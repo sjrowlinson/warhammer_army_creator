@@ -2,6 +2,7 @@
 #define ARMY_MAPS_H
 #include <array>
 #include <cstddef>
+#include <memory>
 #include <string>
 #include <tuple>
 #include <unordered_map>
@@ -47,37 +48,19 @@ namespace armies {
         > options;
     };
 
-    std::unordered_map<std::string, unit_properties> SKAVEN_ARMY = {
-        {"Warlord", unit_properties{
-            UnitType::LORD,
-            90U,
-            0U,
-            {5, 6, 4, 4, 4, 3, 7, 4, 7},
-            {
-                {"Hand Weapon", ""},
-                {"Heavy Armour", ""}
-            },
-            {"Scurry Away!", "Strength in Numbers", "Verminous Valour"},
-            {
-                {"Great weapon", "", 6.0},
-                {"Additional hand weapon", "", 3.0},
-                {"Halberd", "", 3.0},
-                {"Shield", "", 3.0},
-                {"Rat Ogre Bonebreaker", "", 65.0},
-                {"War-litter", "", 35.0},
-                {"Great Pox Rat", "", 30.0}
-            }
-        }},
-        {"Grey Seer", unit_properties{
-            UnitType::LORD,
-            240U,
-            0U,
-            {5, 3, 3, 3, 4, 3, 5, 1, 7},
-            {},
-            {},
-            {}
-        }}
-    };
+    void parse_roster_file(
+        armies::Faction faction,
+        std::shared_ptr<
+            std::unordered_map<std::string, unit_properties>
+        >& army_map
+    );
+
+    std::shared_ptr<
+        std::unordered_map<
+            std::string,
+            unit_properties
+        >
+    > SKAVEN_ARMY;
 };
 
 #endif // !ARMY_MAPS_H

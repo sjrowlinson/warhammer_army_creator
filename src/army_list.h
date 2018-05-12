@@ -1,5 +1,6 @@
 #ifndef ARMY_LIST_H
 #define ARMY_LIST_H
+#include "army_maps.h"
 #include "lord.h"
 #include "hero.h"
 #include "core.h"
@@ -47,6 +48,12 @@ public:
     std::size_t nrare() const noexcept;
     // list property modification
     void change_points_limit(std::size_t pts);
+    void unit_options_event_fired(
+        armies::UnitType unit_type,
+        const std::shared_ptr<unit>& _unit
+    );
+    // list modification
+    void clear();
 };
 
 #endif // !ARMY_LIST_H

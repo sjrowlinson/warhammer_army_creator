@@ -25,9 +25,7 @@ unit::unit(armies::Faction faction,
         case armies::Faction::TOMB_KINGS: break;
         case armies::Faction::OGRE_KINGDOMS: break;
         case armies::Faction::SKAVEN:
-            army_map = std::make_shared<
-                std::unordered_map<std::string, armies::unit_properties>
-            >(armies::SKAVEN_ARMY);
+            army_map = armies::SKAVEN_ARMY;
         case armies::Faction::ORCS_AND_GOBLINS: break;
     }
 }

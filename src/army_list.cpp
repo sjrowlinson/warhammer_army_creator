@@ -94,6 +94,31 @@ void army_list::change_points_limit(std::size_t pts) {
     points = pts;
 }
 
+void army_list::unit_options_event_fired(
+    armies::UnitType unit_type,
+    const std::shared_ptr<unit>& _unit
+) {
+    switch(unit_type) {
+        case armies::UnitType::LORD:
+            auto it = std::find(
+                lords.begin(), lords.end(), _unit
+            );
+        case armies::UnitType::HERO:
+        case armies::UnitType::CORE:
+        case armies::UnitType::SPECIAL:
+        case armies::UnitType::RARE:
+    }
+}
+
+void army_list::clear() {
+    lords.clear();
+    heroes.clear();
+    cores.clear();
+    specials.clear();
+    rares.clear();
+    points = 0U;
+}
+
 void army_list::determine_limits() {
     std::size_t normalised_pts = static_cast<std::size_t>(floor(points/1000.0));
     if (normalised_pts < 2U) {
