@@ -1,5 +1,8 @@
+#include "army_maps.h"
 #include <cstddef>
+#include <memory>
 #include <string>
+#include <unordered_map>
 
 /**
  * TODO: the name argument to a unit should initiate look-up
@@ -10,12 +13,19 @@
 
 class unit {
 protected:
+    armies::Faction race;
     std::string name;
     std::size_t points_per_model;
     std::size_t size;
     std::size_t min_size;
+    std::shared_ptr<
+        std::unordered_map<
+            std::string, armies::unit_properties
+        >
+    > army_map;
 public:
-    unit(const std::string& name,
+    unit(armies::Faction faction,
+         const std::string& name,
          std::size_t points_per_model,
          std::size_t size=0U,
          std::size_t min_size=0U);
