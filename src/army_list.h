@@ -1,3 +1,5 @@
+#ifndef ARMY_LIST_H
+#define ARMY_LIST_H
 #include "lord.h"
 #include "hero.h"
 #include "core.h"
@@ -46,3 +48,5 @@ public:
     // list property modification
     void change_points_limit(std::size_t pts);
 };
+
+#endif // !ARMY_LIST_H

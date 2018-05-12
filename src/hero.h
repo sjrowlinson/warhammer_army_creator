@@ -1,3 +1,5 @@
+#ifndef HERO_H
+#define HERO_H
 #include "unit.h"
 #include <cstddef>
 #include <string>
@@ -10,3 +12,5 @@ public:
     ~hero();
     bool special_character() const noexcept;
 };
+
+#endif // !HERO_H

@@ -1,3 +1,5 @@
+#ifndef SPECIAL_H
+#define SPECIAL_H
 #include "unit.h"
 #include <cstddef>
 #include <string>
@@ -12,3 +14,5 @@ public:
             std::size_t min_size);
     ~special();
 };
+
+#endif // !SPECIAL_H

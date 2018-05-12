@@ -1,3 +1,5 @@
+#ifndef ARMY_MAPS_H
+#define ARMY_MAPS_H
 #include <array>
 #include <cstddef>
 #include <string>
@@ -25,7 +27,16 @@ namespace armies {
         ORCS_AND_GOBLINS
     };
 
+    enum class UnitType {
+        LORD,
+        HERO,
+        CORE,
+        SPECIAL,
+        RARE
+    };
+
     struct unit_properties {
+        UnitType unit_type;
         std::size_t pts_per_model;
         std::size_t min_size;
         std::array<short, 9U> stat_table;
@@ -38,6 +49,7 @@ namespace armies {
 
     std::unordered_map<std::string, unit_properties> SKAVEN_ARMY = {
         {"Warlord", unit_properties{
+            UnitType::LORD,
             90U,
             0U,
             {5, 6, 4, 4, 4, 3, 7, 4, 7},
@@ -57,6 +69,7 @@ namespace armies {
             }
         }},
         {"Grey Seer", unit_properties{
+            UnitType::LORD,
             240U,
             0U,
             {5, 3, 3, 3, 4, 3, 5, 1, 7},
@@ -66,3 +79,5 @@ namespace armies {
         }}
     };
 };
+
+#endif // !ARMY_MAPS_H

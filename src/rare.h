@@ -1,3 +1,5 @@
+#ifndef RARE_H
+#define RARE_H
 #include "unit.h"
 #include <cstddef>
 #include <string>
@@ -12,3 +14,5 @@ public:
          std::size_t min_size);
     ~rare();
 };
+
+#endif // !RARE_H

@@ -1,3 +1,5 @@
+#ifndef UNIT_H
+#define UNIT_H
 #include "army_maps.h"
 #include <cstddef>
 #include <memory>
@@ -35,3 +37,5 @@ public:
     std::size_t unit_size() const noexcept;
     std::size_t minimum_unit_size() const noexcept;
 };
+
+#endif // !UNIT_H

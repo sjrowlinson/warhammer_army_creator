@@ -1,3 +1,5 @@
+#ifndef LORD_H
+#define LORD_H
 #include "unit.h"
 #include <cstddef>
 #include <string>
@@ -10,3 +12,5 @@ public:
     ~lord();
     bool special_character() const noexcept;
 };
+
+#endif //!LORD_H

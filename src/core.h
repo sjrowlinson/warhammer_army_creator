@@ -1,3 +1,5 @@
+#ifndef CORE_H
+#define CORE_H
 #include "unit.h"
 #include <cstddef>
 #include <string>
@@ -12,3 +14,5 @@ public:
          std::size_t min_size);
     ~core();
 };
+
+#endif CORE_H
