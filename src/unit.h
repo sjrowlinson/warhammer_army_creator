@@ -20,11 +20,6 @@ protected:
     std::size_t points_per_model;
     std::size_t size;
     std::size_t min_size;
-    std::shared_ptr<
-        std::unordered_map<
-            std::string, armies::unit_properties
-        >
-    > army_map;
 public:
     unit(armies::Faction faction,
          const std::string& name,
@@ -36,6 +31,15 @@ public:
     std::size_t points_value() const noexcept;
     std::size_t unit_size() const noexcept;
     std::size_t minimum_unit_size() const noexcept;
+};
+
+// custom hash for unit to allow use in unordered containers
+struct unit_hash {
+    std::size_t operator()(const unit& _unit) const noexcept {
+        std::size_t h1 = std::hash<std::string>{}(_unit.get_name());
+        std::size_t h2 = std::hash<std::size_t>{}(_unit.unit_size());
+        return h1 ^ (h2 << 1);
+    }
 };
 
 #endif // !UNIT_H

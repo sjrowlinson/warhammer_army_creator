@@ -7,6 +7,8 @@
 #include "core.h"
 #include "special.h"
 #include "rare.h"
+#include <memory>
+#include <unordered_set>
 
 /**
  * This class represents the left-box of the interface displaying
@@ -23,10 +25,16 @@
  */
 class selection_tree {
 private:
-    //
+    //std::unordered_map<
+    //    std::string, armies::unit_properties
+    //> army_map;
+    std::unordered_set<unit, unit_hash> roster;
+    armies::Faction race;
+    std::shared_ptr<unit> current_selection;
 public:
     selection_tree(armies::Faction faction);
     ~selection_tree();
+    unit add_unit_to_army_list();
 };
 
 #endif // !SELECTION_TREE_H

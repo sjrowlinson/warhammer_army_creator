@@ -10,6 +10,7 @@
 #include <vector>
 
 namespace armies {
+    
     enum class Faction {
         EMPIRE,
         BRETONNIA,
@@ -48,19 +49,6 @@ namespace armies {
         > options;
     };
 
-    void parse_roster_file(
-        armies::Faction faction,
-        std::shared_ptr<
-            std::unordered_map<std::string, unit_properties>
-        >& army_map
-    );
-
-    std::shared_ptr<
-        std::unordered_map<
-            std::string,
-            unit_properties
-        >
-    > SKAVEN_ARMY;
 };
 
 #endif // !ARMY_MAPS_H
