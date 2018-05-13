@@ -1,0 +1,6 @@
+# 
+# Format is: unit_name; unit_type; pts_per_model; min_unit_size; stat_table; equipment_table; special_rules_table; options_table 
+#
+Warlord; Lord; 90; 1; 5,6,4,4,4,3,7,4, 7; Hand weapon, , Heavy armour, , Scurry Away!, , Strength in Numbers, , Verminous Valour, ; Great weapon, (weapon), Additional hand weapon, (weapon), Halberd, (weapon), Shield, (armour), Rat Ogre Bonebreaker (mount, description), War-litter, (mount, description), Great Pox Rat, (mount, description), Magic Items + Scavenge Pile, (100)
+
+Grey Seer; Lord; 240; 1; 5,3,3,3,4,3,5,1,7; Hand weapon, null, D3 Warpstone Tokens, null; Scurry Away!, null, Strength in Numbers, null, Verminous Valour, null; Screaming Bell, (mount), Magic Items + Scavenge Pile, (100)

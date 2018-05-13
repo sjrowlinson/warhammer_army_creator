@@ -22,3 +22,5 @@ const std::string& unit::get_name() const noexcept { return name; }
 std::size_t unit::unit_size() const noexcept { return size; }
 
 std::size_t unit::minimum_unit_size() const noexcept { return min_size; }
+
+void unit::set_stat_table(std::array<short, 9U>&& stats) { stat_table = std::move(stats); }

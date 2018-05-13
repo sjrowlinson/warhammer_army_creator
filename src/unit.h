@@ -1,10 +1,13 @@
 #ifndef UNIT_H
 #define UNIT_H
 #include "army_maps.h"
+#include <array>
 #include <cstddef>
 #include <memory>
 #include <string>
 #include <unordered_map>
+#include <utility>
+#include <vector>
 
 /**
  * TODO: the name argument to a unit should initiate look-up
@@ -20,6 +23,8 @@ protected:
     std::size_t points_per_model;
     std::size_t size;
     std::size_t min_size;
+    std::array<short, 9U> stat_table;
+    std::vector<std::pair<std::string, std::string>> equipment;
 public:
     unit(armies::Faction faction,
          const std::string& name,
@@ -31,6 +36,9 @@ public:
     std::size_t points_value() const noexcept;
     std::size_t unit_size() const noexcept;
     std::size_t minimum_unit_size() const noexcept;
+    // modifiers
+    void set_stat_table(std::array<short, 9U>&& stats);
+    void set_equipment(std::vector<std::pair<std::string, std::string>>&& eq);
 };
 
 // custom hash for unit to allow use in unordered containers

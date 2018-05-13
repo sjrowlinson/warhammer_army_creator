@@ -1,14 +1,19 @@
 #ifndef SELECTION_TREE_H
 #define SELECTION_TREE_H
 #include "army_maps.h"
-#include "unit.h"
-#include "lord.h"
-#include "hero.h"
 #include "core.h"
-#include "special.h"
+#include "file_reader.h"
+#include "hero.h"
+#include "lord.h"
 #include "rare.h"
+#include "special.h"
+#include "tools.h"
+#include "unit.h"
+#include <array>
+#include <cmath>
 #include <memory>
-#include <unordered_set>
+#include <string>
+//#include <unordered_set>
 
 /**
  * This class represents the left-box of the interface displaying
@@ -28,9 +33,19 @@ private:
     //std::unordered_map<
     //    std::string, armies::unit_properties
     //> army_map;
-    std::unordered_set<unit, unit_hash> roster;
+    //std::unordered_set<unit, unit_hash> roster;
+    std::unordered_map<
+        std::string,
+        unit,
+        unit_hash
+    > roster;
     armies::Faction race;
-    std::shared_ptr<unit> current_selection;
+    std::unique_ptr<unit> current_selection;
+
+    void parse_roster_file(const std::string& filename);
+    void _parse_stat_table(unit& temp, const std::string& table);
+    void _parse_equipment_table(unit& temp, const std::string& table);
+    void _parse_special_rules_table(unit& temp, const std::string& table);
 public:
     selection_tree(armies::Faction faction);
     ~selection_tree();
