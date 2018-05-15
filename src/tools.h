@@ -43,16 +43,13 @@ namespace tools {
 	 */
 	std::string& remove_leading_whitespaces(std::string& s) {
 		auto it = s.begin();
-		// loop until past-the-end iterator of _s
+		// loop until past-the-end iterator of s
 		while (it != s.end()) {
-			// if character is a space, erase it and set it to
-			// next valid std::string::iterator in _s
-			if (std::isspace(*it)) {
-				it = s.erase(it);
-			}
+            // if character is a space, erase it and set it to
+			// next valid std::string::iterator in s
+			if (std::isspace(*it)) it = s.erase(it);
 			// if character is not a space, finished so break
-			else
-				break;
+			else break;
 		}
 		return s;
 	}

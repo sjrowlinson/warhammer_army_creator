@@ -61,6 +61,7 @@ void _parse_special_rules_table(unit& temp, const std::string& table) {
         std::string s = special_rules_vec[2*i];
         (i % 2U) ? special_rules[i].second = s : special_rules[i].first = s;
     }
+    temp.set_special_rules(std::move(special_rules));
 }
 
 void selection_tree::parse_roster_file(const std::string& filename) {
@@ -77,5 +78,7 @@ void selection_tree::parse_roster_file(const std::string& filename) {
             static_cast<std::size_t>(std::stoul(split_line[3]))
         );
         _parse_stat_table(tmp, split_line[4]);
+        _parse_equipment_table(tmp, split_line[5]);
+        _parse_special_rules_table(tmp, split_line[6]);
     }
 }

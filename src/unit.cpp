@@ -24,3 +24,11 @@ std::size_t unit::unit_size() const noexcept { return size; }
 std::size_t unit::minimum_unit_size() const noexcept { return min_size; }
 
 void unit::set_stat_table(std::array<short, 9U>&& stats) { stat_table = std::move(stats); }
+
+void unit::set_equipment(std::vector<std::pair<std::string, std::string>>&& eq) {
+    equipment = std::move(eq);
+}
+
+void unit::set_special_rules(std::vector<std::pair<std::string, std::string>>&& sr) {
+    special_rules = std::move(sr);
+}

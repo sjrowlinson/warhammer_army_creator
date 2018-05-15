@@ -25,6 +25,7 @@ protected:
     std::size_t min_size;
     std::array<short, 9U> stat_table;
     std::vector<std::pair<std::string, std::string>> equipment;
+    std::vector<std::pair<std::string, std::string>> special_rules;
 public:
     unit(armies::Faction faction,
          const std::string& name,
@@ -39,6 +40,7 @@ public:
     // modifiers
     void set_stat_table(std::array<short, 9U>&& stats);
     void set_equipment(std::vector<std::pair<std::string, std::string>>&& eq);
+    void set_special_rules(std::vector<std::pair<std::string, std::string>>&& sr);
 };
 
 // custom hash for unit to allow use in unordered containers
