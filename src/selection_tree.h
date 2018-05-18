@@ -21,7 +21,7 @@
  * in this tree and can add them to their army list - the unit will
  * be copied to an intermediate stage and a std::shared_ptr will
  * be made from the copy in order to add it to the army_list structure.
- * 
+ *
  * The shared_ptr of the copy made in the intermediate stage will be
  * the object manipulated by the user in the army list view (centre
  * box) - such that any changes made here are copied across to the
@@ -43,9 +43,12 @@ private:
     std::unique_ptr<unit> current_selection;
 
     void parse_roster_file(const std::string& filename);
-    void _parse_stat_table(unit& temp, const std::string& table);
-    void _parse_equipment_table(unit& temp, const std::string& table);
-    void _parse_special_rules_table(unit& temp, const std::string& table);
+    std::vector<
+        std::pair<std::string, std::string>
+    > parse_table(const std::string& table);
+    void parse_stat_table(unit& temp, const std::string& table);
+    void parse_equipment_table(unit& temp, const std::string& table);
+    void parse_special_rules_table(unit& temp, const std::string& table);
 public:
     selection_tree(armies::Faction faction);
     ~selection_tree();
