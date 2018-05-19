@@ -38,8 +38,8 @@ namespace tools {
     /**
 	 * \brief Removes all leading whitespace `char`s from a `std::string` instance.
 	 *
-	 * \param _s Reference to `std::string` instance.
-	 * \return Reference to `_s` with all leading whitespaces removed.
+	 * \param s Reference to `std::string` instance.
+	 * \return Reference to `s` with all leading whitespaces removed.
 	 */
 	std::string& remove_leading_whitespaces(std::string& s) {
 		auto it = s.begin();
@@ -52,6 +52,17 @@ namespace tools {
 			else break;
 		}
 		return s;
+	}
+
+	/**
+	 * \brief Determines whether a `std::string` instance starts with a given `char`.
+	 *
+	 * \param s Instance of `std::string`.
+	 * \param c `char` to check against.
+	 * \return `true` if `s` starts with `c`, `false` otherwise.
+	 */
+	bool starts_with(const std::string& s, char c) {
+		return *s.cbegin() == c;
 	}
 }
 

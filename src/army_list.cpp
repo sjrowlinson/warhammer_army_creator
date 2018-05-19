@@ -1,6 +1,6 @@
 #include "army_list.h"
 
-army_list::army_list(std::size_t points) 
+army_list::army_list(std::size_t points)
     : points(points), curr_pts(0U) {
     determine_limits();
     lords.reserve(lord_lim);
@@ -22,8 +22,8 @@ void army_list::add_lord(const std::shared_ptr<lord>& _lord) {
             std::any_of(
                 lords.begin(),
                 lords.end(),
-                [&_lord](const std::shared_ptr<lord>& l) { 
-                    return l->get_name() == _lord->get_name(); 
+                [&_lord](const std::shared_ptr<lord>& l) {
+                    return l->get_name() == _lord->get_name();
                 }
             )
         )
@@ -117,6 +117,18 @@ void army_list::clear() {
     specials.clear();
     rares.clear();
     points = 0U;
+}
+
+bool army_list::is_valid() const noexcept {
+    if (curr_pts > points
+        || lords.size() > lord_lim
+        || heroes.size() > hero_lim
+        || lords.size() + heroes.size() > char_lim
+        || cores.size() < core_min
+        || specials.size() > spec_lim
+        || rares.size() > rare_lim)
+        return false;
+    return true;
 }
 
 void army_list::determine_limits() {

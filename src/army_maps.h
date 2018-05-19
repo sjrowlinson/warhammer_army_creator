@@ -10,7 +10,7 @@
 #include <vector>
 
 namespace armies {
-    
+
     enum class Faction {
         EMPIRE,
         BRETONNIA,
@@ -27,6 +27,17 @@ namespace armies {
         OGRE_KINGDOMS,
         SKAVEN,
         ORCS_AND_GOBLINS
+    };
+
+    static std::unordered_map<
+        std::string,
+        Faction
+    > s_map_string_faction = {
+        {"EMPIRE" , Faction::EMPIRE},
+        {"BRETONNIA", Faction::BRETONNIA},
+        {"DWARFS", Faction::DWARFS},
+        {"HIGH_ELVES", Faction::HIGH_ELVES},
+        {"SKAVEN", Faction::SKAVEN}
     };
 
     enum class UnitType {

@@ -54,6 +54,8 @@ public:
     );
     // list modification
     void clear();
+    // other
+    bool is_valid() const noexcept;
 };
 
 #endif // !ARMY_LIST_H
