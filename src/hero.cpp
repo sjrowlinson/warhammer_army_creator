@@ -4,7 +4,12 @@ hero::hero(armies::Faction faction,
            const std::string& name,
            std::size_t points,
            bool is_named=false)
-    : unit(faction, name, points), is_named(is_named) {}
+    : unit(
+        faction,
+        armies::UnitType::HERO,
+        name,
+        points
+    ), is_named(is_named) {}
 
 hero::~hero() {}
 

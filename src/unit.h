@@ -9,16 +9,10 @@
 #include <utility>
 #include <vector>
 
-/**
- * TODO: the name argument to a unit should initiate look-up
- * to a map to load the properties of that unit - do not need
- * points_per_model nor min_size args as they can be obtained
- * from this process. 
- */
-
 class unit {
 protected:
     armies::Faction race;
+    armies::UnitType unit_type;
     std::string name;
     std::size_t points_per_model;
     std::size_t size;
@@ -28,11 +22,13 @@ protected:
     std::vector<std::pair<std::string, std::string>> special_rules;
 public:
     unit(armies::Faction faction,
+         armies::UnitType unit_type,
          const std::string& name,
          std::size_t points_per_model,
          std::size_t size=0U,
-         std::size_t min_size=0U);
-    ~unit();
+         std::size_t min_size=1U);
+    virtual ~unit() = default;
+    armies::UnitType get_type() const noexcept;
     const std::string& get_name() const noexcept;
     std::size_t points_value() const noexcept;
     std::size_t unit_size() const noexcept;

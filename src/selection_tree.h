@@ -1,6 +1,7 @@
 #ifndef SELECTION_TREE_H
 #define SELECTION_TREE_H
 #include "army_maps.h"
+#include "army_list.h"
 #include "core.h"
 #include "file_reader.h"
 #include "hero.h"
@@ -13,7 +14,6 @@
 #include <cmath>
 #include <memory>
 #include <string>
-//#include <unordered_set>
 
 /**
  * This class represents the left-box of the interface displaying
@@ -30,17 +30,12 @@
  */
 class selection_tree {
 private:
-    //std::unordered_map<
-    //    std::string, armies::unit_properties
-    //> army_map;
-    //std::unordered_set<unit, unit_hash> roster;
     std::unordered_map<
         std::string,
-        unit,
-        unit_hash
+        unit
     > roster;
     armies::Faction race;
-    std::unique_ptr<unit> current_selection;
+    std::shared_ptr<unit> current_selection;
 
     void parse_roster_file(const std::string& filename);
     std::vector<
@@ -53,7 +48,8 @@ private:
 public:
     selection_tree(armies::Faction faction);
     ~selection_tree();
-    unit add_unit_to_army_list();
+    void add_unit_to_army_list(army_list& list);
+    void change_selection(const std::string& name);
 };
 
 #endif // !SELECTION_TREE_H

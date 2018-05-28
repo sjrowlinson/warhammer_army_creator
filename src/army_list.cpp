@@ -12,6 +12,27 @@ army_list::army_list(std::size_t points)
 
 army_list::~army_list() {}
 
+void army_list::add_unit(const std::shared_ptr<unit>& _unit) {
+    // TODO: call the relevant add method
+    switch (_unit->get_type()) {
+    case armies::UnitType::LORD:
+        add_lord(std::dynamic_pointer_cast<lord>(_unit));
+        break;
+    case armies::UnitType::HERO:
+        add_hero(std::dynamic_pointer_cast<hero>(_unit));
+        break;
+    case armies::UnitType::CORE:
+        add_core(std::dynamic_pointer_cast<core>(_unit));
+        break;
+    case armies::UnitType::SPECIAL:
+        add_special(std::dynamic_pointer_cast<special>(_unit));
+        break;
+    case armies::UnitType::RARE:
+        add_rare(std::dynamic_pointer_cast<rare>(_unit));
+        break;
+    }
+}
+
 void army_list::add_lord(const std::shared_ptr<lord>& _lord) {
     if (lords.size() >= lord_lim ||
             lords.size() + heroes.size() >= char_lim)
@@ -92,22 +113,6 @@ std::size_t army_list::nrare() const noexcept { return rares.size(); }
 void army_list::change_points_limit(std::size_t pts) {
     determine_limits();
     points = pts;
-}
-
-void army_list::unit_options_event_fired(
-    armies::UnitType unit_type,
-    const std::shared_ptr<unit>& _unit
-) {
-    switch(unit_type) {
-        case armies::UnitType::LORD:
-            auto it = std::find(
-                lords.begin(), lords.end(), _unit
-            );
-        case armies::UnitType::HERO:
-        case armies::UnitType::CORE:
-        case armies::UnitType::SPECIAL:
-        case armies::UnitType::RARE:
-    }
 }
 
 void army_list::clear() {

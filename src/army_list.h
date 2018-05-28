@@ -35,6 +35,7 @@ public:
     ~army_list();
     std::size_t current_points() const noexcept;
     // add units
+    void add_unit(const std::shared_ptr<unit>& _unit);
     void add_lord(const std::shared_ptr<lord>& _lord);
     void add_hero(const std::shared_ptr<hero>& _hero);
     void add_core(const std::shared_ptr<core>& _core);
@@ -48,10 +49,6 @@ public:
     std::size_t nrare() const noexcept;
     // list property modification
     void change_points_limit(std::size_t pts);
-    void unit_options_event_fired(
-        armies::UnitType unit_type,
-        const std::shared_ptr<unit>& _unit
-    );
     // list modification
     void clear();
     // other

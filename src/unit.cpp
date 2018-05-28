@@ -1,20 +1,24 @@
 #include "unit.h"
 
 unit::unit(armies::Faction faction,
+           armies::UnitType unit_type,
            const std::string& name,
            std::size_t points_per_model,
            std::size_t size=0U,
-           std::size_t min_size=0U)
+           std::size_t min_size=1U)
     : race(faction),
+      unit_type(unit_type),
       name(name),
       points_per_model(points_per_model),
       size(size),
       min_size(min_size) {}
 
-unit::~unit() {}
-
-std::size_t unit::points_value() const noexcept { 
+std::size_t unit::points_value() const noexcept {
     return points_per_model * size;
+}
+
+armies::UnitType unit::get_type() const noexcept {
+    return unit_type;
 }
 
 const std::string& unit::get_name() const noexcept { return name; }

@@ -33,7 +33,7 @@ namespace armies {
         std::string,
         Faction
     > s_map_string_faction = {
-        {"EMPIRE" , Faction::EMPIRE},
+        {"EMPIRE", Faction::EMPIRE},
         {"BRETONNIA", Faction::BRETONNIA},
         {"DWARFS", Faction::DWARFS},
         {"HIGH_ELVES", Faction::HIGH_ELVES},
@@ -48,16 +48,15 @@ namespace armies {
         RARE
     };
 
-    struct unit_properties {
-        UnitType unit_type;
-        std::size_t pts_per_model;
-        std::size_t min_size;
-        std::array<short, 9U> stat_table;
-        std::vector<std::pair<std::string, std::string>> equipment;
-        std::vector<std::string> special_rules;
-        std::vector<
-            std::tuple<std::string, std::string, double>
-        > options;
+    static std::unordered_map<
+        std::string,
+        Faction
+    > s_map_string_unit_type = {
+        {"Lord", UnitType::LORD},
+        {"Hero", UnitType::HERO},
+        {"Core", UnitType::CORE},
+        {"Special", UnitType::SPECIAL},
+        {"Rare", UnitType::RARE}
     };
 
 };
