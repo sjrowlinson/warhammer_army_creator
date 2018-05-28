@@ -26,7 +26,8 @@ namespace armies {
         TOMB_KINGS,
         OGRE_KINGDOMS,
         SKAVEN,
-        ORCS_AND_GOBLINS
+        ORCS_AND_GOBLINS,
+        NONE
     };
 
     static std::unordered_map<
@@ -45,12 +46,13 @@ namespace armies {
         HERO,
         CORE,
         SPECIAL,
-        RARE
+        RARE,
+        NONE
     };
 
     static std::unordered_map<
         std::string,
-        Faction
+        UnitType
     > s_map_string_unit_type = {
         {"Lord", UnitType::LORD},
         {"Hero", UnitType::HERO},

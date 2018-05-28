@@ -1,5 +1,9 @@
 .DS_Store
 
+# Makefile related
+.depend
+armycreator
+
 # Prerequisites
 *.d
 

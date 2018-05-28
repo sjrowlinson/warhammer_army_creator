@@ -21,6 +21,7 @@ protected:
     std::vector<std::pair<std::string, std::string>> equipment;
     std::vector<std::pair<std::string, std::string>> special_rules;
 public:
+    unit();
     unit(armies::Faction faction,
          armies::UnitType unit_type,
          const std::string& name,

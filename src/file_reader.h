@@ -29,7 +29,7 @@ namespace tools {
 		 * \param _filename Name/directory of file.
 		 * \param _max_line_length Optional maximum length of file line, used for optimisation.
 		 */
-		explicit file_reader(const std::string& _filename, std::size_t _max_line_length = 256U) 
+		explicit file_reader(const std::string& _filename, std::size_t _max_line_length = 256U)
 			: fs(_filename), filename(_filename) { cache_file_streampos(_max_line_length); }
 		/**
 	 	 * \brief Deleted copy constructor, copy constring is forbidden. No two `file_reader` instances
@@ -43,11 +43,11 @@ namespace tools {
 		 * \param _other Instance of `file_reader` to move to this.
 		 */
 		file_reader(file_reader&& _other) :
-			fs(std::move(_other.fs)), filename(std::move(_other.filename)), 
+			fs(std::move(_other.fs)), filename(std::move(_other.filename)),
 				line_streampos_vec(std::move(_other.line_streampos_vec)) {
 		}
 		/**
-		 * \brief Deleted copy assignment operator, copy assignment is forbidden. No two `file_reader` 
+		 * \brief Deleted copy assignment operator, copy assignment is forbidden. No two `file_reader`
 		 *        instances may observe the same loaded file stream resource.
 		 */
 		file_reader& operator=(const file_reader& _other) = delete;
@@ -125,8 +125,8 @@ namespace tools {
 		}
 	private:
 		std::fstream fs;
-		std::vector<std::fstream::streampos> line_streampos_vec;	// internal stream position container
 		std::string filename;
+		std::vector<std::fstream::streampos> line_streampos_vec;	// internal stream position container
 		/**
 		 * \brief Loads the file `std::streampos` elements into the internal stream position container.
 		 *
@@ -158,4 +158,4 @@ namespace tools {
 
 }
 
-#endif 
+#endif

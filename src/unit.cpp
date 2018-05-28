@@ -1,11 +1,19 @@
 #include "unit.h"
 
+unit::unit()
+    : race(armies::Faction::NONE),
+      unit_type(armies::UnitType::NONE),
+      name(),
+      points_per_model(0U),
+      size(0U),
+      min_size(0U) {}
+
 unit::unit(armies::Faction faction,
            armies::UnitType unit_type,
            const std::string& name,
            std::size_t points_per_model,
-           std::size_t size=0U,
-           std::size_t min_size=1U)
+           std::size_t size,
+           std::size_t min_size)
     : race(faction),
       unit_type(unit_type),
       name(name),

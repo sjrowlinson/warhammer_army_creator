@@ -16,4 +16,4 @@ public:
     ~core();
 };
 
-#endif CORE_H
+#endif // !CORE_H
