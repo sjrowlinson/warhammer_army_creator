@@ -30,6 +30,9 @@ void army_list::add_unit(const std::shared_ptr<unit>& _unit) {
     case armies::UnitType::RARE:
         add_rare(std::dynamic_pointer_cast<rare>(_unit));
         break;
+    default:
+        // TODO: throw exception
+        break;
     }
 }
 

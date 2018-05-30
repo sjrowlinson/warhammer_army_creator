@@ -75,11 +75,14 @@ void selection_tree::change_selection(const std::string& name) {
     case armies::UnitType::RARE:
         current_selection = std::make_shared<rare>(dynamic_cast<rare&>(roster[name]));
         break;
+    default:
+        current_selection = nullptr;
+        break;
     }
 }
 
 void selection_tree::add_unit_to_army_list(army_list& list) {
-    list.add_unit(current_selection);
+    if (current_selection) list.add_unit(current_selection);
 }
 
 std::vector<
@@ -114,6 +117,8 @@ void selection_tree::parse_special_rules_table(unit& temp, const std::string& ta
 }
 
 void selection_tree::parse_options_table(unit& temp, const std::string& table) {
+    (void)temp;
+    (void)table;
     // TODO: implement parse_options_table method
 }
 
