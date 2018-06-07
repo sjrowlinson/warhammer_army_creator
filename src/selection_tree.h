@@ -39,6 +39,11 @@ private:
     void parse_stat_table(unit& temp, const std::string& table);
     void parse_equipment_table(unit& temp, const std::string& table);
     void parse_special_rules_table(unit& temp, const std::string& table);
+    void parse_optional_weapons_table(unit& temp, const std::string& table);
+    void parse_optional_armour_table(unit& temp, const std::string& table);
+    void parse_optional_mounts_table(unit& temp, const std::string& table);
+    void parse_optional_command_table(unit& temp, const std::string& table);
+    void parse_optional_extra_table(unit& temp, const std::string& table);
     void parse_options_table(unit& temp, const std::string& table);
 public:
     selection_tree(armies::Faction faction);

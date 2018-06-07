@@ -78,7 +78,7 @@ std::vector<
 }
 
 void selection_tree::parse_stat_table(unit& temp, const std::string& table) {
-    std::vector<short> stat_vec = tools::split_stos(table, ',');
+    std::vector<short> stat_vec = tools::split_stos(table, ' ');
     std::array<short, 9U> stats;
     for (std::size_t i = 0U; i < 9U; ++i) stats[i] = stat_vec[i];
     temp.set_stat_table(std::move(stats));
@@ -94,6 +94,26 @@ void selection_tree::parse_special_rules_table(unit& temp, const std::string& ta
     temp.set_special_rules(std::move(special_rules));
 }
 
+void selection_tree::parse_optional_weapons_table(unit& temp, const std::string& table) {
+
+}
+
+void selection_tree::parse_optional_armour_table(unit& temp, const std::string& table) {
+
+}
+
+void selection_tree::parse_optional_mounts_table(unit& temp, const std::string& table) {
+
+}
+
+void selection_tree::parse_optional_command_table(unit& temp, const std::string& table) {
+
+}
+
+void selection_tree::parse_optional_extra_table(unit& temp, const std::string& table) {
+
+}
+
 void selection_tree::parse_options_table(unit& temp, const std::string& table) {
     (void)temp;
     (void)table;
@@ -102,8 +122,48 @@ void selection_tree::parse_options_table(unit& temp, const std::string& table) {
 
 void selection_tree::parse_roster_file(const std::string& filename) {
     tools::file_reader fr("../rosters/" + filename);
-    armies::Faction race;
-    for (std::size_t i = 0U; i < fr.lines(); ++i) {
+    armies::Faction race = armies::s_map_string_faction[fr.read_line(0)];
+    std::vector<std::size_t> block_positions;
+    for (std::size_t i = 1U; i < fr.lines(); ++i) {
+        std::string line = fr.read_line(i);
+        if (tools::starts_with(line, '#') || line.empty()) continue;
+        if (!(tools::starts_with(line, '    ') || tools::starts_with(line, '\t')))
+            block_positions.push_back(i);
+    }
+    for (std::size_t i = 0U; i < block_positions.size(); ++i) {
+        std::string unit_name = fr.read_line(block_positions[i]);
+        armies::UnitType unit_type = armies::s_map_string_unit_type[
+            tools::remove_leading_whitespaces(fr.read_line(block_positions[i + 1]))
+        ];
+        std::size_t unit_pts = static_cast<std::size_t>(std::stoul(
+            tools::remove_leading_whitespaces(fr.read_line(block_positions[i + 2]))
+        ));
+        std::size_t unit_min_size = static_cast<std::size_t>(std::stoul(
+            tools::remove_leading_whitespaces(fr.read_line(block_positions[i + 3]))
+        ));
+        unit tmp(
+            race,
+            unit_type,
+            unit_name,
+            unit_pts,
+            unit_min_size,
+            unit_min_size
+        );
+        parse_stat_table(
+            tmp,
+            tools::remove_leading_whitespaces(fr.read_line(block_positions[i + 4]))
+        );
+        parse_equipment_table(
+            tmp,
+            tools::remove_leading_whitespaces(fr.read_line(block_positions[i + 5]))
+        );
+        parse_special_rules_table(
+            tmp,
+            tools::remove_leading_whitespaces(fr.read_line(block_positions[i + 6]))
+        );
+    }
+
+    /*for (std::size_t i = 0U; i < fr.lines(); ++i) {
         std::string line = fr.read_line(i);
         if (tools::starts_with(line, '#')) continue;
         if (tools::starts_with(line, ':'))
@@ -130,5 +190,5 @@ void selection_tree::parse_roster_file(const std::string& filename) {
             parse_options_table(tmp, split_line[7]);
             roster[split_line[0]] = tmp;
         }
-    }
+    }*/
 }

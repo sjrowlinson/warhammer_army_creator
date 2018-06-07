@@ -29,6 +29,7 @@ namespace tools {
 	 * \return Reference to `s` with all leading whitespaces removed.
 	 */
 	std::string& remove_leading_whitespaces(std::string& s);
+	std::string remove_leading_whitespaces(const std::string& s);
 
 	/**
 	 * \brief Determines whether a `std::string` instance starts with a given `char`.
