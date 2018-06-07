@@ -2,12 +2,7 @@
 #define SELECTION_TREE_H
 #include "army_maps.h"
 #include "army_list.h"
-#include "core.h"
 #include "file_reader.h"
-#include "hero.h"
-#include "lord.h"
-#include "rare.h"
-#include "special.h"
 #include "tools.h"
 #include "unit.h"
 #include <array>
@@ -47,7 +42,7 @@ private:
     void parse_options_table(unit& temp, const std::string& table);
 public:
     selection_tree(armies::Faction faction);
-    ~selection_tree();
+    ~selection_tree() = default;
     void add_unit_to_army_list(army_list& list);
     void change_selection(const std::string& name);
 };

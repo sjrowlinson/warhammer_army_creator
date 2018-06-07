@@ -25,9 +25,7 @@ std::size_t unit::points_value() const noexcept {
     return points_per_model * size;
 }
 
-armies::UnitType unit::get_type() const noexcept {
-    return unit_type;
-}
+armies::UnitType unit::get_type() const noexcept { return unit_type; }
 
 const std::string& unit::get_name() const noexcept { return name; }
 

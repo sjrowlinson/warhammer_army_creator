@@ -1,117 +1,70 @@
 #include "army_list.h"
 
 army_list::army_list(std::size_t points)
-    : points(points), curr_pts(0U) {
+    : points(points),
+      curr_pts(0U),
+      num_lords(0U),
+      num_heroes(0U),
+      num_cores(0U),
+      num_specials(0U),
+      num_rares(0U) {
     determine_limits();
-    lords.reserve(lord_lim);
-    heroes.reserve(hero_lim);
-    cores.reserve(core_min);
-    specials.reserve(spec_lim);
-    rares.reserve(rare_lim);
 }
 
 army_list::~army_list() {}
 
 void army_list::add_unit(const std::shared_ptr<unit>& _unit) {
-    // TODO: call the relevant add method
+    if (curr_pts + _unit->points_value() > points)
+        throw std::logic_error("Not enough available points!");
     switch (_unit->get_type()) {
     case armies::UnitType::LORD:
-        add_lord(std::dynamic_pointer_cast<lord>(_unit));
+        if (num_lords >= lord_lim ||
+                num_lords + num_heroes >= char_lim)
+            throw std::logic_error("Too many character units!");
+        ++num_lords;
         break;
     case armies::UnitType::HERO:
-        add_hero(std::dynamic_pointer_cast<hero>(_unit));
+        if (num_heroes >= hero_lim ||
+                num_heroes + num_lords >= char_lim)
+            throw std::logic_error("Too many character units!");
+        ++num_heroes;
         break;
     case armies::UnitType::CORE:
-        add_core(std::dynamic_pointer_cast<core>(_unit));
+        ++num_cores;
         break;
     case armies::UnitType::SPECIAL:
-        add_special(std::dynamic_pointer_cast<special>(_unit));
+        if (num_specials >= spec_lim)
+            throw std::logic_error("Too many special units!");
+        ++num_specials;
         break;
     case armies::UnitType::RARE:
-        add_rare(std::dynamic_pointer_cast<rare>(_unit));
+        if (num_rares >= rare_lim)
+            throw std::logic_error("Too many rare units!");
+        ++num_rares;
         break;
     default:
-        // TODO: throw exception
         break;
     }
-}
-
-void army_list::add_lord(const std::shared_ptr<lord>& _lord) {
-    if (lords.size() >= lord_lim ||
-            lords.size() + heroes.size() >= char_lim)
-        throw std::logic_error("Too many character units!");
-    if (curr_pts + _lord->points_value() > points)
-        throw std::logic_error("Not enough available points!");
-    if (_lord->special_character() &&
-            std::any_of(
-                lords.begin(),
-                lords.end(),
-                [&_lord](const std::shared_ptr<lord>& l) {
-                    return l->get_name() == _lord->get_name();
-                }
-            )
-        )
-        throw std::logic_error("Cannot include two of the same named character!");
-    lords.push_back(_lord);
-    curr_pts += _lord->points_value();
-}
-
-void army_list::add_hero(const std::shared_ptr<hero>& _hero) {
-    if (heroes.size() >= hero_lim ||
-            lords.size() + heroes.size() >= char_lim)
-        throw std::logic_error("Too many character units!");
-    if (curr_pts + _hero->points_value() > points)
-        throw std::logic_error("Not enough available points!");
-    if (_hero->special_character() &&
-            std::any_of(
-                heroes.begin(),
-                heroes.end(),
-                [&_hero](const std::shared_ptr<hero>& h) {
-                    return h->get_name() == _hero->get_name();
-                }
-            )
-        )
-        throw std::logic_error("Cannot include two of the same named character!");
-    heroes.push_back(_hero);
-    curr_pts += _hero->points_value();
-}
-
-void army_list::add_core(const std::shared_ptr<core>& _core) {
-    if (curr_pts + _core->points_value() > points)
-        throw std::logic_error("Not enough available points!");
-    cores.push_back(_core);
-    curr_pts += _core->points_value();
-}
-
-void army_list::add_special(const std::shared_ptr<special>& _special) {
-    if (specials.size() >= spec_lim)
-        throw std::logic_error("Too many special units!");
-    if (curr_pts + _special->points_value() > points)
-        throw std::logic_error("Not enough available points!");
-    specials.push_back(_special);
-    curr_pts += _special->points_value();
-}
-
-void army_list::add_rare(const std::shared_ptr<rare>& _rare) {
-    if (rares.size() >= rare_lim)
-        throw std::logic_error("Too many rare units!");
-    if (curr_pts + _rare->points_value() > points)
-        throw std::logic_error("Not enough available points!");
-    rares.push_back(_rare);
-    curr_pts += _rare->points_value();
+    army.push_back(_unit);
+    curr_pts += _unit->points_value();
 }
 
 std::size_t army_list::current_points() const noexcept { return curr_pts; }
 
-std::size_t army_list::nlords() const noexcept { return lords.size(); }
+std::size_t army_list::nlords() const noexcept { return num_lords; }
 
-std::size_t army_list::nheroes() const noexcept { return heroes.size(); }
+std::size_t army_list::nheroes() const noexcept { return num_heroes; }
 
-std::size_t army_list::ncore() const noexcept { return cores.size(); }
+std::size_t army_list::ncore() const noexcept { return num_cores; }
 
-std::size_t army_list::nspecial() const noexcept { return specials.size(); }
+std::size_t army_list::nspecial() const noexcept { return num_specials; }
 
-std::size_t army_list::nrare() const noexcept { return rares.size(); }
+std::size_t army_list::nrare() const noexcept { return num_rares; }
+
+const std::vector<std::shared_ptr<unit>>& army_list::get() const noexcept {
+    return army;
+}
+
 
 void army_list::change_points_limit(std::size_t pts) {
     determine_limits();
@@ -119,22 +72,23 @@ void army_list::change_points_limit(std::size_t pts) {
 }
 
 void army_list::clear() {
-    lords.clear();
-    heroes.clear();
-    cores.clear();
-    specials.clear();
-    rares.clear();
-    points = 0U;
+    army.clear();
+    num_lords = 0U;
+    num_heroes = 0U;
+    num_cores = 0U;
+    num_specials = 0U;
+    num_rares = 0U;
+    curr_pts = 0U;
 }
 
 bool army_list::is_valid() const noexcept {
     if (curr_pts > points
-        || lords.size() > lord_lim
-        || heroes.size() > hero_lim
-        || lords.size() + heroes.size() > char_lim
-        || cores.size() < core_min
-        || specials.size() > spec_lim
-        || rares.size() > rare_lim)
+        || nlords() > lord_lim
+        || nheroes() > hero_lim
+        || nlords() + nheroes() > char_lim
+        || ncore() < core_min
+        || nspecial() > spec_lim
+        || nrare() > rare_lim)
         return false;
     return true;
 }

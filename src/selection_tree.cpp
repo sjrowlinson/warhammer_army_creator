@@ -52,33 +52,11 @@ selection_tree::selection_tree(armies::Faction faction) : race(faction) {
         filename = "empire_roster.ros";
         break;
     }
-    // parse the file into this->roster
     parse_roster_file(filename);
 }
 
-selection_tree::~selection_tree() {}
-
 void selection_tree::change_selection(const std::string& name) {
-    switch (roster[name].get_type()) {
-    case armies::UnitType::LORD:
-        current_selection = std::make_shared<lord>(dynamic_cast<lord&>(roster[name]));
-        break;
-    case armies::UnitType::HERO:
-        current_selection = std::make_shared<hero>(dynamic_cast<hero&>(roster[name]));
-        break;
-    case armies::UnitType::CORE:
-        current_selection = std::make_shared<core>(dynamic_cast<core&>(roster[name]));
-        break;
-    case armies::UnitType::SPECIAL:
-        current_selection = std::make_shared<special>(dynamic_cast<special&>(roster[name]));
-        break;
-    case armies::UnitType::RARE:
-        current_selection = std::make_shared<rare>(dynamic_cast<rare&>(roster[name]));
-        break;
-    default:
-        current_selection = nullptr;
-        break;
-    }
+    current_selection = std::make_shared<unit>(roster[name]);
 }
 
 void selection_tree::add_unit_to_army_list(army_list& list) {
@@ -138,26 +116,14 @@ void selection_tree::parse_roster_file(const std::string& filename) {
             armies::UnitType unit_type = armies::s_map_string_unit_type[split_line[1]];
             std::size_t unit_pts = static_cast<std::size_t>(std::stoul(split_line[2]));
             std::size_t unit_min_size = static_cast<std::size_t>(std::stoul(split_line[3]));
-            unit tmp;
-            switch (unit_type) {
-            case armies::UnitType::LORD:
-                tmp = lord(race, unit_name, unit_pts, false);
-                break;
-            case armies::UnitType::HERO:
-                tmp = hero(race, unit_name, unit_pts, false);
-                break;
-            case armies::UnitType::CORE:
-                tmp = core(race, unit_name, unit_pts, 0U, unit_min_size);
-                break;
-            case armies::UnitType::SPECIAL:
-                tmp = special(race, unit_name, unit_pts, 0U, unit_min_size);
-                break;
-            case armies::UnitType::RARE:
-                tmp = rare(race, unit_name, unit_pts, 0U, unit_min_size);
-                break;
-            default:
-                break;
-            }
+            unit tmp(
+                race,
+                unit_type,
+                unit_name,
+                unit_pts,
+                unit_min_size,
+                unit_min_size
+            );
             parse_stat_table(tmp, split_line[4]);
             parse_equipment_table(tmp, split_line[5]);
             parse_special_rules_table(tmp, split_line[6]);

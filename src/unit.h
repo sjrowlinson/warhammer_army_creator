@@ -28,7 +28,7 @@ public:
          std::size_t points_per_model,
          std::size_t size=0U,
          std::size_t min_size=1U);
-    virtual ~unit() = default;
+    ~unit() = default;
     armies::UnitType get_type() const noexcept;
     const std::string& get_name() const noexcept;
     std::size_t points_value() const noexcept;
