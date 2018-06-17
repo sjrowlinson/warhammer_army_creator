@@ -39,6 +39,7 @@ namespace tools {
 	 * \return `true` if `s` starts with `c`, `false` otherwise.
 	 */
 	bool starts_with(const std::string& s, char c);
+	bool starts_with(const std::string& s, std::string match);
 }
 
 #endif // !TOOLS_H

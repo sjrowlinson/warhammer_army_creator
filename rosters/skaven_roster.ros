@@ -13,18 +13,13 @@ SKAVEN
 #     optional weapons
 #     optional armour
 #     optional mounts
-#     optional magic items
-#     optional command
-#     optional extra
+#     magic item allowance, [extra]
+#     army specific item allowance (e.g. Scavenge Pile), [is linked to magic item allowance?]
 #
 
-Warlord; Lord; 90; 1; 5,6,4,4,4,3,7,4,7; Hand weapon, , Heavy armour, , Scurry Away!, , Strength in Numbers, , Verminous Valour, ; Great weapon, (weapon), Additional hand weapon, (weapon), Halberd, (weapon), Shield, (armour), Rat Ogre Bonebreaker (mount, description), War-litter, (mount, description), Great Pox Rat, (mount, description), Magic Items + Scavenge Pile, (100)
-
-Grey Seer; Lord; 240; 1; 5,3,3,3,4,3,5,1,7; Hand weapon, null, D3 Warpstone Tokens, null; Scurry Away!, null, Strength in Numbers, null, Verminous Valour, null; Screaming Bell, (mount), Magic Items + Scavenge Pile, (100)
-
-
 Warlord
-    Lord
+    Lord, Melee
+    Infantry
     90
     1
     5 6 4 4 4 3 7 4 7
@@ -33,7 +28,36 @@ Warlord
     Great weapon [6], Additional hand weapon [3], Halberd [3]
     Shield [3]
     Rat Ogre Bonebreaker [65], War-litter [35], Great Pox Rat [30]
-    Magic Items (100), Scavenge Pile (100)
-    None
-    None
+    100
+    100, true
 
+Grey Seer
+    Lord, Mage
+    4
+    Ruin, Plague
+    Infantry
+    240
+    1
+    5 3 3 3 4 3 5 1 7
+    Hand weapon, D3 Warpstone Tokens
+    Scurry Away!, Strength in Numbers, Verminous Valour
+    None
+    None
+    Screaming Bell [200]
+    100
+    100, true
+
+Clanrats
+    Core, Melee
+    Infantry
+    4
+    20
+    5 3 3 3 3 1 4 1 5
+    5 3 3 3 3 1 4 2 5
+    Hand weapon, Light armour
+    Scurry Away!, Strength in Numbers
+    Spears [0.5]
+    Shields [0.5]
+    Musician [4], Standard Bearer [8], Clawleader [8]
+    None
+    Weapon Team: Poisoned Wind Mortar [65], Warpfire Thrower [70], Ratling Gun [55], Doom-flayer [55], true

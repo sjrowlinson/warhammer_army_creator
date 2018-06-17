@@ -2,7 +2,7 @@
 #define SELECTION_TREE_H
 #include "army_maps.h"
 #include "army_list.h"
-#include "file_reader.h"
+#include "roster_parser.h"
 #include "tools.h"
 #include "unit.h"
 #include <array>

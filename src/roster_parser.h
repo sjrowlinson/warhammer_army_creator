@@ -1,12 +1,39 @@
-#ifndef FILE_READER_H
-#define FILE_READER_H
+#ifndef ROSTER_PARSER_H
+#define ROSTER_PARSER_H
+
+#include "army_maps.h"
+#include "tools.h"
+#include "unit.h"
+
 #include <fstream>
 #include <ostream>
 #include <stdexcept>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 namespace tools {
+	class roster_parser {
+	private:
+		std::fstream fs;
+		std::string filename;
+		std::vector<std::fstream::streampos> streampos;
+		std::vector<std::size_t> blocks;
+		std::size_t num_units;
+		void cache_streampos();
+		void count_units();
+		void navigate_to_line(std::size_t n);
+		std::string read_line(std::size_t n);
+		void parse();
+	public:
+		explicit roster_parser(
+			const std::string& name,
+			std::unordered_map<std::string, unit>& roster
+		);
+		std::size_t units() const noexcept;
+	};
+
+
 	/**
 	 * \class file_reader
 	 *
@@ -158,4 +185,4 @@ namespace tools {
 
 }
 
-#endif
+#endif // !ROSTER_PARSER_H
