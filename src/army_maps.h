@@ -61,6 +61,31 @@ namespace armies {
         {"Rare", UnitType::RARE}
     };
 
+    enum class UnitClass {
+        INFANTRY,
+        CAVALRY,
+        MONSTROUS_CAVALRY,
+        MONSTROUS_CREATURES,
+        WARBEASTS,
+        CHARIOT,
+        MONSTER,
+        UNIQUE
+    };
+
+    static std::unordered_map<
+        std::string,
+        UnitClass
+    > s_map_string_unit_class = {
+        {"Infantry", UnitClass::INFANTRY},
+        {"Cavalry", UnitClass::CAVALRY},
+        {"Monstrous Cavalry", UnitClass::MONSTROUS_CAVALRY},
+        {"Monstrous Creatures", UnitClass::MONSTROUS_CREATURES},
+        {"Warbeasts", UnitClass::WARBEASTS},
+        {"Chariot", UnitClass::CHARIOT},
+        {"Monster", UnitClass::MONSTER},
+        {"Unique", UnitClass::UNIQUE}
+    };
+
 };
 
 #endif // !ARMY_MAPS_H

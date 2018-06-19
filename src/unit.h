@@ -13,17 +13,27 @@ class unit {
 protected:
     armies::Faction race;
     armies::UnitType unit_type;
+    armies::UnitClass unit_class;
     std::string name;
     std::size_t points_per_model;
     std::size_t size;
     std::size_t min_size;
-    std::array<short, 9U> stat_table;
-    std::vector<std::pair<std::string, std::string>> equipment;
-    std::vector<std::pair<std::string, std::string>> special_rules;
+    std::size_t mage_level;
+    std::vector<short> stat_table;
+    std::vector<std::string> equipment;
+    std::vector<std::string> special_rules;
+    std::vector<std::pair<std::string, double>> optional_weapons;
+    std::vector<std::pair<std::string, double>> optional_armour;
+    std::vector<std::pair<std::string, double>> optional_mounts;
+    std::vector<std::pair<std::string, double>> optional_extras;
+    std::size_t magic_item_budget;
+    std::size_t extra_item_budget;
+    std::size_t total_item_budget;
 public:
     unit();
     unit(armies::Faction faction,
          armies::UnitType unit_type,
+         armies::UnitClass unit_class,
          const std::string& name,
          std::size_t points_per_model,
          std::size_t size=0U,
@@ -35,9 +45,16 @@ public:
     std::size_t unit_size() const noexcept;
     std::size_t minimum_unit_size() const noexcept;
     // modifiers
-    void set_stat_table(std::array<short, 9U>&& stats);
-    void set_equipment(std::vector<std::pair<std::string, std::string>>&& eq);
-    void set_special_rules(std::vector<std::pair<std::string, std::string>>&& sr);
+    void init_stat_table(std::vector<short>&& stats);
+    void init_equipment(std::vector<std::string>&& eq);
+    void init_special_rules(std::vector<std::string>&& sr);
+    void init_optional_weapons(std::vector<std::pair<std::string, double>>&& opt_weapons);
+    void init_optional_armour(std::vector<std::pair<std::string, double>>&& opt_armour);
+    void init_optional_mounts(std::vector<std::pair<std::string, double>>&& opt_mounts);
+    void init_magic_item_budget(std::size_t budget);
+    void init_extra_item_budget(std::size_t budget);
+    void init_total_item_budget(std::size_t budget);
+    void init_optional_extras(std::vector<std::pair<std::string, double>>&& opt_extras);
 };
 
 // custom hash for unit to allow use in unordered containers

@@ -7,6 +7,7 @@ namespace tools {
 		std::stringstream ss(s);
 		std::string item;
 		while (std::getline(ss, item, delim)) elems.push_back(item);
+		for (auto& _s : elems) tools::remove_leading_whitespaces(_s);
 		return elems;
 	}
 
