@@ -30,33 +30,34 @@ Warlord
     Rat Ogre Bonebreaker [65], War-litter [35], Great Pox Rat [30]
     100
     100, true
+    None
 
-Grey Seer
-    Lord, Mage
-    4
-    Ruin, Plague
-    Infantry
-    240
-    1
-    5 3 3 3 4 3 5 1 7
-    Hand weapon, D3 Warpstone Tokens
-    Scurry Away!, Strength in Numbers, Verminous Valour
-    None
-    None
-    Screaming Bell [200]
-    100
-    100, true
-
-Clanrats
-    Core, Infantry
-    4
-    20
-    5 3 3 3 3 1 4 1 5
-    5 3 3 3 3 1 4 2 5
-    Hand weapon, Light armour
-    Scurry Away!, Strength in Numbers
-    Spears [0.5]
-    Shields [0.5]
-    Musician [4], Standard Bearer [8], Clawleader [8]
-    None
-    Weapon Team: Poisoned Wind Mortar [65], Warpfire Thrower [70], Ratling Gun [55], Doom-flayer [55], true
+#Grey Seer
+#    Lord, Mage
+#    4
+#    Ruin, Plague
+#    Infantry
+#    240
+#    1
+#    5 3 3 3 4 3 5 1 7
+#    Hand weapon, D3 Warpstone Tokens
+#    Scurry Away!, Strength in Numbers, Verminous Valour
+#    None
+#    None
+#    Screaming Bell [200]
+#    100
+#    100, true
+#
+#Clanrats
+#    Core, Infantry
+#    4
+#    20
+#    5 3 3 3 3 1 4 1 5
+#    5 3 3 3 3 1 4 2 5
+#    Hand weapon, Light armour
+#    Scurry Away!, Strength in Numbers
+#    Spears [0.5]
+#    Shields [0.5]
+#    Musician [4], Standard Bearer [8], Clawleader [8]
+#    None
+#    Weapon Team: Poisoned Wind Mortar [65], Warpfire Thrower [70], Ratling Gun [55], Doom-flayer [55], true

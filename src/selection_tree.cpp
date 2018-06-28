@@ -52,7 +52,7 @@ selection_tree::selection_tree(armies::Faction faction) : race(faction) {
         filename = "empire_roster.ros";
         break;
     }
-    parse_roster_file(filename);
+    parse_roster_file("../rosters/" + filename);
 }
 
 void selection_tree::change_selection(const std::string& name) {
