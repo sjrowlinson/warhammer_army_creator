@@ -71,6 +71,16 @@ namespace tools {
                 if (types_split[1] == "Melee") parse_melee_character(i, unit_type);
                 else if (types_split[1] == "Mage") parse_mage_character(i, unit_type);
                 break;
+            case armies::UnitType::CORE:
+            case armies::UnitType::SPECIAL:
+            case armies::UnitType::RARE:
+                if (types_split[1] == "Infantry") parse_infantry(i, unit_type);
+                else if (types_split[1] == "Cavalry") parse_cavalry(i, unit_type);
+                else if (types_split[1] == "Warbeast") parse_warbeast(i, unit_type);
+                else if (types_split[1] == "Monstrous Creature") parse_monstrous_creature(i, unit_type);
+                else if (types_split[1] == "Monster") parse_monster(i, unit_type);
+                break;
+            default: continue;
             }
         }
         return units;

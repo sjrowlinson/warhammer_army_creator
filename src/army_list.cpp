@@ -1,65 +1,208 @@
 #include "army_list.h"
 
-army_list::army_list(std::size_t points)
-    : points(points),
-      curr_pts(0U),
-      num_lords(0U),
-      num_heroes(0U),
-      num_cores(0U),
-      num_specials(0U),
-      num_rares(0U) {
+army_list::army_list(std::size_t points) : points(points) {
     determine_limits();
 }
 
 army_list::~army_list() {}
 
 void army_list::add_unit(const std::shared_ptr<unit>& _unit) {
-    if (curr_pts + _unit->points_value() > points)
-        throw std::logic_error("Not enough available points!");
+    std::size_t pts = _unit->points_value();
+    // too many points
+    if (curr_pts + pts > points)
+        invalidities.insert(InvalidListReason::POINTS);
     switch (_unit->get_type()) {
     case armies::UnitType::LORD:
-        if (num_lords >= lord_lim ||
-                num_lords + num_heroes >= char_lim)
-            throw std::logic_error("Too many character units!");
-        ++num_lords;
+        if (lord_pts + pts > lord_lim)
+            invalidities.insert(InvalidListReason::LORD_LIMIT);
+        lord_pts += pts;
         break;
     case armies::UnitType::HERO:
-        if (num_heroes >= hero_lim ||
-                num_heroes + num_lords >= char_lim)
-            throw std::logic_error("Too many character units!");
-        ++num_heroes;
+        if (hero_pts + pts > hero_lim)
+            invalidities.insert(InvalidListReason::HERO_LIMIT);
+        hero_pts += pts;
         break;
     case armies::UnitType::CORE:
-        ++num_cores;
+        if (core_pts + pts < core_min)
+            invalidities.insert(InvalidListReason::CORE_MINIMUM);
+        core_pts += pts;
         break;
     case armies::UnitType::SPECIAL:
-        if (num_specials >= spec_lim)
-            throw std::logic_error("Too many special units!");
-        ++num_specials;
+        if (spec_pts + pts < spec_lim)
+            invalidities.insert(InvalidListReason::SPECIAL_LIMIT);
+        spec_pts += pts;
         break;
     case armies::UnitType::RARE:
-        if (num_rares >= rare_lim)
-            throw std::logic_error("Too many rare units!");
-        ++num_rares;
-        break;
-    default:
+        if (rare_pts + pts < rare_lim)
+            invalidities.insert(InvalidListReason::RARE_LIMIT);
+        rare_pts += pts;
         break;
     }
     army.push_back(_unit);
-    curr_pts += _unit->points_value();
+    curr_pts += pts;
+}
+
+void army_list::remove_unit(const std::shared_ptr<unit>& _unit) {
+    std::size_t pts = _unit->points_value();
+    army.erase(
+        std::remove(
+            std::begin(army),
+            std::end(army),
+            _unit
+        )
+    );
+    curr_pts -= pts;
+    switch (_unit->get_type()) {
+    case armies::UnitType::LORD:
+        lord_pts -= pts;
+        break;
+    case armies::UnitType::HERO:
+        hero_pts -= pts;
+        break;
+    case armies::UnitType::CORE:
+        core_pts -= pts;
+        break;
+    case armies::UnitType::SPECIAL:
+        hero_pts -= pts;
+        break;
+    case armies::UnitType::RARE:
+        rare_pts -= pts;
+        break;
+    }
+    check_validity();
+}
+
+void army_list::remove_lords() {
+    std::size_t pts = 0U;
+    for (const auto& x : army) {
+        if (x->get_type() == armies::UnitType::LORD)
+            pts += x->points_value();
+    }
+    army.erase(
+        std::remove_if(
+            std::begin(army),
+            std::end(army),
+            [](const auto& x) { return x->get_type() == armies::UnitType::LORD; }
+        )
+    );
+    curr_pts -= pts;
+    lord_pts = 0U;
+    check_validity();
+}
+
+void army_list::remove_heroes() {
+    std::size_t pts = 0U;
+    for (const auto& x : army) {
+        if (x->get_type() == armies::UnitType::HERO)
+            pts += x->points_value();
+    }
+    army.erase(
+        std::remove_if(
+            std::begin(army),
+            std::end(army),
+            [](const auto& x) { return x->get_type() == armies::UnitType::HERO; }
+        )
+    );
+    curr_pts -= pts;
+    hero_pts = 0U;
+    check_validity();
+}
+
+void army_list::remove_core() {
+    std::size_t pts = 0U;
+    for (const auto& x : army) {
+        if (x->get_type() == armies::UnitType::CORE)
+            pts += x->points_value();
+    }
+    army.erase(
+        std::remove_if(
+            std::begin(army),
+            std::end(army),
+            [](const auto& x) { return x->get_type() == armies::UnitType::CORE; }
+        )
+    );
+    curr_pts -= pts;
+    core_pts = 0U;
+    check_validity();
+}
+
+void army_list::remove_special() {
+    std::size_t pts = 0U;
+    for (const auto& x : army) {
+        if (x->get_type() == armies::UnitType::SPECIAL)
+            pts += x->points_value();
+    }
+    army.erase(
+        std::remove_if(
+            std::begin(army),
+            std::end(army),
+            [](const auto& x) { return x->get_type() == armies::UnitType::SPECIAL; }
+        )
+    );
+    curr_pts -= pts;
+    spec_pts = 0U;
+    check_validity();
+}
+
+void army_list::remove_rare() {
+    std::size_t pts = 0U;
+    for (const auto& x : army) {
+        if (x->get_type() == armies::UnitType::RARE)
+            pts += x->points_value();
+    }
+    army.erase(
+        std::remove_if(
+            std::begin(army),
+            std::end(army),
+            [](const auto& x) { return x->get_type() == armies::UnitType::RARE; }
+        )
+    );
+    curr_pts -= pts;
+    rare_pts = 0U;
+    check_validity();
 }
 
 std::size_t army_list::current_points() const noexcept { return curr_pts; }
 
-std::size_t army_list::nlords() const noexcept { return num_lords; }
+std::size_t army_list::nlords() const noexcept {
+    return std::count_if(
+        std::begin(army),
+        std::end(army),
+        [](const std::shared_ptr<unit>& x) { return x->get_type() == armies::UnitType::LORD; }
+    );
+}
 
-std::size_t army_list::nheroes() const noexcept { return num_heroes; }
+std::size_t army_list::nheroes() const noexcept {
+    return std::count_if(
+        std::begin(army),
+        std::end(army),
+        [](const std::shared_ptr<unit>& x) { return x->get_type() == armies::UnitType::HERO; }
+    );
+}
 
-std::size_t army_list::ncore() const noexcept { return num_cores; }
+std::size_t army_list::ncore() const noexcept {
+    return std::count_if(
+        std::begin(army),
+        std::end(army),
+        [](const std::shared_ptr<unit>& x) { return x->get_type() == armies::UnitType::CORE; }
+    );
+}
 
-std::size_t army_list::nspecial() const noexcept { return num_specials; }
+std::size_t army_list::nspecial() const noexcept {
+    return std::count_if(
+        std::begin(army),
+        std::end(army),
+        [](const std::shared_ptr<unit>& x) { return x->get_type() == armies::UnitType::SPECIAL; }
+    );
+}
 
-std::size_t army_list::nrare() const noexcept { return num_rares; }
+std::size_t army_list::nrare() const noexcept {
+    return std::count_if(
+        std::begin(army),
+        std::end(army),
+        [](const std::shared_ptr<unit>& x) { return x->get_type() == armies::UnitType::RARE; }
+    );
+}
 
 const std::vector<std::shared_ptr<unit>>& army_list::get() const noexcept {
     return army;
@@ -73,42 +216,51 @@ void army_list::change_points_limit(std::size_t pts) {
 
 void army_list::clear() {
     army.clear();
-    num_lords = 0U;
-    num_heroes = 0U;
-    num_cores = 0U;
-    num_specials = 0U;
-    num_rares = 0U;
+    invalidities.clear();
     curr_pts = 0U;
+    lord_pts = 0U;
+    hero_pts = 0U;
+    core_pts = 0U;
+    spec_pts = 0U;
+    rare_pts = 0U;
 }
 
 bool army_list::is_valid() const noexcept {
-    if (curr_pts > points
-        || nlords() > lord_lim
-        || nheroes() > hero_lim
-        || nlords() + nheroes() > char_lim
-        || ncore() < core_min
-        || nspecial() > spec_lim
-        || nrare() > rare_lim)
-        return false;
-    return true;
+    return invalidities.empty();
+}
+
+void army_list::check_validity() {
+    if (curr_pts > points)
+        invalidities.insert(InvalidListReason::POINTS);
+    else
+        invalidities.erase(InvalidListReason::POINTS);
+    if (lord_pts > lord_lim)
+        invalidities.insert(InvalidListReason::LORD_LIMIT);
+    else
+        invalidities.erase(InvalidListReason::LORD_LIMIT);
+    if (hero_pts > hero_lim)
+        invalidities.insert(InvalidListReason::HERO_LIMIT);
+    else
+        invalidities.erase(InvalidListReason::HERO_LIMIT);
+    if (core_pts < core_min)
+        invalidities.insert(InvalidListReason::CORE_MINIMUM);
+    else
+        invalidities.erase(InvalidListReason::CORE_MINIMUM);
+    if (spec_pts > spec_lim)
+        invalidities.insert(InvalidListReason::SPECIAL_LIMIT);
+    else
+        invalidities.erase(InvalidListReason::SPECIAL_LIMIT);
+    if (rare_pts > rare_lim)
+        invalidities.insert(InvalidListReason::RARE_LIMIT);
+    else
+        invalidities.erase(InvalidListReason::RARE_LIMIT);
 }
 
 void army_list::determine_limits() {
-    std::size_t normalised_pts = static_cast<std::size_t>(floor(points/1000.0));
-    if (normalised_pts < 2U) {
-        char_lim = 3U;
-        lord_lim = 0U;
-        hero_lim = 3U;
-        core_min = 2U;
-        spec_lim = 3U;
-        rare_lim = 1U;
-    }
-    else {
-        char_lim = 2U*normalised_pts;
-        lord_lim = normalised_pts - 1U;
-        hero_lim = 2U*normalised_pts;
-        core_min = normalised_pts - 1U;
-        spec_lim = normalised_pts + 2;
-        rare_lim = normalised_pts;
-    }
+    std::size_t percent_25 = static_cast<std::size_t>(0.25*points);
+    lord_lim = percent_25;
+    hero_lim = percent_25;
+    core_min = percent_25;
+    spec_lim = 2*percent_25;
+    rare_lim = percent_25;
 }

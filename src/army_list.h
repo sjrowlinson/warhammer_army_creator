@@ -6,34 +6,53 @@
 #include <cmath>
 #include <cstddef>
 #include <memory>
+#include <numeric>
+#include <set>
 #include <stdexcept>
 #include <unordered_map>
 #include <vector>
+
+enum class InvalidListReason {
+    POINTS,
+    LORD_LIMIT,
+    HERO_LIMIT,
+    CORE_MINIMUM,
+    SPECIAL_LIMIT,
+    RARE_LIMIT,
+    VALID
+};
 
 class army_list {
 private:
     std::size_t points;
     std::size_t curr_pts;
-    std::size_t char_lim;
     std::size_t lord_lim;
     std::size_t hero_lim;
     std::size_t core_min;
     std::size_t spec_lim;
     std::size_t rare_lim;
     std::vector<std::shared_ptr<unit>> army;
-    std::size_t num_lords;
-    std::size_t num_heroes;
-    std::size_t num_cores;
-    std::size_t num_specials;
-    std::size_t num_rares;
+    std::size_t lord_pts;
+    std::size_t hero_pts;
+    std::size_t core_pts;
+    std::size_t spec_pts;
+    std::size_t rare_pts;
+    std::set<InvalidListReason> invalidities;
 
+    void check_validity();
     void determine_limits();
 public:
     army_list(std::size_t points);
     ~army_list();
     std::size_t current_points() const noexcept;
-    // add units
+    // add/remove units
     void add_unit(const std::shared_ptr<unit>& _unit);
+    void remove_unit(const std::shared_ptr<unit>& _unit);
+    void remove_lords();
+    void remove_heroes();
+    void remove_core();
+    void remove_special();
+    void remove_rare();
     // get numbers of units
     std::size_t nlords() const noexcept;
     std::size_t nheroes() const noexcept;
