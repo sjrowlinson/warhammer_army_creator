@@ -41,6 +41,14 @@ std::size_t unit::unit_size() const noexcept { return size; }
 
 std::size_t unit::minimum_unit_size() const noexcept { return min_size; }
 
+void unit::pass_magic_items_handle(
+    const std::shared_ptr<std::unordered_map<
+        std::string, magic_item
+    >>& _magic_items
+) {
+    magic_items = _magic_items;
+}
+
 void unit::init_stat_table(std::vector<short>&& stats) {
     stat_table = std::move(stats);
 }
@@ -83,34 +91,54 @@ void unit::init_magic_lores(std::vector<std::string>&& lores) {
 }
 
 double unit::pick_optional_weapon(std::string weapon) {
+    // remove current weapon if present
+    if (!(current_weapon.first.empty()))
+        current_points -= size*current_weapon.second;
+    // look for weapon in optional weapons first
     auto it = std::find_if(
         std::begin(optional_weapons),
         std::end(optional_weapons),
         [&weapon](const auto& x) { return x.first == weapon; }
     );
+    if (it == std::end(optional_weapons)) { // then look in magic items map
+        double pts = (*magic_items)[weapon].points;
+        current_weapon = std::make_pair(weapon, pts);
+        current_points += size*pts;
+        return size * pts;
+    }
     current_weapon = *it;
-    current_points += it->second;
-    return it->second;
+    current_points += size*it->second;
+    return size*it->second;
 }
 double unit::pick_optional_armour(std::string armour) {
+    // TODO: need to figure out what to do about armour + shield
+    // options as can have both
     auto it = std::find_if(
         std::begin(optional_armour),
         std::end(optional_armour),
         [&armour](const auto& x) { return x.first == armour; }
     );
+    if (it == std::end(optional_armour)) {
+        double pts = (*magic_items)[armour].points;
+        current_armour = std::make_pair(armour, pts);
+        current_points += size*pts;
+        return size * pts;
+    }
     current_armour = *it;
-    current_points += it->second;
-    return it->second;
+    current_points += size*it->second;
+    return size*it->second;
 }
 double unit::pick_optional_mount(std::string mount) {
+    if (!(current_mount.first.empty()))
+        current_points -= size*current_mount.second;
     auto it = std::find_if(
         std::begin(optional_mounts),
         std::end(optional_mounts),
         [&mount](const auto& x) { return x.first == mount; }
     );
     current_mount = *it;
-    current_points += it->second;
-    return it->second;
+    current_points += size*it->second;
+    return size*it->second;
 }
 double unit::change_mage_level(short level) {
     auto it = std::find_if(
@@ -119,6 +147,6 @@ double unit::change_mage_level(short level) {
         [&level](const auto& x) { return x.first == level; }
     );
     mage_level = it->first;
-    current_points += it->second;
-    return it->second;
+    current_points += size*it->second;
+    return size*it->second;
 }

@@ -1,5 +1,23 @@
 SKAVEN
 
+Vermin Lord
+    Lord, Mage
+    4
+    None
+    Ruin, Plague
+    Monster
+    500
+    1
+    8 8 4 6 5 5 10 5 8
+    Doom Glaive
+    Scurry Away!, Immune to Psychology, Large Target, Rat Daemon, Terror, Ward save (5+)
+    None
+    None
+    None
+    0
+    0, false
+    None
+
 Warlord
     Lord, Melee
     Infantry
@@ -33,6 +51,71 @@ Grey Seer
     100, true
     None
 
+Assassin
+    Hero, Melee
+    Infantry
+    120
+    1
+    6 6 5 4 4 2 8 3 7
+    Two hand weapons, Throwing stars
+    Scurry Away!, Sneaky Infiltrators, Verminous Valour, A Killer Not A Leader, Always Strike First, Dodge (4+), Hidden, Poisoned Attacks, Scouts
+    None
+    None
+    None
+    50
+    50, true
+    None
+
+Warlock Engineer
+    Hero, Mage
+    0
+    1 [50], 2 [85]
+    Ruin
+    Infantry
+    15
+    1
+    5 3 3 3 3 2 4 1 5
+    Hand weapon
+    Scurry Away!, Strength in Numbers, Verminous Valour
+    Warlock-Augmented Weapon [45], Warplock Pistol [8], Warpmusket [15]
+    None
+    None
+    50
+    50, true
+    None
+
+Chieftain
+    Hero, Melee
+    Infantry
+    45
+    1
+    5 5 4 4 4 2 6 3 6
+    Hand weapon, Heavy armour
+    Scurry Away!, Strength in Numbers, Verminous Valour
+    Great weapon [4], Additional hand weapon [2], Halberd [2]
+    Shield [2]
+    None
+    50
+    50, true
+    Battle Standard Bearer [25]
+
+Plague Priest
+    Hero, Mage
+    1
+    2 [35]
+    Plague
+    Infantry
+    100
+    1
+    5 5 3 4 5 2 5 3 6
+    Hand weapon
+    Scurry Away!, Strength in Numbers, Frenzy
+    Plague Censer [16], Flail [4], Additional hand weapon [2]
+    None
+    Great Pox Rat [30], Plague Furnace [150]
+    50
+    50, true
+    None
 
 #Clanrats
 #    Core, Infantry

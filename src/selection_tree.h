@@ -1,10 +1,14 @@
 #ifndef SELECTION_TREE_H
 #define SELECTION_TREE_H
+
 #include "army_maps.h"
 #include "army_list.h"
+#include "item_parser.h"
+#include "magic_item.h"
 #include "roster_parser.h"
 #include "tools.h"
 #include "unit.h"
+
 #include <array>
 #include <cmath>
 #include <memory>
@@ -29,10 +33,15 @@ private:
         std::string,
         unit
     > roster;
+    std::unordered_map<
+        std::string,
+        magic_item
+    > magic_items;
     armies::Faction race;
     std::shared_ptr<unit> current_selection;
 
-    void parse_roster_file(const std::string& filename);
+    void parse_roster_file(const std::string& roster_file);
+    void parse_item_file(const std::string& item_file);
 public:
     selection_tree(armies::Faction faction);
     ~selection_tree() = default;

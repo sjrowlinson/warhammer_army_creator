@@ -2,6 +2,7 @@
 #define UNIT_H
 
 #include "army_maps.h"
+#include "magic_item.h"
 
 #include <algorithm>
 #include <array>
@@ -43,10 +44,17 @@ protected:
     std::size_t total_item_budget;
 
     double current_points;
+    // currently held options
     std::pair<std::string, double> current_weapon;
-    // TODO: need to change for compatibility with armour + shield (for example)
+    // TODO: need to change for compatibility with armour + shield
     std::pair<std::string, double> current_armour;
     std::pair<std::string, double> current_mount;
+
+    // handle to the magic items map
+    std::shared_ptr<std::unordered_map<
+        std::string,
+        magic_item
+    >> magic_items;
 public:
     unit();
     unit(armies::Faction faction,
@@ -86,6 +94,8 @@ public:
     void init_magic_item_budget(std::size_t budget);
     void init_extra_item_budget(std::size_t budget);
     void init_total_item_budget(std::size_t budget);
+
+    void pass_magic_items_handle(const std::shared_ptr<std::unordered_map<std::string, magic_item>>& magic_items);
 
     /* Setting properties for an instance */
     double pick_optional_weapon(std::string weapon);
