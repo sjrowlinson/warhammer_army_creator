@@ -2,6 +2,7 @@
 #define MAGIC_ITEM_H
 
 #include <string>
+#include <vector>
 
 enum class MagicItemType {
     WEAPON,
@@ -17,6 +18,7 @@ struct magic_item {
     std::string name;
     std::string description;
     double points;
+    std::vector<std::string> allowed_units;
 };
 
 #endif // !MAGIC_ITEM_H

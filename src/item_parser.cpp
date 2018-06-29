@@ -57,11 +57,16 @@ namespace tools {
             MagicItemType item_type = map_to_item[read_line(blocks[i] + 1)];
             double points = std::stod(read_line(blocks[i] + 2));
             std::string descr = read_line(blocks[i] + 3);
+            std::string allowed = read_line(blocks[i] + 4);
             magic_item item;
             item.item_type = item_type;
             item.name = name;
             item.points = points;
             item.description = descr;
+            if (allowed != "None") {
+                std::vector<std::string> vec = tools::split(allowed, ',');
+                item.allowed_units = vec;
+            }
             items.push_back(item);
         }
         return items;

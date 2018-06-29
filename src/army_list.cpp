@@ -37,6 +37,9 @@ void army_list::add_unit(const std::shared_ptr<unit>& _unit) {
             invalidities.insert(InvalidListReason::RARE_LIMIT);
         rare_pts += pts;
         break;
+    default:
+        throw std::invalid_argument("unit type not recognised, cannot add unit to army list.");
+        break;
     }
     army.push_back(_unit);
     curr_pts += pts;
@@ -68,6 +71,8 @@ void army_list::remove_unit(const std::shared_ptr<unit>& _unit) {
     case armies::UnitType::RARE:
         rare_pts -= pts;
         break;
+    default:
+        throw std::invalid_argument("unit type not recognised, cannot remove unit.");
     }
     check_validity();
 }

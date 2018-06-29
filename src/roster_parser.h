@@ -37,7 +37,8 @@ namespace tools {
 		std::vector<std::pair<std::string, double>> common_option_parse(std::string s);
 	public:
 		explicit roster_parser(
-			const std::string& name
+			const std::string& name,
+			armies::Faction faction
 		);
 		std::size_t units() const noexcept;
 		std::vector<unit> parse();

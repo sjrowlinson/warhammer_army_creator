@@ -14,7 +14,7 @@
 #include <vector>
 
 class unit {
-protected:
+public:
     // constants
     armies::Faction race;
     armies::UnitType unit_type;
@@ -30,6 +30,7 @@ protected:
     std::vector<std::string> magic_lores;
     // statistic tables
     std::vector<short> stat_table;
+    std::vector<short> champ_stat_table;
     // equipment and special rules
     std::vector<std::string> equipment;
     std::vector<std::string> special_rules;
@@ -38,10 +39,12 @@ protected:
     std::vector<std::pair<std::string, double>> optional_armour;
     std::vector<std::pair<std::string, double>> optional_mounts;
     std::vector<std::pair<std::string, double>> optional_extras;
+    std::vector<std::pair<std::string, double>> optional_command;
     // magic item + faction-specific item budgets
-    std::size_t magic_item_budget;
-    std::size_t extra_item_budget;
-    std::size_t total_item_budget;
+    double magic_item_budget;
+    double extra_item_budget;
+    double total_item_budget;
+    double magic_banner_budget;
 
     double current_points;
     // currently held options
@@ -82,6 +85,7 @@ public:
     void init_magic_lores(std::vector<std::string>&& lores);
     // statistic tables
     void init_stat_table(std::vector<short>&& stats);
+    void init_champion_stat_table(std::vector<short>&& stats);
     // equipment and special rules
     void init_equipment(std::vector<std::string>&& eq);
     void init_special_rules(std::vector<std::string>&& sr);
@@ -90,10 +94,12 @@ public:
     void init_optional_armour(std::vector<std::pair<std::string, double>>&& opt_armour);
     void init_optional_mounts(std::vector<std::pair<std::string, double>>&& opt_mounts);
     void init_optional_extras(std::vector<std::pair<std::string, double>>&& opt_extras);
+    void init_optional_command(std::vector<std::pair<std::string, double>>&& opt_command);
     // magic item + faction-specific item budgets
-    void init_magic_item_budget(std::size_t budget);
-    void init_extra_item_budget(std::size_t budget);
-    void init_total_item_budget(std::size_t budget);
+    void init_magic_item_budget(double budget);
+    void init_extra_item_budget(double budget);
+    void init_total_item_budget(double budget);
+    void init_magic_banner_budget(double budget);
 
     void pass_magic_items_handle(const std::shared_ptr<std::unordered_map<std::string, magic_item>>& magic_items);
 

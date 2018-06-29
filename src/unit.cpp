@@ -52,6 +52,9 @@ void unit::pass_magic_items_handle(
 void unit::init_stat_table(std::vector<short>&& stats) {
     stat_table = std::move(stats);
 }
+void unit::init_champion_stat_table(std::vector<short>&& stats) {
+    champ_stat_table = std::move(stats);
+}
 void unit::init_equipment(std::vector<std::string>&& eq) {
     equipment = std::move(eq);
 }
@@ -67,14 +70,20 @@ void unit::init_optional_armour(std::vector<std::pair<std::string, double>>&& op
 void unit::init_optional_mounts(std::vector<std::pair<std::string, double>>&& opt_mounts) {
     optional_mounts = std::move(opt_mounts);
 }
-void unit::init_magic_item_budget(std::size_t budget) {
+void unit::init_optional_command(std::vector<std::pair<std::string, double>>&& opt_command) {
+    optional_command = std::move(opt_command);
+}
+void unit::init_magic_item_budget(double budget) {
     magic_item_budget = budget;
 }
-void unit::init_extra_item_budget(std::size_t budget) {
+void unit::init_extra_item_budget(double budget) {
     extra_item_budget = budget;
 }
-void unit::init_total_item_budget(std::size_t budget) {
+void unit::init_total_item_budget(double budget) {
     total_item_budget = budget;
+}
+void unit::init_magic_banner_budget(double budget) {
+    magic_banner_budget = budget;
 }
 void unit::init_optional_extras(std::vector<std::pair<std::string, double>>&& opt_extras) {
     optional_extras = std::move(opt_extras);
