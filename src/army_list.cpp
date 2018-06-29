@@ -1,13 +1,13 @@
 #include "army_list.h"
 
-army_list::army_list(std::size_t points) : points(points) {
+army_list::army_list(double points) : points(points) {
     determine_limits();
 }
 
 army_list::~army_list() {}
 
 void army_list::add_unit(const std::shared_ptr<unit>& _unit) {
-    std::size_t pts = _unit->points_value();
+    auto pts = _unit->points();
     // too many points
     if (curr_pts + pts > points)
         invalidities.insert(InvalidListReason::POINTS);
@@ -43,7 +43,7 @@ void army_list::add_unit(const std::shared_ptr<unit>& _unit) {
 }
 
 void army_list::remove_unit(const std::shared_ptr<unit>& _unit) {
-    std::size_t pts = _unit->points_value();
+    auto pts = _unit->points();
     army.erase(
         std::remove(
             std::begin(army),
@@ -73,10 +73,10 @@ void army_list::remove_unit(const std::shared_ptr<unit>& _unit) {
 }
 
 void army_list::remove_lords() {
-    std::size_t pts = 0U;
+    double pts = 0.0;
     for (const auto& x : army) {
         if (x->get_type() == armies::UnitType::LORD)
-            pts += x->points_value();
+            pts += x->points();
     }
     army.erase(
         std::remove_if(
@@ -86,15 +86,15 @@ void army_list::remove_lords() {
         )
     );
     curr_pts -= pts;
-    lord_pts = 0U;
+    lord_pts = 0.0;
     check_validity();
 }
 
 void army_list::remove_heroes() {
-    std::size_t pts = 0U;
+    double pts = 0.0;
     for (const auto& x : army) {
         if (x->get_type() == armies::UnitType::HERO)
-            pts += x->points_value();
+            pts += x->points();
     }
     army.erase(
         std::remove_if(
@@ -104,15 +104,15 @@ void army_list::remove_heroes() {
         )
     );
     curr_pts -= pts;
-    hero_pts = 0U;
+    hero_pts = 0.0;
     check_validity();
 }
 
 void army_list::remove_core() {
-    std::size_t pts = 0U;
+    double pts = 0.0;
     for (const auto& x : army) {
         if (x->get_type() == armies::UnitType::CORE)
-            pts += x->points_value();
+            pts += x->points();
     }
     army.erase(
         std::remove_if(
@@ -122,15 +122,15 @@ void army_list::remove_core() {
         )
     );
     curr_pts -= pts;
-    core_pts = 0U;
+    core_pts = 0.0;
     check_validity();
 }
 
 void army_list::remove_special() {
-    std::size_t pts = 0U;
+    double pts = 0.0;
     for (const auto& x : army) {
         if (x->get_type() == armies::UnitType::SPECIAL)
-            pts += x->points_value();
+            pts += x->points();
     }
     army.erase(
         std::remove_if(
@@ -140,15 +140,15 @@ void army_list::remove_special() {
         )
     );
     curr_pts -= pts;
-    spec_pts = 0U;
+    spec_pts = 0.0;
     check_validity();
 }
 
 void army_list::remove_rare() {
-    std::size_t pts = 0U;
+    double pts = 0.0;
     for (const auto& x : army) {
         if (x->get_type() == armies::UnitType::RARE)
-            pts += x->points_value();
+            pts += x->points();
     }
     army.erase(
         std::remove_if(
@@ -158,11 +158,11 @@ void army_list::remove_rare() {
         )
     );
     curr_pts -= pts;
-    rare_pts = 0U;
+    rare_pts = 0.0;
     check_validity();
 }
 
-std::size_t army_list::current_points() const noexcept { return curr_pts; }
+double army_list::current_points() const noexcept { return curr_pts; }
 
 std::size_t army_list::nlords() const noexcept {
     return std::count_if(
@@ -209,20 +209,21 @@ const std::vector<std::shared_ptr<unit>>& army_list::get() const noexcept {
 }
 
 
-void army_list::change_points_limit(std::size_t pts) {
-    determine_limits();
+void army_list::change_points_limit(double pts) {
     points = pts;
+    determine_limits();
+    check_validity();
 }
 
 void army_list::clear() {
     army.clear();
     invalidities.clear();
-    curr_pts = 0U;
-    lord_pts = 0U;
-    hero_pts = 0U;
-    core_pts = 0U;
-    spec_pts = 0U;
-    rare_pts = 0U;
+    curr_pts = 0.0;
+    lord_pts = 0.0;
+    hero_pts = 0.0;
+    core_pts = 0.0;
+    spec_pts = 0.0;
+    rare_pts = 0.0;
 }
 
 bool army_list::is_valid() const noexcept {
@@ -257,10 +258,10 @@ void army_list::check_validity() {
 }
 
 void army_list::determine_limits() {
-    std::size_t percent_25 = static_cast<std::size_t>(0.25*points);
+    double percent_25 = 0.25*points;
     lord_lim = percent_25;
     hero_lim = percent_25;
     core_min = percent_25;
-    spec_lim = 2*percent_25;
+    spec_lim = 2.0*percent_25;
     rare_lim = percent_25;
 }

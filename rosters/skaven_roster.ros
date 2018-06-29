@@ -1,22 +1,5 @@
 SKAVEN
 
-#
-# Format:
-#
-# unit name
-#     unit type
-#     points per model
-#     minimum unit size
-#     statistics table
-#     equipment
-#     special rules
-#     optional weapons
-#     optional armour
-#     optional mounts
-#     magic item allowance, [extra]
-#     army specific item allowance (e.g. Scavenge Pile), [is linked to magic item allowance?]
-#
-
 Warlord
     Lord, Melee
     Infantry
@@ -32,22 +15,25 @@ Warlord
     100, true
     None
 
-#Grey Seer
-#    Lord, Mage
-#    4
-#    Ruin, Plague
-#    Infantry
-#    240
-#    1
-#    5 3 3 3 4 3 5 1 7
-#    Hand weapon, D3 Warpstone Tokens
-#    Scurry Away!, Strength in Numbers, Verminous Valour
-#    None
-#    None
-#    Screaming Bell [200]
-#    100
-#    100, true
-#
+Grey Seer
+    Lord, Mage
+    4
+    None
+    Ruin, Plague
+    Infantry
+    240
+    1
+    5 3 3 3 4 3 5 1 7
+    Hand weapon, D3 Warpstone Tokens
+    Scurry Away!, Strength in Numbers, Verminous Valour
+    None
+    None
+    Screaming Bell [200]
+    100
+    100, true
+    None
+
+
 #Clanrats
 #    Core, Infantry
 #    4

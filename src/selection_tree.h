@@ -38,6 +38,7 @@ public:
     ~selection_tree() = default;
     void add_unit_to_army_list(army_list& list);
     void change_selection(const std::string& name);
+    std::shared_ptr<unit>& selected();
 };
 
 #endif // !SELECTION_TREE_H

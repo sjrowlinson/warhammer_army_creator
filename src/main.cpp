@@ -8,7 +8,11 @@ int main(void) {
     selection_tree st(armies::Faction::SKAVEN);
     army_list army(2000U);
     st.change_selection("Warlord");
+    st.selected()->pick_optional_weapon("Halberd");
+    st.selected()->pick_optional_mount("Rat Ogre Bonebreaker");
     st.add_unit_to_army_list(army);
-    std::cout << army.get()[0]->points_value() << std::endl;
+    st.change_selection("Grey Seer");
+    st.add_unit_to_army_list(army);
+    std::cout << army.current_points() << std::endl;
     return 0;
 }

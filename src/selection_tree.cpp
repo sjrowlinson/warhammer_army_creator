@@ -59,6 +59,11 @@ void selection_tree::change_selection(const std::string& name) {
     current_selection = std::make_shared<unit>(roster[name]);
 }
 
+std::shared_ptr<unit>& selection_tree::selected() {
+    return current_selection;
+}
+
+
 void selection_tree::add_unit_to_army_list(army_list& list) {
     if (current_selection) list.add_unit(current_selection);
 }

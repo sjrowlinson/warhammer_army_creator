@@ -24,27 +24,27 @@ enum class InvalidListReason {
 
 class army_list {
 private:
-    std::size_t points;
-    std::size_t curr_pts;
-    std::size_t lord_lim;
-    std::size_t hero_lim;
-    std::size_t core_min;
-    std::size_t spec_lim;
-    std::size_t rare_lim;
+    double points;
+    double curr_pts;
+    double lord_lim;
+    double hero_lim;
+    double core_min;
+    double spec_lim;
+    double rare_lim;
     std::vector<std::shared_ptr<unit>> army;
-    std::size_t lord_pts;
-    std::size_t hero_pts;
-    std::size_t core_pts;
-    std::size_t spec_pts;
-    std::size_t rare_pts;
+    double lord_pts;
+    double hero_pts;
+    double core_pts;
+    double spec_pts;
+    double rare_pts;
     std::set<InvalidListReason> invalidities;
 
     void check_validity();
     void determine_limits();
 public:
-    army_list(std::size_t points);
+    army_list(double points);
     ~army_list();
-    std::size_t current_points() const noexcept;
+    double current_points() const noexcept;
     // add/remove units
     void add_unit(const std::shared_ptr<unit>& _unit);
     void remove_unit(const std::shared_ptr<unit>& _unit);
@@ -61,7 +61,7 @@ public:
     std::size_t nrare() const noexcept;
     const std::vector<std::shared_ptr<unit>>& get() const noexcept;
     // list property modification
-    void change_points_limit(std::size_t pts);
+    void change_points_limit(double pts);
     // list modification
     void clear();
     // other
