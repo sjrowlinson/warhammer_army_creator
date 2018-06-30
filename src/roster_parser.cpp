@@ -48,7 +48,7 @@ namespace tools {
             std::vector<std::string> tmp = tools::split(_s, '[');
             std::string pts_str;
             std::copy_if(
-                tmp[1].begin(), tmp[1].end(), pts_str.begin(), [](auto x) { return x != ']'; }
+                tmp[1].begin(), tmp[1].end(), std::back_inserter(pts_str), [](auto x) { return x != ']'; }
             );
             double pts = std::stod(pts_str);
             vec.push_back(
@@ -75,7 +75,7 @@ namespace tools {
             case armies::UnitType::CORE:
             case armies::UnitType::SPECIAL:
             case armies::UnitType::RARE:
-                if (types_split[1] == "Infantry") {}//units.push_back(parse_infantry(i, unit_type));
+                if (types_split[1] == "Infantry") units.push_back(parse_infantry(i, unit_type));
                 else if (types_split[1] == "Cavalry") parse_cavalry(i, unit_type);
                 else if (types_split[1] == "Warbeast") parse_warbeast(i, unit_type);
                 else if (types_split[1] == "Monstrous Creature") parse_monstrous_creature(i, unit_type);

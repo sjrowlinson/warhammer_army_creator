@@ -74,18 +74,17 @@ selection_tree::selection_tree(armies::Faction faction) : race(faction) {
 }
 
 void selection_tree::change_selection(const std::string& name) {
-    if (current_selection.get() != nullptr)
-        current_selection.reset();
-    current_selection = std::make_shared<unit>(roster[name]);
+    current_selection = roster[name];
 }
 
-std::shared_ptr<unit>& selection_tree::selected() {
+unit& selection_tree::selected() {
     return current_selection;
 }
 
 
 void selection_tree::add_unit_to_army_list(army_list& list) {
-    if (current_selection) list.add_unit(current_selection);
+    //if (current_selection) list.add_unit(current_selection);
+    list.add_unit(current_selection);
 }
 
 void selection_tree::parse_roster_file(const std::string& roster_file) {

@@ -38,7 +38,7 @@ private:
         magic_item
     > magic_items;
     armies::Faction race;
-    std::shared_ptr<unit> current_selection;
+    unit current_selection;
 
     void parse_roster_file(const std::string& roster_file);
     void parse_item_file(const std::string& item_file);
@@ -47,7 +47,7 @@ public:
     ~selection_tree() = default;
     void add_unit_to_army_list(army_list& list);
     void change_selection(const std::string& name);
-    std::shared_ptr<unit>& selected();
+    unit& selected();
 };
 
 #endif // !SELECTION_TREE_H

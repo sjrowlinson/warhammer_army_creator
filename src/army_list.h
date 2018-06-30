@@ -46,7 +46,7 @@ public:
     ~army_list();
     double current_points() const noexcept;
     // add/remove units
-    void add_unit(const std::shared_ptr<unit>& _unit);
+    std::shared_ptr<unit> add_unit(const unit& _unit);
     void remove_unit(const std::shared_ptr<unit>& _unit);
     void remove_lords();
     void remove_heroes();

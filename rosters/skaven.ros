@@ -121,34 +121,34 @@ Plague Priest
 
 # Core
 
-#Clanrats
-#    Core, Infantry
-#    4
-#    20
-#    5 3 3 3 3 1 4 1 5
-#    5 3 3 3 3 1 4 2 5
-#    Hand weapon, Light armour
-#    Scurry Away!, Strength in Numbers
-#    Spears [0.5]
-#    Shields [0.5]
-#    Musician [4], Standard Bearer [8], Clawleader [8]
-#    0
-#    0
-#    0
-#    Poisoned Wind Mortar [65], Warpfire Thrower [70], Ratling Gun [55], Doom-flayer [55]
-#
-#Stormvermin
-#    Core, Infantry
-#    7
-#    10
-#    5 4 3 3 3 1 5 1 5
-#    5 4 3 3 3 1 5 2 5
-#    Hand weapon, Halberd, Heavy armour
-#    Scurry Away!, Strength in Numbers
-#    None
-#    Shields [1]
-#    Musician [5], Standard Bearer [10], Fangleader [10]
-#    0
-#    15
-#    50
-#    Poisoned Wind Mortar [65], Warpfire Thrower [70], Ratling Gun [55], Doom-flayer [55]
+Clanrats
+    Core, Infantry
+    4
+    20
+    5 3 3 3 3 1 4 1 5
+    5 3 3 3 3 1 4 2 5
+    Hand weapon, Light armour
+    Scurry Away!, Strength in Numbers
+    Spears [0.5]
+    Shields [0.5]
+    Musician [4], Standard Bearer [8], Clawleader [8]
+    0
+    0
+    0
+    Poisoned Wind Mortar [65], Warpfire Thrower [70], Ratling Gun [55], Doom-flayer [55]
+
+Stormvermin
+    Core, Infantry
+    7
+    10
+    5 4 3 3 3 1 5 1 5
+    5 4 3 3 3 1 5 2 5
+    Hand weapon, Halberd, Heavy armour
+    Scurry Away!, Strength in Numbers
+    None
+    Shields [1]
+    Musician [5], Standard Bearer [10], Fangleader [10]
+    0
+    15
+    50
+    Poisoned Wind Mortar [65], Warpfire Thrower [70], Ratling Gun [55], Doom-flayer [55]

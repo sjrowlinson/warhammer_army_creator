@@ -42,9 +42,9 @@ std::size_t unit::unit_size() const noexcept { return size; }
 std::size_t unit::minimum_unit_size() const noexcept { return min_size; }
 
 void unit::pass_magic_items_handle(
-    const std::shared_ptr<std::unordered_map<
+    std::shared_ptr<std::unordered_map<
         std::string, magic_item
-    >>& _magic_items
+    >> _magic_items
 ) {
     magic_items = _magic_items;
 }

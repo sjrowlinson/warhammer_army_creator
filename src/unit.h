@@ -14,7 +14,7 @@
 #include <vector>
 
 class unit {
-public:
+protected:
     // constants
     armies::Faction race;
     armies::UnitType unit_type;
@@ -101,7 +101,7 @@ public:
     void init_total_item_budget(double budget);
     void init_magic_banner_budget(double budget);
 
-    void pass_magic_items_handle(const std::shared_ptr<std::unordered_map<std::string, magic_item>>& magic_items);
+    void pass_magic_items_handle(std::shared_ptr<std::unordered_map<std::string, magic_item>> magic_items);
 
     /* Setting properties for an instance */
     double pick_optional_weapon(std::string weapon);

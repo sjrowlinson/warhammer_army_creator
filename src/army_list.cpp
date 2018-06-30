@@ -6,12 +6,12 @@ army_list::army_list(double points) : points(points) {
 
 army_list::~army_list() {}
 
-void army_list::add_unit(const std::shared_ptr<unit>& _unit) {
-    auto pts = _unit->points();
+std::shared_ptr<unit> army_list::add_unit(const unit& _unit) {
+    auto pts = _unit.points();
     // too many points
     if (curr_pts + pts > points)
         invalidities.insert(InvalidListReason::POINTS);
-    switch (_unit->get_type()) {
+    switch (_unit.get_type()) {
     case armies::UnitType::LORD:
         if (lord_pts + pts > lord_lim)
             invalidities.insert(InvalidListReason::LORD_LIMIT);
@@ -41,8 +41,10 @@ void army_list::add_unit(const std::shared_ptr<unit>& _unit) {
         throw std::invalid_argument("unit type not recognised, cannot add unit to army list.");
         break;
     }
-    army.push_back(_unit);
+    auto sp_unit = std::make_shared<unit>(_unit);
+    army.push_back(sp_unit);
     curr_pts += pts;
+    return sp_unit;
 }
 
 void army_list::remove_unit(const std::shared_ptr<unit>& _unit) {
