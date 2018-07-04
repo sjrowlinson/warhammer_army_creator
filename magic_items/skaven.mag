@@ -1,11 +1,72 @@
 The Fellblade
     Weapon
     100
-    Description
+    This foul sword gives the bearer Strength 10 and successful ward saves must be re-rolled. Any unsaved wounds caused by the Fellblade are multiplied into D6 wounds. Roll a D6 at the end of each of the wielder's turns; on a 3+ there is no effect. On a roll of 1-2 the wielder suffers 1 wound with no armour save allowed.
     None
+
+Warpforged Blade
+    Weapon
+    50
+    Armour saves cannot be taken against hits from a Warpforged Blade.
+    None
+
+Warlock-Augmented Weapon
+    Weapon
+    45
+    A Warlock-Augmented weapon adds +1 Strength and +1 Attack to any model so equipped.
+    None
+
+Blade of Corruption
+    Weapon
+    35
+    The wielder of this sword is granted +1 Strength to all Attacks made in close combat. Any unsaved wound inflicted by the Blade of Corruption is multiplied to 2 wounds. In addition, if the wielder makes a To Hit roll that has two or more rolls of 1, the wielder immediately suffers a wound that is multiplied to 2 wounds. Other Attacks are carried out as normal.
+    None
+
+Weeping Blade
+    Weapon
+    30
+    A Weeping Blade has the Armour Piercing special rule. Each unsaved wound is multiplied to D3 wounds.
+    None
+
+Dwarfbane
+    Weapon
+    25
+    The wielder of this blade is granted +1 Strength to all attacks made in close combat. Additionally against Dwarfs, all hits are Armour Piercing, and the user re-rolls all failed To Wound rolls.
+    None
+
+Blade of Nurglitch
+    Weapon
+    10
+    Enemy models lose 1 point of Toughness from their profile for each unsaved wound they suffer from this blade. Any model reduced to Toughness 0 is removed as a casualty.
+    None
+
 
 Warpstone Armour
     Armour
     30
-    Description
+    Warpstone Armour gives its wearer a 4+ armour save. For each successful armour save made by the bearer in close combat, the armour immediately inflicats a Strength 4 hit against the model that struck the blow. Any casualties caused will count towards combat resolution. Warpstone Armour can be worn by Clan Skryre Warlock Engineers.
     None
+
+World's Edge Armour
+    Armour
+    25
+    The armour gives its wearer a 4+ armour save. The first time the wearer is wounded by a Strength high enough to completely cancel his armour save, or is not permitted an armour save for any reason, the wound is discounted, but the armour is completely destroyed.
+    None
+
+Shield of Distraction
+    Armour
+    15
+    Any models in base contact wishing to strike the bearer of this shield suffer -1 Attack, to a minimum of 1.
+    None
+
+
+Foul Pendant
+    Talisman
+    30
+    This wicked token of the Horned Rat's power confers a 5+ ward save upon the bearer.
+    None
+
+Shadow Magnet Trinket
+    Talisman
+    30
+    Shooting attacks at the bearer of a Shadow Magnet Trinket and any unit he has joined

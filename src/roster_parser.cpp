@@ -211,13 +211,16 @@ namespace tools {
     }
 
     unit roster_parser::parse_infantry(std::size_t index, armies::UnitType unit_type) {
+        // get the unit name
         std::string name = read_line(blocks[index]);
         armies::UnitClass category = armies::UnitClass::INFANTRY;
         double pts_per_model = std::stod(read_line(blocks[index] + 2));
         std::size_t min_size = std::stoul(read_line(blocks[index] + 3));
+        // statistics tables of the unit (champion treated separately)
         std::vector<short> stats = tools::split_stos(read_line(blocks[index] + 4), ' ');
         std::vector<short> champion_stats =
             tools::split_stos(read_line(blocks[index] + 5), ' ');
+        // parse unit equipment and special rules
         std::string equipment_str = read_line(blocks[index] + 6);
         std::vector<std::string> equipment;
         if (equipment_str != "None")
@@ -226,18 +229,22 @@ namespace tools {
         std::vector<std::string> special_rules;
         if (special_rules_str != "None")
             special_rules = tools::split(special_rules_str, ',');
+        // parse the available equipment options for the unit
         std::vector<
             std::pair<std::string, double>
         > optional_weapons = common_option_parse(read_line(blocks[index] + 8));
         std::vector<
             std::pair<std::string, double>
         > optional_armour = common_option_parse(read_line(blocks[index] + 9));
+        // get the optional command characters
         std::vector<
             std::pair<std::string, double>
         > optional_command = common_option_parse(read_line(blocks[index] + 10));
+        // item budgets for the champion and standard bearer
         double champion_magic_item_budget = std::stod(read_line(blocks[index] + 11));
         double champion_extra_item_budget = std::stod(read_line(blocks[index] + 12));
         double magic_banner_budget = std::stod(read_line(blocks[index] + 13));
+        // any unique extras such as weapons teams for Skaven or detachments for The Empire
         std::vector<
             std::pair<std::string, double>
         > extras = common_option_parse(read_line(blocks[index] + 14));

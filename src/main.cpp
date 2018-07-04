@@ -19,5 +19,8 @@ int main(void) {
     st.change_selection("Clanrats");
     st.add_unit_to_army_list(army);
     std::cout << army.current_points() << std::endl;
+    st.change_selection("Plague Censer Bearers");
+    st.add_unit_to_army_list(army);
+    std::cout << army.current_points() << std::endl;
     return 0;
 }

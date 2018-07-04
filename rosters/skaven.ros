@@ -152,3 +152,121 @@ Stormvermin
     15
     50
     Poisoned Wind Mortar [65], Warpfire Thrower [70], Ratling Gun [55], Doom-flayer [55]
+
+Skavenslaves
+    Core, Infantry
+    2
+    20
+    5 2 2 3 3 1 4 1 2
+    5 2 2 3 3 1 4 2 2
+    Hand weapon
+    Scurry Away!, Strength in Numbers, Expendable, Cornered Rats
+    Spears [0.5], Slings [0.5]
+    Shields [0.5]
+    Musician [2], Pawleader [4]
+    0
+    0
+    0
+    None
+
+Night Runners
+    Core, Infantry
+    7
+    10
+    6 3 3 3 3 1 5 1 6
+    6 3 4 3 3 1 5 1 6
+    Two hand weapons, Throwing stars
+    Scurry Away!, Strength in Numbers, Slinking Advance, Dodge (6+) Nightleader only
+    Slings [1]
+    None
+    Nightleader [8]
+    0
+    0
+    0
+    Warp-grinder [60]
+    None
+
+# TODO: Giant Rats, Rat Swarm
+
+# Special
+
+Gutter Runners
+    Special, Infantry
+    12
+    5
+    6 4 4 3 3 1 5 1 7
+    6 4 4 3 3 1 5 2 7
+    Two hand weapons, Throwing stars
+    Scurry Away!, Scouts, Skirmish, Sneaky Infiltrators, Dodge (6+), Dodge (5+) Deathrunner only
+    Slings [1], Poisoned Attacks [5]
+    Snare-net [0]
+    Deathrunner [12]
+    0
+    0
+    0
+    Warp-grinder [60]
+    None
+
+Plague Monks
+    Special, Infantry
+    7
+    10
+    5 3 3 3 4 1 3 1 5
+    5 3 3 3 4 1 3 2 5
+    Two hand weapons
+    Scurry Away!, Strength in Numbers, Frenzy
+    None
+    None
+    Musician [5], Standard Bearer [10], Bringer-of-the-Word [10]
+    0
+    0
+    50
+    None
+
+Plague Censer Bearers
+    Special, Infantry
+    16
+    5
+    5 3 3 3 4 1 3 2 5
+    5 3 3 3 4 1 3 3 5
+    Plague censer
+    Scurry Away!, Strength in Numbers, Frenzy, Hatred, Plague Disciples, Skirmish
+    None
+    None
+    Plague Chanter [13]
+    0
+    0
+    0
+    None
+
+Warplock Jezzails
+    Special, Infantry
+    20
+    3
+    5 3 3 3 3 1 3 2 5
+    5 3 4 3 3 1 3 2 5
+    Hand weapon, Jezzail, Pavise
+    Scurry Away!
+    None
+    None
+    Sharpshooter Team [10]
+    0
+    0
+    0
+    None
+
+Poisoned Wind Globadiers
+    Special, Infantry
+    10
+    5
+    5 3 3 3 3 1 4 1 5
+    5 3 4 3 3 1 4 1 5
+    Hand weapon, Heavy armour, Poisoned wind globes
+    Scurry Away!, Life is Cheap, Skirmish, Volley from the Back
+    None
+    None
+    Bombardier [5]
+    0
+    0
+    0
+    Poisoned Wind Mortar [65]
