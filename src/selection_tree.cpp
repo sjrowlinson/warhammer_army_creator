@@ -74,7 +74,7 @@ selection_tree::selection_tree(armies::Faction faction) : race(faction) {
 }
 
 void selection_tree::change_selection(const std::string& name) {
-    current_selection = roster[name];
+    current_selection = unit(roster[name]);
 }
 
 unit& selection_tree::selected() {
@@ -83,14 +83,13 @@ unit& selection_tree::selected() {
 
 
 void selection_tree::add_unit_to_army_list(army_list& list) {
-    //if (current_selection) list.add_unit(current_selection);
     list.add_unit(current_selection);
 }
 
 void selection_tree::parse_roster_file(const std::string& roster_file) {
     tools::roster_parser rp(roster_file, race);
     auto units = rp.parse();
-    for (auto&& unit : units) roster[unit.get_name()] = unit;
+    for (auto&& x : units) roster[x.name] = std::make_shared<base_unit>(x);
 }
 
 void selection_tree::parse_item_file(const std::string& item_file) {
@@ -99,6 +98,6 @@ void selection_tree::parse_item_file(const std::string& item_file) {
     for (auto&& item : items) magic_items[item.name] = item;
     std::shared_ptr<std::unordered_map<std::string, magic_item>> sp_items
      = std::make_shared<std::unordered_map<std::string, magic_item>>(magic_items);
-    for (auto& key : roster) key.second.pass_magic_items_handle(sp_items);
+    for (auto& x : roster) x.second->magic_items = sp_items;
 }
 

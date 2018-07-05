@@ -39,6 +39,15 @@ namespace tools {
         return s;
     }
 
+	std::pair<std::size_t, std::size_t> roster_parser::parse_minmax_size(std::string s) {
+        std::vector<std::string> min_max_str = tools::split(s, ',');
+        std::size_t min = 1;
+        std::size_t max = std::numeric_limits<std::size_t>::max();
+        if (min_max_str[1] != "None") max = static_cast<std::size_t>(std::stoul(min_max_str[1]));
+        min = static_cast<std::size_t>(std::stoul(min_max_str[0]));
+        return std::make_pair(min, max);
+    }
+
     std::vector<std::pair<std::string, double>> roster_parser::common_option_parse(std::string s) {
         std::vector<std::pair<std::string, double>> vec;
         if (s == "None" || s.empty()) return vec;
@@ -58,9 +67,36 @@ namespace tools {
         return vec;
     }
 
-    std::vector<unit> roster_parser::parse() {
+	std::unordered_map<
+		CommandGroup, std::pair<std::string, double>
+	> roster_parser::parse_command_group(std::string s) {
+        std::unordered_map<
+            CommandGroup, std::pair<std::string, double>
+        > map;
+        std::unordered_map<std::string, CommandGroup> convert = {
+            {"Musician", CommandGroup::MUSICIAN},
+            {"Standard Bearer", CommandGroup::STANDARD_BEARER},
+            {"Champion", CommandGroup::CHAMPION}
+        };
+        std::vector<std::string> entries = tools::split(s, ',');
+        for (const auto& x : entries) {
+            std::vector<std::string> tmp = tools::split(x, ':');
+            std::vector<std::string> name_pts = tools::split(tmp[1], '[');
+            std::string pts_str;
+            std::copy_if(
+                name_pts[1].begin(), name_pts[1].end(), std::back_inserter(pts_str), [](auto x) { return x != ']'; }
+            );
+            double pts = std::stod(pts_str);
+            map[convert[tmp[0]]] = std::make_pair(
+                name_pts[0].substr(0, name_pts[0].size() - 1U), pts
+            );
+        }
+        return map;
+    }
+
+    std::vector<base_unit> roster_parser::parse() {
         count_units();
-        std::vector<unit> units; units.reserve(blocks.size());
+        std::vector<base_unit> units; units.reserve(blocks.size());
         for (std::size_t i = 0U; i < blocks.size(); ++i) {
             std::string types = read_line(blocks[i]+1);
             std::vector<std::string> types_split = tools::split(types, ',');
@@ -90,13 +126,13 @@ namespace tools {
     // TODO: make common parse_unit function once all the individual ones below are worked
     // out - lots of duplication at the moment which can be reduced
 
-	unit roster_parser::parse_melee_character(std::size_t index, armies::UnitType unit_type) {
+	base_unit roster_parser::parse_melee_character(std::size_t index, armies::UnitType unit_type) {
         std::string name = read_line(blocks[index]);
         armies::UnitClass category = armies::s_map_string_unit_class[
             read_line(blocks[index] + 2)
         ];
         double pts_per_model = std::stod(read_line(blocks[index] + 3));
-        std::size_t min_size = std::stoul(read_line(blocks[index] + 4));
+        auto minmax_size = parse_minmax_size(read_line(blocks[index] + 4));
         std::vector<short> stats = tools::split_stos(read_line(blocks[index] + 5), ' ');
         std::vector<std::string> equipment = tools::split(read_line(blocks[index] + 6), ',');
         std::vector<std::string> special_rules = tools::split(read_line(blocks[index] + 7), ',');
@@ -112,29 +148,32 @@ namespace tools {
         double magic_item_allowance = std::stod(read_line(blocks[index] + 11));
         std::vector<std::string> str_extra_allowance = tools::split(read_line(blocks[index] + 12), ',');
         double extra_item_allowance = std::stod(str_extra_allowance[0]);
-        double total_allowance;
-        if (str_extra_allowance[1] == "true") total_allowance = magic_item_allowance;
-        else total_allowance = magic_item_allowance + extra_item_allowance;
         std::vector<
             std::pair<std::string, double>
         > extras = common_option_parse(read_line(blocks[index] + 13));
-        unit tmp(
-            faction, unit_type, category, name,pts_per_model, min_size, min_size
-        );
-        tmp.init_stat_table(std::move(stats));
-        tmp.init_equipment(std::move(equipment));
-        tmp.init_special_rules(std::move(special_rules));
-        tmp.init_optional_weapons(std::move(optional_weapons));
-        tmp.init_optional_armour(std::move(optional_armour));
-        tmp.init_optional_mounts(std::move(optional_mounts));
-        tmp.init_magic_item_budget(magic_item_allowance);
-        tmp.init_extra_item_budget(extra_item_allowance);
-        tmp.init_total_item_budget(total_allowance);
-        tmp.init_optional_extras(std::move(extras));
+        base_unit tmp;
+        tmp.faction = faction;
+        tmp.unit_type = unit_type;
+        tmp.unit_class = category;
+        tmp.name = name;
+        tmp.is_character = true;
+        tmp.is_unique = false; // TODO: implement
+        tmp.pts_per_model = pts_per_model;
+        tmp.min_size = minmax_size.first;
+        tmp.max_size = minmax_size.second;
+        tmp.stats = stats;
+        tmp.equipment = equipment;
+        tmp.special_rules = special_rules;
+        for (auto&& x : optional_weapons) tmp.opt_weapons[x.first] = x.second;
+        for (auto&& x : optional_armour) tmp.opt_armour[x.first] = x.second;
+        for (auto&& x : optional_mounts) tmp.opt_mounts[x.first] = x.second;
+        for (auto&& x : extras) tmp.opt_extras[x.first] = x.second;
+        tmp.magic_item_budget = magic_item_allowance;
+        tmp.faction_item_budget = extra_item_allowance;
         return tmp;
     }
 
-    unit roster_parser::parse_mage_character(std::size_t index, armies::UnitType unit_type) {
+    base_unit roster_parser::parse_mage_character(std::size_t index, armies::UnitType unit_type) {
         std::string name = read_line(blocks[index]);
         short mage_level = static_cast<short>(std::stoi(read_line(blocks[index] + 2)));
         std::string mage_upgrades_str = read_line(blocks[index] + 3);
@@ -163,7 +202,7 @@ namespace tools {
             read_line(blocks[index] + 5)
         ];
         double pts_per_model = std::stod(read_line(blocks[index] + 6));
-        std::size_t min_size = std::stoul(read_line(blocks[index] + 7));
+        auto minmax_size = parse_minmax_size(read_line(blocks[index] + 7));
         std::vector<short> stats = tools::split_stos(read_line(blocks[index] + 8), ' ');
         std::string equipment_str = read_line(blocks[index] + 9);
         std::vector<std::string> equipment;
@@ -185,37 +224,40 @@ namespace tools {
         double magic_item_allowance = std::stoul(read_line(blocks[index] + 14));
         std::vector<std::string> extra_allowance_str = tools::split(read_line(blocks[index] + 15), ',');
         double extra_item_allowance = std::stoul(extra_allowance_str[0]);
-        double total_allowance;
-        if (extra_allowance_str[1] == "true") total_allowance = magic_item_allowance;
-        else total_allowance = magic_item_allowance + extra_item_allowance;
         std::vector<
             std::pair<std::string, double>
         > extras = common_option_parse(read_line(blocks[index] + 16));
-        unit tmp(
-            faction, unit_type, category, name, pts_per_model, min_size, min_size
-        );
-        tmp.init_mage_level(mage_level);
-        tmp.init_mage_level_upgrades(std::move(mage_upgrades));
-        tmp.init_magic_lores(std::move(lores));
-        tmp.init_stat_table(std::move(stats));
-        tmp.init_equipment(std::move(equipment));
-        tmp.init_special_rules(std::move(special_rules));
-        tmp.init_optional_weapons(std::move(optional_weapons));
-        tmp.init_optional_armour(std::move(optional_armour));
-        tmp.init_optional_mounts(std::move(optional_mounts));
-        tmp.init_magic_item_budget(magic_item_allowance);
-        tmp.init_extra_item_budget(extra_item_allowance);
-        tmp.init_total_item_budget(total_allowance);
-        tmp.init_optional_extras(std::move(extras));
+        base_unit tmp;
+        tmp.faction = faction;
+        tmp.unit_type = unit_type;
+        tmp.unit_class = category;
+        tmp.name = name;
+        tmp.is_character = true;
+        tmp.is_unique = false; // TODO: implement
+        tmp.pts_per_model = pts_per_model;
+        tmp.min_size = minmax_size.first;
+        tmp.max_size = minmax_size.second;
+        tmp.stats = stats;
+        tmp.equipment = equipment;
+        tmp.special_rules = special_rules;
+        for (auto&& x : optional_weapons) tmp.opt_weapons[x.first] = x.second;
+        for (auto&& x : optional_armour) tmp.opt_armour[x.first] = x.second;
+        for (auto&& x : optional_mounts) tmp.opt_mounts[x.first] = x.second;
+        for (auto&& x : extras) tmp.opt_extras[x.first] = x.second;
+        tmp.magic_item_budget = magic_item_allowance;
+        tmp.faction_item_budget = extra_item_allowance;
+        tmp.base_mage_level = mage_level;
+        for (auto&& x : mage_upgrades) tmp.mage_level_upgrades[x.first] = x.second;
+        tmp.lores = lores;
         return tmp;
     }
 
-    unit roster_parser::parse_infantry(std::size_t index, armies::UnitType unit_type) {
+    base_unit roster_parser::parse_infantry(std::size_t index, armies::UnitType unit_type) {
         // get the unit name
         std::string name = read_line(blocks[index]);
         armies::UnitClass category = armies::UnitClass::INFANTRY;
         double pts_per_model = std::stod(read_line(blocks[index] + 2));
-        std::size_t min_size = std::stoul(read_line(blocks[index] + 3));
+        auto minmax_size = parse_minmax_size(read_line(blocks[index] + 3));
         // statistics tables of the unit (champion treated separately)
         std::vector<short> stats = tools::split_stos(read_line(blocks[index] + 4), ' ');
         std::vector<short> champion_stats =
@@ -237,9 +279,7 @@ namespace tools {
             std::pair<std::string, double>
         > optional_armour = common_option_parse(read_line(blocks[index] + 9));
         // get the optional command characters
-        std::vector<
-            std::pair<std::string, double>
-        > optional_command = common_option_parse(read_line(blocks[index] + 10));
+        auto optional_command = parse_command_group(read_line(blocks[index] + 10));
         // item budgets for the champion and standard bearer
         double champion_magic_item_budget = std::stod(read_line(blocks[index] + 11));
         double champion_extra_item_budget = std::stod(read_line(blocks[index] + 12));
@@ -248,36 +288,42 @@ namespace tools {
         std::vector<
             std::pair<std::string, double>
         > extras = common_option_parse(read_line(blocks[index] + 14));
-        unit tmp(
-            faction, unit_type, category, name, pts_per_model, min_size, min_size
-        );
-        tmp.init_stat_table(std::move(stats));
-        tmp.init_champion_stat_table(std::move(champion_stats));
-        tmp.init_equipment(std::move(equipment));
-        tmp.init_special_rules(std::move(equipment));
-        tmp.init_optional_weapons(std::move(optional_weapons));
-        tmp.init_optional_armour(std::move(optional_armour));
-        tmp.init_optional_command(std::move(optional_command));
-        tmp.init_optional_extras(std::move(extras));
-        tmp.init_magic_item_budget(champion_magic_item_budget);
-        tmp.init_extra_item_budget(champion_extra_item_budget);
-        tmp.init_magic_banner_budget(magic_banner_budget);
+        base_unit tmp;
+        tmp.faction = faction;
+        tmp.unit_type = unit_type;
+        tmp.unit_class = category;
+        tmp.name = name;
+        tmp.is_character = true;
+        tmp.is_unique = false; // TODO: implement
+        tmp.pts_per_model = pts_per_model;
+        tmp.min_size = minmax_size.first;
+        tmp.max_size = minmax_size.second;
+        tmp.stats = stats;
+        tmp.equipment = equipment;
+        tmp.special_rules = special_rules;
+        for (auto&& x : optional_weapons) tmp.opt_weapons[x.first] = x.second;
+        for (auto&& x : optional_armour) tmp.opt_armour[x.first] = x.second;
+        for (auto&& x : extras) tmp.opt_extras[x.first] = x.second;
+        tmp.opt_command = optional_command;
+        tmp.magic_item_budget = champion_magic_item_budget;
+        tmp.faction_item_budget = champion_extra_item_budget;
+        tmp.magic_banner_budget = magic_banner_budget;
         return tmp;
     }
 
-	unit roster_parser::parse_cavalry(std::size_t index, armies::UnitType unit_type) {
+	base_unit roster_parser::parse_cavalry(std::size_t index, armies::UnitType unit_type) {
 
     }
 
-	unit roster_parser::parse_warbeast(std::size_t index, armies::UnitType unit_type) {
+	base_unit roster_parser::parse_warbeast(std::size_t index, armies::UnitType unit_type) {
 
     }
 
-	unit roster_parser::parse_monstrous_creature(std::size_t index, armies::UnitType unit_type) {
+	base_unit roster_parser::parse_monstrous_creature(std::size_t index, armies::UnitType unit_type) {
 
     }
 
-	unit roster_parser::parse_monster(std::size_t index, armies::UnitType unit_type) {
+	base_unit roster_parser::parse_monster(std::size_t index, armies::UnitType unit_type) {
 
     }
 

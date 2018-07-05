@@ -65,7 +65,7 @@ namespace tools {
             item.description = descr;
             if (allowed != "None") {
                 std::vector<std::string> vec = tools::split(allowed, ',');
-                item.allowed_units = vec;
+                for (const auto& x : vec) item.allowed_units.insert(x);
             }
             items.push_back(item);
         }

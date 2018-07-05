@@ -3,6 +3,7 @@
 
 #include "army_maps.h"
 #include "army_list.h"
+#include "base_unit.h"
 #include "item_parser.h"
 #include "magic_item.h"
 #include "roster_parser.h"
@@ -31,7 +32,7 @@ class selection_tree {
 private:
     std::unordered_map<
         std::string,
-        unit
+        std::shared_ptr<base_unit>
     > roster;
     std::unordered_map<
         std::string,
