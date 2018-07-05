@@ -30,6 +30,7 @@
  */
 class selection_tree {
 private:
+    armies::Faction race;
     std::unordered_map<
         std::string,
         std::shared_ptr<base_unit>
@@ -38,16 +39,18 @@ private:
         std::string,
         magic_item
     > magic_items;
-    armies::Faction race;
     unit current_selection;
+
+    std::reference_wrapper<army_list> army;
 
     void parse_roster_file(const std::string& roster_file);
     void parse_item_file(const std::string& item_file);
 public:
-    selection_tree(armies::Faction faction);
+    selection_tree(armies::Faction faction, army_list& list);
     ~selection_tree() = default;
-    void add_unit_to_army_list(army_list& list);
+    void add_unit_to_army_list();
     void change_selection(const std::string& name);
+    void reset_army_list(army_list&_army);
     unit& selected();
 };
 

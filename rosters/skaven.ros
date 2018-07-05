@@ -7,7 +7,7 @@ Vermin Lord
     Ruin, Plague
     Monster
     500
-    1, None
+    1, 1
     8 8 4 6 5 5 10 5 8
     Doom Glaive
     Scurry Away!, Immune to Psychology, Large Target, Rat Daemon, Terror, Ward save (5+)
@@ -22,7 +22,7 @@ Warlord
     Lord, Melee
     Infantry
     90
-    1, None
+    1, 1
     5 6 4 4 4 3 7 4 7
     Hand weapon, Heavy armour
     Scurry Away!, Strength in Numbers, Verminous Valour
@@ -40,7 +40,7 @@ Grey Seer
     Ruin, Plague
     Infantry
     240
-    1, None
+    1, 1
     5 3 3 3 4 3 5 1 7
     Hand weapon, D3 Warpstone Tokens
     Scurry Away!, Strength in Numbers, Verminous Valour
@@ -57,7 +57,7 @@ Assassin
     Hero, Melee
     Infantry
     120
-    1, None
+    1, 1
     6 6 5 4 4 2 8 3 7
     Two hand weapons, Throwing stars
     Scurry Away!, Sneaky Infiltrators, Verminous Valour, A Killer Not A Leader, Always Strike First, Dodge (4+), Hidden, Poisoned Attacks, Scouts
@@ -75,7 +75,7 @@ Warlock Engineer
     Ruin
     Infantry
     15
-    1, None
+    1, 1
     5 3 3 3 3 2 4 1 5
     Hand weapon
     Scurry Away!, Strength in Numbers, Verminous Valour
@@ -90,7 +90,7 @@ Chieftain
     Hero, Melee
     Infantry
     45
-    1, None
+    1, 1
     5 5 4 4 4 2 6 3 6
     Hand weapon, Heavy armour
     Scurry Away!, Strength in Numbers, Verminous Valour
@@ -108,7 +108,7 @@ Plague Priest
     Plague
     Infantry
     100
-    1, None
+    1, 1
     5 5 3 4 5 2 5 3 6
     Hand weapon
     Scurry Away!, Strength in Numbers, Frenzy

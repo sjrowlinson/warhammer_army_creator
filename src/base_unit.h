@@ -26,6 +26,7 @@ struct base_unit {
     std::string name;
     bool is_character;
     bool is_unique;
+    bool is_mage;
     double pts_per_model;
     std::size_t min_size;
     std::size_t max_size;

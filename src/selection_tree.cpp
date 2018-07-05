@@ -1,6 +1,6 @@
 #include "selection_tree.h"
 
-selection_tree::selection_tree(armies::Faction faction) : race(faction) {
+selection_tree::selection_tree(armies::Faction faction, army_list& list) : race(faction), army(list) {
     std::string roster_file;
     std::string item_file;
     switch (race) {
@@ -77,13 +77,17 @@ void selection_tree::change_selection(const std::string& name) {
     current_selection = unit(roster[name]);
 }
 
+void selection_tree::reset_army_list(army_list& _army) {
+    army = _army;
+}
+
 unit& selection_tree::selected() {
     return current_selection;
 }
 
 
-void selection_tree::add_unit_to_army_list(army_list& list) {
-    list.add_unit(current_selection);
+void selection_tree::add_unit_to_army_list() {
+    army.get().add_unit(current_selection);
 }
 
 void selection_tree::parse_roster_file(const std::string& roster_file) {

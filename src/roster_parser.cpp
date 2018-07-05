@@ -158,6 +158,7 @@ namespace tools {
         tmp.name = name;
         tmp.is_character = true;
         tmp.is_unique = false; // TODO: implement
+        tmp.is_mage = false;
         tmp.pts_per_model = pts_per_model;
         tmp.min_size = minmax_size.first;
         tmp.max_size = minmax_size.second;
@@ -234,6 +235,7 @@ namespace tools {
         tmp.name = name;
         tmp.is_character = true;
         tmp.is_unique = false; // TODO: implement
+        tmp.is_mage = true;
         tmp.pts_per_model = pts_per_model;
         tmp.min_size = minmax_size.first;
         tmp.max_size = minmax_size.second;
@@ -293,8 +295,9 @@ namespace tools {
         tmp.unit_type = unit_type;
         tmp.unit_class = category;
         tmp.name = name;
-        tmp.is_character = true;
-        tmp.is_unique = false; // TODO: implement
+        tmp.is_character = false;
+        tmp.is_unique = false;
+        tmp.is_mage = false;
         tmp.pts_per_model = pts_per_model;
         tmp.min_size = minmax_size.first;
         tmp.max_size = minmax_size.second;
