@@ -20,7 +20,7 @@ namespace tools {
     void roster_parser::count_units() {
         for (std::size_t i = 0U; i < streampos.size(); ++i) {
             std::string line = read_line(i, false);
-            if (tools::starts_with(line, '#') || line.empty()) continue;
+            if (line.empty() || tools::starts_with(line, '#')) continue;
             if (!(tools::starts_with(line, "    ") || tools::starts_with(line, '\t')))
                 blocks.push_back(i);
         }
@@ -185,7 +185,7 @@ namespace tools {
                 std::vector<std::string> _tmp1 = tools::split(_s, '[');
                 std::string pts_str;
                 std::copy_if(
-                    _tmp1[1].begin(), _tmp1[1].end(), pts_str.begin(), [](auto x) {
+                    _tmp1[1].begin(), _tmp1[1].end(), std::back_inserter(pts_str), [](auto x) {
                         return x != ']';
                     }
                 );

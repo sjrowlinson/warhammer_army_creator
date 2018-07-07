@@ -34,9 +34,12 @@ namespace tools {
 	}
 
 	bool starts_with(const std::string& s, char c) {
+		if (s.empty()) return false;
 		return *s.cbegin() == c;
 	}
 	bool starts_with(const std::string& s, std::string match) {
+		if (s.empty() && match.empty()) return true;
+		if (s.empty()) return false;
 		for (std::size_t i = 0U; i < match.size(); ++i) {
 			if (s[i] != match[i]) return false;
 		}

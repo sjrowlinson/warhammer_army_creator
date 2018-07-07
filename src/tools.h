@@ -1,5 +1,6 @@
 #ifndef TOOLS_H
 #define TOOLS_H
+#include <cctype>
 #include <sstream>
 #include <string>
 #include <vector>
