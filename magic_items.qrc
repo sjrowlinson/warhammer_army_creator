@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/magic_items">
+        <file alias="skaven.mag">magic_items/skaven.mag</file>
+    </qresource>
+</RCC>

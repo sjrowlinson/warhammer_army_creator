@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/rosters">
+        <file alias="skaven.ros">rosters/skaven.ros</file>
+    </qresource>
+</RCC>

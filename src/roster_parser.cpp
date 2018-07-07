@@ -315,19 +315,23 @@ namespace tools {
     }
 
 	base_unit roster_parser::parse_cavalry(std::size_t index, armies::UnitType unit_type) {
-
+        base_unit tmp;
+        return tmp;
     }
 
 	base_unit roster_parser::parse_warbeast(std::size_t index, armies::UnitType unit_type) {
-
+        base_unit tmp;
+        return tmp;
     }
 
 	base_unit roster_parser::parse_monstrous_creature(std::size_t index, armies::UnitType unit_type) {
-
+        base_unit tmp;
+        return tmp;
     }
 
 	base_unit roster_parser::parse_monster(std::size_t index, armies::UnitType unit_type) {
-
+        base_unit tmp;
+        return tmp;
     }
 
 }

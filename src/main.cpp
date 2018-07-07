@@ -1,10 +1,17 @@
+#include "armycreator.h"
 #include "army_list.h"
 #include "army_maps.h"
 #include "selection_tree.h"
 #include "unit.h"
+#include <QApplication>
 #include <iostream>
 
-int main(void) {
+int main(int argc, char *argv[])
+{
+    QApplication a(argc, argv);
+    ArmyCreator w;
+    w.show();
+
     army_list army(2000U);
     selection_tree st(armies::Faction::SKAVEN, army);
     // add a melee lord
@@ -47,5 +54,5 @@ int main(void) {
     for (auto x : army.get()) {
         std::cout << x->name() << ' ' << x->points() << std::endl;
     }
-    return 0;
+    return a.exec();
 }

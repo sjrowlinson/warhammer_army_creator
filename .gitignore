@@ -1,5 +1,8 @@
 .DS_Store
 
+# QtCreator dependent
+*.pro.user
+
 # Makefile related
 .depend
 armycreator

@@ -1,4 +1,5 @@
 #include "selection_tree.h"
+#include <QDir>
 
 selection_tree::selection_tree(armies::Faction faction, army_list& list) : race(faction), army(list) {
     std::string roster_file;
@@ -69,8 +70,10 @@ selection_tree::selection_tree(armies::Faction faction, army_list& list) : race(
         item_file = "empire.mag";
         break;
     }
-    parse_roster_file("../rosters/" + roster_file);
-    parse_item_file("../magic_items/" + item_file);
+    // TODO: change to use QFile as std c++ functions don't know about
+    // qrc resources so QFile must be used for parsing system now
+    parse_roster_file("../warhammer_army_creator/rosters/" + roster_file);
+    parse_item_file("../warhammer_army_creator/magic_items/" + item_file);
 }
 
 void selection_tree::change_selection(const std::string& name) {
