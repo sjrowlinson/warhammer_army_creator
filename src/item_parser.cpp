@@ -3,16 +3,20 @@
 namespace tools {
 
     item_parser::item_parser(
-        const std::string& name
-    ) : fs(name), filename(name), blocks() {
+        QFile& _file
+    ) {
+        _file.open(QIODevice::ReadOnly | QIODevice::Text);
+        QTextStream in(&_file);
+        std::string content = in.readAll().toStdString();
+        ss = std::stringstream(content);
         cache_streampos();
     }
 
     void item_parser::cache_streampos() {
         std::string s;
-        while (fs) {
-            streampos.push_back(fs.tellg());
-            std::getline(fs, s);
+        while (ss) {
+            streampos.push_back(ss.tellg());
+            std::getline(ss, s);
         }
     }
 
@@ -26,14 +30,14 @@ namespace tools {
     }
 
     void item_parser::navigate_to_line(std::size_t n) {
-        fs.clear();
-        fs.seekg(streampos[n]);
+        ss.clear();
+        ss.seekg(streampos[n]);
     }
 
     std::string item_parser::read_line(std::size_t n, bool trim) {
         navigate_to_line(n);
         std::string s;
-        std::getline(fs, s);
+        std::getline(ss, s);
         if (trim) return tools::remove_leading_whitespaces(s);
         return s;
     }

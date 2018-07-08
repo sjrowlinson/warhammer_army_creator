@@ -15,6 +15,9 @@
 #include <memory>
 #include <string>
 
+#include <QFile>
+#include <QString>
+
 /**
  * This class represents the left-box of the interface displaying
  * the army roster for the selected race. The user clicks on units
@@ -43,8 +46,8 @@ private:
 
     std::reference_wrapper<army_list> army;
 
-    void parse_roster_file(const std::string& roster_file);
-    void parse_item_file(const std::string& item_file);
+    void parse_roster_file(QFile& roster_file);
+    void parse_item_file(QFile& item_file);
 public:
     selection_tree(armies::Faction faction, army_list& list);
     ~selection_tree() = default;

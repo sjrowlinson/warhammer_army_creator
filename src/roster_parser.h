@@ -9,18 +9,22 @@
 #include <algorithm>
 #include <fstream>
 #include <ostream>
+#include <sstream>
 #include <stdexcept>
 #include <string>
 #include <unordered_map>
 #include <utility>
 #include <vector>
 
+#include <QFile>
+#include <QTextStream>
+#include <QString>
+
 namespace tools {
 	class roster_parser {
 	private:
-		std::fstream fs;
-		std::string filename;
-		std::vector<std::fstream::streampos> streampos;
+        std::stringstream ss;
+        std::vector<std::stringstream::streampos> streampos;
 		std::vector<std::size_t> blocks;
 		armies::Faction faction;
 
@@ -42,10 +46,10 @@ namespace tools {
 			CommandGroup, std::pair<std::string, double>
 		> parse_command_group(std::string s);
 	public:
-		explicit roster_parser(
-			const std::string& name,
-			armies::Faction faction
-		);
+        explicit roster_parser(
+            QFile& _file,
+            armies::Faction faction
+        );
 		std::size_t units() const noexcept;
 		std::vector<base_unit> parse();
 	};

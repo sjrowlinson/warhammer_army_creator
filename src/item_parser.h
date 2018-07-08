@@ -7,17 +7,21 @@
 
 #include <fstream>
 #include <ostream>
+#include <sstream>
 #include <string>
 #include <vector>
 #include <unordered_map>
+
+#include <QFile>
+#include <QString>
+#include <QTextStream>
 
 namespace tools {
 
     class item_parser {
     private:
-        std::fstream fs;
-        std::string filename;
-        std::vector<std::fstream::streampos> streampos;
+        std::stringstream ss;
+        std::vector<std::stringstream::streampos> streampos;
         std::vector<std::size_t> blocks;
 
         void cache_streampos();
@@ -25,10 +29,9 @@ namespace tools {
         void navigate_to_line(std::size_t n);
         std::string read_line(std::size_t n, bool trim=true);
     public:
-        explicit item_parser(const std::string& name);
+        explicit item_parser(QFile& _file);
         std::vector<magic_item> parse();
     };
-
 
 }
 
