@@ -12,3 +12,8 @@ ArmyCreator::~ArmyCreator()
 {
     delete ui;
 }
+
+void ArmyCreator::on_actionExit_triggered()
+{
+    QCoreApplication::quit();
+}

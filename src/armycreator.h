@@ -15,6 +15,9 @@ public:
     explicit ArmyCreator(QWidget *parent = 0);
     ~ArmyCreator();
 
+private slots:
+    void on_actionExit_triggered();
+
 private:
     Ui::ArmyCreator *ui;
 };
