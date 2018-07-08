@@ -69,17 +69,10 @@ selection_tree::selection_tree(armies::Faction faction, army_list& list) : race(
         item_file += "empire.mag";
         break;
     }
-    // TODO: change this to pass the QString instance to the relevant parse method
-    // so that the QFile construction takes place in roster_parser and item_parser
-    // constructors - then we can have QFile fields in these classes which can be
-    // treated properly (i.e. explicitly calling file_field.close() in ~roster_parser
-    // and ~item_parser)
     QString rfile(roster_file.data());
-    QFile roster(rfile);
-    parse_roster_file(roster);
+    parse_roster_file(rfile);
     QString mifile(item_file.data());
-    QFile magic_items(mifile);
-    parse_item_file(magic_items);
+    parse_item_file(mifile);
 }
 
 void selection_tree::change_selection(const std::string& name) {
@@ -99,14 +92,14 @@ void selection_tree::add_unit_to_army_list() {
     army.get().add_unit(current_selection);
 }
 
-void selection_tree::parse_roster_file(QFile& roster_file) {
-    tools::roster_parser rp(roster_file, race);
+void selection_tree::parse_roster_file(const QString &rfile_str) {
+    tools::roster_parser rp(rfile_str, race);
     auto units = rp.parse();
     for (auto&& x : units) roster[x.name] = std::make_shared<base_unit>(x);
 }
 
-void selection_tree::parse_item_file(QFile& item_file) {
-    tools::item_parser ip(item_file);
+void selection_tree::parse_item_file(const QString& ifile_str) {
+    tools::item_parser ip(ifile_str);
     auto items = ip.parse();
     for (auto&& item : items) magic_items[item.name] = item;
     std::shared_ptr<std::unordered_map<std::string, magic_item>> sp_items

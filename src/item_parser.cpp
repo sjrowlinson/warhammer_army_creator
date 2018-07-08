@@ -2,14 +2,17 @@
 
 namespace tools {
 
-    item_parser::item_parser(
-        QFile& _file
-    ) {
-        _file.open(QIODevice::ReadOnly | QIODevice::Text);
-        QTextStream in(&_file);
+    item_parser::item_parser(const QString& ifile_str)
+        : item_file(ifile_str) {
+        item_file.open(QIODevice::ReadOnly | QIODevice::Text);
+        QTextStream in(&item_file);
         std::string content = in.readAll().toStdString();
         ss = std::stringstream(content);
         cache_streampos();
+    }
+
+    item_parser::~item_parser() {
+        item_file.close();
     }
 
     void item_parser::cache_streampos() {

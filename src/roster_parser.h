@@ -23,6 +23,7 @@
 namespace tools {
 	class roster_parser {
 	private:
+        QFile roster_file;
         std::stringstream ss;
         std::vector<std::stringstream::streampos> streampos;
 		std::vector<std::size_t> blocks;
@@ -47,9 +48,10 @@ namespace tools {
 		> parse_command_group(std::string s);
 	public:
         explicit roster_parser(
-            QFile& _file,
+            const QString& rfile_str,
             armies::Faction faction
         );
+        ~roster_parser();
 		std::size_t units() const noexcept;
 		std::vector<base_unit> parse();
 	};

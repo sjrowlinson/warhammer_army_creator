@@ -15,7 +15,6 @@
 #include <memory>
 #include <string>
 
-#include <QFile>
 #include <QString>
 
 /**
@@ -46,8 +45,8 @@ private:
 
     std::reference_wrapper<army_list> army;
 
-    void parse_roster_file(QFile& roster_file);
-    void parse_item_file(QFile& item_file);
+    void parse_roster_file(const QString& rfile_str);
+    void parse_item_file(const QString& ifile_str);
 public:
     selection_tree(armies::Faction faction, army_list& list);
     ~selection_tree() = default;

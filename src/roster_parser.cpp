@@ -2,13 +2,18 @@
 #include <iostream>
 namespace tools {
 
-    roster_parser::roster_parser(QFile& _file, armies::Faction _faction) {
-        _file.open(QIODevice::ReadOnly | QIODevice::Text);
-        QTextStream in(&_file);
+    roster_parser::roster_parser(const QString& rfile_str, armies::Faction _faction)
+        : roster_file(rfile_str) {
+        roster_file.open(QIODevice::ReadOnly | QIODevice::Text);
+        QTextStream in(&roster_file);
         std::string content = in.readAll().toStdString();
         ss = std::stringstream(content);
         faction = _faction;
         cache_streampos();
+    }
+
+    roster_parser::~roster_parser() {
+        roster_file.close();
     }
 
     void roster_parser::cache_streampos() {

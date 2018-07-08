@@ -20,6 +20,7 @@ namespace tools {
 
     class item_parser {
     private:
+        QFile item_file;
         std::stringstream ss;
         std::vector<std::stringstream::streampos> streampos;
         std::vector<std::size_t> blocks;
@@ -29,7 +30,8 @@ namespace tools {
         void navigate_to_line(std::size_t n);
         std::string read_line(std::size_t n, bool trim=true);
     public:
-        explicit item_parser(QFile& _file);
+        explicit item_parser(const QString& ifile_str);
+        ~item_parser();
         std::vector<magic_item> parse();
     };
 
