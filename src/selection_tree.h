@@ -14,6 +14,8 @@
 #include <cmath>
 #include <memory>
 #include <string>
+#include <utility>
+#include <vector>
 
 #include <QString>
 
@@ -45,15 +47,26 @@ private:
 
     std::reference_wrapper<army_list> army;
 
+    std::pair<std::string, std::string> filenames() const noexcept;
     void parse_roster_file(const QString& rfile_str);
     void parse_item_file(const QString& ifile_str);
+    std::vector<std::shared_ptr<base_unit>> all_of(armies::UnitType ut) const noexcept;
 public:
     selection_tree(armies::Faction faction, army_list& list);
     ~selection_tree() = default;
     void add_unit_to_army_list();
     void change_selection(const std::string& name);
     void reset_army_list(army_list&_army);
+    void reset(armies::Faction faction, army_list& list);
+
     unit& selected();
+
+    std::vector<std::shared_ptr<base_unit>> lords() const noexcept;
+    std::vector<std::shared_ptr<base_unit>> heroes() const noexcept;
+    std::vector<std::shared_ptr<base_unit>> core() const noexcept;
+    std::vector<std::shared_ptr<base_unit>> special() const noexcept;
+    std::vector<std::shared_ptr<base_unit>> rare() const noexcept;
+
 };
 
 #endif // !SELECTION_TREE_H

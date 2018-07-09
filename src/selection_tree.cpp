@@ -1,6 +1,14 @@
 #include "selection_tree.h"
 
 selection_tree::selection_tree(armies::Faction faction, army_list& list) : race(faction), army(list) {
+    auto files = filenames();
+    QString rfile(files.first.data());
+    parse_roster_file(rfile);
+    QString mifile(files.second.data());
+    parse_item_file(mifile);
+}
+
+std::pair<std::string, std::string> selection_tree::filenames() const noexcept {
     std::string roster_file = ":/rosters/";
     std::string item_file = ":/magic_items/";
     switch (race) {
@@ -69,10 +77,7 @@ selection_tree::selection_tree(armies::Faction faction, army_list& list) : race(
         item_file += "empire.mag";
         break;
     }
-    QString rfile(roster_file.data());
-    parse_roster_file(rfile);
-    QString mifile(item_file.data());
-    parse_item_file(mifile);
+    return {roster_file, item_file};
 }
 
 void selection_tree::change_selection(const std::string& name) {
@@ -81,6 +86,19 @@ void selection_tree::change_selection(const std::string& name) {
 
 void selection_tree::reset_army_list(army_list& _army) {
     army = _army;
+}
+
+void selection_tree::reset(armies::Faction faction, army_list &list) {
+    roster.clear();
+    magic_items.clear();
+    current_selection = unit();
+    race = faction;
+    auto files = filenames();
+    QString rfile(files.first.data());
+    parse_roster_file(rfile);
+    QString mifile(files.second.data());
+    parse_item_file(mifile);
+    reset_army_list(list);
 }
 
 unit& selection_tree::selected() {
@@ -105,4 +123,28 @@ void selection_tree::parse_item_file(const QString& ifile_str) {
     std::shared_ptr<std::unordered_map<std::string, magic_item>> sp_items
         = std::make_shared<std::unordered_map<std::string, magic_item>>(magic_items);
     for (auto& x : roster) x.second->magic_items = sp_items;
+}
+
+std::vector<std::shared_ptr<base_unit>> selection_tree::all_of(armies::UnitType ut) const noexcept {
+    std::vector<std::shared_ptr<base_unit>> v;
+    for (const auto& x : roster) {
+        if (x.second->unit_type == ut) v.push_back(x.second);
+    }
+    return v;
+}
+
+std::vector<std::shared_ptr<base_unit>> selection_tree::lords() const noexcept {
+    return all_of(armies::UnitType::LORD);
+}
+std::vector<std::shared_ptr<base_unit>> selection_tree::heroes() const noexcept {
+    return all_of(armies::UnitType::HERO);
+}
+std::vector<std::shared_ptr<base_unit>> selection_tree::core() const noexcept {
+    return all_of(armies::UnitType::CORE);
+}
+std::vector<std::shared_ptr<base_unit>> selection_tree::special() const noexcept {
+    return all_of(armies::UnitType::SPECIAL);
+}
+std::vector<std::shared_ptr<base_unit>> selection_tree::rare() const noexcept {
+    return all_of(armies::UnitType::RARE);
 }

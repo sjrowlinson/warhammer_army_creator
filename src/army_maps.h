@@ -34,11 +34,20 @@ namespace armies {
         std::string,
         Faction
     > s_map_string_faction = {
-        {"EMPIRE", Faction::EMPIRE},
-        {"BRETONNIA", Faction::BRETONNIA},
-        {"DWARFS", Faction::DWARFS},
-        {"HIGH_ELVES", Faction::HIGH_ELVES},
-        {"SKAVEN", Faction::SKAVEN}
+        {"The Empire", Faction::EMPIRE},
+        {"Bretonnia", Faction::BRETONNIA},
+        {"Dwarfs", Faction::DWARFS},
+        {"High Elves", Faction::HIGH_ELVES},
+        {"Dark Elves", Faction::DARK_ELVES},
+        {"Warriors of Chaos", Faction::WARRIORS_OF_CHAOS},
+        {"Daemons of Chaos", Faction::DAEMONS_OF_CHAOS},
+        {"Beastmen", Faction::BEASTMEN},
+        {"Chaos Dwarfs", Faction::CHAOS_DWARFS},
+        {"Vampire Counts", Faction::VAMPIRE_COUNTS},
+        {"Tomb Kings", Faction::TOMB_KINGS},
+        {"Ogre Kingdoms", Faction::OGRE_KINGDOMS},
+        {"Skaven", Faction::SKAVEN},
+        {"Orcs and Goblins", Faction::ORCS_AND_GOBLINS}
     };
 
     enum class UnitType {
