@@ -33,6 +33,15 @@ namespace tools {
 		return tmp;
 	}
 
+    std::string& remove_trailing_whitespaces(std::string& s) {
+        auto it = s.rbegin();
+        while (it != s.rend() && std::isspace(*it)) {
+            ++it;
+            it = std::reverse_iterator<std::string::iterator>(s.erase(it.base()));
+        }
+        return s;
+    }
+
 	bool starts_with(const std::string& s, char c) {
 		if (s.empty()) return false;
 		return *s.cbegin() == c;

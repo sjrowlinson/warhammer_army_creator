@@ -29,7 +29,6 @@ SOURCES += \
         src/army_list.cpp \
         src/army_maps.cpp \
         src/item_parser.cpp \
-        src/main.cpp \
         src/roster_parser.cpp \
         src/selection_tree.cpp \
         src/tools.cpp \

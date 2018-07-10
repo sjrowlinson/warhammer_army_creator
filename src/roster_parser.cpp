@@ -68,7 +68,7 @@ namespace tools {
             );
             double pts = std::stod(pts_str);
             vec.push_back(
-                std::make_pair(tmp[0].substr(0, tmp[0].size() - 1U), pts)
+                std::make_pair(tools::remove_trailing_whitespaces(tmp[0]), pts)
             );
         }
         return vec;
@@ -95,7 +95,7 @@ namespace tools {
             );
             double pts = std::stod(pts_str);
             map[convert[tmp[0]]] = std::make_pair(
-                name_pts[0].substr(0, name_pts[0].size() - 1U), pts
+                tools::remove_trailing_whitespaces(name_pts[0]), pts
             );
         }
         return map;
@@ -190,6 +190,7 @@ namespace tools {
             std::vector<std::string> _tmp = tools::split(mage_upgrades_str, ',');
             for (const auto& _s : _tmp) {
                 std::vector<std::string> _tmp1 = tools::split(_s, '[');
+                tools::remove_trailing_whitespaces(_tmp1[0]);
                 std::string pts_str;
                 std::copy_if(
                     _tmp1[1].begin(), _tmp1[1].end(), std::back_inserter(pts_str), [](auto x) {
