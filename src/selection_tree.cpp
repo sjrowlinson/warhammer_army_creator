@@ -107,6 +107,7 @@ unit& selection_tree::selected() {
 
 
 void selection_tree::add_unit_to_army_list() {
+    if (current_selection.name().empty()) return;
     army.get().add_unit(current_selection);
 }
 

@@ -14,171 +14,234 @@
    <string>ArmyCreator</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QFormLayout" name="formLayout">
-    <item row="0" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QLabel" name="label">
-        <property name="font">
-         <font>
-          <family>Courier New</family>
-          <pointsize>8</pointsize>
-          <weight>75</weight>
-          <italic>true</italic>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#aa0000;&quot;&gt;Faction&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="faction_combobox">
-        <property name="editable">
-         <bool>false</bool>
-        </property>
-        <item>
-         <property name="text">
-          <string>The Empire</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Bretonnia</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Dwarfs</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>High Elves</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Wood Elves</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Dark Elves</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Warriors of Chaos</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Daemons of Chaos</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Beastmen</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Chaos Dwarfs</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Vampire Counts</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Tomb Kings</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Ogre Kingdoms</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Skaven</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Orcs and Goblins</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-     </layout>
+   <widget class="QTreeWidget" name="treeWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>80</y>
+      <width>381</width>
+      <height>611</height>
+     </rect>
+    </property>
+    <column>
+     <property name="text">
+      <string>Roster</string>
+     </property>
+    </column>
+    <item>
+     <property name="text">
+      <string>Lords</string>
+     </property>
     </item>
-    <item row="0" column="1">
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
-       <widget class="QLabel" name="label_2">
-        <property name="font">
-         <font>
-          <family>Courier New</family>
-          <weight>75</weight>
-          <italic>true</italic>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#aa0000;&quot;&gt;Point Limit&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QDoubleSpinBox" name="pts_limit_spinbox">
-        <property name="decimals">
-         <number>1</number>
-        </property>
-        <property name="maximum">
-         <double>100000.000000000000000</double>
-        </property>
-        <property name="singleStep">
-         <double>0.500000000000000</double>
-        </property>
-        <property name="value">
-         <double>1000.000000000000000</double>
-        </property>
-       </widget>
-      </item>
-     </layout>
+    <item>
+     <property name="text">
+      <string>Heroes</string>
+     </property>
     </item>
-    <item row="1" column="1">
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
-      <item>
-       <widget class="QLabel" name="label_3">
-        <property name="font">
-         <font>
-          <family>Courier New</family>
-          <weight>75</weight>
-          <italic>true</italic>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#aa0000;&quot;&gt;Current Points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="current_pts_label">
-        <property name="text">
-         <string>0</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
+    <item>
+     <property name="text">
+      <string>Core</string>
+     </property>
     </item>
-   </layout>
+    <item>
+     <property name="text">
+      <string>Special</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Rare</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>212</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="font">
+        <font>
+         <family>Courier New</family>
+         <pointsize>8</pointsize>
+         <weight>75</weight>
+         <italic>true</italic>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#aa0000;&quot;&gt;Faction&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="faction_combobox">
+       <property name="editable">
+        <bool>false</bool>
+       </property>
+       <item>
+        <property name="text">
+         <string>The Empire</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Bretonnia</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Dwarfs</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>High Elves</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Wood Elves</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Dark Elves</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Warriors of Chaos</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Daemons of Chaos</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Beastmen</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Chaos Dwarfs</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Vampire Counts</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Tomb Kings</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Ogre Kingdoms</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Skaven</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Orcs and Goblins</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QPushButton" name="add_button">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>700</y>
+      <width>83</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Add</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>1180</x>
+      <y>0</y>
+      <width>188</width>
+      <height>47</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="font">
+        <font>
+         <family>Courier New</family>
+         <weight>75</weight>
+         <italic>true</italic>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#aa0000;&quot;&gt;Point Limit&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1" colspan="2">
+      <widget class="QDoubleSpinBox" name="pts_limit_spinbox">
+       <property name="decimals">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <double>100000.000000000000000</double>
+       </property>
+       <property name="singleStep">
+        <double>0.500000000000000</double>
+       </property>
+       <property name="value">
+        <double>1000.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0" colspan="2">
+      <widget class="QLabel" name="label_3">
+       <property name="font">
+        <font>
+         <family>Courier New</family>
+         <weight>75</weight>
+         <italic>true</italic>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#aa0000;&quot;&gt;Current Points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QLabel" name="current_pts_label">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

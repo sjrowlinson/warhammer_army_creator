@@ -10,6 +10,8 @@
 
 #include <QMainWindow>
 #include <QString>
+#include <QTreeWidget>
+#include <QTreeWidgetItem>
 
 namespace Ui {
 class ArmyCreator;
@@ -29,11 +31,18 @@ private slots:
 
     void on_pts_limit_spinbox_valueChanged(double pts);
 
+    void on_treeWidget_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+
+    void on_add_button_clicked();
+
 private:
     Ui::ArmyCreator *ui;
     armies::Faction race;
     std::shared_ptr<army_list> army;
     std::shared_ptr<selection_tree> st;
+
+    void populate_roster_tree();
+    void clear_roster_tree();
 };
 
 #endif // ARMYCREATOR_H
