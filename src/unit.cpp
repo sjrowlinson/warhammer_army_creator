@@ -40,10 +40,21 @@ std::size_t unit::max_size() const noexcept {
     return base->max_size;
 }
 
+std::size_t unit::size() const noexcept {
+    return unit_size;
+}
+
 std::pair<std::string, double> unit::weapon() const noexcept {
     if (current_weapon.second.first.empty())
         return {"Hand weapon", 0.0};
     return current_weapon.second;
+}
+
+std::unordered_map<
+    ArmourType,
+    std::pair<std::string, double>
+> unit::armour() const noexcept {
+    return current_armour;
 }
 
 void unit::remove_current_weapon(bool is_champion) {

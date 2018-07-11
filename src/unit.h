@@ -50,7 +50,12 @@ public:
     double points() const noexcept;
     std::size_t min_size() const noexcept;
     std::size_t max_size() const noexcept;
+    std::size_t size() const noexcept;
     std::pair<std::string, double> weapon() const noexcept;
+    std::unordered_map<
+        ArmourType,
+        std::pair<std::string, double>
+    > armour() const noexcept;
 
     double pick_weapon(ItemType item_type, std::string weapon);
     double pick_armour(ItemType item_type, ArmourType armour_type, std::string armour);

@@ -11,13 +11,13 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
     army = std::make_shared<army_list>(ui->pts_limit_spinbox->value());
     st = std::make_shared<selection_tree>(race, *army);
 
-    //QTreeWidgetItem* tree_item = new QTreeWidgetItem(ui->treeWidget);
+    //QTreeWidgetItem* tree_item = new QTreeWidgetItem(ui->roster_tree);
     //tree_item->setText(0, QString("foo"));
-    //ui->treeWidget->addTopLevelItem(tree_item);
+    //ui->roster_tree->addTopLevelItem(tree_item);
 }
 
 ArmyCreator::~ArmyCreator() {
-    delete ui;
+    //delete ui;
 }
 
 void ArmyCreator::populate_roster_tree() {
@@ -29,33 +29,38 @@ void ArmyCreator::populate_roster_tree() {
     for (const auto& l : lords) {
         QTreeWidgetItem* lord_item = new QTreeWidgetItem();
         lord_item->setText(0, QString(l->name.data()));
-        ui->treeWidget->topLevelItem(0)->addChild(lord_item);
+        ui->roster_tree->topLevelItem(0)->addChild(lord_item);
     }
     for (const auto& h : heroes) {
         QTreeWidgetItem* hero_item = new QTreeWidgetItem();
         hero_item->setText(0, QString(h->name.data()));
-        ui->treeWidget->topLevelItem(1)->addChild(hero_item);
+        ui->roster_tree->topLevelItem(1)->addChild(hero_item);
     }
     for (const auto& c : cores) {
         QTreeWidgetItem* core_item = new QTreeWidgetItem();
         core_item->setText(0, QString(c->name.data()));
-        ui->treeWidget->topLevelItem(2)->addChild(core_item);
+        ui->roster_tree->topLevelItem(2)->addChild(core_item);
     }
     for (const auto& s : specials) {
         QTreeWidgetItem* spec_item = new QTreeWidgetItem();
         spec_item->setText(0, QString(s->name.data()));
-        ui->treeWidget->topLevelItem(3)->addChild(spec_item);
+        ui->roster_tree->topLevelItem(3)->addChild(spec_item);
     }
     for (const auto& r : rares) {
         QTreeWidgetItem* rare_item = new QTreeWidgetItem();
         rare_item->setText(0, QString(r->name.data()));
-        ui->treeWidget->topLevelItem(4)->addChild(rare_item);
+        ui->roster_tree->topLevelItem(4)->addChild(rare_item);
     }
 }
 
 void ArmyCreator::clear_roster_tree() {
     for (int i = 0; i < 5; ++i)
-        ui->treeWidget->topLevelItem(i)->takeChildren();
+        ui->roster_tree->topLevelItem(i)->takeChildren();
+}
+
+void ArmyCreator::clear_army_tree() {
+    for (int i = 0; i < 5; ++i)
+        ui->army_tree->topLevelItem(i)->takeChildren();
 }
 
 void ArmyCreator::on_actionExit_triggered() {
@@ -68,9 +73,12 @@ void ArmyCreator::on_faction_combobox_currentTextChanged(const QString& faction)
     ];
     army->clear();
     ui->current_pts_label->setText(QString("%1").arg(static_cast<double>(0.0)));
+    for (int i = 0; i < 5; ++i)
+        ui->army_tree->topLevelItem(i)->setText(4, QString("%1").arg(static_cast<double>(0.0)));
     st->reset(race, *army);
     // now fill the roster tree widget
     clear_roster_tree();
+    clear_army_tree();
     populate_roster_tree();
 }
 
@@ -78,14 +86,64 @@ void ArmyCreator::on_pts_limit_spinbox_valueChanged(double pts) {
     army->change_points_limit(pts);
 }
 
-void ArmyCreator::on_treeWidget_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous) {
+void ArmyCreator::on_roster_tree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous) {
     std::string name = current->text(0).toStdString();
     if (name != "Lords" && name != "Heroes" && name != "Core" &&
-            name != "Special" && name != "Rare")
+            name != "Special" && name != "Rare") {
         st->change_selection(name);
+        ui->add_button->setEnabled(true);
+    }
+    else
+        ui->add_button->setEnabled(false);
 }
 
 void ArmyCreator::on_add_button_clicked() {
     st->add_unit_to_army_list();
     ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+    // now add to army tree widget
+    armies::UnitType unit_type = st->selected().type();
+    QTreeWidgetItem* item = new QTreeWidgetItem();
+    item->setText(0, QString(st->selected().name().data()));
+    item->setText(1, QString("%1").arg(st->selected().size()));
+    // get the current weapon of the unit
+    auto weapon = st->selected().weapon();
+    item->setText(2, QString("%1 [%2]").arg(weapon.first.data(), QString("%1").arg(weapon.second)));
+    // get the current armour of the unit
+    auto all_armour = st->selected().armour();
+    auto armour = all_armour[ArmourType::ARMOUR];
+    auto shield = all_armour[ArmourType::SHIELD];
+    auto helmet = all_armour[ArmourType::HELMET];
+    QString armour_str("");
+    if (!(armour.first.empty()))
+        armour_str += QString("%1 [%2").arg(armour.first.data(), QString("%1").arg(armour.second));
+    if (!(shield.first.empty()))
+        armour_str += QString("%1 [%2").arg(shield.first.data(), QString("%1").arg(shield.second));
+    if (!(helmet.first.empty()))
+        armour_str += QString("%1 [%2").arg(helmet.first.data(), QString("%1").arg(helmet.second));
+    item->setText(3, armour_str);
+    item->setText(4, QString("%2").arg(st->selected().points()));
+    switch (unit_type) {
+    case armies::UnitType::LORD:
+        ui->army_tree->topLevelItem(0)->addChild(item);
+        ui->army_tree->topLevelItem(0)->setText(4, QString("%1").arg(army->lord_points()));
+        break;
+    case armies::UnitType::HERO:
+        ui->army_tree->topLevelItem(1)->addChild(item);
+        ui->army_tree->topLevelItem(1)->setText(4, QString("%1").arg(army->hero_points()));
+        break;
+    case armies::UnitType::CORE:
+        ui->army_tree->topLevelItem(2)->addChild(item);
+        ui->army_tree->topLevelItem(2)->setText(4, QString("%1").arg(army->core_points()));
+        break;
+    case armies::UnitType::SPECIAL:
+        ui->army_tree->topLevelItem(3)->addChild(item);
+        ui->army_tree->topLevelItem(3)->setText(4, QString("%1").arg(army->special_points()));
+        break;
+    case armies::UnitType::RARE:
+        ui->army_tree->topLevelItem(4)->addChild(item);
+        ui->army_tree->topLevelItem(4)->setText(4, QString("%1").arg(army->rare_points()));
+    default:
+        delete item;
+        break;
+    }
 }

@@ -6,21 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1368</width>
-    <height>768</height>
+    <width>1650</width>
+    <height>1050</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>ArmyCreator</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QTreeWidget" name="treeWidget">
+   <widget class="QTreeWidget" name="roster_tree">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>80</y>
       <width>381</width>
-      <height>611</height>
+      <height>821</height>
      </rect>
     </property>
     <column>
@@ -76,7 +76,7 @@
         </font>
        </property>
        <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#aa0000;&quot;&gt;Faction&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-style:normal; color:#ffffff;&quot;&gt;Faction&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
      </item>
@@ -168,7 +168,7 @@
     <property name="geometry">
      <rect>
       <x>300</x>
-      <y>700</y>
+      <y>910</y>
       <width>83</width>
       <height>23</height>
      </rect>
@@ -177,18 +177,138 @@
      <string>Add</string>
     </property>
    </widget>
+   <widget class="QTreeWidget" name="army_tree">
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>80</y>
+      <width>941</width>
+      <height>821</height>
+     </rect>
+    </property>
+    <column>
+     <property name="text">
+      <string>Army List</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Unit Size</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Weapon</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Armour</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Points</string>
+     </property>
+    </column>
+    <item>
+     <property name="text">
+      <string>Lord Units</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Hero Units</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Core Units</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Special Units</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Rare Units</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </item>
+   </widget>
    <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>1180</x>
-      <y>0</y>
-      <width>188</width>
+      <x>1377</x>
+      <y>1</y>
+      <width>241</width>
       <height>47</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_2">
+     <item row="1" column="0" colspan="2">
+      <widget class="QLabel" name="label_3">
        <property name="font">
         <font>
          <family>Courier New</family>
@@ -198,7 +318,14 @@
         </font>
        </property>
        <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#aa0000;&quot;&gt;Point Limit&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-style:normal; color:#ffffff;&quot;&gt;Current Points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QLabel" name="current_pts_label">
+       <property name="text">
+        <string>0</string>
        </property>
       </widget>
      </item>
@@ -218,8 +345,8 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="0" colspan="2">
-      <widget class="QLabel" name="label_3">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_2">
        <property name="font">
         <font>
          <family>Courier New</family>
@@ -229,14 +356,7 @@
         </font>
        </property>
        <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#aa0000;&quot;&gt;Current Points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="2">
-      <widget class="QLabel" name="current_pts_label">
-       <property name="text">
-        <string>0</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-style:normal; color:#ffffff;&quot;&gt;Point Limit&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
      </item>
@@ -248,7 +368,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1368</width>
+     <width>1650</width>
      <height>20</height>
     </rect>
    </property>

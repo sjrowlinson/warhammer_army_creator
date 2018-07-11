@@ -211,6 +211,12 @@ std::size_t army_list::nrare() const noexcept {
     );
 }
 
+double army_list::lord_points() const noexcept { return lord_pts; }
+double army_list::hero_points() const noexcept { return hero_pts; }
+double army_list::core_points() const noexcept { return core_pts; }
+double army_list::special_points() const noexcept { return spec_pts; }
+double army_list::rare_points() const noexcept { return rare_pts; }
+
 const std::vector<std::shared_ptr<unit>>& army_list::get() const noexcept {
     return army;
 }

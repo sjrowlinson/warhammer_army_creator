@@ -59,6 +59,12 @@ public:
     std::size_t ncore() const noexcept;
     std::size_t nspecial() const noexcept;
     std::size_t nrare() const noexcept;
+    // unit type points
+    double lord_points() const noexcept;
+    double hero_points() const noexcept;
+    double core_points() const noexcept;
+    double special_points() const noexcept;
+    double rare_points() const noexcept;
     const std::vector<std::shared_ptr<unit>>& get() const noexcept;
     // list property modification
     void change_points_limit(double pts);
