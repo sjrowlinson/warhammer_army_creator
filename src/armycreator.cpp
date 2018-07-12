@@ -105,11 +105,21 @@ void ArmyCreator::on_roster_tree_currentItemChanged(QTreeWidgetItem *current, QT
         ui->add_button->setEnabled(false);
 }
 
+void ArmyCreator::on_roster_tree_itemDoubleClicked(QTreeWidgetItem *item, int column) {
+    if (item == nullptr) return;
+    std::string name = item->text(column).toStdString();
+    if (name == "Lords" || name == "Heroes" || name == "Core" ||
+            name == "Special" || name == "Rare") return;
+    st->change_selection(name);
+    on_add_button_clicked();
+}
+
 void ArmyCreator::on_army_tree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous) {
     std::string name = current->text(0).toStdString();
     if (name != "Lords" && name != "Heroes" && name != "Core" &&
-            name != "Special" && name != "Rare")
+            name != "Special" && name != "Rare") {
         ui->remove_button->setEnabled(true);
+    }
     else
         ui->remove_button->setEnabled(false);
 }

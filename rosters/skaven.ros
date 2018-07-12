@@ -188,6 +188,29 @@ Night Runners
 
 # TODO: Giant Rats, Rat Swarm
 
+#Giant Rats
+#    Core, Warbeast
+#    3
+#    5, None
+#    6 3 1 3 3 1 4 1 3
+#    Sharp teeth/claws
+#    Scurry Away!, Mixed Unit, Rat Pack, Wave of Rats
+#    None
+#    Packmaster
+#    8
+#    1, None
+#    6 3 3 3 3 1 4 1 5
+#    Hand weapon, Light armour, Whip
+#    Scurry Away!, Strength in Numbers, Mixed Unit, Running with the Pack
+#    Master Moulder [25] {1}
+#
+#Rat Swarm
+#    Core, Swarm
+#    25
+#    2, 10
+#    Unbreakable (Swarm), Small
+#    None
+
 # Special
 
 Gutter Runners

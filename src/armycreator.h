@@ -34,12 +34,13 @@ private slots:
     void on_pts_limit_spinbox_valueChanged(double pts);
 
     void on_roster_tree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+    void on_roster_tree_itemDoubleClicked(QTreeWidgetItem *item, int column);
+
+    void on_army_tree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
 
     void on_add_button_clicked();
 
     void on_remove_button_clicked();
-
-    void on_army_tree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
 
     void on_clear_button_clicked();
 

@@ -388,6 +388,19 @@
      <string>Clear</string>
     </property>
    </widget>
+   <widget class="QGroupBox" name="options_group_box">
+    <property name="geometry">
+     <rect>
+      <x>1350</x>
+      <y>80</y>
+      <width>281</width>
+      <height>821</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Unit Options</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
