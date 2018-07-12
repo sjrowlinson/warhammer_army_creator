@@ -5,7 +5,6 @@
 #include <algorithm>
 #include <cmath>
 #include <cstddef>
-#include <memory>
 #include <numeric>
 #include <set>
 #include <stdexcept>
@@ -31,7 +30,10 @@ private:
     double core_min;
     double spec_lim;
     double rare_lim;
-    std::vector<std::shared_ptr<unit>> army;
+    std::unordered_map<
+        int,
+        unit
+    > army;
     double lord_pts;
     double hero_pts;
     double core_pts;
@@ -46,8 +48,8 @@ public:
     ~army_list();
     double current_points() const noexcept;
     // add/remove units
-    std::shared_ptr<unit> add_unit(const unit& _unit);
-    void remove_unit(const std::shared_ptr<unit>& _unit);
+    void add_unit(const unit& _unit);
+    void remove_unit(int id);
     void remove_lords();
     void remove_heroes();
     void remove_core();
@@ -65,7 +67,8 @@ public:
     double core_points() const noexcept;
     double special_points() const noexcept;
     double rare_points() const noexcept;
-    const std::vector<std::shared_ptr<unit>>& get() const noexcept;
+
+    const unit& get_unit(int id);
     // list property modification
     void change_points_limit(double pts);
     // list modification

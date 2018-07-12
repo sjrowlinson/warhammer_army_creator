@@ -13,6 +13,7 @@
 #include <QString>
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
+#include <QVariant>
 
 namespace Ui {
 class ArmyCreator;
@@ -36,11 +37,18 @@ private slots:
 
     void on_add_button_clicked();
 
+    void on_remove_button_clicked();
+
+    void on_army_tree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+
+    void on_clear_button_clicked();
+
 private:
-    std::unique_ptr<Ui::ArmyCreator> ui;
+    Ui::ArmyCreator* ui;
     armies::Faction race;
     std::shared_ptr<army_list> army;
     std::shared_ptr<selection_tree> st;
+    int id_counter;
 
     void populate_roster_tree();
     void clear_roster_tree();

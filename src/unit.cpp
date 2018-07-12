@@ -20,6 +20,10 @@ unit::unit(const std::shared_ptr<base_unit>& _base)
     current_champion_armour[ArmourType::HELMET] = {"", 0.0};
 }
 
+int unit::id() const noexcept { return unit_id; }
+
+void unit::set_id(int id) { unit_id = id; }
+
 std::string unit::name() const noexcept {
     return base->name;
 }

@@ -18,6 +18,7 @@
 class unit {
 private:
     std::shared_ptr<base_unit> base;
+    int unit_id;
     std::size_t unit_size;
 
     double current_points;
@@ -45,6 +46,8 @@ public:
     explicit unit(const std::shared_ptr<base_unit>& _base);
     ~unit() = default;
 
+    int id() const noexcept;
+    void set_id(int id);
     std::string name() const noexcept;
     armies::UnitType type() const noexcept;
     double points() const noexcept;

@@ -54,7 +54,7 @@ private:
 public:
     selection_tree(armies::Faction faction, army_list& list);
     ~selection_tree() = default;
-    void add_unit_to_army_list();
+    void add_unit_to_army_list(int id);
     void change_selection(const std::string& name);
     void reset_army_list(army_list&_army);
     void reset(armies::Faction faction, army_list& list);
