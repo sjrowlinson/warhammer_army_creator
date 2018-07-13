@@ -200,7 +200,7 @@ double army_list::core_points() const noexcept { return core_pts; }
 double army_list::special_points() const noexcept { return spec_pts; }
 double army_list::rare_points() const noexcept { return rare_pts; }
 
-const unit& army_list::get_unit(int id) { return army[id]; }
+unit& army_list::get_unit(int id) { return army[id]; }
 
 void army_list::change_points_limit(double pts) {
     points = pts;

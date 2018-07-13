@@ -1,26 +1,19 @@
 Parsing
 -------
 
+* Refactor the parsing system. Current system is ok but needs to be improved on now to make it easier
+  to interact with unit objects. Probably want to have enums for each item type standardised across
+  both the default equipment and optional equipment for the unit. This will require refactoring of both
+  the .ros file format and the roster_parser class methods themselves.
+
 - Finish first basic implementation of parsing for all unit and character types. Infantry and characters
   mostly done - Warbeasts, Monsters, Warmachines and others still to do.
 
 - Implement method in roster_parser for parsing common properties that all units have, then add additional
   parsing rules to the unit specific methods.
 
-- Change minimum size value in .ros files to a (minimum, maximum) as some units have maximum unit sizes
-  as well as minimum (parser will have to reflect these changes).
-
 Units
 -----
-
-- May need to consider returning to a system I had previously whereby unit was a base class for more
-  specific unit type classes, probably not exactly as before but rather based on the unit category (i.e.
-  Infantry, Cavalry etc.). Needs more thought as it could get quite messy and the unit storing containers
-  of selection_tree and army_list would need to be changed to store std::shared_ptr or std::unique_ptr
-  instances rather than just unit.
-
-- Figure out solution to unit armour problem. This is where units may have both armour + shield options so
-  will need some sort of pairing implementation - likely to need roster parsing changes too.
 
 - Make cleaner implementation of unit champion handling, currently have no way to indicate that a units'
   champion can have some specific items / other options. Again, needs careful handling in roster parsing
@@ -29,28 +22,7 @@ Units
 GUI
 ---
 
-- Start considering how the model so far will fit into a GUI created by QtCreator. Shouldn't be any
-  compatibility problems as long as QtCreator handles C++14, but may want to start testing parts of
-  the current code base fitting into a UI framework.
+- More experimenting with layouts for better scaling behaviour of widgets.
 
-- Play around with QtCreator, particularly the Qt Designer aspect. Want to see how feasible it will be
-  to create a GUI in line with what I want.
-
-- Once parsing logic is mostly figured out (could take some time!) then begin moving over the current code
-  base into a Qt project.
-
-Intermediate Unit Manipulation Interface
-----------------------------------------
-
-- I want an interface in the GUI which will let me click on a unit in the army list and modify this unit
-  (i.e. change its size, add/remove options etc.) with these changes being automatically reflected in the
-  unit instance stored within the army_list class field army. Currently I store std::shared_ptr<unit> in
-  this std::vector field and army_list::add_unit returns a copy of the std::shared_ptr to the unit created
-  within this method. So from this I could take the return value of add_unit and put it into some sort of
-  look-up "cache" so that when a user clicks on a unit in their army list it will look up this unit in the
-  cache and assign their current selection to the shared_ptr instance of this unit so that any changes made
-  to this object will be instantly reflected in the army list.
-
-- Alternatively to above, I could change the army field of army_list to be a std::map or std::unordered_map
-  where the key_type is some sort of unique identifier to the unit - then the value_type would only need to
-  be a unit rather than std::shared_ptr<unit>.
+- Once parsing system refactor is complete start designing the unit_options_box element
+  of the UI.

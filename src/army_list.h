@@ -68,7 +68,7 @@ public:
     double special_points() const noexcept;
     double rare_points() const noexcept;
 
-    const unit& get_unit(int id);
+    unit& get_unit(int id);
     // list property modification
     void change_points_limit(double pts);
     // list modification

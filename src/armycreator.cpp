@@ -1,6 +1,6 @@
 #include "armycreator.h"
 #include "ui_armycreator.h"
-
+#include <iostream>
 ArmyCreator::ArmyCreator(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::ArmyCreator) {
@@ -70,6 +70,28 @@ void ArmyCreator::clear_army_tree() {
         ui->army_tree->topLevelItem(i)->takeChildren();
 }
 
+void ArmyCreator::clear_unit_options_box() {
+    auto c = ui->options_group_box->children();
+    for (auto& x : c) delete x;
+}
+
+void ArmyCreator::initialise_unit_options_box() {
+    int curr_id = ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt();
+    auto opt_weapons = army->get_unit(curr_id).optional_weapons();
+
+    QVBoxLayout* vbox = new QVBoxLayout;
+    for (const auto& x : opt_weapons) {
+        QRadioButton* b = new QRadioButton(tr(x.first.data()));
+        b->setObjectName(tr((x.first + "_radiobutton").data()));
+        vbox->addWidget(b);
+    }
+    vbox->addStretch(1);
+    ui->options_group_box->setLayout(vbox);
+
+    //QGridLayout* grid = new QGridLayout;
+    //grid->addWidget(ui->options_group_box);
+}
+
 void ArmyCreator::on_actionExit_triggered() {
     QCoreApplication::quit();
 }
@@ -119,6 +141,8 @@ void ArmyCreator::on_army_tree_currentItemChanged(QTreeWidgetItem *current, QTre
     if (name != "Lords" && name != "Heroes" && name != "Core" &&
             name != "Special" && name != "Rare") {
         ui->remove_button->setEnabled(true);
+        clear_unit_options_box();
+        initialise_unit_options_box();
     }
     else
         ui->remove_button->setEnabled(false);
@@ -209,6 +233,7 @@ void ArmyCreator::on_remove_button_clicked() {
     default:
         break;
     }
+    clear_unit_options_box();
     delete item;
 }
 
@@ -218,4 +243,5 @@ void ArmyCreator::on_clear_button_clicked() {
     for (int i = 0; i < 5; ++i)
         ui->army_tree->topLevelItem(i)->setText(4, QString("%1").arg(static_cast<double>(0.0)));
     clear_army_tree();
+    clear_unit_options_box();
 }

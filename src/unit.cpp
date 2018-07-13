@@ -61,6 +61,10 @@ std::unordered_map<
     return current_armour;
 }
 
+std::unordered_map<std::string, double> unit::optional_weapons() const noexcept {
+    return base->opt_weapons;
+}
+
 void unit::remove_current_weapon(bool is_champion) {
     double pts = current_weapon.second.second;
     if (!is_champion) {

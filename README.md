@@ -17,7 +17,7 @@ Warhammer, Warhammer Fantasy Battles and all the associated names and content us
 trademarks of Games Workshop Ltd. All data used by The Software is either developer-generated or user-generated
 content and is not supported by Games Workshop Ltd. in any way. All Rights Reserved.
 
-All armies/factions in the `rosters/` directory as well as items in the `magic_items/` directory
+All files in the `rosters/` directory as well as files in the `magic_items/` directory
 contain data which wholly belongs to Games Workshop Ltd. By using this software, cloning this
 repository and/or viewing the contents of any files within the directories `rosters/` and `magic_items/`,
 users and/or contributors acknowledge that they are solely responsible for ensuring they legally own

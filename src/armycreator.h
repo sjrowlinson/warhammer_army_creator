@@ -8,12 +8,19 @@
 
 #include <functional>
 #include <memory>
+#include <unordered_map>
 
+#include <QCheckBox>
+#include <QGridLayout>
+#include <QGroupBox>
 #include <QMainWindow>
+#include <QPushButton>
+#include <QRadioButton>
 #include <QString>
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 #include <QVariant>
+#include <QVBoxLayout>
 
 namespace Ui {
 class ArmyCreator;
@@ -54,6 +61,8 @@ private:
     void populate_roster_tree();
     void clear_roster_tree();
     void clear_army_tree();
+    void clear_unit_options_box();
+    void initialise_unit_options_box();
 };
 
 #endif // ARMYCREATOR_H

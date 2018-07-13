@@ -60,6 +60,9 @@ public:
         std::pair<std::string, double>
     > armour() const noexcept;
 
+    // options
+    std::unordered_map<std::string, double> optional_weapons() const noexcept;
+
     double pick_weapon(ItemType item_type, std::string weapon);
     double pick_armour(ItemType item_type, ArmourType armour_type, std::string armour);
     double pick_mount(std::string mount);
