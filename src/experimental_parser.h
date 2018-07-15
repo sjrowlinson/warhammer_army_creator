@@ -33,8 +33,8 @@ namespace tools {
         };
     private:
         QFile f;
-        std::stringstream ss;
-        std::vector<std::stringstream::streampos> spos;
+        QTextStream qts;
+        std::vector<qint64> streampos;
         std::vector<std::size_t> blocks;
         armies::Faction faction;
 
@@ -50,6 +50,15 @@ namespace tools {
             std::pair<std::string, double>
         > parse_command(std::string s);
         equipment parse_equipment(std::string s);
+        std::unordered_map<
+            std::string,
+            std::vector<std::pair<WeaponType, double>>
+        > parse_optional_weapons(std::string s);
+        std::unordered_map<
+            std::string,
+            std::vector<std::pair<ArmourType, double>>
+        > parse_optional_armour(std::string s);
+
 
         // specialised parsing
         base_unit parse_melee_character(std::size_t n, armies::UnitType ut);

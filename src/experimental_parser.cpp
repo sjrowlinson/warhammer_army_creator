@@ -4,8 +4,8 @@ namespace tools {
 
     experimental_parser::experimental_parser(const QString& rfile, armies::Faction _faction)
         : f(rfile) {
-        QTextStream in(&f);
-        ss = std::stringstream(in.readAll().toStdString());
+        f.open(QFile::ReadOnly | QFile::Text);
+        qts = QTextStream(&f);
         faction = _faction;
         cache();
     }
@@ -13,10 +13,9 @@ namespace tools {
     experimental_parser::~experimental_parser() { f.close(); }
 
     void experimental_parser::cache() {
-        std::string s;
-        while (ss) {
-            spos.push_back(ss.tellg());
-            std::getline(ss, s);
+        while (!qts.atEnd()) {
+            streampos.push_back(qts.pos());
+            auto line = qts.readLine();
         }
     }
 
@@ -30,16 +29,14 @@ namespace tools {
     }
 
     void experimental_parser::navigate_to_line(std::size_t n) {
-        ss.clear();
-        ss.seekg(spos[n]);
+        qts.seek(streampos[n]);
     }
 
     std::string experimental_parser::read_line(std::size_t n, bool trim) {
         navigate_to_line(n);
-        std::string s;
-        std::getline(ss, s);
-        if (trim) return tools::remove_leading_whitespaces(s);
-        return s;
+        std::string line = qts.readLine().toStdString();
+        if (trim) return tools::remove_leading_whitespaces(line);
+        return line;
     }
 
     std::pair<std::size_t, std::size_t> experimental_parser::parse_minmax_size(std::string s) {
@@ -95,36 +92,97 @@ namespace tools {
             switch (map_to[vec[0]]) {
             case 0:
             {
-                std::vector<std::string> v = tools::split(vec[1], '{');
-                std::vector<std::string> v1 = tools::split(v[1], '}');
-                std::vector<std::string> v2 = tools::split(v1[1], '[');
-                std::vector<std::string> v3 = tools::split(v2[1], ']');
-                std::string name = v[0];
+                auto item_bs = tools::parse_item_bs(vec[1]);
+                std::string name = item_bs[0];
                 WeaponType wt;
-                if (v3[0] == "Melee") wt = WeaponType::MELEE;
-                else if (v3[0] == "Ballistic") wt = WeaponType::BALLISTIC;
+                if (item_bs[2] == "Melee") wt = WeaponType::MELEE;
+                else if (item_bs[2] == "Ballistic") wt = WeaponType::BALLISTIC;
                 e.weapons[wt] = name;
                 break;
             }
             case 1:
             {
-                std::vector<std::string> v = tools::split(vec[1], '{');
-                std::vector<std::string> v1 = tools::split(v[1], '}');
-                std::vector<std::string> v2 = tools::split(v1[1], '[');
-                std::vector<std::string> v3 = tools::split(v2[1], ']');
-                std::string name = v[0];
+                auto item_bs = tools::parse_item_bs(vec[1]);
+                std::string name = item_bs[0];
                 ArmourType at;
-                if (v3[0] == "Armour") at = ArmourType::ARMOUR;
-                else if (v3[0] == "Shield") at = ArmourType::SHIELD;
-                else if (v3[0] == "Helmet") at = ArmourType::HELMET;
+                if (item_bs[2] == "Armour") at = ArmourType::ARMOUR;
+                else if (item_bs[2] == "Shield") at = ArmourType::SHIELD;
+                else if (item_bs[2] == "Helmet") at = ArmourType::HELMET;
                 e.armour[at] = name;
                 break;
             }
+                break;
+            case 2:
+                e.talismans.push_back(vec[1]);
+                break;
+            case 3:
+                e.arcane.push_back(vec[1]);
+                break;
+            case 4:
+                e.enchanted.push_back(vec[1]);
+                break;
+            case 5:
+                e.banners.push_back(vec[1]);
                 break;
             default: break;
             }
         }
         return e;
+    }
+
+    std::unordered_map<
+        std::string,
+        std::vector<std::pair<WeaponType, double>>
+    > experimental_parser::parse_optional_weapons(std::string s) {
+        std::unordered_map<
+                std::string,
+                std::vector<std::pair<WeaponType, double>>
+        > um;
+        if (s == "None" || s.empty()) return um;
+        std::vector<std::string> all = tools::split(s, ',');
+        for (const auto& _s : all) {
+            auto weapon_bsp = tools::parse_item_bsp(_s);
+            std::string name = weapon_bsp[0];
+            ItemClass ic;
+            if (bsp[1] == "Mundane") ic = ItemClass::MUNDANE;
+            else if (bsp[1] == "Magic") ic = ItemClass::MAGIC;
+            else if (bsp[1] == "Common") ic = ItemClass::COMMON;
+            else if (bsp[1] == "Faction") ic = ItemClass::FACTION;
+            WeaponType wt;
+            if (bsp[2] == "Melee") wt = WeaponType::MELEE;
+            else if (bsp[2] == "Ballistic") wt = WeaponType::BALLISTIC;
+            double pts = std::stod(bsp[3]);
+            um[name].push_back(std::make_pair(wt, pts));
+        }
+        return um;
+    }
+
+    std::unordered_map<
+        std::string,
+        std::vector<std::pair<ArmourType, double>>
+    > experimental_parser::parse_optional_armour(std::string s) {
+        std::unordered_map<
+                std::string,
+                std::vector<std::pair<ArmourType, double>>
+        > um;
+        if (s == "None" || s.empty()) return um;
+        std::vector<std::string> all = tools::split(s, ',');
+        for (const auto& _s : all) {
+            auto armour_bsp = tools::parse_item_bsp(_s);
+            std::string name = armour_bsp[0];
+            ItemClass ic;
+            if (bsp[1] == "Mundane") ic = ItemClass::MUNDANE;
+            else if (bsp[1] == "Magic") ic = ItemClass::MAGIC;
+            else if (bsp[1] == "Common") ic = ItemClass::COMMON;
+            else if (bsp[1] == "Faction") ic = ItemClass::FACTION;
+            ArmourType at;
+            if (bsp[2] == "Armour") at = ArmourType::ARMOUR;
+            else if (bsp[2] == "Shield") at = ArmourType::SHIELD;
+            else if (bsp[2] == "Helmet") at = ArmourType::HELMET;
+            double pts = std::stod(bsp[3]);
+            um[name].push_back(std::make_pair(at, pts));
+        }
+        return um;
     }
 
     std::vector<base_unit> experimental_parser::parse() {
@@ -156,7 +214,7 @@ namespace tools {
         auto mm_size = parse_minmax_size(read_line(blocks[n] + 4));
         auto stats = tools::split_stos(read_line(blocks[n] + 5), ' ');
         auto rules = tools::split(read_line(blocks[n] + 6), ',');
-
+        auto eq = parse_equipment(read_line(blocks[n] + 7));
     }
 
 }

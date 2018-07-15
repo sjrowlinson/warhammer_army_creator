@@ -3,6 +3,7 @@
 #include <cctype>
 #include <sstream>
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace tools {
@@ -16,6 +17,9 @@ namespace tools {
 
 	bool starts_with(const std::string& s, char c);
 	bool starts_with(const std::string& s, std::string match);
+
+    std::vector<std::string> parse_item_bs(std::string s);
+    std::vector<std::string> parse_item_bsp(std::string s);
 }
 
 #endif // !TOOLS_H

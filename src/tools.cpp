@@ -55,4 +55,31 @@ namespace tools {
 		return true;
 	}
 
+    std::vector<std::string> parse_item_bs(std::string s) {
+        std::vector<std::string> brace_start = tools::split(s, '{');
+        std::vector<std::string> brace_end = tools::split(brace_start[1], '}');
+        std::vector<std::string> square_start = tools::split(brace_end[1], '[');
+        std::vector<std::string> square_end = tools::split(square_start[1], ']');
+        std::vector<std::string> result;
+        result.push_back(brace_start[0]);
+        result.push_back(brace_end[0]);
+        result.push_back(square_end[0]);
+        return result;
+    }
+
+    std::vector<std::string> parse_item_bsp(std::string s) {
+        std::vector<std::string> brace_start = tools::split(s, '{');
+        std::vector<std::string> brace_end = tools::split(brace_start[1], '}');
+        std::vector<std::string> square_start = tools::split(brace_end[1], '[');
+        std::vector<std::string> square_end = tools::split(square_start[1], ']');
+        std::vector<std::string> paren_start = tools::split(square_end[1], '(');
+        std::vector<std::string> paren_end = tools::split(paren_start[1], ')');
+        std::vector<std::string> result;
+        result.push_back(brace_start[0]);
+        result.push_back(brace_end[0]);
+        result.push_back(square_end[0]);
+        result.push_back(paren_end[0]);
+        return result;
+    }
+
 }
