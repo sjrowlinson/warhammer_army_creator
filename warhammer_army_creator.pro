@@ -28,6 +28,7 @@ SOURCES += \
         src/armycreator.cpp \
         src/army_list.cpp \
         src/army_maps.cpp \
+        src/experimental_parser.cpp \
         src/item_parser.cpp \
         src/roster_parser.cpp \
         src/selection_tree.cpp \
@@ -38,6 +39,7 @@ HEADERS += \
         src/armycreator.h \
         src/army_list.h \
         src/army_maps.h \
+        src/experimental_parser.h \
         src/base_unit.h \
         src/item_parser.h \
         src/magic_item.h \
@@ -50,5 +52,5 @@ FORMS += \
         form/armycreator.ui
 
 RESOURCES += \
-    rosters.qrc \
-    magic_items.qrc
+        rosters.qrc \
+        magic_items.qrc

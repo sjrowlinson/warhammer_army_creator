@@ -36,6 +36,16 @@ struct base_unit {
     // equipment and special rules
     std::vector<std::string> equipment;
     std::vector<std::string> special_rules;
+    
+    /*
+    std::unordered_map<WeaponType, std::string> weapons;
+    std::unordered_map<ArmourType, std::string> armour;
+    std::vector<std::string> talismans;
+    std::vector<std::string> arcane_items;
+    std::vector<std::string> enchanted_items;
+    std::vector<std::string> banners;
+    */
+
     // optional equipment
     std::unordered_map<std::string, double> opt_weapons;
     std::unordered_map<std::string, double> opt_armour;
@@ -44,6 +54,22 @@ struct base_unit {
     std::unordered_map<
         CommandGroup, std::pair<std::string, double>
     > opt_command;
+
+    /*
+    std::unordered_map<
+        std::string,
+        std::vector<std::pair<WeaponType, double>>
+    > opt_weapons;
+    std::unordered_map<
+        std::string,
+        std::vector<std::pair<ArmourType, double>>
+    > opt_armour;
+    std::unordered_map<
+        std::string,
+        std::vector<std::pair<UnitClass, double>>
+    > opt_mounts;
+    */
+
     // champion specific options
     std::unordered_map<std::string, double> champ_options;
     // magic item + faction-specific item/feature budgets

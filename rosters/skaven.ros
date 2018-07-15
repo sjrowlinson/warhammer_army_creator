@@ -18,6 +18,46 @@ Vermin Lord
     0, false
     None
 
+# Experimental
+# ------------
+#
+# Warlord
+#   Lord, Melee
+#   Infantry
+#   90
+#   1, 1
+#   5 6 4 4 4 3 7 4 7
+#   Scurry Away!, Strength in Numbers, Verminous Valour
+#   Weapon: Hand weapon {Mundane} [Melee], Armour: Heavy armour {Mundane} [Armour]
+#   OCO: Great weapon {Mundane} [Melee] (6), Additional hand weapon {Mundane} [Melee] (3), Halberd {Mundane} [Melee] (3)
+#   Shield {Mundane} [Shield] (3)
+#   Rat Ogre Bonebreaker {Monster} [65], War-litter {Unique} [35], Great Pox Rat {Monstrous Cavalry} [30]
+#   None # extra items
+#   100 # magic item allowance
+#   100 # faction-specific (e.g. Skaven Scavenge-Pile or Chaos Gifts) item allowance
+#   100 # total magic item allowance
+#
+#
+# Grey Seer
+#   Lord, Mage
+#   4
+#   None
+#   Ruin, Plague
+#   Infantry
+#   240
+#   1, 1
+#   5 3 3 3 4 3 5 1 7
+#   Scurry Away!, Strength in Numbers, Verminous Valour
+#   Weapon: Hand weapon, Enchanted Item: D3 Warpstone Tokens
+#   None
+#   None
+#   Screaming Bell {Unique} [200]
+#   None
+#   100
+#   100
+#   100
+#
+
 Warlord
     Lord, Melee
     Infantry

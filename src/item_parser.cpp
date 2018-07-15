@@ -48,25 +48,44 @@ namespace tools {
     std::vector<magic_item> item_parser::parse() {
         std::unordered_map<
             std::string,
-            MagicItemType
+            ItemType
         > map_to_item = {
-            {"Weapon", MagicItemType::WEAPON},
-            {"Armour", MagicItemType::ARMOUR},
-            {"Talisman", MagicItemType::TALISMAN},
-            {"Arcane", MagicItemType::ARCANE},
-            {"Enchanted", MagicItemType::ENCHANTED},
-            {"Banner", MagicItemType::BANNER}
+            {"Weapon", ItemType::WEAPON},
+            {"Armour", ItemType::ARMOUR},
+            {"Talisman", ItemType::TALISMAN},
+            {"Arcane", ItemType::ARCANE},
+            {"Enchanted", ItemType::ENCHANTED},
+            {"Banner", ItemType::BANNER}
+        };
+        std::unordered_map<
+            std::string,
+            ArmourType
+        > map_to_armour = {
+            {"Armour", ArmourType::ARMOUR},
+            {"Shield", ArmourType::SHIELD},
+            {"Helmet", ArmourType::HELMET}
         };
         count_items();
         std::vector<magic_item> items; items.reserve(blocks.size());
         for (std::size_t i = 0U; i < blocks.size(); ++i) {
             std::string name = read_line(blocks[i]);
-            MagicItemType item_type = map_to_item[read_line(blocks[i] + 1)];
+            std::vector<std::string> mits = tools::split(read_line(blocks[i] + 1), ',');
+            ItemType mit;
+            ArmourType at;
+            if (mits.size() > 1) {
+                mit = ItemType::ARMOUR;
+                at = map_to_armour[mits[1]];
+            }
+            else {
+                mit = map_to_item[mits[0]];
+                at = ArmourType::NONE;
+            }
             double points = std::stod(read_line(blocks[i] + 2));
             std::string descr = read_line(blocks[i] + 3);
             std::string allowed = read_line(blocks[i] + 4);
             magic_item item;
-            item.item_type = item_type;
+            item.item_type = mit;
+            item.armour_type = at;
             item.name = name;
             item.points = points;
             item.description = descr;

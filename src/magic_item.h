@@ -4,7 +4,14 @@
 #include <string>
 #include <unordered_set>
 
-enum class MagicItemType {
+enum class ItemClass {
+    MUNDANE,
+    MAGIC,
+    FACTION,
+    COMMON
+};
+
+enum class ItemType {
     WEAPON,
     ARMOUR,
     TALISMAN,
@@ -13,21 +20,21 @@ enum class MagicItemType {
     BANNER
 };
 
-enum class ItemType {
-    MUNDANE,
-    MAGIC,
-    FACTION,
-    COMMON
+enum class WeaponType {
+    MELEE,
+    BALLISTIC
 };
 
 enum class ArmourType {
     ARMOUR,
     SHIELD,
     HELMET,
+    NONE
 };
 
 struct magic_item {
-    MagicItemType item_type;
+    ItemType item_type;
+    ArmourType armour_type;
     std::string name;
     std::string description;
     double points;

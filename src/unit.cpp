@@ -9,12 +9,12 @@ unit::unit(const std::shared_ptr<base_unit>& _base)
     current_magic_item_points = 0.0;
     current_faction_item_points = 0.0;
     current_mage_level = _base->base_mage_level;
-    current_weapon = {ItemType::MUNDANE, {"Hand weapon", 0.0}};
+    current_weapon = {ItemClass::MUNDANE, {"Hand weapon", 0.0}};
     current_armour[ArmourType::ARMOUR] = {"", 0.0};
     current_armour[ArmourType::SHIELD] = {"", 0.0};
     current_armour[ArmourType::HELMET] = {"", 0.0};
     current_mount = {"", 0.0};
-    current_champion_weapon = {ItemType::MUNDANE, {"Hand weapon", 0.0}};
+    current_champion_weapon = {ItemClass::MUNDANE, {"Hand weapon", 0.0}};
     current_champion_armour[ArmourType::ARMOUR] = {"", 0.0};
     current_champion_armour[ArmourType::SHIELD] = {"", 0.0};
     current_champion_armour[ArmourType::HELMET] = {"", 0.0};
@@ -69,39 +69,39 @@ void unit::remove_current_weapon(bool is_champion) {
     double pts = current_weapon.second.second;
     if (!is_champion) {
         switch (current_weapon.first) {
-        case ItemType::MAGIC:
-        case ItemType::COMMON:
+        case ItemClass::MAGIC:
+        case ItemClass::COMMON:
             current_magic_item_points -= pts;
             break;
-        case ItemType::FACTION:
+        case ItemClass::FACTION:
             current_faction_item_points -= pts;
             break;
         default: break;
         }
         current_points -= unit_size * pts;
-        current_weapon = {ItemType::MUNDANE, {"Hand weapon", 0.0}};
+        current_weapon = {ItemClass::MUNDANE, {"Hand weapon", 0.0}};
     }
     else {
         switch (current_champion_weapon.first) {
-        case ItemType::MAGIC:
-        case ItemType::COMMON:
+        case ItemClass::MAGIC:
+        case ItemClass::COMMON:
             current_magic_item_points -= pts;
             break;
-        case ItemType::FACTION:
+        case ItemClass::FACTION:
             current_faction_item_points -= pts;
             break;
         default: break;
         }
         current_points -= pts;
-        current_champion_weapon = {ItemType::MUNDANE, {"Hand weapon", 0.0}};
+        current_champion_weapon = {ItemClass::MUNDANE, {"Hand weapon", 0.0}};
     }
 }
 
 
-double unit::pick_weapon(ItemType item_type, std::string weapon) {
+double unit::pick_weapon(ItemClass item_type, std::string weapon) {
     double pts = 0.0;
     switch (item_type) {
-    case ItemType::MUNDANE:
+    case ItemClass::MUNDANE:
         if (!(base->opt_weapons.count(weapon)))
             throw std::invalid_argument("Weapon not found!");
         pts = base->opt_weapons[weapon];
@@ -109,7 +109,7 @@ double unit::pick_weapon(ItemType item_type, std::string weapon) {
         current_weapon = std::make_pair(item_type, std::make_pair(weapon, pts));
         current_points += unit_size * pts;
         break;
-    case ItemType::MAGIC:
+    case ItemClass::MAGIC:
         if (!(base->is_character || !(base->opt_command.count(CommandGroup::CHAMPION))))
             throw std::invalid_argument("Cannot give this unit a magic weapon.");
         if (base->is_character) {
@@ -136,10 +136,10 @@ double unit::pick_weapon(ItemType item_type, std::string weapon) {
             return pts;
         }
         break;
-    case ItemType::FACTION:
+    case ItemClass::FACTION:
         // TODO: implement once we have faction specific items parser + container
         break;
-    case ItemType::COMMON:
+    case ItemClass::COMMON:
         // TODO: implement once we have common item parser + container
         break;
     default:
@@ -148,10 +148,10 @@ double unit::pick_weapon(ItemType item_type, std::string weapon) {
     return unit_size * pts;
 }
 
-double unit::pick_armour(ItemType item_type, ArmourType armour_type, std::string armour) {
+double unit::pick_armour(ItemClass item_type, ArmourType armour_type, std::string armour) {
     double pts = 0.0;
     switch (item_type) {
-    case ItemType::MUNDANE:
+    case ItemClass::MUNDANE:
         break;
     }
     return pts;
