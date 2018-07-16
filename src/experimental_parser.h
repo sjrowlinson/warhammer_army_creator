@@ -28,7 +28,7 @@ namespace tools {
             std::vector<std::string> enchanted;
             std::vector<std::string> banners;
 
-            equipment() 
+            equipment()
                 : weapons(), armour(), talismans(), arcane(), enchanted(), banners() {}
         };
     private:
@@ -49,16 +49,27 @@ namespace tools {
             CommandGroup,
             std::pair<std::string, double>
         > parse_command(std::string s);
+        std::unordered_map<
+            short,
+            double
+        > parse_mage_upgrades(std::string s);
         equipment parse_equipment(std::string s);
         std::unordered_map<
             std::string,
-            std::vector<std::pair<WeaponType, double>>
+            std::pair<WeaponType, double>
         > parse_optional_weapons(std::string s);
         std::unordered_map<
             std::string,
-            std::vector<std::pair<ArmourType, double>>
+            std::pair<ArmourType, double>
         > parse_optional_armour(std::string s);
-
+        std::unordered_map<
+            std::string,
+            std::pair<UnitClass, double>
+        > parse_optional_mounts(std::string s);
+        std::unordered_map<
+            std::string,
+            std::pair<bool, double>
+        > parse_optional_extras(std::string s);
 
         // specialised parsing
         base_unit parse_melee_character(std::size_t n, armies::UnitType ut);

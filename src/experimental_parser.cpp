@@ -75,6 +75,22 @@ namespace tools {
         return map;
     }
 
+    std::unordered_map<
+        short,
+        double
+    > experimental_parser::parse_mage_upgrades(std::string s) {
+        std::unordered_map<short, double> um;
+        if (s == "None" || s.empty()) return um;
+        std::vector<std::string> all = tools::split(s, ',');
+        for (const auto& _s : all) {
+            std::vector<std::string> v = tools::split(_s, '[');
+            short level = std::stoul(v[0]);
+            double pts = std::stod(tools::split(v[1], ']')[0]);
+            um[level] = pts;
+        }
+        return um;
+    }
+
     experimental_parser::equipment experimental_parser::parse_equipment(std::string s) {
         equipment e;
         if (s == "None" || s.empty()) return e;
@@ -127,16 +143,18 @@ namespace tools {
             default: break;
             }
         }
+        if (!(e.weapons.count(WeaponType::MELEE)))
+            e.weapons[WeaponType::MELEE] = "Hand weapon";
         return e;
     }
 
     std::unordered_map<
         std::string,
-        std::vector<std::pair<WeaponType, double>>
+        std::pair<WeaponType, double>
     > experimental_parser::parse_optional_weapons(std::string s) {
         std::unordered_map<
-                std::string,
-                std::vector<std::pair<WeaponType, double>>
+            std::string,
+            std::pair<WeaponType, double>
         > um;
         if (s == "None" || s.empty()) return um;
         std::vector<std::string> all = tools::split(s, ',');
@@ -144,26 +162,26 @@ namespace tools {
             auto weapon_bsp = tools::parse_item_bsp(_s);
             std::string name = weapon_bsp[0];
             ItemClass ic;
-            if (bsp[1] == "Mundane") ic = ItemClass::MUNDANE;
-            else if (bsp[1] == "Magic") ic = ItemClass::MAGIC;
-            else if (bsp[1] == "Common") ic = ItemClass::COMMON;
-            else if (bsp[1] == "Faction") ic = ItemClass::FACTION;
+            if (weapon_bsp[1] == "Mundane") ic = ItemClass::MUNDANE;
+            else if (weapon_bsp[1] == "Magic") ic = ItemClass::MAGIC;
+            else if (weapon_bsp[1] == "Common") ic = ItemClass::COMMON;
+            else if (weapon_bsp[1] == "Faction") ic = ItemClass::FACTION;
             WeaponType wt;
-            if (bsp[2] == "Melee") wt = WeaponType::MELEE;
-            else if (bsp[2] == "Ballistic") wt = WeaponType::BALLISTIC;
-            double pts = std::stod(bsp[3]);
-            um[name].push_back(std::make_pair(wt, pts));
+            if (weapon_bsp[2] == "Melee") wt = WeaponType::MELEE;
+            else if (weapon_bsp[2] == "Ballistic") wt = WeaponType::BALLISTIC;
+            double pts = std::stod(weapon_bsp[3]);
+            um[name] = std::make_pair(wt, pts);
         }
         return um;
     }
 
     std::unordered_map<
         std::string,
-        std::vector<std::pair<ArmourType, double>>
+        std::pair<ArmourType, double>
     > experimental_parser::parse_optional_armour(std::string s) {
         std::unordered_map<
-                std::string,
-                std::vector<std::pair<ArmourType, double>>
+            std::string,
+            std::pair<ArmourType, double>
         > um;
         if (s == "None" || s.empty()) return um;
         std::vector<std::string> all = tools::split(s, ',');
@@ -171,16 +189,64 @@ namespace tools {
             auto armour_bsp = tools::parse_item_bsp(_s);
             std::string name = armour_bsp[0];
             ItemClass ic;
-            if (bsp[1] == "Mundane") ic = ItemClass::MUNDANE;
-            else if (bsp[1] == "Magic") ic = ItemClass::MAGIC;
-            else if (bsp[1] == "Common") ic = ItemClass::COMMON;
-            else if (bsp[1] == "Faction") ic = ItemClass::FACTION;
+            if (armour_bsp[1] == "Mundane") ic = ItemClass::MUNDANE;
+            else if (armour_bsp[1] == "Magic") ic = ItemClass::MAGIC;
+            else if (armour_bsp[1] == "Common") ic = ItemClass::COMMON;
+            else if (armour_bsp[1] == "Faction") ic = ItemClass::FACTION;
             ArmourType at;
-            if (bsp[2] == "Armour") at = ArmourType::ARMOUR;
-            else if (bsp[2] == "Shield") at = ArmourType::SHIELD;
-            else if (bsp[2] == "Helmet") at = ArmourType::HELMET;
-            double pts = std::stod(bsp[3]);
-            um[name].push_back(std::make_pair(at, pts));
+            if (armour_bsp[2] == "Armour") at = ArmourType::ARMOUR;
+            else if (armour_bsp[2] == "Shield") at = ArmourType::SHIELD;
+            else if (armour_bsp[2] == "Helmet") at = ArmourType::HELMET;
+            double pts = std::stod(armour_bsp[3]);
+            um[name] = std::make_pair(at, pts);
+        }
+        return um;
+    }
+
+    std::unordered_map<
+        std::string,
+        std::pair<UnitClass, double>
+    > experimental_parser::parse_optional_mounts(std::string s) {
+        std::unordered_map<
+            std::string,
+            std::pair<UnitClass, double>
+        > um;
+        if (s == "None" || s.empty()) return um;
+        std::vector<std::string> all = tools::split(s, ',');
+        for (const auto& _s : all) {
+            auto mount_bs = tools::parse_item_bs(_s);
+            std::string name = mount_bs[0];
+            UnitClass uc;
+            if (mount_bs[1] == "Infantry") uc = UnitClass::INFANTRY;
+            else if (mount_bs[1] == "Cavalry") uc = UnitClass::CAVALRY;
+            else if (mount_bs[1] == "Monstrous Cavalry") uc = UnitClass::MONSTROUS_CAVALRY;
+            else if (mount_bs[1] == "Monstrous Creature") uc = UnitClass::MONSTROUS_CREATURES;
+            else if (mount_bs[1] == "Warbeast") uc = UnitClass::WARBEASTS;
+            else if (mount_bs[1] == "Chariot") uc = UnitClass::CHARIOT;
+            else if (mount_bs[1] == "Monster") uc = UnitClass::MONSTER;
+            else if (mount_bs[1] == "Unique") uc = UnitClass::UNIQUE;
+            double pts = std::stod(mount_bs[2]);
+            um[name] = std::make_pair(uc, pts);
+        }
+        return um;
+    }
+
+    std::unordered_map<
+        std::string,
+        std::pair<bool, double>
+    > experimental_parser::parse_optional_extras(std::string s) {
+        std::unordered_map<
+            std::string,
+            std::pair<bool, double>
+        > um;
+        if (s == "None" || s.empty()) return um;
+        std::vector<std::string> all = tools::split(s, ',');
+        for (const auto& _s : all) {
+            auto extras_bs = tools::parse_item_bs(_s);
+            std::string name = extras_bs[0];
+            bool is_singular = (extras_bs[1] == "True");
+            double pts = std::stod(extras_bs[2]);
+            um[name] = std::make_pair(is_singular, pts);
         }
         return um;
     }
@@ -215,6 +281,20 @@ namespace tools {
         auto stats = tools::split_stos(read_line(blocks[n] + 5), ' ');
         auto rules = tools::split(read_line(blocks[n] + 6), ',');
         auto eq = parse_equipment(read_line(blocks[n] + 7));
+        auto opt_weapons = parse_optional_weapons(read_line(blocks[n] + 8));
+        auto opt_armours = parse_optional_armour(read_line(blocks[n] + 9));
+        auto opt_mounts = parse_optional_mounts(read_line(blocks[n] + 10));
+        auto opt_extras = parse_optional_extras(read_line(blocks[n] + 11));
+        auto mi_budget = std::stod(read_line(blocks[n] + 12));
+        auto fi_budget = std::stod(read_line(blocks[n] + 13));
+        auto ti_budget = std::stod(read_line(blocks[n] + 14));
+    }
+
+    base_unit experimental_parser::parse_mage_character(std::size_t n, armies::UnitType ut) {
+        auto name = read_line(blocks[n]);
+        auto level = static_cast<short>(std::stoi(read_line(blocks[n] + 2)));
+        auto level_upgrades = parse_mage_upgrades(read_line(blocks[n] + 3));
+        auto lores = tools::split(read_line(blocks[n] + 4), ',');
     }
 
 }
