@@ -9,10 +9,26 @@ unit::unit(const std::shared_ptr<base_unit>& _base)
     current_magic_item_points = 0.0;
     current_faction_item_points = 0.0;
     current_mage_level = _base->base_mage_level;
-    current_weapon = {ItemClass::MUNDANE, {"Hand weapon", 0.0}};
-    current_armour[ArmourType::ARMOUR] = {"", 0.0};
-    current_armour[ArmourType::SHIELD] = {"", 0.0};
-    current_armour[ArmourType::HELMET] = {"", 0.0};
+
+    current_weapon = {ItemClass::MUNDANE, {_base->weapons[WeaponType::MELEE], 0.0}};
+    if (_base->armour.count(ArmourType::ARMOUR))
+        current_armour[ArmourType::ARMOUR] = {_base->armour[ArmourType::ARMOUR], 0.0};
+    else
+        current_armour[ArmourType::ARMOUR] = {"", 0.0};
+    if (_base->armour.count(ArmourType::SHIELD))
+        current_armour[ArmourType::SHIELD] = {_base->armour[ArmourType::SHIELD], 0.0};
+    else
+        current_armour[ArmourType::SHIELD] = {"", 0.0};
+    if (_base->armour.count(ArmourType::HELMET))
+        current_armour[ArmourType::HELMET] = {_base->armour[ArmourType::HELMET], 0.0};
+    else
+        current_armour[ArmourType::HELMET] = {"", 0.0};
+
+    //current_weapon = {ItemClass::MUNDANE, {"Hand weapon", 0.0}};
+    //current_armour[ArmourType::ARMOUR] = {"", 0.0};
+    //current_armour[ArmourType::SHIELD] = {"", 0.0};
+    //current_armour[ArmourType::HELMET] = {"", 0.0};
+
     current_mount = {"", 0.0};
     current_champion_weapon = {ItemClass::MUNDANE, {"Hand weapon", 0.0}};
     current_champion_armour[ArmourType::ARMOUR] = {"", 0.0};
@@ -61,7 +77,10 @@ std::unordered_map<
     return current_armour;
 }
 
-std::unordered_map<std::string, double> unit::optional_weapons() const noexcept {
+std::unordered_map<
+    std::string,
+    std::pair<WeaponType, double>
+> unit::optional_weapons() const noexcept {
     return base->opt_weapons;
 }
 
@@ -97,18 +116,22 @@ void unit::remove_current_weapon(bool is_champion) {
     }
 }
 
-
+// TODO: remove item_type param and store the ItemClass of a weapon
+// when parsing so that all we need here is the name of the weapon
+// as a string look-up
 double unit::pick_weapon(ItemClass item_type, std::string weapon) {
     double pts = 0.0;
     switch (item_type) {
     case ItemClass::MUNDANE:
+    {
         if (!(base->opt_weapons.count(weapon)))
             throw std::invalid_argument("Weapon not found!");
-        pts = base->opt_weapons[weapon];
+        auto type_pts_pair = base->opt_weapons[weapon];
         remove_current_weapon(false);
-        current_weapon = std::make_pair(item_type, std::make_pair(weapon, pts));
+        current_weapon = std::make_pair(item_type, std::make_pair(weapon, type_pts_pair.second));
         current_points += unit_size * pts;
         break;
+    }
     case ItemClass::MAGIC:
         if (!(base->is_character || !(base->opt_command.count(CommandGroup::CHAMPION))))
             throw std::invalid_argument("Cannot give this unit a magic weapon.");
@@ -160,7 +183,7 @@ double unit::pick_armour(ItemClass item_type, ArmourType armour_type, std::strin
 double unit::pick_mount(std::string mount) {
     if (!(base->opt_mounts.count(mount)))
         throw std::invalid_argument("Mount not found!");
-    double pts = base->opt_mounts[mount];
+    double pts = (base->opt_mounts[mount]).second;
     current_points -= unit_size * current_mount.second;
     current_mount = std::make_pair(mount, pts);
     current_points += unit_size * pts;

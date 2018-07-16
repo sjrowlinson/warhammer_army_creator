@@ -1,5 +1,21 @@
 # Lords
 
+Warlord
+    Lord, Melee
+    Infantry
+    90
+    1, 1
+    5 6 4 4 4 3 7 4 7
+    Scurry Away!, Strength in Numbers, Verminous Valour
+    Armour: Heavy armour {Mundane} [Armour]
+    Great weapon {Mundane} [Melee] (6), Additional hand weapon {Mundane} [Melee] (3), Halberd {Mundane} [Melee] (3)
+    Shield {Mundane} [Shield] (3)
+    Rat Ogre Bonebreaker {Monster} [65], War-litter {Unique} [35], Great Pox Rat {Monstrous Cavalry} [30]
+    None
+    100
+    100
+    100
+
 Vermin Lord
     Lord, Mage
     4
@@ -9,69 +25,15 @@ Vermin Lord
     500
     1, 1
     8 8 4 6 5 5 10 5 8
-    Doom Glaive
     Scurry Away!, Immune to Psychology, Large Target, Rat Daemon, Terror, Ward save (5+)
+    Weapon: Doom Glaive {Magic} [Melee]
+    None
     None
     None
     None
     0
-    0, false
-    None
-
-# Experimental
-# ------------
-#
-# Warlord
-#   Lord, Melee
-#   Infantry
-#   90
-#   1, 1
-#   5 6 4 4 4 3 7 4 7
-#   Scurry Away!, Strength in Numbers, Verminous Valour
-#   Weapon: Hand weapon {Mundane} [Melee], Armour: Heavy armour {Mundane} [Armour]
-#   Great weapon {Mundane} [Melee] (6), Additional hand weapon {Mundane} [Melee] (3), Halberd {Mundane} [Melee] (3)
-#   Shield {Mundane} [Shield] (3)
-#   Rat Ogre Bonebreaker {Monster} [65], War-litter {Unique} [35], Great Pox Rat {Monstrous Cavalry} [30]
-#   None # extra items
-#   100 # magic item allowance
-#   100 # faction-specific (e.g. Skaven Scavenge-Pile or Chaos Gifts) item allowance
-#   100 # total magic item allowance
-#
-#
-# Grey Seer
-#   Lord, Mage
-#   4
-#   None
-#   Ruin, Plague
-#   Infantry
-#   240
-#   1, 1
-#   5 3 3 3 4 3 5 1 7
-#   Scurry Away!, Strength in Numbers, Verminous Valour
-#   Weapon: Hand weapon, Enchanted Item: D3 Warpstone Tokens
-#   None
-#   None
-#   Screaming Bell {Unique} [200]
-#   None
-#   100
-#   100
-#   100
-#
-
-Warlord
-    Lord, Melee
-    Infantry
-    90
-    1, 1
-    5 6 4 4 4 3 7 4 7
-    Hand weapon, Heavy armour
-    Scurry Away!, Strength in Numbers, Verminous Valour
-    Great weapon [6], Additional hand weapon [3], Halberd [3]
-    Shield [3]
-    Rat Ogre Bonebreaker [65], War-litter [35], Great Pox Rat [30]
-    100
-    100, true
-    None
+    0
+    0
 
 Grey Seer
     Lord, Mage
@@ -82,254 +44,12 @@ Grey Seer
     240
     1, 1
     5 3 3 3 4 3 5 1 7
-    Hand weapon, D3 Warpstone Tokens
     Scurry Away!, Strength in Numbers, Verminous Valour
+    Enchanted Item: D3 Warpstone Tokens
     None
     None
-    Screaming Bell [200]
+    Screaming Bell {Unique} [200]
+    None
     100
-    100, true
-    None
-
-# Heroes
-
-Assassin
-    Hero, Melee
-    Infantry
-    120
-    1, 1
-    6 6 5 4 4 2 8 3 7
-    Two hand weapons, Throwing stars
-    Scurry Away!, Sneaky Infiltrators, Verminous Valour, A Killer Not A Leader, Always Strike First, Dodge (4+), Hidden, Poisoned Attacks, Scouts
-    None
-    None
-    None
-    50
-    50, true
-    None
-
-Warlock Engineer
-    Hero, Mage
-    0
-    1 [50], 2 [85]
-    Ruin
-    Infantry
-    15
-    1, 1
-    5 3 3 3 3 2 4 1 5
-    Hand weapon
-    Scurry Away!, Strength in Numbers, Verminous Valour
-    Warlock-Augmented Weapon [45], Warplock Pistol [8], Warpmusket [15]
-    None
-    None
-    50
-    50, true
-    None
-
-Chieftain
-    Hero, Melee
-    Infantry
-    45
-    1, 1
-    5 5 4 4 4 2 6 3 6
-    Hand weapon, Heavy armour
-    Scurry Away!, Strength in Numbers, Verminous Valour
-    Great weapon [4], Additional hand weapon [2], Halberd [2]
-    Shield [2]
-    None
-    50
-    50, true
-    Battle Standard Bearer [25]
-
-Plague Priest
-    Hero, Mage
-    1
-    2 [35]
-    Plague
-    Infantry
     100
-    1, 1
-    5 5 3 4 5 2 5 3 6
-    Hand weapon
-    Scurry Away!, Strength in Numbers, Frenzy
-    Plague Censer [16], Flail [4], Additional hand weapon [2]
-    None
-    Great Pox Rat [30], Plague Furnace [150]
-    50
-    50, true
-    None
-
-# Core
-
-Clanrats
-    Core, Infantry
-    4
-    20, None
-    5 3 3 3 3 1 4 1 5
-    5 3 3 3 3 1 4 2 5
-    Hand weapon, Light armour
-    Scurry Away!, Strength in Numbers
-    Spears [0.5]
-    Shields [0.5]
-    Musician: Musician [4], Standard Bearer: Standard Bearer [8], Champion: Clawleader [8]
-    0
-    0
-    0
-    Poisoned Wind Mortar [65], Warpfire Thrower [70], Ratling Gun [55], Doom-flayer [55]
-
-Stormvermin
-    Core, Infantry
-    7
-    10, None
-    5 4 3 3 3 1 5 1 5
-    5 4 3 3 3 1 5 2 5
-    Hand weapon, Halberd, Heavy armour
-    Scurry Away!, Strength in Numbers
-    None
-    Shields [1]
-    Musician: Musician [5], Standard Bearer: Standard Bearer [10], Champion: Fangleader [10]
-    0
-    15
-    50
-    Poisoned Wind Mortar [65], Warpfire Thrower [70], Ratling Gun [55], Doom-flayer [55]
-
-Skavenslaves
-    Core, Infantry
-    2
-    20, None
-    5 2 2 3 3 1 4 1 2
-    5 2 2 3 3 1 4 2 2
-    Hand weapon
-    Scurry Away!, Strength in Numbers, Expendable, Cornered Rats
-    Spears [0.5], Slings [0.5]
-    Shields [0.5]
-    Musician: Musician [2], Champion: Pawleader [4]
-    0
-    0
-    0
-    None
-
-Night Runners
-    Core, Infantry
-    7
-    10, None
-    6 3 3 3 3 1 5 1 6
-    6 3 4 3 3 1 5 1 6
-    Two hand weapons, Throwing stars
-    Scurry Away!, Strength in Numbers, Slinking Advance, Dodge (6+) Nightleader only
-    Slings [1]
-    None
-    Champion: Nightleader [8]
-    0
-    0
-    0
-    Warp-grinder [60]
-    None
-
-# TODO: Giant Rats, Rat Swarm
-
-#Giant Rats
-#    Core, Warbeast
-#    3
-#    5, None
-#    6 3 1 3 3 1 4 1 3
-#    Sharp teeth/claws
-#    Scurry Away!, Mixed Unit, Rat Pack, Wave of Rats
-#    None
-#    Packmaster
-#    8
-#    1, None
-#    6 3 3 3 3 1 4 1 5
-#    Hand weapon, Light armour, Whip
-#    Scurry Away!, Strength in Numbers, Mixed Unit, Running with the Pack
-#    Master Moulder [25] {1}
-#
-#Rat Swarm
-#    Core, Swarm
-#    25
-#    2, 10
-#    Unbreakable (Swarm), Small
-#    None
-
-# Special
-
-Gutter Runners
-    Special, Infantry
-    12
-    5, 15
-    6 4 4 3 3 1 5 1 7
-    6 4 4 3 3 1 5 2 7
-    Two hand weapons, Throwing stars
-    Scurry Away!, Scouts, Skirmish, Sneaky Infiltrators, Dodge (6+), Dodge (5+) Deathrunner only
-    Slings [1], Poisoned Attacks [5]
-    Snare-net [0]
-    Champion: Deathrunner [12]
-    0
-    0
-    0
-    Warp-grinder [60]
-    None
-
-Plague Monks
-    Special, Infantry
-    7
-    10, None
-    5 3 3 3 4 1 3 1 5
-    5 3 3 3 4 1 3 2 5
-    Two hand weapons
-    Scurry Away!, Strength in Numbers, Frenzy
-    None
-    None
-    Musician: Musician [5], Standard Bearer: Standard Bearer [10], Champion: Bringer-of-the-Word [10]
-    0
-    0
-    50
-    None
-
-Plague Censer Bearers
-    Special, Infantry
-    16
-    5, None
-    5 3 3 3 4 1 3 2 5
-    5 3 3 3 4 1 3 3 5
-    Plague censer
-    Scurry Away!, Strength in Numbers, Frenzy, Hatred, Plague Disciples, Skirmish
-    None
-    None
-    Champion: Plague Chanter [13]
-    0
-    0
-    0
-    None
-
-Warplock Jezzails
-    Special, Infantry
-    20
-    3, None
-    5 3 3 3 3 1 3 2 5
-    5 3 4 3 3 1 3 2 5
-    Hand weapon, Jezzail, Pavise
-    Scurry Away!
-    None
-    None
-    Champion: Sharpshooter Team [10]
-    0
-    0
-    0
-    None
-
-Poisoned Wind Globadiers
-    Special, Infantry
-    10
-    5, 15
-    5 3 3 3 3 1 4 1 5
-    5 3 4 3 3 1 4 1 5
-    Hand weapon, Heavy armour, Poisoned wind globes
-    Scurry Away!, Life is Cheap, Skirmish, Volley from the Back
-    None
-    None
-    Champion: Bombardier [5]
-    0
-    0
-    0
-    Poisoned Wind Mortar [65]
+    100

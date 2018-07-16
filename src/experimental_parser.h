@@ -33,8 +33,8 @@ namespace tools {
         };
     private:
         QFile f;
-        QTextStream qts;
-        std::vector<qint64> streampos;
+        std::stringstream ss;
+        std::vector<std::stringstream::streampos> streampos;
         std::vector<std::size_t> blocks;
         armies::Faction faction;
 
@@ -64,7 +64,7 @@ namespace tools {
         > parse_optional_armour(std::string s);
         std::unordered_map<
             std::string,
-            std::pair<UnitClass, double>
+            std::pair<armies::UnitClass, double>
         > parse_optional_mounts(std::string s);
         std::unordered_map<
             std::string,

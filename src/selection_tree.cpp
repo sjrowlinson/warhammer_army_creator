@@ -113,8 +113,11 @@ void selection_tree::add_unit_to_army_list(int id) {
 }
 
 void selection_tree::parse_roster_file(const QString &rfile_str) {
-    tools::roster_parser rp(rfile_str, race);
-    auto units = rp.parse();
+    //tools::roster_parser rp(rfile_str, race);
+    //auto units = rp.parse();
+    //for (auto&& x : units) roster[x.name] = std::make_shared<base_unit>(x);
+    tools::experimental_parser ep(rfile_str, race);
+    auto units = ep.parse();
     for (auto&& x : units) roster[x.name] = std::make_shared<base_unit>(x);
 }
 

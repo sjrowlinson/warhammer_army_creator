@@ -1,11 +1,12 @@
 #include "experimental_parser.h"
-
 namespace tools {
 
     experimental_parser::experimental_parser(const QString& rfile, armies::Faction _faction)
         : f(rfile) {
-        f.open(QFile::ReadOnly | QFile::Text);
-        qts = QTextStream(&f);
+        f.open(QIODevice::ReadOnly | QIODevice::Text);
+        QTextStream in(&f);
+        std::string content = in.readAll().toStdString();
+        ss = std::stringstream(content);
         faction = _faction;
         cache();
     }
@@ -13,14 +14,15 @@ namespace tools {
     experimental_parser::~experimental_parser() { f.close(); }
 
     void experimental_parser::cache() {
-        while (!qts.atEnd()) {
-            streampos.push_back(qts.pos());
-            auto line = qts.readLine();
+        std::string s;
+        while (ss) {
+            streampos.push_back(ss.tellg());
+            std::getline(ss, s);
         }
     }
 
     void experimental_parser::count_units() {
-        for (std::size_t i = 0U; i < spos.size(); ++i) {
+        for (std::size_t i = 0U; i < streampos.size(); ++i) {
             std::string line = read_line(i, false);
             if (line.empty() || tools::starts_with(line, '#')) continue;
             if (!(tools::starts_with(line, "    ") || tools::starts_with(line, '\t')))
@@ -29,14 +31,16 @@ namespace tools {
     }
 
     void experimental_parser::navigate_to_line(std::size_t n) {
-        qts.seek(streampos[n]);
+        ss.clear();
+        ss.seekg(streampos[n]);
     }
 
     std::string experimental_parser::read_line(std::size_t n, bool trim) {
         navigate_to_line(n);
-        std::string line = qts.readLine().toStdString();
-        if (trim) return tools::remove_leading_whitespaces(line);
-        return line;
+        std::string s;
+        std::getline(ss, s);
+        if (trim) return tools::remove_leading_whitespaces(s);
+        return s;
     }
 
     std::pair<std::size_t, std::size_t> experimental_parser::parse_minmax_size(std::string s) {
@@ -205,26 +209,26 @@ namespace tools {
 
     std::unordered_map<
         std::string,
-        std::pair<UnitClass, double>
+        std::pair<armies::UnitClass, double>
     > experimental_parser::parse_optional_mounts(std::string s) {
         std::unordered_map<
             std::string,
-            std::pair<UnitClass, double>
+            std::pair<armies::UnitClass, double>
         > um;
         if (s == "None" || s.empty()) return um;
         std::vector<std::string> all = tools::split(s, ',');
         for (const auto& _s : all) {
             auto mount_bs = tools::parse_item_bs(_s);
             std::string name = mount_bs[0];
-            UnitClass uc;
-            if (mount_bs[1] == "Infantry") uc = UnitClass::INFANTRY;
-            else if (mount_bs[1] == "Cavalry") uc = UnitClass::CAVALRY;
-            else if (mount_bs[1] == "Monstrous Cavalry") uc = UnitClass::MONSTROUS_CAVALRY;
-            else if (mount_bs[1] == "Monstrous Creature") uc = UnitClass::MONSTROUS_CREATURES;
-            else if (mount_bs[1] == "Warbeast") uc = UnitClass::WARBEASTS;
-            else if (mount_bs[1] == "Chariot") uc = UnitClass::CHARIOT;
-            else if (mount_bs[1] == "Monster") uc = UnitClass::MONSTER;
-            else if (mount_bs[1] == "Unique") uc = UnitClass::UNIQUE;
+            armies::UnitClass uc;
+            if (mount_bs[1] == "Infantry") uc = armies::UnitClass::INFANTRY;
+            else if (mount_bs[1] == "Cavalry") uc = armies::UnitClass::CAVALRY;
+            else if (mount_bs[1] == "Monstrous Cavalry") uc = armies::UnitClass::MONSTROUS_CAVALRY;
+            else if (mount_bs[1] == "Monstrous Creature") uc = armies::UnitClass::MONSTROUS_CREATURES;
+            else if (mount_bs[1] == "Warbeast") uc = armies::UnitClass::WARBEASTS;
+            else if (mount_bs[1] == "Chariot") uc = armies::UnitClass::CHARIOT;
+            else if (mount_bs[1] == "Monster") uc = armies::UnitClass::MONSTER;
+            else if (mount_bs[1] == "Unique") uc = armies::UnitClass::UNIQUE;
             double pts = std::stod(mount_bs[2]);
             um[name] = std::make_pair(uc, pts);
         }
@@ -274,9 +278,9 @@ namespace tools {
     }
 
     base_unit experimental_parser::parse_melee_character(std::size_t n, armies::UnitType ut) {
-        auto name = read_line(blocks[n]);
+        std::string name = read_line(blocks[n]);
         auto category = armies::s_map_string_unit_class[read_line(blocks[n] + 2)];
-        auto pts = std::stod(read_line(blocks[n] + 3));
+        double pts = std::stod(read_line(blocks[n] + 3));
         auto mm_size = parse_minmax_size(read_line(blocks[n] + 4));
         auto stats = tools::split_stos(read_line(blocks[n] + 5), ' ');
         auto rules = tools::split(read_line(blocks[n] + 6), ',');
@@ -285,16 +289,86 @@ namespace tools {
         auto opt_armours = parse_optional_armour(read_line(blocks[n] + 9));
         auto opt_mounts = parse_optional_mounts(read_line(blocks[n] + 10));
         auto opt_extras = parse_optional_extras(read_line(blocks[n] + 11));
-        auto mi_budget = std::stod(read_line(blocks[n] + 12));
-        auto fi_budget = std::stod(read_line(blocks[n] + 13));
-        auto ti_budget = std::stod(read_line(blocks[n] + 14));
+        double mi_budget = std::stod(read_line(blocks[n] + 12));
+        double fi_budget = std::stod(read_line(blocks[n] + 13));
+        double ti_budget = std::stod(read_line(blocks[n] + 14));
+        base_unit tmp;
+        tmp.faction = faction;
+        tmp.unit_type = ut;
+        tmp.unit_class = category;
+        tmp.name = name;
+        tmp.is_character = true;
+        tmp.is_unique = false;
+        tmp.is_mage = false;
+        tmp.pts_per_model = pts;
+        tmp.min_size = mm_size.first;
+        tmp.max_size = mm_size.second;
+        tmp.stats = stats;
+        tmp.special_rules = rules;
+        tmp.weapons = eq.weapons;
+        tmp.armour = eq.armour;
+        tmp.talismans = eq.talismans;
+        tmp.arcane_items = eq.arcane;
+        tmp.enchanted_items = eq.enchanted;
+        tmp.banners = eq.banners;
+        tmp.opt_weapons = opt_weapons;
+        tmp.opt_armour = opt_armours;
+        tmp.opt_mounts = opt_mounts;
+        tmp.opt_extras = opt_extras;
+        tmp.magic_item_budget = mi_budget;
+        tmp.faction_item_budget = fi_budget;
+        tmp.total_item_budget = ti_budget;
+        return tmp;
     }
 
     base_unit experimental_parser::parse_mage_character(std::size_t n, armies::UnitType ut) {
-        auto name = read_line(blocks[n]);
-        auto level = static_cast<short>(std::stoi(read_line(blocks[n] + 2)));
+        std::string name = read_line(blocks[n]);
+        short level = static_cast<short>(std::stoi(read_line(blocks[n] + 2)));
         auto level_upgrades = parse_mage_upgrades(read_line(blocks[n] + 3));
         auto lores = tools::split(read_line(blocks[n] + 4), ',');
+        auto category = armies::s_map_string_unit_class[read_line(blocks[n] + 5)];
+        double pts = std::stod(read_line(blocks[n] + 6));
+        auto mm_size = parse_minmax_size(read_line(blocks[n] + 7));
+        auto stats = tools::split_stos(read_line(blocks[n] + 8), ' ');
+        auto rules = tools::split(read_line(blocks[n] + 9), ',');
+        auto eq = parse_equipment(read_line(blocks[n] + 10));
+        auto opt_weapons = parse_optional_weapons(read_line(blocks[n] + 11));
+        auto opt_armours = parse_optional_armour(read_line(blocks[n] + 12));
+        auto opt_mounts = parse_optional_mounts(read_line(blocks[n] + 13));
+        auto opt_extras = parse_optional_extras(read_line(blocks[n] + 14));
+        double mi_budget = std::stod(read_line(blocks[n] + 15));
+        double fi_budget = std::stod(read_line(blocks[n] + 16));
+        double ti_budget = std::stod(read_line(blocks[n] + 17));
+        base_unit tmp;
+        tmp.faction = faction;
+        tmp.unit_type = ut;
+        tmp.unit_class = category;
+        tmp.name = name;
+        tmp.is_character = true;
+        tmp.is_unique = false;
+        tmp.is_mage = false;
+        tmp.pts_per_model = pts;
+        tmp.min_size = mm_size.first;
+        tmp.max_size = mm_size.second;
+        tmp.stats = stats;
+        tmp.special_rules = rules;
+        tmp.weapons = eq.weapons;
+        tmp.armour = eq.armour;
+        tmp.talismans = eq.talismans;
+        tmp.arcane_items = eq.arcane;
+        tmp.enchanted_items = eq.enchanted;
+        tmp.banners = eq.banners;
+        tmp.opt_weapons = opt_weapons;
+        tmp.opt_armour = opt_armours;
+        tmp.opt_mounts = opt_mounts;
+        tmp.opt_extras = opt_extras;
+        tmp.magic_item_budget = mi_budget;
+        tmp.faction_item_budget = fi_budget;
+        tmp.total_item_budget = ti_budget;
+        tmp.base_mage_level = level;
+        tmp.mage_level_upgrades = level_upgrades;
+        tmp.lores = lores;
+        return tmp;
     }
 
 }

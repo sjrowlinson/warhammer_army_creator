@@ -1,6 +1,6 @@
 #include "armycreator.h"
 #include "ui_armycreator.h"
-#include <iostream>
+
 ArmyCreator::ArmyCreator(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::ArmyCreator) {
@@ -168,11 +168,11 @@ void ArmyCreator::on_add_button_clicked() {
     auto helmet = all_armour[ArmourType::HELMET];
     QString armour_str("");
     if (!(armour.first.empty()))
-        armour_str += QString("%1 [%2").arg(armour.first.data(), QString("%1").arg(armour.second));
+        armour_str += QString("%1 [%2]").arg(armour.first.data(), QString("%1").arg(armour.second));
     if (!(shield.first.empty()))
-        armour_str += QString("%1 [%2").arg(shield.first.data(), QString("%1").arg(shield.second));
+        armour_str += QString("%1 [%2]").arg(shield.first.data(), QString("%1").arg(shield.second));
     if (!(helmet.first.empty()))
-        armour_str += QString("%1 [%2").arg(helmet.first.data(), QString("%1").arg(helmet.second));
+        armour_str += QString("%1 [%2]").arg(helmet.first.data(), QString("%1").arg(helmet.second));
     item->setText(3, armour_str);
     item->setText(4, QString("%2").arg(st->selected().points()));
     switch (unit_type) {
