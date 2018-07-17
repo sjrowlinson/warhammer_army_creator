@@ -102,7 +102,7 @@ Chieftain
     Great weapon {Mundane} [Melee] (4), Additional hand weapon {Mundane} [Melee] (2), Halberd {Mundane} [Melee] (2)
     Shield {Mundane} [Shield] (2)
     None
-    Battle Standard Bearer [25]
+    Battle Standard Bearer {True} [25]
     50
     50
     50
@@ -136,18 +136,18 @@ Clanrats
     5 3 3 3 3 1 4 2 5
     Scurry Away!, Strength in Numbers
     Armour: Light armour {Mundane} [Armour]
-    None # champion equipment
+    None
     Spears {Mundane} [Melee] (0.5)
-    None # champion specific weapon options
+    None
     Shields {Mundane} [Shield] (0.5)
-    None # champion specific armour options
-    OCO: Poisoned Wind Mortar {1} [65], Warpfire Thrower {1} [70], Ratling Gun {1} [55], Doom-flayer {1} [55]
-    None # champion specific extra options
+    None
+    OCO: Poisoned Wind Mortar {True} [65], Warpfire Thrower {True} [70], Ratling Gun {True} [55], Doom-flayer {True} [55]
+    None
     Musician: Musician [4], Standard Bearer: Standard Bearer [8], Champion: Clawleader [8]
-    0 # champion magic item budget
-    0 # champion faction item budget
-    0 # champion total item budget
-    0 # magic banner budget
+    0
+    0
+    0
+    0
 
 Stormvermin
     Core, Infantry
@@ -162,7 +162,7 @@ Stormvermin
     None
     Shields {Mundane} [Shield] (1)
     None
-    OCO: Poisoned Wind Mortar {1} [65], Warpfire Thrower {1} [70], Ratling Gun {1} [55], Doom-flayer {1} [55]
+    OCO: Poisoned Wind Mortar {True} [65], Warpfire Thrower {True} [70], Ratling Gun {True} [55], Doom-flayer {True} [55]
     None
     Musician: Musician [5], Standard Bearer: Standard Bearer [10], Champion: Clawleader [10]
     0
@@ -190,3 +190,68 @@ Skavenslaves
     0
     0
     0
+
+Night Runners
+    Core, Infantry
+    7
+    10, None
+    6 3 3 3 3 1 5 1 6
+    6 3 4 3 3 1 5 1 6
+    Scurry Away!, Strength in Numbers, Slinking Advance, Dodge (6+) Nightleader only
+    Weapon: Two hand weapons {Mundane} [Melee], Weapon: Throwing stars {Mundane} [Ballistic]
+    None
+    Slings {Mundane} [Ballistic] (1)
+    None
+    None
+    None
+    OCO: Warp-grinder {True} [60]
+    None
+    Champion: Nightleader [8]
+    0
+    0
+    0
+    0
+
+# Special
+
+Gutter Runners
+    Special, Infantry
+    12
+    5, 15
+    6 4 4 3 3 1 5 1 7
+    6 4 4 3 3 1 5 2 7
+    Scurry Away!, Scouts, Skirmish, Sneaky Infiltrators, Dodge (6+), Dodge (5+) Deathrunner only
+    Weapon: Two hand weapons {Mundane} [Melee], Weapon: Throwing stars {Mundane} [Ballistic]
+    None
+    Snare-net {Mundane} [Melee] (0), Slings {Mundane} [Ballistic] (1)
+    Weeping Blade {Magic} [Melee] (30)
+    None
+    None
+    Poisoned Attacks {False} [5], Warp-grinder {True} [60]
+    Smoke Bombs {True} [10]
+    Champion: Deathrunner [12]
+    0
+    0
+    0
+    0
+
+Plague Monks
+    Special, Infantry
+    7
+    10, None
+    5 3 3 3 4 1 3 1 5
+    5 3 3 3 4 1 3 2 5
+    Scurry Away!, Strength in Numbers, Frenzy
+    Weapon: Two hand weapons {Mundane} [Melee]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [5], Standard Bearer: Standard Bearer [10], Champion: Bringer-of-the-Word [10]
+    0
+    0
+    0
+    50

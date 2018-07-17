@@ -14,7 +14,10 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
 
     ui->army_tree->header()->resizeSection(0, 250); // unit name header
     ui->army_tree->header()->resizeSection(1, 80); // unit size header
-    ui->army_tree->header()->resizeSection(2, 150); // weapon header
+    ui->army_tree->header()->resizeSection(2, 150); // melee weapon header
+    ui->army_tree->header()->resizeSection(3, 150); // ranged weapon header
+    ui->army_tree->header()->resizeSection(4, 150); // armour header
+    ui->army_tree->header()->resizeSection(5, 80); // points header
     ui->remove_button->setEnabled(false);
 }
 
@@ -81,8 +84,8 @@ void ArmyCreator::initialise_unit_options_box() {
 
     QVBoxLayout* vbox = new QVBoxLayout;
     for (const auto& x : opt_weapons) {
-        QRadioButton* b = new QRadioButton(tr(x.first.data()));
-        b->setObjectName(tr((x.first + "_radiobutton").data()));
+        QRadioButton* b = new QRadioButton(tr(std::get<0>(x).data()));
+        b->setObjectName(tr((std::get<0>(x) + "_radiobutton").data()));
         vbox->addWidget(b);
     }
     vbox->addStretch(1);
@@ -109,6 +112,7 @@ void ArmyCreator::on_faction_combobox_currentTextChanged(const QString& faction)
     // now fill the roster tree widget
     clear_roster_tree();
     clear_army_tree();
+    clear_unit_options_box();
     populate_roster_tree();
 }
 
@@ -159,22 +163,34 @@ void ArmyCreator::on_add_button_clicked() {
     item->setText(0, QString(st->selected().name().data()));
     item->setText(1, QString("%1").arg(st->selected().size()));
     // get the current weapon of the unit
-    auto weapon = st->selected().weapon();
-    item->setText(2, QString("%1 [%2]").arg(weapon.first.data(), QString("%1").arg(weapon.second)));
+    auto melee_weapon = st->selected().melee_weapon();
+    auto ranged_weapon = st->selected().ranged_weapon();
+    item->setText(2, QString("%1 [%2]").arg(melee_weapon.first.data(), QString("%1").arg(melee_weapon.second)));
+    if (!(ranged_weapon.first.empty()))
+        item->setText(3, QString("%1 [%2]").arg(ranged_weapon.first.data(), QString("%1").arg(ranged_weapon.second)));
     // get the current armour of the unit
     auto all_armour = st->selected().armour();
     auto armour = all_armour[ArmourType::ARMOUR];
     auto shield = all_armour[ArmourType::SHIELD];
     auto helmet = all_armour[ArmourType::HELMET];
     QString armour_str("");
-    if (!(armour.first.empty()))
-        armour_str += QString("%1 [%2]").arg(armour.first.data(), QString("%1").arg(armour.second));
-    if (!(shield.first.empty()))
-        armour_str += QString("%1 [%2]").arg(shield.first.data(), QString("%1").arg(shield.second));
-    if (!(helmet.first.empty()))
-        armour_str += QString("%1 [%2]").arg(helmet.first.data(), QString("%1").arg(helmet.second));
-    item->setText(3, armour_str);
-    item->setText(4, QString("%2").arg(st->selected().points()));
+    if (!(std::get<1>(armour).empty()))
+        armour_str += QString("%1 [%2]").arg(
+                        std::get<1>(armour).data(),
+                        QString("%1").arg(std::get<2>(armour))
+                    );
+    if (!(std::get<1>(shield).empty()))
+        armour_str += QString("%1 [%2]").arg(
+                        std::get<1>(shield).data(),
+                        QString("%1").arg(std::get<2>(shield))
+                    );
+    if (!(std::get<1>(helmet).empty()))
+        armour_str += QString("%1 [%2]").arg(
+                        std::get<1>(helmet).data(),
+                        QString("%1").arg(std::get<2>(helmet))
+                    );
+    item->setText(4, armour_str);
+    item->setText(5, QString("%2").arg(st->selected().points()));
     switch (unit_type) {
     case armies::UnitType::LORD:
         ui->army_tree->topLevelItem(0)->addChild(item);

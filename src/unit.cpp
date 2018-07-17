@@ -10,24 +10,41 @@ unit::unit(const std::shared_ptr<base_unit>& _base)
     current_faction_item_points = 0.0;
     current_mage_level = _base->base_mage_level;
 
-    current_weapon = {ItemClass::MUNDANE, {_base->weapons[WeaponType::MELEE], 0.0}};
+    current_melee_weapon = {
+        _base->weapons[WeaponType::MELEE].first,
+        {_base->weapons[WeaponType::MELEE].second, 0.0}
+    };
+    if (_base->weapons.count(WeaponType::BALLISTIC))
+        current_ranged_weapon = {
+            _base->weapons[WeaponType::BALLISTIC].first,
+            {_base->weapons[WeaponType::BALLISTIC].second, 0.0}
+        };
+    else
+        current_ranged_weapon = {ItemClass::MUNDANE, {"", 0.0}};
     if (_base->armour.count(ArmourType::ARMOUR))
-        current_armour[ArmourType::ARMOUR] = {_base->armour[ArmourType::ARMOUR], 0.0};
+        current_armour[ArmourType::ARMOUR] = {
+            _base->armour[ArmourType::ARMOUR].first,
+            _base->armour[ArmourType::ARMOUR].second,
+            0.0
+        };
     else
-        current_armour[ArmourType::ARMOUR] = {"", 0.0};
+        current_armour[ArmourType::ARMOUR] = {ItemClass::MUNDANE ,"", 0.0};
     if (_base->armour.count(ArmourType::SHIELD))
-        current_armour[ArmourType::SHIELD] = {_base->armour[ArmourType::SHIELD], 0.0};
+        current_armour[ArmourType::SHIELD] = {
+            _base->armour[ArmourType::SHIELD].first,
+            _base->armour[ArmourType::SHIELD].second,
+            0.0
+        };
     else
-        current_armour[ArmourType::SHIELD] = {"", 0.0};
+        current_armour[ArmourType::SHIELD] = {ItemClass::MUNDANE, "", 0.0};
     if (_base->armour.count(ArmourType::HELMET))
-        current_armour[ArmourType::HELMET] = {_base->armour[ArmourType::HELMET], 0.0};
+        current_armour[ArmourType::HELMET] = {
+            _base->armour[ArmourType::HELMET].first,
+            _base->armour[ArmourType::HELMET].second,
+            0.0
+        };
     else
-        current_armour[ArmourType::HELMET] = {"", 0.0};
-
-    //current_weapon = {ItemClass::MUNDANE, {"Hand weapon", 0.0}};
-    //current_armour[ArmourType::ARMOUR] = {"", 0.0};
-    //current_armour[ArmourType::SHIELD] = {"", 0.0};
-    //current_armour[ArmourType::HELMET] = {"", 0.0};
+        current_armour[ArmourType::HELMET] = {ItemClass::MUNDANE, "", 0.0};
 
     current_mount = {"", 0.0};
     current_champion_weapon = {ItemClass::MUNDANE, {"Hand weapon", 0.0}};
@@ -64,27 +81,30 @@ std::size_t unit::size() const noexcept {
     return unit_size;
 }
 
-std::pair<std::string, double> unit::weapon() const noexcept {
-    if (current_weapon.second.first.empty())
+std::pair<std::string, double> unit::melee_weapon() const noexcept {
+    if (current_melee_weapon.second.first.empty())
         return {"Hand weapon", 0.0};
-    return current_weapon.second;
+    return current_melee_weapon.second;
+}
+
+std::pair<std::string, double> unit::ranged_weapon() const noexcept {
+    return current_ranged_weapon.second;
 }
 
 std::unordered_map<
-    ArmourType,
-    std::pair<std::string, double>
+    ArmourType, std::tuple<ItemClass, std::string, double>
 > unit::armour() const noexcept {
     return current_armour;
 }
 
 std::unordered_map<
     std::string,
-    std::pair<WeaponType, double>
+    std::tuple<WeaponType, ItemClass, double>
 > unit::optional_weapons() const noexcept {
     return base->opt_weapons;
 }
 
-void unit::remove_current_weapon(bool is_champion) {
+/*void unit::remove_current_weapon(bool is_champion) {
     double pts = current_weapon.second.second;
     if (!is_champion) {
         switch (current_weapon.first) {
@@ -114,12 +134,12 @@ void unit::remove_current_weapon(bool is_champion) {
         current_points -= pts;
         current_champion_weapon = {ItemClass::MUNDANE, {"Hand weapon", 0.0}};
     }
-}
+}*/
 
 // TODO: remove item_type param and store the ItemClass of a weapon
 // when parsing so that all we need here is the name of the weapon
 // as a string look-up
-double unit::pick_weapon(ItemClass item_type, std::string weapon) {
+/*double unit::pick_weapon(ItemClass item_type, std::string weapon) {
     double pts = 0.0;
     switch (item_type) {
     case ItemClass::MUNDANE:
@@ -169,16 +189,16 @@ double unit::pick_weapon(ItemClass item_type, std::string weapon) {
         return 0.0;
     }
     return unit_size * pts;
-}
+}*/
 
-double unit::pick_armour(ItemClass item_type, ArmourType armour_type, std::string armour) {
+/*double unit::pick_armour(ItemClass item_type, ArmourType armour_type, std::string armour) {
     double pts = 0.0;
     switch (item_type) {
     case ItemClass::MUNDANE:
         break;
     }
     return pts;
-}
+}*/
 
 double unit::pick_mount(std::string mount) {
     if (!(base->opt_mounts.count(mount)))
@@ -190,7 +210,7 @@ double unit::pick_mount(std::string mount) {
     return unit_size * pts;
 }
 
-double unit::change_size(std::size_t size) {
+/*double unit::change_size(std::size_t size) {
     if (size < base->min_size || size > base->max_size)
         throw std::invalid_argument("Invalid unit size!");
     double before = current_points;
@@ -203,7 +223,7 @@ double unit::change_size(std::size_t size) {
     // TODO: add the other options points values once implemented
     unit_size = size;
     return current_points - before;
-}
+}*/
 
 double unit::add_musician() {
     if (!(base->opt_command.count(CommandGroup::MUSICIAN)))
@@ -242,10 +262,10 @@ double unit::change_mage_level(short level) {
     return unit_size * pts;
 }
 
-void unit::remove_weapon() {
+/*void unit::remove_weapon() {
     remove_current_weapon(false);
 }
 
 void unit::remove_champion_weapon() {
     remove_current_weapon(true);
-}
+}*/

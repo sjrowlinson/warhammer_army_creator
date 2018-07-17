@@ -37,8 +37,8 @@ struct base_unit {
     std::vector<std::string> special_rules;
 
     // default equipment
-    std::unordered_map<WeaponType, std::string> weapons;
-    std::unordered_map<ArmourType, std::string> armour;
+    std::unordered_map<WeaponType, std::pair<ItemClass, std::string>> weapons;
+    std::unordered_map<ArmourType, std::pair<ItemClass, std::string>> armour;
     std::vector<std::string> talismans;
     std::vector<std::string> arcane_items;
     std::vector<std::string> enchanted_items;
@@ -47,19 +47,22 @@ struct base_unit {
     // options
     std::unordered_map<
         std::string,
-        std::pair<WeaponType, double>
+        std::tuple<WeaponType, ItemClass, double>
     > opt_weapons;
     std::unordered_map<
         std::string,
-        std::pair<ArmourType, double>
+        std::tuple<ArmourType, ItemClass, double>
     > opt_armour;
     std::unordered_map<
         std::string,
         std::pair<armies::UnitClass, double>
     > opt_mounts;
-    std::unordered_map<
-        std::string,
-        std::pair<bool, double>
+    std::pair<
+        std::unordered_map<
+            std::string,
+            std::pair<bool, double>
+        >,
+        bool
     > opt_extras;
 
     // optional command group
@@ -71,15 +74,18 @@ struct base_unit {
 
     std::unordered_map<
         std::string,
-        std::pair<WeaponType, double>
+        std::tuple<WeaponType, ItemClass, double>
     > champ_opt_weapons;
     std::unordered_map<
         std::string,
-        std::pair<ArmourType, double>
+        std::tuple<ArmourType, ItemClass, double>
     > champ_opt_armour;
-    std::unordered_map<
-        std::string,
-        std::pair<bool, double>
+    std::pair<
+        std::unordered_map<
+            std::string,
+            std::pair<bool, double>
+        >,
+        bool
     > champ_opt_extras;
 
     // magic item + faction-specific item/feature budgets

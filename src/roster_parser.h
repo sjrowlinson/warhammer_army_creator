@@ -4,57 +4,87 @@
 #include "army_maps.h"
 #include "base_unit.h"
 #include "tools.h"
-#include "unit.h"
 
 #include <algorithm>
-#include <fstream>
 #include <ostream>
 #include <sstream>
-#include <stdexcept>
 #include <string>
+#include <tuple>
 #include <unordered_map>
 #include <utility>
 #include <vector>
 
 #include <QFile>
-#include <QTextStream>
 #include <QString>
+#include <QTextStream>
 
 namespace tools {
-	class roster_parser {
-	private:
-        QFile roster_file;
+
+    class roster_parser {
+        struct equipment {
+            std::unordered_map<WeaponType, std::pair<ItemClass, std::string>> weapons;
+            std::unordered_map<ArmourType, std::pair<ItemClass, std::string>> armour;
+            std::vector<std::string> talismans;
+            std::vector<std::string> arcane;
+            std::vector<std::string> enchanted;
+            std::vector<std::string> banners;
+
+            equipment()
+                : weapons(), armour(), talismans(), arcane(), enchanted(), banners() {}
+        };
+    private:
+        QFile f;
         std::stringstream ss;
         std::vector<std::stringstream::streampos> streampos;
-		std::vector<std::size_t> blocks;
-		armies::Faction faction;
+        std::vector<std::size_t> blocks;
+        armies::Faction faction;
 
-		void cache_streampos();
-		void count_units();
-		void navigate_to_line(std::size_t n);
-		std::string read_line(std::size_t n, bool trim=true);
-		base_unit parse_melee_character(std::size_t index, armies::UnitType unit_type);
-		base_unit parse_mage_character(std::size_t index, armies::UnitType unit_type);
-		base_unit parse_infantry(std::size_t index, armies::UnitType unit_type);
-		base_unit parse_cavalry(std::size_t index, armies::UnitType unit_type);
-		base_unit parse_warbeast(std::size_t index, armies::UnitType unit_type);
-		base_unit parse_monstrous_creature(std::size_t index, armies::UnitType unit_type);
-		base_unit parse_monster(std::size_t index, armies::UnitType unit_type);
+        void cache();
+        void count_units();
+        void navigate_to_line(std::size_t n);
+        std::string read_line(std::size_t n, bool trim=true);
 
-		std::pair<std::size_t, std::size_t> parse_minmax_size(std::string s);
-		std::vector<std::pair<std::string, double>> common_option_parse(std::string s);
-		std::unordered_map<
-			CommandGroup, std::pair<std::string, double>
-		> parse_command_group(std::string s);
-	public:
-        explicit roster_parser(
-            const QString& rfile_str,
-            armies::Faction faction
-        );
+        // common parsing
+        std::pair<std::size_t, std::size_t> parse_minmax_size(std::string s);
+        std::unordered_map<
+            CommandGroup,
+            std::pair<std::string, double>
+        > parse_command(std::string s);
+        std::unordered_map<
+            short,
+            double
+        > parse_mage_upgrades(std::string s);
+        equipment parse_equipment(std::string s);
+        std::unordered_map<
+            std::string,
+            std::tuple<WeaponType, ItemClass, double>
+        > parse_optional_weapons(std::string s);
+        std::unordered_map<
+            std::string,
+            std::tuple<ArmourType, ItemClass, double>
+        > parse_optional_armour(std::string s);
+        std::unordered_map<
+            std::string,
+            std::pair<armies::UnitClass, double>
+        > parse_optional_mounts(std::string s);
+        std::pair<
+            std::unordered_map<
+                std::string,
+                std::pair<bool, double>
+            >,
+            bool
+        > parse_optional_extras(std::string s);
+
+        // specialised parsing
+        base_unit parse_melee_character(std::size_t n, armies::UnitType ut);
+        base_unit parse_mage_character(std::size_t n, armies::UnitType ut);
+        base_unit parse_infantry(std::size_t n, armies::UnitType ut);
+    public:
+        explicit roster_parser(const QString& rfile, armies::Faction faction);
         ~roster_parser();
-		std::size_t units() const noexcept;
-		std::vector<base_unit> parse();
-	};
+
+        std::vector<base_unit> parse();
+    };
 
 }
 
