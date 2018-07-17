@@ -271,6 +271,11 @@ namespace tools {
                 else if (types_split[1] == "Mage")
                     units.push_back(parse_mage_character(i, ut));
                 break;
+            case armies::UnitType::CORE:
+            case armies::UnitType::SPECIAL:
+            case armies::UnitType::RARE:
+                if (types_split[1] == "Infantry")
+                    units.push_back(parse_infantry(i, ut));
             default: continue;
             }
         }
@@ -371,10 +376,32 @@ namespace tools {
         return tmp;
     }
 
+    base_unit experimental_parser::parse_infantry(std::size_t n, armies::UnitType ut) {
+        std::string name = read_line(blocks[n]);
+        auto category = UnitClass::INFANTRY;
+        double pts = std::stod(read_line(blocks[n] + 2));
+        auto mm_size = parse_minmax_size(read_line(blocks[n] + 3));
+        auto stats = tools::split_stos(read_line(blocks[n] + 4), ' ');
+        auto champ_stats = tools::split_stos(read_line(blocks[n] + 5));
+        auto rules = tools::split(read_line(blocks[n] + 6), ',');
+        auto eq = parse_equipment(read_line(blocks[n] + 7));
+        auto champ_eq = parse_equipment(read_line(blocks[n] + 8));
+        auto opt_weapons = parse_optional_weapons(read_line(blocks[n] + 9));
+        auto champ_opt_weapons = parse_optional_weapons(read_line(blocks[n] + 10));
+        auto opt_armours = parse_optional_armour(read_line(blocks[n] + 11));
+        auto champ_opt_armours = parse_optional_armour(read_line(blocks[n] + 12));
+        // TODO: find if optional extras line starts with OCO (one choice only) and store
+        // the optional extras as a std::pair<std::unordered_map, bool> where .second element
+        // indicates whether it is a one choice only map or not.
+        auto opt_extras = parse_optional_extras(read_line(blocks[n] + 13));
+        auto champ_opt_extras = parse_optional_extras(read_line(blocks[n] + 14));
+        auto command = parse_command(read_line(blocks[n] + 15));
+        double champ_mi_budget = std::stod(read_line(blocks[n] + 16));
+        double champ_fi_budget = std::stod(read_line(blocks[n] + 17));
+        double champ_ti_budget = std::stod(read_line(blocks[n] + 18));
+        double mb_budget = std::stod(read_line(blocks[n] + 19));
+        base_unit tmp;
+        return tmp;
+    }
+
 }
-
-
-
-
-
-

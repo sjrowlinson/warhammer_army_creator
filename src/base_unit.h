@@ -33,10 +33,10 @@ struct base_unit {
     // statistic tables
     std::vector<short> stats;
     std::vector<short> champion_stats;
-    // equipment and special rules
-    //std::vector<std::string> equipment;
+    // special rules
     std::vector<std::string> special_rules;
-    
+
+    // default equipment
     std::unordered_map<WeaponType, std::string> weapons;
     std::unordered_map<ArmourType, std::string> armour;
     std::vector<std::string> talismans;
@@ -44,15 +44,7 @@ struct base_unit {
     std::vector<std::string> enchanted_items;
     std::vector<std::string> banners;
 
-    // optional equipment
-    //std::unordered_map<std::string, double> opt_weapons;
-    //std::unordered_map<std::string, double> opt_armour;
-    //std::unordered_map<std::string, double> opt_mounts;
-    //std::unordered_map<std::string, double> opt_extras;
-    std::unordered_map<
-        CommandGroup, std::pair<std::string, double>
-    > opt_command;
-
+    // options
     std::unordered_map<
         std::string,
         std::pair<WeaponType, double>
@@ -70,13 +62,32 @@ struct base_unit {
         std::pair<bool, double>
     > opt_extras;
 
+    // optional command group
+    std::unordered_map<
+        CommandGroup, std::pair<std::string, double>
+    > opt_command;
+
     // champion specific options
-    std::unordered_map<std::string, double> champ_options;
+
+    std::unordered_map<
+        std::string,
+        std::pair<WeaponType, double>
+    > champ_opt_weapons;
+    std::unordered_map<
+        std::string,
+        std::pair<ArmourType, double>
+    > champ_opt_armour;
+    std::unordered_map<
+        std::string,
+        std::pair<bool, double>
+    > champ_opt_extras;
+
     // magic item + faction-specific item/feature budgets
     double magic_item_budget;
     double faction_item_budget;
     double total_item_budget;
     double magic_banner_budget;
+
     // mage related
     short base_mage_level;
     std::unordered_map<short, double> mage_level_upgrades;

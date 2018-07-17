@@ -74,6 +74,7 @@ namespace tools {
         // specialised parsing
         base_unit parse_melee_character(std::size_t n, armies::UnitType ut);
         base_unit parse_mage_character(std::size_t n, armies::UnitType ut);
+        base_unit parse_infantry(std::size_t n, armies::UnitType ut);
     public:
         explicit experimental_parser(const QString& rfile, armies::Faction faction);
         ~experimental_parser();
