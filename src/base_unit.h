@@ -17,6 +17,24 @@ enum class CommandGroup {
     CHAMPION
 };
 
+struct equipment {
+    std::unordered_map<
+        WeaponType,
+        std::pair<ItemClass, std::string>
+    > weapons;
+    std::unordered_map<
+        ArmourType,
+        std::pair<ItemClass, std::string>
+    > armour;
+    std::vector<std::string> talismans;
+    std::vector<std::string> arcane;
+    std::vector<std::string> enchanted;
+    std::vector<std::string> banners;
+
+    equipment()
+        : weapons(), armour(), talismans(), arcane(), enchanted(), banners() {}
+};
+
 struct base_unit {
     // enum constants
     armies::Faction faction;
@@ -37,12 +55,8 @@ struct base_unit {
     std::vector<std::string> special_rules;
 
     // default equipment
-    std::unordered_map<WeaponType, std::pair<ItemClass, std::string>> weapons;
-    std::unordered_map<ArmourType, std::pair<ItemClass, std::string>> armour;
-    std::vector<std::string> talismans;
-    std::vector<std::string> arcane_items;
-    std::vector<std::string> enchanted_items;
-    std::vector<std::string> banners;
+    equipment eq;
+    equipment champ_eq;
 
     // options
     std::unordered_map<

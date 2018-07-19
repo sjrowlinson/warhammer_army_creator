@@ -96,7 +96,7 @@ namespace tools {
         return um;
     }
 
-    roster_parser::equipment roster_parser::parse_equipment(std::string s) {
+    equipment roster_parser::parse_equipment(std::string s) {
         equipment e;
         if (s == "None" || s.empty()) return e;
         std::unordered_map<std::string, int> map_to = {
@@ -334,12 +334,7 @@ namespace tools {
         tmp.max_size = mm_size.second;
         tmp.stats = stats;
         tmp.special_rules = rules;
-        tmp.weapons = eq.weapons;
-        tmp.armour = eq.armour;
-        tmp.talismans = eq.talismans;
-        tmp.arcane_items = eq.arcane;
-        tmp.enchanted_items = eq.enchanted;
-        tmp.banners = eq.banners;
+        tmp.eq = eq;
         tmp.opt_weapons = opt_weapons;
         tmp.opt_armour = opt_armours;
         tmp.opt_mounts = opt_mounts;
@@ -381,12 +376,7 @@ namespace tools {
         tmp.max_size = mm_size.second;
         tmp.stats = stats;
         tmp.special_rules = rules;
-        tmp.weapons = eq.weapons;
-        tmp.armour = eq.armour;
-        tmp.talismans = eq.talismans;
-        tmp.arcane_items = eq.arcane;
-        tmp.enchanted_items = eq.enchanted;
-        tmp.banners = eq.banners;
+        tmp.eq = eq;
         tmp.opt_weapons = opt_weapons;
         tmp.opt_armour = opt_armours;
         tmp.opt_mounts = opt_mounts;
@@ -435,12 +425,8 @@ namespace tools {
         tmp.stats = stats;
         tmp.champion_stats = champ_stats;
         tmp.special_rules = rules;
-        tmp.weapons = eq.weapons;
-        tmp.armour = eq.armour;
-        tmp.talismans = eq.talismans;
-        tmp.arcane_items = eq.arcane;
-        tmp.enchanted_items = eq.enchanted;
-        tmp.banners = eq.banners;
+        tmp.eq = eq;
+        tmp.champ_eq = champ_eq;
         tmp.opt_weapons = opt_weapons;
         tmp.opt_armour = opt_armours;
         tmp.opt_extras = opt_extras;

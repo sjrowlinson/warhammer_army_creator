@@ -11,36 +11,36 @@ unit::unit(const std::shared_ptr<base_unit>& _base)
     current_mage_level = _base->base_mage_level;
 
     current_melee_weapon = {
-        _base->weapons[WeaponType::MELEE].first,
-        {_base->weapons[WeaponType::MELEE].second, 0.0}
+        _base->eq.weapons[WeaponType::MELEE].first,
+        {_base->eq.weapons[WeaponType::MELEE].second, 0.0}
     };
-    if (_base->weapons.count(WeaponType::BALLISTIC))
+    if (_base->eq.weapons.count(WeaponType::BALLISTIC))
         current_ranged_weapon = {
-            _base->weapons[WeaponType::BALLISTIC].first,
-            {_base->weapons[WeaponType::BALLISTIC].second, 0.0}
+            _base->eq.weapons[WeaponType::BALLISTIC].first,
+            {_base->eq.weapons[WeaponType::BALLISTIC].second, 0.0}
         };
     else
         current_ranged_weapon = {ItemClass::MUNDANE, {"", 0.0}};
-    if (_base->armour.count(ArmourType::ARMOUR))
+    if (_base->eq.armour.count(ArmourType::ARMOUR))
         current_armour[ArmourType::ARMOUR] = {
-            _base->armour[ArmourType::ARMOUR].first,
-            _base->armour[ArmourType::ARMOUR].second,
+            _base->eq.armour[ArmourType::ARMOUR].first,
+            _base->eq.armour[ArmourType::ARMOUR].second,
             0.0
         };
     else
         current_armour[ArmourType::ARMOUR] = {ItemClass::MUNDANE ,"", 0.0};
-    if (_base->armour.count(ArmourType::SHIELD))
+    if (_base->eq.armour.count(ArmourType::SHIELD))
         current_armour[ArmourType::SHIELD] = {
-            _base->armour[ArmourType::SHIELD].first,
-            _base->armour[ArmourType::SHIELD].second,
+            _base->eq.armour[ArmourType::SHIELD].first,
+            _base->eq.armour[ArmourType::SHIELD].second,
             0.0
         };
     else
         current_armour[ArmourType::SHIELD] = {ItemClass::MUNDANE, "", 0.0};
-    if (_base->armour.count(ArmourType::HELMET))
+    if (_base->eq.armour.count(ArmourType::HELMET))
         current_armour[ArmourType::HELMET] = {
-            _base->armour[ArmourType::HELMET].first,
-            _base->armour[ArmourType::HELMET].second,
+            _base->eq.armour[ArmourType::HELMET].first,
+            _base->eq.armour[ArmourType::HELMET].second,
             0.0
         };
     else

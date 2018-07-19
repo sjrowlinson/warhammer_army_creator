@@ -21,7 +21,7 @@
 namespace tools {
 
     class roster_parser {
-        struct equipment {
+        /*struct equipment {
             std::unordered_map<WeaponType, std::pair<ItemClass, std::string>> weapons;
             std::unordered_map<ArmourType, std::pair<ItemClass, std::string>> armour;
             std::vector<std::string> talismans;
@@ -31,7 +31,7 @@ namespace tools {
 
             equipment()
                 : weapons(), armour(), talismans(), arcane(), enchanted(), banners() {}
-        };
+        };*/
     private:
         QFile f;
         std::stringstream ss;
