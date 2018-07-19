@@ -78,6 +78,8 @@ namespace armies {
         WARBEASTS,
         CHARIOT,
         MONSTER,
+        SWARM,
+        WARMACHINE,
         UNIQUE
     };
 
@@ -92,9 +94,11 @@ namespace armies {
         {"Warbeasts", UnitClass::WARBEASTS},
         {"Chariot", UnitClass::CHARIOT},
         {"Monster", UnitClass::MONSTER},
+        {"Swarm", UnitClass::SWARM},
+        {"Warmachine", UnitClass::WARMACHINE},
         {"Unique", UnitClass::UNIQUE}
     };
 
-};
+}
 
 #endif // !ARMY_MAPS_H

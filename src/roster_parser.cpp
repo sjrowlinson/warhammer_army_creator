@@ -300,6 +300,12 @@ namespace tools {
             case armies::UnitType::RARE:
                 if (types_split[1] == "Infantry")
                     units.push_back(parse_infantry(i, ut));
+                else if (types_split[1] == "Swarm")
+                    units.push_back(parse_swarm(i, ut));
+                else if (types_split[1] == "Monster")
+                    units.push_back(parse_monster(i, ut));
+                else if (types_split[1] == "Warmachine")
+                    units.push_back(parse_warmachine(i, ut));
             default: continue;
             }
         }
@@ -438,6 +444,95 @@ namespace tools {
         tmp.faction_item_budget = champ_fi_budget;
         tmp.total_item_budget = champ_ti_budget;
         tmp.magic_banner_budget = mb_budget;
+        return tmp;
+    }
+
+    base_unit roster_parser::parse_swarm(std::size_t n, armies::UnitType ut) {
+        std::string name = read_line(blocks[n]);
+        auto category = armies::UnitClass::SWARM;
+        double pts = std::stod(read_line(blocks[n] + 2));
+        auto mm_size = parse_minmax_size(read_line(blocks[n] + 3));
+        auto stats = tools::split_stos(read_line(blocks[n] + 4), ' ');
+        auto rules = tools::split(read_line(blocks[n] + 5), ',');
+        auto opt_extras = parse_optional_extras(read_line(blocks[n] + 6));
+        base_unit tmp;
+        tmp.faction = faction;
+        tmp.unit_type = ut;
+        tmp.unit_class = category;
+        tmp.name = name;
+        tmp.is_character = false;
+        tmp.is_unique = false;
+        tmp.is_mage = false;
+        tmp.pts_per_model = pts;
+        tmp.min_size = mm_size.first;
+        tmp.max_size = mm_size.second;
+        tmp.stats = stats;
+        tmp.special_rules = rules;
+        tmp.opt_extras = opt_extras;
+        tmp.magic_item_budget = 0.0;
+        tmp.faction_item_budget = 0.0;
+        tmp.total_item_budget = 0.0;
+        tmp.magic_banner_budget = 0.0;
+        return tmp;
+    }
+
+    base_unit roster_parser::parse_monster(std::size_t n, armies::UnitType ut) {
+        std::string name = read_line(blocks[n]);
+        auto category = armies::UnitClass::MONSTER;
+        double pts = std::stod(read_line(blocks[n] + 2));
+        auto mm_size = parse_minmax_size(read_line(blocks[n] + 3));
+        auto stats = tools::split_stos(read_line(blocks[n] + 4), ' ');
+        auto rules = tools::split(read_line(blocks[n] + 5), ',');
+        auto opt_extras = parse_optional_extras(read_line(blocks[n] + 6));
+        base_unit tmp;
+        tmp.faction = faction;
+        tmp.unit_type = ut;
+        tmp.unit_class = category;
+        tmp.name = name;
+        tmp.is_character = false;
+        tmp.is_unique = false;
+        tmp.is_mage = false;
+        tmp.pts_per_model = pts;
+        tmp.min_size = mm_size.first;
+        tmp.max_size = mm_size.second;
+        tmp.stats = stats;
+        tmp.special_rules = rules;
+        tmp.opt_extras = opt_extras;
+        tmp.magic_item_budget = 0.0;
+        tmp.faction_item_budget = 0.0;
+        tmp.total_item_budget = 0.0;
+        tmp.magic_banner_budget = 0.0;
+        return tmp;
+    }
+
+    base_unit roster_parser::parse_warmachine(std::size_t n, armies::UnitType ut) {
+        std::string name = read_line(blocks[n]);
+        auto category = armies::UnitClass::WARMACHINE;
+        double pts = std::stod(read_line(blocks[n] + 2));
+        auto mm_size = parse_minmax_size(read_line(blocks[n] + 3));
+        auto stats = tools::split_stos(read_line(blocks[n] + 4), ' ');
+        auto crew_stats = tools::split_stos(read_line(blocks[n] + 5), ' ');
+        auto rules = tools::split(read_line(blocks[n] + 6), ',');
+        auto opt_extras = parse_optional_extras(read_line(blocks[n] + 7));
+        base_unit tmp;
+        tmp.faction = faction;
+        tmp.unit_type = ut;
+        tmp.unit_class = category;
+        tmp.name = name;
+        tmp.is_character = false;
+        tmp.is_unique = false;
+        tmp.is_mage = false;
+        tmp.pts_per_model = pts;
+        tmp.min_size = mm_size.first;
+        tmp.max_size = mm_size.second;
+        tmp.stats = stats;
+        tmp.champion_stats = crew_stats;
+        tmp.special_rules = rules;
+        tmp.opt_extras = opt_extras;
+        tmp.magic_item_budget = 0.0;
+        tmp.faction_item_budget = 0.0;
+        tmp.total_item_budget = 0.0;
+        tmp.magic_banner_budget = 0.0;
         return tmp;
     }
 

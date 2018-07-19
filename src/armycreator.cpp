@@ -106,7 +106,7 @@ void ArmyCreator::on_faction_combobox_currentTextChanged(const QString& faction)
     army->clear();
     ui->current_pts_label->setText(QString("%1").arg(static_cast<double>(0.0)));
     for (int i = 0; i < 5; ++i)
-        ui->army_tree->topLevelItem(i)->setText(4, QString("%1").arg(static_cast<double>(0.0)));
+        ui->army_tree->topLevelItem(i)->setText(5, QString("%1").arg(static_cast<double>(0.0)));
     st->reset(race, *army);
     id_counter = 0;
     // now fill the roster tree widget
@@ -179,11 +179,13 @@ void ArmyCreator::on_add_button_clicked() {
                         std::get<1>(armour).data(),
                         QString("%1").arg(std::get<2>(armour))
                     );
-    if (!(std::get<1>(shield).empty()))
+    if (!(std::get<1>(shield).empty())) {
+        if (!armour_str.isEmpty()) armour_str += QString("\n");
         armour_str += QString("%1 [%2]").arg(
                         std::get<1>(shield).data(),
                         QString("%1").arg(std::get<2>(shield))
                     );
+    }
     if (!(std::get<1>(helmet).empty()))
         armour_str += QString("%1 [%2]").arg(
                         std::get<1>(helmet).data(),
@@ -194,27 +196,27 @@ void ArmyCreator::on_add_button_clicked() {
     switch (unit_type) {
     case armies::UnitType::LORD:
         ui->army_tree->topLevelItem(0)->addChild(item);
-        ui->army_tree->topLevelItem(0)->setText(4, QString("%1").arg(army->lord_points()));
+        ui->army_tree->topLevelItem(0)->setText(5, QString("%1").arg(army->lord_points()));
         ui->army_tree->topLevelItem(0)->setExpanded(true);
         break;
     case armies::UnitType::HERO:
         ui->army_tree->topLevelItem(1)->addChild(item);
-        ui->army_tree->topLevelItem(1)->setText(4, QString("%1").arg(army->hero_points()));
+        ui->army_tree->topLevelItem(1)->setText(5, QString("%1").arg(army->hero_points()));
         ui->army_tree->topLevelItem(1)->setExpanded(true);
         break;
     case armies::UnitType::CORE:
         ui->army_tree->topLevelItem(2)->addChild(item);
-        ui->army_tree->topLevelItem(2)->setText(4, QString("%1").arg(army->core_points()));
+        ui->army_tree->topLevelItem(2)->setText(5, QString("%1").arg(army->core_points()));
         ui->army_tree->topLevelItem(2)->setExpanded(true);
         break;
     case armies::UnitType::SPECIAL:
         ui->army_tree->topLevelItem(3)->addChild(item);
-        ui->army_tree->topLevelItem(3)->setText(4, QString("%1").arg(army->special_points()));
+        ui->army_tree->topLevelItem(3)->setText(5, QString("%1").arg(army->special_points()));
         ui->army_tree->topLevelItem(3)->setExpanded(true);
         break;
     case armies::UnitType::RARE:
         ui->army_tree->topLevelItem(4)->addChild(item);
-        ui->army_tree->topLevelItem(4)->setText(4, QString("%1").arg(army->rare_points()));
+        ui->army_tree->topLevelItem(4)->setText(5, QString("%1").arg(army->rare_points()));
         ui->army_tree->topLevelItem(4)->setExpanded(true);
         break;
     default:
@@ -232,19 +234,19 @@ void ArmyCreator::on_remove_button_clicked() {
     ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
     switch (unit_type) {
     case armies::UnitType::LORD:
-        ui->army_tree->topLevelItem(0)->setText(4, QString("%1").arg(army->lord_points()));
+        ui->army_tree->topLevelItem(0)->setText(5, QString("%1").arg(army->lord_points()));
         break;
     case armies::UnitType::HERO:
-        ui->army_tree->topLevelItem(1)->setText(4, QString("%1").arg(army->hero_points()));
+        ui->army_tree->topLevelItem(1)->setText(5, QString("%1").arg(army->hero_points()));
         break;
     case armies::UnitType::CORE:
-        ui->army_tree->topLevelItem(2)->setText(4, QString("%1").arg(army->core_points()));
+        ui->army_tree->topLevelItem(2)->setText(5, QString("%1").arg(army->core_points()));
         break;
     case armies::UnitType::SPECIAL:
-        ui->army_tree->topLevelItem(3)->setText(4, QString("%1").arg(army->special_points()));
+        ui->army_tree->topLevelItem(3)->setText(5, QString("%1").arg(army->special_points()));
         break;
     case armies::UnitType::RARE:
-        ui->army_tree->topLevelItem(4)->setText(4, QString("%1").arg(army->rare_points()));
+        ui->army_tree->topLevelItem(4)->setText(5, QString("%1").arg(army->rare_points()));
         break;
     default:
         break;
@@ -257,7 +259,7 @@ void ArmyCreator::on_clear_button_clicked() {
     army->clear();
     ui->current_pts_label->setText(QString("%1").arg(static_cast<double>(0.0)));
     for (int i = 0; i < 5; ++i)
-        ui->army_tree->topLevelItem(i)->setText(4, QString("%1").arg(static_cast<double>(0.0)));
+        ui->army_tree->topLevelItem(i)->setText(5, QString("%1").arg(static_cast<double>(0.0)));
     clear_army_tree();
     clear_unit_options_box();
 }

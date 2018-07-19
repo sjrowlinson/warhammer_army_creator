@@ -21,17 +21,6 @@
 namespace tools {
 
     class roster_parser {
-        /*struct equipment {
-            std::unordered_map<WeaponType, std::pair<ItemClass, std::string>> weapons;
-            std::unordered_map<ArmourType, std::pair<ItemClass, std::string>> armour;
-            std::vector<std::string> talismans;
-            std::vector<std::string> arcane;
-            std::vector<std::string> enchanted;
-            std::vector<std::string> banners;
-
-            equipment()
-                : weapons(), armour(), talismans(), arcane(), enchanted(), banners() {}
-        };*/
     private:
         QFile f;
         std::stringstream ss;
@@ -79,6 +68,9 @@ namespace tools {
         base_unit parse_melee_character(std::size_t n, armies::UnitType ut);
         base_unit parse_mage_character(std::size_t n, armies::UnitType ut);
         base_unit parse_infantry(std::size_t n, armies::UnitType ut);
+        base_unit parse_swarm(std::size_t n, armies::UnitType ut);
+        base_unit parse_monster(std::size_t n, armies::UnitType ut);
+        base_unit parse_warmachine(std::size_t n, armies::UnitType ut);
     public:
         explicit roster_parser(const QString& rfile, armies::Faction faction);
         ~roster_parser();
