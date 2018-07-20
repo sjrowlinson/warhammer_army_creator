@@ -8,7 +8,9 @@ _base_unit::_base_unit(
     std::size_t min_size,
     std::size_t max_size
 ) : faction_(faction), ut_(ut), uc_(uc), name_(name),
-    min_size_(min_size), max_size_(max_size) {}
+    min_size_(min_size), max_size_(max_size), but(BaseUnitType::BASE) {}
+
+BaseUnitType _base_unit::base_unit_type() const noexcept { return but; }
 
 armies::Faction _base_unit::faction() const noexcept { return faction_; }
 armies::UnitType _base_unit::unit_type() const noexcept { return ut_; }

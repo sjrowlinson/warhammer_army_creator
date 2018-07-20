@@ -34,7 +34,7 @@ base_mage_character_unit::base_mage_character_unit(
     is_bsb,
     mount_name
 ), mage_level_(mage_level), level_upgrades_(std::move(level_upgrades)),
-   lores_(std::move(lores)) {}
+   lores_(std::move(lores)) { but = BaseUnitType::MAGE_CHARACTER; }
 
 short base_mage_character_unit::mage_level() const noexcept { return mage_level_; }
 const std::unordered_map<short, double>& base_mage_character_unit::level_upgrades() const noexcept {

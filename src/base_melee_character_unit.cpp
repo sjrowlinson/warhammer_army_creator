@@ -30,4 +30,4 @@ base_melee_character_unit::base_melee_character_unit(
     ti_budget,
     is_bsb,
     mount_name
-) {}
+) { but = BaseUnitType::MELEE_CHARACTER; }

@@ -37,7 +37,7 @@ base_normal_unit::base_normal_unit(
    champ_opt_(std::move(champ_opt)), champ_mi_budget_(champ_mi_budget),
    champ_fi_budget_(champ_fi_budget), champ_ti_budget_(champ_ti_budget),
    opt_command_(std::move(opt_command)), magic_banner_budget_(magic_banner_budget),
-   mount_name_(mount_name) {}
+   mount_name_(mount_name) { but = BaseUnitType::NORMAL; }
 
 double base_normal_unit::points_per_model() const noexcept { return pts_per_model_; }
 

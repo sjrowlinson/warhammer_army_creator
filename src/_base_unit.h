@@ -12,7 +12,17 @@
 #include <utility>
 #include <vector>
 
+enum class BaseUnitType {
+    NORMAL,
+    MIXED,
+    MELEE_CHARACTER,
+    MAGE_CHARACTER,
+    BASE
+};
+
 class _base_unit {
+protected:
+    BaseUnitType but;
 private:
     // enums
     armies::Faction faction_;
@@ -37,6 +47,8 @@ public:
         std::size_t max_size = std::numeric_limits<std::size_t>::max()
     );
     virtual ~_base_unit() = default;
+
+    BaseUnitType base_unit_type() const noexcept;
 
     armies::Faction faction() const noexcept;
     armies::UnitType unit_type() const noexcept;

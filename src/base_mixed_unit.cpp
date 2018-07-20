@@ -14,7 +14,7 @@ base_mixed_unit::base_mixed_unit(
     slave.max_size()
 ), master_(std::move(master)), slave_(std::move(slave)),
    min_masters_per_slave_(min_masters_per_slave),
-   max_masters_per_slave_(max_masters_per_slave) {}
+   max_masters_per_slave_(max_masters_per_slave) { but = BaseUnitType::MIXED; }
 
 const base_normal_unit& base_mixed_unit::master() const noexcept {
     return master_;
