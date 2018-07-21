@@ -56,9 +56,27 @@ std::unordered_map<
 }
 
 std::unordered_map<
+    std::string,
+    std::pair<bool, double>
+> normal_unit::extras() const noexcept {
+    return extras_;
+}
+
+std::unordered_map<
+    std::string,
+    std::pair<bool, double>
+> normal_unit::champion_extras() const noexcept {
+    return champ_extras;
+}
+
+std::unordered_map<
     CommandGroup, std::pair<std::string, double>
 > normal_unit::command() const noexcept {
     return command_group;
+}
+
+std::pair<std::string, double> normal_unit::magic_banner() const noexcept {
+    return banner;
 }
 
 // current property modifiers
@@ -70,7 +88,7 @@ void normal_unit::pick_weapon(ItemClass item_type, std::string name) {
         auto search = handle->opt().opt_weapons.find(name);
         if (search == handle->opt().opt_weapons.end())
             throw std::invalid_argument("Weapon not found!");
-        // TODO: remove current weapon
+        remove_weapon(std::get<0>(search->second));
         weapons[std::get<0>(search->second)] = {
             std::get<1>(search->second),
             search->first,
@@ -101,7 +119,7 @@ void normal_unit::pick_armour(ItemClass item_type, std::string name) {
         auto search = handle->opt().opt_armour.find(name);
         if (search == handle->opt().opt_armour.end())
             throw std::invalid_argument("Armour not found!");
-        // TODO: remove current armour
+        remove_armour(std::get<0>(search->second));
         armours[std::get<0>(search->second)] = {
             std::get<1>(search->second),
             search->first,
@@ -134,7 +152,7 @@ void normal_unit::pick_champion_weapon(ItemClass item_type, std::string name) {
         auto search = handle->champion_opt().opt_weapons.find(name);
         if (search == handle->champion_opt().opt_weapons.end())
             throw std::invalid_argument("Weapon not found!");
-        // TODO: remove current champion weapon
+        remove_champion_weapon(std::get<0>(search->second));
         champ_weapons[std::get<0>(search->second)] = {
             std::get<1>(search->second),
             search->first,
@@ -162,7 +180,7 @@ void normal_unit::pick_champion_weapon(ItemClass item_type, std::string name) {
                     [&unit_name](const auto& x) { return x == unit_name; }
                 )) throw std::invalid_argument("Unit champion cannot take this weapon!");
         }
-        // TODO: remove current champion weapon
+        remove_champion_weapon(search->second.weapon_type);
         champ_weapons[search->second.weapon_type] = {
             item_type,
             search->first,
@@ -197,7 +215,7 @@ void normal_unit::pick_champion_armour(ItemClass item_type, std::string name) {
         auto search = handle->champion_opt().opt_armour.find(name);
         if (search == handle->champion_opt().opt_armour.end())
             throw std::invalid_argument("Armour not found!");
-        // TODO: remove current champion armour
+        remove_champion_armour(std::get<0>(search->second));
         champ_armours[std::get<0>(search->second)] = {
             std::get<1>(search->second),
             search->first,
@@ -225,7 +243,7 @@ void normal_unit::pick_champion_armour(ItemClass item_type, std::string name) {
                     [&unit_name](const auto& x) { return x == unit_name; }
                 )) throw std::invalid_argument("Unit champion cannot take this weapon!");
         }
-        // TODO: remove current champion armour
+        remove_champion_armour(search->second.armour_type);
         champ_armours[search->second.armour_type] = {
             item_type,
             search->first,
@@ -317,6 +335,106 @@ void normal_unit::remove_champion_armour(ArmourType at) {
         points_ -= pts;
         armours[at] = {def_a.first, def_a.second, 0.0};
     }
+}
+
+void normal_unit::add_command_member(CommandGroup member) {
+    auto search = handle->optional_command().find(member);
+    if (search == handle->optional_command().end())
+        throw std::invalid_argument("Command group member not available!");
+    command_group[member] = {search->second.first, search->second.second};
+    points_ += search->second.second;
+}
+
+void normal_unit::remove_command_member(CommandGroup member) {
+    auto it = command_group.find(member);
+    if (it != command_group.end()) {
+        points_ -= it->second.second;
+        command_group.erase(member);
+    }
+}
+
+void normal_unit::pick_banner(ItemClass item_type, std::string name) {
+    if (!(command_group.count(CommandGroup::STANDARD_BEARER)))
+        throw std::runtime_error("Unit contains no standard bearer!");
+    switch (item_type) {
+    case ItemClass::MAGIC:
+    {
+        auto search = handle->magic_items_handle()->find(name);
+        if (search == handle->magic_items_handle()->end())
+            throw std::invalid_argument("Magic banner not found!");
+        if (search->second.points > handle->magic_banner_budget())
+            throw std::invalid_argument("Magic banner beyond budget!");
+        // check if the magic weapon has specific allowed units
+        if (!(search->second.allowed_units.empty())) {
+            std::string unit_name = this->name();
+            // check that this unit is within the magic weapons' allowed units container
+            if (!std::count_if(
+                    std::begin(search->second.allowed_units),
+                    std::end(search->second.allowed_units),
+                    [&unit_name](const auto& x) { return x == unit_name; }
+                )) throw std::invalid_argument("Unit standard bearer cannot take this banner!");
+        }
+        remove_banner();
+        banner.first = name;
+        banner.second = search->second.points;
+        points_ += search->second.points;
+        break;
+    }
+    }
+}
+
+void normal_unit::remove_banner() {
+    if (banner.first.empty()) return;
+    points_ -= banner.second;
+    banner.first = "";
+    banner.second = 0.0;
+}
+
+void normal_unit::pick_extra(std::string name) {
+    auto search = handle->opt().opt_extras.first.find(name);
+    if (search == handle->opt().opt_extras.first.end())
+        throw std::invalid_argument("Item not found!");
+    if (handle->opt().opt_extras.second) { // one choice only
+        for (const auto& x : extras_) {
+            if (x.second.first) points_ -= x.second.second;
+            else points_ -= size_ * x.second.second;
+        }
+        extras_.clear();
+    }
+    extras_[search->first] = search->second;
+    if (search->second.first) points_ += search->second.second;
+    else points_ += size_ * search->second.second;
+}
+
+void normal_unit::pick_champion_extra(std::string name) {
+    auto search = handle->champion_opt().opt_extras.first.find(name);
+    if (search == handle->champion_opt().opt_extras.first.end())
+        throw std::invalid_argument("Item not found!");
+    if (handle->champion_opt().opt_extras.second) { // one choice only
+        for (const auto& x : champ_extras)
+            points_ -= x.second.second;
+        champ_extras.clear();
+    }
+    champ_extras[search->first] = search->second;
+    points_ += search->second.second;
+}
+
+void normal_unit::change_size(std::size_t n) {
+    if (n < handle->min_size() || n > handle->max_size())
+        throw std::invalid_argument("Invalid unit size!");
+    points_ = n * handle->points_per_model();
+    for (const auto& w : weapons) points_ += n * std::get<2>(w.second);
+    for (const auto& a : armours) points_ += n * std::get<2>(a.second);
+    for (const auto& e : extras_) {
+        if (e.second.first) points_ += e.second.second;
+        else points_ += n * e.second.second;
+    }
+    for (const auto& cw : champ_weapons) points_ += std::get<2>(cw.second);
+    for (const auto& ca : champ_armours) points_ += std::get<2>(ca.second);
+    for (const auto& ce : champ_extras) points_ + ce.second.second;
+    for (const auto& m : command_group) points_ += m.second.second;
+    points_ += banner.second;
+    size_ = n;
 }
 
 // base property accessors
