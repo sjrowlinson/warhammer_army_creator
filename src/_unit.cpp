@@ -1,7 +1,7 @@
 #include "_unit.h"
 
 _unit::_unit(std::shared_ptr<_base_unit> base)
-    : id_(0), base_(base) {}
+    : id_(0), points_(0.0), base_(base) {}
 
 int _unit::id() const noexcept { return id_; }
 void _unit::set_id(int id) { id_ = id; }

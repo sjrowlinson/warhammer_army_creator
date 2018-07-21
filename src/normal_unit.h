@@ -19,6 +19,8 @@ private:
     std::size_t size_;
     // TODO: store fields such as current melee weapon, current ranged weapon
     // and current armour for both champion and non-champion models
+
+    // non-champion
     std::unordered_map<
         WeaponType,
         std::tuple<ItemClass, std::string, double>
@@ -27,14 +29,75 @@ private:
         ArmourType,
         std::tuple<ItemClass, std::string, double>
     > armours;
+
+    // champion
+    std::unordered_map<
+        WeaponType,
+        std::tuple<ItemClass, std::string, double>
+    > champ_weapons;
+    std::unordered_map<
+        ArmourType,
+        std::tuple<ItemClass, std::string, double>
+    > champ_armours;
+    double champ_magic_item_points;
+    double champ_faction_item_points;
+    double champ_total_item_points;
+
+    // command
+    std::unordered_map<
+        CommandGroup, std::pair<std::string, double>
+    > command_group;
 public:
     explicit normal_unit(std::shared_ptr<_base_unit> base);
     ~normal_unit() = default;
 
+    // current property accessors
+    std::size_t size() const noexcept;
+    std::tuple<ItemClass, std::string, double> melee_weapon() const;
+    std::tuple<ItemClass, std::string, double> ranged_weapon() const;
+    std::tuple<ItemClass, std::string, double> champion_melee_weapon() const;
+    std::tuple<ItemClass, std::string, double> champion_ranged_weapon() const;
+
+    std::unordered_map<
+        ArmourType,
+        std::tuple<ItemClass, std::string, double>
+    > armour() const noexcept;
+        std::unordered_map<
+        ArmourType,
+        std::tuple<ItemClass, std::string, double>
+    > champion_armour() const noexcept;
+
+    std::unordered_map<
+        CommandGroup, std::pair<std::string, double>
+    > command() const noexcept;
+
+    // current property modifiers
+    void pick_weapon(ItemClass item_type, std::string name);
+    void pick_armour(ItemClass item_type, std::string name);
+    void pick_champion_weapon(ItemClass item_type, std::string name);
+    void pick_champion_armour(ItemClass item_type, std::string name);
+
+    void remove_weapon(WeaponType wt);
+    void remove_armour(ArmourType at);
+    void remove_champion_weapon(WeaponType wt);
+    void remove_champion_armour(ArmourType at);
+
+    // base property accessors
     const std::vector<short>& statistics() const noexcept;
     const std::vector<short>& champion_statistics() const noexcept;
-
     const std::vector<std::string>& special_rules() const noexcept;
+    const std::vector<std::string>& champion_special_rules() const noexcept;
+    const equipment& eq() const noexcept;
+    const options& opt() const noexcept;
+    const equipment& champion_eq() const noexcept;
+    const options& champion_opt() const noexcept;
+    const std::unordered_map<
+        CommandGroup, std::pair<std::string, double>
+    >& optional_command() const noexcept;
+    double champion_magic_item_budget() const noexcept;
+    double champion_faction_item_budget() const noexcept;
+    double champion_total_item_budget() const noexcept;
+    double magic_banner_budget() const noexcept;
 };
 
 #endif // !_UNIT_H

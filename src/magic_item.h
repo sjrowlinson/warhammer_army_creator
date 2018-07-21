@@ -35,6 +35,7 @@ enum class ArmourType {
 struct magic_item {
     ItemType item_type;
     ArmourType armour_type;
+    WeaponType weapon_type;
     std::string name;
     std::string description;
     double points;

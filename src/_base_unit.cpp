@@ -20,6 +20,11 @@ std::string _base_unit::name() const noexcept { return name_; }
 std::size_t _base_unit::min_size() const noexcept { return min_size_; }
 std::size_t _base_unit::max_size() const noexcept { return max_size_; }
 
+const std::shared_ptr<
+    std::unordered_map<std::string, magic_item>
+>& _base_unit::magic_items_handle() const noexcept {
+    return magic_items;
+}
 void _base_unit::set_magic_item_handle(
     const std::shared_ptr<
         std::unordered_map<

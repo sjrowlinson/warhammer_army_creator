@@ -58,6 +58,9 @@ public:
     std::size_t min_size() const noexcept;
     std::size_t max_size() const noexcept;
 
+    const std::shared_ptr<
+        std::unordered_map<std::string, magic_item>
+    >& magic_items_handle() const noexcept;
     void set_magic_item_handle(
         const std::shared_ptr<
             std::unordered_map<
