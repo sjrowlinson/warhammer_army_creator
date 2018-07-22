@@ -112,6 +112,9 @@ public:
     void pick_extra(std::string name);
     void pick_champion_extra(std::string name);
 
+    void remove_extra(std::string name);
+    void remove_champion_extra(std::string name);
+
     void change_size(std::size_t n);
 
     // base property accessors

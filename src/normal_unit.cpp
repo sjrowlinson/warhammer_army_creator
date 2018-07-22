@@ -380,6 +380,13 @@ void normal_unit::pick_banner(ItemClass item_type, std::string name) {
         points_ += search->second.points;
         break;
     }
+    case ItemClass::FACTION:
+        // TODO: implement once we have a faction_items handle
+        break;
+    case ItemClass::COMMON:
+        // TODO: implement once we have a common_items handle
+        break;
+    default: break;
     }
 }
 
@@ -417,6 +424,23 @@ void normal_unit::pick_champion_extra(std::string name) {
     }
     champ_extras[search->first] = search->second;
     points_ += search->second.second;
+}
+
+void normal_unit::remove_extra(std::string name) {
+    auto search = extras_.find(name);
+    if (search != extras_.end()) {
+        if (search->second.first) points_ -= search->second.second;
+        else points_ -= size_ * search->second.second;
+        extras_.erase(name);
+    }
+}
+
+void normal_unit::remove_champion_extra(std::string name) {
+    auto search = champ_extras.find(name);
+    if (search != champ_extras.end()) {
+        points_ -= search->second.second;
+        champ_extras.erase(name);
+    }
 }
 
 void normal_unit::change_size(std::size_t n) {
