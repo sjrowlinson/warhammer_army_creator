@@ -14,12 +14,6 @@
 
 class normal_unit : public _unit {
 private:
-    // TODO: consider making handle a const public field so that we
-    // don't need base property accessor methods
-
-    // handle
-    std::shared_ptr<base_normal_unit> handle;
-
     // unit size
     std::size_t size_;
 
@@ -60,6 +54,9 @@ private:
     > command_group;
     std::pair<std::string, double> banner;
 public:
+    // handle
+    const std::shared_ptr<base_normal_unit> handle;
+
     explicit normal_unit(std::shared_ptr<_base_unit> base);
     ~normal_unit() = default;
 

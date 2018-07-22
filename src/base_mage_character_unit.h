@@ -4,7 +4,7 @@
 #include "army_maps.h"
 #include "base_character_unit.h"
 
-class base_mage_character_unit : base_character_unit {
+class base_mage_character_unit : public base_character_unit {
 private:
     short mage_level_;
     std::unordered_map<short, double> level_upgrades_;

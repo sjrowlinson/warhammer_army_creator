@@ -4,7 +4,7 @@
 #include "army_maps.h"
 #include "base_character_unit.h"
 
-class base_melee_character_unit : base_character_unit {
+class base_melee_character_unit : public base_character_unit {
 private:
 public:
     base_melee_character_unit(

@@ -25,7 +25,7 @@ public:
     int id() const noexcept;
     void set_id(int id);
     
-    double points() const noexcept;
+    virtual double points() const noexcept;
 
     BaseUnitType base_unit_type() const noexcept;
     std::string name() const noexcept;

@@ -166,9 +166,10 @@ void normal_unit::pick_champion_weapon(ItemClass item_type, std::string name) {
         auto search = handle->magic_items_handle()->find(name);
         if (search == handle->magic_items_handle()->end())
             throw std::invalid_argument("Weapon not found!");
-        double budget = handle->champion_magic_item_budget();
-        if ((search->second.points + champ_magic_item_points > budget) ||
-                (search->second.points + champ_total_item_points > budget))
+        double mi_budget = handle->champion_magic_item_budget();
+        double ti_budget = handle->champion_total_item_budget();
+        if ((search->second.points + champ_magic_item_points > mi_budget) ||
+                (search->second.points + champ_total_item_points > ti_budget))
             throw std::runtime_error("Magic item budget exceeded!");
         // check if the magic weapon has specific allowed units
         if (!(search->second.allowed_units.empty())) {
@@ -188,6 +189,7 @@ void normal_unit::pick_champion_weapon(ItemClass item_type, std::string name) {
         };
         points_ += search->second.points;
         champ_magic_item_points += search->second.points;
+        champ_faction_item_points += search->second.points;
         break;
     }
     case ItemClass::FACTION:
@@ -229,9 +231,10 @@ void normal_unit::pick_champion_armour(ItemClass item_type, std::string name) {
         auto search = handle->magic_items_handle()->find(name);
         if (search == handle->magic_items_handle()->end())
             throw std::invalid_argument("Armour not found!");
-        double budget = handle->champion_magic_item_budget();
-        if ((search->second.points + champ_magic_item_points > budget) ||
-                (search->second.points + champ_total_item_points > budget))
+        double mi_budget = handle->champion_magic_item_budget();
+        double ti_budget = handle->champion_total_item_budget();
+        if ((search->second.points + champ_magic_item_points > mi_budget) ||
+                (search->second.points + champ_total_item_points > ti_budget))
             throw std::runtime_error("Magic item budget exceeded!");
         // check if the magic armour has specific allowed units
         if (!(search->second.allowed_units.empty())) {
@@ -251,6 +254,7 @@ void normal_unit::pick_champion_armour(ItemClass item_type, std::string name) {
         };
         points_ += search->second.points;
         champ_magic_item_points += search->second.points;
+        champ_faction_item_points += search->second.points;
         break;
     }
     case ItemClass::FACTION:
