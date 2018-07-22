@@ -279,9 +279,9 @@ namespace tools {
         return um;
     }
 
-    std::vector<base_unit> roster_parser::parse() {
+    std::vector<std::shared_ptr<_base_unit>> roster_parser::parse() {
         count_units();
-        std::vector<base_unit> units;
+        std::vector<std::shared_ptr<_base_unit>> units;
         units.reserve(blocks.size());
         for (std::size_t i = 0U; i < blocks.size(); ++i) {
             std::string types = read_line(blocks[i] + 1);
@@ -291,28 +291,34 @@ namespace tools {
             case armies::UnitType::LORD:
             case armies::UnitType::HERO:
                 if (types_split[1] == "Melee")
-                    units.push_back(parse_melee_character(i, ut));
+                    units.push_back(std::make_shared<base_melee_character_unit>(
+                        parse_melee_character(i, ut)
+                    ));
                 else if (types_split[1] == "Mage")
-                    units.push_back(parse_mage_character(i, ut));
+                    units.push_back(std::make_shared<base_mage_character_unit>(
+                        parse_mage_character(i, ut)
+                    ));
                 break;
             case armies::UnitType::CORE:
             case armies::UnitType::SPECIAL:
             case armies::UnitType::RARE:
-                if (types_split[1] == "Infantry")
-                    units.push_back(parse_infantry(i, ut));
-                else if (types_split[1] == "Swarm")
-                    units.push_back(parse_swarm(i, ut));
-                else if (types_split[1] == "Monster")
-                    units.push_back(parse_monster(i, ut));
-                else if (types_split[1] == "Warmachine")
-                    units.push_back(parse_warmachine(i, ut));
+                auto category = armies::s_map_string_unit_class[types_split[1]];
+                if (types_split[2] == "Normal")
+                    units.push_back(std::make_shared<base_normal_unit>(
+                        parse_normal_unit(i, ut, category)
+                    ));
+                else if (types_split[2] == "Mixed")
+                    units.push_back(std::make_shared<base_mixed_unit>(
+                        parse_mixed_unit(i, ut, category)
+                    ));
+                break;
             default: continue;
             }
         }
         return units;
     }
 
-    base_unit roster_parser::parse_melee_character(std::size_t n, armies::UnitType ut) {
+    base_melee_character_unit roster_parser::parse_melee_character(std::size_t n, armies::UnitType ut) {
         std::string name = read_line(blocks[n]);
         auto category = armies::s_map_string_unit_class[read_line(blocks[n] + 2)];
         double pts = std::stod(read_line(blocks[n] + 3));
@@ -324,34 +330,33 @@ namespace tools {
         auto opt_armours = parse_optional_armour(read_line(blocks[n] + 9));
         auto opt_mounts = parse_optional_mounts(read_line(blocks[n] + 10));
         auto opt_extras = parse_optional_extras(read_line(blocks[n] + 11));
+        options opt;
+        opt.opt_weapons = opt_weapons;
+        opt.opt_armour = opt_armours;
+        opt.opt_mounts = opt_mounts;
+        opt.opt_extras = opt_extras;
         double mi_budget = std::stod(read_line(blocks[n] + 12));
         double fi_budget = std::stod(read_line(blocks[n] + 13));
         double ti_budget = std::stod(read_line(blocks[n] + 14));
-        base_unit tmp;
-        tmp.faction = faction;
-        tmp.unit_type = ut;
-        tmp.unit_class = category;
-        tmp.name = name;
-        tmp.is_character = true;
-        tmp.is_unique = false;
-        tmp.is_mage = false;
-        tmp.pts_per_model = pts;
-        tmp.min_size = mm_size.first;
-        tmp.max_size = mm_size.second;
-        tmp.stats = stats;
-        tmp.special_rules = rules;
-        tmp.eq = eq;
-        tmp.opt_weapons = opt_weapons;
-        tmp.opt_armour = opt_armours;
-        tmp.opt_mounts = opt_mounts;
-        tmp.opt_extras = opt_extras;
-        tmp.magic_item_budget = mi_budget;
-        tmp.faction_item_budget = fi_budget;
-        tmp.total_item_budget = ti_budget;
+        base_melee_character_unit tmp(
+            faction,
+            ut,
+            category,
+            name,
+            pts,
+            std::move(stats),
+            std::move(rules),
+            std::move(eq),
+            std::move(opt),
+            mi_budget,
+            fi_budget,
+            ti_budget,
+            false // TODO: add is_bsb line to character block in roster file
+        );
         return tmp;
     }
 
-    base_unit roster_parser::parse_mage_character(std::size_t n, armies::UnitType ut) {
+    base_mage_character_unit roster_parser::parse_mage_character(std::size_t n, armies::UnitType ut) {
         std::string name = read_line(blocks[n]);
         short level = static_cast<short>(std::stoi(read_line(blocks[n] + 2)));
         auto level_upgrades = parse_mage_upgrades(read_line(blocks[n] + 3));
@@ -366,173 +371,32 @@ namespace tools {
         auto opt_armours = parse_optional_armour(read_line(blocks[n] + 12));
         auto opt_mounts = parse_optional_mounts(read_line(blocks[n] + 13));
         auto opt_extras = parse_optional_extras(read_line(blocks[n] + 14));
+        options opt;
+        opt.opt_weapons = opt_weapons;
+        opt.opt_armour = opt_armours;
+        opt.opt_mounts = opt_mounts;
+        opt.opt_extras = opt_extras;
         double mi_budget = std::stod(read_line(blocks[n] + 15));
         double fi_budget = std::stod(read_line(blocks[n] + 16));
         double ti_budget = std::stod(read_line(blocks[n] + 17));
-        base_unit tmp;
-        tmp.faction = faction;
-        tmp.unit_type = ut;
-        tmp.unit_class = category;
-        tmp.name = name;
-        tmp.is_character = true;
-        tmp.is_unique = false;
-        tmp.is_mage = false;
-        tmp.pts_per_model = pts;
-        tmp.min_size = mm_size.first;
-        tmp.max_size = mm_size.second;
-        tmp.stats = stats;
-        tmp.special_rules = rules;
-        tmp.eq = eq;
-        tmp.opt_weapons = opt_weapons;
-        tmp.opt_armour = opt_armours;
-        tmp.opt_mounts = opt_mounts;
-        tmp.opt_extras = opt_extras;
-        tmp.magic_item_budget = mi_budget;
-        tmp.faction_item_budget = fi_budget;
-        tmp.total_item_budget = ti_budget;
-        tmp.base_mage_level = level;
-        tmp.mage_level_upgrades = level_upgrades;
-        tmp.lores = lores;
-        return tmp;
-    }
-
-    base_unit roster_parser::parse_infantry(std::size_t n, armies::UnitType ut) {
-        std::string name = read_line(blocks[n]);
-        auto category = armies::UnitClass::INFANTRY;
-        double pts = std::stod(read_line(blocks[n] + 2));
-        auto mm_size = parse_minmax_size(read_line(blocks[n] + 3));
-        auto stats = tools::split_stos(read_line(blocks[n] + 4), ' ');
-        auto champ_stats = tools::split_stos(read_line(blocks[n] + 5), ' ');
-        auto rules = tools::split(read_line(blocks[n] + 6), ',');
-        auto eq = parse_equipment(read_line(blocks[n] + 7));
-        auto champ_eq = parse_equipment(read_line(blocks[n] + 8));
-        auto opt_weapons = parse_optional_weapons(read_line(blocks[n] + 9));
-        auto champ_opt_weapons = parse_optional_weapons(read_line(blocks[n] + 10));
-        auto opt_armours = parse_optional_armour(read_line(blocks[n] + 11));
-        auto champ_opt_armours = parse_optional_armour(read_line(blocks[n] + 12));
-        auto opt_extras = parse_optional_extras(read_line(blocks[n] + 13));
-        auto champ_opt_extras = parse_optional_extras(read_line(blocks[n] + 14));
-        auto command = parse_command(read_line(blocks[n] + 15));
-        double champ_mi_budget = std::stod(read_line(blocks[n] + 16));
-        double champ_fi_budget = std::stod(read_line(blocks[n] + 17));
-        double champ_ti_budget = std::stod(read_line(blocks[n] + 18));
-        double mb_budget = std::stod(read_line(blocks[n] + 19));
-        base_unit tmp;
-        tmp.faction = faction;
-        tmp.unit_type = ut;
-        tmp.unit_class = category;
-        tmp.name = name;
-        tmp.is_character = false;
-        tmp.is_unique = false;
-        tmp.is_mage = false;
-        tmp.pts_per_model = pts;
-        tmp.min_size = mm_size.first;
-        tmp.max_size = mm_size.second;
-        tmp.stats = stats;
-        tmp.champion_stats = champ_stats;
-        tmp.special_rules = rules;
-        tmp.eq = eq;
-        tmp.champ_eq = champ_eq;
-        tmp.opt_weapons = opt_weapons;
-        tmp.opt_armour = opt_armours;
-        tmp.opt_extras = opt_extras;
-        tmp.opt_command = command;
-        tmp.champ_opt_weapons = champ_opt_weapons;
-        tmp.champ_opt_armour = champ_opt_armours;
-        tmp.champ_opt_extras = champ_opt_extras;
-        tmp.magic_item_budget = champ_mi_budget;
-        tmp.faction_item_budget = champ_fi_budget;
-        tmp.total_item_budget = champ_ti_budget;
-        tmp.magic_banner_budget = mb_budget;
-        return tmp;
-    }
-
-    base_unit roster_parser::parse_swarm(std::size_t n, armies::UnitType ut) {
-        std::string name = read_line(blocks[n]);
-        auto category = armies::UnitClass::SWARM;
-        double pts = std::stod(read_line(blocks[n] + 2));
-        auto mm_size = parse_minmax_size(read_line(blocks[n] + 3));
-        auto stats = tools::split_stos(read_line(blocks[n] + 4), ' ');
-        auto rules = tools::split(read_line(blocks[n] + 5), ',');
-        auto opt_extras = parse_optional_extras(read_line(blocks[n] + 6));
-        base_unit tmp;
-        tmp.faction = faction;
-        tmp.unit_type = ut;
-        tmp.unit_class = category;
-        tmp.name = name;
-        tmp.is_character = false;
-        tmp.is_unique = false;
-        tmp.is_mage = false;
-        tmp.pts_per_model = pts;
-        tmp.min_size = mm_size.first;
-        tmp.max_size = mm_size.second;
-        tmp.stats = stats;
-        tmp.special_rules = rules;
-        tmp.opt_extras = opt_extras;
-        tmp.magic_item_budget = 0.0;
-        tmp.faction_item_budget = 0.0;
-        tmp.total_item_budget = 0.0;
-        tmp.magic_banner_budget = 0.0;
-        return tmp;
-    }
-
-    base_unit roster_parser::parse_monster(std::size_t n, armies::UnitType ut) {
-        std::string name = read_line(blocks[n]);
-        auto category = armies::UnitClass::MONSTER;
-        double pts = std::stod(read_line(blocks[n] + 2));
-        auto mm_size = parse_minmax_size(read_line(blocks[n] + 3));
-        auto stats = tools::split_stos(read_line(blocks[n] + 4), ' ');
-        auto rules = tools::split(read_line(blocks[n] + 5), ',');
-        auto opt_extras = parse_optional_extras(read_line(blocks[n] + 6));
-        base_unit tmp;
-        tmp.faction = faction;
-        tmp.unit_type = ut;
-        tmp.unit_class = category;
-        tmp.name = name;
-        tmp.is_character = false;
-        tmp.is_unique = false;
-        tmp.is_mage = false;
-        tmp.pts_per_model = pts;
-        tmp.min_size = mm_size.first;
-        tmp.max_size = mm_size.second;
-        tmp.stats = stats;
-        tmp.special_rules = rules;
-        tmp.opt_extras = opt_extras;
-        tmp.magic_item_budget = 0.0;
-        tmp.faction_item_budget = 0.0;
-        tmp.total_item_budget = 0.0;
-        tmp.magic_banner_budget = 0.0;
-        return tmp;
-    }
-
-    base_unit roster_parser::parse_warmachine(std::size_t n, armies::UnitType ut) {
-        std::string name = read_line(blocks[n]);
-        auto category = armies::UnitClass::WARMACHINE;
-        double pts = std::stod(read_line(blocks[n] + 2));
-        auto mm_size = parse_minmax_size(read_line(blocks[n] + 3));
-        auto stats = tools::split_stos(read_line(blocks[n] + 4), ' ');
-        auto crew_stats = tools::split_stos(read_line(blocks[n] + 5), ' ');
-        auto rules = tools::split(read_line(blocks[n] + 6), ',');
-        auto opt_extras = parse_optional_extras(read_line(blocks[n] + 7));
-        base_unit tmp;
-        tmp.faction = faction;
-        tmp.unit_type = ut;
-        tmp.unit_class = category;
-        tmp.name = name;
-        tmp.is_character = false;
-        tmp.is_unique = false;
-        tmp.is_mage = false;
-        tmp.pts_per_model = pts;
-        tmp.min_size = mm_size.first;
-        tmp.max_size = mm_size.second;
-        tmp.stats = stats;
-        tmp.champion_stats = crew_stats;
-        tmp.special_rules = rules;
-        tmp.opt_extras = opt_extras;
-        tmp.magic_item_budget = 0.0;
-        tmp.faction_item_budget = 0.0;
-        tmp.total_item_budget = 0.0;
-        tmp.magic_banner_budget = 0.0;
+        base_mage_character_unit tmp(
+            faction,
+            ut,
+            category,
+            name,
+            pts,
+            std::move(stats),
+            std::move(rules),
+            std::move(eq),
+            std::move(opt),
+            mi_budget,
+            fi_budget,
+            ti_budget,
+            false,
+            level,
+            std::move(level_upgrades),
+            std::move(lores)
+        );
         return tmp;
     }
 

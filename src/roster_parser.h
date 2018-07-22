@@ -4,6 +4,12 @@
 #include "army_maps.h"
 #include "base_unit.h"
 #include "tools.h"
+#include "_base_unit.h"
+#include "base_character_unit.h"
+#include "base_mage_character_unit.h"
+#include "base_melee_character_unit.h"
+#include "base_mixed_unit.h"
+#include "base_normal_unit.h"
 
 #include <algorithm>
 #include <ostream>
@@ -65,17 +71,23 @@ namespace tools {
         > parse_optional_extras(std::string s);
 
         // specialised parsing
-        base_unit parse_melee_character(std::size_t n, armies::UnitType ut);
+        /*base_unit parse_melee_character(std::size_t n, armies::UnitType ut);
         base_unit parse_mage_character(std::size_t n, armies::UnitType ut);
         base_unit parse_infantry(std::size_t n, armies::UnitType ut);
         base_unit parse_swarm(std::size_t n, armies::UnitType ut);
         base_unit parse_monster(std::size_t n, armies::UnitType ut);
-        base_unit parse_warmachine(std::size_t n, armies::UnitType ut);
+        base_unit parse_warmachine(std::size_t n, armies::UnitType ut);*/
+        base_melee_character_unit parse_melee_character(std::size_t n, armies::UnitType ut);
+        base_mage_character_unit parse_mage_character(std::size_t n, armies::UnitType ut);
+        base_normal_unit parse_normal_unit(std::size_t n, armies::UnitType ut, armies::UnitClass category);
+        base_mixed_unit parse_mixed_unit(std::size_t n, armies::UnitType ut, armies::UnitClass category);
+
     public:
         explicit roster_parser(const QString& rfile, armies::Faction faction);
         ~roster_parser();
 
-        std::vector<base_unit> parse();
+        //std::vector<base_unit> parse();
+        std::vector<std::shared_ptr<_base_unit>> parse();
     };
 
 }
