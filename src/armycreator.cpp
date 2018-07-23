@@ -33,31 +33,31 @@ void ArmyCreator::populate_roster_tree() {
     auto rares = st->rare();
     for (const auto& l : lords) {
         QTreeWidgetItem* lord_item = new QTreeWidgetItem();
-        lord_item->setText(0, QString(l->name.data()));
+        lord_item->setText(0, QString(l->name().data()));
         ui->roster_tree->topLevelItem(0)->addChild(lord_item);
         ui->roster_tree->topLevelItem(0)->setExpanded(true);
     }
     for (const auto& h : heroes) {
         QTreeWidgetItem* hero_item = new QTreeWidgetItem();
-        hero_item->setText(0, QString(h->name.data()));
+        hero_item->setText(0, QString(h->name().data()));
         ui->roster_tree->topLevelItem(1)->addChild(hero_item);
         ui->roster_tree->topLevelItem(1)->setExpanded(true);
     }
     for (const auto& c : cores) {
         QTreeWidgetItem* core_item = new QTreeWidgetItem();
-        core_item->setText(0, QString(c->name.data()));
+        core_item->setText(0, QString(c->name().data()));
         ui->roster_tree->topLevelItem(2)->addChild(core_item);
         ui->roster_tree->topLevelItem(2)->setExpanded(true);
     }
     for (const auto& s : specials) {
         QTreeWidgetItem* spec_item = new QTreeWidgetItem();
-        spec_item->setText(0, QString(s->name.data()));
+        spec_item->setText(0, QString(s->name().data()));
         ui->roster_tree->topLevelItem(3)->addChild(spec_item);
         ui->roster_tree->topLevelItem(3)->setExpanded(true);
     }
     for (const auto& r : rares) {
         QTreeWidgetItem* rare_item = new QTreeWidgetItem();
-        rare_item->setText(0, QString(r->name.data()));
+        rare_item->setText(0, QString(r->name().data()));
         ui->roster_tree->topLevelItem(4)->addChild(rare_item);
         ui->roster_tree->topLevelItem(4)->setExpanded(true);
     }
@@ -80,7 +80,26 @@ void ArmyCreator::clear_unit_options_box() {
 
 void ArmyCreator::initialise_unit_options_box() {
     int curr_id = ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt();
-    auto opt_weapons = army->get_unit(curr_id).optional_weapons();
+    //auto opt_weapons = army->get_unit(curr_id).optional_weapons();
+    std::unordered_map<
+        std::string,
+        std::tuple<WeaponType, ItemClass, double>
+    > opt_weapons;
+    switch (army->get_unit(curr_id)->base_unit_type()) {
+    case BaseUnitType::MELEE_CHARACTER:
+        opt_weapons = std::dynamic_pointer_cast<melee_character_unit>(army->get_unit(curr_id))->handle->opt().opt_weapons;
+        break;
+    case BaseUnitType::MAGE_CHARACTER:
+        opt_weapons = std::dynamic_pointer_cast<mage_character_unit>(army->get_unit(curr_id))->handle->opt().opt_weapons;
+        break;
+    //case BaseUnitType::MIXED:
+    //   opt_weapons = std::dynamic_pointer_cast<mixed_character_unit>(army->get_unit())->handle->opt().opt_weapons;
+    //    break;
+    case BaseUnitType::NORMAL:
+        opt_weapons = std::dynamic_pointer_cast<normal_unit>(army->get_unit(curr_id))->handle->opt().opt_weapons;
+        break;
+    default: break;
+    }
 
     QVBoxLayout* vbox = new QVBoxLayout;
     for (const auto& x : opt_weapons) {
@@ -155,12 +174,104 @@ void ArmyCreator::on_army_tree_currentItemChanged(QTreeWidgetItem *current, QTre
 void ArmyCreator::on_add_button_clicked() {
     st->add_unit_to_army_list(id_counter++);
     ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
-    // now add to army tree widget
-    armies::UnitType unit_type = st->selected().type();
     QTreeWidgetItem* item = new QTreeWidgetItem();
-    QVariant v(st->selected().id());
+    switch (st->selected()->base_unit_type()) {
+    case BaseUnitType::MELEE_CHARACTER:
+    {
+        auto p = std::dynamic_pointer_cast<melee_character_unit>(st->selected());
+        QVariant v(p->id());
+        item->setData(0, Qt::UserRole, v);
+        item->setText(0, QString(p->name().data()));
+        item->setText(1, QString("%1").arg(1));
+        // current weapons
+        auto mw = p->melee_weapon();
+        auto rw = p->ranged_weapon();
+        if (!(std::get<1>(mw).empty()))
+            item->setText(2, QString("%1 [%2]").arg(
+                std::get<1>(mw).data(), 
+                QString("%1").arg(std::get<2>(mw))
+                )
+            );
+        if (!(std::get<1>(rw).empty()))
+            item->setText(3, QString("%1 [%2]").arg(
+                std::get<1>(rw).data(), 
+                QString("%1").arg(std::get<2>(rw))
+                )
+            );
+        // current armour
+        auto all_armour = p->armour();
+        auto armour = all_armour[ArmourType::ARMOUR];
+        auto shield = all_armour[ArmourType::SHIELD];
+        auto helmet = all_armour[ArmourType::HELMET];
+        QString armour_str("");
+        if (!(std::get<1>(armour).empty()))
+            armour_str += QString("%1 [%2]").arg(
+                            std::get<1>(armour).data(),
+                            QString("%1").arg(std::get<2>(armour))
+                        );
+        if (!(std::get<1>(shield).empty())) {
+            if (!armour_str.isEmpty()) armour_str += QString("\n");
+            armour_str += QString("%1 [%2]").arg(
+                            std::get<1>(shield).data(),
+                            QString("%1").arg(std::get<2>(shield))
+                        );
+        }
+        if (!(std::get<1>(helmet).empty()))
+            armour_str += QString("%1 [%2]").arg(
+                            std::get<1>(helmet).data(),
+                            QString("%1").arg(std::get<2>(helmet))
+                        );
+        item->setText(4, armour_str);
+        item->setText(5, QString("%2").arg(p->points()));
+        // unit type
+        auto unit_type = p->unit_type();
+        switch (unit_type) {
+        case armies::UnitType::LORD:
+            ui->army_tree->topLevelItem(0)->addChild(item);
+            ui->army_tree->topLevelItem(0)->setText(5, QString("%1").arg(army->lord_points()));
+            ui->army_tree->topLevelItem(0)->setExpanded(true);
+            break;
+        case armies::UnitType::HERO:
+            ui->army_tree->topLevelItem(1)->addChild(item);
+            ui->army_tree->topLevelItem(1)->setText(5, QString("%1").arg(army->hero_points()));
+            ui->army_tree->topLevelItem(1)->setExpanded(true);
+            break;
+        case armies::UnitType::CORE:
+            ui->army_tree->topLevelItem(2)->addChild(item);
+            ui->army_tree->topLevelItem(2)->setText(5, QString("%1").arg(army->core_points()));
+            ui->army_tree->topLevelItem(2)->setExpanded(true);
+            break;
+        case armies::UnitType::SPECIAL:
+            ui->army_tree->topLevelItem(3)->addChild(item);
+            ui->army_tree->topLevelItem(3)->setText(5, QString("%1").arg(army->special_points()));
+            ui->army_tree->topLevelItem(3)->setExpanded(true);
+            break;
+        case armies::UnitType::RARE:
+            ui->army_tree->topLevelItem(4)->addChild(item);
+            ui->army_tree->topLevelItem(4)->setText(5, QString("%1").arg(army->rare_points()));
+            ui->army_tree->topLevelItem(4)->setExpanded(true);
+            break;
+        default:
+            delete item;
+            break;
+        }
+        break;
+    }
+    case BaseUnitType::MAGE_CHARACTER:
+        
+        break;
+    case BaseUnitType::NORMAL:
+        
+        break;
+    default: break;
+    }
+    
+    // now add to army tree widget
+    /*armies::UnitType unit_type = st->selected()->unit_type();
+    QTreeWidgetItem* item = new QTreeWidgetItem();
+    QVariant v(st->selected()->id());
     item->setData(0, Qt::UserRole, v);
-    item->setText(0, QString(st->selected().name().data()));
+    item->setText(0, QString(st->selected()->name().data()));
     item->setText(1, QString("%1").arg(st->selected().size()));
     // get the current weapon of the unit
     auto melee_weapon = st->selected().melee_weapon();
@@ -222,14 +333,14 @@ void ArmyCreator::on_add_button_clicked() {
     default:
         delete item;
         break;
-    }
+    }*/
 }
 
 void ArmyCreator::on_remove_button_clicked() {
     QTreeWidgetItem* item = ui->army_tree->currentItem();
     QVariant v = item->data(0, Qt::UserRole);
     int id = v.toInt();
-    armies::UnitType unit_type = army->get_unit(id).type();
+    armies::UnitType unit_type = army->get_unit(id)->unit_type();
     army->remove_unit(id);
     ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
     switch (unit_type) {

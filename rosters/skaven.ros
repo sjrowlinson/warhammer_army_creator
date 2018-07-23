@@ -129,11 +129,12 @@ Plague Priest
 # Core
 
 Clanrats
-    Core, Infantry
+    Core, Infantry, Normal
     4
     20, None
     5 3 3 3 3 1 4 1 5
     5 3 3 3 3 1 4 2 5
+    Scurry Away!, Strength in Numbers
     Scurry Away!, Strength in Numbers
     Armour: Light armour {Mundane} [Armour]
     None
@@ -150,11 +151,12 @@ Clanrats
     0
 
 Stormvermin
-    Core, Infantry
+    Core, Infantry, Normal
     7
     10, None
     5 4 3 3 3 1 5 1 5
     5 4 3 3 3 1 5 2 5
+    Scurry Away!, Strength in Numbers
     Scurry Away!, Strength in Numbers
     Weapon: Halberd {Mundane} [Melee], Armour: Heavy armour {Mundane} [Armour]
     None
@@ -171,11 +173,12 @@ Stormvermin
     50
 
 Skavenslaves
-    Core, Infantry
+    Core, Infantry, Normal
     2
     20, None
     5 2 2 3 3 1 4 1 2
     5 2 2 3 3 1 4 2 2
+    Scurry Away!, Strength in Numbers, Expendable, Cornered Rats
     Scurry Away!, Strength in Numbers, Expendable, Cornered Rats
     None
     None
@@ -192,12 +195,13 @@ Skavenslaves
     0
 
 Night Runners
-    Core, Infantry
+    Core, Infantry, Normal
     7
     10, None
     6 3 3 3 3 1 5 1 6
     6 3 4 3 3 1 5 1 6
-    Scurry Away!, Strength in Numbers, Slinking Advance, Dodge (6+) Nightleader only
+    Scurry Away!, Strength in Numbers, Slinking Advance
+    Scurry Away!, Strength in Numbers, Slinking Advance, Dodge (6+)
     Weapon: Two hand weapons {Mundane} [Melee], Weapon: Throwing stars {Mundane} [Ballistic]
     None
     Slings {Mundane} [Ballistic] (1)
@@ -212,23 +216,24 @@ Night Runners
     0
     0
 
-Rat Swarm
-    Core, Swarm
-    25
-    2, 10
-    6 3 0 2 2 5 4 5 10
-    Unbreakable (Swarm), Small
-    None
+#Rat Swarm
+#    Core, Swarm
+#    25
+#    2, 10
+#    6 3 0 2 2 5 4 5 10
+#    Unbreakable (Swarm), Small
+#    None
 
 # Special
 
 Gutter Runners
-    Special, Infantry
+    Special, Infantry, Normal
     12
     5, 15
     6 4 4 3 3 1 5 1 7
     6 4 4 3 3 1 5 2 7
-    Scurry Away!, Scouts, Skirmish, Sneaky Infiltrators, Dodge (6+), Dodge (5+) Deathrunner only
+    Scurry Away!, Scouts, Skirmish, Sneaky Infiltrators, Dodge (6+)
+    Scurry Away!, Scouts, Skirmish, Sneaky Infiltrators, Dodge (6+), Dodge (5+)
     Weapon: Two hand weapons {Mundane} [Melee], Weapon: Throwing stars {Mundane} [Ballistic]
     None
     Snare-net {Mundane} [Melee] (0), Slings {Mundane} [Ballistic] (1)
@@ -244,11 +249,12 @@ Gutter Runners
     0
 
 Plague Monks
-    Special, Infantry
+    Special, Infantry, Normal
     7
     10, None
     5 3 3 3 4 1 3 1 5
     5 3 3 3 4 1 3 2 5
+    Scurry Away!, Strength in Numbers, Frenzy
     Scurry Away!, Strength in Numbers, Frenzy
     Weapon: Two hand weapons {Mundane} [Melee]
     None
@@ -265,11 +271,12 @@ Plague Monks
     50
 
 Plague Censer Bearers
-    Special, Infantry
+    Special, Infantry, Normal
     16
     5, None
     5 3 3 3 4 1 3 2 5
     5 3 3 3 4 1 3 3 5
+    Scurry Away!, Strength in Numbers, Frenzy, Hatred, Plague Disciples, Skirmish
     Scurry Away!, Strength in Numbers, Frenzy, Hatred, Plague Disciples, Skirmish
     Weapon: Plague Censer {Mundane} [Melee]
     None
@@ -286,11 +293,12 @@ Plague Censer Bearers
     0
 
 Warplock Jezzails
-    Special, Infantry
+    Special, Infantry, Normal
     20
     3, None
     5 3 3 3 3 1 3 2 5
     5 3 4 3 3 1 3 2 5
+    Scurry Away!
     Scurry Away!
     Weapon: Jezzail {Mundane} [Ballistic], Armour: Pavise {Mundane} [Shield]
     None
@@ -307,11 +315,12 @@ Warplock Jezzails
     0
 
 Poisoned Wind Globadiers
-    Special, Infantry
+    Special, Infantry, Normal
     10
     5, 15
     5 3 3 3 3 1 4 1 5
     5 3 4 3 3 1 4 1 5
+    Scurry Away!, Life is Cheap, Skirmish, Volley from the Back
     Scurry Away!, Life is Cheap, Skirmish, Volley from the Back
     Weapon: Poisoned wind globes {Mundane} [Ballistic], Armour: Heavy armour {Mundane} [Armour]
     None
@@ -329,37 +338,37 @@ Poisoned Wind Globadiers
 
 # Rare
 
-Hell Pit Abomination
-    Rare, Monster
-    235
-    1, 1
-    -3 3 1 6 5 6 4 0 8
-    Impact Hits (D6), Large Target, Regenerate, Shambling Horror, Special Close Combat Attacks, Stubborn, Terror, Too Horrible to Die
-    Warpstone Spikes {True} [15]
-
-Doomwheel
-    Rare, Warmachine
-    150
-    1, 1
-    -3 0 0 6 6 5 0 0 0
-    0 3 3 2 0 0 4 -2 7
-    Armour save (4+), Grinding Down the Foe, Immune to Psychology, Impact Hits (D6+1), Large Target, Rolling Doom, Terror, Zzzzap!
-    None
-
-Warp Lightning Cannon
-    Rare, Warmachine
-    90
-    1, 1
-    0 0 0 0 6 4 0 0 0
-    5 3 3 3 3 0 3 3 7
-    Ponderous War Machine
-    None
-
-Plagueclaw Catapult
-    Rare, Warmachine
-    100
-    1, 1
-    0 0 0 0 6 4 0 0 0
-    5 3 3 3 4 0 3 -1 7
-    Fume-addled Crew, Ponderous War Machine
-    None
+#Hell Pit Abomination
+#    Rare, Monster
+#    235
+#    1, 1
+#    -3 3 1 6 5 6 4 0 8
+#    Impact Hits (D6), Large Target, Regenerate, Shambling Horror, Special Close Combat Attacks, Stubborn, Terror, Too Horrible to Die
+#    Warpstone Spikes {True} [15]
+#
+#Doomwheel
+#    Rare, Warmachine
+#    150
+#    1, 1
+#    -3 0 0 6 6 5 0 0 0
+#    0 3 3 2 0 0 4 -2 7
+#    Armour save (4+), Grinding Down the Foe, Immune to Psychology, Impact Hits (D6+1), Large Target, Rolling Doom, Terror, Zzzzap!
+#    None
+#
+#Warp Lightning Cannon
+#    Rare, Warmachine
+#    90
+#    1, 1
+#    0 0 0 0 6 4 0 0 0
+#    5 3 3 3 3 0 3 3 7
+#    Ponderous War Machine
+#    None
+#
+#Plagueclaw Catapult
+#    Rare, Warmachine
+#    100
+#    1, 1
+#    0 0 0 0 6 4 0 0 0
+#    5 3 3 3 4 0 3 -1 7
+#    Fume-addled Crew, Ponderous War Machine
+#    None

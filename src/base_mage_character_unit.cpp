@@ -17,7 +17,7 @@ base_mage_character_unit::base_mage_character_unit(
     short mage_level,
     std::unordered_map<short, double>&& level_upgrades,
     std::vector<std::string>&& lores,
-    std::string mount_name=""
+    std::string mount_name
 ) : base_character_unit(
     faction,
     ut,

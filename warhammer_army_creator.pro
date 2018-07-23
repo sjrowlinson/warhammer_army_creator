@@ -32,7 +32,18 @@ SOURCES += \
         src/roster_parser.cpp \
         src/selection_tree.cpp \
         src/tools.cpp \
-        src/unit.cpp
+        src/unit.cpp \
+        src/_base_unit.cpp \
+        src/_unit.cpp \
+        src/base_character_unit.cpp \
+        src/base_mage_character_unit.cpp \
+        src/base_melee_character_unit.cpp \
+        src/base_mixed_unit.cpp \
+        src/base_normal_unit.cpp \
+        src/mage_character_unit.cpp \
+        src/melee_character_unit.cpp \
+        src/mixed_unit.cpp \
+        src/normal_unit.cpp
 
 HEADERS += \
         src/armycreator.h \
@@ -44,7 +55,18 @@ HEADERS += \
         src/roster_parser.h \
         src/selection_tree.h \
         src/tools.h \
-        src/unit.h
+        src/unit.h \
+        src/_base_unit.h \
+        src/_unit.h \
+        src/base_character_unit.h \
+        src/base_mage_character_unit.h \
+        src/base_melee_character_unit.h \
+        src/base_mixed_unit.h \
+        src/base_normal_unit.h \
+        src/mage_character_unit.h \
+        src/melee_character_unit.h \
+        src/mixed_unit.h \
+        src/normal_unit.h
 
 FORMS += \
         form/armycreator.ui

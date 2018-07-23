@@ -81,7 +81,22 @@ std::pair<std::string, std::string> selection_tree::filenames() const noexcept {
 }
 
 void selection_tree::change_selection(const std::string& name) {
-    current_selection = unit(roster[name]);
+    //current_selection = unit(roster[name]);
+    switch (roster[name]->base_unit_type()) {
+    case BaseUnitType::MELEE_CHARACTER:
+        current_selection = std::make_shared<melee_character_unit>(melee_character_unit(roster[name]));
+        break;
+    case BaseUnitType::MAGE_CHARACTER:
+        current_selection = std::make_shared<mage_character_unit>(mage_character_unit(roster[name]));
+        break;
+    case BaseUnitType::MIXED:
+        current_selection = std::make_shared<mixed_unit>(mixed_unit(roster[name]));
+        break;
+    case BaseUnitType::NORMAL:
+        current_selection = std::make_shared<normal_unit>(normal_unit(roster[name]));
+        break;
+    default: break;
+    }
 }
 
 void selection_tree::reset_army_list(army_list& _army) {
@@ -91,7 +106,7 @@ void selection_tree::reset_army_list(army_list& _army) {
 void selection_tree::reset(armies::Faction faction, army_list &list) {
     roster.clear();
     magic_items.clear();
-    current_selection = unit();
+    current_selection.reset();
     race = faction;
     auto files = filenames();
     QString rfile(files.first.data());
@@ -101,21 +116,36 @@ void selection_tree::reset(armies::Faction faction, army_list &list) {
     reset_army_list(list);
 }
 
-unit& selection_tree::selected() {
-    return current_selection;
+std::shared_ptr<_unit> selection_tree::selected() {
+    switch (current_selection->base_unit_type()) {
+    case BaseUnitType::MELEE_CHARACTER:
+        return std::dynamic_pointer_cast<melee_character_unit>(current_selection);
+    case BaseUnitType::MAGE_CHARACTER:
+        return std::dynamic_pointer_cast<mage_character_unit>(current_selection);
+    case BaseUnitType::MIXED:
+        return std::dynamic_pointer_cast<mixed_unit>(current_selection);
+    case BaseUnitType::NORMAL:
+        return std::dynamic_pointer_cast<normal_unit>(current_selection);
+    default:
+        return current_selection;
+    }
 }
 
 
 void selection_tree::add_unit_to_army_list(int id) {
-    current_selection.set_id(id);
-    if (current_selection.name().empty()) return;
+    current_selection->set_id(id);
+    if (current_selection->name().empty()) return;
     army.get().add_unit(current_selection);
+    //current_selection.set_id(id);
+    //if (current_selection.name().empty()) return;
+    //army.get().add_unit(current_selection);
 }
 
 void selection_tree::parse_roster_file(const QString &rfile_str) {
     tools::roster_parser rp(rfile_str, race);
     auto units = rp.parse();
-    for (auto&& x : units) roster[x.name] = std::make_shared<base_unit>(x);
+    //for (auto&& x : units) roster[x.name] = std::make_shared<base_unit>(x);
+    for (auto&& x : units) roster[x->name()] = x;
 }
 
 void selection_tree::parse_item_file(const QString& ifile_str) {
@@ -124,29 +154,30 @@ void selection_tree::parse_item_file(const QString& ifile_str) {
     for (auto&& item : items) magic_items[item.name] = item;
     std::shared_ptr<std::unordered_map<std::string, magic_item>> sp_items
         = std::make_shared<std::unordered_map<std::string, magic_item>>(magic_items);
-    for (auto& x : roster) x.second->magic_items = sp_items;
+    //for (auto& x : roster) x.second->magic_items = sp_items;
+    for (auto& x : roster) x.second->set_magic_item_handle(sp_items);
 }
 
-std::vector<std::shared_ptr<base_unit>> selection_tree::all_of(armies::UnitType ut) const noexcept {
-    std::vector<std::shared_ptr<base_unit>> v;
+std::vector<std::shared_ptr<_base_unit>> selection_tree::all_of(armies::UnitType ut) const noexcept {
+    std::vector<std::shared_ptr<_base_unit>> v;
     for (const auto& x : roster) {
-        if (x.second->unit_type == ut) v.push_back(x.second);
+        if (x.second->unit_type() == ut) v.push_back(x.second);
     }
     return v;
 }
 
-std::vector<std::shared_ptr<base_unit>> selection_tree::lords() const noexcept {
+std::vector<std::shared_ptr<_base_unit>> selection_tree::lords() const noexcept {
     return all_of(armies::UnitType::LORD);
 }
-std::vector<std::shared_ptr<base_unit>> selection_tree::heroes() const noexcept {
+std::vector<std::shared_ptr<_base_unit>> selection_tree::heroes() const noexcept {
     return all_of(armies::UnitType::HERO);
 }
-std::vector<std::shared_ptr<base_unit>> selection_tree::core() const noexcept {
+std::vector<std::shared_ptr<_base_unit>> selection_tree::core() const noexcept {
     return all_of(armies::UnitType::CORE);
 }
-std::vector<std::shared_ptr<base_unit>> selection_tree::special() const noexcept {
+std::vector<std::shared_ptr<_base_unit>> selection_tree::special() const noexcept {
     return all_of(armies::UnitType::SPECIAL);
 }
-std::vector<std::shared_ptr<base_unit>> selection_tree::rare() const noexcept {
+std::vector<std::shared_ptr<_base_unit>> selection_tree::rare() const noexcept {
     return all_of(armies::UnitType::RARE);
 }

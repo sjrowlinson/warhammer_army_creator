@@ -6,12 +6,12 @@ army_list::army_list(double points) : points(points) {
 
 army_list::~army_list() {}
 
-void army_list::add_unit(const unit& _unit) {
-    auto pts = _unit.points();
+void army_list::add_unit(std::shared_ptr<_unit> u) {
+    auto pts = u->points();
     // too many points
     if (curr_pts + pts > points)
         invalidities.insert(InvalidListReason::POINTS);
-    switch (_unit.type()) {
+    switch (u->unit_type()) {
     case armies::UnitType::LORD:
         if (lord_pts + pts > lord_lim)
             invalidities.insert(InvalidListReason::LORD_LIMIT);
@@ -41,13 +41,13 @@ void army_list::add_unit(const unit& _unit) {
         throw std::invalid_argument("unit type not recognised, cannot add unit to army list.");
         break;
     }
-    army[_unit.id()] = _unit;
+    army[u->id()] = u;
     curr_pts += pts;
 }
 
 void army_list::remove_unit(int id) {
-    auto pts = army[id].points();
-    armies::UnitType unit_type = army[id].type();
+    auto pts = army[id]->points();
+    armies::UnitType unit_type = army[id]->unit_type();
     army.erase(id);
     curr_pts -= pts;
     switch (unit_type) {
@@ -75,11 +75,11 @@ void army_list::remove_unit(int id) {
 void army_list::remove_lords() {
     double pts = 0.0;
     for (const auto& x : army) {
-        if (x.second.type() == armies::UnitType::LORD)
-            pts += x.second.points();
+        if (x.second->unit_type() == armies::UnitType::LORD)
+            pts += x.second->points();
     }
     for (auto it = std::begin(army); it != std::end(army);) {
-        if (it->second.type() == armies::UnitType::LORD)
+        if (it->second->unit_type() == armies::UnitType::LORD)
             it = army.erase(it);
         else ++it;
     }
@@ -91,11 +91,11 @@ void army_list::remove_lords() {
 void army_list::remove_heroes() {
     double pts = 0.0;
     for (const auto& x : army) {
-        if (x.second.type() == armies::UnitType::HERO)
-            pts += x.second.points();
+        if (x.second->unit_type() == armies::UnitType::HERO)
+            pts += x.second->points();
     }
     for (auto it = std::begin(army); it != std::end(army);) {
-        if (it->second.type() == armies::UnitType::HERO)
+        if (it->second->unit_type() == armies::UnitType::HERO)
             it = army.erase(it);
         else ++it;
     }
@@ -107,11 +107,11 @@ void army_list::remove_heroes() {
 void army_list::remove_core() {
     double pts = 0.0;
     for (const auto& x : army) {
-        if (x.second.type() == armies::UnitType::CORE)
-            pts += x.second.points();
+        if (x.second->unit_type() == armies::UnitType::CORE)
+            pts += x.second->points();
     }
     for (auto it = std::begin(army); it != std::end(army);) {
-        if (it->second.type() == armies::UnitType::CORE)
+        if (it->second->unit_type() == armies::UnitType::CORE)
             it = army.erase(it);
         else ++it;
     }
@@ -123,11 +123,11 @@ void army_list::remove_core() {
 void army_list::remove_special() {
     double pts = 0.0;
     for (const auto& x : army) {
-        if (x.second.type() == armies::UnitType::SPECIAL)
-            pts += x.second.points();
+        if (x.second->unit_type() == armies::UnitType::SPECIAL)
+            pts += x.second->points();
     }
     for (auto it = std::begin(army); it != std::end(army);) {
-        if (it->second.type() == armies::UnitType::SPECIAL)
+        if (it->second->unit_type() == armies::UnitType::SPECIAL)
             it = army.erase(it);
         else ++it;
     }
@@ -139,11 +139,11 @@ void army_list::remove_special() {
 void army_list::remove_rare() {
     double pts = 0.0;
     for (const auto& x : army) {
-        if (x.second.type() == armies::UnitType::RARE)
-            pts += x.second.points();
+        if (x.second->unit_type() == armies::UnitType::RARE)
+            pts += x.second->points();
     }
     for (auto it = std::begin(army); it != std::end(army);) {
-        if (it->second.type() == armies::UnitType::RARE)
+        if (it->second->unit_type() == armies::UnitType::RARE)
             it = army.erase(it);
         else ++it;
     }
@@ -158,7 +158,7 @@ std::size_t army_list::nlords() const noexcept {
     return std::count_if(
         std::begin(army),
         std::end(army),
-        [](const auto& x) { return x.second.type() == armies::UnitType::LORD; }
+        [](const auto& x) { return x.second->unit_type() == armies::UnitType::LORD; }
     );
 }
 
@@ -166,7 +166,7 @@ std::size_t army_list::nheroes() const noexcept {
     return std::count_if(
         std::begin(army),
         std::end(army),
-        [](const auto& x) { return x.second.type() == armies::UnitType::HERO; }
+        [](const auto& x) { return x.second->unit_type() == armies::UnitType::HERO; }
     );
 }
 
@@ -174,7 +174,7 @@ std::size_t army_list::ncore() const noexcept {
     return std::count_if(
         std::begin(army),
         std::end(army),
-        [](const auto& x) { return x.second.type() == armies::UnitType::CORE; }
+        [](const auto& x) { return x.second->unit_type() == armies::UnitType::CORE; }
     );
 }
 
@@ -182,7 +182,7 @@ std::size_t army_list::nspecial() const noexcept {
     return std::count_if(
         std::begin(army),
         std::end(army),
-        [](const auto& x) { return x.second.type() == armies::UnitType::SPECIAL; }
+        [](const auto& x) { return x.second->unit_type() == armies::UnitType::SPECIAL; }
     );
 }
 
@@ -190,7 +190,7 @@ std::size_t army_list::nrare() const noexcept {
     return std::count_if(
         std::begin(army),
         std::end(army),
-        [](const auto& x) { return x.second.type() == armies::UnitType::RARE; }
+        [](const auto& x) { return x.second->unit_type() == armies::UnitType::RARE; }
     );
 }
 
@@ -200,7 +200,21 @@ double army_list::core_points() const noexcept { return core_pts; }
 double army_list::special_points() const noexcept { return spec_pts; }
 double army_list::rare_points() const noexcept { return rare_pts; }
 
-unit& army_list::get_unit(int id) { return army[id]; }
+std::shared_ptr<_unit> army_list::get_unit(int id) { 
+    switch (army[id]->base_unit_type()) {
+    case BaseUnitType::MELEE_CHARACTER:
+        return std::dynamic_pointer_cast<melee_character_unit>(army[id]);
+    case BaseUnitType::MAGE_CHARACTER:
+        return std::dynamic_pointer_cast<mage_character_unit>(army[id]);
+    case BaseUnitType::MIXED:
+        return std::dynamic_pointer_cast<mixed_unit>(army[id]);
+    case BaseUnitType::NORMAL:
+        return std::dynamic_pointer_cast<normal_unit>(army[id]);
+    default:
+        return army[id];
+    }
+    //return army[id];
+}
 
 void army_list::change_points_limit(double pts) {
     points = pts;

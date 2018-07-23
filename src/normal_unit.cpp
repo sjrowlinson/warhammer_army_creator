@@ -459,7 +459,7 @@ void normal_unit::change_size(std::size_t n) {
     }
     for (const auto& cw : champ_weapons) points_ += std::get<2>(cw.second);
     for (const auto& ca : champ_armours) points_ += std::get<2>(ca.second);
-    for (const auto& ce : champ_extras) points_ + ce.second.second;
+    for (const auto& ce : champ_extras) points_ += ce.second.second;
     for (const auto& m : command_group) points_ += m.second.second;
     points_ += banner.second;
     size_ = n;

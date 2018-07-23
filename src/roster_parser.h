@@ -80,7 +80,7 @@ namespace tools {
         base_melee_character_unit parse_melee_character(std::size_t n, armies::UnitType ut);
         base_mage_character_unit parse_mage_character(std::size_t n, armies::UnitType ut);
         base_normal_unit parse_normal_unit(std::size_t n, armies::UnitType ut, armies::UnitClass category);
-        base_mixed_unit parse_mixed_unit(std::size_t n, armies::UnitType ut, armies::UnitClass category);
+        //base_mixed_unit parse_mixed_unit(std::size_t n, armies::UnitType ut, armies::UnitClass category);
 
     public:
         explicit roster_parser(const QString& rfile, armies::Faction faction);

@@ -302,16 +302,17 @@ namespace tools {
             case armies::UnitType::CORE:
             case armies::UnitType::SPECIAL:
             case armies::UnitType::RARE:
-                auto category = armies::s_map_string_unit_class[types_split[1]];
+            {   auto category = armies::s_map_string_unit_class[types_split[1]];
                 if (types_split[2] == "Normal")
                     units.push_back(std::make_shared<base_normal_unit>(
                         parse_normal_unit(i, ut, category)
                     ));
-                else if (types_split[2] == "Mixed")
-                    units.push_back(std::make_shared<base_mixed_unit>(
-                        parse_mixed_unit(i, ut, category)
-                    ));
+                //else if (types_split[2] == "Mixed")
+                //    units.push_back(std::make_shared<base_mixed_unit>(
+                //        parse_mixed_unit(i, ut, category)
+                //    ));
                 break;
+            }
             default: continue;
             }
         }
@@ -396,6 +397,62 @@ namespace tools {
             level,
             std::move(level_upgrades),
             std::move(lores)
+        );
+        return tmp;
+    }
+
+    base_normal_unit roster_parser::parse_normal_unit(
+        std::size_t n, armies::UnitType ut, armies::UnitClass category
+    ) {
+        std::string name = read_line(blocks[n]);
+        double pts = std::stod(read_line(blocks[n] + 2));
+        auto mm_size = parse_minmax_size(read_line(blocks[n] + 3));
+        auto stats = tools::split_stos(read_line(blocks[n] + 4), ' ');
+        auto champ_stats = tools::split_stos(read_line(blocks[n] + 5), ' ');
+        auto rules = tools::split(read_line(blocks[n] + 6), ',');
+        auto champ_rules = tools::split(read_line(blocks[n] + 7), ',');
+        auto eq = parse_equipment(read_line(blocks[n] + 8));
+        auto champ_eq = parse_equipment(read_line(blocks[n] + 9));
+        auto opt_weapons = parse_optional_weapons(read_line(blocks[n] + 10));
+        auto champ_opt_weapons = parse_optional_weapons(read_line(blocks[n] + 11));
+        auto opt_armours = parse_optional_armour(read_line(blocks[n] + 12));
+        auto champ_opt_armours = parse_optional_armour(read_line(blocks[n] + 13));
+        auto opt_extras = parse_optional_extras(read_line(blocks[n] + 14));
+        auto champ_opt_extras = parse_optional_extras(read_line(blocks[n] + 15));
+        options opt;
+        opt.opt_weapons = opt_weapons;
+        opt.opt_armour = opt_armours;
+        opt.opt_extras = opt_extras;
+        options champ_opt;
+        champ_opt.opt_weapons = champ_opt_weapons;
+        champ_opt.opt_armour = champ_opt_armours;
+        champ_opt.opt_extras = champ_opt_extras;
+        auto command = parse_command(read_line(blocks[n] + 16));
+        double champ_mi_budget = std::stod(read_line(blocks[n] + 17));
+        double champ_fi_budget = std::stod(read_line(blocks[n] + 18));
+        double champ_ti_budget = std::stod(read_line(blocks[n] + 19));
+        double mb_budget = std::stod(read_line(blocks[n] + 20));
+        base_normal_unit tmp(
+            faction,
+            ut,
+            category,
+            name,
+            mm_size.first,
+            mm_size.second,
+            pts,
+            std::move(stats),
+            std::move(rules),
+            std::move(eq),
+            std::move(opt),
+            std::move(champ_stats),
+            std::move(champ_rules),
+            std::move(champ_eq),
+            std::move(champ_opt),
+            champ_mi_budget,
+            champ_fi_budget,
+            champ_ti_budget,
+            std::move(command),
+            mb_budget
         );
         return tmp;
     }

@@ -2,6 +2,13 @@
 #define ARMY_LIST_H
 #include "army_maps.h"
 #include "unit.h"
+
+#include "_unit.h"
+#include "mage_character_unit.h"
+#include "melee_character_unit.h"
+#include "mixed_unit.h"
+#include "normal_unit.h"
+
 #include <algorithm>
 #include <cmath>
 #include <cstddef>
@@ -32,7 +39,7 @@ private:
     double rare_lim;
     std::unordered_map<
         int,
-        unit
+        std::shared_ptr<_unit>
     > army;
     double lord_pts;
     double hero_pts;
@@ -48,7 +55,7 @@ public:
     ~army_list();
     double current_points() const noexcept;
     // add/remove units
-    void add_unit(const unit& _unit);
+    void add_unit(std::shared_ptr<_unit> u);
     void remove_unit(int id);
     void remove_lords();
     void remove_heroes();
@@ -68,7 +75,7 @@ public:
     double special_points() const noexcept;
     double rare_points() const noexcept;
 
-    unit& get_unit(int id);
+    std::shared_ptr<_unit> get_unit(int id);
     // list property modification
     void change_points_limit(double pts);
     // list modification
