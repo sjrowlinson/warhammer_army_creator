@@ -4,15 +4,14 @@
 #include "army_maps.h"
 #include "base_unit.h"
 #include "base_melee_character_unit.h"
-#include "_base_unit.h"
-#include "_unit.h"
+#include "unit.h"
 
 #include <memory>
 #include <tuple>
 #include <unordered_map>
 #include <utility>
 
-class melee_character_unit : public _unit {
+class melee_character_unit : public unit {
 private:
     // equipment
     std::unordered_map<
@@ -35,7 +34,7 @@ private:
 public:
     const std::shared_ptr<base_melee_character_unit> handle;
 
-    explicit melee_character_unit(std::shared_ptr<_base_unit> base);
+    explicit melee_character_unit(std::shared_ptr<base_unit> base);
     ~melee_character_unit() = default;
 
     // current property accessors

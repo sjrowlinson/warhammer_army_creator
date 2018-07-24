@@ -4,13 +4,12 @@
 #include "army_maps.h"
 #include "base_unit.h"
 #include "base_normal_unit.h"
-#include "_base_unit.h"
 
 #include <string>
 #include <unordered_map>
 #include <vector>
 
-class base_mixed_unit : public _base_unit {
+class base_mixed_unit : public base_unit {
 private:
     base_normal_unit master_;
     base_normal_unit slave_;

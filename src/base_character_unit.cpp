@@ -15,7 +15,7 @@ base_character_unit::base_character_unit(
     double ti_budget,
     bool is_bsb,
     std::string mount_name
-) : _base_unit(
+) : base_unit(
     faction,
     ut,
     uc,

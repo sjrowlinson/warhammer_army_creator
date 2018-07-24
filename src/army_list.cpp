@@ -6,7 +6,7 @@ army_list::army_list(double points) : points(points) {
 
 army_list::~army_list() {}
 
-void army_list::add_unit(std::shared_ptr<_unit> u) {
+void army_list::add_unit(std::shared_ptr<unit> u) {
     auto pts = u->points();
     // too many points
     if (curr_pts + pts > points)
@@ -200,7 +200,7 @@ double army_list::core_points() const noexcept { return core_pts; }
 double army_list::special_points() const noexcept { return spec_pts; }
 double army_list::rare_points() const noexcept { return rare_pts; }
 
-std::shared_ptr<_unit> army_list::get_unit(int id) { 
+std::shared_ptr<unit> army_list::get_unit(int id) {
     switch (army[id]->base_unit_type()) {
     case BaseUnitType::MELEE_CHARACTER:
         return std::dynamic_pointer_cast<melee_character_unit>(army[id]);

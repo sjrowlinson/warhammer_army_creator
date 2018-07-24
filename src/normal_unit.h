@@ -4,15 +4,14 @@
 #include "army_maps.h"
 #include "base_unit.h"
 #include "base_normal_unit.h"
-#include "_base_unit.h"
-#include "_unit.h"
+#include "unit.h"
 
 #include <memory>
 #include <tuple>
 #include <unordered_map>
 #include <utility>
 
-class normal_unit : public _unit {
+class normal_unit : public unit {
 private:
     // unit size
     std::size_t size_;
@@ -57,7 +56,7 @@ public:
     // handle
     const std::shared_ptr<base_normal_unit> handle;
 
-    explicit normal_unit(std::shared_ptr<_base_unit> base);
+    explicit normal_unit(std::shared_ptr<base_unit> base);
     ~normal_unit() = default;
 
     // current property accessors

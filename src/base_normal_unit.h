@@ -3,13 +3,12 @@
 
 #include "army_maps.h"
 #include "base_unit.h"
-#include "_base_unit.h"
 
 #include <string>
 #include <unordered_map>
 #include <vector>
 
-class base_normal_unit : public _base_unit {
+class base_normal_unit : public base_unit {
 private:
     double pts_per_model_;
     // non-champion fields

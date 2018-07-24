@@ -5,7 +5,7 @@ base_mixed_unit::base_mixed_unit(
     base_normal_unit&& slave,
     std::size_t min_masters_per_slave,
     std::size_t max_masters_per_slave
-) : _base_unit(
+) : base_unit(
     master.faction(),
     master.unit_type(),
     master.unit_class(),

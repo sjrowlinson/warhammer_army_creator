@@ -279,9 +279,9 @@ namespace tools {
         return um;
     }
 
-    std::vector<std::shared_ptr<_base_unit>> roster_parser::parse() {
+    std::vector<std::shared_ptr<base_unit>> roster_parser::parse() {
         count_units();
-        std::vector<std::shared_ptr<_base_unit>> units;
+        std::vector<std::shared_ptr<base_unit>> units;
         units.reserve(blocks.size());
         for (std::size_t i = 0U; i < blocks.size(); ++i) {
             std::string types = read_line(blocks[i] + 1);

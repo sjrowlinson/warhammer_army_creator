@@ -24,7 +24,7 @@ base_normal_unit::base_normal_unit(
     >&& opt_command,
     double magic_banner_budget,
     std::string mount_name
-) : _base_unit(
+) : base_unit(
     faction,
     ut,
     uc,

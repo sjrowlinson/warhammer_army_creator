@@ -1,7 +1,7 @@
 #include "mage_character_unit.h"
 
-mage_character_unit::mage_character_unit(std::shared_ptr<_base_unit> base)
-    : _unit(base),
+mage_character_unit::mage_character_unit(std::shared_ptr<base_unit> base)
+    : unit(base),
       handle(std::dynamic_pointer_cast<base_mage_character_unit>(base)) {
     points_ = handle->points();
     for (const auto& w : handle->eq().weapons) {

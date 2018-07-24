@@ -1,7 +1,7 @@
 #include "normal_unit.h"
 
-normal_unit::normal_unit(std::shared_ptr<_base_unit> base)
-    : _unit(base),
+normal_unit::normal_unit(std::shared_ptr<base_unit> base)
+    : unit(base),
       handle(std::dynamic_pointer_cast<base_normal_unit>(base)) {
     points_ = handle->min_size() * handle->points_per_model();
     size_ = handle->min_size();
