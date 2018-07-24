@@ -73,8 +73,9 @@ namespace armies {
     enum class UnitClass {
         INFANTRY,
         CAVALRY,
+        MONSTROUS_INFANTRY,
         MONSTROUS_CAVALRY,
-        MONSTROUS_CREATURES,
+        MONSTROUS_BEAST,
         WARBEASTS,
         CHARIOT,
         MONSTER,
@@ -89,9 +90,10 @@ namespace armies {
     > s_map_string_unit_class = {
         {"Infantry", UnitClass::INFANTRY},
         {"Cavalry", UnitClass::CAVALRY},
+        {"Monstrous Infantry", UnitClass::MONSTROUS_INFANTRY},
         {"Monstrous Cavalry", UnitClass::MONSTROUS_CAVALRY},
-        {"Monstrous Creatures", UnitClass::MONSTROUS_CREATURES},
-        {"Warbeasts", UnitClass::WARBEASTS},
+        {"Monstrous Beast", UnitClass::MONSTROUS_BEAST},
+        {"Warbeast", UnitClass::WARBEASTS},
         {"Chariot", UnitClass::CHARIOT},
         {"Monster", UnitClass::MONSTER},
         {"Swarm", UnitClass::SWARM},

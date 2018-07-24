@@ -62,7 +62,7 @@ private:
     void clear_roster_tree();
     void clear_army_tree();
     void clear_unit_options_box();
-    void initialise_unit_options_box();
+    void initialise_unit_options_box(bool from_roster);
 };
 
 #endif // ARMYCREATOR_H

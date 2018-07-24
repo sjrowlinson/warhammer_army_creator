@@ -2,5 +2,6 @@
     <qresource prefix="/rosters">
         <file alias="skaven.ros">rosters/skaven.ros</file>
         <file alias="empire.ros">rosters/empire.ros</file>
+        <file alias="woc.ros">rosters/woc.ros</file>
     </qresource>
 </RCC>

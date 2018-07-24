@@ -59,6 +59,7 @@ namespace tools {
         std::unordered_map<
             CommandGroup, std::pair<std::string, double>
         > map;
+        if (s == "None" || s.empty()) return map;
         std::unordered_map<std::string, CommandGroup> convert = {
             {"Musician", CommandGroup::MUSICIAN},
             {"Standard Bearer", CommandGroup::STANDARD_BEARER},
@@ -237,7 +238,7 @@ namespace tools {
             if (mount_bs[1] == "Infantry") uc = armies::UnitClass::INFANTRY;
             else if (mount_bs[1] == "Cavalry") uc = armies::UnitClass::CAVALRY;
             else if (mount_bs[1] == "Monstrous Cavalry") uc = armies::UnitClass::MONSTROUS_CAVALRY;
-            else if (mount_bs[1] == "Monstrous Creature") uc = armies::UnitClass::MONSTROUS_CREATURES;
+            else if (mount_bs[1] == "Monstrous Beast") uc = armies::UnitClass::MONSTROUS_BEAST;
             else if (mount_bs[1] == "Warbeast") uc = armies::UnitClass::WARBEASTS;
             else if (mount_bs[1] == "Chariot") uc = armies::UnitClass::CHARIOT;
             else if (mount_bs[1] == "Monster") uc = armies::UnitClass::MONSTER;

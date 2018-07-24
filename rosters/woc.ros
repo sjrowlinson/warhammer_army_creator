@@ -1,0 +1,237 @@
+# Lords
+
+Chaos Lord
+    Lord, Melee
+    Infantry
+    210
+    1, 1
+    4 8 3 5 5 3 7 5 9
+    Eye of the Gods
+    Armour: Chaos armour {Mundane} [Armour]
+    Additional hand weapon {Mundane} [Melee] (6), Great weapon {Mundane} [Melee] (8), Flail {Mundane} [Melee] (6), Halberd {Mundane} [Melee] (8), Lance {Mundane} [Melee] (8)
+    Shield {Mundane} [Shield] (5)
+    Barded Chaos Steed {Warbeast} [24], Steed of Slaanesh {Warbeast} [25], Disc of Tzeentch {Warbeast} [30], Daemonic Mount {Monstrous Beast} [35], Palanquin of Nurgle {Monstrous Beast} [40], Juggernaught of Khorne {Monstrous Beast} [55], Chaos Chariot {Chariot} [110], Chaos Warshrine {Chariot} [125], Gorebeast Chariot {Chariot} [130], Manticore {Monster} [150], Chaos Dragon {Monster} [330]
+    OCO: Mark of Khorne {True} [10], Mark of Tzeentch {True} [10], Mark of Nurgle {True} [10], Mark of Slaanesh {True} [5]
+    100
+    50
+    150
+
+Chaos Sorceror Lord
+    Lord, Mage
+    3
+    4 [35]
+    Death, Fire, Metal, Shadow, Tzeentch, Nurgle, Slaanesh
+    Infantry
+    235
+    1, 1
+    4 5 3 4 4 3 5 3 8
+    Eye of the Gods
+    Armour: Chaos armour {Mundane} [Armour]
+    None
+    None
+    Barded Chaos Steed {Warbeast} [24], Steed of Slaanesh {Warbeast} [25], Disc of Tzeentch {Warbeast} [30], Daemonic Mount {Monstrous Beast} [35], Palanquin of Nurgle {Monstrous Beast} [40], Juggernaught of Khorne {Monstrous Beast} [55], Chaos Chariot {Chariot} [110], Chaos Warshrine {Chariot} [125], Gorebeast Chariot {Chariot} [130], Manticore {Monster} [150], Chaos Dragon {Monster} [330]
+    OCO: Mark of Tzeentch {True} [10], Mark of Nurgle {True} [10], Mark of Slaanesh {True} [5]
+    100
+    50
+    150
+
+Daemon Prince
+    Lord, Mage
+    0
+    1 [35], 2 [70], 3 [105], 4 [140]
+    Metal, Death, Shadow, Tzeentch, Nurgle, Slaanesh
+    Monster
+    235
+    1, 1
+    8 9 5 6 5 4 8 5 9
+    Daemonic Attacks, Daemonic Invulnerability, Terror, Unbreakable
+    None
+    None
+    Chaos armour {Mundane} [Armour] (20)
+    None
+    OCO: Daemon of Khorne {True} [10], Daemon of Tzeentch {True} [15], Daemon of Nurgle {True} [10], Daemon of Slaanesh {True} [5]
+    25
+    100
+    125
+
+# Heroes
+
+# Core
+
+Chaos Warriors
+    Core, Infantry, Normal
+    14
+    10, None
+    4 5 3 4 4 1 5 2 8
+    4 5 3 4 4 1 5 3 8
+    None
+    Eye of the Gods
+    Armour: Chaos armour {Mundane} [Armour]
+    None
+    Additional hand weapons {Mundane} [Melee] (2), Great weapons {Mundane} [Melee] (3), Halberds {Mundane} [Melee] (3)
+    None
+    Shields {Mundane} [Shield] (1)
+    None
+    OCO: Mark of Khorne {False} [2], Mark of Tzeentch {False} [2], Mark of Nurgle {False} [2], Mark of Slaanesh {False} [1]
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Aspiring Champion [10]
+    0
+    0
+    0
+    25
+
+Chaos Marauders
+    Core, Infantry, Normal
+    6
+    10, None
+    4 4 3 3 3 1 4 1 7
+    4 4 3 3 3 1 4 2 7
+    None
+    Eye of the Gods
+    None
+    None
+    Great weapons {Mundane} [Melee] (3), Flails {Mundane} [Melee] (2)
+    None
+    Light armour {Mundane} [Armour] (1), Shields {Mundane} [Shield] (1)
+    None
+    OCO: Mark of Khorne {False} [2], Mark of Tzeentch {False} [2], Mark of Nurgle {False} [2], Mark of Slaanesh {False} [1]
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Marauder Chieftain [10]
+    0
+    0
+    0
+    0
+
+Forsaken
+    Core, Infantry, Normal
+    19
+    5, None
+    6 4 0 4 4 1 4 -3 8
+    6 4 0 4 4 1 4 -3 8
+    Freakish Mutations, Frenzy, Immune to Psychology, Random Attacks (D3)
+    None
+    Armour: Chaos armour {Mundane} [Armour]
+    None
+    None
+    None
+    None
+    None
+    OCO: Forsaken of Khorne {False} [2], Forsaken of Tzeentch {False} [1], Forsaken of Nurgle {False} [2], Forsaken of Slaanesh {False} [2]
+    None
+    None
+    0
+    0
+    0
+    0
+
+Chaos Warhounds
+    Core, Warbeast, Normal
+    6
+    5, None
+    7 4 0 3 3 1 3 1 5
+    7 4 0 3 3 1 3 1 5
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Scaly Hide {False} [1], Mutant Poisons {False} [1]
+    None
+    None
+    0
+    0
+    0
+    0
+
+Marauder Horsemen
+    Core, Cavalry, Normal
+    14
+    5, None
+    4 4 3 3 3 1 4 1 7
+    4 4 3 3 3 1 4 2 7
+    Fast Cavalry
+    Eye of the Gods, Fast Cavalry
+    None
+    None
+    Throwing axes {Mundane} [Ballistic] (2), Javelins {Mundane} [Ballistic] (1), Spears {Mundane} [Melee] (1), Flails {Mundane} [Melee] (2)
+    None
+    Light armour {Mundane} [Armour] (1), Shields {Mundane} [Shield] (1)
+    None
+    OCO: Mark of Khorne {False} [2], Mark of Tzeentch {False} [2], Mark of Nurgle {False} [2], Mark of Slaanesh {False} [1]
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Marauder Horsemaster [10]
+    0
+    0
+    0
+    0
+
+# Special
+
+Chosen
+    Special, Infantry, Normal
+    18
+    5, None
+    4 6 3 4 4 1 5 2 8
+    4 6 3 4 4 1 5 3 8
+    The Rewards of Chaos
+    Eye of the Gods, The Rewards of Chaos
+    Armour: Chaos armour {Mundane} [Armour]
+    None
+    Additional hand weapons {Mundane} [Melee] (2), Great weapons {Mundane} [Melee] (3), Halberds {Mundane} [Melee] (3)
+    None
+    Shields {Mundane} [Shield] (2)
+    None
+    OCO: Mark of Khorne {False} [2], Mark of Tzeentch {False} [2], Mark of Nurgle {False} [2], Mark of Slaanesh {False} [1]
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Chosen Champion [10]
+    0
+    0
+    0
+    50
+
+Chaos Knights
+    Special, Cavalry, Normal
+    40
+    5, None
+    4 5 3 4 4 1 5 2 8
+    4 5 3 4 4 1 5 3 8
+    Fear
+    Eye of the Gods, Fear
+    Armour: Chaos armour {Mundane} [Armour], Armour: Shield {Mundane} [Shield]
+    None
+    Lances {Mundane} [Melee] (2), Ensorcelled weapons {Mundane} [Melee] (3)
+    None
+    None
+    None
+    OCO: Mark of Khorne {False} [2], Mark of Tzeentch {False} [2], Mark of Nurgle {False} [2], Mark of Slaanesh {False} [1]
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Doom Knight [10]
+    0
+    0
+    0
+    50
+
+Chaos Ogres
+    Special, Monstrous Infantry, Normal
+    33
+    3, None
+    6 3 2 4 4 3 2 3 7
+    6 3 2 4 4 3 2 4 7
+    Fear, Ogre Charge
+    Eye of the Gods, Fear, Ogre Charge
+    Armour: Heavy armour {Mundane} [Armour]
+    None
+    Additional hand weapons {Mundane} [Melee] (3), Great weapons {Mundane} [Melee] (8)
+    None
+    None
+    None
+    OCO: Mark of Khorne {False} [4], Mark of Tzeentch {False} [4], Mark of Nurgle {False} [4], Mark of Slaanesh {False} [2]
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Ogre Mutant [10]
+    0
+    0
+    0
+    0

@@ -69,4 +69,174 @@ Foul Pendant
 Shadow Magnet Trinket
     Talisman
     30
-    Shooting attacks at the bearer of a Shadow Magnet Trinket and any unit he has joined
+    Shooting attacks at the bearer of a Shadow Magnet Trinket and any unit he has joined suffer a -1 To Hit penalty in addition to any normal modifiers due to the cloying presence of unnatural darkness.
+    None
+
+Rival Hide Talisman
+    Talisman
+    15
+    One use only. A Skaven model wearing a Rival Hide Talisman can make a single enemy model in base contact re-roll all its successful To Hit dice rolls.
+    None
+
+
+Warpstorm Scroll
+    Arcane
+    50
+    Bound Spell (Power Level 5). One use only. When this scroll is read all flying units within 24" of the caster suffer D6 Strength 6 hits, distributed as per shooting.
+    Grey Seer, Plague Priest, Warlock Engineer
+
+Warp-Energy Condenser
+    Arcane
+    20
+    During each friendly Magic phase a Grey Seer or Warlock Engineer with a Warp-Energy Condenser can, on a D6 roll of 5+, generate and extra power dice. Additionally, the device is particularly adept at aiding a sorcerer in casting Warp Lightning. While wearing a Warp-Energy Condenser a caster does not D6 but D6 + 2 hits when casting Warp Lightning. Rolls of 1, however, do not gain the +2 bonus.
+    Grey Seer, Warlock Engineer
+
+Scrying Stone
+    Arcane
+    15
+    One use only. The bearer of this mystical ball gains a 3+ ward save against the first wound suffered. If the wound is saved because of the ward save of the Scrying Ball, the bearer will be subject to Stupidity in the following friendly turn as he awaits further helpful instructions from the mysterious globe.
+    Grey Seer, Plague Priest, Warlock Engineer
+
+Warpstone Tokens
+    Arcane
+    15
+    Description
+    Grey Seer, Warlock Engineer
+
+
+Skavenbrew
+    Enchanted
+    50
+    Description
+    None
+
+Skalm
+    Enchanted
+    30
+    D
+    None
+
+Pipes of Piebald
+    Enchanted
+    25
+    In order to charge the bearer or any unit he has joined, an enemy unit must first pass a Ld test. If the Ld test is failed, treat the unit as if they had failed a charge.
+    None
+
+Portents of Verminous Doom
+    Enchanted
+    20
+    Any enemy unit in base contact with the model bearing Portents of Verminous Doom suffers a -1 penalty to its Leadership for as long as they remain in contact.
+    None
+
+
+Warpstone Stars
+    Weapon
+    50
+    Warpstone Stars are a thrown weapon with the 3x Multiple Shots rule. Warpstone stars are Strength 5 and each unsaved wound multiplies into D3 wounds.
+    Assassin
+
+Infernal Bomb
+    Enchanted
+    30
+    D
+    Assassin
+
+Smoke Bombs
+    Enchanted
+    10
+    One use only. If a character equipped with Smoke Bombs is forced to flee he can choose to smash the bombs underfoot to slow the victors as they pursue. Before any dice are rolled announce the Smoke Bombs are being detonated. All pursuing units in the combat must roll 1D6 less than normal.
+    Assassin
+
+
+Brass Orb
+    Enchanted
+    50
+    D
+    Warlock Engineer
+
+Doomrocket
+    Weapon
+    30
+    D
+    Warlock Engineer
+
+Death Globe
+    Weapon
+    25
+    D
+    Warlock Engineer
+
+Warlock Optics
+    Enchanted
+    20
+    A Warlock Engineer equipped with Warlock Optics adds +1 to his Ballistic Skill. Additionally, a model so equipped can see partially through objects and so suffers no penalty for shooting at targets in cover.
+    Warlock Engineer
+
+
+Warp Scroll
+    Arcane
+    35
+    One use only. Bound Spell (Power level 5). The spell has a range of 24" and can be cast on any unit visible to the bearer. The spell inflicts one Strength 2 hit on every model in the unit, with no armour saves allowed.
+    Plague Priest
+
+Plague Banner
+    Banner
+    30
+    One use only. Once per game in any Close Combat phase the Plague Banner may be activated. For the remainder of the phase all Plague Monk models in the unit may re-roll failed To Hit rolls and failed To Wound rolls.
+    Plague Priest, Plague Monks
+
+
+Shock-Prod
+    Weapon
+    25
+    This weapon required two hands to wield and ignores armour saves.
+    Master Moulder
+
+Electro-Whip
+    Weapon
+    15
+    This weapon follows the rules for whips but confers D3 Attacks instead of the normal 1 when in base contact and from the rear ranks. Roll to determine the number of Attacks each combat.
+    Master Moulder
+
+
+Sacred Banner of the Horned Rat
+    Banner
+    70
+    All enemy units within 12" of this banner suffer a -1 penalty to their leadership and the owning player can make enemy units in base contact with the bearer of this banner re-roll any successful Leadership tests.
+    None
+
+Storm Banner
+    Banner
+    50
+    The banner can be activated at the beginning of any player's turn. No flying movement is allowed across the entire battlefield and missile fire is at -2 to hit. All non-magical missile attacks that don't use BS to hit their targer need to roll a 4+ on a D6 before they can fire. Roll a D6 at the beginning of each following player turn - the effects of the banner will end on a D6 roll of 4+.
+    None
+
+Grand Banner of Clan Superiority
+    Banner
+    30
+    In any combat in which a unit bearing a Grand Banner of Clan Superiority has more ranks than its opponents, the banner will add not 1 as per a normal banner, but instead a total of D3 to its bearer's combat resolution. Roll at the end of each combat.
+    None
+
+Shroud of Dripping Death
+    Banner
+    30
+    All enemy models in base contact with the bearer of this banner take a single Strength 3 hit with no armour save at the start of each and every close combat phase. Additionally, should the unit bearing the Shroud of Dripping Death break from combat, any unit that dares to pursue it will immediately suffer D6+2 Strength 3 hits with no armour saves.
+    None
+
+Banner of the Under-Empire
+    Banner
+    25
+    All units in base contact with the unit bearing this banner suffer 2D6 Strength 2 automatic hits at the start of each and every Close Combat phase. All hits are distributed as per Shooting.
+    None
+
+Dwarf-Hide Banner
+    Banner
+    15
+    The unit carrying this banner gains Hatred of Dwarfs and likewise will be subject to all Dwarfs gaining Hatred against them.
+    None
+
+Banner of Verminous Scurrying
+    Banner
+    10
+    Once per battle, at the start of any friendly turn except the first, the banner can be activated. If the unit carrying the banner can march, they can so at triple speed. Such a rapid expenditure of energy has a cost, as after marching the unit suffers 2D6 Strength 3 hits (no armour saves allowed), distributed as per shooting.
+    None

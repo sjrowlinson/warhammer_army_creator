@@ -2,5 +2,6 @@
     <qresource prefix="/magic_items">
         <file alias="skaven.mag">magic_items/skaven.mag</file>
         <file alias="empire.mag">magic_items/empire.mag</file>
+        <file alias="woc.mag">magic_items/woc.mag</file>
     </qresource>
 </RCC>

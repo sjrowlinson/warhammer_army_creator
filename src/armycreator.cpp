@@ -78,29 +78,52 @@ void ArmyCreator::clear_unit_options_box() {
     for (auto& x : c) delete x;
 }
 
-void ArmyCreator::initialise_unit_options_box() {
-    int curr_id = ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt();
-    //auto opt_weapons = army->get_unit(curr_id).optional_weapons();
+void ArmyCreator::initialise_unit_options_box(bool from_roster) {
     std::unordered_map<
         std::string,
         std::tuple<WeaponType, ItemClass, double>
     > opt_weapons;
-    switch (army->get_unit(curr_id)->base_unit_type()) {
-    case BaseUnitType::MELEE_CHARACTER:
-        opt_weapons = std::dynamic_pointer_cast<melee_character_unit>(army->get_unit(curr_id))->handle->opt().opt_weapons;
-        break;
-    case BaseUnitType::MAGE_CHARACTER:
-        opt_weapons = std::dynamic_pointer_cast<mage_character_unit>(army->get_unit(curr_id))->handle->opt().opt_weapons;
-        break;
-    //case BaseUnitType::MIXED:
-    //   opt_weapons = std::dynamic_pointer_cast<mixed_character_unit>(army->get_unit())->handle->opt().opt_weapons;
-    //    break;
-    case BaseUnitType::NORMAL:
-        opt_weapons = std::dynamic_pointer_cast<normal_unit>(army->get_unit(curr_id))->handle->opt().opt_weapons;
-        break;
-    default: break;
+    if (from_roster) {
+        switch (st->selected()->base_unit_type()) {
+        case BaseUnitType::MELEE_CHARACTER:
+            opt_weapons = std::dynamic_pointer_cast<melee_character_unit>(
+                            st->selected()
+                          )->handle->opt().opt_weapons;
+            break;
+        case BaseUnitType::MAGE_CHARACTER:
+            opt_weapons = std::dynamic_pointer_cast<mage_character_unit>(
+                            st->selected()
+                          )->handle->opt().opt_weapons;
+            break;
+        case BaseUnitType::MIXED:
+            // TODO: implement once mixed units are figured out
+            break;
+        case BaseUnitType::NORMAL:
+            opt_weapons = std::dynamic_pointer_cast<normal_unit>(
+                            st->selected()
+                          )->handle->opt().opt_weapons;
+            break;
+        default: break;
+        }
     }
-
+    else {
+        int curr_id = ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt();
+        switch (army->get_unit(curr_id)->base_unit_type()) {
+        case BaseUnitType::MELEE_CHARACTER:
+            opt_weapons = std::dynamic_pointer_cast<melee_character_unit>(army->get_unit(curr_id))->handle->opt().opt_weapons;
+            break;
+        case BaseUnitType::MAGE_CHARACTER:
+            opt_weapons = std::dynamic_pointer_cast<mage_character_unit>(army->get_unit(curr_id))->handle->opt().opt_weapons;
+            break;
+        case BaseUnitType::MIXED:
+            // TODO: implement once mixed units are figured out
+            break;
+        case BaseUnitType::NORMAL:
+            opt_weapons = std::dynamic_pointer_cast<normal_unit>(army->get_unit(curr_id))->handle->opt().opt_weapons;
+            break;
+        default: break;
+        }
+    }
     QVBoxLayout* vbox = new QVBoxLayout;
     for (const auto& x : opt_weapons) {
         QRadioButton* b = new QRadioButton(tr(std::get<0>(x).data()));
@@ -145,6 +168,8 @@ void ArmyCreator::on_roster_tree_currentItemChanged(QTreeWidgetItem *current, QT
             name != "Special" && name != "Rare") {
         st->change_selection(name);
         ui->add_button->setEnabled(true);
+        clear_unit_options_box();
+        initialise_unit_options_box(true);
     }
     else
         ui->add_button->setEnabled(false);
@@ -165,7 +190,7 @@ void ArmyCreator::on_army_tree_currentItemChanged(QTreeWidgetItem *current, QTre
             name != "Special" && name != "Rare") {
         ui->remove_button->setEnabled(true);
         clear_unit_options_box();
-        initialise_unit_options_box();
+        initialise_unit_options_box(false);
     }
     else
         ui->remove_button->setEnabled(false);
