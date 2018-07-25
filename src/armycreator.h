@@ -63,6 +63,36 @@ private:
     void clear_army_tree();
     void clear_unit_options_box();
     void initialise_unit_options_box(bool from_roster);
+
+    void init_opt_weapons_groupbox(
+            QVBoxLayout* vbl,
+            const std::unordered_map<std::string, std::tuple<WeaponType, ItemClass, double>>& weapons,
+            bool from_roster,
+            int id=0
+         );
+    void init_opt_armour_groupbox(
+            QVBoxLayout* vbl,
+            const std::unordered_map<std::string, std::tuple<ArmourType, ItemClass, double>>& armour,
+            bool from_roster,
+            int id=0
+         );
+    void init_opt_mounts_groupbox(
+            QVBoxLayout* vbl,
+            const std::unordered_map<std::string, std::pair<armies::UnitClass, double>>& mounts,
+            bool from_roster,
+            int id=0
+         );
+    /*void init_opt_extras_groupbox(
+            QVBoxLayout* vbl,
+            const std::pair<
+                std::unordered_map<
+                    std::string,
+                    std::pair<bool, double>
+                >,
+                bool
+            >& extras,
+            int id=0
+         );*/
 };
 
 #endif // ARMYCREATOR_H
