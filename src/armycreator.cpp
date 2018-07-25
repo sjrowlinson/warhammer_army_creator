@@ -117,6 +117,42 @@ void ArmyCreator::optional_weapon_selected() {
     }
 }
 
+void ArmyCreator::optional_armour_selected() {
+    QRadioButton* rb = qobject_cast<QRadioButton*>(QObject::sender());
+    std::string rb_name = rb->objectName().toStdString();
+    auto rb_name_split = tools::split(rb_name, '_');
+    std::string armour = rb_name_split[0];
+    ItemClass it = static_cast<ItemClass>(std::stoi(rb_name_split[2]));
+    auto from_roster = std::stoi(rb_name_split[3]);
+    std::shared_ptr<unit> current;
+    if (from_roster) current = st->selected();
+    else {
+        int curr_id = ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt();
+        current = army->get_unit(curr_id);
+    }
+    switch (current->base_unit_type()) {
+    case BaseUnitType::MELEE_CHARACTER:
+    {
+        auto p = std::dynamic_pointer_cast<melee_character_unit>(current);
+        try { p->pick_armour(it, armour); } catch (const std::invalid_argument&) { }
+        break;
+    }
+    case BaseUnitType::MAGE_CHARACTER:
+    {
+        auto p = std::dynamic_pointer_cast<mage_character_unit>(current);
+        try { p->pick_armour(it, armour); } catch (const std::invalid_argument&) { }
+        break;
+    }
+    case BaseUnitType::NORMAL:
+    {
+        auto p = std::dynamic_pointer_cast<normal_unit>(current);
+        try { p->pick_armour(it, armour); } catch (const std::invalid_argument&) { }
+        break;
+    }
+    default: break;
+    }
+}
+
 void ArmyCreator::init_opt_weapons_groupbox(
         QVBoxLayout* vbl,
         const std::unordered_map<std::string, std::tuple<WeaponType, ItemClass, double>>& weapons,
@@ -136,8 +172,6 @@ void ArmyCreator::init_opt_weapons_groupbox(
             permodel += (army->get_unit(id)->base_unit_type() == BaseUnitType::NORMAL) ? "/model" : "";
         std::string name = w.first + " (" + pts_str + " pts" + permodel + ")";
         QRadioButton* b = new QRadioButton(tr(name.data()));
-        //std::string b_name = w.first + std::to_string(static_cast<int>())
-        //b->setObjectName(tr((w.first + "_radiobutton").data()));
         std::string b_name = w.first + "_" +
                 std::to_string(static_cast<int>(std::get<0>(w.second))) + "_" +
                 std::to_string(static_cast<int>(std::get<1>(w.second))) + "_" +
@@ -174,7 +208,12 @@ void ArmyCreator::init_opt_armour_groupbox(
             permodel += (army->get_unit(id)->base_unit_type() == BaseUnitType::NORMAL) ? "/model" : "";
         std::string name = a.first + " (" + pts_str + " pts" + permodel + ")";
         QRadioButton* b = new QRadioButton(tr(name.data()));
-        b->setObjectName(tr((a.first + "_radiobutton").data()));
+        std::string b_name = a.first + "_" +
+                std::to_string(static_cast<int>(std::get<0>(a.second))) + "_" +
+                std::to_string(static_cast<int>(std::get<1>(a.second))) + "_" +
+                ((from_roster) ? "1" : "0") + "_radiobutton";
+        b->setObjectName(tr(b_name.data()));
+        connect(b, SIGNAL(clicked(bool)), this, SLOT(optional_armour_selected()));
         vbox_armours->addWidget(b);
     }
     QRadioButton* none_rb = new QRadioButton(tr("None"));
@@ -309,6 +348,37 @@ QGroupBox* ArmyCreator::init_command_groupbox(
     return gb;
 }
 
+void ArmyCreator::change_unit_size() {
+    QSpinBox* sb = qobject_cast<QSpinBox*>(QObject::sender());
+    std::string sb_name = sb->objectName().toStdString();
+    int from_roster = std::stoi(tools::split(sb_name, '_')[1]);
+    std::shared_ptr<unit> current;
+    if (from_roster) current = st->selected();
+    else {
+        int curr_id = ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt();
+        current = army->get_unit(curr_id);
+    }
+    switch (current->base_unit_type()) {
+    case BaseUnitType::MELEE_CHARACTER:
+    {
+        break;
+    }
+    case BaseUnitType::MAGE_CHARACTER:
+    {
+        break;
+    }
+    case BaseUnitType::NORMAL:
+    {
+        auto p = std::dynamic_pointer_cast<normal_unit>(current);
+        try {
+            p->change_size(static_cast<std::size_t>(sb->value()));
+        } catch (const std::invalid_argument&) {}
+        break;
+    }
+    default: break;
+    }
+}
+
 void ArmyCreator::init_size_command_groupbox(
         QVBoxLayout* vbl,
         bool from_roster
@@ -340,6 +410,9 @@ void ArmyCreator::init_size_command_groupbox(
         if (p->max_size() == std::numeric_limits<std::size_t>::max())
             size_sb->setMaximum(1000);
         else size_sb->setMaximum(static_cast<int>(p->max_size()));
+        std::string size_sb_name = p->name() + "_" + ((from_roster) ? "1" : "0") + "_spinbox";
+        size_sb->setObjectName(QString(size_sb_name.data()));
+        connect(size_sb, SIGNAL(valueChanged(int)), this, SLOT(change_unit_size()));
         hbox->addWidget(label);
         hbox->addWidget(size_sb);
         hbox->addStretch(1);

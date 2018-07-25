@@ -114,7 +114,7 @@ void melee_character_unit::pick_armour(ItemClass item_type, std::string name) {
     case ItemClass::MUNDANE:
     {
         auto search = handle->opt().opt_armour.find(name);
-        if (search == handle->opt().opt_armour.end())
+        if (search == handle->opt().opt_armour.cend())
             throw std::invalid_argument("Armour not found!");
         remove_armour(std::get<0>(search->second));
         armours_[std::get<0>(search->second)] = {
@@ -187,6 +187,7 @@ void melee_character_unit::pick_extra(std::string name) {
 }
 
 void melee_character_unit::remove_weapon(WeaponType wt) {
+    if (!weapons_.count(wt)) return;
     auto weapon = weapons_[wt];
     auto def_w = handle->eq().weapons.at(wt);
     if (def_w.second != std::get<1>(weapon)) {
@@ -211,6 +212,7 @@ void melee_character_unit::remove_weapon(WeaponType wt) {
 }
 
 void melee_character_unit::remove_armour(ArmourType at) {
+    if (!armours_.count(at)) return;
     auto armour = armours_[at];
     auto def_a = handle->eq().armour.at(at);
     if (def_a.second != std::get<1>(armour)) {

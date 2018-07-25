@@ -1,31 +1,16 @@
 Units
 -----
 
-* Refactor base_unit and unit classes to avoid messy implementation which could make it difficult to
-  work with when doing intricate model-view interaction handling. Ideas:
+* Determine best structure for mixed_unit class - currently storing two normal_unit instances ("master"
+  and "slave") but this will likely yield problems. May be better to just compromise with some duplication
+  of normal_unit methods but with some specialisation for correctly handling mixed units.
 
-  * Switch back to an inheritance-based system rather than composition with the base_unit class.
-
-  * To do this I probably need several base data structures for handling different unit types as they
-    all store slightly different properties. E.g. I could have an overall class base_unit which all
-    other bases inherit from - this should store completely-common attributes such as the unit name,
-    minimum and maximum size, points per model, the UnitType and UnitClass of the unit and possibly others.
-
-  * Then I would need base unit classes for the different unit types, e.g. base_infantry, base_cavalry,
-    base_warmachine, base_monster and so on. All of these would inherit from base_unit.
-
-  * From this the class unit would be split up into infantry, cavalry, warmachine, monster and so on
-    classes - where each of these inherits/composits from their associated base unit type.
-
-* If I decide to implement a structure along the lines of above then some of the roster_parser class
-  implementation would need to be changed again - but likely only to return the correct base unit type
-  and handle the polymorphism of these types correctly.
+* Store one-choice-only and multiple-choice extras separately.
 
 Parsing
 -------
 
-- Finish first basic implementation of parsing for all unit and character types. Infantry and characters
-  mostly done - Warbeasts, Monsters, Warmachines and others still to do.
+- Once mixed_unit structure is finalised, Implement parsing method for these types.
 
 - Implement method in roster_parser for parsing common properties that all units have, then add additional
   parsing rules to the unit specific methods.
@@ -34,6 +19,3 @@ GUI
 ---
 
 - More experimenting with layouts for better scaling behaviour of widgets.
-
-- Once parsing system refactor is complete start designing the unit_options_box element
-  of the UI.

@@ -53,6 +53,9 @@ private slots:
     void on_clear_button_clicked();
 
     void optional_weapon_selected();
+    void optional_armour_selected();
+
+    void change_unit_size();
 private:
     Ui::ArmyCreator* ui;
     armies::Faction race;
