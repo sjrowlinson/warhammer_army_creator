@@ -17,6 +17,7 @@
 #include <QPushButton>
 #include <QRadioButton>
 #include <QString>
+#include <QSpinBox>
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 #include <QVariant>
@@ -64,6 +65,16 @@ private:
     void clear_unit_options_box();
     void initialise_unit_options_box(bool from_roster);
 
+    void init_size_command_groupbox(
+            QVBoxLayout* vbl,
+            bool from_roster
+         );
+    QGroupBox* init_command_groupbox(
+                   std::unordered_map<
+                       CommandGroup, std::pair<std::string, double>
+                   > command,
+                   bool from_roster
+               );
     void init_opt_weapons_groupbox(
             QVBoxLayout* vbl,
             const std::unordered_map<std::string, std::tuple<WeaponType, ItemClass, double>>& weapons,
@@ -82,7 +93,7 @@ private:
             bool from_roster,
             int id=0
          );
-    /*void init_opt_extras_groupbox(
+    void init_opt_extras_groupbox(
             QVBoxLayout* vbl,
             const std::pair<
                 std::unordered_map<
@@ -91,8 +102,9 @@ private:
                 >,
                 bool
             >& extras,
+            bool from_roster,
             int id=0
-         );*/
+         );
 };
 
 #endif // ARMYCREATOR_H
