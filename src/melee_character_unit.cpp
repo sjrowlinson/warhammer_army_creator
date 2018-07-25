@@ -51,7 +51,7 @@ void melee_character_unit::pick_weapon(ItemClass item_type, std::string name) {
     case ItemClass::MUNDANE:
     {
         auto search = handle->opt().opt_weapons.find(name);
-        if (search == handle->opt().opt_weapons.end())
+        if (search == handle->opt().opt_weapons.cend())
             throw std::invalid_argument("Weapon not found!");
         remove_weapon(std::get<0>(search->second));
         weapons_[std::get<0>(search->second)] = {

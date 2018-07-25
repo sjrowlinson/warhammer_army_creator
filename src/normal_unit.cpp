@@ -86,8 +86,9 @@ void normal_unit::pick_weapon(ItemClass item_type, std::string name) {
     case ItemClass::MUNDANE:
     {
         auto search = handle->opt().opt_weapons.find(name);
-        if (search == handle->opt().opt_weapons.end())
+        if (search == handle->opt().opt_weapons.cend()) {
             throw std::invalid_argument("Weapon not found!");
+        }
         remove_weapon(std::get<0>(search->second));
         weapons[std::get<0>(search->second)] = {
             std::get<1>(search->second),
@@ -274,6 +275,7 @@ void normal_unit::pick_champion_armour(ItemClass item_type, std::string name) {
 }
 
 void normal_unit::remove_weapon(WeaponType wt) {
+    if (!weapons.count(wt)) return;
     auto weapon = weapons[wt];
     auto def_w = handle->eq().weapons.at(wt);
     // do not want to remove a default weapon
@@ -284,6 +286,7 @@ void normal_unit::remove_weapon(WeaponType wt) {
 }
 
 void normal_unit::remove_armour(ArmourType at) {
+    if (!armours.count(at)) return;
     auto armour = armours[at];
     auto def_a = handle->eq().armour.at(at);
     // do not want to remove a default armour
@@ -294,7 +297,7 @@ void normal_unit::remove_armour(ArmourType at) {
 }
 
 void normal_unit::remove_champion_weapon(WeaponType wt) {
-    auto weapon = weapons[wt];
+    auto weapon = champ_weapons[wt];
     auto def_w = handle->champion_eq().weapons.at(wt);
     if (def_w.second != std::get<1>(weapon)) {
         const double pts = std::get<2>(weapon);

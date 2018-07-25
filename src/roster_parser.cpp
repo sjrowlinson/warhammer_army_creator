@@ -99,7 +99,10 @@ namespace tools {
 
     equipment roster_parser::parse_equipment(std::string s) {
         equipment e;
-        if (s == "None" || s.empty()) return e;
+        if (s == "None" || s.empty()) {
+            e.weapons[WeaponType::MELEE] = {ItemClass::MUNDANE, "Hand weapon"};
+            return e;
+        }
         std::unordered_map<std::string, int> map_to = {
             {"Weapon", 0},
             {"Armour", 1},

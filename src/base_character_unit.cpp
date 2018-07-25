@@ -30,8 +30,8 @@ base_character_unit::base_character_unit(
 double base_character_unit::points() const noexcept { return pts_; }
 std::vector<short> base_character_unit::statistics() const noexcept { return stats_; }
 std::vector<std::string> base_character_unit::special_rules() const noexcept { return sr_; }
-equipment base_character_unit::eq() const noexcept { return eq_; }
-options base_character_unit::opt() const noexcept { return opt_; }
+const equipment& base_character_unit::eq() const noexcept { return eq_; }
+const options& base_character_unit::opt() const noexcept { return opt_; }
 double base_character_unit::magic_item_budget() const noexcept { return magic_item_budget_; }
 double base_character_unit::faction_item_budget() const noexcept { return faction_item_budget_; }
 double base_character_unit::total_item_budget() const noexcept { return total_item_budget_; }

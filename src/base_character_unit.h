@@ -43,8 +43,8 @@ public:
     double points() const noexcept;
     std::vector<short> statistics() const noexcept;
     std::vector<std::string> special_rules() const noexcept;
-    equipment eq() const noexcept;
-    options opt() const noexcept;
+    const equipment& eq() const noexcept;
+    const options& opt() const noexcept;
     double magic_item_budget() const noexcept;
     double faction_item_budget() const noexcept;
     double total_item_budget() const noexcept;
