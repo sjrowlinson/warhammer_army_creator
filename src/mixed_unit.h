@@ -13,7 +13,6 @@
 #include <unordered_map>
 #include <utility>
 
-// TODO: need to redesign this and it likely won't work as intended
 class mixed_unit : public unit {
 public:
     // handle

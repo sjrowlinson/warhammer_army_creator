@@ -277,23 +277,25 @@ void normal_unit::pick_champion_armour(ItemClass item_type, std::string name) {
 void normal_unit::remove_weapon(WeaponType wt) {
     if (!weapons.count(wt)) return;
     auto weapon = weapons[wt];
-    auto def_w = handle->eq().weapons.at(wt);
-    // do not want to remove a default weapon
-    if (def_w.second != std::get<1>(weapon)) {
-        points_ -= size_ * std::get<2>(weapon);
-        weapons[wt] = {def_w.first, def_w.second, 0.0};
+    auto search = handle->eq().weapons.find(wt);
+    if (search != handle->eq().weapons.cend()) { // avoid removing default weapon
+        if (search->second.second == std::get<1>(weapon)) return;
+        weapons[wt] = {search->second.first, search->second.second, 0.0};
     }
+    else weapons.erase(wt);
+    points_ -= size_ * std::get<2>(weapon);
 }
 
 void normal_unit::remove_armour(ArmourType at) {
     if (!armours.count(at)) return;
     auto armour = armours[at];
-    auto def_a = handle->eq().armour.at(at);
-    // do not want to remove a default armour
-    if (def_a.second != std::get<1>(armour)) {
-        points_ -= size_ * std::get<2>(armour);
-        armours[at] = {def_a.first, def_a.second, 0.0};
+    auto search = handle->eq().armour.find(at);
+    if (search != handle->eq().armour.cend()) { // avoid removing default armour
+        if (search->second.second == std::get<1>(armour)) return;
+        armours[at] = {search->second.first, search->second.second, 0.0};
     }
+    else armours.erase(at);
+    points_ -= size_ * std::get<2>(armour);
 }
 
 void normal_unit::remove_champion_weapon(WeaponType wt) {

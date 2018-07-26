@@ -11,24 +11,21 @@
 
 class base_mixed_unit : public base_unit {
 private:
+    double ms_ratio_limit_;
     base_normal_unit master_;
     base_normal_unit slave_;
-    std::size_t min_masters_per_slave_;
-    std::size_t max_masters_per_slave_;
 public:
     base_mixed_unit(
+        std::string name,
         base_normal_unit&& master,
-        base_normal_unit&& slave,
-        std::size_t min_masters_per_slave,
-        std::size_t max_masters_per_slave
+        base_normal_unit&& slave
     );
     ~base_mixed_unit() = default;
 
     const base_normal_unit& master() const noexcept;
     const base_normal_unit& slave() const noexcept;
 
-    std::size_t min_masters_per_slave() const noexcept;
-    std::size_t max_masters_per_slave() const noexcept;
+    double ratio_limit() const noexcept;
 };
 
 #endif // !BASE_MIXED_UNIT_H

@@ -216,13 +216,97 @@ Night Runners
     0
     0
 
-#Rat Swarm
-#    Core, Swarm
-#    25
-#    2, 10
-#    6 3 0 2 2 5 4 5 10
-#    Unbreakable (Swarm), Small
-#    None
+# mixed unit format:
+#
+# Name
+#   UnitType, UnitClass, Mixed
+#   pts per slave model
+#   minimum slave models, maximum slave models
+#   slave stats table
+#   slave champion stats table
+#   slave special rules
+#   slave champion special rules
+#   slave equipment
+#   slave champion extra equipment
+#   slave optional weapons
+#   slave champion optional weapons
+#   slave optional armour
+#   slave champion optional armour
+#   slave optional extras
+#   slave champion optional extras
+#   slave optional command
+#   slave champion magic item budget
+#   slave champion faction item budget
+#   slave champion total item budget
+#   slave magic banner budget
+#   pts per master model
+#   minimum master models, maximum master models
+#   master stats table
+#   master champion stats table
+#   master special rules
+#   master champion special rules
+#   master equipment
+#   master champion extra equipment
+#   master optional weapons
+#   master champion optional weapons
+#   master optional armour
+#   master champion optional armour
+#   master optional extras
+#   master champion optional extras
+#   master optional command
+#   master champion magic item budget
+#   master champion faction item budget
+#   master champion total item budget
+#   master magic banner budget
+
+Giant Rats
+    Core, Warbeast, Mixed
+    3
+    5, None
+    6 3 1 3 3 1 4 1 3
+    6 3 1 3 3 1 4 1 3
+    Scurry Away!, Strength in Numbers, Mixed Unit, Rat Pack, Wave of Rats
+    Scurry Away!, Strength in Numbers, Mixed Unit, Rat Pack, Wave of Rats
+    Weapon: Sharp teeth/claws {Mundane} [Melee]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    0
+    0
+    0
+    0
+    8
+    1, None
+    6 3 3 3 3 1 4 1 5
+    6 5 3 4 4 2 5 2 6
+    Scurry Away!, Strength in Numbers, Mixed Unit, Running with the Pack
+    Scurry Away!, Strength in Numbers, Mixed Unit, Running with the Pack, Verminous Valour
+    Armour: Light armour {Mundane} [Armour], Weapon: Whip {Mundane} [Melee]
+    None
+    None
+    Great weapon {Mundane} [Melee] (4), Things-catcher {Mundane} [Melee] (20)
+    None
+    None
+    None
+    None
+    Champion: Master Moulder [25]
+    30
+    30
+    30
+    0
+
+Rat Swarm
+    Core, Swarm, Normal
+    25
+    2, 10
+    6 3 0 2 2 5 4 5 10
+    Unbreakable (Swarm), Small
+    None
 
 # Special
 
@@ -246,6 +330,47 @@ Gutter Runners
     0
     0
     0
+    0
+
+Rat Ogres
+    Special, Monstrous Infantry, Mixed
+    40
+    2, None
+    6 3 1 5 4 3 4 3 5
+    6 4 1 5 4 3 5 4 5
+    Scurry Away!, Strength in Numbers, Mixed Unit, Beast Pack, Fear, Frenzy
+    Scurry Away!, Strength in Numbers, Mixed Unit, Beast Pack, Fear, Frenzy
+    Weapon: Claws and savagery {Mundane} [Melee]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Champion: Master-bred Rat Ogre [15]
+    0
+    0
+    0
+    0
+    8
+    1, None
+    6 3 3 3 3 1 4 1 5
+    6 5 3 4 4 2 5 2 6
+    Scurry Away!, Strength in Numbers, Mixed Unit, Running with the Pack
+    Scurry Away!, Strength in Numbers, Mixed Unit, Running with the Pack, Verminous Valour
+    Armour: Light armour {Mundane} [Armour], Weapon: Whip {Mundane} [Melee]
+    None
+    None
+    Great weapon {Mundane} [Melee] (4), Things-catcher {Mundane} [Melee] (20)
+    None
+    None
+    None
+    None
+    Champion: Master Moulder [25]
+    30
+    30
+    30
     0
 
 Plague Monks
@@ -338,16 +463,16 @@ Poisoned Wind Globadiers
 
 # Rare
 
-#Hell Pit Abomination
-#    Rare, Monster
-#    235
-#    1, 1
-#    -3 3 1 6 5 6 4 0 8
-#    Impact Hits (D6), Large Target, Regenerate, Shambling Horror, Special Close Combat Attacks, Stubborn, Terror, Too Horrible to Die
-#    Warpstone Spikes {True} [15]
-#
+Hell Pit Abomination
+    Rare, Monster, Normal
+    235
+    1, 1
+    -3 3 1 6 5 6 4 0 8
+    Impact Hits (D6), Large Target, Regenerate, Shambling Horror, Special Close Combat Attacks, Stubborn, Terror, Too Horrible to Die
+    Warpstone Spikes {True} [15]
+
 #Doomwheel
-#    Rare, Warmachine
+#    Rare, Warmachine, Normal
 #    150
 #    1, 1
 #    -3 0 0 6 6 5 0 0 0
@@ -356,7 +481,7 @@ Poisoned Wind Globadiers
 #    None
 #
 #Warp Lightning Cannon
-#    Rare, Warmachine
+#    Rare, Warmachine, Normal
 #    90
 #    1, 1
 #    0 0 0 0 6 4 0 0 0
@@ -365,7 +490,7 @@ Poisoned Wind Globadiers
 #    None
 #
 #Plagueclaw Catapult
-#    Rare, Warmachine
+#    Rare, Warmachine, Normal
 #    100
 #    1, 1
 #    0 0 0 0 6 4 0 0 0
