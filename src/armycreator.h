@@ -54,6 +54,7 @@ private slots:
 
     void optional_weapon_selected();
     void optional_armour_selected();
+    void optional_command_selected();
 
     void change_unit_size();
 private:

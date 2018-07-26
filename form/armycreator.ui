@@ -193,22 +193,22 @@
     </column>
     <column>
      <property name="text">
-      <string>Unit Size</string>
+      <string>Models</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>Melee Weapon</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Ranged Weapon</string>
+      <string>Weapon(s)</string>
      </property>
     </column>
     <column>
      <property name="text">
       <string>Armour</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Command</string>
      </property>
     </column>
     <column>
