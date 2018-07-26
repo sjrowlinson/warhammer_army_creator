@@ -20,11 +20,11 @@ private:
     std::unordered_map<
         WeaponType,
         std::tuple<ItemClass, std::string, double>
-    > weapons;
+    > weapons_;
     std::unordered_map<
         ArmourType,
         std::tuple<ItemClass, std::string, double>
-    > armours;
+    > armours_;
     std::unordered_map<
         std::string,
         std::pair<bool, double>
@@ -34,15 +34,15 @@ private:
     std::unordered_map<
         WeaponType,
         std::tuple<ItemClass, std::string, double>
-    > champ_weapons;
+    > champ_weapons_;
     std::unordered_map<
         ArmourType,
         std::tuple<ItemClass, std::string, double>
-    > champ_armours;
+    > champ_armours_;
     std::unordered_map<
         std::string,
         std::pair<bool, double>
-    > champ_extras;
+    > champ_extras_;
     double champ_magic_item_points;
     double champ_faction_item_points;
     double champ_total_item_points;
@@ -61,6 +61,10 @@ public:
 
     // current property accessors
     std::size_t size() const noexcept;
+    std::unordered_map<
+        WeaponType,
+        std::tuple<ItemClass, std::string, double>
+    > weapons() const noexcept;
     std::tuple<ItemClass, std::string, double> melee_weapon() const;
     std::tuple<ItemClass, std::string, double> ranged_weapon() const;
     std::tuple<ItemClass, std::string, double> champion_melee_weapon() const;
@@ -113,22 +117,6 @@ public:
 
     void change_size(std::size_t n);
 
-    // base property accessors
-    const std::vector<short>& statistics() const noexcept;
-    const std::vector<short>& champion_statistics() const noexcept;
-    const std::vector<std::string>& special_rules() const noexcept;
-    const std::vector<std::string>& champion_special_rules() const noexcept;
-    const equipment& eq() const noexcept;
-    const options& opt() const noexcept;
-    const equipment& champion_eq() const noexcept;
-    const options& champion_opt() const noexcept;
-    const std::unordered_map<
-        CommandGroup, std::pair<std::string, double>
-    >& optional_command() const noexcept;
-    double champion_magic_item_budget() const noexcept;
-    double champion_faction_item_budget() const noexcept;
-    double champion_total_item_budget() const noexcept;
-    double magic_banner_budget() const noexcept;
 };
 
 #endif // !_UNIT_H

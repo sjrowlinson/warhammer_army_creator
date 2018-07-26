@@ -70,18 +70,24 @@ private:
     void clear_unit_options_box();
     void initialise_unit_options_box(bool from_roster);
 
+    // TODO: change signature to return QGroupBox* rather than taking in vbl as param
     void init_size_command_groupbox(
             QVBoxLayout* vbl,
             bool from_roster
          );
     QGroupBox* init_command_groupbox(
-                   std::unordered_map<
+                   const std::unordered_map<
                        CommandGroup, std::pair<std::string, double>
-                   > command,
+                   >& opt_command,
+                   const std::unordered_map<
+                       CommandGroup, std::pair<std::string, double>
+                   >& command,
                    bool from_roster
                );
+    // TODO: change signatures to return QGroupBox* rather than taking in vbl as param
     void init_opt_weapons_groupbox(
             QVBoxLayout* vbl,
+            const std::unordered_map<std::string, std::tuple<WeaponType, ItemClass, double>>& opt_weapons,
             const std::unordered_map<std::string, std::tuple<WeaponType, ItemClass, double>>& weapons,
             bool from_roster,
             int id=0

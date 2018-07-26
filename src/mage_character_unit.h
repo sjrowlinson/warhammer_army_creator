@@ -43,6 +43,10 @@ public:
 
     // current property accessors
     std::size_t size() const noexcept;
+    std::unordered_map<
+        WeaponType,
+        std::tuple<ItemClass, std::string, double>
+    > weapons() const noexcept;
     std::tuple<ItemClass, std::string, double> melee_weapon() const;
     std::tuple<ItemClass, std::string, double> ranged_weapon() const;
 

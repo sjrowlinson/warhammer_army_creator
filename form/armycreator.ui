@@ -193,12 +193,12 @@
     </column>
     <column>
      <property name="text">
-      <string>Models</string>
+      <string>Size</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>Weapon(s)</string>
+      <string>Weapons</string>
      </property>
     </column>
     <column>

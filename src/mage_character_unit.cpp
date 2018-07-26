@@ -21,6 +21,11 @@ mage_character_unit::mage_character_unit(std::shared_ptr<base_unit> base)
 
 std::size_t mage_character_unit::size() const noexcept { return 1U; }
 
+std::unordered_map<
+    WeaponType,
+    std::tuple<ItemClass, std::string, double>
+> mage_character_unit::weapons() const noexcept { return weapons_; }
+
 std::tuple<ItemClass, std::string, double> mage_character_unit::melee_weapon() const {
     auto search = weapons_.find(WeaponType::MELEE);
     if (search != weapons_.end()) return (*search).second;
@@ -193,51 +198,59 @@ void mage_character_unit::pick_extra(std::string name) {
 }
 
 void mage_character_unit::remove_weapon(WeaponType wt) {
+    if (!weapons_.count(wt)) return;
     auto weapon = weapons_[wt];
-    auto def_w = handle->eq().weapons.at(wt);
-    if (def_w.second != std::get<1>(weapon)) {
-        const double pts = std::get<2>(weapon);
-        switch (std::get<0>(weapon)) {
-        case ItemClass::MUNDANE:
-            break;
-        case ItemClass::MAGIC:
-        case ItemClass::COMMON:
-            magic_item_points_ -= pts;
-            total_item_points_ -= pts;
-            break;
-        case ItemClass::FACTION:
-            faction_item_points_ -= pts;
-            total_item_points_ -= pts;
-            break;
-        default: break;
-        }
-        points_ -= pts;
-        weapons_[wt] = {def_w.first, def_w.second, 0.0};
+    auto search = handle->eq().weapons.find(wt);
+    if (search != handle->eq().weapons.cend()) { // avoid removing default weapon
+        if (search->second.second == std::get<1>(weapon)) return;
+        weapons_[wt] = {search->second.first, search->second.second, 0.0};
     }
+    else weapons_.erase(wt);
+    // remove points value of weapon
+    const double pts = std::get<2>(weapon);
+    switch (std::get<0>(weapon)) {
+    case ItemClass::MUNDANE:
+        break;
+    case ItemClass::MAGIC:
+    case ItemClass::COMMON:
+        magic_item_points_ -= pts;
+        total_item_points_ -= pts;
+        break;
+    case ItemClass::FACTION:
+        faction_item_points_ -= pts;
+        total_item_points_ -= pts;
+        break;
+    default: break;
+    }
+    points_ -= pts;
 }
 
 void mage_character_unit::remove_armour(ArmourType at) {
+    if (!armours_.count(at)) return;
     auto armour = armours_[at];
-    auto def_a = handle->eq().armour.at(at);
-    if (def_a.second != std::get<1>(armour)) {
-        const double pts = std::get<2>(armour);
-        switch (std::get<0>(armour)) {
-        case ItemClass::MUNDANE:
-            break;
-        case ItemClass::MAGIC:
-        case ItemClass::COMMON:
-            magic_item_points_ -= pts;
-            total_item_points_ -= pts;
-            break;
-        case ItemClass::FACTION:
-            faction_item_points_ -= pts;
-            total_item_points_ -= pts;
-            break;
-        default: break;
-        }
-        points_ -= pts;
-        armours_[at] = {def_a.first, def_a.second, 0.0};
+    auto search = handle->eq().armour.find(at);
+    if (search != handle->eq().armour.cend()) { // avoid removing default armour
+        if (search->second.second == std::get<1>(armour)) return;
+        armours_[at] = {search->second.first, search->second.second, 0.0};
     }
+    else armours_.erase(at);
+    // remove points value of armour
+    const double pts = std::get<2>(armour);
+    switch (std::get<0>(armour)) {
+    case ItemClass::MUNDANE:
+        break;
+    case ItemClass::MAGIC:
+    case ItemClass::COMMON:
+        magic_item_points_ -= pts;
+        total_item_points_ -= pts;
+        break;
+    case ItemClass::FACTION:
+        faction_item_points_ -= pts;
+        total_item_points_ -= pts;
+        break;
+    default: break;
+    }
+    points_ -= pts;
 }
 
 void mage_character_unit::remove_extra(std::string name) {
