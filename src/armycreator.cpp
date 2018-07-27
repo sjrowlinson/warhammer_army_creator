@@ -79,7 +79,6 @@ void ArmyCreator::clear_unit_options_box() {
     for (auto& x : c) delete x;
 }
 
-// TODO: split into optional_melee_weapon_selected and optional_ranged_weapon_selected
 void ArmyCreator::optional_weapon_selected() {
     QRadioButton* rb = qobject_cast<QRadioButton*>(QObject::sender());
     std::string rb_name = rb->objectName().toStdString();
@@ -91,37 +90,36 @@ void ArmyCreator::optional_weapon_selected() {
         int curr_id = ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt();
         current = army->get_unit(curr_id);
     }
+    // None radio button selected
     if (weapon == "None") {
+        std::string wt_str = rb_name_split[2];
+        WeaponType wt;
+        if (wt_str == "melee") wt = WeaponType::MELEE;
+        else wt = WeaponType::BALLISTIC;
         switch (current->base_unit_type()) {
         case BaseUnitType::MELEE_CHARACTER:
         {
             auto p = std::dynamic_pointer_cast<melee_character_unit>(current);
-            // safe to just call remove on both types for now as remove_weapo
-            // prevents default weapon from being removed - but will want to
-            // change this as it will produce unexpected results for a unit
-            // which can take both an optional melee and ranged weapon
-            p->remove_weapon(WeaponType::MELEE);
-            p->remove_weapon(WeaponType::BALLISTIC);
+            p->remove_weapon(wt);
             break;
         }
         case BaseUnitType::MAGE_CHARACTER:
         {
             auto p = std::dynamic_pointer_cast<mage_character_unit>(current);
-            p->remove_weapon(WeaponType::MELEE);
-            p->remove_weapon(WeaponType::BALLISTIC);
+            p->remove_weapon(wt);
             break;
         }
         case BaseUnitType::NORMAL:
         {
             auto p = std::dynamic_pointer_cast<normal_unit>(current);
-            p->remove_weapon(WeaponType::MELEE);
-            p->remove_weapon(WeaponType::BALLISTIC);
+            p->remove_weapon(wt);
             break;
         }
         default: break;
         }
         return;
     }
+    // weapon item selected
     ItemClass it = static_cast<ItemClass>(std::stoi(rb_name_split[2]));
     switch (current->base_unit_type()) {
     case BaseUnitType::MELEE_CHARACTER:
@@ -246,6 +244,71 @@ void ArmyCreator::optional_command_selected() {
     }
 }
 
+QGroupBox* ArmyCreator::init_opt_subweapons_groupbox(
+    WeaponType wt,
+    const std::unordered_map<std::string, std::tuple<WeaponType, ItemClass, double>>& opt_weapons,
+    const std::unordered_map<WeaponType, std::tuple<ItemClass, std::string, double>>& weapons,
+    int id
+) {
+    auto opt_weapon_vec = tools::find_all_if(
+        std::begin(opt_weapons),
+        std::end(opt_weapons),
+        [wt] (const auto& x) { return std::get<0>(x.second) == wt; }
+    );
+    if (opt_weapon_vec.empty()) return nullptr;
+    std::string subbox_label = "";
+    switch (wt) {
+    case WeaponType::MELEE:
+        subbox_label = "Melee";
+        break;
+    case WeaponType::BALLISTIC:
+        subbox_label = "Ranged";
+        break;
+    default: break;
+    }
+    QGroupBox* weapons_subbox = new QGroupBox(tr(subbox_label.data()));
+    QVBoxLayout* weapons_subbox_layout = new QVBoxLayout;
+    bool has_weapon = false;
+    for (const auto& w : opt_weapon_vec) {
+        BaseUnitType but;
+        if (in_tree == InTree::ROSTER) but = st->selected()->base_unit_type();
+        else but = army->get_unit(id)->base_unit_type();
+        std::string pts_str = tools::points_str(std::get<2>(w->second), but);
+        std::string button_label = w->first + " (" + pts_str + ")";
+        std::string button_name = w->first + "_" +
+                std::to_string(static_cast<int>(std::get<0>(w->second))) + "_" +
+                std::to_string(static_cast<int>(std::get<1>(w->second))) + "_radiobutton";
+        QRadioButton* rb = new QRadioButton(tr(button_label.data()));
+        rb->setObjectName(tr(button_name.data()));
+        // check if current unit weapon map contains this weapon
+        if (weapons.count(std::get<0>(w->second))) {
+            if (std::get<1>(weapons.at(std::get<0>(w->second))) == w->first) {
+                rb->setChecked(true);
+                has_weapon = true;
+            }
+        }
+        connect(rb, SIGNAL(clicked(bool)), this, SLOT(optional_weapon_selected()));
+        weapons_subbox_layout->addWidget(rb);
+    }
+    QRadioButton* none_rb = new QRadioButton(tr("None"));
+    std::string none_rb_name = "None_opt_";
+    switch (wt) {
+    case WeaponType::MELEE:
+        none_rb_name += "melee_radiobutton";
+        break;
+    case WeaponType::BALLISTIC:
+        none_rb_name += "ranged_radiobutton";
+        break;
+    }
+    none_rb->setObjectName(tr(none_rb_name.data()));
+    if (!has_weapon) none_rb->setChecked(true);
+    connect(none_rb, SIGNAL(clicked(bool)), this, SLOT(optional_weapon_selected()));
+    weapons_subbox_layout->addWidget(none_rb);
+    weapons_subbox_layout->addStretch(1);
+    weapons_subbox->setLayout(weapons_subbox_layout);
+    return weapons_subbox;
+}
+
 QGroupBox* ArmyCreator::init_opt_weapons_groupbox(
         const std::unordered_map<std::string, std::tuple<WeaponType, ItemClass, double>>& opt_weapons,
         const std::unordered_map<WeaponType, std::tuple<ItemClass, std::string, double>>& weapons,
@@ -253,30 +316,11 @@ QGroupBox* ArmyCreator::init_opt_weapons_groupbox(
      ) {
     QGroupBox* weapons_box = new QGroupBox(tr("Weapons"));
     QVBoxLayout* vbox_weapons = new QVBoxLayout;
-    for (const auto& w : opt_weapons) {
-        auto tmp = tools::split(std::to_string(std::get<2>(w.second)), '.');
-        for (auto& s : tmp) tools::remove_leading_whitespaces(s);
-        std::string pts_str = (tools::starts_with(tmp[1], '0')) ? tmp[0] : tmp[0] + "." + tmp[1].substr(0, 1);
-        std::string permodel = "";
-        if (in_tree == InTree::ROSTER)
-            permodel += (st->selected()->base_unit_type() == BaseUnitType::NORMAL) ? "/model" : "";
-        else
-            permodel += (army->get_unit(id)->base_unit_type() == BaseUnitType::NORMAL) ? "/model" : "";
-        std::string name = w.first + " (" + pts_str + " pts" + permodel + ")";
-        QRadioButton* b = new QRadioButton(tr(name.data()));
-        std::string b_name = w.first + "_" +
-                std::to_string(static_cast<int>(std::get<0>(w.second))) + "_" +
-                std::to_string(static_cast<int>(std::get<1>(w.second))) + "_radiobutton";
-        b->setObjectName(tr(b_name.data()));
-        connect(b, SIGNAL(clicked(bool)), this, SLOT(optional_weapon_selected()));
-        vbox_weapons->addWidget(b);
-    }
-    QRadioButton* none_rb = new QRadioButton(tr("None"));
-    std::string none_rb_name = "None_optweapon_radiobutton_";
-    none_rb->setObjectName(tr(none_rb_name.data()));
-    none_rb->setChecked(true);
-    connect(none_rb, SIGNAL(clicked(bool)), this, SLOT(optional_weapon_selected()));
-    vbox_weapons->addWidget(none_rb);
+    // create the sub group boxes for melee and ranged weapon options
+    auto melee_subbox = init_opt_subweapons_groupbox(WeaponType::MELEE, opt_weapons, weapons, id);
+    if (melee_subbox != nullptr) vbox_weapons->addWidget(melee_subbox);
+    auto ranged_subbox = init_opt_subweapons_groupbox(WeaponType::BALLISTIC, opt_weapons, weapons, id);
+    if (ranged_subbox != nullptr) vbox_weapons->addWidget(ranged_subbox);
     vbox_weapons->addStretch(1);
     weapons_box->setLayout(vbox_weapons);
     return weapons_box;
@@ -691,6 +735,7 @@ void ArmyCreator::on_roster_tree_currentItemChanged(QTreeWidgetItem *current, QT
         ui->add_button->setEnabled(false);
         clear_unit_options_box();
     }
+    ui->army_tree->clearSelection();
 }
 
 void ArmyCreator::on_roster_tree_itemDoubleClicked(QTreeWidgetItem *item, int column) {
@@ -711,8 +756,11 @@ void ArmyCreator::on_army_tree_currentItemChanged(QTreeWidgetItem *current, QTre
         clear_unit_options_box();
         initialise_unit_options_box();
     }
-    else
+    else {
         ui->remove_button->setEnabled(false);
+        clear_unit_options_box();
+    }
+    ui->roster_tree->clearSelection();
 }
 
 void ArmyCreator::on_add_button_clicked() {
