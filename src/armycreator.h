@@ -27,6 +27,12 @@ namespace Ui {
 class ArmyCreator;
 }
 
+enum class InTree {
+    ROSTER,
+    ARMY,
+    NEITHER
+};
+
 class ArmyCreator : public QMainWindow {
     Q_OBJECT
 
@@ -63,49 +69,43 @@ private:
     std::shared_ptr<army_list> army;
     std::shared_ptr<selection_tree> st;
     int id_counter;
+    InTree in_tree;
 
+    // roster tree modifying
     void populate_roster_tree();
     void clear_roster_tree();
-    void clear_army_tree();
-    void clear_unit_options_box();
-    void initialise_unit_options_box(bool from_roster);
 
-    // TODO: change signature to return QGroupBox* rather than taking in vbl as param
-    void init_size_command_groupbox(
-            QVBoxLayout* vbl,
-            bool from_roster
-         );
+    // army tree modifying
+    void clear_army_tree();
+
+    // unit options box modifying
+    void clear_unit_options_box();
+    // TODO: remove from_roster parameters and use in_tree field instead
+    void initialise_unit_options_box();
+    QGroupBox* init_size_command_groupbox();
     QGroupBox* init_command_groupbox(
                    const std::unordered_map<
                        CommandGroup, std::pair<std::string, double>
                    >& opt_command,
                    const std::unordered_map<
                        CommandGroup, std::pair<std::string, double>
-                   >& command,
-                   bool from_roster
+                   >& command
                );
-    // TODO: change signatures to return QGroupBox* rather than taking in vbl as param
-    void init_opt_weapons_groupbox(
-            QVBoxLayout* vbl,
+
+    QGroupBox* init_opt_weapons_groupbox(
             const std::unordered_map<std::string, std::tuple<WeaponType, ItemClass, double>>& opt_weapons,
-            const std::unordered_map<std::string, std::tuple<WeaponType, ItemClass, double>>& weapons,
-            bool from_roster,
+            const std::unordered_map<WeaponType, std::tuple<ItemClass, std::string, double>>& weapons,
             int id=0
          );
-    void init_opt_armour_groupbox(
-            QVBoxLayout* vbl,
+    QGroupBox* init_opt_armour_groupbox(
             const std::unordered_map<std::string, std::tuple<ArmourType, ItemClass, double>>& armour,
-            bool from_roster,
             int id=0
          );
-    void init_opt_mounts_groupbox(
-            QVBoxLayout* vbl,
+    QGroupBox* init_opt_mounts_groupbox(
             const std::unordered_map<std::string, std::pair<armies::UnitClass, double>>& mounts,
-            bool from_roster,
             int id=0
          );
-    void init_opt_extras_groupbox(
-            QVBoxLayout* vbl,
+    QGroupBox* init_opt_extras_groupbox(
             const std::pair<
                 std::unordered_map<
                     std::string,
@@ -113,7 +113,6 @@ private:
                 >,
                 bool
             >& extras,
-            bool from_roster,
             int id=0
          );
 };
