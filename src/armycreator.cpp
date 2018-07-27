@@ -244,6 +244,10 @@ void ArmyCreator::optional_command_selected() {
     }
 }
 
+void ArmyCreator::optional_extra_selected() {
+
+}
+
 QGroupBox* ArmyCreator::init_opt_subweapons_groupbox(
     WeaponType wt,
     const std::unordered_map<std::string, std::tuple<WeaponType, ItemClass, double>>& opt_weapons,
@@ -439,15 +443,15 @@ QGroupBox* ArmyCreator::init_opt_extras_groupbox(
                 std::pair<bool, double>
             >,
             bool
-        >& extras,
+        >& opt_extras,
+        const std::unordered_map<std::string, std::pair<bool, double>>& extras,
         int id
      ) {
     QGroupBox* extras_box = new QGroupBox(tr("Other"));
     QVBoxLayout* vbox_extras = new QVBoxLayout;
-    for (const auto& e : extras.first) {
-        auto tmp = tools::split(std::to_string(e.second.second), '.');
-        for (auto& s : tmp) tools::remove_leading_whitespaces(s);
-        std::string pts_str = (tools::starts_with(tmp[1], '0')) ? tmp[0] : tmp[0] + "." + tmp[1].substr(0, 1);
+    bool has_extras = false;
+    for (const auto& e : opt_extras.first) {
+        std::string pts_str = tools::points_str(e.second.second);
         std::string permodel = "";
         if (in_tree == InTree::ROSTER)
             permodel += (st->selected()->base_unit_type() == BaseUnitType::NORMAL &&
@@ -455,22 +459,31 @@ QGroupBox* ArmyCreator::init_opt_extras_groupbox(
         else
             permodel += (army->get_unit(id)->base_unit_type() == BaseUnitType::NORMAL &&
                             !(e.second.first)) ? "/model" : "";
-        std::string name = e.first + "(" + pts_str + " pts" + permodel + ")";
-        if (extras.second) { // one choice only so use radio buttons
-            QRadioButton* rb = new QRadioButton(tr(name.data()));
-            rb->setObjectName(tr((e.first + "_radiobutton").data()));
+        std::string label = e.first + " (" + pts_str + " pts" + permodel + ")";
+        std::string name = e.first + "_";
+        if (opt_extras.second) { // one choice only so use radio buttons
+            QRadioButton* rb = new QRadioButton(tr(label.data()));
+            name += "_radiobutton";
+            rb->setObjectName(tr(name.data()));
+            if (extras.count(e.first)) {
+                rb->setChecked(true);
+                has_extras = true;
+            }
             vbox_extras->addWidget(rb);
         }
         else { // multiple choices allowed so use checkboxes
-            QCheckBox* cb = new QCheckBox(tr(name.data()));
-            cb->setObjectName(tr((e.first + "_radiobutton").data()));
+            QCheckBox* cb = new QCheckBox(tr(label.data()));
+            name += "_checkbox";
+            cb->setObjectName(tr(name.data()));
+            if (extras.count(e.first))
+                cb->setChecked(true);
             vbox_extras->addWidget(cb);
         }
     }
-    if (extras.second) {
+    if (opt_extras.second) {
         QRadioButton* none_rb = new QRadioButton(tr("None"));
         none_rb->setObjectName(tr("None_radiobutton"));
-        none_rb->setChecked(true);
+        if(!has_extras) none_rb->setChecked(true);
         vbox_extras->addWidget(none_rb);
     }
     vbox_extras->addStretch(1);
@@ -633,6 +646,10 @@ void ArmyCreator::initialise_unit_options_box() {
         >,
         bool
     > opt_extras;
+    std::unordered_map<
+        std::string,
+        std::pair<bool, double>
+    > current_extras;
     int curr_id = 0;
     // overall layout for options box
     QVBoxLayout* vbox = new QVBoxLayout;
@@ -654,6 +671,10 @@ void ArmyCreator::initialise_unit_options_box() {
         opt_extras = p->handle->opt().opt_extras;
         current_weapons = p->weapons();
         current_armours = p->armour();
+        auto tmp = p->extras();
+        for (const auto& x : tmp) {
+            current_extras[x.first] = std::make_pair(true, x.second);
+        }
         break;
     }
     case BaseUnitType::MAGE_CHARACTER:
@@ -665,6 +686,10 @@ void ArmyCreator::initialise_unit_options_box() {
         opt_extras = p->handle->opt().opt_extras;
         current_weapons = p->weapons();
         current_armours = p->armour();
+        auto tmp = p->extras();
+        for (const auto& x : tmp) {
+            current_extras[x.first] = std::make_pair(true, x.second);
+        }
         break;
     }
     case BaseUnitType::MIXED:
@@ -679,6 +704,7 @@ void ArmyCreator::initialise_unit_options_box() {
         opt_extras = p->handle->opt().opt_extras;
         current_weapons = p->weapons();
         current_armours = p->armour();
+        current_extras = p->extras();
         break;
     }
     default:
@@ -691,7 +717,7 @@ void ArmyCreator::initialise_unit_options_box() {
     if (!opt_mounts.empty())
         vbox->addWidget(init_opt_mounts_groupbox(opt_mounts, curr_id));
     if (!opt_extras.first.empty())
-        vbox->addWidget(init_opt_extras_groupbox(opt_extras, curr_id));
+        vbox->addWidget(init_opt_extras_groupbox(opt_extras, current_extras, curr_id));
     // set overall layout
     ui->options_group_box->setLayout(vbox);
 }

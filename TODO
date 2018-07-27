@@ -1,16 +1,10 @@
 Units
 -----
 
-* Determine best structure for mixed_unit class - currently storing two normal_unit instances ("master"
-  and "slave") but this will likely yield problems. May be better to just compromise with some duplication
-  of normal_unit methods but with some specialisation for correctly handling mixed units.
-
-* Store one-choice-only and multiple-choice extras separately.
+* Store one-choice-only and multiple-choice extras separately - requires slight change to parsing.
 
 Parsing
 -------
-
-- Once mixed_unit structure is finalised, Implement parsing method for these types.
 
 - Implement method in roster_parser for parsing common properties that all units have, then add additional
   parsing rules to the unit specific methods.

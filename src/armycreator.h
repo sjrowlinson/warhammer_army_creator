@@ -61,6 +61,7 @@ private slots:
     void optional_weapon_selected();
     void optional_armour_selected();
     void optional_command_selected();
+    void optional_extra_selected();
 
     void change_unit_size();
 private:
@@ -122,7 +123,8 @@ private:
         const std::pair<
             std::unordered_map<std::string, std::pair<bool, double>>,
             bool
-        >& extras,
+        >& opt_extras,
+        const std::unordered_map<std::string, std::pair<bool, double>>& extras,
         int id=0
     );
 };
