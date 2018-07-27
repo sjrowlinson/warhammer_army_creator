@@ -151,13 +151,44 @@ void ArmyCreator::optional_armour_selected() {
     std::string rb_name = rb->objectName().toStdString();
     auto rb_name_split = tools::split(rb_name, '_');
     std::string armour = rb_name_split[0];
-    ItemClass it = static_cast<ItemClass>(std::stoi(rb_name_split[2]));
     std::shared_ptr<unit> current;
     if (in_tree == InTree::ROSTER) current = st->selected();
     else {
         int curr_id = ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt();
         current = army->get_unit(curr_id);
     }
+    // None radio button selected
+    if (armour == "None") {
+        std::string at_str = rb_name_split[2];
+        ArmourType at;
+        if (at_str == "armour") at = ArmourType::ARMOUR;
+        else if (at_str == "shield") at = ArmourType::SHIELD;
+        else at = ArmourType::HELMET;
+        switch (current->base_unit_type()) {
+        case BaseUnitType::MELEE_CHARACTER:
+        {
+            auto p = std::dynamic_pointer_cast<melee_character_unit>(current);
+            p->remove_armour(at);
+            break;
+        }
+        case BaseUnitType::MAGE_CHARACTER:
+        {
+            auto p = std::dynamic_pointer_cast<mage_character_unit>(current);
+            p->remove_armour(at);
+            break;
+        }
+        case BaseUnitType::NORMAL:
+        {
+            auto p = std::dynamic_pointer_cast<normal_unit>(current);
+            p->remove_armour(at);
+            break;
+        }
+        default: break;
+        }
+        return;
+    }
+    // armour item selected
+    ItemClass it = static_cast<ItemClass>(std::stoi(rb_name_split[2]));
     switch (current->base_unit_type()) {
     case BaseUnitType::MELEE_CHARACTER:
     {
@@ -251,35 +282,78 @@ QGroupBox* ArmyCreator::init_opt_weapons_groupbox(
     return weapons_box;
 }
 
+QGroupBox* ArmyCreator::init_opt_subarmour_groupbox(
+    ArmourType at,
+    const std::unordered_map<std::string, std::tuple<ArmourType, ItemClass, double>>& opt_armour,
+    const std::unordered_map<ArmourType, std::tuple<ItemClass, std::string, double>>& armour,
+    int id
+) {
+    auto opt_armour_vec = tools::find_all_if(
+        std::begin(opt_armour),
+        std::end(opt_armour),
+        [at](const auto& x) { return std::get<0>(x.second) == at; }
+    );
+    if (opt_armour_vec.empty()) return nullptr;
+    QGroupBox* ab_armours_box = new QGroupBox();
+    QVBoxLayout* ab_armours_box_layout = new QVBoxLayout;
+    bool has_armour = false;
+    for (const auto& a : opt_armour_vec) {
+        BaseUnitType but;
+        if (in_tree == InTree::ROSTER) but = st->selected()->base_unit_type();
+        else but = army->get_unit(id)->base_unit_type();
+        std::string pts_str = tools::points_str(std::get<2>(a->second), but);
+        std::string button_label = a->first + " (" + pts_str + ")";
+        std::string button_name = a->first + "_" +
+                std::to_string(static_cast<int>(std::get<0>(a->second))) + "_" +
+                std::to_string(static_cast<int>(std::get<1>(a->second))) + "_radiobutton";
+        QRadioButton* rb = new QRadioButton(tr(button_label.data()));
+        rb->setObjectName(tr(button_name.data()));
+        // check if current unit armour map contains this piece of armour
+        if (armour.count(std::get<0>(a->second))) {
+               if (std::get<1>(armour.at(std::get<0>(a->second))) == a->first) {
+                   rb->setChecked(true);
+                   has_armour = true;
+               }
+        }
+        connect(rb, SIGNAL(clicked(bool)), this, SLOT(optional_armour_selected()));
+        ab_armours_box_layout->addWidget(rb);
+    }
+    QRadioButton* none_rb = new QRadioButton(tr("None"));
+    std::string none_rb_name = "None_opt_";
+    switch (at) {
+    case ArmourType::ARMOUR:
+        none_rb_name += "armour_radiobutton";
+        break;
+    case ArmourType::SHIELD:
+        none_rb_name += "shield_radiobutton";
+        break;
+    case ArmourType::HELMET:
+        none_rb_name += "helmet_radiobutton";
+        break;
+    }
+    none_rb->setObjectName(tr(none_rb_name.data()));
+    if (!has_armour) none_rb->setChecked(true);
+    connect(none_rb, SIGNAL(clicked(bool)), this, SLOT(optional_armour_selected()));
+    ab_armours_box_layout->addWidget(none_rb);
+    ab_armours_box_layout->addStretch(1);
+    ab_armours_box->setLayout(ab_armours_box_layout);
+    return ab_armours_box;
+}
+
 QGroupBox* ArmyCreator::init_opt_armour_groupbox(
-        const std::unordered_map<std::string, std::tuple<ArmourType, ItemClass, double>>& armour,
+        const std::unordered_map<std::string, std::tuple<ArmourType, ItemClass, double>>& opt_armour,
+        const std::unordered_map<ArmourType, std::tuple<ItemClass, std::string, double>>& armour,
         int id
      ) {
     QGroupBox* armours_box = new QGroupBox(tr("Armours"));
     QVBoxLayout* vbox_armours = new QVBoxLayout;
-    for (const auto& a : armour) {
-        auto tmp = tools::split(std::to_string(std::get<2>(a.second)), '.');
-        for (auto& s : tmp) tools::remove_leading_whitespaces(s);
-        std::string pts_str = (tools::starts_with(tmp[1], '0')) ? tmp[0] : tmp[0] + "." + tmp[1].substr(0, 1);
-        std::string permodel = "";
-        if (in_tree == InTree::ROSTER)
-            permodel += (st->selected()->base_unit_type() == BaseUnitType::NORMAL) ? "/model" : "";
-        else
-            permodel += (army->get_unit(id)->base_unit_type() == BaseUnitType::NORMAL) ? "/model" : "";
-        std::string name = a.first + " (" + pts_str + " pts" + permodel + ")";
-        QRadioButton* b = new QRadioButton(tr(name.data()));
-        std::string b_name = a.first + "_" +
-                std::to_string(static_cast<int>(std::get<0>(a.second))) + "_" +
-                std::to_string(static_cast<int>(std::get<1>(a.second))) + "_radiobutton";
-        b->setObjectName(tr(b_name.data()));
-        connect(b, SIGNAL(clicked(bool)), this, SLOT(optional_armour_selected()));
-        vbox_armours->addWidget(b);
-    }
-    QRadioButton* none_rb = new QRadioButton(tr("None"));
-    std::string none_rb_name = "None_optarmour_radiobutton_";
-    none_rb->setObjectName(tr(none_rb_name.data()));
-    none_rb->setChecked(true);
-    vbox_armours->addWidget(none_rb);
+    // create the sub group boxes for armour, shield and helmet options
+    auto armours_subbox = init_opt_subarmour_groupbox(ArmourType::ARMOUR, opt_armour, armour, id);
+    if (armours_subbox != nullptr) vbox_armours->addWidget(armours_subbox);
+    auto shields_subbox = init_opt_subarmour_groupbox(ArmourType::SHIELD, opt_armour, armour, id);
+    if (shields_subbox != nullptr) vbox_armours->addWidget(shields_subbox);
+    auto helmets_subbox = init_opt_subarmour_groupbox(ArmourType::HELMET, opt_armour, armour, id);
+    if (helmets_subbox != nullptr) vbox_armours->addWidget(helmets_subbox);
     vbox_armours->addStretch(1);
     armours_box->setLayout(vbox_armours);
     return armours_box;
@@ -569,7 +643,7 @@ void ArmyCreator::initialise_unit_options_box() {
     if (!opt_weapons.empty())
         vbox->addWidget(init_opt_weapons_groupbox(opt_weapons, current_weapons, curr_id));
     if (!opt_armours.empty())
-        vbox->addWidget(init_opt_armour_groupbox(opt_armours, curr_id));
+        vbox->addWidget(init_opt_armour_groupbox(opt_armours, current_armours, curr_id));
     if (!opt_mounts.empty())
         vbox->addWidget(init_opt_mounts_groupbox(opt_mounts, curr_id));
     if (!opt_extras.first.empty())

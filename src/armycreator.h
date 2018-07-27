@@ -84,37 +84,39 @@ private:
     void initialise_unit_options_box();
     QGroupBox* init_size_command_groupbox();
     QGroupBox* init_command_groupbox(
-                   const std::unordered_map<
-                       CommandGroup, std::pair<std::string, double>
-                   >& opt_command,
-                   const std::unordered_map<
-                       CommandGroup, std::pair<std::string, double>
-                   >& command
-               );
+        const std::unordered_map<CommandGroup, std::pair<std::string, double>>& opt_command,
+        const std::unordered_map<CommandGroup, std::pair<std::string, double>>& command
+    );
 
     QGroupBox* init_opt_weapons_groupbox(
-            const std::unordered_map<std::string, std::tuple<WeaponType, ItemClass, double>>& opt_weapons,
-            const std::unordered_map<WeaponType, std::tuple<ItemClass, std::string, double>>& weapons,
-            int id=0
-         );
+        const std::unordered_map<std::string, std::tuple<WeaponType, ItemClass, double>>& opt_weapons,
+        const std::unordered_map<WeaponType, std::tuple<ItemClass, std::string, double>>& weapons,
+        int id=0
+    );
+
+    QGroupBox* init_opt_subarmour_groupbox(
+        ArmourType at,
+        const std::unordered_map<std::string, std::tuple<ArmourType, ItemClass, double>>& opt_armour,
+        const std::unordered_map<ArmourType, std::tuple<ItemClass, std::string, double>>& armour,
+        int id
+    );
+
     QGroupBox* init_opt_armour_groupbox(
-            const std::unordered_map<std::string, std::tuple<ArmourType, ItemClass, double>>& armour,
-            int id=0
-         );
+        const std::unordered_map<std::string, std::tuple<ArmourType, ItemClass, double>>& opt_armour,
+        const std::unordered_map<ArmourType, std::tuple<ItemClass, std::string, double>>& armour,
+        int id=0
+    );
     QGroupBox* init_opt_mounts_groupbox(
-            const std::unordered_map<std::string, std::pair<armies::UnitClass, double>>& mounts,
-            int id=0
-         );
+        const std::unordered_map<std::string, std::pair<armies::UnitClass, double>>& mounts,
+        int id=0
+    );
     QGroupBox* init_opt_extras_groupbox(
-            const std::pair<
-                std::unordered_map<
-                    std::string,
-                    std::pair<bool, double>
-                >,
-                bool
-            >& extras,
-            int id=0
-         );
+        const std::pair<
+            std::unordered_map<std::string, std::pair<bool, double>>,
+            bool
+        >& extras,
+        int id=0
+    );
 };
 
 #endif // ARMYCREATOR_H

@@ -20,6 +20,17 @@ namespace tools {
 		return elems;
 	}
 
+    std::string points_str(double value) {
+        auto tmp = tools::split(std::to_string(value), '.');
+        for (auto& s : tmp) tools::remove_leading_whitespaces(s);
+        return (tools::starts_with(tmp[1], '0')) ? tmp[0] : tmp[0] + "." + tmp[1].substr(0, 1);
+    }
+
+    std::string points_str(double value, BaseUnitType but) {
+        auto pts_str = points_str(value);
+        return pts_str + " pts" + ((but == BaseUnitType::NORMAL) ? "/model" : "");
+    }
+
 	std::string& remove_leading_whitespaces(std::string& s) {
 		auto it = s.begin();
 		while (it != s.end() && std::isspace(*it)) it = s.erase(it);
