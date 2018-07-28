@@ -41,6 +41,7 @@ SOURCES += \
         src/base_mixed_unit.cpp \
         src/base_normal_unit.cpp \
         src/unit.cpp \
+        src/character_unit.cpp \
         src/mage_character_unit.cpp \
         src/melee_character_unit.cpp \
         src/mixed_unit.cpp \
@@ -63,6 +64,7 @@ HEADERS += \
         src/base_mixed_unit.h \
         src/base_normal_unit.h \
         src/unit.h \
+        src/character_unit.h \
         src/mage_character_unit.h \
         src/melee_character_unit.h \
         src/mixed_unit.h \
