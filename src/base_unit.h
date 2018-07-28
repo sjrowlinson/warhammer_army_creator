@@ -49,13 +49,14 @@ struct options {
         std::string,
         std::pair<armies::UnitClass, double>
     > opt_mounts;
-    std::pair<
-        std::unordered_map<
-            std::string,
-            std::pair<bool, double>
-        >,
-        bool
-    > opt_extras;
+    std::unordered_map<
+        std::string,
+        std::pair<bool, double>
+    > oco_extras;
+    std::unordered_map<
+        std::string,
+        std::pair<bool, double>
+    > mc_extras;
 };
 
 enum class BaseUnitType {

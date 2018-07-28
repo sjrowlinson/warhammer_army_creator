@@ -218,7 +218,6 @@ namespace tools {
             else if (armour_bsp[2] == "Shield") at = ArmourType::SHIELD;
             else if (armour_bsp[2] == "Helmet") at = ArmourType::HELMET;
             double pts = std::stod(armour_bsp[3]);
-            //um[name] = std::make_pair(at, pts);
             um[name] = std::make_tuple(at, ic, pts);
         }
         return um;
@@ -252,33 +251,22 @@ namespace tools {
         return um;
     }
 
-    std::pair<
+    std::unordered_map<
+        std::string,
+        std::pair<bool, double>
+    > roster_parser::parse_optional_extras(std::string s) {
         std::unordered_map<
             std::string,
             std::pair<bool, double>
-        >,
-        bool
-    > roster_parser::parse_optional_extras(std::string s) {
-        std::pair<
-            std::unordered_map<
-                std::string,
-                std::pair<bool, double>
-            >,
-            bool
         > um;
         if (s == "None" || s.empty()) return um;
-        std::vector<std::string> all;
-        if (tools::starts_with(s, "OCO")) {
-            um.second = true;
-            all = tools::split(s.substr(4), ',');
-        }
-        else all = tools::split(s, ',');
+        std::vector<std::string> all = tools::split(s, ',');
         for (const auto& _s : all) {
             auto extras_bs = tools::parse_item_bs(_s);
             std::string name = extras_bs[0];
             bool is_singular = (extras_bs[1] == "True");
             double pts = std::stod(extras_bs[2]);
-            (um.first)[name] = std::make_pair(is_singular, pts);
+            um[name] = std::make_pair(is_singular, pts);
         }
         return um;
     }
@@ -350,15 +338,17 @@ namespace tools {
         auto opt_weapons = parse_optional_weapons(read_line(blocks[n] + 8));
         auto opt_armours = parse_optional_armour(read_line(blocks[n] + 9));
         auto opt_mounts = parse_optional_mounts(read_line(blocks[n] + 10));
-        auto opt_extras = parse_optional_extras(read_line(blocks[n] + 11));
+        auto opt_oco_extras = parse_optional_extras(read_line(blocks[n] + 11));
+        auto opt_mc_extras = parse_optional_extras(read_line(blocks[n] + 12));
         options opt;
         opt.opt_weapons = opt_weapons;
         opt.opt_armour = opt_armours;
         opt.opt_mounts = opt_mounts;
-        opt.opt_extras = opt_extras;
-        double mi_budget = std::stod(read_line(blocks[n] + 12));
-        double fi_budget = std::stod(read_line(blocks[n] + 13));
-        double ti_budget = std::stod(read_line(blocks[n] + 14));
+        opt.oco_extras = opt_oco_extras;
+        opt.mc_extras = opt_mc_extras;
+        double mi_budget = std::stod(read_line(blocks[n] + 13));
+        double fi_budget = std::stod(read_line(blocks[n] + 14));
+        double ti_budget = std::stod(read_line(blocks[n] + 15));
         base_melee_character_unit tmp(
             faction,
             ut,
@@ -391,15 +381,17 @@ namespace tools {
         auto opt_weapons = parse_optional_weapons(read_line(blocks[n] + 11));
         auto opt_armours = parse_optional_armour(read_line(blocks[n] + 12));
         auto opt_mounts = parse_optional_mounts(read_line(blocks[n] + 13));
-        auto opt_extras = parse_optional_extras(read_line(blocks[n] + 14));
+        auto opt_oco_extras = parse_optional_extras(read_line(blocks[n] + 14));
+        auto opt_mc_extras = parse_optional_extras(read_line(blocks[n] + 15));
         options opt;
         opt.opt_weapons = opt_weapons;
         opt.opt_armour = opt_armours;
         opt.opt_mounts = opt_mounts;
-        opt.opt_extras = opt_extras;
-        double mi_budget = std::stod(read_line(blocks[n] + 15));
-        double fi_budget = std::stod(read_line(blocks[n] + 16));
-        double ti_budget = std::stod(read_line(blocks[n] + 17));
+        opt.oco_extras = opt_oco_extras;
+        opt.mc_extras = opt_mc_extras;
+        double mi_budget = std::stod(read_line(blocks[n] + 16));
+        double fi_budget = std::stod(read_line(blocks[n] + 17));
+        double ti_budget = std::stod(read_line(blocks[n] + 18));
         base_mage_character_unit tmp(
             faction,
             ut,
@@ -438,21 +430,25 @@ namespace tools {
         auto champ_opt_weapons = parse_optional_weapons(read_line(blocks[n] + 11 + offset));
         auto opt_armours = parse_optional_armour(read_line(blocks[n] + 12 + offset));
         auto champ_opt_armours = parse_optional_armour(read_line(blocks[n] + 13 + offset));
-        auto opt_extras = parse_optional_extras(read_line(blocks[n] + 14 + offset));
-        auto champ_opt_extras = parse_optional_extras(read_line(blocks[n] + 15 + offset));
+        auto opt_oco_extras = parse_optional_extras(read_line(blocks[n] + 14 + offset));
+        auto champ_opt_oco_extras = parse_optional_extras(read_line(blocks[n] + 15 + offset));
+        auto opt_mc_extras = parse_optional_extras(read_line(blocks[n] + 16 + offset));
+        auto champ_opt_mc_extras = parse_optional_extras(read_line(blocks[n] + 17 + offset));
         options opt;
         opt.opt_weapons = opt_weapons;
         opt.opt_armour = opt_armours;
-        opt.opt_extras = opt_extras;
+        opt.oco_extras = opt_oco_extras;
+        opt.mc_extras = opt_mc_extras;
         options champ_opt;
         champ_opt.opt_weapons = champ_opt_weapons;
         champ_opt.opt_armour = champ_opt_armours;
-        champ_opt.opt_extras = champ_opt_extras;
-        auto command = parse_command(read_line(blocks[n] + 16 + offset));
-        double champ_mi_budget = std::stod(read_line(blocks[n] + 17 + offset));
-        double champ_fi_budget = std::stod(read_line(blocks[n] + 18 + offset));
-        double champ_ti_budget = std::stod(read_line(blocks[n] + 19 + offset));
-        double mb_budget = std::stod(read_line(blocks[n] + 20 + offset));
+        champ_opt.oco_extras = champ_opt_oco_extras;
+        champ_opt.mc_extras = champ_opt_mc_extras;
+        auto command = parse_command(read_line(blocks[n] + 18 + offset));
+        double champ_mi_budget = std::stod(read_line(blocks[n] + 19 + offset));
+        double champ_fi_budget = std::stod(read_line(blocks[n] + 20 + offset));
+        double champ_ti_budget = std::stod(read_line(blocks[n] + 21 + offset));
+        double mb_budget = std::stod(read_line(blocks[n] + 22 + offset));
         base_normal_unit tmp(
             faction,
             ut,
@@ -486,12 +482,14 @@ namespace tools {
         std::vector<short> champ_stats;
         auto rules = tools::split(read_line(blocks[n] + 5), ',');
         std::vector<std::string> champ_rules;
-        auto opt_extras = parse_optional_extras(read_line(blocks[n] + 6));
+        auto opt_oco_extras = parse_optional_extras(read_line(blocks[n] + 6));
+        auto opt_mc_extras = parse_optional_extras(read_line(blocks[n] + 7));
         equipment eq;
         equipment champ_eq;
         options opt;
         options champ_opt;
-        opt.opt_extras = opt_extras;
+        opt.oco_extras = opt_oco_extras;
+        opt.mc_extras = opt_mc_extras;
         std::unordered_map<
             CommandGroup, std::pair<std::string, double>
         > command;
@@ -522,7 +520,7 @@ namespace tools {
 
     base_mixed_unit roster_parser::parse_mixed_unit(std::size_t n, armies::UnitType ut, armies::UnitClass category) {
         auto slave = parse_normal_unit(n, ut, category);
-        auto master = parse_normal_unit(n, ut, category, slave.name(), 19U);
+        auto master = parse_normal_unit(n, ut, category, slave.name(), 21U);
         base_mixed_unit tmp(
             slave.name(),
             std::move(master),

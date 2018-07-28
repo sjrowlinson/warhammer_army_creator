@@ -244,8 +244,114 @@ void ArmyCreator::optional_command_selected() {
     }
 }
 
-void ArmyCreator::optional_extra_selected() {
+void ArmyCreator::optional_oco_extra_selected() {
+    QRadioButton* rb = qobject_cast<QRadioButton*>(QObject::sender());
+    std::string rb_name = rb->objectName().toStdString();
+    auto rb_name_split = tools::split(rb_name, '_');
+    std::string extra = rb_name_split[0];
+    std::shared_ptr<unit> current;
+    if (in_tree == InTree::ROSTER) current = st->selected();
+    else {
+        int curr_id = ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt();
+        current = army->get_unit(curr_id);
+    }
+    if (extra == "None") { // None radio button selected
+        switch (current->base_unit_type()) {
+        case BaseUnitType::MELEE_CHARACTER:
+        {
+            auto p = std::dynamic_pointer_cast<melee_character_unit>(current);
+            p->remove_oco_extra();
+        }
+        case BaseUnitType::MAGE_CHARACTER:
+        {
+            auto p = std::dynamic_pointer_cast<mage_character_unit>(current);
+            p->remove_oco_extra();
+        }
+        case BaseUnitType::NORMAL:
+        {
+            auto p = std::dynamic_pointer_cast<normal_unit>(current);
+            p->remove_oco_extra();
+        }
+        default: break;
+        }
+    }
+    // extra item selected
+    switch (current->base_unit_type()) {
+    case BaseUnitType::MELEE_CHARACTER:
+    {
+        auto p = std::dynamic_pointer_cast<melee_character_unit>(current);
+        try {
+            p->pick_oco_extra(extra);
+        } catch (const std::invalid_argument&) {}
+        break;
+    }
+    case BaseUnitType::MAGE_CHARACTER:
+    {
+        auto p = std::dynamic_pointer_cast<mage_character_unit>(current);
+        try {
+            p->pick_oco_extra(extra);
+        } catch (const std::invalid_argument&) {}
+        break;
+    }
+    case BaseUnitType::NORMAL:
+    {
+        auto p = std::dynamic_pointer_cast<normal_unit>(current);
+        try {
+            p->pick_oco_extra(extra);
+        } catch (const std::invalid_argument&) {}
+        break;
+    }
+    default: break;
+    }
+}
 
+void ArmyCreator::optional_mc_extra_selected() {
+    QCheckBox* cb = qobject_cast<QCheckBox*>(QObject::sender());
+    std::string cb_name = cb->objectName().toStdString();
+    auto cb_name_split = tools::split(cb_name, '_');
+    std::string extra = cb_name_split[0];
+    std::shared_ptr<unit> current;
+    if (in_tree == InTree::ROSTER) current = st->selected();
+    else {
+        int curr_id = ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt();
+        current = army->get_unit(curr_id);
+    }
+    switch (current->base_unit_type()) {
+    case BaseUnitType::MELEE_CHARACTER:
+    {
+        auto p = std::dynamic_pointer_cast<melee_character_unit>(current);
+        if (cb->isChecked()) {
+            try {
+                p->pick_mc_extra(extra);
+            } catch (const std::invalid_argument&) {}
+        }
+        else p->remove_mc_extra(extra);
+        break;
+    }
+    case BaseUnitType::MAGE_CHARACTER:
+    {
+        auto p = std::dynamic_pointer_cast<mage_character_unit>(current);
+        if (cb->isChecked()) {
+            try {
+                p->pick_mc_extra(extra);
+            } catch (const std::invalid_argument&) {}
+        }
+        else p->remove_mc_extra(extra);
+        break;
+    }
+    case BaseUnitType::NORMAL:
+    {
+        auto p = std::dynamic_pointer_cast<normal_unit>(current);
+        if (cb->isChecked()) {
+            try {
+                p->pick_mc_extra(extra);
+            } catch (const std::invalid_argument&) {}
+        }
+        else p->remove_mc_extra(extra);
+        break;
+    }
+    default: break;
+    }
 }
 
 QGroupBox* ArmyCreator::init_opt_subweapons_groupbox(
@@ -436,56 +542,106 @@ QGroupBox* ArmyCreator::init_opt_mounts_groupbox(
     return mounts_box;
 }
 
-QGroupBox* ArmyCreator::init_opt_extras_groupbox(
-        const std::pair<
-            std::unordered_map<
-                std::string,
-                std::pair<bool, double>
-            >,
-            bool
-        >& opt_extras,
-        const std::unordered_map<std::string, std::pair<bool, double>>& extras,
-        int id
-     ) {
-    QGroupBox* extras_box = new QGroupBox(tr("Other"));
-    QVBoxLayout* vbox_extras = new QVBoxLayout;
-    bool has_extras = false;
-    for (const auto& e : opt_extras.first) {
+QGroupBox* ArmyCreator::init_opt_oco_extras_groupbox(
+    const std::unordered_map<
+        std::string,
+        std::pair<bool, double>
+    >& opt_oco_extras,
+    const std::pair<std::string, std::pair<bool, double>>& curr_oco_extra,
+    int id
+) {
+    if (opt_oco_extras.empty()) return nullptr;
+    QGroupBox* oco_box = new QGroupBox();
+    QVBoxLayout* oco_box_layout = new QVBoxLayout;
+    bool has_extra = false;
+    for (const auto& e : opt_oco_extras) {
         std::string pts_str = tools::points_str(e.second.second);
         std::string permodel = "";
         if (in_tree == InTree::ROSTER)
             permodel += (st->selected()->base_unit_type() == BaseUnitType::NORMAL &&
-                            !(e.second.first)) ? "/model" : "";
+                !(e.second.first)) ? "/model" : "";
         else
             permodel += (army->get_unit(id)->base_unit_type() == BaseUnitType::NORMAL &&
-                            !(e.second.first)) ? "/model" : "";
+                !(e.second.first)) ? "/model" : "";
         std::string label = e.first + " (" + pts_str + " pts" + permodel + ")";
-        std::string name = e.first + "_";
-        if (opt_extras.second) { // one choice only so use radio buttons
-            QRadioButton* rb = new QRadioButton(tr(label.data()));
-            name += "_radiobutton";
-            rb->setObjectName(tr(name.data()));
-            if (extras.count(e.first)) {
-                rb->setChecked(true);
-                has_extras = true;
-            }
-            vbox_extras->addWidget(rb);
+        std::string name = e.first + "_radiobutton";
+        QRadioButton* rb = new QRadioButton(tr(label.data()));
+        rb->setObjectName(tr(name.data()));
+        if (curr_oco_extra.first == e.first) {
+            rb->setChecked(true);
+            has_extra = true;
         }
-        else { // multiple choices allowed so use checkboxes
-            QCheckBox* cb = new QCheckBox(tr(label.data()));
-            name += "_checkbox";
-            cb->setObjectName(tr(name.data()));
-            if (extras.count(e.first))
-                cb->setChecked(true);
-            vbox_extras->addWidget(cb);
-        }
+        connect(rb, SIGNAL(clicked(bool)), this, SLOT(optional_oco_extra_selected()));
+        oco_box_layout->addWidget(rb);
     }
-    if (opt_extras.second) {
-        QRadioButton* none_rb = new QRadioButton(tr("None"));
-        none_rb->setObjectName(tr("None_radiobutton"));
-        if(!has_extras) none_rb->setChecked(true);
-        vbox_extras->addWidget(none_rb);
+    QRadioButton* none_rb = new QRadioButton(tr("None"));
+    none_rb->setObjectName(tr("None_ocoextra_radiobutton"));
+    if (!has_extra) none_rb->setChecked(true);
+    connect(none_rb, SIGNAL(clicked(bool)), this, SLOT(optional_oco_extra_selected()));
+    oco_box_layout->addWidget(none_rb);
+    oco_box_layout->addStretch(1);
+    oco_box->setLayout(oco_box_layout);
+    return oco_box;
+}
+
+QGroupBox* ArmyCreator::init_opt_mc_extras_groupbox(
+    const std::unordered_map<
+        std::string,
+        std::pair<bool, double>
+    >& opt_mc_extras,
+    const std::unordered_map<
+        std::string,
+        std::pair<bool, double>
+    > curr_mc_extras,
+    int id
+) {
+    if (opt_mc_extras.empty()) return nullptr;
+    QGroupBox* mc_box = new QGroupBox();
+    QVBoxLayout* mc_box_layout = new QVBoxLayout;
+    for (const auto& e : opt_mc_extras) {
+        std::string pts_str = tools::points_str(e.second.second);
+        std::string permodel = "";
+        if (in_tree == InTree::ROSTER)
+            permodel += (st->selected()->base_unit_type() == BaseUnitType::NORMAL &&
+                !(e.second.first)) ? "/model" : "";
+        else
+            permodel += (army->get_unit(id)->base_unit_type() == BaseUnitType::NORMAL &&
+                !(e.second.first)) ? "/model" : "";
+        std::string label = e.first + " (" + pts_str + " pts" + permodel + ")";
+        std::string name = e.first + "_checkbox";
+        QCheckBox* cb = new QCheckBox(tr(label.data()));
+        cb->setObjectName(tr(name.data()));
+        if (curr_mc_extras.count(e.first)) cb->setChecked(true);
+        connect(cb, SIGNAL(clicked(bool)), this, SLOT(optional_mc_extra_selected()));
+        mc_box_layout->addWidget(cb);
     }
+    mc_box_layout->addStretch(1);
+    mc_box->setLayout(mc_box_layout);
+    return mc_box;
+}
+
+QGroupBox* ArmyCreator::init_opt_extras_groupbox(
+    const std::unordered_map<
+        std::string,
+        std::pair<bool, double>
+    >& opt_oco_extras,
+    const std::unordered_map<
+        std::string,
+        std::pair<bool, double>
+    >& opt_mc_extras,
+    const std::pair<std::string, std::pair<bool, double>>& curr_oco_extra,
+    const std::unordered_map<
+        std::string,
+        std::pair<bool, double>
+    > curr_mc_extras,
+    int id
+) {
+    QGroupBox* extras_box = new QGroupBox(tr("Other"));
+    QVBoxLayout* vbox_extras = new QVBoxLayout;
+    auto oco_extras_subbox = init_opt_oco_extras_groupbox(opt_oco_extras, curr_oco_extra, id);
+    if (oco_extras_subbox != nullptr) vbox_extras->addWidget(oco_extras_subbox);
+    auto mc_extras_subbox = init_opt_mc_extras_groupbox(opt_mc_extras, curr_mc_extras, id);
+    if (mc_extras_subbox != nullptr) vbox_extras->addWidget(mc_extras_subbox);
     vbox_extras->addStretch(1);
     extras_box->setLayout(vbox_extras);
     return extras_box;
@@ -622,6 +778,7 @@ QGroupBox* ArmyCreator::init_size_command_groupbox() {
 }
 
 void ArmyCreator::initialise_unit_options_box() {
+    // optional and current weapons
     std::unordered_map<
         std::string,
         std::tuple<WeaponType, ItemClass, double>
@@ -630,6 +787,7 @@ void ArmyCreator::initialise_unit_options_box() {
         WeaponType,
         std::tuple<ItemClass, std::string, double>
     > current_weapons;
+    // optional and current armours
     std::unordered_map<
         std::string,
         std::tuple<ArmourType, ItemClass, double>
@@ -638,18 +796,22 @@ void ArmyCreator::initialise_unit_options_box() {
         ArmourType,
         std::tuple<ItemClass, std::string, double>
     > current_armours;
+    // optional and current mounts
     std::unordered_map<std::string, std::pair<armies::UnitClass, double>> opt_mounts;
-    std::pair<
-        std::unordered_map<
-            std::string,
-            std::pair<bool, double>
-        >,
-        bool
-    > opt_extras;
+    // optional and current extras
     std::unordered_map<
         std::string,
         std::pair<bool, double>
-    > current_extras;
+    > opt_oco_extras;
+    std::unordered_map<
+        std::string,
+        std::pair<bool, double>
+    > opt_mc_extras;
+    std::pair<std::string, std::pair<bool, double>> curr_oco_extra;
+    std::unordered_map<
+        std::string,
+        std::pair<bool, double>
+    > curr_mc_extras;
     int curr_id = 0;
     // overall layout for options box
     QVBoxLayout* vbox = new QVBoxLayout;
@@ -668,13 +830,15 @@ void ArmyCreator::initialise_unit_options_box() {
         opt_weapons = p->handle->opt().opt_weapons;
         opt_armours = p->handle->opt().opt_armour;
         opt_mounts = p->handle->opt().opt_mounts;
-        opt_extras = p->handle->opt().opt_extras;
+        opt_oco_extras = p->handle->opt().oco_extras;
+        opt_mc_extras = p->handle->opt().mc_extras;
         current_weapons = p->weapons();
         current_armours = p->armour();
-        auto tmp = p->extras();
-        for (const auto& x : tmp) {
-            current_extras[x.first] = std::make_pair(true, x.second);
-        }
+        auto tmp_oco = p->oco_extra();
+        curr_oco_extra = {tmp_oco.first, {true, tmp_oco.second}};
+        auto tmp_mc = p->mc_extras();
+        for (auto x : tmp_mc)
+            curr_mc_extras[x.first] = {true, x.second};
         break;
     }
     case BaseUnitType::MAGE_CHARACTER:
@@ -683,13 +847,15 @@ void ArmyCreator::initialise_unit_options_box() {
         opt_weapons = p->handle->opt().opt_weapons;
         opt_armours = p->handle->opt().opt_armour;
         opt_mounts = p->handle->opt().opt_mounts;
-        opt_extras = p->handle->opt().opt_extras;
+        opt_oco_extras = p->handle->opt().oco_extras;
+        opt_mc_extras = p->handle->opt().mc_extras;
         current_weapons = p->weapons();
         current_armours = p->armour();
-        auto tmp = p->extras();
-        for (const auto& x : tmp) {
-            current_extras[x.first] = std::make_pair(true, x.second);
-        }
+        auto tmp_oco = p->oco_extra();
+        curr_oco_extra = {tmp_oco.first, {true, tmp_oco.second}};
+        auto tmp_mc = p->mc_extras();
+        for (auto x : tmp_mc)
+            curr_mc_extras[x.first] = {true, x.second};
         break;
     }
     case BaseUnitType::MIXED:
@@ -701,10 +867,12 @@ void ArmyCreator::initialise_unit_options_box() {
         opt_weapons = p->handle->opt().opt_weapons;
         opt_armours = p->handle->opt().opt_armour;
         opt_mounts = p->handle->opt().opt_mounts;
-        opt_extras = p->handle->opt().opt_extras;
+        opt_oco_extras = p->handle->opt().oco_extras;
+        opt_mc_extras = p->handle->opt().mc_extras;
         current_weapons = p->weapons();
         current_armours = p->armour();
-        current_extras = p->extras();
+        curr_oco_extra = p->oco_extra();
+        curr_mc_extras = p->mc_extras();
         break;
     }
     default:
@@ -716,8 +884,14 @@ void ArmyCreator::initialise_unit_options_box() {
         vbox->addWidget(init_opt_armour_groupbox(opt_armours, current_armours, curr_id));
     if (!opt_mounts.empty())
         vbox->addWidget(init_opt_mounts_groupbox(opt_mounts, curr_id));
-    if (!opt_extras.first.empty())
-        vbox->addWidget(init_opt_extras_groupbox(opt_extras, current_extras, curr_id));
+    if (!(opt_oco_extras.empty() && opt_mc_extras.empty()))
+        vbox->addWidget(init_opt_extras_groupbox(
+            opt_oco_extras,
+            opt_mc_extras,
+            curr_oco_extra,
+            curr_mc_extras,
+            curr_id
+        ));
     // set overall layout
     ui->options_group_box->setLayout(vbox);
 }

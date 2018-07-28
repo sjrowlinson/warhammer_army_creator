@@ -12,6 +12,7 @@ Warlord
     Shield {Mundane} [Shield] (3)
     Rat Ogre Bonebreaker {Monster} [65], War-litter {Unique} [35], Great Pox Rat {Monstrous Cavalry} [30]
     None
+    None
     100
     100
     100
@@ -27,6 +28,7 @@ Vermin Lord
     8 8 4 6 5 5 10 5 8
     Scurry Away!, Immune to Psychology, Large Target, Rat Daemon, Terror, Ward save (5+)
     Weapon: Doom Glaive {Magic} [Melee]
+    None
     None
     None
     None
@@ -50,6 +52,7 @@ Grey Seer
     None
     Screaming Bell {Unique} [200]
     None
+    None
     100
     100
     100
@@ -64,6 +67,7 @@ Assassin
     6 6 5 4 4 2 8 3 7
     Scurry Away!, Sneaky Infiltrators, Verminous Valour, A Killer Not A Leader, Always Strike First, Dodge (4+), Hidden, Poisoned Attacks, Scouts
     Weapon: Two hand weapons {Mundane} [Melee], Weapon: Throwing stars {Mundane} [Ballistic]
+    None
     None
     None
     None
@@ -87,6 +91,7 @@ Warlock Engineer
     None
     None
     None
+    None
     50
     50
     50
@@ -101,6 +106,7 @@ Chieftain
     Armour: Heavy armour {Mundane} [Armour]
     Great weapon {Mundane} [Melee] (4), Additional hand weapon {Mundane} [Melee] (2), Halberd {Mundane} [Melee] (2)
     Shield {Mundane} [Shield] (2)
+    None
     None
     Battle Standard Bearer {True} [25]
     50
@@ -122,6 +128,7 @@ Plague Priest
     None
     Great Pox Rat {Monstrous Cavalry} [30], Plague Furnace {Unique} [150]
     None
+    None
     50
     50
     50
@@ -142,7 +149,9 @@ Clanrats
     None
     Shields {Mundane} [Shield] (0.5)
     None
-    OCO: Poisoned Wind Mortar {True} [65], Warpfire Thrower {True} [70], Ratling Gun {True} [55], Doom-flayer {True} [55]
+    Poisoned Wind Mortar {True} [65], Warpfire Thrower {True} [70], Ratling Gun {True} [55], Doom-flayer {True} [55]
+    None
+    None
     None
     Musician: Musician [4], Standard Bearer: Standard Bearer [8], Champion: Clawleader [8]
     0
@@ -164,7 +173,9 @@ Stormvermin
     None
     Shields {Mundane} [Shield] (1)
     None
-    OCO: Poisoned Wind Mortar {True} [65], Warpfire Thrower {True} [70], Ratling Gun {True} [55], Doom-flayer {True} [55]
+    Poisoned Wind Mortar {True} [65], Warpfire Thrower {True} [70], Ratling Gun {True} [55], Doom-flayer {True} [55]
+    None
+    None
     None
     Musician: Musician [5], Standard Bearer: Standard Bearer [10], Champion: Clawleader [10]
     0
@@ -188,6 +199,8 @@ Skavenslaves
     None
     None
     None
+    None
+    None
     Musician: Musician [2], Champion: Pawleader [4]
     0
     0
@@ -208,7 +221,9 @@ Night Runners
     None
     None
     None
-    OCO: Warp-grinder {True} [60]
+    Warp-grinder {True} [60]
+    None
+    None
     None
     Champion: Nightleader [8]
     0
@@ -276,6 +291,8 @@ Giant Rats
     None
     None
     None
+    None
+    None
     0
     0
     0
@@ -294,6 +311,8 @@ Giant Rats
     None
     None
     None
+    None
+    None
     Champion: Master Moulder [25]
     30
     30
@@ -306,6 +325,7 @@ Rat Swarm
     2, 10
     6 3 0 2 2 5 4 5 10
     Unbreakable (Swarm), Small
+    None
     None
 
 # Special
@@ -324,7 +344,9 @@ Gutter Runners
     Weeping Blade {Magic} [Melee] (30)
     None
     None
-    Poisoned Attacks {False} [5], Warp-grinder {True} [60]
+    Warp-grinder {True} [60]
+    None
+    Poisoned Attacks {False} [5]
     Smoke Bombs {True} [10]
     Champion: Deathrunner [12]
     0
@@ -341,6 +363,8 @@ Rat Ogres
     Scurry Away!, Strength in Numbers, Mixed Unit, Beast Pack, Fear, Frenzy
     Scurry Away!, Strength in Numbers, Mixed Unit, Beast Pack, Fear, Frenzy
     Weapon: Claws and savagery {Mundane} [Melee]
+    None
+    None
     None
     None
     None
@@ -367,6 +391,8 @@ Rat Ogres
     None
     None
     None
+    None
+    None
     Champion: Master Moulder [25]
     30
     30
@@ -382,6 +408,8 @@ Plague Monks
     Scurry Away!, Strength in Numbers, Frenzy
     Scurry Away!, Strength in Numbers, Frenzy
     Weapon: Two hand weapons {Mundane} [Melee]
+    None
+    None
     None
     None
     None
@@ -411,6 +439,8 @@ Plague Censer Bearers
     None
     None
     None
+    None
+    None
     Champion: Plague Chanter [13]
     0
     0
@@ -426,6 +456,8 @@ Warplock Jezzails
     Scurry Away!
     Scurry Away!
     Weapon: Jezzail {Mundane} [Ballistic], Armour: Pavise {Mundane} [Shield]
+    None
+    None
     None
     None
     None
@@ -455,6 +487,8 @@ Poisoned Wind Globadiers
     None
     Poisoned Wind Mortar {True} [65]
     None
+    None
+    None
     Champion: Bombardier [5]
     0
     0
@@ -470,6 +504,7 @@ Hell Pit Abomination
     -3 3 1 6 5 6 4 0 8
     Impact Hits (D6), Large Target, Regenerate, Shambling Horror, Special Close Combat Attacks, Stubborn, Terror, Too Horrible to Die
     Warpstone Spikes {True} [15]
+    None
 
 #Doomwheel
 #    Rare, Warmachine, Normal

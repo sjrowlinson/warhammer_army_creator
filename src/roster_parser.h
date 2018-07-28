@@ -61,12 +61,9 @@ namespace tools {
             std::string,
             std::pair<armies::UnitClass, double>
         > parse_optional_mounts(std::string s);
-        std::pair<
-            std::unordered_map<
-                std::string,
-                std::pair<bool, double>
-            >,
-            bool
+        std::unordered_map<
+            std::string,
+            std::pair<bool, double>
         > parse_optional_extras(std::string s);
 
         // specialised parsing

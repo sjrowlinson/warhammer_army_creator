@@ -7,6 +7,8 @@
 #include "unit.h"
 
 #include <memory>
+#include <stdexcept>
+#include <string>
 #include <tuple>
 #include <unordered_map>
 #include <utility>
@@ -25,10 +27,8 @@ private:
         ArmourType,
         std::tuple<ItemClass, std::string, double>
     > armours_;
-    std::unordered_map<
-        std::string,
-        std::pair<bool, double>
-    > extras_;
+    std::pair<std::string, std::pair<bool, double>> oco_extra_;
+    std::unordered_map<std::string, std::pair<bool, double>> mc_extras_;
 
     // champion
     std::unordered_map<
@@ -39,10 +39,8 @@ private:
         ArmourType,
         std::tuple<ItemClass, std::string, double>
     > champ_armours_;
-    std::unordered_map<
-        std::string,
-        std::pair<bool, double>
-    > champ_extras_;
+    std::pair<std::string, double> champ_oco_extra_;
+    std::unordered_map<std::string, double> champ_mc_extras_;
     double champ_magic_item_points;
     double champ_faction_item_points;
     double champ_total_item_points;
@@ -79,14 +77,16 @@ public:
         std::tuple<ItemClass, std::string, double>
     > champion_armour() const noexcept;
 
+    std::pair<std::string, std::pair<bool, double>> oco_extra() const noexcept;
     std::unordered_map<
         std::string,
         std::pair<bool, double>
-    > extras() const noexcept;
+    > mc_extras() const noexcept;
+    std::pair<std::string, double> champion_oco_extra() const noexcept;
     std::unordered_map<
         std::string,
-        std::pair<bool, double>
-    > champion_extras() const noexcept;
+        double
+    > champion_mc_extras() const noexcept;
 
     std::unordered_map<
         CommandGroup, std::pair<std::string, double>
@@ -109,11 +109,15 @@ public:
     void pick_banner(ItemClass item_type, std::string name);
     void remove_banner();
 
-    void pick_extra(std::string name);
-    void pick_champion_extra(std::string name);
+    void pick_oco_extra(std::string name);
+    void pick_mc_extra(std::string name);
+    void pick_champion_oco_extra(std::string name);
+    void pick_champion_mc_extra(std::string name);
 
-    void remove_extra(std::string name);
-    void remove_champion_extra(std::string name);
+    void remove_oco_extra();
+    void remove_mc_extra(std::string name);
+    void remove_champion_oco_extra();
+    void remove_champion_mc_extra(std::string name);
 
     void change_size(std::size_t n);
 

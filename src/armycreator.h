@@ -61,7 +61,8 @@ private slots:
     void optional_weapon_selected();
     void optional_armour_selected();
     void optional_command_selected();
-    void optional_extra_selected();
+    void optional_oco_extra_selected();
+    void optional_mc_extra_selected();
 
     void change_unit_size();
 private:
@@ -119,12 +120,39 @@ private:
         int id=0
     );
 
+    QGroupBox* init_opt_oco_extras_groupbox(
+        const std::unordered_map<
+            std::string,
+            std::pair<bool, double>
+        >& opt_oco_extras,
+        const std::pair<std::string, std::pair<bool, double>>& curr_oco_extra,
+        int id
+    );
+    QGroupBox* init_opt_mc_extras_groupbox(
+        const std::unordered_map<
+            std::string,
+            std::pair<bool, double>
+        >& opt_mc_extras,
+        const std::unordered_map<
+            std::string,
+            std::pair<bool, double>
+        > curr_mc_extras,
+        int id
+    );
     QGroupBox* init_opt_extras_groupbox(
-        const std::pair<
-            std::unordered_map<std::string, std::pair<bool, double>>,
-            bool
-        >& opt_extras,
-        const std::unordered_map<std::string, std::pair<bool, double>>& extras,
+        const std::unordered_map<
+            std::string,
+            std::pair<bool, double>
+        >& opt_oco_extras,
+        const std::unordered_map<
+            std::string,
+            std::pair<bool, double>
+        >& opt_mc_extras,
+        const std::pair<std::string, std::pair<bool, double>>& curr_oco_extra,
+        const std::unordered_map<
+            std::string,
+            std::pair<bool, double>
+        > curr_mc_extras,
         int id=0
     );
 };

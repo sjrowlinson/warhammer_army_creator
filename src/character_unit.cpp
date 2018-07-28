@@ -41,10 +41,8 @@ std::unordered_map<
     std::tuple<ItemClass, std::string, double>
 > character_unit::armour() const noexcept { return armours_; }
 
-std::unordered_map<
-    std::string,
-    double
-> character_unit::extras() const noexcept { return extras_; }
+std::pair<std::string, double> character_unit::oco_extra() const noexcept { return oco_extra_; }
+std::unordered_map<std::string, double> character_unit::mc_extras() const noexcept { return mc_extras_; }
 
 void character_unit::pick_weapon(ItemClass item_type, std::string name) {
     switch (item_type) {
@@ -172,17 +170,23 @@ void character_unit::pick_armour(ItemClass item_type, std::string name) {
     }
 }
 
-void character_unit::pick_extra(std::string name) {
-    auto search = handle_->opt().opt_extras.first.find(name);
-    if (search == handle_->opt().opt_extras.first.end())
+void character_unit::pick_oco_extra(std::string name) {
+    auto search = handle_->opt().oco_extras.find(name);
+    if (search == handle_->opt().oco_extras.end())
         throw std::invalid_argument("Item not found!");
-    if (handle_->opt().opt_extras.second) { // one choice only
-        for (const auto& x : extras_) {
-            points_ -= x.second;
-        }
-        extras_.clear();
-    }
-    extras_[search->first] = search->second.second;
+    if (oco_extra_.first == name) return;
+    points_ -= oco_extra_.second;
+    oco_extra_.first = name;
+    oco_extra_.second = search->second.second;
+    points_ += search->second.second;
+}
+
+void character_unit::pick_mc_extra(std::string name) {
+    auto search = handle_->opt().mc_extras.find(name);
+    if (search == handle_->opt().mc_extras.end())
+        throw std::invalid_argument("Item not found!");
+    if (mc_extras_.count(name)) return;
+    mc_extras_[name] = search->second.second;
     points_ += search->second.second;
 }
 
@@ -242,10 +246,16 @@ void character_unit::remove_armour(ArmourType at) {
     points_ -= pts;
 }
 
-void character_unit::remove_extra(std::string name) {
-    auto search = extras_.find(name);
-    if (search != extras_.end()) {
+void character_unit::remove_oco_extra() {
+    points_ -= oco_extra_.second;
+    oco_extra_.first = "";
+    oco_extra_.second = 0.0;
+}
+
+void character_unit::remove_mc_extra(std::string name) {
+    auto search = mc_extras_.find(name);
+    if (search != mc_extras_.end()) {
         points_ -= search->second;
-        extras_.erase(name);
+        mc_extras_.erase(name);
     }
 }

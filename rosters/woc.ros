@@ -11,7 +11,8 @@ Chaos Lord
     Additional hand weapon {Mundane} [Melee] (6), Great weapon {Mundane} [Melee] (8), Flail {Mundane} [Melee] (6), Halberd {Mundane} [Melee] (8), Lance {Mundane} [Melee] (8)
     Shield {Mundane} [Shield] (5)
     Barded Chaos Steed {Warbeast} [24], Steed of Slaanesh {Warbeast} [25], Disc of Tzeentch {Warbeast} [30], Daemonic Mount {Monstrous Beast} [35], Palanquin of Nurgle {Monstrous Beast} [40], Juggernaught of Khorne {Monstrous Beast} [55], Chaos Chariot {Chariot} [110], Chaos Warshrine {Chariot} [125], Gorebeast Chariot {Chariot} [130], Manticore {Monster} [150], Chaos Dragon {Monster} [330]
-    OCO: Mark of Khorne {True} [10], Mark of Tzeentch {True} [10], Mark of Nurgle {True} [10], Mark of Slaanesh {True} [5]
+    Mark of Khorne {True} [10], Mark of Tzeentch {True} [10], Mark of Nurgle {True} [10], Mark of Slaanesh {True} [5]
+    None
     100
     50
     150
@@ -30,7 +31,8 @@ Chaos Sorceror Lord
     None
     None
     Barded Chaos Steed {Warbeast} [24], Steed of Slaanesh {Warbeast} [25], Disc of Tzeentch {Warbeast} [30], Daemonic Mount {Monstrous Beast} [35], Palanquin of Nurgle {Monstrous Beast} [40], Juggernaught of Khorne {Monstrous Beast} [55], Chaos Chariot {Chariot} [110], Chaos Warshrine {Chariot} [125], Gorebeast Chariot {Chariot} [130], Manticore {Monster} [150], Chaos Dragon {Monster} [330]
-    OCO: Mark of Tzeentch {True} [10], Mark of Nurgle {True} [10], Mark of Slaanesh {True} [5]
+    Mark of Tzeentch {True} [10], Mark of Nurgle {True} [10], Mark of Slaanesh {True} [5]
+    None
     100
     50
     150
@@ -49,7 +51,8 @@ Daemon Prince
     None
     Chaos armour {Mundane} [Armour] (20)
     None
-    OCO: Daemon of Khorne {True} [10], Daemon of Tzeentch {True} [15], Daemon of Nurgle {True} [10], Daemon of Slaanesh {True} [5]
+    Daemon of Khorne {True} [10], Daemon of Tzeentch {True} [15], Daemon of Nurgle {True} [10], Daemon of Slaanesh {True} [5]
+    Daemonic Flight {True} [40]
     25
     100
     125
@@ -72,7 +75,9 @@ Chaos Warriors
     None
     Shields {Mundane} [Shield] (1)
     None
-    OCO: Mark of Khorne {False} [2], Mark of Tzeentch {False} [2], Mark of Nurgle {False} [2], Mark of Slaanesh {False} [1]
+    Mark of Khorne {False} [2], Mark of Tzeentch {False} [2], Mark of Nurgle {False} [2], Mark of Slaanesh {False} [1]
+    None
+    None
     None
     Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Aspiring Champion [10]
     0
@@ -94,7 +99,9 @@ Chaos Marauders
     None
     Light armour {Mundane} [Armour] (1), Shields {Mundane} [Shield] (1)
     None
-    OCO: Mark of Khorne {False} [2], Mark of Tzeentch {False} [2], Mark of Nurgle {False} [2], Mark of Slaanesh {False} [1]
+    Mark of Khorne {False} [2], Mark of Tzeentch {False} [2], Mark of Nurgle {False} [2], Mark of Slaanesh {False} [1]
+    None
+    None
     None
     Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Marauder Chieftain [10]
     0
@@ -116,7 +123,9 @@ Forsaken
     None
     None
     None
-    OCO: Forsaken of Khorne {False} [2], Forsaken of Tzeentch {False} [1], Forsaken of Nurgle {False} [2], Forsaken of Slaanesh {False} [2]
+    Forsaken of Khorne {False} [2], Forsaken of Tzeentch {False} [1], Forsaken of Nurgle {False} [2], Forsaken of Slaanesh {False} [2]
+    None
+    None
     None
     None
     0
@@ -130,6 +139,8 @@ Chaos Warhounds
     5, None
     7 4 0 3 3 1 3 1 5
     7 4 0 3 3 1 3 1 5
+    None
+    None
     None
     None
     None
@@ -160,7 +171,9 @@ Marauder Horsemen
     None
     Light armour {Mundane} [Armour] (1), Shields {Mundane} [Shield] (1)
     None
-    OCO: Mark of Khorne {False} [2], Mark of Tzeentch {False} [2], Mark of Nurgle {False} [2], Mark of Slaanesh {False} [1]
+    Mark of Khorne {False} [2], Mark of Tzeentch {False} [2], Mark of Nurgle {False} [2], Mark of Slaanesh {False} [1]
+    None
+    None
     None
     Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Marauder Horsemaster [10]
     0
@@ -184,7 +197,9 @@ Chosen
     None
     Shields {Mundane} [Shield] (2)
     None
-    OCO: Mark of Khorne {False} [2], Mark of Tzeentch {False} [2], Mark of Nurgle {False} [2], Mark of Slaanesh {False} [1]
+    Mark of Khorne {False} [2], Mark of Tzeentch {False} [2], Mark of Nurgle {False} [2], Mark of Slaanesh {False} [1]
+    None
+    None
     None
     Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Chosen Champion [10]
     0
@@ -206,7 +221,9 @@ Chaos Knights
     None
     None
     None
-    OCO: Mark of Khorne {False} [2], Mark of Tzeentch {False} [2], Mark of Nurgle {False} [2], Mark of Slaanesh {False} [1]
+    Mark of Khorne {False} [2], Mark of Tzeentch {False} [2], Mark of Nurgle {False} [2], Mark of Slaanesh {False} [1]
+    None
+    None
     None
     Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Doom Knight [10]
     0
@@ -228,7 +245,9 @@ Chaos Ogres
     None
     None
     None
-    OCO: Mark of Khorne {False} [4], Mark of Tzeentch {False} [4], Mark of Nurgle {False} [4], Mark of Slaanesh {False} [2]
+    Mark of Khorne {False} [4], Mark of Tzeentch {False} [4], Mark of Nurgle {False} [4], Mark of Slaanesh {False} [2]
+    None
+    None
     None
     Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Ogre Mutant [10]
     0

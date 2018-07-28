@@ -61,19 +61,25 @@ std::unordered_map<
     return champ_armours_;
 }
 
-std::unordered_map<
+std::pair<
     std::string,
     std::pair<bool, double>
-> normal_unit::extras() const noexcept {
-    return extras_;
-}
+> normal_unit::oco_extra() const noexcept { return oco_extra_; }
 
 std::unordered_map<
     std::string,
     std::pair<bool, double>
-> normal_unit::champion_extras() const noexcept {
-    return champ_extras_;
-}
+> normal_unit::mc_extras() const noexcept { return mc_extras_; }
+
+std::pair<
+    std::string,
+    double
+> normal_unit::champion_oco_extra() const noexcept { return champ_oco_extra_; }
+
+std::unordered_map<
+    std::string,
+    double
+> normal_unit::champion_mc_extras() const noexcept { return champ_mc_extras_; }
 
 std::unordered_map<
     CommandGroup, std::pair<std::string, double>
@@ -412,49 +418,75 @@ void normal_unit::remove_banner() {
     banner.second = 0.0;
 }
 
-void normal_unit::pick_extra(std::string name) {
-    auto search = handle->opt().opt_extras.first.find(name);
-    if (search == handle->opt().opt_extras.first.end())
+void normal_unit::pick_oco_extra(std::string name) {
+    auto search = handle->opt().oco_extras.find(name);
+    if (search == handle->opt().oco_extras.end())
         throw std::invalid_argument("Item not found!");
-    if (handle->opt().opt_extras.second) { // one choice only
-        for (const auto& x : extras_) {
-            if (x.second.first) points_ -= x.second.second;
-            else points_ -= size_ * x.second.second;
-        }
-        extras_.clear();
-    }
-    extras_[search->first] = search->second;
-    if (search->second.first) points_ += search->second.second;
-    else points_ += size_ * search->second.second;
+    if (oco_extra_.first == name) return;
+    const double prev_pts = oco_extra_.second.second;
+    points_ -= (oco_extra_.second.first) ? prev_pts : size_ * prev_pts;
+    oco_extra_.first = name;
+    oco_extra_.second = search->second;
+    const double new_pts = search->second.second;
+    points_ += (search->second.first) ? new_pts : size_ * new_pts;
 }
 
-void normal_unit::pick_champion_extra(std::string name) {
-    auto search = handle->champion_opt().opt_extras.first.find(name);
-    if (search == handle->champion_opt().opt_extras.first.end())
+void normal_unit::pick_mc_extra(std::string name) {
+    auto search = handle->opt().mc_extras.find(name);
+    if (search == handle->opt().mc_extras.end())
         throw std::invalid_argument("Item not found!");
-    if (handle->champion_opt().opt_extras.second) { // one choice only
-        for (const auto& x : champ_extras_)
-            points_ -= x.second.second;
-        champ_extras_.clear();
-    }
-    champ_extras_[search->first] = search->second;
+    if (mc_extras_.count(name)) return;
+    mc_extras_[name] = search->second;
+    const double pts = search->second.second;
+    points_ += (search->second.first) ? pts : size_ * pts;
+}
+
+void normal_unit::pick_champion_oco_extra(std::string name) {
+    auto search = handle->champion_opt().oco_extras.find(name);
+    if (search == handle->champion_opt().oco_extras.end())
+        throw std::invalid_argument("Item not found!");
+    if (champ_oco_extra_.first == name) return;
+    points_ -= champ_oco_extra_.second;
+    champ_oco_extra_.first = name;
+    champ_oco_extra_.second = search->second.second;
     points_ += search->second.second;
 }
 
-void normal_unit::remove_extra(std::string name) {
-    auto search = extras_.find(name);
-    if (search != extras_.end()) {
-        if (search->second.first) points_ -= search->second.second;
-        else points_ -= size_ * search->second.second;
-        extras_.erase(name);
+void normal_unit::pick_champion_mc_extra(std::string name) {
+    auto search = handle->champion_opt().mc_extras.find(name);
+    if (search == handle->champion_opt().mc_extras.end())
+        throw std::invalid_argument("Item not found!");
+    if (champ_mc_extras_.count(name)) return;
+    champ_mc_extras_[name] = search->second.second;
+    points_ += search->second.second;
+}
+
+void normal_unit::remove_oco_extra() {
+    points_ -= (oco_extra_.second.first) ? oco_extra_.second.second : size_ * oco_extra_.second.second;
+    oco_extra_.first = "";
+    oco_extra_.second.second = 0.0;
+}
+
+void normal_unit::remove_mc_extra(std::string name) {
+    auto search = mc_extras_.find(name);
+    if (search != mc_extras_.end()) {
+        const double pts = search->second.second;
+        points_ -= (search->second.first) ? pts : size_ * pts;
+        mc_extras_.erase(name);
     }
 }
 
-void normal_unit::remove_champion_extra(std::string name) {
-    auto search = champ_extras_.find(name);
-    if (search != champ_extras_.end()) {
-        points_ -= search->second.second;
-        champ_extras_.erase(name);
+void normal_unit::remove_champion_oco_extra() {
+    points_ -= champ_oco_extra_.second;
+    champ_oco_extra_.first = "";
+    champ_oco_extra_.second = 0.0;
+}
+
+void normal_unit::remove_champion_mc_extra(std::string name) {
+    auto search = champ_mc_extras_.find(name);
+    if (search != champ_mc_extras_.end()) {
+        points_ -= search->second;
+        champ_mc_extras_.erase(name);
     }
 }
 
@@ -464,13 +496,13 @@ void normal_unit::change_size(std::size_t n) {
     points_ = n * handle->points_per_model();
     for (const auto& w : weapons_) points_ += n * std::get<2>(w.second);
     for (const auto& a : armours_) points_ += n * std::get<2>(a.second);
-    for (const auto& e : extras_) {
-        if (e.second.first) points_ += e.second.second;
-        else points_ += n * e.second.second;
-    }
+    points_ += (oco_extra_.second.first) ? oco_extra_.second.second : n * oco_extra_.second.second;
+    for (const auto& e : mc_extras_)
+        points_ += (e.second.first) ? e.second.second : n * e.second.second;
     for (const auto& cw : champ_weapons_) points_ += std::get<2>(cw.second);
     for (const auto& ca : champ_armours_) points_ += std::get<2>(ca.second);
-    for (const auto& ce : champ_extras_) points_ += ce.second.second;
+    points_ += champ_oco_extra_.second;
+    for (const auto& ce : champ_mc_extras_) points_ += ce.second;
     for (const auto& m : command_group) points_ += m.second.second;
     points_ += banner.second;
     size_ = n;
