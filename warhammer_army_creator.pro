@@ -75,4 +75,5 @@ FORMS += \
 
 RESOURCES += \
         rosters.qrc \
-        magic_items.qrc
+        magic_items.qrc \
+        faction_items.qrc

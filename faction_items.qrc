@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/faction_items">
+        <file alias="skaven.fit">faction_items/skaven.fit</file>
+    </qresource>
+</RCC>

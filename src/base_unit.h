@@ -82,10 +82,16 @@ private:
 
     // handle to magic items
     std::shared_ptr<
-        std::unordered_map<std::string, magic_item>
+        std::unordered_map<std::string, item>
     > magic_items;
+    std::shared_ptr<
+        std::unordered_map<std::string, item>
+    > common_items;
+    std::shared_ptr<
+        std::unordered_map<std::string, item>
+    > faction_items;
 public:
-    base_unit(
+    explicit base_unit(
         armies::Faction faction,
         armies::UnitType ut,
         armies::UnitClass uc,
@@ -106,13 +112,35 @@ public:
     std::size_t max_size() const noexcept;
 
     const std::shared_ptr<
-        std::unordered_map<std::string, magic_item>
+        std::unordered_map<std::string, item>
     >& magic_items_handle() const noexcept;
     void set_magic_item_handle(
         const std::shared_ptr<
             std::unordered_map<
                 std::string,
-                magic_item
+                item
+            >
+        >& items
+    ) noexcept;
+    const std::shared_ptr<
+        std::unordered_map<std::string, item>
+    >& common_items_handle() const noexcept;
+    void set_common_item_handle(
+        const std::shared_ptr<
+            std::unordered_map<
+                std::string,
+                item
+            >
+        >& items
+    ) noexcept;
+    const std::shared_ptr<
+        std::unordered_map<std::string, item>
+    >& faction_items_handle() const noexcept;
+    void set_faction_item_handle(
+        const std::shared_ptr<
+            std::unordered_map<
+                std::string,
+                item
             >
         >& items
     ) noexcept;

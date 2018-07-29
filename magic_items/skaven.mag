@@ -1,41 +1,41 @@
 The Fellblade
-    Weapon
+    Weapon, Melee
     100
     This foul sword gives the bearer Strength 10 and successful ward saves must be re-rolled. Any unsaved wounds caused by the Fellblade are multiplied into D6 wounds. Roll a D6 at the end of each of the wielder's turns; on a 3+ there is no effect. On a roll of 1-2 the wielder suffers 1 wound with no armour save allowed.
     None
 
 Warpforged Blade
-    Weapon
+    Weapon, Melee
     50
     Armour saves cannot be taken against hits from a Warpforged Blade.
     None
 
 Warlock-Augmented Weapon
-    Weapon
+    Weapon, Melee
     45
     A Warlock-Augmented weapon adds +1 Strength and +1 Attack to any model so equipped.
     None
 
 Blade of Corruption
-    Weapon
+    Weapon, Melee
     35
     The wielder of this sword is granted +1 Strength to all Attacks made in close combat. Any unsaved wound inflicted by the Blade of Corruption is multiplied to 2 wounds. In addition, if the wielder makes a To Hit roll that has two or more rolls of 1, the wielder immediately suffers a wound that is multiplied to 2 wounds. Other Attacks are carried out as normal.
     None
 
 Weeping Blade
-    Weapon
+    Weapon, Melee
     30
     A Weeping Blade has the Armour Piercing special rule. Each unsaved wound is multiplied to D3 wounds.
     None
 
 Dwarfbane
-    Weapon
+    Weapon, Melee
     25
     The wielder of this blade is granted +1 Strength to all attacks made in close combat. Additionally against Dwarfs, all hits are Armour Piercing, and the user re-rolls all failed To Wound rolls.
     None
 
 Blade of Nurglitch
-    Weapon
+    Weapon, Melee
     10
     Enemy models lose 1 point of Toughness from their profile for each unsaved wound they suffer from this blade. Any model reduced to Toughness 0 is removed as a casualty.
     None
@@ -130,7 +130,7 @@ Portents of Verminous Doom
 
 
 Warpstone Stars
-    Weapon
+    Weapon, Ballistic
     50
     Warpstone Stars are a thrown weapon with the 3x Multiple Shots rule. Warpstone stars are Strength 5 and each unsaved wound multiplies into D3 wounds.
     Assassin
@@ -155,13 +155,13 @@ Brass Orb
     Warlock Engineer
 
 Doomrocket
-    Weapon
+    Weapon, Ballistic
     30
     D
     Warlock Engineer
 
 Death Globe
-    Weapon
+    Weapon, Ballistic
     25
     D
     Warlock Engineer
@@ -187,13 +187,13 @@ Plague Banner
 
 
 Shock-Prod
-    Weapon
+    Weapon, Melee
     25
     This weapon required two hands to wield and ignores armour saves.
     Master Moulder
 
 Electro-Whip
-    Weapon
+    Weapon, Melee
     15
     This weapon follows the rules for whips but confers D3 Attacks instead of the normal 1 when in base contact and from the rear ranks. Roll to determine the number of Attacks each combat.
     Master Moulder

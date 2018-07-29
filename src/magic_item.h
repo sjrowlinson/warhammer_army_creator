@@ -17,12 +17,14 @@ enum class ItemType {
     TALISMAN,
     ARCANE,
     ENCHANTED,
-    BANNER
+    BANNER,
+    OTHER
 };
 
 enum class WeaponType {
     MELEE,
-    BALLISTIC
+    BALLISTIC,
+    NONE
 };
 
 enum class ArmourType {
@@ -32,7 +34,8 @@ enum class ArmourType {
     NONE
 };
 
-struct magic_item {
+struct item {
+    ItemClass item_class;
     ItemType item_type;
     ArmourType armour_type;
     WeaponType weapon_type;

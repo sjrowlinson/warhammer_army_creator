@@ -3,5 +3,6 @@
         <file alias="skaven.mag">magic_items/skaven.mag</file>
         <file alias="empire.mag">magic_items/empire.mag</file>
         <file alias="woc.mag">magic_items/woc.mag</file>
+        <file alias="common.mag">magic_items/common.mag</file>
     </qresource>
 </RCC>

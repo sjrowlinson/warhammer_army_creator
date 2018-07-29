@@ -1,0 +1,29 @@
+Warpmusket
+    Weapon, Ballistic
+    15
+    A warpmusket is a move or fire weapon that has a range of 24" and is Strength 5. A warpmusket is Armour Piercing, uses Unstable Ammunition, and is a Warpstone Weapon.
+    None
+
+Poisoned Attacks
+    Other
+    15
+    All close combat attacks made by the model count as Poisoned Attacks. This will affect a tail weapon, but not any magic weapons or a Rat Hound Bodyguard.
+    None
+
+Tail Weapon
+    Other
+    8
+    D
+    None
+
+Warplock Pistol
+    Weapon, Ballistic
+    8
+    D
+    None
+
+Rat Hound Bodyguard
+    Other
+    5
+    D
+    None

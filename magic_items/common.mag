@@ -1,0 +1,45 @@
+# Magic Weapons
+
+Giant Blade
+    Weapon, Melee
+    60
+    Close combat attacks made with this sword are resolved at +3 Strength.
+    None
+
+Sword of Bloodshed
+    Weapon, Melee
+    60
+    The wielder has +3 Attacks.
+    None
+
+Obsidian Blade
+    Weapon, Melee
+    50
+    Armour saves cannot be taken against wounds caused by the Obsidian Blade.
+    None
+
+Ogre Blade
+    Weapon, Melee
+    40
+    Close combat attacks made with this sword are resolved at +2 Strength.
+    None
+
+# Magic Armour
+
+Armour of Destiny
+    Armour, Armour
+    50
+    Heavy armour. The Armour of Destiny grants the wearer a 4+ ward save.
+    None
+
+Trickster's Helm
+    Armour, Helmet
+    50
+    The wearer counts his armour save as being one point higher than normal. Any successful roll to wound made against the wearer of the Trickster's Helm must be re-rolled.
+    None
+
+Armour of Silvered Steel
+    Armour, Armour
+    45
+    The Armour of Silvered Steel grants its wearer a 2+ armour save that cannot be improved by any means.
+    None

@@ -19,10 +19,11 @@
 #include "tools.h"
 #include "unit.h"
 
-#include <array>
 #include <cmath>
 #include <memory>
 #include <string>
+#include <tuple>
+#include <unordered_map>
 #include <utility>
 #include <vector>
 
@@ -31,21 +32,33 @@
 class selection_tree {
 private:
     armies::Faction race;
+    // roster of units
     std::unordered_map<
         std::string,
         std::shared_ptr<base_unit>
     > roster;
+    // magic and faction items
     std::unordered_map<
         std::string,
-        magic_item
+        item
     > magic_items;
+    std::unordered_map<
+        std::string,
+        item
+    > common_items;
+    std::unordered_map<
+        std::string,
+        item
+    > faction_items;
+
     std::shared_ptr<unit> current_selection;
 
     std::reference_wrapper<army_list> army;
 
-    std::pair<std::string, std::string> filenames() const noexcept;
+    //std::pair<std::string, std::string> filenames() const noexcept;
+    std::tuple<std::string, std::string, std::string> filenames() const noexcept;
     void parse_roster_file(const QString& rfile_str);
-    void parse_item_file(const QString& ifile_str);
+    void parse_item_files(const std::pair<QString, QString>& ifile_str);
     std::vector<std::shared_ptr<base_unit>> all_of(armies::UnitType ut) const noexcept;
 public:
     selection_tree(armies::Faction faction, army_list& list);

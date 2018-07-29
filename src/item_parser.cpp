@@ -2,8 +2,8 @@
 
 namespace tools {
 
-    item_parser::item_parser(const QString& ifile_str)
-        : item_file(ifile_str) {
+    item_parser::item_parser(const QString& ifile_str, ItemClass ic)
+        : item_file(ifile_str), item_class(ic) {
         item_file.open(QIODevice::ReadOnly | QIODevice::Text);
         QTextStream in(&item_file);
         std::string content = in.readAll().toStdString();
@@ -45,7 +45,7 @@ namespace tools {
         return s;
     }
 
-    std::vector<magic_item> item_parser::parse() {
+    std::vector<item> item_parser::parse() {
         std::unordered_map<
             std::string,
             ItemType
@@ -55,7 +55,15 @@ namespace tools {
             {"Talisman", ItemType::TALISMAN},
             {"Arcane", ItemType::ARCANE},
             {"Enchanted", ItemType::ENCHANTED},
-            {"Banner", ItemType::BANNER}
+            {"Banner", ItemType::BANNER},
+            {"Other", ItemType::OTHER}
+        };
+        std::unordered_map<
+            std::string,
+            WeaponType
+        > map_to_weapon = {
+            {"Melee", WeaponType::MELEE},
+            {"Ballistic", WeaponType::BALLISTIC}
         };
         std::unordered_map<
             std::string,
@@ -66,24 +74,31 @@ namespace tools {
             {"Helmet", ArmourType::HELMET}
         };
         count_items();
-        std::vector<magic_item> items; items.reserve(blocks.size());
+        std::vector<item> items; items.reserve(blocks.size());
         for (std::size_t i = 0U; i < blocks.size(); ++i) {
             std::string name = read_line(blocks[i]);
             std::vector<std::string> mits = tools::split(read_line(blocks[i] + 1), ',');
             ItemType mit;
+            WeaponType wt;
             ArmourType at;
-            if (mits.size() > 1) {
+            if (mits[0] == "Weapon") {
+                mit = ItemType::WEAPON;
+                wt = map_to_weapon[mits[1]];
+            }
+            else if (mits[0] == "Armour") {
                 mit = ItemType::ARMOUR;
                 at = map_to_armour[mits[1]];
             }
             else {
                 mit = map_to_item[mits[0]];
+                wt = WeaponType::NONE;
                 at = ArmourType::NONE;
             }
             double points = std::stod(read_line(blocks[i] + 2));
             std::string descr = read_line(blocks[i] + 3);
             std::string allowed = read_line(blocks[i] + 4);
-            magic_item item;
+            item item;
+            item.item_class = item_class;
             item.item_type = mit;
             item.armour_type = at;
             item.name = name;
