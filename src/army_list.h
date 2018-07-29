@@ -47,6 +47,7 @@ private:
     double spec_pts;
     double rare_pts;
     std::set<InvalidListReason> invalidities;
+    double snap_unit_pts;
 
     void check_validity();
     void determine_limits();
@@ -76,6 +77,8 @@ public:
     double rare_points() const noexcept;
 
     std::shared_ptr<unit> get_unit(int id);
+    void take_snapshot_of(int id);
+    void update_on(int id);
     // list property modification
     void change_points_limit(double pts);
     // list modification

@@ -85,6 +85,8 @@ private:
     // TODO: remove from_roster parameters and use in_tree field instead
     void initialise_unit_options_box();
 
+    void update_unit_display(QTreeWidgetItem* item);
+
     QGroupBox* init_size_command_groupbox();
     QGroupBox* init_command_groupbox(
         const std::unordered_map<CommandGroup, std::pair<std::string, double>>& opt_command,

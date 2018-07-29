@@ -216,6 +216,34 @@ std::shared_ptr<unit> army_list::get_unit(int id) {
     //return army[id];
 }
 
+void army_list::take_snapshot_of(int id) {
+    snap_unit_pts = army[id]->points();
+}
+
+void army_list::update_on(int id) {
+    double diff = army[id]->points() - snap_unit_pts;
+    curr_pts += diff;
+    switch (army[id]->unit_type()) {
+    case armies::UnitType::LORD:
+        lord_pts += diff;
+        break;
+    case armies::UnitType::HERO:
+        hero_pts += diff;
+        break;
+    case armies::UnitType::CORE:
+        core_pts += diff;
+        break;
+    case armies::UnitType::SPECIAL:
+        spec_pts += diff;
+        break;
+    case armies::UnitType::RARE:
+        rare_pts += diff;
+        break;
+    default: break;
+    }
+    check_validity();
+}
+
 void army_list::change_points_limit(double pts) {
     points = pts;
     determine_limits();

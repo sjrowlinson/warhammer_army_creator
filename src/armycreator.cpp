@@ -85,9 +85,10 @@ void ArmyCreator::optional_weapon_selected() {
     auto rb_name_split = tools::split(rb_name, '_');
     std::string weapon = rb_name_split[0];
     std::shared_ptr<unit> current;
+    int curr_id;
     if (in_tree == InTree::ROSTER) current = st->selected();
     else {
-        int curr_id = ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt();
+        curr_id = ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt();
         current = army->get_unit(curr_id);
     }
     // None radio button selected
@@ -100,19 +101,37 @@ void ArmyCreator::optional_weapon_selected() {
         case BaseUnitType::MELEE_CHARACTER:
         {
             auto p = std::dynamic_pointer_cast<melee_character_unit>(current);
-            p->remove_weapon(wt);
+            if (in_tree == InTree::ARMY) {
+                army->take_snapshot_of(curr_id);
+                p->remove_weapon(wt);
+                army->update_on(curr_id);
+                ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+                update_unit_display(ui->army_tree->currentItem());
+            } else p->remove_weapon(wt);
             break;
         }
         case BaseUnitType::MAGE_CHARACTER:
         {
             auto p = std::dynamic_pointer_cast<mage_character_unit>(current);
-            p->remove_weapon(wt);
+            if (in_tree == InTree::ARMY) {
+                army->take_snapshot_of(curr_id);
+                p->remove_weapon(wt);
+                army->update_on(curr_id);
+                ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+                update_unit_display(ui->army_tree->currentItem());
+            } else p->remove_weapon(wt);
             break;
         }
         case BaseUnitType::NORMAL:
         {
             auto p = std::dynamic_pointer_cast<normal_unit>(current);
-            p->remove_weapon(wt);
+            if (in_tree == InTree::ARMY) {
+                army->take_snapshot_of(curr_id);
+                p->remove_weapon(wt);
+                army->update_on(curr_id);
+                ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+                update_unit_display(ui->army_tree->currentItem());
+            } else p->remove_weapon(wt);
             break;
         }
         default: break;
@@ -125,19 +144,43 @@ void ArmyCreator::optional_weapon_selected() {
     case BaseUnitType::MELEE_CHARACTER:
     {
         auto p = std::dynamic_pointer_cast<melee_character_unit>(current);
-        try { p->pick_weapon(it, weapon); } catch (const std::invalid_argument&) { }
+        try {
+            if (in_tree == InTree::ARMY) {
+                army->take_snapshot_of(curr_id);
+                p->pick_weapon(it, weapon);
+                army->update_on(curr_id);
+                ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+                update_unit_display(ui->army_tree->currentItem());
+            } else p->pick_weapon(it, weapon);
+        } catch (const std::invalid_argument&) { }
         break;
     }
     case BaseUnitType::MAGE_CHARACTER:
     {
         auto p = std::dynamic_pointer_cast<mage_character_unit>(current);
-        try { p->pick_weapon(it, weapon); } catch (const std::invalid_argument&) { }
+        try {
+            if (in_tree == InTree::ARMY) {
+                army->take_snapshot_of(curr_id);
+                p->pick_weapon(it, weapon);
+                army->update_on(curr_id);
+                ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+                update_unit_display(ui->army_tree->currentItem());
+            } else p->pick_weapon(it, weapon);
+        } catch (const std::invalid_argument&) { }
         break;
     }
     case BaseUnitType::NORMAL:
     {
         auto p = std::dynamic_pointer_cast<normal_unit>(current);
-        try { p->pick_weapon(it, weapon); } catch (const std::invalid_argument&) { }
+        try {
+            if (in_tree == InTree::ARMY) {
+                army->take_snapshot_of(curr_id);
+                p->pick_weapon(it, weapon);
+                army->update_on(curr_id);
+                ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+                update_unit_display(ui->army_tree->currentItem());
+            } else p->pick_weapon(it, weapon);
+        } catch (const std::invalid_argument&) { }
         break;
     }
     default: break;
@@ -150,9 +193,10 @@ void ArmyCreator::optional_armour_selected() {
     auto rb_name_split = tools::split(rb_name, '_');
     std::string armour = rb_name_split[0];
     std::shared_ptr<unit> current;
+    int curr_id;
     if (in_tree == InTree::ROSTER) current = st->selected();
     else {
-        int curr_id = ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt();
+        curr_id = ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt();
         current = army->get_unit(curr_id);
     }
     // None radio button selected
@@ -166,19 +210,37 @@ void ArmyCreator::optional_armour_selected() {
         case BaseUnitType::MELEE_CHARACTER:
         {
             auto p = std::dynamic_pointer_cast<melee_character_unit>(current);
-            p->remove_armour(at);
+            if (in_tree == InTree::ARMY) {
+                army->take_snapshot_of(curr_id);
+                p->remove_armour(at);
+                army->update_on(curr_id);
+                ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+                update_unit_display(ui->army_tree->currentItem());
+            } else p->remove_armour(at);
             break;
         }
         case BaseUnitType::MAGE_CHARACTER:
         {
             auto p = std::dynamic_pointer_cast<mage_character_unit>(current);
-            p->remove_armour(at);
+            if (in_tree == InTree::ARMY) {
+                army->take_snapshot_of(curr_id);
+                p->remove_armour(at);
+                army->update_on(curr_id);
+                ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+                update_unit_display(ui->army_tree->currentItem());
+            } else p->remove_armour(at);
             break;
         }
         case BaseUnitType::NORMAL:
         {
             auto p = std::dynamic_pointer_cast<normal_unit>(current);
-            p->remove_armour(at);
+            if (in_tree == InTree::ARMY) {
+                army->take_snapshot_of(curr_id);
+                p->remove_armour(at);
+                army->update_on(curr_id);
+                ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+                update_unit_display(ui->army_tree->currentItem());
+            } else p->remove_armour(at);
             break;
         }
         default: break;
@@ -191,19 +253,43 @@ void ArmyCreator::optional_armour_selected() {
     case BaseUnitType::MELEE_CHARACTER:
     {
         auto p = std::dynamic_pointer_cast<melee_character_unit>(current);
-        try { p->pick_armour(it, armour); } catch (const std::invalid_argument&) { }
+        try {
+            if (in_tree == InTree::ARMY) {
+                army->take_snapshot_of(curr_id);
+                p->pick_armour(it, armour);
+                army->update_on(curr_id);
+                ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+                update_unit_display(ui->army_tree->currentItem());
+            } else p->pick_armour(it, armour);
+        } catch (const std::invalid_argument&) { }
         break;
     }
     case BaseUnitType::MAGE_CHARACTER:
     {
         auto p = std::dynamic_pointer_cast<mage_character_unit>(current);
-        try { p->pick_armour(it, armour); } catch (const std::invalid_argument&) { }
+        try {
+            if (in_tree == InTree::ARMY) {
+                army->take_snapshot_of(curr_id);
+                p->pick_armour(it, armour);
+                army->update_on(curr_id);
+                ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+                update_unit_display(ui->army_tree->currentItem());
+            } else p->pick_armour(it, armour);
+        } catch (const std::invalid_argument&) { }
         break;
     }
     case BaseUnitType::NORMAL:
     {
         auto p = std::dynamic_pointer_cast<normal_unit>(current);
-        try { p->pick_armour(it, armour); } catch (const std::invalid_argument&) { }
+        try {
+            if (in_tree == InTree::ARMY) {
+                army->take_snapshot_of(curr_id);
+                p->pick_armour(it, armour);
+                army->update_on(curr_id);
+                ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+                update_unit_display(ui->army_tree->currentItem());
+            } else p->pick_armour(it, armour);
+        } catch (const std::invalid_argument&) { }
         break;
     }
     default: break;
@@ -220,9 +306,10 @@ void ArmyCreator::optional_command_selected() {
     else if (cb_name_split[1] == "sb") member = CommandGroup::STANDARD_BEARER;
     else member = CommandGroup::CHAMPION;
     std::shared_ptr<unit> current;
+    int curr_id;
     if (in_tree == InTree::ROSTER) current = st->selected();
     else {
-        int curr_id = ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt();
+        curr_id = ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt();
         current = army->get_unit(curr_id);
     }
     switch (current->base_unit_type()) {
@@ -234,10 +321,25 @@ void ArmyCreator::optional_command_selected() {
         auto p = std::dynamic_pointer_cast<normal_unit>(current);
         if (cb->isChecked()) {
             try {
-                p->add_command_member(member);
+                if (in_tree == InTree::ARMY) {
+                    army->take_snapshot_of(curr_id);
+                    p->add_command_member(member);
+                    army->update_on(curr_id);
+                    ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+                    update_unit_display(ui->army_tree->currentItem());
+                }
+                else p->add_command_member(member);
             } catch (const std::invalid_argument&) {}
         }
-        else p->remove_command_member(member);
+        else {
+            if (in_tree == InTree::ARMY) {
+                army->take_snapshot_of(curr_id);
+                p->remove_command_member(member);
+                army->update_on(curr_id);
+                ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+                update_unit_display(ui->army_tree->currentItem());
+            } else p->remove_command_member(member);
+        }
         break;
     }
     default: break;
@@ -250,9 +352,10 @@ void ArmyCreator::optional_oco_extra_selected() {
     auto rb_name_split = tools::split(rb_name, '_');
     std::string extra = rb_name_split[0];
     std::shared_ptr<unit> current;
+    int curr_id;
     if (in_tree == InTree::ROSTER) current = st->selected();
     else {
-        int curr_id = ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt();
+        curr_id = ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt();
         current = army->get_unit(curr_id);
     }
     if (extra == "None") { // None radio button selected
@@ -260,17 +363,35 @@ void ArmyCreator::optional_oco_extra_selected() {
         case BaseUnitType::MELEE_CHARACTER:
         {
             auto p = std::dynamic_pointer_cast<melee_character_unit>(current);
-            p->remove_oco_extra();
+            if (in_tree == InTree::ARMY) {
+                army->take_snapshot_of(curr_id);
+                p->remove_oco_extra();
+                army->update_on(curr_id);
+                ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+                update_unit_display(ui->army_tree->currentItem());
+            } else p->remove_oco_extra();
         }
         case BaseUnitType::MAGE_CHARACTER:
         {
             auto p = std::dynamic_pointer_cast<mage_character_unit>(current);
-            p->remove_oco_extra();
+            if (in_tree == InTree::ARMY) {
+                army->take_snapshot_of(curr_id);
+                p->remove_oco_extra();
+                army->update_on(curr_id);
+                ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+                update_unit_display(ui->army_tree->currentItem());
+            } else p->remove_oco_extra();
         }
         case BaseUnitType::NORMAL:
         {
             auto p = std::dynamic_pointer_cast<normal_unit>(current);
-            p->remove_oco_extra();
+            if (in_tree == InTree::ARMY) {
+                army->take_snapshot_of(curr_id);
+                p->remove_oco_extra();
+                army->update_on(curr_id);
+                ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+                update_unit_display(ui->army_tree->currentItem());
+            } else p->remove_oco_extra();
         }
         default: break;
         }
@@ -281,7 +402,13 @@ void ArmyCreator::optional_oco_extra_selected() {
     {
         auto p = std::dynamic_pointer_cast<melee_character_unit>(current);
         try {
-            p->pick_oco_extra(extra);
+            if (in_tree == InTree::ARMY) {
+                army->take_snapshot_of(curr_id);
+                p->pick_oco_extra(extra);
+                army->update_on(curr_id);
+                ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+                update_unit_display(ui->army_tree->currentItem());
+            } else p->pick_oco_extra(extra);
         } catch (const std::invalid_argument&) {}
         break;
     }
@@ -289,7 +416,13 @@ void ArmyCreator::optional_oco_extra_selected() {
     {
         auto p = std::dynamic_pointer_cast<mage_character_unit>(current);
         try {
-            p->pick_oco_extra(extra);
+            if (in_tree == InTree::ARMY) {
+                army->take_snapshot_of(curr_id);
+                p->pick_oco_extra(extra);
+                army->update_on(curr_id);
+                ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+                update_unit_display(ui->army_tree->currentItem());
+            } else p->pick_oco_extra(extra);
         } catch (const std::invalid_argument&) {}
         break;
     }
@@ -297,7 +430,13 @@ void ArmyCreator::optional_oco_extra_selected() {
     {
         auto p = std::dynamic_pointer_cast<normal_unit>(current);
         try {
-            p->pick_oco_extra(extra);
+            if (in_tree == InTree::ARMY) {
+                army->take_snapshot_of(curr_id);
+                p->pick_oco_extra(extra);
+                army->update_on(curr_id);
+                ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+                update_unit_display(ui->army_tree->currentItem());
+            } else p->pick_oco_extra(extra);
         } catch (const std::invalid_argument&) {}
         break;
     }
@@ -311,9 +450,10 @@ void ArmyCreator::optional_mc_extra_selected() {
     auto cb_name_split = tools::split(cb_name, '_');
     std::string extra = cb_name_split[0];
     std::shared_ptr<unit> current;
+    int curr_id;
     if (in_tree == InTree::ROSTER) current = st->selected();
     else {
-        int curr_id = ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt();
+        curr_id = ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt();
         current = army->get_unit(curr_id);
     }
     switch (current->base_unit_type()) {
@@ -322,7 +462,12 @@ void ArmyCreator::optional_mc_extra_selected() {
         auto p = std::dynamic_pointer_cast<melee_character_unit>(current);
         if (cb->isChecked()) {
             try {
-                p->pick_mc_extra(extra);
+                if (in_tree == InTree::ARMY) {
+                    army->take_snapshot_of(curr_id);
+                    p->pick_mc_extra(extra);
+                    army->update_on(curr_id);
+                }
+                else p->pick_mc_extra(extra);
             } catch (const std::invalid_argument&) {}
         }
         else p->remove_mc_extra(extra);
@@ -1280,4 +1425,204 @@ void ArmyCreator::on_clear_button_clicked() {
         ui->army_tree->topLevelItem(i)->setText(5, QString("%1").arg(static_cast<double>(0.0)));
     clear_army_tree();
     clear_unit_options_box();
+}
+
+void ArmyCreator::update_unit_display(QTreeWidgetItem* item) {
+    int id = item->data(0, Qt::UserRole).toInt();
+    std::shared_ptr<unit> u = army->get_unit(id);
+    item->setText(0, QString(u->name().data()));
+    item->setText(5, QString("%1").arg(u->points()));
+    switch (u->base_unit_type()) {
+    case BaseUnitType::MELEE_CHARACTER:
+    {
+        auto p = std::dynamic_pointer_cast<melee_character_unit>(u);
+        item->setText(1, QString("%1").arg(1));
+        // current weapons
+        auto mw = p->melee_weapon();
+        auto rw = p->ranged_weapon();
+        QString weapons_str("");
+        if (!(std::get<1>(mw).empty()))
+            weapons_str += QString("%1 [%2]").arg(
+                               std::get<1>(mw).data(),
+                               QString("%1").arg(std::get<2>(mw))
+                           );
+        if (!(std::get<1>(rw).empty())) {
+            weapons_str += QString("\n");
+            weapons_str += QString("%1 [%2]").arg(
+                               std::get<1>(rw).data(),
+                               QString("%1").arg(std::get<2>(rw))
+                           );
+        }
+        item->setText(2, weapons_str);
+        // current armour
+        auto all_armour = p->armour();
+        auto armour = all_armour[ArmourType::ARMOUR];
+        auto shield = all_armour[ArmourType::SHIELD];
+        auto helmet = all_armour[ArmourType::HELMET];
+        QString armour_str("");
+        if (!(std::get<1>(armour).empty()))
+            armour_str += QString("%1 [%2]").arg(
+                            std::get<1>(armour).data(),
+                            QString("%1").arg(std::get<2>(armour))
+                        );
+        if (!(std::get<1>(shield).empty())) {
+            if (!armour_str.isEmpty()) armour_str += QString("\n");
+            armour_str += QString("%1 [%2]").arg(
+                            std::get<1>(shield).data(),
+                            QString("%1").arg(std::get<2>(shield))
+                        );
+        }
+        if (!(std::get<1>(helmet).empty()))
+            armour_str += QString("%1 [%2]").arg(
+                            std::get<1>(helmet).data(),
+                            QString("%1").arg(std::get<2>(helmet))
+                        );
+        item->setText(3, armour_str);
+        break;
+    }
+    case BaseUnitType::MAGE_CHARACTER:
+    {
+        auto p = std::dynamic_pointer_cast<mage_character_unit>(u);
+        item->setText(1, QString("%1").arg(1));
+        // current weapons
+        auto mw = p->melee_weapon();
+        auto rw = p->ranged_weapon();
+        QString weapons_str("");
+        if (!(std::get<1>(mw).empty()))
+            weapons_str += QString("%1 [%2]").arg(
+                               std::get<1>(mw).data(),
+                               QString("%1").arg(std::get<2>(mw))
+                           );
+        if (!(std::get<1>(rw).empty())) {
+            weapons_str += QString("\n");
+            weapons_str += QString("%1 [%2]").arg(
+                               std::get<1>(rw).data(),
+                               QString("%1").arg(std::get<2>(rw))
+                           );
+        }
+        item->setText(2, weapons_str);
+        // current armour
+        auto all_armour = p->armour();
+        auto armour = all_armour[ArmourType::ARMOUR];
+        auto shield = all_armour[ArmourType::SHIELD];
+        auto helmet = all_armour[ArmourType::HELMET];
+        QString armour_str("");
+        if (!(std::get<1>(armour).empty()))
+            armour_str += QString("%1 [%2]").arg(
+                            std::get<1>(armour).data(),
+                            QString("%1").arg(std::get<2>(armour))
+                        );
+        if (!(std::get<1>(shield).empty())) {
+            if (!armour_str.isEmpty()) armour_str += QString("\n");
+            armour_str += QString("%1 [%2]").arg(
+                            std::get<1>(shield).data(),
+                            QString("%1").arg(std::get<2>(shield))
+                        );
+        }
+        if (!(std::get<1>(helmet).empty()))
+            armour_str += QString("%1 [%2]").arg(
+                            std::get<1>(helmet).data(),
+                            QString("%1").arg(std::get<2>(helmet))
+                        );
+        item->setText(3, armour_str);
+        break;
+    }
+    case BaseUnitType::NORMAL:
+    {
+        auto p = std::dynamic_pointer_cast<normal_unit>(u);
+        item->setText(1, QString("%1").arg(p->size()));
+        // current weapons
+        auto mw = p->melee_weapon();
+        auto rw = p->ranged_weapon();
+        QString weapons_str("");
+        if (!(std::get<1>(mw).empty()))
+            weapons_str += QString("%1 [%2]").arg(
+                               std::get<1>(mw).data(),
+                               QString("%1").arg(std::get<2>(mw))
+                           );
+        if (!(std::get<1>(rw).empty())) {
+            weapons_str += QString("\n");
+            weapons_str += QString("%1 [%2]").arg(
+                               std::get<1>(rw).data(),
+                               QString("%1").arg(std::get<2>(rw))
+                           );
+        }
+        item->setText(2, weapons_str);
+        // current armour
+        auto all_armour = p->armour();
+        auto armour_it = all_armour.find(ArmourType::ARMOUR);
+        auto shield_it = all_armour.find(ArmourType::SHIELD);
+        auto helmet_it = all_armour.find(ArmourType::HELMET);
+        QString armour_str("");
+        if (armour_it != all_armour.end()) {
+            armour_str += QString("%1 [%2]").arg(
+                              std::get<1>(armour_it->second).data(),
+                              QString("%1").arg(std::get<2>(armour_it->second))
+                          );
+        }
+        if (shield_it != all_armour.end()) {
+            if (armour_it != all_armour.end()) armour_str += QString("\n");
+            armour_str += QString("%1 [%2]").arg(
+                              std::get<1>(shield_it->second).data(),
+                              QString("%1").arg(std::get<2>(shield_it->second))
+                          );
+        }
+        if (helmet_it != all_armour.end()) {
+            if (shield_it != all_armour.end() || armour_it != all_armour.end()) armour_str += QString("\n");
+            armour_str += QString("%1 [%2]").arg(
+                              std::get<1>(helmet_it->second).data(),
+                              QString("%1").arg(std::get<2>(helmet_it->second))
+                          );
+        }
+        item->setText(3, armour_str);
+        // current command
+        auto command = p->command();
+        auto musician_it = command.find(CommandGroup::MUSICIAN);
+        auto sb_it = command.find(CommandGroup::STANDARD_BEARER);
+        auto champion_it = command.find(CommandGroup::CHAMPION);
+        QString command_str("");
+        if (musician_it != command.end()) {
+            command_str += QString("%1 [%2]").arg(
+                              std::get<0>(musician_it->second).data(),
+                              QString("%1").arg(std::get<1>(musician_it->second))
+                          );
+        }
+        if (sb_it != command.end()) {
+            if (musician_it != command.end()) command_str += QString("\n");
+            command_str += QString("%1 [%2]").arg(
+                              std::get<0>(sb_it->second).data(),
+                              QString("%1").arg(std::get<1>(sb_it->second))
+                          );
+        }
+        if (champion_it != command.end()) {
+            if (sb_it != command.end() || musician_it != command.end()) command_str += QString("\n");
+            command_str += QString("%1 [%2]").arg(
+                              std::get<0>(champion_it->second).data(),
+                              QString("%1").arg(std::get<1>(champion_it->second))
+                          );
+        }
+        item->setText(4, command_str);
+        break;
+    }
+    default: break;
+    }
+    // unit type
+    switch (u->unit_type()) {
+    case armies::UnitType::LORD:
+        ui->army_tree->topLevelItem(0)->setText(5, QString("%1").arg(army->lord_points()));
+        break;
+    case armies::UnitType::HERO:
+        ui->army_tree->topLevelItem(1)->setText(5, QString("%1").arg(army->hero_points()));
+        break;
+    case armies::UnitType::CORE:
+        ui->army_tree->topLevelItem(2)->setText(5, QString("%1").arg(army->core_points()));
+        break;
+    case armies::UnitType::SPECIAL:
+        ui->army_tree->topLevelItem(3)->setText(5, QString("%1").arg(army->special_points()));
+        break;
+    case armies::UnitType::RARE:
+        ui->army_tree->topLevelItem(4)->setText(5, QString("%1").arg(army->rare_points()));
+        break;
+    default: break;
+    }
 }
