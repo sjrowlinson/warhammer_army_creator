@@ -45,7 +45,8 @@ SOURCES += \
         src/mage_character_unit.cpp \
         src/melee_character_unit.cpp \
         src/mixed_unit.cpp \
-        src/normal_unit.cpp
+        src/normal_unit.cpp \
+        src/option_selector.cpp
 
 HEADERS += \
         src/armycreator.h \
@@ -68,7 +69,8 @@ HEADERS += \
         src/mage_character_unit.h \
         src/melee_character_unit.h \
         src/mixed_unit.h \
-        src/normal_unit.h
+        src/normal_unit.h \
+        src/option_selector.h
 
 FORMS += \
         form/armycreator.ui

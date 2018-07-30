@@ -4,6 +4,7 @@
 #include "army_list.h"
 #include "army_maps.h"
 #include "magic_item.h"
+#include "option_selector.h"
 #include "selection_tree.h"
 
 #include <functional>
@@ -27,17 +28,11 @@ namespace Ui {
 class ArmyCreator;
 }
 
-enum class InTree {
-    ROSTER,
-    ARMY,
-    NEITHER
-};
-
 class ArmyCreator : public QMainWindow {
     Q_OBJECT
 
 public:
-    explicit ArmyCreator(QWidget *parent = 0);
+    explicit ArmyCreator(QWidget *parent = nullptr);
     ~ArmyCreator();
 
 private slots:

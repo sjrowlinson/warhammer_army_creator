@@ -18,7 +18,8 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
     ui->army_tree->header()->resizeSection(2, 180); // weapons header
     ui->army_tree->header()->resizeSection(3, 150); // armour header
     ui->army_tree->header()->resizeSection(4, 180); // command group header
-    ui->army_tree->header()->resizeSection(5, 60); // points header
+    ui->army_tree->header()->resizeSection(5, 180); // extras header
+    ui->army_tree->header()->resizeSection(6, 60); // points header
     ui->remove_button->setEnabled(false);
 }
 
@@ -466,11 +467,22 @@ void ArmyCreator::optional_mc_extra_selected() {
                     army->take_snapshot_of(curr_id);
                     p->pick_mc_extra(extra);
                     army->update_on(curr_id);
+                    ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+                    update_unit_display(ui->army_tree->currentItem());
                 }
                 else p->pick_mc_extra(extra);
             } catch (const std::invalid_argument&) {}
         }
-        else p->remove_mc_extra(extra);
+        else {
+            if (in_tree == InTree::ARMY) {
+                army->take_snapshot_of(curr_id);
+                p->remove_mc_extra(extra);
+                army->update_on(curr_id);
+                ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+                update_unit_display(ui->army_tree->currentItem());
+            } else p->remove_mc_extra(extra);
+
+        }
         break;
     }
     case BaseUnitType::MAGE_CHARACTER:
@@ -478,10 +490,26 @@ void ArmyCreator::optional_mc_extra_selected() {
         auto p = std::dynamic_pointer_cast<mage_character_unit>(current);
         if (cb->isChecked()) {
             try {
-                p->pick_mc_extra(extra);
+                if (in_tree == InTree::ARMY) {
+                    army->take_snapshot_of(curr_id);
+                    p->pick_mc_extra(extra);
+                    army->update_on(curr_id);
+                    ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+                    update_unit_display(ui->army_tree->currentItem());
+                }
+                else p->pick_mc_extra(extra);
             } catch (const std::invalid_argument&) {}
         }
-        else p->remove_mc_extra(extra);
+        else {
+            if (in_tree == InTree::ARMY) {
+                army->take_snapshot_of(curr_id);
+                p->remove_mc_extra(extra);
+                army->update_on(curr_id);
+                ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+                update_unit_display(ui->army_tree->currentItem());
+            } else p->remove_mc_extra(extra);
+
+        }
         break;
     }
     case BaseUnitType::NORMAL:
@@ -489,10 +517,26 @@ void ArmyCreator::optional_mc_extra_selected() {
         auto p = std::dynamic_pointer_cast<normal_unit>(current);
         if (cb->isChecked()) {
             try {
-                p->pick_mc_extra(extra);
+                if (in_tree == InTree::ARMY) {
+                    army->take_snapshot_of(curr_id);
+                    p->pick_mc_extra(extra);
+                    army->update_on(curr_id);
+                    ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+                    update_unit_display(ui->army_tree->currentItem());
+                }
+                else p->pick_mc_extra(extra);
             } catch (const std::invalid_argument&) {}
         }
-        else p->remove_mc_extra(extra);
+        else {
+            if (in_tree == InTree::ARMY) {
+                army->take_snapshot_of(curr_id);
+                p->remove_mc_extra(extra);
+                army->update_on(curr_id);
+                ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+                update_unit_display(ui->army_tree->currentItem());
+            } else p->remove_mc_extra(extra);
+
+        }
         break;
     }
     default: break;
@@ -843,9 +887,10 @@ QGroupBox* ArmyCreator::init_command_groupbox(
 void ArmyCreator::change_unit_size() {
     QSpinBox* sb = qobject_cast<QSpinBox*>(QObject::sender());
     std::shared_ptr<unit> current;
+    int curr_id;
     if (in_tree == InTree::ROSTER) current = st->selected();
     else {
-        int curr_id = ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt();
+        curr_id = ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt();
         current = army->get_unit(curr_id);
     }
     switch (current->base_unit_type()) {
@@ -861,7 +906,14 @@ void ArmyCreator::change_unit_size() {
     {
         auto p = std::dynamic_pointer_cast<normal_unit>(current);
         try {
-            p->change_size(static_cast<std::size_t>(sb->value()));
+            if (in_tree == InTree::ARMY) {
+                army->take_snapshot_of(curr_id);
+                p->change_size(static_cast<std::size_t>(sb->value()));
+                army->update_on(curr_id);
+                ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+                update_unit_display(ui->army_tree->currentItem());
+            }
+            else p->change_size(static_cast<std::size_t>(sb->value()));
         } catch (const std::invalid_argument&) {}
         break;
     }
@@ -1162,7 +1214,7 @@ void ArmyCreator::on_add_button_clicked() {
                             QString("%1").arg(std::get<2>(helmet))
                         );
         item->setText(3, armour_str);
-        item->setText(5, QString("%2").arg(p->points()));
+        item->setText(6, QString("%2").arg(p->points()));
         break;
     }
     case BaseUnitType::MAGE_CHARACTER:
@@ -1213,7 +1265,7 @@ void ArmyCreator::on_add_button_clicked() {
                             QString("%1").arg(std::get<2>(helmet))
                         );
         item->setText(3, armour_str);
-        item->setText(5, QString("%2").arg(p->points()));
+        item->setText(6, QString("%2").arg(p->points()));
         break;
     }
     case BaseUnitType::NORMAL:
@@ -1294,7 +1346,7 @@ void ArmyCreator::on_add_button_clicked() {
                           );
         }
         item->setText(4, command_str);
-        item->setText(5, QString("%2").arg(p->points()));
+        item->setText(6, QString("%2").arg(p->points()));
         break;
     }
     case BaseUnitType::MIXED:
@@ -1345,7 +1397,7 @@ void ArmyCreator::on_add_button_clicked() {
                             QString("%1").arg(std::get<2>(helmet))
                         );
         item->setText(3, armour_str);
-        item->setText(5, QString("%2").arg(p->points()));
+        item->setText(6, QString("%2").arg(p->points()));
         break;
     }
     default: break;
@@ -1431,7 +1483,7 @@ void ArmyCreator::update_unit_display(QTreeWidgetItem* item) {
     int id = item->data(0, Qt::UserRole).toInt();
     std::shared_ptr<unit> u = army->get_unit(id);
     item->setText(0, QString(u->name().data()));
-    item->setText(5, QString("%1").arg(u->points()));
+    item->setText(6, QString("%1").arg(u->points()));
     switch (u->base_unit_type()) {
     case BaseUnitType::MELEE_CHARACTER:
     {
@@ -1478,6 +1530,7 @@ void ArmyCreator::update_unit_display(QTreeWidgetItem* item) {
                             QString("%1").arg(std::get<2>(helmet))
                         );
         item->setText(3, armour_str);
+
         break;
     }
     case BaseUnitType::MAGE_CHARACTER:
@@ -1609,19 +1662,19 @@ void ArmyCreator::update_unit_display(QTreeWidgetItem* item) {
     // unit type
     switch (u->unit_type()) {
     case armies::UnitType::LORD:
-        ui->army_tree->topLevelItem(0)->setText(5, QString("%1").arg(army->lord_points()));
+        ui->army_tree->topLevelItem(0)->setText(6, QString("%1").arg(army->lord_points()));
         break;
     case armies::UnitType::HERO:
-        ui->army_tree->topLevelItem(1)->setText(5, QString("%1").arg(army->hero_points()));
+        ui->army_tree->topLevelItem(1)->setText(6, QString("%1").arg(army->hero_points()));
         break;
     case armies::UnitType::CORE:
-        ui->army_tree->topLevelItem(2)->setText(5, QString("%1").arg(army->core_points()));
+        ui->army_tree->topLevelItem(2)->setText(6, QString("%1").arg(army->core_points()));
         break;
     case armies::UnitType::SPECIAL:
-        ui->army_tree->topLevelItem(3)->setText(5, QString("%1").arg(army->special_points()));
+        ui->army_tree->topLevelItem(3)->setText(6, QString("%1").arg(army->special_points()));
         break;
     case armies::UnitType::RARE:
-        ui->army_tree->topLevelItem(4)->setText(5, QString("%1").arg(army->rare_points()));
+        ui->army_tree->topLevelItem(4)->setText(6, QString("%1").arg(army->rare_points()));
         break;
     default: break;
     }
