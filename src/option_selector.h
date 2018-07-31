@@ -32,8 +32,10 @@ public:
     // selectors
 
     bool select_weapon(const std::string& s);
-    //bool select_armour(const std::string& s);
-    //bool select_command(const std::string& s);
+    bool select_armour(const std::string& s);
+    bool select_command(const std::string& s, bool is_checked);
+    bool select_oco_extra(const std::string& s);
+    bool select_mc_extra(const std::string& s, bool is_checked);
 };
 
 #endif // !OPTION_SELECTOR_H

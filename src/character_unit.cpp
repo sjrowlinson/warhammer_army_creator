@@ -41,8 +41,8 @@ std::unordered_map<
     std::tuple<ItemClass, std::string, double>
 > character_unit::armour() const noexcept { return armours_; }
 
-std::pair<std::string, double> character_unit::oco_extra() const noexcept { return oco_extra_; }
-std::unordered_map<std::string, double> character_unit::mc_extras() const noexcept { return mc_extras_; }
+std::pair<std::string, std::pair<bool, double>> character_unit::oco_extra() const noexcept { return oco_extra_; }
+std::unordered_map<std::string, std::pair<bool, double>> character_unit::mc_extras() const noexcept { return mc_extras_; }
 
 void character_unit::pick_weapon(ItemClass item_type, std::string name) {
     switch (item_type) {
@@ -175,9 +175,9 @@ void character_unit::pick_oco_extra(std::string name) {
     if (search == handle_->opt().oco_extras.end())
         throw std::invalid_argument("Item not found!");
     if (oco_extra_.first == name) return;
-    points_ -= oco_extra_.second;
+    points_ -= oco_extra_.second.second;
     oco_extra_.first = name;
-    oco_extra_.second = search->second.second;
+    oco_extra_.second = search->second;
     points_ += search->second.second;
 }
 
@@ -186,7 +186,7 @@ void character_unit::pick_mc_extra(std::string name) {
     if (search == handle_->opt().mc_extras.end())
         throw std::invalid_argument("Item not found!");
     if (mc_extras_.count(name)) return;
-    mc_extras_[name] = search->second.second;
+    mc_extras_[name] = search->second;
     points_ += search->second.second;
 }
 
@@ -247,15 +247,15 @@ void character_unit::remove_armour(ArmourType at) {
 }
 
 void character_unit::remove_oco_extra() {
-    points_ -= oco_extra_.second;
+    points_ -= oco_extra_.second.second;
     oco_extra_.first = "";
-    oco_extra_.second = 0.0;
+    oco_extra_.second.second = 0.0;
 }
 
 void character_unit::remove_mc_extra(std::string name) {
     auto search = mc_extras_.find(name);
     if (search != mc_extras_.end()) {
-        points_ -= search->second;
+        points_ -= search->second.second;
         mc_extras_.erase(name);
     }
 }

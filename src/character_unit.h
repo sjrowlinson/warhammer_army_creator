@@ -24,8 +24,8 @@ protected:
         ArmourType,
         std::tuple<ItemClass, std::string, double>
     > armours_;
-    std::pair<std::string, double> oco_extra_;
-    std::unordered_map<std::string, double> mc_extras_;
+    std::pair<std::string, std::pair<bool, double>> oco_extra_;
+    std::unordered_map<std::string, std::pair<bool, double>> mc_extras_;
 
     // item points
     double magic_item_points_;
@@ -41,27 +41,27 @@ public:
     std::unordered_map<
         WeaponType,
         std::tuple<ItemClass, std::string, double>
-    > weapons() const noexcept;
+    > weapons() const noexcept override;
     std::tuple<ItemClass, std::string, double> melee_weapon() const;
     std::tuple<ItemClass, std::string, double> ranged_weapon() const;
 
     std::unordered_map<
         ArmourType,
         std::tuple<ItemClass, std::string, double>
-    > armour() const noexcept;
+    > armour() const noexcept override;
 
-    std::pair<std::string, double> oco_extra() const noexcept;
-    std::unordered_map<std::string, double> mc_extras() const noexcept;
+    std::pair<std::string, std::pair<bool, double>> oco_extra() const noexcept override;
+    std::unordered_map<std::string, std::pair<bool, double>> mc_extras() const noexcept override;
 
     // curremt property modifiers
-    void pick_weapon(ItemClass item_type, std::string name);
-    void pick_armour(ItemClass item_type, std::string name);
-    void pick_oco_extra(std::string name);
-    void pick_mc_extra(std::string name);
-    void remove_weapon(WeaponType wt);
-    void remove_armour(ArmourType at);
-    void remove_oco_extra();
-    void remove_mc_extra(std::string name);
+    void pick_weapon(ItemClass item_type, std::string name) override;
+    void pick_armour(ItemClass item_type, std::string name) override;
+    void pick_oco_extra(std::string name) override;
+    void pick_mc_extra(std::string name) override;
+    void remove_weapon(WeaponType wt) override;
+    void remove_armour(ArmourType at) override;
+    void remove_oco_extra() override;
+    void remove_mc_extra(std::string name) override;
 };
 
 #endif // !CHARACTER_UNIT_H

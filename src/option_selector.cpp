@@ -20,34 +20,174 @@ bool option_selector::select_weapon(const std::string& s) {
         if (split[2] == "melee") wt = WeaponType::MELEE;
         else if (split[2] == "ballistic") wt = WeaponType::BALLISTIC;
         else wt = WeaponType::NONE;
-        switch (current->base_unit_type()) {
-        case BaseUnitType::MELEE_CHARACTER:
-        {
-            auto p = std::dynamic_pointer_cast<melee_character_unit>(current);
-            switch (in_tree) {
-            case InTree::ARMY:
-                army->take_snapshot_of(current->id());
-                p->remove_weapon(wt);
-                army->update_on(current->id());
-                return true;
-            case InTree::ROSTER:
-                p->remove_weapon(wt);
-                return false;
-            default: throw std::runtime_error("No unit selected, cannot assign weapon!");
-            }
-        }
-        case BaseUnitType::MAGE_CHARACTER:
-        {
-            auto p = std::dynamic_pointer_cast<mage_character_unit>(current);
-            if (in_tree == InTree::ROSTER) {
-                int id = current->id();
-                army->take_snapshot_of(id);
-                p->remove_weapon(wt);
-                army->update_on(id);
-                return true;
-            }
-        }
+        switch (in_tree) {
+        case InTree::ARMY:
+            army->take_snapshot_of(current->id());
+            current->remove_weapon(wt);
+            army->update_on(current->id());
+            return true;
+        case InTree::ROSTER:
+            current->remove_weapon(wt);
+            return false;
+        default: throw std::runtime_error("No unit selected!");
         }
     }
-    return false;
+    else {
+        ItemClass ic = static_cast<ItemClass>(std::stoi(split[2]));
+        switch (in_tree) {
+        case InTree::ARMY:
+            army->take_snapshot_of(current->id());
+            current->pick_weapon(ic, weapon);
+            army->update_on(current->id());
+            return true;
+        case InTree::ROSTER:
+            current->pick_weapon(ic, weapon);
+            return false;
+        default: throw std::runtime_error("No unit selected!");
+        }
+    }
+}
+
+bool option_selector::select_armour(const std::string& s) {
+    auto split = tools::split(s, '_');
+    auto armour = split[0];
+    if (armour == "None") {
+        ArmourType at;
+        if (split[2] == "armour") at = ArmourType::ARMOUR;
+        else if (split[2] == "shield") at = ArmourType::SHIELD;
+        else if (split[2] == "helmet") at = ArmourType::HELMET;
+        else at = ArmourType::NONE;
+        switch (in_tree) {
+        case InTree::ARMY:
+            army->take_snapshot_of(current->id());
+            current->remove_armour(at);
+            army->update_on(current->id());
+            return true;
+        case InTree::ROSTER:
+            current->remove_armour(at);
+            return false;
+        default: throw std::runtime_error("No unit selected!");
+        }
+    }
+    else {
+        ItemClass ic = static_cast<ItemClass>(std::stoi(split[2]));
+        switch (in_tree) {
+        case InTree::ARMY:
+            army->take_snapshot_of(current->id());
+            try {
+                current->pick_armour(ic, armour);
+            } catch (const std::invalid_argument&) {}
+            army->update_on(current->id());
+            return true;
+        case InTree::ROSTER:
+            current->pick_armour(ic, armour);
+            return false;
+        default: throw std::runtime_error("No unit selected!");
+        }
+    }
+}
+
+bool option_selector::select_command(const std::string& s, bool is_checked) {
+    auto split = tools::split(s, '_');
+    auto name = split[0];
+    CommandGroup member;
+    if (split[1] == "m") member = CommandGroup::MUSICIAN;
+    else if (split[1] == "c") member = CommandGroup::CHAMPION;
+    else if (split[1] == "sb") member = CommandGroup::STANDARD_BEARER;
+    else throw std::invalid_argument("Unrecognised command group member type!");
+    switch (current->base_unit_type()) {
+    case BaseUnitType::NORMAL:
+    {
+        auto p = std::dynamic_pointer_cast<normal_unit>(current);
+        if (is_checked) {
+            switch (in_tree) {
+            case InTree::ARMY:
+                army->take_snapshot_of(p->id());
+                p->add_command_member(member);
+                army->update_on(p->id());
+                return true;
+            case InTree::ROSTER:
+                p->add_command_member(member);
+                return false;
+            default: throw std::runtime_error("No unit selected!");
+            }
+        }
+        else {
+            switch (in_tree) {
+            case InTree::ARMY:
+                army->take_snapshot_of(p->id());
+                p->remove_command_member(member);
+                army->update_on(p->id());
+                return true;
+            case InTree::ROSTER:
+                p->remove_command_member(member);
+                return false;
+            default: throw std::runtime_error("No unit selected!");
+            }
+        }
+    }
+    default: return false;
+    }
+}
+
+bool option_selector::select_oco_extra(const std::string& s) {
+    auto split = tools::split(s, '_');
+    auto extra = split[0];
+    if (extra == "None") {
+        switch (in_tree) {
+        case InTree::ARMY:
+            army->take_snapshot_of(current->id());
+            current->remove_oco_extra();
+            army->update_on(current->id());
+            return true;
+        case InTree::ROSTER:
+            current->remove_oco_extra();
+            return false;
+        default: throw std::runtime_error("No unit selected!");
+        }
+    }
+    else {
+        switch (in_tree) {
+        case InTree::ARMY:
+            army->take_snapshot_of(current->id());
+            current->pick_oco_extra(extra);
+            army->update_on(current->id());
+            return true;
+        case InTree::ROSTER:
+            current->pick_oco_extra(extra);
+            return false;
+        default: throw std::runtime_error("No unit selected!");
+        }
+    }
+}
+
+bool option_selector::select_mc_extra(const std::string& s, bool is_checked) {
+    auto split = tools::split(s, '_');
+    auto extra = split[0];
+    if (is_checked) {
+        switch (in_tree) {
+        case InTree::ARMY:
+            army->take_snapshot_of(current->id());
+            current->pick_mc_extra(extra);
+            army->update_on(current->id());
+            return true;
+        case InTree::ROSTER:
+            current->pick_mc_extra(extra);
+            return false;
+        default: throw std::runtime_error("No unit selected!");
+        }
+    }
+    else {
+        switch (in_tree) {
+        case InTree::ARMY:
+            army->take_snapshot_of(current->id());
+            current->remove_mc_extra(extra);
+            army->update_on(current->id());
+            return true;
+        case InTree::ROSTER:
+            current->remove_mc_extra(extra);
+            return false;
+        default: throw std::runtime_error("No unit selected!");
+        }
+    }
 }

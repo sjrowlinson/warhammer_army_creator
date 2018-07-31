@@ -67,6 +67,7 @@ private:
     std::shared_ptr<selection_tree> st;
     int id_counter;
     InTree in_tree;
+    std::shared_ptr<option_selector> opt_sel;
 
     // roster tree modifying
     void populate_roster_tree();
@@ -77,7 +78,6 @@ private:
 
     // unit options box modifying
     void clear_unit_options_box();
-    // TODO: remove from_roster parameters and use in_tree field instead
     void initialise_unit_options_box();
 
     void update_unit_display(QTreeWidgetItem* item);
