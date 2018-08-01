@@ -79,8 +79,8 @@ namespace tools {
             std::string name = read_line(blocks[i]);
             std::vector<std::string> mits = tools::split(read_line(blocks[i] + 1), ',');
             ItemType mit;
-            WeaponType wt;
-            ArmourType at;
+            WeaponType wt = WeaponType::NONE;
+            ArmourType at = ArmourType::NONE;
             if (mits[0] == "Weapon") {
                 mit = ItemType::WEAPON;
                 wt = map_to_weapon[mits[1]];
@@ -89,11 +89,7 @@ namespace tools {
                 mit = ItemType::ARMOUR;
                 at = map_to_armour[mits[1]];
             }
-            else {
-                mit = map_to_item[mits[0]];
-                wt = WeaponType::NONE;
-                at = ArmourType::NONE;
-            }
+            else mit = map_to_item[mits[0]];
             double points = std::stod(read_line(blocks[i] + 2));
             std::string descr = read_line(blocks[i] + 3);
             std::string allowed = read_line(blocks[i] + 4);

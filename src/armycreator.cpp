@@ -22,6 +22,7 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
     ui->army_tree->header()->resizeSection(5, 180); // extras header
     ui->army_tree->header()->resizeSection(6, 60); // points header
     ui->remove_button->setEnabled(false);
+    populate_roster_tree();
 }
 
 ArmyCreator::~ArmyCreator() {
@@ -181,6 +182,7 @@ QGroupBox* ArmyCreator::init_opt_subweapons_groupbox(
     case WeaponType::BALLISTIC:
         none_rb_name += "ranged_radiobutton";
         break;
+    default: throw std::runtime_error("Unrecognised weapon type!");
     }
     none_rb->setObjectName(tr(none_rb_name.data()));
     if (!has_weapon) none_rb->setChecked(true);
@@ -256,6 +258,7 @@ QGroupBox* ArmyCreator::init_opt_subarmour_groupbox(
     case ArmourType::HELMET:
         none_rb_name += "helmet_radiobutton";
         break;
+    default: throw std::runtime_error("Unrecognised armour type!");
     }
     none_rb->setObjectName(tr(none_rb_name.data()));
     if (!has_armour) none_rb->setChecked(true);
@@ -470,33 +473,38 @@ QGroupBox* ArmyCreator::init_command_groupbox(
 void ArmyCreator::change_unit_size() {
     QSpinBox* sb = qobject_cast<QSpinBox*>(QObject::sender());
     std::shared_ptr<unit> current;
-    int curr_id;
-    if (in_tree == InTree::ROSTER) current = st->selected();
-    else {
+    int curr_id = -1;
+    switch (in_tree) {
+    case InTree::ARMY:
         curr_id = ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt();
         current = army->get_unit(curr_id);
+        break;
+    case InTree::ROSTER:
+        current = st->selected();
+        break;
+    default: throw std::runtime_error("No unit selected!");
     }
     switch (current->base_unit_type()) {
     case BaseUnitType::MELEE_CHARACTER:
-    {
-        break;
-    }
     case BaseUnitType::MAGE_CHARACTER:
-    {
         break;
-    }
     case BaseUnitType::NORMAL:
     {
         auto p = std::dynamic_pointer_cast<normal_unit>(current);
         try {
-            if (in_tree == InTree::ARMY) {
+            switch (in_tree) {
+            case InTree::ARMY:
                 army->take_snapshot_of(curr_id);
                 p->change_size(static_cast<std::size_t>(sb->value()));
                 army->update_on(curr_id);
                 ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
                 update_unit_display(ui->army_tree->currentItem());
+                break;
+            case InTree::ROSTER:
+                p->change_size(static_cast<std::size_t>(sb->value()));
+                break;
+            default: throw std::runtime_error("No unit selected!");
             }
-            else p->change_size(static_cast<std::size_t>(sb->value()));
         } catch (const std::invalid_argument&) {}
         break;
     }
@@ -706,6 +714,7 @@ void ArmyCreator::on_pts_limit_spinbox_valueChanged(double pts) {
 }
 
 void ArmyCreator::on_roster_tree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous) {
+    (void)(previous);
     std::string name = current->text(0).toStdString();
     if (name != "Lords" && name != "Heroes" && name != "Core" &&
             name != "Special" && name != "Rare") {
@@ -733,6 +742,7 @@ void ArmyCreator::on_roster_tree_itemDoubleClicked(QTreeWidgetItem *item, int co
 }
 
 void ArmyCreator::on_army_tree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous) {
+    (void)(previous);
     std::string name = current->text(0).toStdString();
     if (name != "Lords" && name != "Heroes" && name != "Core" &&
             name != "Special" && name != "Rare") {
@@ -753,161 +763,65 @@ void ArmyCreator::on_add_button_clicked() {
     st->add_unit_to_army_list(id_counter++);
     ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
     QTreeWidgetItem* item = new QTreeWidgetItem();
-    // TODO: clean up, reduce duplication
+    std::shared_ptr<unit> u = st->selected();
+    // assign id
+    QVariant v(u->id());
+    item->setData(0, Qt::UserRole, v);
+    // name column
+    item->setText(0, QString(u->name().data()));
+    // weapons column
+    auto weapons = u->weapons();
+    QString weapons_str("");
+    auto melee_weapon = weapons[WeaponType::MELEE];
+    auto ranged_weapon = weapons[WeaponType::BALLISTIC];
+    if (!(std::get<1>(melee_weapon).empty()))
+        weapons_str += QString("%1 [%2]").arg(
+                           std::get<1>(melee_weapon).data(),
+                           QString("%1").arg(std::get<2>(melee_weapon))
+                       );
+    if (!(std::get<1>(ranged_weapon).empty()))
+        weapons_str += QString("\n") + QString("%1 [%2]").arg(
+                           std::get<1>(ranged_weapon).data(),
+                           QString("%1").arg(std::get<2>(ranged_weapon))
+                       );
+    item->setText(2, weapons_str);
+    // armour column
+    QString armour_str("");
+    auto all_armour = u->armour();
+    auto armour = all_armour[ArmourType::ARMOUR];
+    auto shield = all_armour[ArmourType::SHIELD];
+    auto helmet = all_armour[ArmourType::HELMET];
+    if (!(std::get<1>(armour).empty()))
+        armour_str += QString("%1 [%2]").arg(
+                        std::get<1>(armour).data(),
+                        QString("%1").arg(std::get<2>(armour))
+                    );
+    if (!(std::get<1>(shield).empty())) {
+        if (!armour_str.isEmpty()) armour_str += QString("\n");
+        armour_str += QString("%1 [%2]").arg(
+                        std::get<1>(shield).data(),
+                        QString("%1").arg(std::get<2>(shield))
+                    );
+    }
+    if (!(std::get<1>(helmet).empty()))
+        armour_str += QString("%1 [%2]").arg(
+                        std::get<1>(helmet).data(),
+                        QString("%1").arg(std::get<2>(helmet))
+                    );
+    item->setText(3, armour_str);
+    // points column
+    item->setText(6, QString("%1").arg(u->points()));
     switch (st->selected()->base_unit_type()) {
     case BaseUnitType::MELEE_CHARACTER:
-    {
-        auto p = std::dynamic_pointer_cast<melee_character_unit>(st->selected());
-        QVariant v(p->id());
-        item->setData(0, Qt::UserRole, v);
-        item->setText(0, QString(p->name().data()));
-        item->setText(1, QString("%1").arg(1));
-        // current weapons
-        auto mw = p->melee_weapon();
-        auto rw = p->ranged_weapon();
-        QString weapons_str("");
-        if (!(std::get<1>(mw).empty()))
-            weapons_str += QString("%1 [%2]").arg(
-                               std::get<1>(mw).data(),
-                               QString("%1").arg(std::get<2>(mw))
-                           );
-        if (!(std::get<1>(rw).empty())) {
-            weapons_str += QString("\n");
-            weapons_str += QString("%1 [%2]").arg(
-                               std::get<1>(rw).data(),
-                               QString("%1").arg(std::get<2>(rw))
-                           );
-        }
-        item->setText(2, weapons_str);
-        // current armour
-        auto all_armour = p->armour();
-        auto armour = all_armour[ArmourType::ARMOUR];
-        auto shield = all_armour[ArmourType::SHIELD];
-        auto helmet = all_armour[ArmourType::HELMET];
-        QString armour_str("");
-        if (!(std::get<1>(armour).empty()))
-            armour_str += QString("%1 [%2]").arg(
-                            std::get<1>(armour).data(),
-                            QString("%1").arg(std::get<2>(armour))
-                        );
-        if (!(std::get<1>(shield).empty())) {
-            if (!armour_str.isEmpty()) armour_str += QString("\n");
-            armour_str += QString("%1 [%2]").arg(
-                            std::get<1>(shield).data(),
-                            QString("%1").arg(std::get<2>(shield))
-                        );
-        }
-        if (!(std::get<1>(helmet).empty()))
-            armour_str += QString("%1 [%2]").arg(
-                            std::get<1>(helmet).data(),
-                            QString("%1").arg(std::get<2>(helmet))
-                        );
-        item->setText(3, armour_str);
-        item->setText(6, QString("%2").arg(p->points()));
-        break;
-    }
     case BaseUnitType::MAGE_CHARACTER:
-    {
-        auto p = std::dynamic_pointer_cast<mage_character_unit>(st->selected());
-        QVariant v(p->id());
-        item->setData(0, Qt::UserRole, v);
-        item->setText(0, QString(p->name().data()));
+        // size column
         item->setText(1, QString("%1").arg(1));
-        // current weapons
-        auto mw = p->melee_weapon();
-        auto rw = p->ranged_weapon();
-        QString weapons_str("");
-        if (!(std::get<1>(mw).empty()))
-            weapons_str += QString("%1 [%2]").arg(
-                               std::get<1>(mw).data(),
-                               QString("%1").arg(std::get<2>(mw))
-                           );
-        if (!(std::get<1>(rw).empty())) {
-            weapons_str += QString("\n");
-            weapons_str += QString("%1 [%2]").arg(
-                               std::get<1>(rw).data(),
-                               QString("%1").arg(std::get<2>(rw))
-                           );
-        }
-        item->setText(2, weapons_str);
-        // current armour
-        auto all_armour = p->armour();
-        auto armour = all_armour[ArmourType::ARMOUR];
-        auto shield = all_armour[ArmourType::SHIELD];
-        auto helmet = all_armour[ArmourType::HELMET];
-        QString armour_str("");
-        if (!(std::get<1>(armour).empty()))
-            armour_str += QString("%1 [%2]").arg(
-                            std::get<1>(armour).data(),
-                            QString("%1").arg(std::get<2>(armour))
-                        );
-        if (!(std::get<1>(shield).empty())) {
-            if (!armour_str.isEmpty()) armour_str += QString("\n");
-            armour_str += QString("%1 [%2]").arg(
-                            std::get<1>(shield).data(),
-                            QString("%1").arg(std::get<2>(shield))
-                        );
-        }
-        if (!(std::get<1>(helmet).empty()))
-            armour_str += QString("%1 [%2]").arg(
-                            std::get<1>(helmet).data(),
-                            QString("%1").arg(std::get<2>(helmet))
-                        );
-        item->setText(3, armour_str);
-        item->setText(6, QString("%2").arg(p->points()));
         break;
-    }
     case BaseUnitType::NORMAL:
     {
         auto p = std::dynamic_pointer_cast<normal_unit>(st->selected());
-        QVariant v(p->id());
-        item->setData(0, Qt::UserRole, v);
-        item->setText(0, QString(p->name().data()));
+        // size column
         item->setText(1, QString("%1").arg(p->size()));
-        // current weapons
-        auto mw = p->melee_weapon();
-        auto rw = p->ranged_weapon();
-        QString weapons_str("");
-        if (!(std::get<1>(mw).empty()))
-            weapons_str += QString("%1 [%2]").arg(
-                               std::get<1>(mw).data(),
-                               QString("%1").arg(std::get<2>(mw))
-                           );
-        if (!(std::get<1>(rw).empty())) {
-            weapons_str += QString("\n");
-            weapons_str += QString("%1 [%2]").arg(
-                               std::get<1>(rw).data(),
-                               QString("%1").arg(std::get<2>(rw))
-                           );
-        }
-        item->setText(2, weapons_str);
-        // current armour
-        auto all_armour = p->armour();
-        auto armour_it = all_armour.find(ArmourType::ARMOUR);
-        auto shield_it = all_armour.find(ArmourType::SHIELD);
-        auto helmet_it = all_armour.find(ArmourType::HELMET);
-        QString armour_str("");
-        if (armour_it != all_armour.end()) {
-            armour_str += QString("%1 [%2]").arg(
-                              std::get<1>(armour_it->second).data(),
-                              QString("%1").arg(std::get<2>(armour_it->second))
-                          );
-        }
-        if (shield_it != all_armour.end()) {
-            if (armour_it != all_armour.end()) armour_str += QString("\n");
-            armour_str += QString("%1 [%2]").arg(
-                              std::get<1>(shield_it->second).data(),
-                              QString("%1").arg(std::get<2>(shield_it->second))
-                          );
-        }
-        if (helmet_it != all_armour.end()) {
-            if (shield_it != all_armour.end() || armour_it != all_armour.end()) armour_str += QString("\n");
-            armour_str += QString("%1 [%2]").arg(
-                              std::get<1>(helmet_it->second).data(),
-                              QString("%1").arg(std::get<2>(helmet_it->second))
-                          );
-        }
-        item->setText(3, armour_str);
         // current command
         auto command = p->command();
         auto musician_it = command.find(CommandGroup::MUSICIAN);
@@ -935,87 +849,42 @@ void ArmyCreator::on_add_button_clicked() {
                           );
         }
         item->setText(4, command_str);
-        item->setText(6, QString("%2").arg(p->points()));
         break;
     }
     case BaseUnitType::MIXED:
     {
         auto p = std::dynamic_pointer_cast<mixed_unit>(st->selected());
-        QVariant v(p->id());
-        item->setData(0, Qt::UserRole, v);
-        item->setText(0, QString(p->name().data()));
+        // size column
         item->setText(1, QString("%1").arg(p->slave().size()));
-        // current weapons
-        auto mw = p->slave().melee_weapon();
-        auto rw = p->slave().ranged_weapon();
-        QString weapons_str("");
-        if (!(std::get<1>(mw).empty()))
-            weapons_str += QString("%1 [%2]").arg(
-                               std::get<1>(mw).data(),
-                               QString("%1").arg(std::get<2>(mw))
-                           );
-        if (!(std::get<1>(rw).empty())) {
-            weapons_str += QString("\n");
-            weapons_str += QString("%1 [%2]").arg(
-                               std::get<1>(rw).data(),
-                               QString("%1").arg(std::get<2>(rw))
-                           );
-        }
-        item->setText(2, weapons_str);
-        // current armour
-        auto all_armour = p->slave().armour();
-        auto armour = all_armour[ArmourType::ARMOUR];
-        auto shield = all_armour[ArmourType::SHIELD];
-        auto helmet = all_armour[ArmourType::HELMET];
-        QString armour_str("");
-        if (!(std::get<1>(armour).empty()))
-            armour_str += QString("%1 [%2]").arg(
-                            std::get<1>(armour).data(),
-                            QString("%1").arg(std::get<2>(armour))
-                        );
-        if (!(std::get<1>(shield).empty())) {
-            if (!armour_str.isEmpty()) armour_str += QString("\n");
-            armour_str += QString("%1 [%2]").arg(
-                            std::get<1>(shield).data(),
-                            QString("%1").arg(std::get<2>(shield))
-                        );
-        }
-        if (!(std::get<1>(helmet).empty()))
-            armour_str += QString("%1 [%2]").arg(
-                            std::get<1>(helmet).data(),
-                            QString("%1").arg(std::get<2>(helmet))
-                        );
-        item->setText(3, armour_str);
-        item->setText(6, QString("%2").arg(p->points()));
         break;
     }
     default: break;
     }
-    // unit type
+    // unit type points column
     switch (st->selected()->unit_type()) {
     case armies::UnitType::LORD:
         ui->army_tree->topLevelItem(0)->addChild(item);
-        ui->army_tree->topLevelItem(0)->setText(5, QString("%1").arg(army->lord_points()));
+        ui->army_tree->topLevelItem(0)->setText(6, QString("%1").arg(army->lord_points()));
         ui->army_tree->topLevelItem(0)->setExpanded(true);
         break;
     case armies::UnitType::HERO:
         ui->army_tree->topLevelItem(1)->addChild(item);
-        ui->army_tree->topLevelItem(1)->setText(5, QString("%1").arg(army->hero_points()));
+        ui->army_tree->topLevelItem(1)->setText(6, QString("%1").arg(army->hero_points()));
         ui->army_tree->topLevelItem(1)->setExpanded(true);
         break;
     case armies::UnitType::CORE:
         ui->army_tree->topLevelItem(2)->addChild(item);
-        ui->army_tree->topLevelItem(2)->setText(5, QString("%1").arg(army->core_points()));
+        ui->army_tree->topLevelItem(2)->setText(6, QString("%1").arg(army->core_points()));
         ui->army_tree->topLevelItem(2)->setExpanded(true);
         break;
     case armies::UnitType::SPECIAL:
         ui->army_tree->topLevelItem(3)->addChild(item);
-        ui->army_tree->topLevelItem(3)->setText(5, QString("%1").arg(army->special_points()));
+        ui->army_tree->topLevelItem(3)->setText(6, QString("%1").arg(army->special_points()));
         ui->army_tree->topLevelItem(3)->setExpanded(true);
         break;
     case armies::UnitType::RARE:
         ui->army_tree->topLevelItem(4)->addChild(item);
-        ui->army_tree->topLevelItem(4)->setText(5, QString("%1").arg(army->rare_points()));
+        ui->army_tree->topLevelItem(4)->setText(6, QString("%1").arg(army->rare_points()));
         ui->army_tree->topLevelItem(4)->setExpanded(true);
         break;
     default:
@@ -1025,6 +894,7 @@ void ArmyCreator::on_add_button_clicked() {
     st->change_selection(st->selected()->name());
     clear_unit_options_box();
     // just make sure to keep us in roster tree
+    // in case it gets changed somehow
     in_tree = InTree::ROSTER;
     initialise_unit_options_box();
 }
@@ -1071,153 +941,62 @@ void ArmyCreator::on_clear_button_clicked() {
 void ArmyCreator::update_unit_display(QTreeWidgetItem* item) {
     int id = item->data(0, Qt::UserRole).toInt();
     std::shared_ptr<unit> u = army->get_unit(id);
+    // name column
     item->setText(0, QString(u->name().data()));
+    // weapons column
+    auto weapons = u->weapons();
+    QString weapons_str("");
+    auto melee_weapon = weapons[WeaponType::MELEE];
+    auto ranged_weapon = weapons[WeaponType::BALLISTIC];
+    if (!(std::get<1>(melee_weapon).empty()))
+        weapons_str += QString("%1 [%2]").arg(
+                           std::get<1>(melee_weapon).data(),
+                           QString("%1").arg(std::get<2>(melee_weapon))
+                       );
+    if (!(std::get<1>(ranged_weapon).empty()))
+        weapons_str += QString("\n") + QString("%1 [%2]").arg(
+                           std::get<1>(ranged_weapon).data(),
+                           QString("%1").arg(std::get<2>(ranged_weapon))
+                       );
+    item->setText(2, weapons_str);
+    // armour column
+    QString armour_str("");
+    auto all_armour = u->armour();
+    auto armour = all_armour[ArmourType::ARMOUR];
+    auto shield = all_armour[ArmourType::SHIELD];
+    auto helmet = all_armour[ArmourType::HELMET];
+    if (!(std::get<1>(armour).empty()))
+        armour_str += QString("%1 [%2]").arg(
+                        std::get<1>(armour).data(),
+                        QString("%1").arg(std::get<2>(armour))
+                    );
+    if (!(std::get<1>(shield).empty())) {
+        if (!armour_str.isEmpty()) armour_str += QString("\n");
+        armour_str += QString("%1 [%2]").arg(
+                        std::get<1>(shield).data(),
+                        QString("%1").arg(std::get<2>(shield))
+                    );
+    }
+    if (!(std::get<1>(helmet).empty()))
+        armour_str += QString("%1 [%2]").arg(
+                        std::get<1>(helmet).data(),
+                        QString("%1").arg(std::get<2>(helmet))
+                    );
+    item->setText(3, armour_str);
+    // points column
     item->setText(6, QString("%1").arg(u->points()));
     switch (u->base_unit_type()) {
     case BaseUnitType::MELEE_CHARACTER:
-    {
-        auto p = std::dynamic_pointer_cast<melee_character_unit>(u);
-        item->setText(1, QString("%1").arg(1));
-        // current weapons
-        auto mw = p->melee_weapon();
-        auto rw = p->ranged_weapon();
-        QString weapons_str("");
-        if (!(std::get<1>(mw).empty()))
-            weapons_str += QString("%1 [%2]").arg(
-                               std::get<1>(mw).data(),
-                               QString("%1").arg(std::get<2>(mw))
-                           );
-        if (!(std::get<1>(rw).empty())) {
-            weapons_str += QString("\n");
-            weapons_str += QString("%1 [%2]").arg(
-                               std::get<1>(rw).data(),
-                               QString("%1").arg(std::get<2>(rw))
-                           );
-        }
-        item->setText(2, weapons_str);
-        // current armour
-        auto all_armour = p->armour();
-        auto armour = all_armour[ArmourType::ARMOUR];
-        auto shield = all_armour[ArmourType::SHIELD];
-        auto helmet = all_armour[ArmourType::HELMET];
-        QString armour_str("");
-        if (!(std::get<1>(armour).empty()))
-            armour_str += QString("%1 [%2]").arg(
-                            std::get<1>(armour).data(),
-                            QString("%1").arg(std::get<2>(armour))
-                        );
-        if (!(std::get<1>(shield).empty())) {
-            if (!armour_str.isEmpty()) armour_str += QString("\n");
-            armour_str += QString("%1 [%2]").arg(
-                            std::get<1>(shield).data(),
-                            QString("%1").arg(std::get<2>(shield))
-                        );
-        }
-        if (!(std::get<1>(helmet).empty()))
-            armour_str += QString("%1 [%2]").arg(
-                            std::get<1>(helmet).data(),
-                            QString("%1").arg(std::get<2>(helmet))
-                        );
-        item->setText(3, armour_str);
-
-        break;
-    }
     case BaseUnitType::MAGE_CHARACTER:
-    {
-        auto p = std::dynamic_pointer_cast<mage_character_unit>(u);
+        // size column
         item->setText(1, QString("%1").arg(1));
-        // current weapons
-        auto mw = p->melee_weapon();
-        auto rw = p->ranged_weapon();
-        QString weapons_str("");
-        if (!(std::get<1>(mw).empty()))
-            weapons_str += QString("%1 [%2]").arg(
-                               std::get<1>(mw).data(),
-                               QString("%1").arg(std::get<2>(mw))
-                           );
-        if (!(std::get<1>(rw).empty())) {
-            weapons_str += QString("\n");
-            weapons_str += QString("%1 [%2]").arg(
-                               std::get<1>(rw).data(),
-                               QString("%1").arg(std::get<2>(rw))
-                           );
-        }
-        item->setText(2, weapons_str);
-        // current armour
-        auto all_armour = p->armour();
-        auto armour = all_armour[ArmourType::ARMOUR];
-        auto shield = all_armour[ArmourType::SHIELD];
-        auto helmet = all_armour[ArmourType::HELMET];
-        QString armour_str("");
-        if (!(std::get<1>(armour).empty()))
-            armour_str += QString("%1 [%2]").arg(
-                            std::get<1>(armour).data(),
-                            QString("%1").arg(std::get<2>(armour))
-                        );
-        if (!(std::get<1>(shield).empty())) {
-            if (!armour_str.isEmpty()) armour_str += QString("\n");
-            armour_str += QString("%1 [%2]").arg(
-                            std::get<1>(shield).data(),
-                            QString("%1").arg(std::get<2>(shield))
-                        );
-        }
-        if (!(std::get<1>(helmet).empty()))
-            armour_str += QString("%1 [%2]").arg(
-                            std::get<1>(helmet).data(),
-                            QString("%1").arg(std::get<2>(helmet))
-                        );
-        item->setText(3, armour_str);
         break;
-    }
     case BaseUnitType::NORMAL:
     {
         auto p = std::dynamic_pointer_cast<normal_unit>(u);
+        // size column
         item->setText(1, QString("%1").arg(p->size()));
-        // current weapons
-        auto mw = p->melee_weapon();
-        auto rw = p->ranged_weapon();
-        QString weapons_str("");
-        if (!(std::get<1>(mw).empty()))
-            weapons_str += QString("%1 [%2]").arg(
-                               std::get<1>(mw).data(),
-                               QString("%1").arg(std::get<2>(mw))
-                           );
-        if (!(std::get<1>(rw).empty())) {
-            weapons_str += QString("\n");
-            weapons_str += QString("%1 [%2]").arg(
-                               std::get<1>(rw).data(),
-                               QString("%1").arg(std::get<2>(rw))
-                           );
-        }
-        item->setText(2, weapons_str);
-        // current armour
-        auto all_armour = p->armour();
-        auto armour_it = all_armour.find(ArmourType::ARMOUR);
-        auto shield_it = all_armour.find(ArmourType::SHIELD);
-        auto helmet_it = all_armour.find(ArmourType::HELMET);
-        QString armour_str("");
-        if (armour_it != all_armour.end()) {
-            armour_str += QString("%1 [%2]").arg(
-                              std::get<1>(armour_it->second).data(),
-                              QString("%1").arg(std::get<2>(armour_it->second))
-                          );
-        }
-        if (shield_it != all_armour.end()) {
-            if (armour_it != all_armour.end()) armour_str += QString("\n");
-            armour_str += QString("%1 [%2]").arg(
-                              std::get<1>(shield_it->second).data(),
-                              QString("%1").arg(std::get<2>(shield_it->second))
-                          );
-        }
-        if (helmet_it != all_armour.end()) {
-            if (shield_it != all_armour.end() || armour_it != all_armour.end()) armour_str += QString("\n");
-            armour_str += QString("%1 [%2]").arg(
-                              std::get<1>(helmet_it->second).data(),
-                              QString("%1").arg(std::get<2>(helmet_it->second))
-                          );
-        }
-        item->setText(3, armour_str);
-        // current command
+        // command column
         auto command = p->command();
         auto musician_it = command.find(CommandGroup::MUSICIAN);
         auto sb_it = command.find(CommandGroup::STANDARD_BEARER);
@@ -1227,28 +1006,28 @@ void ArmyCreator::update_unit_display(QTreeWidgetItem* item) {
             command_str += QString("%1 [%2]").arg(
                               std::get<0>(musician_it->second).data(),
                               QString("%1").arg(std::get<1>(musician_it->second))
-                          );
+                           );
         }
         if (sb_it != command.end()) {
             if (musician_it != command.end()) command_str += QString("\n");
             command_str += QString("%1 [%2]").arg(
                               std::get<0>(sb_it->second).data(),
                               QString("%1").arg(std::get<1>(sb_it->second))
-                          );
+                           );
         }
         if (champion_it != command.end()) {
             if (sb_it != command.end() || musician_it != command.end()) command_str += QString("\n");
             command_str += QString("%1 [%2]").arg(
                               std::get<0>(champion_it->second).data(),
                               QString("%1").arg(std::get<1>(champion_it->second))
-                          );
+                           );
         }
         item->setText(4, command_str);
         break;
     }
     default: break;
     }
-    // unit type
+    // unit type points column
     switch (u->unit_type()) {
     case armies::UnitType::LORD:
         ui->army_tree->topLevelItem(0)->setText(6, QString("%1").arg(army->lord_points()));

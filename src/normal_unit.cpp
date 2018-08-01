@@ -140,7 +140,6 @@ void normal_unit::pick_weapon(ItemClass item_type, std::string name) {
     case ModelSelect::CHAMPION:
         pick_champion_weapon(item_type, name);
         break;
-    default: break;
     }
 }
 
@@ -163,16 +162,9 @@ void normal_unit::pick_default_weapon(ItemClass item_type, std::string name) {
     }
     case ItemClass::MAGIC:
     case ItemClass::COMMON:
-    {
         throw std::invalid_argument("Cannot give magic weapons to this unit!");
-        break;
-    }
     case ItemClass::FACTION:
-    {
         throw std::invalid_argument("Cannot give faction weapons to this unit!");
-        break;
-    }
-    default: break;
     }
 }
 
@@ -237,7 +229,6 @@ void normal_unit::pick_champion_weapon(ItemClass item_type, std::string name) {
         // => implementation should be very similar to ItemClass::MAGIC case
         break;
     }
-    default: break;
     }
 }
 
@@ -249,7 +240,6 @@ void normal_unit::pick_armour(ItemClass item_type, std::string name) {
     case ModelSelect::CHAMPION:
         pick_champion_armour(item_type, name);
         break;
-    default: break;
     }
 }
 
@@ -271,16 +261,9 @@ void normal_unit::pick_default_armour(ItemClass item_type, std::string name) {
     }
     case ItemClass::MAGIC:
     case ItemClass::COMMON:
-    {
         throw std::invalid_argument("Cannot give magic armour to this unit!");
-        break;
-    }
     case ItemClass::FACTION:
-    {
         throw std::invalid_argument("Cannot give faction armour to this unit!");
-        break;
-    }
-    default: break;
     }
 }
 
@@ -345,7 +328,6 @@ void normal_unit::pick_champion_armour(ItemClass item_type, std::string name) {
         // => implementation should be very similar to ItemClass::MAGIC case
         break;
     }
-    default: break;
     }
 }
 
@@ -357,7 +339,6 @@ void normal_unit::remove_weapon(WeaponType wt) {
     case ModelSelect::CHAMPION:
         remove_champion_weapon(wt);
         break;
-    default: break;
     }
 }
 
@@ -390,7 +371,6 @@ void normal_unit::remove_champion_weapon(WeaponType wt) {
             champ_faction_item_points -= pts;
             champ_total_item_points -= pts;
             break;
-        default: break;
         }
         points_ -= pts;
         champ_weapons_[wt] = {def_w.first, def_w.second, 0.0};
@@ -405,7 +385,6 @@ void normal_unit::remove_armour(ArmourType at) {
     case ModelSelect::CHAMPION:
         remove_champion_armour(at);
         break;
-    default: break;
     }
 }
 
@@ -438,7 +417,6 @@ void normal_unit::remove_champion_armour(ArmourType at) {
             champ_faction_item_points -= pts;
             champ_total_item_points -= pts;
             break;
-        default: break;
         }
         points_ -= pts;
         champ_armours_[at] = {def_a.first, def_a.second, 0.0};
@@ -513,7 +491,6 @@ void normal_unit::pick_oco_extra(std::string name) {
     case ModelSelect::CHAMPION:
         pick_champion_oco_extra(name);
         break;
-    default: break;
     }
 }
 
@@ -549,7 +526,6 @@ void normal_unit::pick_mc_extra(std::string name) {
     case ModelSelect::CHAMPION:
         pick_champion_mc_extra(name);
         break;
-    default: break;
     }
 }
 
@@ -580,7 +556,6 @@ void normal_unit::remove_oco_extra() {
     case ModelSelect::CHAMPION:
         remove_champion_oco_extra();
         break;
-    default: break;
     }
 }
 
@@ -604,7 +579,6 @@ void normal_unit::remove_mc_extra(std::string name) {
     case ModelSelect::CHAMPION:
         remove_champion_mc_extra(name);
         break;
-    default: break;
     }
 }
 

@@ -62,11 +62,90 @@ std::unordered_map<
     }
 }
 
-void mixed_unit::pick_weapon(ItemClass item_type, std::string name) {}
-void mixed_unit::remove_weapon(WeaponType wt) {}
-void mixed_unit::pick_armour(ItemClass item_type, std::string name) {}
-void mixed_unit::remove_armour(ArmourType at) {}
-void mixed_unit::pick_oco_extra(std::string name) {}
-void mixed_unit::remove_oco_extra() {}
-void mixed_unit::pick_mc_extra(std::string name) {}
-void mixed_unit::remove_mc_extra(std::string name) {}
+void mixed_unit::pick_weapon(ItemClass item_type, std::string name) {
+    switch (mixed_select_) {
+    case MixedSelect::MASTER:
+        master_.pick_weapon(item_type, name);
+        break;
+    case MixedSelect::SLAVE:
+        slave_.pick_weapon(item_type, name);
+        break;
+    }
+}
+
+void mixed_unit::remove_weapon(WeaponType wt) {
+    switch (mixed_select_) {
+    case MixedSelect::MASTER:
+        master_.remove_weapon(wt);
+        break;
+    case MixedSelect::SLAVE:
+        slave_.remove_weapon(wt);
+        break;
+    }
+}
+
+void mixed_unit::pick_armour(ItemClass item_type, std::string name) {
+    switch (mixed_select_) {
+    case MixedSelect::MASTER:
+        master_.pick_armour(item_type, name);
+        break;
+    case MixedSelect::SLAVE:
+        slave_.pick_armour(item_type, name);
+        break;
+    }
+}
+
+void mixed_unit::remove_armour(ArmourType at) {
+    switch (mixed_select_) {
+    case MixedSelect::MASTER:
+        master_.remove_armour(at);
+        break;
+    case MixedSelect::SLAVE:
+        slave_.remove_armour(at);
+        break;
+    }
+}
+
+void mixed_unit::pick_oco_extra(std::string name) {
+    switch (mixed_select_) {
+    case MixedSelect::MASTER:
+        master_.pick_oco_extra(name);
+        break;
+    case MixedSelect::SLAVE:
+        slave_.pick_oco_extra(name);
+        break;
+    }
+}
+
+void mixed_unit::remove_oco_extra() {
+    switch (mixed_select_) {
+    case MixedSelect::MASTER:
+        master_.remove_oco_extra();
+        break;
+    case MixedSelect::SLAVE:
+        slave_.remove_oco_extra();
+        break;
+    }
+}
+
+void mixed_unit::pick_mc_extra(std::string name) {
+    switch (mixed_select_) {
+    case MixedSelect::MASTER:
+        master_.pick_mc_extra(name);
+        break;
+    case MixedSelect::SLAVE:
+        slave_.pick_mc_extra(name);
+        break;
+    }
+}
+
+void mixed_unit::remove_mc_extra(std::string name) {
+    switch (mixed_select_) {
+    case MixedSelect::MASTER:
+        master_.remove_mc_extra(name);
+        break;
+    case MixedSelect::SLAVE:
+        slave_.remove_mc_extra(name);
+        break;
+    }
+}

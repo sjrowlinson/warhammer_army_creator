@@ -90,7 +90,7 @@ namespace tools {
         std::vector<std::string> all = tools::split(s, ',');
         for (const auto& _s : all) {
             std::vector<std::string> v = tools::split(_s, '[');
-            short level = std::stoul(v[0]);
+            short level = static_cast<short>(std::stoi(v[0]));
             double pts = std::stod(tools::split(v[1], ']')[0]);
             um[level] = pts;
         }
@@ -146,7 +146,6 @@ namespace tools {
                 e.armour[at] = {ic, name};
                 break;
             }
-                break;
             case 2:
                 e.talismans.push_back(vec[1]);
                 break;
@@ -331,7 +330,7 @@ namespace tools {
         std::string name = read_line(blocks[n]);
         auto category = armies::s_map_string_unit_class[read_line(blocks[n] + 2)];
         double pts = std::stod(read_line(blocks[n] + 3));
-        auto mm_size = parse_minmax_size(read_line(blocks[n] + 4));
+        //auto mm_size = parse_minmax_size(read_line(blocks[n] + 4));
         auto stats = tools::split_stos(read_line(blocks[n] + 5), ' ');
         auto rules = tools::split(read_line(blocks[n] + 6), ',');
         auto eq = parse_equipment(read_line(blocks[n] + 7));
@@ -374,7 +373,7 @@ namespace tools {
         auto lores = tools::split(read_line(blocks[n] + 4), ',');
         auto category = armies::s_map_string_unit_class[read_line(blocks[n] + 5)];
         double pts = std::stod(read_line(blocks[n] + 6));
-        auto mm_size = parse_minmax_size(read_line(blocks[n] + 7));
+        //auto mm_size = parse_minmax_size(read_line(blocks[n] + 7));
         auto stats = tools::split_stos(read_line(blocks[n] + 8), ' ');
         auto rules = tools::split(read_line(blocks[n] + 9), ',');
         auto eq = parse_equipment(read_line(blocks[n] + 10));
