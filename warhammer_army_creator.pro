@@ -46,7 +46,8 @@ SOURCES += \
         src/melee_character_unit.cpp \
         src/mixed_unit.cpp \
         src/normal_unit.cpp \
-        src/option_selector.cpp
+        src/option_selector.cpp \
+        src/magic_item_window.cpp
 
 HEADERS += \
         src/armycreator.h \
@@ -70,7 +71,8 @@ HEADERS += \
         src/melee_character_unit.h \
         src/mixed_unit.h \
         src/normal_unit.h \
-        src/option_selector.h
+        src/option_selector.h \
+        src/magic_item_window.h
 
 FORMS += \
         form/armycreator.ui

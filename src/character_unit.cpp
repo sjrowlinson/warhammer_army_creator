@@ -24,22 +24,14 @@ std::unordered_map<
     std::tuple<ItemClass, std::string, double>
 > character_unit::weapons() const noexcept { return weapons_; }
 
-std::tuple<ItemClass, std::string, double> character_unit::melee_weapon() const {
-    auto search = weapons_.find(WeaponType::MELEE);
-    if (search != weapons_.end()) return (*search).second;
-    return {ItemClass::MUNDANE, "Hand weapon", 0.0};
-}
-
-std::tuple<ItemClass, std::string, double> character_unit::ranged_weapon() const {
-    auto search = weapons_.find(WeaponType::BALLISTIC);
-    if (search != weapons_.end()) return (*search).second;
-    return {ItemClass::MUNDANE, "", 0.0};
-}
-
 std::unordered_map<
     ArmourType,
     std::tuple<ItemClass, std::string, double>
 > character_unit::armour() const noexcept { return armours_; }
+
+std::pair<std::string, double> character_unit::talisman() const noexcept { return talisman_; }
+
+std::pair<std::string, double> character_unit::enchanted_item() const noexcept { return enchanted_item_; }
 
 std::pair<std::string, std::pair<bool, double>> character_unit::oco_extra() const noexcept { return oco_extra_; }
 std::unordered_map<std::string, std::pair<bool, double>> character_unit::mc_extras() const noexcept { return mc_extras_; }
@@ -93,14 +85,64 @@ void character_unit::pick_weapon(ItemClass item_type, std::string name) {
     }
     case ItemClass::FACTION:
     {
-        // TODO: implement once we have a faction_items structure
-        // => implementation should be very similar to ItemClass::MAGIC case
+        auto search = handle_->faction_items_handle()->find(name);
+        if (search == handle_->faction_items_handle()->end())
+            throw std::invalid_argument("Weapon not found!");
+        double fi_budget = handle_->faction_item_budget();
+        double ti_budget = handle_->total_item_budget();
+        if ((search->second.points + faction_item_points_ > fi_budget) ||
+                (search->second.points + faction_item_points_ > ti_budget))
+            throw std::runtime_error("Faction item budget exceeded!");
+        // check if the faction weapon has specific allowed units
+        if (!(search->second.allowed_units.empty())) {
+            std::string unit_name = this->name();
+            // check that this unit is within the magic weapons' allowed units container
+            if (!std::count_if(
+                    std::begin(search->second.allowed_units),
+                    std::end(search->second.allowed_units),
+                    [&unit_name](const auto& x) { return x == unit_name; }
+                )) throw std::invalid_argument("Character cannot take this weapon!");
+        }
+        remove_weapon(search->second.weapon_type);
+        weapons_[search->second.weapon_type] = {
+            item_type,
+            search->first,
+            search->second.points
+        };
+        points_ += search->second.points;
+        faction_item_points_ += search->second.points;
+        total_item_points_ += search->second.points;
         break;
     }
     case ItemClass::COMMON:
     {
-        // TODO: implement once we have a common_items structure
-        // => implementation should be very similar to ItemClass::MAGIC case
+        auto search = handle_->common_items_handle()->find(name);
+        if (search == handle_->common_items_handle()->end())
+            throw std::invalid_argument("Weapon not found!");
+        double mi_budget = handle_->magic_item_budget();
+        double ti_budget = handle_->total_item_budget();
+        if ((search->second.points + magic_item_points_ > mi_budget) ||
+                (search->second.points + magic_item_points_ > ti_budget))
+            throw std::runtime_error("Magic item budget exceeded!");
+        // check if the magic weapon has specific allowed units
+        if (!(search->second.allowed_units.empty())) {
+            std::string unit_name = this->name();
+            // check that this unit is within the magic weapons' allowed units container
+            if (!std::count_if(
+                    std::begin(search->second.allowed_units),
+                    std::end(search->second.allowed_units),
+                    [&unit_name](const auto& x) { return x == unit_name; }
+                )) throw std::invalid_argument("Character cannot take this weapon!");
+        }
+        remove_weapon(search->second.weapon_type);
+        weapons_[search->second.weapon_type] = {
+            item_type,
+            search->first,
+            search->second.points
+        };
+        points_ += search->second.points;
+        magic_item_points_ += search->second.points;
+        total_item_points_ += search->second.points;
         break;
     }
     default: break;
@@ -156,18 +198,204 @@ void character_unit::pick_armour(ItemClass item_type, std::string name) {
     }
     case ItemClass::FACTION:
     {
-        // TODO: implement once we have a faction_items structure
-        // => implementation should be very similar to ItemClass::MAGIC case
+        auto search = handle_->faction_items_handle()->find(name);
+        if (search == handle_->faction_items_handle()->end())
+            throw std::invalid_argument("Armour not found!");
+        double fi_budget = handle_->faction_item_budget();
+        double ti_budget = handle_->total_item_budget();
+        if ((search->second.points + faction_item_points_ > fi_budget) ||
+                (search->second.points + faction_item_points_ > ti_budget))
+            throw std::runtime_error("Faction item budget exceeded!");
+        // check if the faction weapon has specific allowed units
+        if (!(search->second.allowed_units.empty())) {
+            std::string unit_name = this->name();
+            // check that this unit is within the magic weapons' allowed units container
+            if (!std::count_if(
+                    std::begin(search->second.allowed_units),
+                    std::end(search->second.allowed_units),
+                    [&unit_name](const auto& x) { return x == unit_name; }
+                )) throw std::invalid_argument("Character cannot take this armour!");
+        }
+        remove_armour(search->second.armour_type);
+        armours_[search->second.armour_type] = {
+            item_type,
+            search->first,
+            search->second.points
+        };
+        points_ += search->second.points;
+        faction_item_points_ += search->second.points;
+        total_item_points_ += search->second.points;
         break;
     }
     case ItemClass::COMMON:
     {
-        // TODO: implement once we have a common_items structure
-        // => implementation should be very similar to ItemClass::MAGIC case
+        auto search = handle_->common_items_handle()->find(name);
+        if (search == handle_->common_items_handle()->end())
+            throw std::invalid_argument("Armour not found!");
+        double mi_budget = handle_->magic_item_budget();
+        double ti_budget = handle_->total_item_budget();
+        if ((search->second.points + magic_item_points_ > mi_budget) ||
+                (search->second.points + total_item_points_ > ti_budget))
+            throw std::runtime_error("Magic item budget exceeded!");
+        // check if the magic armour has specific allowed units
+        if (!(search->second.allowed_units.empty())) {
+            std::string unit_name = this->name();
+            // check that this unit is within the magic armours' allowed units container
+            if (!std::count_if(
+                    std::begin(search->second.allowed_units),
+                    std::end(search->second.allowed_units),
+                    [&unit_name](const auto& x) { return x == unit_name; }
+                )) throw std::invalid_argument("Character cannot take this weapon!");
+        }
+        remove_armour(search->second.armour_type);
+        armours_[search->second.armour_type] = {
+            item_type,
+            search->first,
+            search->second.points
+        };
+        points_ += search->second.points;
+        magic_item_points_ += search->second.points;
+        total_item_points_ += search->second.points;
         break;
     }
     default: break;
     }
+}
+
+void character_unit::pick_talisman(ItemClass item_class, std::string name) {
+    switch (item_class) {
+    case ItemClass::MAGIC:
+    {
+        auto search = handle_->magic_items_handle()->find(name);
+        if (search == handle_->magic_items_handle()->end())
+            throw std::runtime_error("Talisman not found!");
+        double mi_budget = handle_->magic_item_budget();
+        double ti_budget = handle_->total_item_budget();
+        if ((search->second.points + magic_item_points_ > mi_budget) ||
+                (search->second.points + total_item_points_ > ti_budget))
+            throw std::runtime_error("Magic item budget exceeded!");
+        // check if the talisman has specific allowed units
+        if (!(search->second.allowed_units.empty())) {
+            std::string unit_name = this->name();
+            // check that this unit is within the magic talismans' allowed units container
+            if (!std::count_if(
+                    std::begin(search->second.allowed_units),
+                    std::end(search->second.allowed_units),
+                    [&unit_name](const auto& x) { return x == unit_name; }
+                )) throw std::invalid_argument("Character cannot take this talisman!");
+        }
+        remove_talisman();
+        talisman_ = {search->first, search->second.points};
+        points_ += search->second.points;
+        magic_item_points_ += search->second.points;
+        total_item_points_ += search->second.points;
+        break;
+    }
+    case ItemClass::COMMON:
+    {
+        auto search = handle_->common_items_handle()->find(name);
+        if (search == handle_->common_items_handle()->end())
+            throw std::runtime_error("Talisman not found!");
+        double mi_budget = handle_->magic_item_budget();
+        double ti_budget = handle_->total_item_budget();
+        if ((search->second.points + magic_item_points_ > mi_budget) ||
+                (search->second.points + total_item_points_ > ti_budget))
+            throw std::runtime_error("Magic item budget exceeded!");
+        // check if the talisman has specific allowed units
+        if (!(search->second.allowed_units.empty())) {
+            std::string unit_name = this->name();
+            // check that this unit is within the magic talismans' allowed units container
+            if (!std::count_if(
+                    std::begin(search->second.allowed_units),
+                    std::end(search->second.allowed_units),
+                    [&unit_name](const auto& x) { return x == unit_name; }
+                )) throw std::invalid_argument("Character cannot take this talisman!");
+        }
+        remove_talisman();
+        talisman_ = {search->first, search->second.points};
+        points_ += search->second.points;
+        magic_item_points_ += search->second.points;
+        total_item_points_ += search->second.points;
+        break;
+    }
+    default: break;
+    }
+}
+
+void character_unit::remove_talisman() {
+    points_ -= talisman_.second;
+    magic_item_points_ -= talisman_.second;
+    total_item_points_ -= talisman_.second;
+    talisman_.first = "";
+    talisman_.second = 0.0;
+}
+
+void character_unit::pick_enchanted_item(ItemClass item_class, std::string name) {
+    switch (item_class) {
+    case ItemClass::MAGIC:
+    {
+        auto search = handle_->magic_items_handle()->find(name);
+        if (search == handle_->magic_items_handle()->end())
+            throw std::runtime_error("Enchanted item not found!");
+        double mi_budget = handle_->magic_item_budget();
+        double ti_budget = handle_->total_item_budget();
+        if ((search->second.points + magic_item_points_ > mi_budget) ||
+                (search->second.points + total_item_points_ > ti_budget))
+            throw std::runtime_error("Magic item budget exceeded!");
+        // check if the talisman has specific allowed units
+        if (!(search->second.allowed_units.empty())) {
+            std::string unit_name = this->name();
+            // check that this unit is within the magic talismans' allowed units container
+            if (!std::count_if(
+                    std::begin(search->second.allowed_units),
+                    std::end(search->second.allowed_units),
+                    [&unit_name](const auto& x) { return x == unit_name; }
+                )) throw std::invalid_argument("Character cannot take this enchanted item!");
+        }
+        remove_enchanted_item();
+        enchanted_item_ = {search->first, search->second.points};
+        points_ += search->second.points;
+        magic_item_points_ += search->second.points;
+        total_item_points_ += search->second.points;
+        break;
+    }
+    case ItemClass::COMMON:
+    {
+        auto search = handle_->common_items_handle()->find(name);
+        if (search == handle_->common_items_handle()->end())
+            throw std::runtime_error("Enchanted item not found!");
+        double mi_budget = handle_->magic_item_budget();
+        double ti_budget = handle_->total_item_budget();
+        if ((search->second.points + magic_item_points_ > mi_budget) ||
+                (search->second.points + total_item_points_ > ti_budget))
+            throw std::runtime_error("Magic item budget exceeded!");
+        // check if the item has specific allowed units
+        if (!(search->second.allowed_units.empty())) {
+            std::string unit_name = this->name();
+            // check that this unit is within the items' allowed units container
+            if (!std::count_if(
+                    std::begin(search->second.allowed_units),
+                    std::end(search->second.allowed_units),
+                    [&unit_name](const auto& x) { return x == unit_name; }
+                )) throw std::invalid_argument("Character cannot take this enchanted item!");
+        }
+        remove_enchanted_item();
+        enchanted_item_ = {search->first, search->second.points};
+        points_ += search->second.points;
+        magic_item_points_ += search->second.points;
+        total_item_points_ += search->second.points;
+        break;
+    }
+    default: break;
+    }
+}
+
+void character_unit::remove_enchanted_item() {
+    points_ -= enchanted_item_.second;
+    magic_item_points_ -= enchanted_item_.second;
+    total_item_points_ -= enchanted_item_.second;
+    enchanted_item_.first = "";
+    enchanted_item_.second = 0.0;
 }
 
 void character_unit::pick_oco_extra(std::string name) {

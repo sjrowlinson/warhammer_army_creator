@@ -155,43 +155,43 @@ void army_list::remove_rare() {
 double army_list::current_points() const noexcept { return curr_pts; }
 
 std::size_t army_list::nlords() const noexcept {
-    return std::count_if(
+    return static_cast<std::size_t>(std::count_if(
         std::begin(army),
         std::end(army),
         [](const auto& x) { return x.second->unit_type() == armies::UnitType::LORD; }
-    );
+    ));
 }
 
 std::size_t army_list::nheroes() const noexcept {
-    return std::count_if(
+    return static_cast<std::size_t>(std::count_if(
         std::begin(army),
         std::end(army),
         [](const auto& x) { return x.second->unit_type() == armies::UnitType::HERO; }
-    );
+    ));
 }
 
 std::size_t army_list::ncore() const noexcept {
-    return std::count_if(
+    return static_cast<std::size_t>(std::count_if(
         std::begin(army),
         std::end(army),
         [](const auto& x) { return x.second->unit_type() == armies::UnitType::CORE; }
-    );
+    ));
 }
 
 std::size_t army_list::nspecial() const noexcept {
-    return std::count_if(
+    return static_cast<std::size_t>(std::count_if(
         std::begin(army),
         std::end(army),
         [](const auto& x) { return x.second->unit_type() == armies::UnitType::SPECIAL; }
-    );
+    ));
 }
 
 std::size_t army_list::nrare() const noexcept {
-    return std::count_if(
+    return static_cast<std::size_t>(std::count_if(
         std::begin(army),
         std::end(army),
         [](const auto& x) { return x.second->unit_type() == armies::UnitType::RARE; }
-    );
+    ));
 }
 
 double army_list::lord_points() const noexcept { return lord_pts; }

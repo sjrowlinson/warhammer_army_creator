@@ -4,6 +4,7 @@
 #include "army_list.h"
 #include "army_maps.h"
 #include "magic_item.h"
+#include "magic_item_window.h"
 #include "option_selector.h"
 #include "selection_tree.h"
 
@@ -60,6 +61,8 @@ private slots:
     void optional_mc_extra_selected();
 
     void change_unit_size();
+
+    void spawn_magic_weapons_window();
 private:
     Ui::ArmyCreator* ui;
     armies::Faction race;

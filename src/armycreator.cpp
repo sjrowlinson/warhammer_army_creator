@@ -127,6 +127,15 @@ void ArmyCreator::optional_mc_extra_selected() {
     }
 }
 
+void ArmyCreator::spawn_magic_weapons_window() {
+    MagicItemWindow* miw = new MagicItemWindow(ItemType::WEAPON);
+    miw->setWindowTitle(tr("Magic Weapon Selection"));
+    miw->setFixedWidth(1366);
+    miw->setFixedHeight(768);
+    miw->show();
+    miw->setAttribute(Qt::WA_DeleteOnClose);
+}
+
 QGroupBox* ArmyCreator::init_opt_subweapons_groupbox(
     WeaponType wt,
     const std::unordered_map<std::string, std::tuple<WeaponType, ItemClass, double>>& opt_weapons,
@@ -205,6 +214,30 @@ QGroupBox* ArmyCreator::init_opt_weapons_groupbox(
     if (melee_subbox != nullptr) vbox_weapons->addWidget(melee_subbox);
     auto ranged_subbox = init_opt_subweapons_groupbox(WeaponType::BALLISTIC, opt_weapons, weapons, id);
     if (ranged_subbox != nullptr) vbox_weapons->addWidget(ranged_subbox);
+    std::shared_ptr<unit> current;
+    switch (in_tree) {
+    case InTree::ARMY:
+    {
+        int id = ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt();
+        current = army->get_unit(id);
+        break;
+    }
+    case InTree::ROSTER:
+        current = st->selected();
+        break;
+    default: break;
+    }
+    /*switch (current->unit_type()) {
+    case armies::UnitType::LORD:
+    case armies::UnitType::HERO:
+    {
+        QPushButton* spawn_magic_weapons = new QPushButton(tr("Select Magic Weapon"));
+        vbox_weapons->addWidget(spawn_magic_weapons);
+        connect(spawn_magic_weapons, SIGNAL(clicked(bool)), this, SLOT(spawn_magic_weapons_window()));
+        break;
+    }
+    default: break;
+    }*/
     vbox_weapons->addStretch(1);
     weapons_box->setLayout(vbox_weapons);
     return weapons_box;
@@ -624,11 +657,6 @@ void ArmyCreator::initialise_unit_options_box() {
         current_armours = p->armour();
         curr_oco_extra = p->oco_extra();
         curr_mc_extras = p->mc_extras();
-        //auto tmp_oco = p->oco_extra();
-        /*curr_oco_extra = {tmp_oco.first, {true, tmp_oco.second}};
-        auto tmp_mc = p->mc_extras();
-        for (auto x : tmp_mc)
-            curr_mc_extras[x.first] = {true, x.second};*/
         break;
     }
     case BaseUnitType::MAGE_CHARACTER:
@@ -643,11 +671,6 @@ void ArmyCreator::initialise_unit_options_box() {
         current_armours = p->armour();
         curr_oco_extra = p->oco_extra();
         curr_mc_extras = p->mc_extras();
-        /*auto tmp_oco = p->oco_extra();
-        curr_oco_extra = {tmp_oco.first, {true, tmp_oco.second}};
-        auto tmp_mc = p->mc_extras();
-        for (auto x : tmp_mc)
-            curr_mc_extras[x.first] = {true, x.second};*/
         break;
     }
     case BaseUnitType::MIXED:

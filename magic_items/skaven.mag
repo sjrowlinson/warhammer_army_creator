@@ -2,81 +2,81 @@ The Fellblade
     Weapon, Melee
     100
     This foul sword gives the bearer Strength 10 and successful ward saves must be re-rolled. Any unsaved wounds caused by the Fellblade are multiplied into D6 wounds. Roll a D6 at the end of each of the wielder's turns; on a 3+ there is no effect. On a roll of 1-2 the wielder suffers 1 wound with no armour save allowed.
-    None
+    Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
 
 Warpforged Blade
     Weapon, Melee
     50
     Armour saves cannot be taken against hits from a Warpforged Blade.
-    None
+    Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
 
 Warlock-Augmented Weapon
     Weapon, Melee
     45
     A Warlock-Augmented weapon adds +1 Strength and +1 Attack to any model so equipped.
-    None
+    Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
 
 Blade of Corruption
     Weapon, Melee
     35
     The wielder of this sword is granted +1 Strength to all Attacks made in close combat. Any unsaved wound inflicted by the Blade of Corruption is multiplied to 2 wounds. In addition, if the wielder makes a To Hit roll that has two or more rolls of 1, the wielder immediately suffers a wound that is multiplied to 2 wounds. Other Attacks are carried out as normal.
-    None
+    Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
 
 Weeping Blade
     Weapon, Melee
     30
     A Weeping Blade has the Armour Piercing special rule. Each unsaved wound is multiplied to D3 wounds.
-    None
+    Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
 
 Dwarfbane
     Weapon, Melee
     25
     The wielder of this blade is granted +1 Strength to all attacks made in close combat. Additionally against Dwarfs, all hits are Armour Piercing, and the user re-rolls all failed To Wound rolls.
-    None
+    Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
 
 Blade of Nurglitch
     Weapon, Melee
     10
     Enemy models lose 1 point of Toughness from their profile for each unsaved wound they suffer from this blade. Any model reduced to Toughness 0 is removed as a casualty.
-    None
+    Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
 
 
 Warpstone Armour
     Armour, Armour
     30
     Warpstone Armour gives its wearer a 4+ armour save. For each successful armour save made by the bearer in close combat, the armour immediately inflicats a Strength 4 hit against the model that struck the blow. Any casualties caused will count towards combat resolution. Warpstone Armour can be worn by Clan Skryre Warlock Engineers.
-    None
+    Warlord, Assassin, Warlock Engineer, Chieftain
 
 World's Edge Armour
     Armour, Armour
     25
     The armour gives its wearer a 4+ armour save. The first time the wearer is wounded by a Strength high enough to completely cancel his armour save, or is not permitted an armour save for any reason, the wound is discounted, but the armour is completely destroyed.
-    None
+    Warlord, Assassin, Chieftain
 
 Shield of Distraction
     Armour, Shield
     15
     Any models in base contact wishing to strike the bearer of this shield suffer -1 Attack, to a minimum of 1.
-    None
+    Warlord, Assassin, Chieftain
 
 
 Foul Pendant
     Talisman
     30
     This wicked token of the Horned Rat's power confers a 5+ ward save upon the bearer.
-    None
+    Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
 
 Shadow Magnet Trinket
     Talisman
     30
     Shooting attacks at the bearer of a Shadow Magnet Trinket and any unit he has joined suffer a -1 To Hit penalty in addition to any normal modifiers due to the cloying presence of unnatural darkness.
-    None
+    Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
 
 Rival Hide Talisman
     Talisman
     15
     One use only. A Skaven model wearing a Rival Hide Talisman can make a single enemy model in base contact re-roll all its successful To Hit dice rolls.
-    None
+    Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
 
 
 Warpstorm Scroll
@@ -108,25 +108,25 @@ Skavenbrew
     Enchanted
     50
     Description
-    None
+    Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
 
 Skalm
     Enchanted
     30
     D
-    None
+    Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
 
 Pipes of Piebald
     Enchanted
     25
     In order to charge the bearer or any unit he has joined, an enemy unit must first pass a Ld test. If the Ld test is failed, treat the unit as if they had failed a charge.
-    None
+    Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
 
 Portents of Verminous Doom
     Enchanted
     20
     Any enemy unit in base contact with the model bearing Portents of Verminous Doom suffers a -1 penalty to its Leadership for as long as they remain in contact.
-    None
+    Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
 
 
 Warpstone Stars

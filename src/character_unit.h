@@ -24,6 +24,8 @@ protected:
         ArmourType,
         std::tuple<ItemClass, std::string, double>
     > armours_;
+    std::pair<std::string, double> talisman_;
+    std::pair<std::string, double> enchanted_item_;
     std::pair<std::string, std::pair<bool, double>> oco_extra_;
     std::unordered_map<std::string, std::pair<bool, double>> mc_extras_;
 
@@ -42,25 +44,35 @@ public:
         WeaponType,
         std::tuple<ItemClass, std::string, double>
     > weapons() const noexcept override;
-    std::tuple<ItemClass, std::string, double> melee_weapon() const;
-    std::tuple<ItemClass, std::string, double> ranged_weapon() const;
 
     std::unordered_map<
         ArmourType,
         std::tuple<ItemClass, std::string, double>
     > armour() const noexcept override;
 
+    std::pair<std::string, double> talisman() const noexcept;
+    std::pair<std::string, double> enchanted_item() const noexcept;
+
     std::pair<std::string, std::pair<bool, double>> oco_extra() const noexcept override;
     std::unordered_map<std::string, std::pair<bool, double>> mc_extras() const noexcept override;
 
     // curremt property modifiers
     void pick_weapon(ItemClass item_type, std::string name) override;
-    void pick_armour(ItemClass item_type, std::string name) override;
-    void pick_oco_extra(std::string name) override;
-    void pick_mc_extra(std::string name) override;
     void remove_weapon(WeaponType wt) override;
+
+    void pick_armour(ItemClass item_type, std::string name) override;
     void remove_armour(ArmourType at) override;
+
+    void pick_talisman(ItemClass item_class, std::string name);
+    void remove_talisman();
+
+    void pick_enchanted_item(ItemClass item_class, std::string name);
+    void remove_enchanted_item();
+
+    void pick_oco_extra(std::string name) override;
     void remove_oco_extra() override;
+
+    void pick_mc_extra(std::string name) override;
     void remove_mc_extra(std::string name) override;
 };
 
