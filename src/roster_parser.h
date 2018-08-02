@@ -81,6 +81,11 @@ namespace tools {
                             armies::UnitType ut,
                             armies::UnitClass category
                          );
+        base_normal_unit parse_warmachine(
+                            std::size_t n,
+                            armies::UnitType ut,
+                            armies::UnitClass category
+                         );
         base_mixed_unit parse_mixed_unit(std::size_t n, armies::UnitType ut, armies::UnitClass category);
 
     public:

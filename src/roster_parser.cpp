@@ -306,6 +306,13 @@ namespace tools {
                                   )
                               );
                         break;
+                    case armies::UnitClass::WARMACHINE:
+                        units.push_back(
+                                  std::make_shared<base_normal_unit>(
+                                      parse_warmachine(i, ut, category)
+                                  )
+                              );
+                        break;
                     default:
                         units.push_back(std::make_shared<base_normal_unit>(
                             parse_normal_unit(i, ut, category)
@@ -505,6 +512,50 @@ namespace tools {
             std::move(eq),
             std::move(opt),
             std::move(champ_stats),
+            std::move(champ_rules),
+            std::move(champ_eq),
+            std::move(champ_opt),
+            0.0,
+            0.0,
+            0.0,
+            std::move(command),
+            0.0
+        );
+        return tmp;
+    }
+
+    base_normal_unit roster_parser::parse_warmachine(std::size_t n, armies::UnitType ut, armies::UnitClass category) {
+        std::string name = read_line(blocks[n]);
+        double pts = std::stod(read_line(blocks[n] + 2));
+        auto mm_size = parse_minmax_size(read_line(blocks[n] + 3));
+        auto stats = tools::split_stos(read_line(blocks[n] + 4), ' ');
+        auto machine_stats = tools::split_stos(read_line(blocks[n] + 5), ' ');
+        auto rules = tools::split(read_line(blocks[n] + 6), ',');
+        std::vector<std::string> champ_rules;
+        auto opt_oco_extras = parse_optional_extras(read_line(blocks[n] + 7));
+        auto opt_mc_extras = parse_optional_extras(read_line(blocks[n] + 8));
+        equipment eq;
+        equipment champ_eq;
+        options opt;
+        options champ_opt;
+        opt.oco_extras = opt_oco_extras;
+        opt.mc_extras = opt_mc_extras;
+        std::unordered_map<
+            CommandGroup, std::pair<std::string, double>
+        > command;
+        base_normal_unit tmp(
+            faction,
+            ut,
+            category,
+            name,
+            mm_size.first,
+            mm_size.second,
+            pts,
+            std::move(stats),
+            std::move(rules),
+            std::move(eq),
+            std::move(opt),
+            std::move(machine_stats),
             std::move(champ_rules),
             std::move(champ_eq),
             std::move(champ_opt),

@@ -699,7 +699,7 @@ void ArmyCreator::on_faction_combobox_currentTextChanged(const QString& faction)
     army->clear();
     ui->current_pts_label->setText(QString("%1").arg(static_cast<double>(0.0)));
     for (int i = 0; i < 5; ++i)
-        ui->army_tree->topLevelItem(i)->setText(5, QString("%1").arg(static_cast<double>(0.0)));
+        ui->army_tree->topLevelItem(i)->setText(6, QString("%1").arg(static_cast<double>(0.0)));
     st->reset(race, *army);
     id_counter = 0;
     // now fill the roster tree widget
@@ -983,6 +983,25 @@ void ArmyCreator::update_unit_display(QTreeWidgetItem* item) {
                         QString("%1").arg(std::get<2>(helmet))
                     );
     item->setText(3, armour_str);
+    // extras column
+    QString extras_str("");
+    auto oco_extra = u->oco_extra();
+    if (!(oco_extra.first.empty()))
+        extras_str += QString("%1 [%2]").arg(
+                          oco_extra.first.data(),
+                          QString("%1").arg(oco_extra.second.second)
+                      );
+    auto mc_extras = u->mc_extras();
+    if (!mc_extras.empty() && !oco_extra.first.empty()) extras_str += QString("\n");
+    for(auto it = std::begin(mc_extras); it != std::end(mc_extras); ++it) {
+        extras_str += QString("%1 [%2]").arg(
+                                  it->first.data(),
+                                  QString("%1").arg(it->second.second)
+                              );
+        if (++it != std::end(mc_extras)) extras_str += QString("\n");
+        --it;
+    }
+    item->setText(5, extras_str);
     // points column
     item->setText(6, QString("%1").arg(u->points()));
     switch (u->base_unit_type()) {

@@ -87,7 +87,7 @@ Warlock Engineer
     5 3 3 3 3 2 4 1 5
     Scurry Away!, Strength in Numbers, Verminous Valour
     None
-    Warlock-Augmented Weapon {Magic} [Melee] (45), Warplock Pistol {Faction} [Ballistic] (8), Warpmusket {Faction} [Ballistic] (15)
+    Warlock-Augmented Weapon {Mundane} [Melee] (45), Warplock Pistol {Mundane} [Ballistic] (8), Warpmusket {Mundane} [Ballistic] (15)
     None
     None
     None
@@ -230,49 +230,6 @@ Night Runners
     0
     0
     0
-
-# mixed unit format:
-#
-# Name
-#   UnitType, UnitClass, Mixed
-#   pts per slave model
-#   minimum slave models, maximum slave models
-#   slave stats table
-#   slave champion stats table
-#   slave special rules
-#   slave champion special rules
-#   slave equipment
-#   slave champion extra equipment
-#   slave optional weapons
-#   slave champion optional weapons
-#   slave optional armour
-#   slave champion optional armour
-#   slave optional extras
-#   slave champion optional extras
-#   slave optional command
-#   slave champion magic item budget
-#   slave champion faction item budget
-#   slave champion total item budget
-#   slave magic banner budget
-#   pts per master model
-#   minimum master models, maximum master models
-#   master stats table
-#   master champion stats table
-#   master special rules
-#   master champion special rules
-#   master equipment
-#   master champion extra equipment
-#   master optional weapons
-#   master champion optional weapons
-#   master optional armour
-#   master champion optional armour
-#   master optional extras
-#   master champion optional extras
-#   master optional command
-#   master champion magic item budget
-#   master champion faction item budget
-#   master champion total item budget
-#   master magic banner budget
 
 Giant Rats
     Core, Warbeast, Mixed
@@ -506,29 +463,32 @@ Hell Pit Abomination
     Warpstone Spikes {True} [15]
     None
 
-#Doomwheel
-#    Rare, Warmachine, Normal
-#    150
-#    1, 1
-#    -3 0 0 6 6 5 0 0 0
-#    0 3 3 2 0 0 4 -2 7
-#    Armour save (4+), Grinding Down the Foe, Immune to Psychology, Impact Hits (D6+1), Large Target, Rolling Doom, Terror, Zzzzap!
-#    None
-#
-#Warp Lightning Cannon
-#    Rare, Warmachine, Normal
-#    90
-#    1, 1
-#    0 0 0 0 6 4 0 0 0
-#    5 3 3 3 3 0 3 3 7
-#    Ponderous War Machine
-#    None
-#
-#Plagueclaw Catapult
-#    Rare, Warmachine, Normal
-#    100
-#    1, 1
-#    0 0 0 0 6 4 0 0 0
-#    5 3 3 3 4 0 3 -1 7
-#    Fume-addled Crew, Ponderous War Machine
-#    None
+Doomwheel
+    Rare, Warmachine, Normal
+    150
+    1, 1
+    -3 0 0 6 6 5 0 0 0
+    0 3 3 2 0 0 4 -2 7
+    Armour save (4+), Grinding Down the Foe, Immune to Psychology, Impact Hits (D6+1), Large Target, Rolling Doom, Terror, Zzzzap!
+    None
+    None
+
+Warp Lightning Cannon
+    Rare, Warmachine, Normal
+    90
+    1, 1
+    0 0 0 0 6 4 0 0 0
+    5 3 3 3 3 0 3 3 7
+    Ponderous War Machine
+    None
+    None
+
+Plagueclaw Catapult
+    Rare, Warmachine, Normal
+    100
+    1, 1
+    0 0 0 0 6 4 0 0 0
+    5 3 3 3 4 0 3 -1 7
+    Fume-addled Crew, Ponderous War Machine
+    None
+    None

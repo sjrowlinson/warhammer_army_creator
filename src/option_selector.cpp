@@ -18,7 +18,7 @@ bool option_selector::select_weapon(const std::string& s) {
     if (weapon == "None") { // None radio button selected
         WeaponType wt;
         if (split[2] == "melee") wt = WeaponType::MELEE;
-        else if (split[2] == "ballistic") wt = WeaponType::BALLISTIC;
+        else if (split[2] == "ranged") wt = WeaponType::BALLISTIC;
         else wt = WeaponType::NONE;
         switch (in_tree) {
         case InTree::ARMY:
