@@ -29,6 +29,17 @@ namespace Ui {
 class ArmyCreator;
 }
 
+enum class ArmyTreeColumn {
+    NAME,
+    SIZE,
+    WEAPONS,
+    ARMOUR,
+    COMMAND,
+    EXTRAS,
+    POINTS,
+    ALL
+};
+
 class ArmyCreator : public QMainWindow {
     Q_OBJECT
 
@@ -83,7 +94,7 @@ private:
     void clear_unit_options_box();
     void initialise_unit_options_box();
 
-    void update_unit_display(QTreeWidgetItem* item);
+    void update_unit_display(QTreeWidgetItem* item, bool adding, ArmyTreeColumn column = ArmyTreeColumn::ALL);
 
     QGroupBox* init_size_command_groupbox();
     QGroupBox* init_command_groupbox(
