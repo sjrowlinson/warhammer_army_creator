@@ -13,14 +13,16 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
     id_counter = 0;
     in_tree = InTree::NEITHER;
     opt_sel = std::make_shared<option_selector>(st, army);
-
-    ui->army_tree->header()->resizeSection(0, 250); // unit name header
-    ui->army_tree->header()->resizeSection(1, 60); // unit size header
-    ui->army_tree->header()->resizeSection(2, 180); // weapons header
-    ui->army_tree->header()->resizeSection(3, 150); // armour header
-    ui->army_tree->header()->resizeSection(4, 180); // command group header
-    ui->army_tree->header()->resizeSection(5, 180); // extras header
-    ui->army_tree->header()->resizeSection(6, 60); // points header
+    // set magic_item_selector to hidden initially
+    ui->magic_items_selector->setHidden(true);
+    // set army list view header sizes
+    ui->army_tree->header()->resizeSection(static_cast<int>(ArmyTreeColumn::NAME), 250); // unit name header
+    ui->army_tree->header()->resizeSection(static_cast<int>(ArmyTreeColumn::SIZE), 60); // unit size header
+    ui->army_tree->header()->resizeSection(static_cast<int>(ArmyTreeColumn::WEAPONS), 180); // weapons header
+    ui->army_tree->header()->resizeSection(static_cast<int>(ArmyTreeColumn::ARMOUR), 150); // armour header
+    ui->army_tree->header()->resizeSection(static_cast<int>(ArmyTreeColumn::COMMAND), 180); // command group header
+    ui->army_tree->header()->resizeSection(static_cast<int>(ArmyTreeColumn::EXTRAS), 180); // extras header
+    ui->army_tree->header()->resizeSection(static_cast<int>(ArmyTreeColumn::POINTS), 60); // points header
     ui->remove_button->setEnabled(false);
     populate_roster_tree();
 }
@@ -136,6 +138,66 @@ void ArmyCreator::spawn_magic_weapons_window() {
     miw->setAttribute(Qt::WA_DeleteOnClose);
 }
 
+void ArmyCreator::clear_magic_items_selector() {
+    ui->magic_items_selector->clear();
+    for (auto i = 0; i < ui->magic_items_selector->count(); ++i)
+        ui->magic_items_selector->removeTab(i);
+
+}
+
+void ArmyCreator::init_magic_items_selector(std::shared_ptr<unit> current) {
+    auto mih = current->base()->magic_items_handle();
+    // magic weapons
+    auto magic_weapons_box = setup_magic_weapons_tab(*mih, current);
+    if (magic_weapons_box != nullptr) ui->magic_items_selector->addTab(magic_weapons_box, tr("Magic Weapons"));
+    // magic armour
+    auto magic_armour_box = setup_magic_armour_tab(*mih, current);
+    if (magic_armour_box != nullptr) ui->magic_items_selector->addTab(magic_armour_box, tr("Magic Armour"));
+    ui->magic_items_selector->setHidden(false);
+}
+
+QGroupBox* ArmyCreator::setup_magic_weapons_tab(const std::unordered_map<std::string, item>& items,
+                                                std::shared_ptr<unit> current) {
+    auto weapons = tools::magic_items_of(items, ItemType::WEAPON);
+    if (!std::count_if(weapons.begin(), weapons.end(), [&current](const auto& x) {
+            return x.second.allowed_units.count(current->name());
+        })) return nullptr;
+    QGroupBox* box = new QGroupBox();
+    QHBoxLayout* hlayout = new QHBoxLayout;
+    for (const auto& w : weapons) {
+        if (w.second.allowed_units.size() && !w.second.allowed_units.count(current->name()))
+            continue;
+        std::string pts_str = tools::points_str(w.second.points);
+        QRadioButton* rb = new QRadioButton(tr((w.first + " (" + pts_str + " pts)").data()));
+        rb->setToolTip(tr(w.second.description.data()));
+        hlayout->addWidget(rb);
+    }
+    hlayout->addStretch(1);
+    box->setLayout(hlayout);
+    return box;
+}
+
+QGroupBox* ArmyCreator::setup_magic_armour_tab(const std::unordered_map<std::string, item>& items,
+                                                std::shared_ptr<unit> current) {
+    auto armour = tools::magic_items_of(items, ItemType::ARMOUR);
+    if (!std::count_if(armour.begin(), armour.end(), [&current](const auto& x) {
+            return x.second.allowed_units.count(current->name());
+        })) return nullptr;
+    QGroupBox* box = new QGroupBox();
+    QHBoxLayout* hlayout = new QHBoxLayout;
+    for (const auto& a : armour) {
+        if (a.second.allowed_units.size() && !a.second.allowed_units.count(current->name()))
+            continue;
+        std::string pts_str = tools::points_str(a.second.points);
+        QRadioButton* rb = new QRadioButton(tr((a.first + " (" + pts_str + " pts)").data()));
+        rb->setToolTip(tr(a.second.description.data()));
+        hlayout->addWidget(rb);
+    }
+    hlayout->addStretch(1);
+    box->setLayout(hlayout);
+    return box;
+}
+
 QGroupBox* ArmyCreator::init_opt_subweapons_groupbox(
     WeaponType wt,
     const std::unordered_map<std::string, std::tuple<WeaponType, ItemClass, double>>& opt_weapons,
@@ -227,17 +289,6 @@ QGroupBox* ArmyCreator::init_opt_weapons_groupbox(
         break;
     default: break;
     }
-    /*switch (current->unit_type()) {
-    case armies::UnitType::LORD:
-    case armies::UnitType::HERO:
-    {
-        QPushButton* spawn_magic_weapons = new QPushButton(tr("Select Magic Weapon"));
-        vbox_weapons->addWidget(spawn_magic_weapons);
-        connect(spawn_magic_weapons, SIGNAL(clicked(bool)), this, SLOT(spawn_magic_weapons_window()));
-        break;
-    }
-    default: break;
-    }*/
     vbox_weapons->addStretch(1);
     weapons_box->setLayout(vbox_weapons);
     return weapons_box;
@@ -342,7 +393,7 @@ QGroupBox* ArmyCreator::init_opt_mounts_groupbox(
         vbox_mounts->addWidget(b);
     }
     QRadioButton* none_rb = new QRadioButton(tr("None"));
-    none_rb->setObjectName(tr("None_radiobutton"));
+    none_rb->setObjectName(tr("None_mounts_radiobutton"));
     none_rb->setChecked(true);
     vbox_mounts->addWidget(none_rb);
     vbox_mounts->addStretch(1);
@@ -747,10 +798,21 @@ void ArmyCreator::on_roster_tree_currentItemChanged(QTreeWidgetItem *current, QT
         clear_unit_options_box();
         initialise_unit_options_box();
         opt_sel->reset(st->selected(), in_tree);
+        clear_magic_items_selector();
+        switch (st->selected()->unit_type()) {
+        case armies::UnitType::LORD:
+        case armies::UnitType::HERO:
+        {
+            init_magic_items_selector(st->selected());
+            break;
+        }
+        default: break;
+        }
     }
     else {
         ui->add_button->setEnabled(false);
         clear_unit_options_box();
+        clear_magic_items_selector();
     }
     ui->army_tree->clearSelection();
 }
@@ -773,11 +835,23 @@ void ArmyCreator::on_army_tree_currentItemChanged(QTreeWidgetItem *current, QTre
         ui->remove_button->setEnabled(true);
         clear_unit_options_box();
         initialise_unit_options_box();
-        opt_sel->reset(army->get_unit(current->data(0, Qt::UserRole).toInt()), in_tree);
+        int id = current->data(0, Qt::UserRole).toInt();
+        opt_sel->reset(army->get_unit(id), in_tree);
+        clear_magic_items_selector();
+        switch (army->get_unit(id)->unit_type()) {
+        case armies::UnitType::LORD:
+        case armies::UnitType::HERO:
+        {
+            init_magic_items_selector(army->get_unit(id));
+            break;
+        }
+        default: break;
+        }
     }
     else {
         ui->remove_button->setEnabled(false);
         clear_unit_options_box();
+        clear_magic_items_selector();
     }
     ui->roster_tree->clearSelection();
 }

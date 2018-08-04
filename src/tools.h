@@ -1,10 +1,12 @@
 #ifndef TOOLS_H
 #define TOOLS_H
 #include "base_unit.h"
+#include "magic_item.h"
 
 #include <cctype>
 #include <sstream>
 #include <string>
+#include <unordered_map>
 #include <utility>
 #include <vector>
 
@@ -24,6 +26,10 @@ namespace tools {
 
     std::vector<std::string> parse_item_bs(std::string s);
     std::vector<std::string> parse_item_bsp(std::string s);
+
+    std::unordered_map<std::string, item> magic_items_of(
+        const std::unordered_map<std::string, item>& items, ItemType item_type
+    );
 
     template<class InputIt, class UnaryPredicate>
     constexpr std::vector<InputIt> find_all_if(InputIt first, InputIt last, UnaryPredicate p) {

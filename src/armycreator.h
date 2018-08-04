@@ -94,6 +94,14 @@ private:
     void clear_unit_options_box();
     void initialise_unit_options_box();
 
+    void clear_magic_items_selector();
+    void init_magic_items_selector(std::shared_ptr<unit> current);
+
+    QGroupBox* setup_magic_weapons_tab(const std::unordered_map<std::string, item>& items,
+                                       std::shared_ptr<unit> current);
+    QGroupBox* setup_magic_armour_tab(const std::unordered_map<std::string, item>& items,
+                                       std::shared_ptr<unit> current);
+
     void update_unit_display(QTreeWidgetItem* item, bool adding, ArmyTreeColumn column = ArmyTreeColumn::ALL);
 
     QGroupBox* init_size_command_groupbox();

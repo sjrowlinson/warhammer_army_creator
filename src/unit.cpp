@@ -8,6 +8,10 @@ void unit::set_id(int id) { id_ = id; }
 
 double unit::points() const noexcept { return points_; }
 
+const std::shared_ptr<base_unit>& unit::base() const noexcept {
+    return base_;
+}
+
 BaseUnitType unit::base_unit_type() const noexcept {
     return base_->base_unit_type();
 }

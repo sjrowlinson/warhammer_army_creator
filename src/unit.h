@@ -52,6 +52,7 @@ public:
     > mc_extras() const noexcept = 0;
 
     // basic properties
+    const std::shared_ptr<base_unit>& base() const noexcept;
     BaseUnitType base_unit_type() const noexcept;
     std::string name() const noexcept;
     std::size_t min_size() const noexcept;

@@ -93,4 +93,18 @@ namespace tools {
         return result;
     }
 
+    std::unordered_map<std::string, item> magic_items_of(
+        const std::unordered_map<std::string, item> &items,
+        ItemType item_type
+    ) {
+        std::unordered_map<std::string, item> map;
+        auto found = tools::find_all_if(
+            items.begin(),
+            items.end(),
+            [item_type](const auto& x) { return x.second.item_type == item_type; }
+        );
+        for (auto it : found) map[it->first] = it->second;
+        return map;
+    }
+
 }
