@@ -18,6 +18,7 @@ public:
     const std::shared_ptr<base_mage_character_unit> handle;
 
     explicit mage_character_unit(std::shared_ptr<base_unit> base);
+    mage_character_unit(const mage_character_unit& other);
     ~mage_character_unit() = default;
 
     short level() const noexcept;

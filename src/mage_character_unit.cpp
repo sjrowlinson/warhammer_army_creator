@@ -4,6 +4,10 @@ mage_character_unit::mage_character_unit(std::shared_ptr<base_unit> base)
     : character_unit(base),
       handle(std::dynamic_pointer_cast<base_mage_character_unit>(base)) {}
 
+mage_character_unit::mage_character_unit(const mage_character_unit& other)
+    : character_unit(other), level_(other.level_), arcane_item_(other.arcane_item_),
+      handle(other.handle) {}
+
 short mage_character_unit::level() const noexcept {
     return level_.first;
 }
@@ -76,6 +80,7 @@ void mage_character_unit::pick_arcane_item(ItemClass item_class, std::string nam
         total_item_points_ += search->second.points;
         break;
     }
+    default: break;
     }
 }
 

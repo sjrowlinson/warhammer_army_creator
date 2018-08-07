@@ -17,6 +17,15 @@ character_unit::character_unit(std::shared_ptr<base_unit> base)
     total_item_points_ = 0.0;
 }
 
+character_unit::character_unit(const character_unit& other)
+ : unit(other), weapons_(other.weapons_), armours_(other.armours_),
+   talisman_(other.talisman_), enchanted_item_(other.enchanted_item_),
+   oco_extra_(other.oco_extra_), mc_extras_(other.mc_extras_),
+   magic_item_points_(other.magic_item_points_),
+   faction_item_points_(other.faction_item_points_),
+   total_item_points_(other.total_item_points_),
+   handle_(other.handle_) {}
+
 std::size_t character_unit::size() const noexcept { return 1U; }
 
 std::unordered_map<
@@ -145,7 +154,6 @@ void character_unit::pick_weapon(ItemClass item_type, std::string name) {
         total_item_points_ += search->second.points;
         break;
     }
-    default: break;
     }
 }
 
@@ -258,7 +266,6 @@ void character_unit::pick_armour(ItemClass item_type, std::string name) {
         total_item_points_ += search->second.points;
         break;
     }
-    default: break;
     }
 }
 
@@ -441,7 +448,6 @@ void character_unit::remove_weapon(WeaponType wt) {
         faction_item_points_ -= pts;
         total_item_points_ -= pts;
         break;
-    default: break;
     }
     points_ -= pts;
 }
@@ -469,7 +475,6 @@ void character_unit::remove_armour(ArmourType at) {
         faction_item_points_ -= pts;
         total_item_points_ -= pts;
         break;
-    default: break;
     }
     points_ -= pts;
 }

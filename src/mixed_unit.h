@@ -32,7 +32,8 @@ private:
     std::size_t slaves_size_;
 public:
     explicit mixed_unit(std::shared_ptr<base_unit> base);
-    ~mixed_unit() = default;
+    mixed_unit(const mixed_unit& other);
+    ~mixed_unit() override = default;
 
     normal_unit& master() noexcept;
     normal_unit& slave() noexcept;

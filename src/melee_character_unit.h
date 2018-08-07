@@ -13,6 +13,7 @@ public:
     const std::shared_ptr<base_melee_character_unit> handle;
 
     explicit melee_character_unit(std::shared_ptr<base_unit> base);
+    melee_character_unit(const melee_character_unit& other);
     ~melee_character_unit() = default;
 };
 

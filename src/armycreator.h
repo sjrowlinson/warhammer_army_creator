@@ -60,9 +60,8 @@ private slots:
     void on_army_tree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
 
     void on_add_button_clicked();
-
+    void on_duplicate_button_clicked();
     void on_remove_button_clicked();
-
     void on_clear_button_clicked();
 
     void optional_weapon_selected();
@@ -74,6 +73,7 @@ private slots:
     void change_unit_size();
 
     void spawn_magic_weapons_window();
+
 private:
     Ui::ArmyCreator* ui;
     armies::Faction race;
@@ -102,7 +102,12 @@ private:
     QGroupBox* setup_magic_armour_tab(const std::unordered_map<std::string, item>& items,
                                        std::shared_ptr<unit> current);
 
-    void update_unit_display(QTreeWidgetItem* item, bool adding, ArmyTreeColumn column = ArmyTreeColumn::ALL);
+    void update_unit_display(
+            QTreeWidgetItem* item,
+            bool adding,
+            ArmyTreeColumn column = ArmyTreeColumn::ALL,
+            bool copying = false
+    );
 
     QGroupBox* init_size_command_groupbox();
     QGroupBox* init_command_groupbox(

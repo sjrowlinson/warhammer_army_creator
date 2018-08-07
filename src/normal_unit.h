@@ -61,7 +61,8 @@ public:
     const std::shared_ptr<base_normal_unit> handle;
 
     explicit normal_unit(std::shared_ptr<base_unit> base);
-    ~normal_unit() = default;
+    normal_unit(const normal_unit& other);
+    ~normal_unit() override = default;
 
     // current property accessors
     std::size_t size() const noexcept;

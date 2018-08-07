@@ -7,6 +7,11 @@ mixed_unit::mixed_unit(std::shared_ptr<base_unit> base)
       slave_(std::make_shared<base_normal_unit>(handle->slave())),
       mixed_select_(MixedSelect::SLAVE) {}
 
+mixed_unit::mixed_unit(const mixed_unit& other)
+    : unit(other), handle(other.handle), master_(other.master_),
+      slave_(other.slave_), mixed_select_(other.mixed_select_),
+      master_size_(other.master_size_), slaves_size_(other.slaves_size_) {}
+
 normal_unit& mixed_unit::master() noexcept { return master_; }
 normal_unit& mixed_unit::slave() noexcept { return slave_; }
 

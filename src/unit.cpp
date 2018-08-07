@@ -3,6 +3,9 @@
 unit::unit(std::shared_ptr<base_unit> base)
     : id_(0), points_(0.0), base_(base) {}
 
+unit::unit(const unit& other)
+    : id_(other.id()), points_(other.points_), base_(other.base_) {}
+
 int unit::id() const noexcept { return id_; }
 void unit::set_id(int id) { id_ = id; }
 

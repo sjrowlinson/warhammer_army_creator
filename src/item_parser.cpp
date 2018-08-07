@@ -78,6 +78,10 @@ namespace tools {
         for (std::size_t i = 0U; i < blocks.size(); ++i) {
             std::string name = read_line(blocks[i]);
             std::vector<std::string> mits = tools::split(read_line(blocks[i] + 1), ',');
+            for (auto& x : mits) {
+                tools::remove_leading_whitespaces(x);
+                tools::remove_trailing_whitespaces(x);
+            }
             ItemType mit;
             WeaponType wt = WeaponType::NONE;
             ArmourType at = ArmourType::NONE;
@@ -96,6 +100,7 @@ namespace tools {
             item item;
             item.item_class = item_class;
             item.item_type = mit;
+            item.weapon_type = wt;
             item.armour_type = at;
             item.name = name;
             item.points = points;

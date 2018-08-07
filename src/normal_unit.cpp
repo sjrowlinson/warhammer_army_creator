@@ -19,6 +19,19 @@ normal_unit::normal_unit(std::shared_ptr<base_unit> base)
     }
 }
 
+normal_unit::normal_unit(const normal_unit& other)
+    : unit(other), model_select_(other.model_select_),
+      size_(other.size_), weapons_(other.weapons_),
+      armours_(other.armours_), oco_extra_(other.oco_extra_),
+      mc_extras_(other.mc_extras_), champ_weapons_(other.champ_weapons_),
+      champ_armours_(other.champ_armours_), champ_oco_extra_(other.champ_oco_extra_),
+      champ_mc_extras_(other.champ_mc_extras_),
+      champ_magic_item_points(other.champ_magic_item_points),
+      champ_faction_item_points(other.champ_faction_item_points),
+      champ_total_item_points(other.champ_total_item_points),
+      command_group(other.command_group),
+      banner(other.banner), handle(other.handle) {}
+
 // current property accessors
 
 std::size_t normal_unit::size() const noexcept { return size_; }

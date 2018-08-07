@@ -37,7 +37,8 @@ protected:
     const std::shared_ptr<base_character_unit> handle_;
 public:
     explicit character_unit(std::shared_ptr<base_unit> base);
-    virtual ~character_unit() = default;
+    character_unit(const character_unit& other);
+    virtual ~character_unit() override = default;
 
     std::size_t size() const noexcept;
     std::unordered_map<

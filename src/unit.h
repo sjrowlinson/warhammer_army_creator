@@ -21,6 +21,7 @@ protected:
     std::shared_ptr<base_unit> base_;
 public:
     explicit unit(std::shared_ptr<base_unit> base);
+    unit(const unit& other);
     virtual ~unit() = default;
 
     int id() const noexcept;
