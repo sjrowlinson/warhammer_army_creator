@@ -79,9 +79,67 @@ void ArmyCreator::clear_army_tree() {
         ui->army_tree->topLevelItem(i)->takeChildren();
 }
 
+void ArmyCreator::clear_unit_info_box() {
+    auto c = ui->unit_info_box->children();
+    for (auto& x : c) delete x;
+}
+
 void ArmyCreator::clear_unit_options_box() {
     auto c = ui->options_group_box->children();
     for (auto& x : c) delete x;
+}
+
+void ArmyCreator::initialise_unit_info_box() {
+    std::shared_ptr<unit> u;
+    switch (in_tree) {
+    case InTree::ARMY:
+        u = army->get_unit(ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt());
+        break;
+    case InTree::ROSTER:
+        u = st->selected();
+        break;
+    default: break;
+    }
+    // overall layout for unit info box
+    QVBoxLayout* vbox = new QVBoxLayout;
+    // TODO: add points (per model) as QLabel widgets
+    {
+        QFrame* f = new QFrame();
+        QHBoxLayout* points_label_layout = new QHBoxLayout;
+        QLabel* pre_points_label;
+        QLabel* points_label;
+        switch (u->base_unit_type()) {
+        case BaseUnitType::MAGE_CHARACTER:
+        case BaseUnitType::MELEE_CHARACTER:
+        {
+            auto p = std::dynamic_pointer_cast<character_unit>(u);
+            pre_points_label = new QLabel(tr("Points:"));
+            points_label = new QLabel(
+                QString(tools::points_str(p->points(), p->base_unit_type()).data())
+            );
+            break;
+        }
+        case BaseUnitType::NORMAL:
+        {
+            auto p = std::dynamic_pointer_cast<normal_unit>(u);
+            pre_points_label = new QLabel(tr("Points per model:"));
+            points_label = new QLabel(
+                QString(tools::points_str(p->handle->points_per_model(), BaseUnitType::NORMAL).data())
+            );
+            break;
+        }
+        default: return;
+        }
+        points_label_layout->addWidget(pre_points_label);
+        points_label_layout->addWidget(points_label);
+        f->setLayout(points_label_layout);
+        vbox->addWidget(f);
+
+    }
+    // TODO: add QTableWidget instance(s) for unit statistics
+    // TODO: add list of special rules, probably just as QLabel widget
+    ui->unit_info_box->setLayout(vbox);
+
 }
 
 void ArmyCreator::optional_weapon_selected() {
@@ -885,16 +943,18 @@ void ArmyCreator::on_roster_tree_currentItemChanged(QTreeWidgetItem *current, QT
     ui->army_tree->setCurrentItem(ui->army_tree->topLevelItem(0));
     ui->army_tree->clearSelection();
     ui->roster_tree->setCurrentItem(current);
+    clear_unit_info_box();
+    clear_unit_options_box();
+    clear_magic_items_selector();
     std::string name = current->text(0).toStdString();
     if (name != "Lords" && name != "Heroes" && name != "Core" &&
             name != "Special" && name != "Rare") {
         st->change_selection(name);
         in_tree = InTree::ROSTER;
         ui->add_button->setEnabled(true);
-        clear_unit_options_box();
+        initialise_unit_info_box();
         initialise_unit_options_box();
         opt_sel->reset(st->selected(), in_tree);
-        clear_magic_items_selector();
         switch (st->selected()->unit_type()) {
         case armies::UnitType::LORD:
         case armies::UnitType::HERO:
@@ -909,8 +969,6 @@ void ArmyCreator::on_roster_tree_currentItemChanged(QTreeWidgetItem *current, QT
     }
     else {
         ui->add_button->setEnabled(false);
-        clear_unit_options_box();
-        clear_magic_items_selector();
     }
     ui->duplicate_button->setEnabled(false);
     ui->remove_button->setEnabled(false);
@@ -930,17 +988,19 @@ void ArmyCreator::on_army_tree_currentItemChanged(QTreeWidgetItem *current, QTre
     ui->roster_tree->setCurrentItem(ui->roster_tree->topLevelItem(0));
     ui->roster_tree->clearSelection();
     ui->army_tree->setCurrentItem(current);
+    clear_unit_info_box();
+    clear_unit_options_box();
+    clear_magic_items_selector();
     std::string name = current->text(0).toStdString();
     if (name != "Lords" && name != "Heroes" && name != "Core" &&
             name != "Special" && name != "Rare") {
         in_tree = InTree::ARMY;
         ui->duplicate_button->setEnabled(true);
         ui->remove_button->setEnabled(true);
-        clear_unit_options_box();
+        initialise_unit_info_box();
         initialise_unit_options_box();
         int id = current->data(0, Qt::UserRole).toInt();
         opt_sel->reset(army->get_unit(id), in_tree);
-        clear_magic_items_selector();
         switch (army->get_unit(id)->unit_type()) {
         case armies::UnitType::LORD:
         case armies::UnitType::HERO:
@@ -956,8 +1016,6 @@ void ArmyCreator::on_army_tree_currentItemChanged(QTreeWidgetItem *current, QTre
     else {
         ui->duplicate_button->setEnabled(false);
         ui->remove_button->setEnabled(false);
-        clear_unit_options_box();
-        clear_magic_items_selector();
     }
 }
 
@@ -1009,12 +1067,11 @@ void ArmyCreator::on_duplicate_button_clicked() {
     }
     default: return;
     }
-    ++id_counter;
-    cpy_ptr->set_id(id_counter);
+    cpy_ptr->set_id(id_counter++);
     army->add_unit(cpy_ptr);
     ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
     QTreeWidgetItem* item = new QTreeWidgetItem();
-    QVariant v(id_counter);
+    QVariant v(cpy_ptr->id());
     item->setData(0, Qt::UserRole, v);
     update_unit_display(item, true, ArmyTreeColumn::ALL, true);
     clear_unit_options_box();

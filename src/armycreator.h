@@ -90,6 +90,9 @@ private:
     // army tree modifying
     void clear_army_tree();
 
+    void clear_unit_info_box();
+    void initialise_unit_info_box();
+
     // unit options box modifying
     void clear_unit_options_box();
     void initialise_unit_options_box();
