@@ -8,11 +8,593 @@ General of The Empire
     4 5 5 4 4 3 5 3 9
     Hold the Line!
     Armour: Light armour {Mundane} [Armour]
-    Additional hand weapon {Mundane} [Melee] (3), Great weapon {Mundane} [Melee] (6), Lance {Mundane} [Melee] (7), Handgun {Mundane} [Ballistic] (5), Longbow {Mundane} [Ballistic] (5), Pistol {Mundane} [Ballistic] (5)
+    Additional hand weapon {Mundane} [Melee] (3), Great weapon {Mundane} [Melee] (6), Lance {Mundane} [Melee] (7), Handgun {Mundane} [Ballistic] (6), Longbow {Mundane} [Ballistic] (5), Pistol {Mundane} [Ballistic] (5)
     Full plate armour {Mundane} [Armour] (9), Heavy armour {Mundane} [Armour] (4), Shield {Mundane} [Shield] (3)
     Imperial Griffon {Monster} [170], Imperial Pegasus {Monstrous Creature} [45], Warhorse {Cavalry} [18]
     None
     None
     100
+    0
     100
+
+Battle Wizard Lord
+    Lord, Mage
+    3
+    4 [35]
+    All
+    Infantry
+    165
+    1, 1
+    4 3 3 3 4 3 3 1 8
+    None
+    None
+    None
+    None
+    Imperial Pegasus {Monstrous Beast} [45], Warhorse {Cavalry} [18], Celestial Hurricanum {Warmachine} [125], Luminark of Hysh {Warmachine} [120], Imperial Griffon {Monster} [170]
+    None
+    None
     100
+    0
+    100
+
+Arch Lector
+    Lord, Melee
+    Infantry
+    100
+    1, 1
+    4 4 4 4 4 3 4 2 9
+    Battle Prayers, Divine Power, Righteous Fury
+    Armour: Light armour {Mundane} [Armour]
+    Additional hand weapon {Mundane} [Melee] (2), Great weapon {Mundane} [Melee] (5)
+    Heavy armour {Mundane} [Armour] (4), Shield {Mundane} [Shield] (4)
+    The War Altar of Sigmar {Warmachine} [150], Warhorse {Cavalry} [18]
+    None
+    None
+    100
+    0
+    100
+
+Grand Master
+    Lord, Melee
+    Cavalry
+    155
+    1, 1
+    4 6 6 4 4 3 6 4 9
+    Immune to Psychology, Master of Battle
+    Armour: Full plate armour {Mundane} [Armour]
+    Great weapon {Mundane} [Melee] (6), Lance {Mundane} [Melee] (7)
+    Shield {Mundane} [Shield] (4)
+    None
+    None
+    None
+    100
+    0
+    100
+
+# Heroes
+
+Captain of The Empire
+    Hero, Melee
+    Infantry
+    60
+    1, 1
+    4 5 5 4 4 2 5 3 8
+    Hold the Line!
+    Armour: Light armour {Mundane} [Armour]
+    Additional hand weapon {Mundane} [Melee] (3), Great weapon {Mundane} [Melee] (6), Lance {Mundane} [Melee] (7), Handgun {Mundane} [Ballistic] (6), Longbow {Mundane} [Ballistic] (5), Pistol {Mundane} [Ballistic] (5)
+    Full plate armour {Mundane} [Armour] (6), Heavy armour {Mundane} [Armour] (2), Shield {Mundane} [Shield] (2)
+    Imperial Pegasus {Monstrous Beast} [45], Warhorse {Cavalry} [12]
+    None
+    Battle Standard Bearer {True} [25]
+    50
+    0
+    50
+
+Battle Wizard
+    Hero, Mage
+    1
+    2 [35]
+    All
+    Infantry
+    65
+    1, 1
+    4 3 3 3 3 2 3 1 7
+    None
+    None
+    None
+    None
+    Warhorse {Cavalry} [12]
+    None
+    None
+    50
+    0
+    50
+
+Warrior Priest
+    Hero, Melee
+    Infantry
+    65
+    1, 1
+    4 4 4 4 4 2 4 2 8
+    Battle Prayers, Divine Power, Righteous Fury
+    Armour: Light armour {Mundane} [Armour]
+    Additional hand weapon {Mundane} [Melee] (2), Great weapon {Mundane} [Melee] (5)
+    Heavy armour {Mundane} [Armour] (2), Shield {Mundane} [Shield] (2)
+    Warhorse {Cavalry} [12]
+    None
+    None
+    50
+    0
+    50
+
+Master Engineer
+    Hero, Melee
+    Infantry
+    65
+    1, 1
+    4 3 4 3 3 2 3 1 7
+    Master of Ballistics, 'Stand back, Sir!'
+    None
+    Grenade launching blunderbuss {Mundane} [Ballistic] (10), Hochland long rifle {Mundane} [Ballistic] (20), Pigeon bombs {Mundane} [Ballistic] (20), Repeater handgun {Mundane} [Ballistic] (10), Repeater pistol {Mundane} [Ballistic] (10)
+    Light armour {Mundane} [Armour] (1)
+    Mechanical Steed {Warbeast} [25], Warhorse {Warbeast} [12]
+    None
+    None
+    50
+    0
+    50
+
+Witch Hunter
+    Hero, Melee
+    Infantry
+    50
+    1, 1
+    4 4 4 4 4 2 4 2 8
+    Accusation, Grim Resolve, Magic Resistance (2), Tools of Judgement
+    Weapon: Pistol {Mundane} [Ballistic], Armour: Light armour {Mundane} [Armour]
+    Brace of pistols {Mundane} [Ballistic] (5), Great weapon {Mundane} [Melee] (5)
+    None
+    None
+    None
+    None
+    50
+    0
+    50
+
+# Core
+
+# TODO: figure out additional parsing and unit arrangements for smart handling of Detachments
+
+Halberdiers
+    Core, Infantry, Normal
+    6
+    10, None
+    4 3 3 3 3 1 3 1 7
+    4 3 3 3 3 1 3 2 7
+    Detachment, Regimental Unit
+    Detachment, Regimental Unit
+    Weapon: Halberd {Mundane} [Melee], Armour: Light armour {Mundane} [Armour]
+    None
+    None
+    None
+    Shields {Mundane} [Shield] (1)
+    None
+    None
+    None
+    Detachment {True} [0]
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Sergeant [10]
+    0
+    0
+    0
+    0
+
+Spearmen
+    Core, Infantry, Normal
+    5
+    10, None
+    4 3 3 3 3 1 3 1 7
+    4 3 3 3 3 1 3 2 7
+    Detachment, Regimental Unit
+    Detachment, Regimental Unit
+    Weapon: Spear {Mundane} [Melee], Armour: Light armour {Mundane} [Armour]
+    None
+    None
+    None
+    Shields {Mundane} [Shield] (1)
+    None
+    None
+    None
+    Detachment {True} [0]
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Sergeant [10]
+    0
+    0
+    0
+    0
+
+Swordsmen
+    Core, Infantry, Normal
+    7
+    10, None
+    4 4 3 3 3 1 3 1 7
+    4 4 3 3 3 1 3 2 7
+    Detachment, Regimental Unit
+    Detachment, Regimental Unit
+    Armour: Light armour {Mundane} [Armour], Armour: Shield {Mundane} [Shield]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Detachment {True} [0]
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Duellist [10]
+    0
+    0
+    0
+    0
+
+Crossbowmen
+    Core, Infantry, Normal
+    9
+    10, None
+    4 3 3 3 3 1 3 1 7
+    4 3 4 3 3 1 3 1 7
+    Detachment, Regimental Unit
+    Detachment, Regimental Unit
+    Weapon: Crossbow {Mundane} [Ballistic]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Detachment {True} [0]
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Marksman [10]
+    0
+    0
+    0
+    0
+
+Handgunners
+    Core, Infantry, Normal
+    9
+    10, None
+    4 3 3 3 3 1 3 1 7
+    4 3 4 3 3 1 3 1 7
+    Detachment, Regimental Unit
+    Detachment, Regimental Unit
+    Weapon: Handgun {Mundane} [Ballistic]
+    None
+    None
+    Brace of pistols {Mundane} [Ballistic] (5), Hochland long rifle {Mundane} [Ballistic] (20), Repeater handgun {Mundane} [Ballistic] (10)
+    None
+    None
+    None
+    None
+    Detachment {True} [0]
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Marksman [10]
+    0
+    0
+    0
+    0
+
+Archers
+    Core, Infantry, Normal
+    7
+    10, None
+    4 3 3 3 3 1 3 1 7
+    4 3 4 3 3 1 3 1 7
+    Detachment, Regimental Unit, Skirmishers
+    Detachment, Regimental Unit, Skirmishers
+    Weapon: Bow {Mundane} [Ballistic]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Detachment {True} [0]
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Marksman [10]
+    0
+    0
+    0
+    0
+
+Free Company Militia
+    Core, Infantry, Normal
+    6
+    10, None
+    4 3 3 3 3 1 3 1 7
+    4 3 3 3 3 1 3 2 7
+    Detachment
+    Detachment
+    Weapon: Two hand weapons {Mundane} [Melee]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Militia Leader [10]
+    0
+    0
+    0
+    0
+
+Knightly Orders
+    Core, Cavalry, Normal
+    22
+    5, None
+    4 4 3 3 3 1 4 1 7
+    4 4 3 3 3 1 4 2 7
+    Barding
+    Barding
+    Weapon: Lance {Mundane} [Melee], Armour: Full plate armour {Mundane} [Armour], Armour: Shield {Mundane} [Shield]
+    None
+    Great weapons {Mundane} [Melee] (0)
+    None
+    None
+    None
+    None
+    None
+    Inner Circle Knights {False} [3]
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Preceptor [10]
+    0
+    0
+    0
+    50
+
+# Special
+
+Greatswords
+    Special, Infantry, Normal
+    11
+    10, None
+    4 4 3 3 3 1 3 1 8
+    4 4 3 3 3 1 3 2 8
+    Regimental Unit, Stubborn
+    Regimental Unit, Stubborn
+    Weapon: Great weapon {Mundane} [Melee], Armour: Full plate armour {Mundane} [Armour]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Count's Champion [10]
+    0
+    0
+    0
+    50
+
+Demigryph Knights
+    Special, Monstrous Cavalry, Normal
+    58
+    3, None
+    4 4 3 4 3 1 3 1 8
+    4 4 3 4 3 1 3 2 8
+    Fear, Barding
+    Fear, Barding
+    Weapon: Lance {Mundane} [Melee], Armour: Full plate armour {Mundane} [Armour], Armour: Shield {Mundane} [Shield]
+    None
+    Halberds {Mundane} [Melee] (0)
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Inner Circle Preceptor [10]
+    0
+    0
+    0
+    50
+
+Reiksguard Knights
+    Special, Cavalry, Normal
+    27
+    5, None
+    4 4 3 4 3 1 3 1 8
+    4 4 3 4 3 1 3 2 8
+    Stubborn, Barding
+    Stubborn, Barding
+    Weapon: Lance {Mundane} [Melee], Armour: Full plate armour {Mundane} [Armour], Armour: Shield {Mundane} [Shield]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Reikscaptain [10]
+    0
+    0
+    0
+    50
+
+Huntsmen
+    Special, Infantry, Normal
+    8
+    10, None
+    4 3 3 3 3 1 3 1 7
+    4 3 4 3 3 1 3 1 7
+    Scouts, Skirmishers
+    Scouts, Skirmishers
+    Weapon: Bow {Mundane} [Ballistic]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Detachment {True} [0]
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Tracker [10]
+    0
+    0
+    0
+    0
+
+Pistoliers
+    Special, Cavalry, Normal
+    18
+    5, None
+    4 3 3 3 3 1 3 1 7
+    4 3 4 3 3 1 3 1 7
+    Fast Cavalry
+    Fast Cavalry
+    Weapon: Brace of pistols {Mundane} [Ballistic], Armour: Light armour {Mundane} [Armour]
+    None
+    None
+    Brace of pistols including a repeater pistol {Mundane} [Ballistic] (10), Repeater Handgun {Mundane} [Ballistic] (10)
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Outrider [10]
+    0
+    0
+    0
+    0
+
+Outriders
+    Special, Cavalry, Normal
+    21
+    5, None
+    4 3 4 3 3 1 3 1 7
+    4 3 5 3 3 1 3 1 7
+    Fast Cavalry
+    Fast Cavalry
+    Weapon: Repeater handgun {Mundane} [Ballistic], Armour: Light armour {Mundane} [Armour]
+    None
+    None
+    Brace of pistols including a repeater pistol {Mundane} [Ballistic] (10), Grenade launching blunderbuss {Mundane} [Ballistic] (10)
+    None
+    None
+    None
+    None
+    Barding {False} [1]
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Sharpshooter [10]
+    0
+    0
+    0
+    0
+
+Great Cannon
+    Special, Warmachine, Normal
+    120
+    1, 1
+    0 0 0 0 7 3 0 0 0
+    4 3 3 3 3 1 3 1 7
+    None
+    None
+    None
+
+Mortar
+    Special, Warmachine, Normal
+    100
+    1, 1
+    0 0 0 0 7 3 0 0 0
+    4 3 3 3 3 1 3 1 7
+    Mortar Shells
+    None
+    None
+
+Flagellants
+    Special, Infantry, Normal
+    12
+    10, None
+    4 3 3 3 3 1 3 1 7
+    4 3 3 3 3 1 3 2 7
+    The End is Nigh!, Frenzy, Unbreakable
+    The End is Nigh!, Frenzy, Unbreakable
+    Weapon: Flail {Mundane} [Melee]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Champion: Prophet of Doom [10]
+    0
+    0
+    0
+    0
+
+# Rare
+
+Helblaster Volley Gun
+    Rare, Warmachine, Normal
+    120
+    1, 1
+    0 0 0 0 7 3 0 0 0
+    4 3 3 3 3 1 3 1 7
+    Volley Gun
+    None
+    None
+
+Helstorm Rocket Battery
+    Rare, Warmachine, Normal
+    120
+    1, 1
+    0 0 0 0 7 3 0 0 0
+    4 3 3 3 3 1 3 1 7
+    Helstorm Rockets
+    None
+    None
+
+Steam Tank
+    Rare, Chariot, Normal
+    250
+    1, 1
+    0 3 4 3 0 0 3 1 7
+    0 0 0 6 6 10 0 0 0
+    Large Target, Random Movement (variable), Steam Points, Steel Behemoth, Terror, Unbreakable, Armour Save (1+)
+    None
+    Hochland long rifle {True} [20]
+
+Celestial Hurricanum
+    Rare, Chariot, Normal
+    130
+    1, 1
+    0 3 3 3 0 0 3 1 7
+    0 0 0 5 5 5 0 0 0
+    Large Target, Locus of Azyr, Portents of Battle, Storm of Shemtek, Armour Save (5+)
+    None
+    None
+
+Luminark of Hysh
+    Rare, Chariot, Normal
+    120
+    1, 1
+    0 3 3 3 0 0 3 1 7
+    0 0 0 5 5 5 0 0 0
+    Aura of Protection, Large Target, Locus of Hysh, Solheim's Bolt of Illumination, Armour Save (5+)
+    None
+    None
