@@ -299,7 +299,6 @@ namespace tools {
                     switch (category) {
                     case armies::UnitClass::MONSTER:
                     case armies::UnitClass::SWARM:
-                    case armies::UnitClass::MONSTROUS_BEAST:
                         units.push_back(
                                   std::make_shared<base_normal_unit>(
                                       parse_minimal_normal_unit(i, ut, category)
@@ -307,6 +306,7 @@ namespace tools {
                               );
                         break;
                     case armies::UnitClass::WARMACHINE:
+                    case armies::UnitClass::CHARIOT:
                         units.push_back(
                                   std::make_shared<base_normal_unit>(
                                       parse_warmachine(i, ut, category)

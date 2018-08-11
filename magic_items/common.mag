@@ -24,6 +24,96 @@ Ogre Blade
     Close combat attacks made with this sword are resolved at +2 Strength.
     None
 
+Sword of Strife
+    Weapon, Melee
+    40
+    The wielder of the Sword of Strife has +2 Attacks.
+    None
+
+Fencer's Blades
+    Weapon, Melee
+    35
+    Paired weapons. The bearer has Weapon Skill 10.
+    None
+
+Sword of Anti-Heroes
+    Weapon, Melee
+    30
+    The bearer has +1 Strength and +1 Attack for every enemy character in base contact with him or his unit. These bonuses are calculated at the start of each round of close combat and last until its end.
+    None
+
+Spellthieving Sword
+    Weapon, Melee
+    25
+    A Wizard that suffers unsaved wounds from the Spellthieving Sword loses one of his spells (determined randomly) for each unsaved wound.
+    None
+
+Sword of Swift Slaying
+    Weapon, Melee
+    25
+    The wielder of the Sword of Swift Slaying has the Always Strike First special rule.
+    None
+
+Sword of Battle
+    Weapon, Melee
+    20
+    The wielder has +1 Attack.
+    None
+
+Berserker Sword
+    Weapon, Melee
+    20
+    The bearer has the Frenzy special rule and can never lose his Frenzy.
+    None
+
+Sword of Might
+    Weapon, Melee
+    20
+    Close combat attacks made with this sword are resolved at +1 Strength.
+    None
+
+Gold Sigil Sword
+    Weapon, Melee
+    15
+    Attacks from the Gold Sigil Sword are made at Initiative 10.
+    None
+
+Sword of Striking
+    Weapon, Melee
+    15
+    Attacks with the Sword of Striking receive a +1 bonus to hit.
+    None
+
+Biting Blade
+    Weapon, Melee
+    10
+    Close combat attacks made by the Biting Blade are armour piercing.
+    None
+
+Relic Sword
+    Weapon, Melee
+    10
+    Attacks made with the Relic Sword will always wound on 5+, unless they would normally need a lower result.
+    None
+
+Shrieking Blade
+    Weapon, Melee
+    10
+    The bearer causes Fear.
+    None
+
+Tormentor Sword
+    Weapon, Melee
+    5
+    A monster or character that suffers an unsaved wound from the Tormentor Sword has the Stupidity special rule for the rest of the game.
+    None
+
+Warrior Bane
+    Weapon, Melee
+    5
+    A monster or character that suffers unsaved wounds from Warrior Bane permanently loses one Attack for each unsaved wound (to a minimum of Attacks 1).
+    None
+
 # Magic Armour
 
 Armour of Destiny
@@ -42,4 +132,66 @@ Armour of Silvered Steel
     Armour, Armour
     45
     The Armour of Silvered Steel grants its wearer a 2+ armour save that cannot be improved by any means.
+    None
+
+Armour of Fortune
+    Armour, Armour
+    35
+    Heavy armour. The Armour of Fortune grants the wearer a 5+ ward save.
+    None
+
+Helm of Discord
+    Armour, Helmet
+    30
+    D
+    None
+
+Glittering Scales
+    Armour, Armour
+    25
+    Light armour. Enemies suffer a -1 to hit penalty when attempting to strike the wearer in close combat.
+    None
+
+Shield of Ptolos
+    Armour, Shield
+    25
+    Shield. The bearer has a +1 armour save against shooting attacks.
+    None
+
+Spellshield
+    Armour, Shield
+    20
+    Shield. The bearer gains Magic Resistance (1).
+    None
+
+Gambler's Armour
+    Armour, Armour
+    20
+    Heavy armour. The Gambler's Armour grants the wearer a 6+ ward save.
+    None
+
+Dragonhelm
+    Armour, Helmet
+    10
+    The wearer counts his armour save as being one point higher than normal. The wearer has a 2+ ward save against flaming attacks.
+    None
+
+Enchanted Shield
+    Armour, Shield
+    5
+    Shield. The bearer counts his armour save as being two points higher than normal, rather than the usual one point that a shield would normally grant.
+    None
+
+Charmed Shield
+    Armour, Shield
+    5
+    Shield. One use only. The first hit suffered by the bearer of the Charmed Shield is discounted on a roll of 2+.
+    None
+
+# Talismans
+
+Talisman of Preservation
+    Talisman
+    45
+    The Talisman of Preservation grants the bearer a 4+ ward save.
     None

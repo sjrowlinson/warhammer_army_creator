@@ -33,9 +33,9 @@ protected:
     double magic_item_points_;
     double faction_item_points_;
     double total_item_points_;
-
-    const std::shared_ptr<base_character_unit> handle_;
 public:
+    const std::shared_ptr<base_character_unit> handle_;
+
     explicit character_unit(std::shared_ptr<base_unit> base);
     character_unit(const character_unit& other);
     virtual ~character_unit() override = default;

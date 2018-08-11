@@ -1,0 +1,520 @@
+# Lords
+
+Prince
+    Lord, Melee
+    Infantry
+    140
+    1, 1
+    5 7 7 4 3 3 8 4 10
+    Always Strikes First, Martial Prowess, Valour of Ages
+    Armour: Light armour {Mundane} [Armour]
+    Additional hand weapon {Mundane} [Melee] (3), Halberd {Mundane} [Melee] (3), Lance {Mundane} [Melee] (7), Spear {Mundane} [Melee] (3), Great weapon {Mundane} [Melee] (6), Longbow {Mundane} [Ballistic] (5)
+    Heavy armour {Mundane} [Armour] (6), Dragon armour {Mundane} [Armour] (20), Shield {Mundane} [Shield] (3)
+    Elven Steed {Cavalry} [20], Great Eagle {Monstrous Beast} [50], Griffon {Monster} [150], Tiranoc Chariot {Chariot} [70], Sun Dragon {Monster} [235], Moon Dragon {Monster} [300], Star Dragon {Monster} [390]
+    None
+    Lion Cloak {True} [6]
+    100
+    0
+    100
+
+Archmage
+    Lord, Mage
+    3
+    4 [35]
+    High Magic, Fire
+    Infantry
+    185
+    1, 1
+    5 4 4 3 3 3 5 1 9
+    Always Strikes First, Lileath's Blessing, Martial Prowess, Valour of Ages
+    None
+    None
+    None
+    Elven Steed {Cavalry} [20], Great Eagle {Monstrous Beast} [50], Tiranoc Chariot {Chariot} [70], Sun Dragon {Monster} [235], Moon Dragon {Monster} [300], Star Dragon {Monster} [390]
+    None
+    None
+    100
+    0
+    100
+
+Anointed of Asuryan
+    Lord, Melee
+    Infantry
+    210
+    1, 1
+    5 7 6 4 3 3 8 3 9
+    Always Strikes First, Blessings of Asuryan, Fear, Magic Resistance (2), Martial Prowess, Valour of Ages, Witness to Destiny
+    Weapon: Halberd {Mundane} [Melee], Armour: Heavy armour {Mundane} [Armour]
+    None
+    None
+    Flamespyre Phoenix {Monstrous Beast} [225], Frostheart Phoenix {Monstrous Beast} [240]
+    None
+    None
+    100
+    0
+    100
+
+Loremaster of Hoeth
+    Lord, Mage
+    2
+    None
+    All
+    Infantry
+    230
+    1, 1
+    5 6 4 4 3 3 7 3 9
+    Always Strikes First, Deflect Shots, Martial Prowess, Valour of Ages
+    Weapon: Great weapon {Mundane} [Melee], Armour: Heavy armour {Mundane} [Armour]
+    None
+    None
+    None
+    None
+    None
+    100
+    0
+    100
+
+# Heroes
+
+Noble
+    Hero, Melee
+    Infantry
+    70
+    1, 1
+    5 6 6 4 3 2 7 3 9
+    Always Strikes First, Martial Prowess, Valour of Ages
+    Armour: Light armour {Mundane} [Melee]
+    Additional hand weapon {Mundane} [Melee] (2), Halberd {Mundane} [Melee] (2), Lance {Mundane} [Melee] (6), Spear {Mundane} [Melee] (2), Great weapon {Mundane} [Melee] (4), Longbow {Mundane} [Ballistic] (5)
+    Heavy armour {Mundane} [Armour] (4), Dragon armour {Mundane} [Armour] (10), Shield {Mundane} [Shield] (2)
+    Elven Steed {Cavalry} [20], Great Eagle {Monstrous Beast} [50], Griffon {Monster} [150], Tiranoc Chariot {Chariot} [70]
+    None
+    Lion Cloak {True} [4], Battle Standard Bearer {True} [25]
+    50
+    0
+    50
+
+Mage
+    Hero, Mage
+    1
+    2 [35]
+    High Magic, Fire
+    Infantry
+    185
+    1, 1
+    5 4 4 3 3 3 5 1 9
+    Always Strikes First, Lileath's Blessing, Martial Prowess, Valour of Ages
+    None
+    None
+    None
+    Elven Steed {Cavalry} [20], Tiranoc Chariot {Chariot} [70]
+    None
+    None
+    50
+    0
+    50
+
+Dragon Mage of Caledor
+    Hero, Mage
+    1
+    2 [35]
+    Fire
+    Monster
+    350
+    1, 1
+    5 4 4 3 3 2 6 2 8
+    Always Strikes First, Martial Prowess, Reckless, Valour of Ages, Warrior Mage
+    None
+    None
+    Dragon armour {Mundane} [Armour] (10)
+    None
+    None
+    None
+    50
+    0
+    50
+
+Lothern Sea Helm
+    Hero, Melee
+    Infantry
+    100
+    1, 1
+    5 6 6 4 3 2 7 2 9
+    Always Strikes First, Martial Prowess, Naval Discipline, Valour of Ages, Windrider
+    Weapon: Spear {Mundane} [Melee], Armour: Light armour {Mundane} [Armour], Armour: Shield {Mundane} [Shield]
+    Bow {Mundane} [Ballistic] (4)
+    None
+    Lothern Skycutter {Chariot} [95]
+    None
+    Battle Standard Bearer {True} [25]
+    50
+    0
+    50
+
+Handmaiden of the Everqueen
+    Hero, Melee
+    Infantry
+    95
+    1, 1
+    5 5 7 4 3 2 7 2 9
+    Always Strikes First, Martial Prowess, Quicksilver Shot, Valour of Ages
+    Weapon: Spear {Mundane} [Melee], Weapon: Bow of Avelorn {Mundane} [Ballistic], Armour: Light armour {Mundane} [Armour]
+    None
+    None
+    None
+    None
+    None
+    50
+    0
+    50
+
+# Core
+
+Spearmen
+    Core, Infantry, Normal
+    9
+    10, None
+    5 4 4 3 3 1 5 1 8
+    5 4 4 3 3 1 5 2 8
+    Always Strikes First, Martial Prowess, Valour of Ages
+    Always Strikes First, Martial Prowess, Valour of Ages
+    Weapon: Spear {Mundane} [Melee], Armour: Light armour {Mundane} [Armour], Armour: Shield {Mundane} [Shield]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Sentinel [10]
+    0
+    0
+    0
+    25
+
+Archers
+    Core, Infantry, Normal
+    10
+    10, None
+    5 4 4 3 3 1 5 1 8
+    5 4 5 3 3 1 5 1 8
+    Always Strikes First, Martial Prowess, Valour of Ages
+    Always Strikes First, Martial Prowess, Valour of Ages
+    Weapon: Longbow {Mundane} [Ballistic]
+    None
+    None
+    None
+    Light armour {Mundane} [Armour] (1)
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Hawkeye [10]
+    0
+    0
+    0
+    0
+
+Lothern Sea Guard
+    Core, Infantry, Normal
+    11
+    10, None
+    5 4 4 3 3 1 5 1 8
+    5 4 4 3 3 1 5 2 8
+    Always Strikes First, Martial Prowess, Valour of Ages
+    Always Strikes First, Martial Prowess, Valour of Ages
+    Weapon: Spear {Mundane} [Melee], Weapon: Bow {Mundane} [Ballistic], Armour: Light armour {Mundane} [Armour]
+    None
+    None
+    None
+    Shields {Mundane} [Shield] (1)
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Sea Master [10]
+    0
+    0
+    0
+    0
+
+Silver Helms
+    Core, Cavalry, Normal
+    21
+    5, None
+    5 4 4 3 3 1 5 1 8
+    5 4 4 3 3 1 5 2 8
+    Always Strikes First, Martial Prowess, Valour of Ages
+    Always Strikes First, Martial Prowess, Valour of Ages
+    Weapon: Lance {Mundane} [Melee], Armour: Heavy armour {Mundane} [Armour]
+    None
+    None
+    None
+    Shields {Mundane} [Shield] (2)
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: High Helm [10]
+    0
+    0
+    0
+    0
+
+Ellyrian Reavers
+    Core, Cavalry, Normal
+    16
+    5, None
+    5 4 4 3 3 1 5 1 8
+    5 4 5 3 3 1 5 1 8
+    Always Strikes First, Martial Prowess, Valour of Ages, Fast Cavalry
+    Always Strikes First, Martial Prowess, Valour of Ages, Fast Cavalry
+    Weapon: Spear {Mundane} [Melee], Armour: Light armour {Mundane} [Armour]
+    None
+    Bows {Mundane} [Ballistic] (3)
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Harbinger [10]
+    0
+    0
+    0
+    0
+
+# Special
+
+Lion Chariot of Chrace
+    Special, Chariot, Normal
+    120
+    1, 1
+    0 5 4 4 0 0 5 1 8
+    0 0 0 5 4 4 0 0 0
+    Armour Save (4+), Great weapon (crew only), Always Strikes First, Fear, Stubborn, Valour of Ages
+    None
+    None
+
+White Lions of Chrace
+    Special, Infantry, Normal
+    13
+    10, None
+    5 5 4 4 3 1 5 1 8
+    5 5 4 4 3 1 5 2 8
+    Always Strikes First, Forest Strider, Martial Prowess, Stubborn, Valour of Ages
+    Always Strikes First, Forest Strider, Martial Prowess, Stubborn, Valour of Ages
+    Weapon: Great weapon {Mundane} [Melee], Armour: Heavy armour {Mundane} [Armour]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Guardian [10]
+    25
+    0
+    25
+    50
+
+Swordmasters of Hoeth
+    Special, Infantry, Normal
+    13
+    5, None
+    5 6 4 3 3 1 5 2 8
+    5 6 4 3 3 1 5 3 8
+    Always Strikes First, Deflect Shots, Martial Prowess, Valour of Ages
+    Always Strikes First, Deflect Shots, Martial Prowess, Valour of Ages
+    Weapon: Great weapon {Mundane} [Melee], Armour: Heavy armour {Mundane} [Armour]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Bladelord [10]
+    25
+    0
+    25
+    50
+
+Shadow Warriors
+    Special, Infantry, Normal
+    14
+    5, None
+    5 5 5 3 3 1 5 1 8
+    5 5 5 3 3 1 5 2 8
+    Always Strikes First, Hatred (Dark Elves), Martial Prowess, Scouts, Skirmishers, Valour of Ages
+    Always Strikes First, Hatred (Dark Elves), Martial Prowess, Scouts, Skirmishers, Valour of Ages
+    Weapon: Longbow {Mundane} [Ballistic], Armour: Light armour {Mundane} [Armour]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Champion: Shadow-walker [10]
+    25
+    0
+    25
+    0
+
+Phoenix Guard
+    Special, Infantry, Normal
+    15
+    10, None
+    5 5 4 3 3 1 6 1 9
+    5 5 4 3 3 1 6 2 9
+    Always Strikes First, Fear, Martial Prowess, Valour of Ages, Witness to Destiny
+    Always Strikes First, Fear, Martial Prowess, Valour of Ages, Witness to Destiny
+    Weapon: Halberd {Mundane} [Melee], Armour: Heavy armour {Mundane} [Armour]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Keeper of the Flame [10]
+    25
+    0
+    25
+    50
+
+Dragon Princes of Caledor
+    Special, Cavalry, Normal
+    29
+    5, None
+    5 5 4 3 3 1 6 2 9
+    5 5 4 3 3 1 6 3 9
+    Always Strikes First, Martial Prowess, Valour of Ages
+    Always Strikes First, Martial Prowess, Valour of Ages
+    Weapon: Lance {Mundane} [Melee], Armour: Dragon armour {Mundane} [Armour], Armour: Shield {Mundane} [Armour]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Drakemaster [10]
+    50
+    0
+    0
+    75
+
+Lothern Skycutter
+    Special, Chariot, Normal
+    95
+    1, 1
+    0 4 4 3 0 0 5 1 8
+    0 0 0 5 4 4 0 0 0
+    Armour Save (4+), Spears (crew only), Bows (crew only), Always Strikes First, Fly, Valour of Ages
+    None
+    Eagle Eye Bolt Thrower {True} [25]
+
+Tiranoc Chariot
+    Special, Chariot, Normal
+    70
+    1, 1
+    0 4 4 3 0 0 5 1 8
+    0 0 0 5 4 4 0 0 0
+    Armour Save (5+), Spears (crew only), Longbows (crew only), Always Strikes First, Valour of Ages
+    None
+    None
+
+# Rare
+
+Eagle Claw Bolt Thrower
+    Rare, Warmachine, Normal
+    70
+    1, 1
+    0 0 0 0 7 2 0 0 0
+    5 4 4 3 3 1 5 1 8
+    Repeater Bolt Thrower, Always Strikes First, Martial Prowess, Valour of Ages
+    None
+    None
+
+Great Eagle
+    Rare, Monstrous Beast, Normal
+    50
+    1, None
+    2 5 0 4 4 3 4 2 8
+    2 5 0 4 4 3 4 2 8
+    Fly
+    Fly
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Swiftsense {False} [10], Shredding Talons {False} [5]
+    None
+    None
+    0
+    0
+    0
+    0
+
+Flamespyre Phoenix
+    Rare, Monster, Normal
+    225
+    1, 1
+    2 5 0 5 5 5 4 3 8
+    Attuned to Magic, Fireborn, Flaming Attacks, Fly, Large Target, Phoenix Reborn, Terror, Wake of Fire
+    None
+    None
+
+Frostheart Phoenix
+    Rare, Monster, Normal
+    240
+    1, 1
+    2 5 0 5 5 5 4 3 8
+    Attuned to Magic, Blizzard Aura, Fly, Large Target, Natural Armour (5+), Terror
+    None
+    None
+
+Sisters of Avelorn
+    Rare, Infantry, Normal
+    14
+    5, None
+    5 5 5 3 3 1 5 1 8
+    5 5 6 3 3 1 5 2 8
+    Always Strikes First, Martial Prowess, Valour of Ages, Witness to Destiny
+    Always Strikes First, Martial Prowess, Valour of Ages, Witness to Destiny
+    Weapon: Bows of Avelorn {Mundane} [Melee], Armour: Light armour {Mundane} [Armour]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Champion: High Sister [10]
+    25
+    0
+    25
+    0

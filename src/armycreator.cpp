@@ -102,7 +102,7 @@ void ArmyCreator::initialise_unit_info_box() {
     }
     // overall layout for unit info box
     QVBoxLayout* vbox = new QVBoxLayout;
-    // TODO: add points (per model) as QLabel widgets
+    // add points label widget in a frame
     {
         QFrame* f = new QFrame();
         QHBoxLayout* points_label_layout = new QHBoxLayout;
@@ -136,8 +136,85 @@ void ArmyCreator::initialise_unit_info_box() {
         vbox->addWidget(f);
 
     }
-    // TODO: add QTableWidget instance(s) for unit statistics
+    // add statistics table(s)
+    {
+        QTableWidget* stats_table = new QTableWidget(2, 9);
+        stats_table->horizontalHeader()->setVisible(false);
+        stats_table->verticalHeader()->setVisible(false);
+        QStringList tmp = {"M", "WS", "BS", "S", "T", "W", "I", "A", "LD"};
+        for (auto i = 0; i < tmp.size(); ++i) {
+            QTableWidgetItem* entry = new QTableWidgetItem(tmp[i]);
+            entry->setFlags(entry->flags() & ~Qt::ItemIsEditable);
+            stats_table->setItem(0, i, entry);
+        }
+        //stats_table->setHorizontalHeaderLabels(tmp);
+        switch (u->base_unit_type()) {
+        case BaseUnitType::MAGE_CHARACTER:
+        case BaseUnitType::MELEE_CHARACTER:
+        {
+            auto p = std::dynamic_pointer_cast<character_unit>(u);
+            auto stats = p->handle_->statistics();
+            int count = 0;
+            for (const auto& x : stats) {
+                QTableWidgetItem* entry = new QTableWidgetItem(
+                    tr("%1").arg(x)
+                );
+                entry->setFlags(entry->flags() & ~Qt::ItemIsEditable);
+                stats_table->setItem(1, count++, entry);
+            }
+            break;
+        }
+        case BaseUnitType::NORMAL:
+        {
+            auto p = std::dynamic_pointer_cast<normal_unit>(u);
+            auto stats = p->handle->statistics();
+            int count = 0;
+            for (const auto& x : stats) {
+                QTableWidgetItem* entry = new QTableWidgetItem(
+                    tr("%1").arg(x)
+                );
+                entry->setFlags(entry->flags() & ~Qt::ItemIsEditable);
+                stats_table->setItem(1, count++, entry);
+            }
+            break;
+        }
+        default: return;
+        }
+        stats_table->resizeRowsToContents();
+        stats_table->resizeColumnsToContents();
+        vbox->addWidget(stats_table);
+    }
     // TODO: add list of special rules, probably just as QLabel widget
+    {
+        QLabel* special_rules_label = new QLabel();
+        switch (u->base_unit_type()) {
+        case BaseUnitType::MAGE_CHARACTER:
+        case BaseUnitType::MELEE_CHARACTER:
+        {
+            auto p = std::dynamic_pointer_cast<character_unit>(u);
+            auto sr = p->handle_->special_rules();
+            std::string rules_str = "Special Rules: ";
+            for (const auto& s : sr)
+                rules_str += "- " + s;
+                //rules_str += (s == *std::prev(std::end(sr))) ? s : s + ", ";
+            special_rules_label->setTextFormat(Qt::TextFormat::RichText);
+            special_rules_label->setText(tr(rules_str.data()));
+            break;
+        }
+        case BaseUnitType::NORMAL:
+        {
+            auto p = std::dynamic_pointer_cast<normal_unit>(u);
+            auto sr = p->handle->special_rules();
+            std::string rules_str = "Special Rules: ";
+            for (const auto& s : sr)
+                rules_str += (s == *std::prev(std::end(sr))) ? s : s + ", ";
+            special_rules_label->setText(tr(rules_str.data()));
+            break;
+        }
+        default: return;
+        }
+        vbox->addWidget(special_rules_label);
+    }
     ui->unit_info_box->setLayout(vbox);
 
 }
@@ -218,7 +295,7 @@ QGroupBox* ArmyCreator::setup_magic_weapons_tab(const std::unordered_map<std::st
                                                 std::shared_ptr<unit> current) {
     auto weapons = tools::magic_items_of(items, ItemType::WEAPON);
     if (!std::count_if(weapons.begin(), weapons.end(), [&current](const auto& x) {
-            return x.second.allowed_units.count(current->name());
+            return x.second.allowed_units.empty() || x.second.allowed_units.count(current->name());
         })) return nullptr;
     QGroupBox* box = new QGroupBox();
     QVBoxLayout* vlayout = new QVBoxLayout;
@@ -244,6 +321,7 @@ QGroupBox* ArmyCreator::setup_magic_weapons_tab(const std::unordered_map<std::st
             if (w.second.points > p->handle->magic_item_budget()) continue;
             break;
         }
+        default: break;
         }
         std::string pts_str = tools::points_str(w.second.points);
         QRadioButton* rb = new QRadioButton(tr((w.first + " (" + pts_str + " pts)").data()));
@@ -275,7 +353,7 @@ QGroupBox* ArmyCreator::setup_magic_armour_tab(const std::unordered_map<std::str
                                                 std::shared_ptr<unit> current) {
     auto armour = tools::magic_items_of(items, ItemType::ARMOUR);
     if (!std::count_if(armour.begin(), armour.end(), [&current](const auto& x) {
-            return x.second.allowed_units.count(current->name());
+            return x.second.allowed_units.empty() || x.second.allowed_units.count(current->name());
         })) return nullptr;
     // overall
     QGroupBox* box = new QGroupBox();
@@ -305,6 +383,7 @@ QGroupBox* ArmyCreator::setup_magic_armour_tab(const std::unordered_map<std::str
             if (a.second.points > p->handle->magic_item_budget()) continue;
             break;
         }
+        default: break;
         }
         std::string pts_str = tools::points_str(a.second.points);
         QRadioButton* rb = new QRadioButton(tr((a.first + " (" + pts_str + " pts)").data()));

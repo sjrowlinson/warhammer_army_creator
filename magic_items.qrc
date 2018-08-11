@@ -4,5 +4,6 @@
         <file alias="empire.mag">magic_items/empire.mag</file>
         <file alias="woc.mag">magic_items/woc.mag</file>
         <file alias="common.mag">magic_items/common.mag</file>
+        <file alias="high_elves.mag">magic_items/high_elves.mag</file>
     </qresource>
 </RCC>

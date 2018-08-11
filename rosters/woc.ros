@@ -59,6 +59,43 @@ Daemon Prince
 
 # Heroes
 
+Exalted Hero
+    Hero, Melee
+    Infantry
+    110
+    1, 1
+    4 7 3 5 5 2 6 4 8
+    Eye of the Gods
+    Armour: Chaos armour {Mundane} [Armour]
+    Additional hand weapon {Mundane} [Melee] (3), Great weapon {Mundane} [Melee] (6), Flail {Mundane} [Melee] (5), Halberd {Mundane} [Melee] (6)
+    Shield {Mundane} [Shield] (5)
+    Barded Chaos Steed {Warbeast} [16], Steed of Slaanesh {Warbeast} [25], Disc of Tzeentch {Warbeast} [30], Daemonic Mount {Monstrous Beast} [35], Palanquin of Nurgle {Monstrous Beast} [40], Juggernaught of Khorne {Monstrous Beast} [55], Chaos Chariot {Chariot} [110], Chaos Warshrine {Chariot} [125], Gorebeast Chariot {Chariot} [130]
+    Mark of Khorne {True} [10], Mark of Tzeentch {True} [10], Mark of Nurgle {True} [10], Mark of Slaanesh {True} [5]
+    Battle Standard Bearer {True} [25]
+    50
+    25
+    75
+
+Chaos Sorceror
+    Hero, Mage
+    1
+    2 [35]
+    Death, Fire, Metal, Shadow, Tzeentch, Nurgle, Slaanesh
+    Infantry
+    110
+    1, 1
+    4 5 3 4 4 2 5 2 8
+    Eye of the Gods
+    Armour: Chaos armour {Mundane} [Armour]
+    None
+    None
+    Barded Chaos Steed {Warbeast} [16], Steed of Slaanesh {Warbeast} [25], Disc of Tzeentch {Warbeast} [30], Daemonic Mount {Monstrous Beast} [35], Palanquin of Nurgle {Monstrous Beast} [40], Juggernaught of Khorne {Monstrous Beast} [55], Chaos Chariot {Chariot} [110], Chaos Warshrine {Chariot} [125], Gorebeast Chariot {Chariot} [130]
+    Mark of Tzeentch {True} [10], Mark of Nurgle {True} [10], Mark of Slaanesh {True} [5]
+    None
+    50
+    25
+    75
+
 # Core
 
 Chaos Warriors
@@ -157,6 +194,16 @@ Chaos Warhounds
     0
     0
 
+Chaos Chariot
+    Core, Chariot, Normal
+    110
+    1, 1
+    0 5 3 4 0 0 5 2 8
+    0 0 0 5 5 4 0 0 0
+    Armour Save (3+), Scythes, Halberds (Chaos Charioteers only)
+    Mark of Khorne {False} [10], Mark of Tzeentch {False} [10], Mark of Nurgle {False} [15], Mark of Slaanesh {False} [5]
+    None
+
 Marauder Horsemen
     Core, Cavalry, Normal
     14
@@ -182,6 +229,30 @@ Marauder Horsemen
     0
 
 # Special
+
+Hellstriders of Slaanesh
+    Special, Cavalry, Normal
+    19
+    5, None
+    4 4 3 3 3 1 5 1 7
+    4 4 3 3 3 1 5 2 7
+    Fast Cavalry, Fear, Mark of Slaanesh, Soul Hunters
+    Eye of the Gods, Fast Cavalry, Fear, Mark of Slaanesh, Soul Hunters
+    Armour: Shield {Mundane} [Shield], Weapon: Spear {Mundane} [Melee]
+    None
+    Hellscourges {Mundane} [Melee] (1)
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Hellreaver [10]
+    0
+    0
+    0
+    0
 
 Chosen
     Special, Infantry, Normal
@@ -254,3 +325,175 @@ Chaos Ogres
     0
     0
     0
+
+Dragon Ogres
+    Special, Monstrous Beast, Normal
+    60
+    3, None
+    7 4 2 5 4 4 2 3 8
+    7 4 2 5 4 4 2 4 8
+    Fear, Scaly Skin (5+), Storm Rage
+    Fear, Scaly Skin (5+), Storm Rage
+    Armour: Light armour {Mundane} [Armour]
+    None
+    Additional hand weapons {Mundane} [Melee] (3), Halberds {Mundane} [Melee] (8), Great weapons {Mundane} [Melee] (8)
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Champion: Dragon Ogre Shartak [10]
+    0
+    0
+    0
+    0
+
+Chaos Trolls
+    Special, Monstrous Infantry, Normal
+    35
+    3, None
+    6 3 1 5 4 3 1 3 4
+    6 3 1 5 4 3 1 3 4
+    Fear, Regeneration, Stupidity, Troll Vomit
+    None
+    None
+    None
+    Additional hand weapons {Mundane} [Melee] (3)
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    0
+    0
+    0
+    0
+
+Chimera
+    Special, Monster, Normal
+    230
+    1, 1
+    6 4 0 6 5 4 2 6 5
+    Fiend Tail, Fly, Large Target, Scaly Skin (4+), Terror
+    None
+    Flaming Breath {True} [30], Regenerating Flesh {True} [15], Venomous Ooze {True} [15]
+
+Gorebeast Chariot
+    Special, Chariot, Normal
+    130
+    1, 1
+    0 5 3 4 0 0 5 2 8
+    0 0 0 5 6 5 0 0 0
+    Fear, Gorebeast Charge, Armour Save (3+), Scythes, Halberds (Chaos Charioteers only)
+    Mark of Khorne {False} [10], Mark of Tzeentch {False} [10], Mark of Nurgle {False} [10], Mark of Slaanesh {False} [5]
+    None
+
+Chaos Warshrine
+    Special, Chariot, Normal
+    125
+    1, 1
+    0 5 3 4 0 0 5 2 8
+    0 0 0 0 5 5 0 0 0
+    Favour of the Ruinous Powers, Fear, Giver of Glory, Protection of the Dark Gods, Random Attacks (D6+2, Chaos Shrine Bearers only), War Platform
+    Mark of Khorne {False} [10], Mark of Tzeentch {False} [10], Mark of Nurgle {False} [10], Mark of Slaanesh {False} [5]
+    None
+
+# Rare
+
+Hellcannon
+    Rare, Monster, Normal
+    210
+    1, 1
+    3 4 3 5 6 5 1 5 4
+    Caged Fury, Daemonic Attacks (Hellcannon only), Daemonic Construction, Doomfire
+    None
+    None
+
+Dragon Ogre Shaggoth
+    Rare, Monster, Normal
+    215
+    1, 1
+    7 6 3 6 5 6 4 5 9
+    Immune to Psychology, Large Target, Scaly Skin (5+), Storm Rage, Terror
+    Additional hand weapon {True} [5], Great weapon {True} [12]
+    None
+
+Chaos Giant
+    Rare, Monster, Normal
+    200
+    1, 1
+    6 3 3 6 5 6 3 0 10
+    Fall Over, Giant Special Attacks, Large Target, Stubborn, Terror
+    Giant of Khorne {False} [10], Giant of Tzeentch {False} [15], Giant of Nurgle {False} [15], Giant of Slaanesh {False} [5]
+    None
+
+Chaos Spawn
+    Rare, Monstrous Beast, Normal
+    50
+    1, 1
+    0 3 0 4 5 3 2 0 10
+    0 3 0 4 5 3 2 0 10
+    Fear, Random Attacks (D6+1), Random Movement (2D6), Unbreakable
+    Fear, Random Attacks (D6+1), Random Movement (2D6), Unbreakable
+    None
+    None
+    None
+    None
+    None
+    None
+    Spawn of Khorne {False} [5], Spawn of Tzeentch {False} [20], Spawn of Nurgle {False} [10], Spawn of Slaanesh {False} [10]
+    None
+    None
+    None
+    None
+    0
+    0
+    0
+    0
+
+Skullcrushers of Khorne
+    Rare, Monstrous Cavalry, Normal
+    75
+    3, None
+    4 5 3 4 4 1 5 2 8
+    4 5 3 4 4 1 5 3 8
+    Brass Behemoth, Fear, Mark of Khorne
+    Eye of the Gods, Brass Behemoth, Fear, Mark of Khorne
+    Armour: Chaos armour {Mundane} [Armour], Armour: Shield {Mundane} [Shield]
+    None
+    Lances {Mundane} [Melee] (2), Ensorcelled weapons {Mundane} [Melee] (3)
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Skullhunter [10]
+    0
+    0
+    0
+    50
+
+Slaughterbrute
+    Rare, Monster, Normal
+    205
+    1, 1
+    6 3 0 7 5 5 3 4 5
+    Large Target, Runes of Binding, Scaly Skin (4+), Terror, Unbound
+    None
+    Extra Claws {True} [20]
+
+Mutalith Vortex Beast
+    Rare, Monster, Normal
+    240
+    1, 1
+    6 3 0 5 5 5 3 -1 8
+    Aura of Mutation, Large Target, Random Attacks (D6+2), Regeneration (5+), Scaly Skin (4+), Terror
+    None
+    None
