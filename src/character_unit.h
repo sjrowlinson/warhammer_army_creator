@@ -28,6 +28,7 @@ protected:
     std::pair<std::string, double> enchanted_item_;
     std::pair<std::string, std::pair<bool, double>> oco_extra_;
     std::unordered_map<std::string, std::pair<bool, double>> mc_extras_;
+    std::pair<std::string, std::pair<armies::UnitClass, double>> mount_;
 
     // item points
     double magic_item_points_;
@@ -57,7 +58,12 @@ public:
     std::pair<std::string, std::pair<bool, double>> oco_extra() const noexcept override;
     std::unordered_map<std::string, std::pair<bool, double>> mc_extras() const noexcept override;
 
-    // curremt property modifiers
+    std::pair<
+        std::string,
+        std::pair<armies::UnitClass, double>
+    > mount() const noexcept override;
+
+    // current property modifiers
     void pick_weapon(ItemClass item_type, std::string name) override;
     void remove_weapon(WeaponType wt) override;
 
@@ -75,6 +81,9 @@ public:
 
     void pick_mc_extra(std::string name) override;
     void remove_mc_extra(std::string name) override;
+
+    void pick_mount(std::string name) override;
+    void remove_mount() override;
 };
 
 #endif // !CHARACTER_UNIT_H

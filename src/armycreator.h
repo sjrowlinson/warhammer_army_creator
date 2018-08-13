@@ -66,6 +66,7 @@ private slots:
 
     void optional_weapon_selected();
     void optional_armour_selected();
+    void optional_mount_selected();
     void optional_command_selected();
     void optional_oco_extra_selected();
     void optional_mc_extra_selected();

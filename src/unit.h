@@ -51,6 +51,11 @@ public:
         std::string,
         std::pair<bool, double>
     > mc_extras() const noexcept = 0;
+    virtual
+    std::pair<
+        std::string,
+        std::pair<armies::UnitClass, double>
+    > mount() const noexcept = 0;
 
     // basic properties
     const std::shared_ptr<base_unit>& base() const noexcept;
@@ -71,6 +76,8 @@ public:
     virtual void remove_oco_extra() = 0;
     virtual void pick_mc_extra(std::string name) = 0;
     virtual void remove_mc_extra(std::string name) = 0;
+    virtual void pick_mount(std::string name) = 0;
+    virtual void remove_mount() = 0;
 };
 
 #endif // !UNIT_H

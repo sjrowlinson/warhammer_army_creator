@@ -67,6 +67,18 @@ std::unordered_map<
     }
 }
 
+std::pair<
+    std::string,
+    std::pair<armies::UnitClass, double>
+> mixed_unit::mount() const noexcept {
+    switch (mixed_select_) {
+    case MixedSelect::MASTER:
+        return master_.mount();
+    case MixedSelect::SLAVE:
+        return slave_.mount();
+    }
+}
+
 void mixed_unit::pick_weapon(ItemClass item_type, std::string name) {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
@@ -154,3 +166,26 @@ void mixed_unit::remove_mc_extra(std::string name) {
         break;
     }
 }
+
+void mixed_unit::pick_mount(std::string name) {
+    switch (mixed_select_) {
+    case MixedSelect::MASTER:
+        master_.pick_mount(name);
+        break;
+    case MixedSelect::SLAVE:
+        slave_.pick_mount(name);
+        break;
+    }
+}
+
+void mixed_unit::remove_mount() {
+    switch (mixed_select_) {
+    case MixedSelect::MASTER:
+        master_.remove_mount();
+        break;
+    case MixedSelect::SLAVE:
+        slave_.remove_mount();
+        break;
+    }
+}
+

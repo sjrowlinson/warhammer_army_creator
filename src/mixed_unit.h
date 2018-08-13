@@ -56,6 +56,10 @@ public:
         std::string,
         std::pair<bool, double>
     > mc_extras() const noexcept override;
+    std::pair<
+        std::string,
+        std::pair<armies::UnitClass, double>
+    > mount() const noexcept override;
 
     void pick_weapon(ItemClass item_type, std::string name) override;
     void remove_weapon(WeaponType wt) override;
@@ -65,7 +69,8 @@ public:
     void remove_oco_extra() override;
     void pick_mc_extra(std::string name) override;
     void remove_mc_extra(std::string name) override;
-
+    void pick_mount(std::string name) override;
+    void remove_mount() override;
 };
 
 #endif // !MIXED_UNIT_H

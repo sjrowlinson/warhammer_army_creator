@@ -51,6 +51,12 @@ private:
     double champ_faction_item_points;
     double champ_total_item_points;
 
+    // mounts
+    std::pair<
+        std::string,
+        std::pair<armies::UnitClass, double>
+    > mount_;
+
     // command
     std::unordered_map<
         CommandGroup, std::pair<std::string, double>
@@ -94,6 +100,11 @@ public:
         std::string,
         double
     > champion_mc_extras() const noexcept;
+
+    std::pair<
+        std::string,
+        std::pair<armies::UnitClass, double>
+    > mount() const noexcept override;
 
     std::unordered_map<
         CommandGroup, std::pair<std::string, double>
@@ -140,6 +151,9 @@ public:
     void remove_champion_oco_extra();
     void remove_default_mc_extra(std::string name);
     void remove_champion_mc_extra(std::string name);
+
+    void pick_mount(std::string name) override;
+    void remove_mount() override;
 
     void change_size(std::size_t n);
 

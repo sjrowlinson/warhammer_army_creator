@@ -130,6 +130,11 @@ std::unordered_map<
     double
 > normal_unit::champion_mc_extras() const noexcept { return champ_mc_extras_; }
 
+std::pair<
+    std::string,
+    std::pair<armies::UnitClass, double>
+> normal_unit::mount() const noexcept { return mount_; }
+
 std::unordered_map<
     CommandGroup, std::pair<std::string, double>
 > normal_unit::command() const noexcept {
@@ -612,6 +617,24 @@ void normal_unit::remove_champion_mc_extra(std::string name) {
     }
 }
 
+void normal_unit::pick_mount(std::string name) {
+    auto search = handle->opt().opt_mounts.find(name);
+    if (search == handle->opt().opt_mounts.end())
+        throw std::invalid_argument("Mount not found!");
+    if (mount_.first == name) return;
+    points_ -= size_ * mount_.second.second;
+    mount_.first = name;
+    mount_.second = search->second;
+    points_ += size_ * search->second.second;
+}
+
+void normal_unit::remove_mount() {
+    points_ -= size_ * mount_.second.second;
+    mount_.first = "";
+    mount_.second.first = handle->unit_class();
+    mount_.second.second = 0.0;
+}
+
 void normal_unit::change_size(std::size_t n) {
     if (n < handle->min_size() || n > handle->max_size())
         throw std::invalid_argument("Invalid unit size!");
@@ -625,6 +648,7 @@ void normal_unit::change_size(std::size_t n) {
     for (const auto& ca : champ_armours_) points_ += std::get<2>(ca.second);
     points_ += champ_oco_extra_.second;
     for (const auto& ce : champ_mc_extras_) points_ += ce.second;
+    points_ += n * mount_.second.second;
     for (const auto& m : command_group) points_ += m.second.second;
     points_ += banner.second;
     size_ = n;

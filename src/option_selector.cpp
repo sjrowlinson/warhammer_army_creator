@@ -87,6 +87,37 @@ bool option_selector::select_armour(const std::string& s) {
     }
 }
 
+bool option_selector::select_mount(const std::string& s) {
+    auto split = tools::split(s, '_');
+    auto mount = split[0];
+    if (mount == "None") {
+        switch (in_tree) {
+        case InTree::ARMY:
+            army->take_snapshot_of(current->id());
+            current->remove_mount();
+            army->update_on(current->id());
+            return true;
+        case InTree::ROSTER:
+            current->remove_mount();
+            return false;
+        default: throw std::runtime_error("No unit selected!");
+        }
+    }
+    else {
+        switch (in_tree) {
+        case InTree::ARMY:
+            army->take_snapshot_of(current->id());
+            current->pick_mount(mount);
+            army->update_on(current->id());
+            return true;
+        case InTree::ROSTER:
+            current->pick_mount(mount);
+            return false;
+        default: throw std::runtime_error("No unit selected!");
+        }
+    }
+}
+
 bool option_selector::select_command(const std::string& s, bool is_checked) {
     auto split = tools::split(s, '_');
     auto name = split[0];

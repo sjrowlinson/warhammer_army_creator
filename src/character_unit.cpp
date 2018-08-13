@@ -45,6 +45,11 @@ std::pair<std::string, double> character_unit::enchanted_item() const noexcept {
 std::pair<std::string, std::pair<bool, double>> character_unit::oco_extra() const noexcept { return oco_extra_; }
 std::unordered_map<std::string, std::pair<bool, double>> character_unit::mc_extras() const noexcept { return mc_extras_; }
 
+std::pair<
+    std::string,
+    std::pair<armies::UnitClass, double>
+> character_unit::mount() const noexcept { return mount_; }
+
 void character_unit::pick_weapon(ItemClass item_type, std::string name) {
     switch (item_type) {
     case ItemClass::MUNDANE:
@@ -491,4 +496,22 @@ void character_unit::remove_mc_extra(std::string name) {
         points_ -= search->second.second;
         mc_extras_.erase(name);
     }
+}
+
+void character_unit::pick_mount(std::string name) {
+    auto search = handle_->opt().opt_mounts.find(name);
+    if (search == handle_->opt().opt_mounts.end())
+        throw std::invalid_argument("Mount not found!");
+    if (mount_.first == name) return;
+    points_ -= mount_.second.second;
+    mount_.first = name;
+    mount_.second = search->second;
+    points_ += search->second.second;
+}
+
+void character_unit::remove_mount() {
+    points_ -= mount_.second.second;
+    mount_.first = "";
+    mount_.second.first = handle_->unit_class();
+    mount_.second.second = 0.0;
 }

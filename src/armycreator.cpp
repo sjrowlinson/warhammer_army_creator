@@ -168,6 +168,15 @@ void ArmyCreator::optional_armour_selected() {
     }
 }
 
+void ArmyCreator::optional_mount_selected() {
+    QRadioButton* rb = qobject_cast<QRadioButton*>(QObject::sender());
+    std::string rb_name = rb->objectName().toStdString();
+    if (opt_sel->select_mount(rb_name)) {
+        ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+        update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::NAME);
+    }
+}
+
 void ArmyCreator::optional_command_selected() {
     QCheckBox* cb = qobject_cast<QCheckBox*>(QObject::sender());
     std::string cb_name = cb->objectName().toStdString();
@@ -250,7 +259,7 @@ void ArmyCreator::initialise_unit_info_box() {
             auto p = std::dynamic_pointer_cast<character_unit>(u);
             pre_points_label = new QLabel(tr("Points:"));
             points_label = new QLabel(
-                QString(tools::points_str(p->points(), p->base_unit_type()).data())
+                QString(tools::points_str(p->handle_->points(), p->base_unit_type()).data())
             );
             break;
         }
@@ -919,18 +928,21 @@ QGroupBox* ArmyCreator::initialise_opt_armour_subgroupbox(
 
 QGroupBox* ArmyCreator::initialise_opt_mounts_groupbox(std::shared_ptr<unit> current) {
     std::unordered_map<std::string, std::pair<armies::UnitClass, double>> opt_mounts;
+    std::pair<std::string, std::pair<armies::UnitClass, double>> mount;
     switch (current->base_unit_type()) {
     case BaseUnitType::MAGE_CHARACTER:
     case BaseUnitType::MELEE_CHARACTER:
     {
         auto p = std::dynamic_pointer_cast<character_unit>(current);
         opt_mounts = p->handle_->opt().opt_mounts;
+        mount = p->mount();
         break;
     }
     case BaseUnitType::NORMAL:
     {
         auto p = std::dynamic_pointer_cast<normal_unit>(current);
         opt_mounts = p->handle->opt().opt_mounts;
+        mount = p->mount();
         break;
     }
     default: return nullptr;
@@ -938,6 +950,7 @@ QGroupBox* ArmyCreator::initialise_opt_mounts_groupbox(std::shared_ptr<unit> cur
     if (opt_mounts.empty()) return nullptr;
     QGroupBox* mounts_box = new QGroupBox(tr("Mounts"));
     QVBoxLayout* vbox_mounts = new QVBoxLayout;
+    bool has_mount = false;
     for (const auto& m : opt_mounts) {
         auto tmp = tools::split(std::to_string(std::get<1>(m.second)), '.');
         for (auto& s : tmp) tools::remove_leading_whitespaces(s);
@@ -946,11 +959,17 @@ QGroupBox* ArmyCreator::initialise_opt_mounts_groupbox(std::shared_ptr<unit> cur
         std::string name = m.first + " (" + pts_str + " pts" + permodel + ")";
         QRadioButton* b = new QRadioButton(tr(name.data()));
         b->setObjectName(tr((m.first + "_radiobutton").data()));
+        if (mount.first == m.first) {
+            b->setChecked(true);
+            has_mount = true;
+        }
+        connect(b, SIGNAL(clicked(bool)), this, SLOT(optional_mount_selected()));
         vbox_mounts->addWidget(b);
     }
     QRadioButton* none_rb = new QRadioButton(tr("None"));
     none_rb->setObjectName(tr("None_mounts_radiobutton"));
-    none_rb->setChecked(true);
+    if (!has_mount) none_rb->setChecked(true);
+    connect(none_rb, SIGNAL(clicked(bool)), this, SLOT(optional_mount_selected()));
     vbox_mounts->addWidget(none_rb);
     vbox_mounts->addStretch(1);
     mounts_box->setLayout(vbox_mounts);
@@ -1350,8 +1369,12 @@ void ArmyCreator::update_unit_display(
     else u = army->get_unit(item->data(0, Qt::UserRole).toInt());
     switch (column) {
     case ArmyTreeColumn::NAME:
-        item->setText(static_cast<int>(column), QString(u->name().data()));
+    {
+        std::string name = u->name() + ((u->mount().first.empty()) ? "" : "\n(" + u->mount().first + ")");
+        item->setText(static_cast<int>(column), QString(name.data()));
+        update_unit_display(item, adding, ArmyTreeColumn::POINTS, copying);
         break;
+    }
     case ArmyTreeColumn::SIZE:
         switch (u->base_unit_type()) {
         case BaseUnitType::MAGE_CHARACTER:
