@@ -97,6 +97,22 @@ private:
     void clear_unit_options_box();
     void initialise_unit_options_box();
 
+    // size and command group option box
+    QGroupBox* initialise_size_command_groupbox(std::shared_ptr<unit> current);
+    QGroupBox* initialise_command_groupbox(std::shared_ptr<unit> current);
+    // weapons option boxes
+    std::pair<QGroupBox*, QGroupBox*> initialise_opt_weapons_groupbox(std::shared_ptr<unit> current);
+    QGroupBox* initialise_opt_weapons_subgroupbox(WeaponType wt, std::shared_ptr<unit> current, bool champion);
+    // armour option boxes
+    std::pair<QGroupBox*, QGroupBox*> initialise_opt_armour_groupbox(std::shared_ptr<unit> current);
+    QGroupBox* initialise_opt_armour_subgroupbox(ArmourType at, std::shared_ptr<unit> current, bool champion);
+    // mount option boxes
+    QGroupBox* initialise_opt_mounts_groupbox(std::shared_ptr<unit> current);
+    // extras option boxes
+    std::pair<QGroupBox*, QGroupBox*> initialise_opt_extras_groupbox(std::shared_ptr<unit> current);
+    QGroupBox* initialise_opt_oco_extras_groupbox(std::shared_ptr<unit> current, bool champion);
+    QGroupBox* initialise_opt_mc_extras_groupbox(std::shared_ptr<unit> current, bool champion);
+
     void clear_magic_items_selector();
     void init_magic_items_selector(std::shared_ptr<unit> current);
 
@@ -112,76 +128,6 @@ private:
             bool copying = false
     );
 
-    QGroupBox* init_size_command_groupbox();
-    QGroupBox* init_command_groupbox(
-        const std::unordered_map<CommandGroup, std::pair<std::string, double>>& opt_command,
-        const std::unordered_map<CommandGroup, std::pair<std::string, double>>& command
-    );
-
-    QGroupBox* init_opt_subweapons_groupbox(
-        WeaponType wt,
-        const std::unordered_map<std::string, std::tuple<WeaponType, ItemClass, double>>& opt_weapons,
-        const std::unordered_map<WeaponType, std::tuple<ItemClass, std::string, double>>& weapons,
-        int id
-    );
-    QGroupBox* init_opt_weapons_groupbox(
-        const std::unordered_map<std::string, std::tuple<WeaponType, ItemClass, double>>& opt_weapons,
-        const std::unordered_map<WeaponType, std::tuple<ItemClass, std::string, double>>& weapons,
-        int id=0
-    );
-
-    QGroupBox* init_opt_subarmour_groupbox(
-        ArmourType at,
-        const std::unordered_map<std::string, std::tuple<ArmourType, ItemClass, double>>& opt_armour,
-        const std::unordered_map<ArmourType, std::tuple<ItemClass, std::string, double>>& armour,
-        int id
-    );
-    QGroupBox* init_opt_armour_groupbox(
-        const std::unordered_map<std::string, std::tuple<ArmourType, ItemClass, double>>& opt_armour,
-        const std::unordered_map<ArmourType, std::tuple<ItemClass, std::string, double>>& armour,
-        int id=0
-    );
-
-    QGroupBox* init_opt_mounts_groupbox(
-        const std::unordered_map<std::string, std::pair<armies::UnitClass, double>>& mounts,
-        int id=0
-    );
-
-    QGroupBox* init_opt_oco_extras_groupbox(
-        const std::unordered_map<
-            std::string,
-            std::pair<bool, double>
-        >& opt_oco_extras,
-        const std::pair<std::string, std::pair<bool, double>>& curr_oco_extra,
-        int id
-    );
-    QGroupBox* init_opt_mc_extras_groupbox(
-        const std::unordered_map<
-            std::string,
-            std::pair<bool, double>
-        >& opt_mc_extras,
-        const std::unordered_map<
-            std::string,
-            std::pair<bool, double>
-        > curr_mc_extras,
-        int id
-    );
-    QGroupBox* init_opt_extras_groupbox(
-        const std::unordered_map<
-            std::string,
-            std::pair<bool, double>
-        >& opt_oco_extras,
-        const std::unordered_map<
-            std::string,
-            std::pair<bool, double>
-        >& opt_mc_extras,
-        const std::pair<std::string, std::pair<bool, double>>& curr_oco_extra,
-        const std::unordered_map<
-            std::string,
-            std::pair<bool, double>
-        > curr_mc_extras,
-        int id=0
-    );
 };
 
 #endif // ARMYCREATOR_H

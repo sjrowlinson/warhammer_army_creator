@@ -33,10 +33,25 @@ ArmyCreator::~ArmyCreator() {
 
 void ArmyCreator::populate_roster_tree() {
     auto lords = st->lords();
+    std::sort(std::begin(lords), std::end(lords),
+        [](const auto& lhs, const auto& rhs) { return lhs->name() < rhs->name(); }
+    );
     auto heroes = st->heroes();
+    std::sort(std::begin(heroes), std::end(heroes),
+        [](const auto& lhs, const auto& rhs) { return lhs->name() < rhs->name(); }
+    );
     auto cores = st->core();
+    std::sort(std::begin(cores), std::end(cores),
+        [](const auto& lhs, const auto& rhs) { return lhs->name() < rhs->name(); }
+    );
     auto specials = st->special();
+    std::sort(std::begin(specials), std::end(specials),
+        [](const auto& lhs, const auto& rhs) { return lhs->name() < rhs->name(); }
+    );
     auto rares = st->rare();
+    std::sort(std::begin(rares), std::end(rares),
+        [](const auto& lhs, const auto& rhs) { return lhs->name() < rhs->name(); }
+    );
     for (const auto& l : lords) {
         QTreeWidgetItem* lord_item = new QTreeWidgetItem();
         lord_item->setText(0, QString(l->name().data()));
@@ -69,6 +84,8 @@ void ArmyCreator::populate_roster_tree() {
     }
 }
 
+// ui element clearers
+
 void ArmyCreator::clear_roster_tree() {
     for (int i = 0; i < 5; ++i)
         ui->roster_tree->topLevelItem(i)->takeChildren();
@@ -88,6 +105,124 @@ void ArmyCreator::clear_unit_options_box() {
     auto c = ui->options_group_box->children();
     for (auto& x : c) delete x;
 }
+
+// option box selection slots
+
+void ArmyCreator::change_unit_size() {
+    QSpinBox* sb = qobject_cast<QSpinBox*>(QObject::sender());
+    std::shared_ptr<unit> current;
+    int curr_id = -1;
+    switch (in_tree) {
+    case InTree::ARMY:
+        curr_id = ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt();
+        current = army->get_unit(curr_id);
+        break;
+    case InTree::ROSTER:
+        current = st->selected();
+        break;
+    default: throw std::runtime_error("No unit selected!");
+    }
+    switch (current->base_unit_type()) {
+    case BaseUnitType::MELEE_CHARACTER:
+    case BaseUnitType::MAGE_CHARACTER:
+        break;
+    case BaseUnitType::NORMAL:
+    {
+        auto p = std::dynamic_pointer_cast<normal_unit>(current);
+        try {
+            switch (in_tree) {
+            case InTree::ARMY:
+                army->take_snapshot_of(curr_id);
+                p->change_size(static_cast<std::size_t>(sb->value()));
+                army->update_on(curr_id);
+                ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+                update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::SIZE);
+                break;
+            case InTree::ROSTER:
+                p->change_size(static_cast<std::size_t>(sb->value()));
+                break;
+            default: throw std::runtime_error("No unit selected!");
+            }
+        } catch (const std::invalid_argument&) {}
+        break;
+    }
+    default: break;
+    }
+}
+
+void ArmyCreator::optional_weapon_selected() {
+    QRadioButton* rb = qobject_cast<QRadioButton*>(QObject::sender());
+    std::string rb_name = rb->objectName().toStdString();
+    if (opt_sel->select_weapon(rb_name)) {
+        ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+        update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::WEAPONS);
+    }
+}
+
+void ArmyCreator::optional_armour_selected() {
+    QRadioButton* rb = qobject_cast<QRadioButton*>(QObject::sender());
+    std::string rb_name = rb->objectName().toStdString();
+    if (opt_sel->select_armour(rb_name)) {
+        ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+        update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::ARMOUR);
+    }
+}
+
+void ArmyCreator::optional_command_selected() {
+    QCheckBox* cb = qobject_cast<QCheckBox*>(QObject::sender());
+    std::string cb_name = cb->objectName().toStdString();
+    if (opt_sel->select_command(cb_name, cb->isChecked())) {
+        ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+        update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::COMMAND);
+    }
+}
+
+void ArmyCreator::optional_oco_extra_selected() {
+    QRadioButton* rb = qobject_cast<QRadioButton*>(QObject::sender());
+    std::string rb_name = rb->objectName().toStdString();
+    if (opt_sel->select_oco_extra(rb_name)) {
+        ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+        update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::EXTRAS);
+    }
+}
+
+void ArmyCreator::optional_mc_extra_selected() {
+    QCheckBox* cb = qobject_cast<QCheckBox*>(QObject::sender());
+    std::string cb_name = cb->objectName().toStdString();
+    if (opt_sel->select_mc_extra(cb_name, cb->isChecked())) {
+        ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+        update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::EXTRAS);
+    }
+}
+
+void ArmyCreator::spawn_magic_weapons_window() {
+    MagicItemWindow* miw = new MagicItemWindow(ItemType::WEAPON);
+    miw->setWindowTitle(tr("Magic Weapon Selection"));
+    miw->setFixedWidth(1366);
+    miw->setFixedHeight(768);
+    miw->show();
+    miw->setAttribute(Qt::WA_DeleteOnClose);
+}
+
+void ArmyCreator::clear_magic_items_selector() {
+    ui->magic_items_selector->clear();
+    for (auto i = 0; i < ui->magic_items_selector->count(); ++i)
+        ui->magic_items_selector->removeTab(i);
+
+}
+
+void ArmyCreator::init_magic_items_selector(std::shared_ptr<unit> current) {
+    auto mih = current->base()->magic_items_handle();
+    // magic weapons
+    auto magic_weapons_box = setup_magic_weapons_tab(*mih, current);
+    if (magic_weapons_box != nullptr) ui->magic_items_selector->addTab(magic_weapons_box, tr("Magic Weapons"));
+    // magic armour
+    auto magic_armour_box = setup_magic_armour_tab(*mih, current);
+    if (magic_armour_box != nullptr) ui->magic_items_selector->addTab(magic_armour_box, tr("Magic Armour"));
+    ui->magic_items_selector->setHidden(false);
+}
+
+// unit info box initialisers
 
 void ArmyCreator::initialise_unit_info_box() {
     std::shared_ptr<unit> u;
@@ -195,8 +330,7 @@ void ArmyCreator::initialise_unit_info_box() {
             auto sr = p->handle_->special_rules();
             std::string rules_str = "Special Rules: ";
             for (const auto& s : sr)
-                rules_str += "- " + s;
-                //rules_str += (s == *std::prev(std::end(sr))) ? s : s + ", ";
+                rules_str += (s == *std::prev(std::end(sr))) ? s : s + ", ";
             special_rules_label->setTextFormat(Qt::TextFormat::RichText);
             special_rules_label->setText(tr(rules_str.data()));
             break;
@@ -216,79 +350,6 @@ void ArmyCreator::initialise_unit_info_box() {
         vbox->addWidget(special_rules_label);
     }
     ui->unit_info_box->setLayout(vbox);
-
-}
-
-void ArmyCreator::optional_weapon_selected() {
-    QRadioButton* rb = qobject_cast<QRadioButton*>(QObject::sender());
-    std::string rb_name = rb->objectName().toStdString();
-    if (opt_sel->select_weapon(rb_name)) {
-        ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
-        update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::WEAPONS);
-    }
-}
-
-void ArmyCreator::optional_armour_selected() {
-    QRadioButton* rb = qobject_cast<QRadioButton*>(QObject::sender());
-    std::string rb_name = rb->objectName().toStdString();
-    if (opt_sel->select_armour(rb_name)) {
-        ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
-        update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::ARMOUR);
-    }
-}
-
-void ArmyCreator::optional_command_selected() {
-    QCheckBox* cb = qobject_cast<QCheckBox*>(QObject::sender());
-    std::string cb_name = cb->objectName().toStdString();
-    if (opt_sel->select_command(cb_name, cb->isChecked())) {
-        ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
-        update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::COMMAND);
-    }
-}
-
-void ArmyCreator::optional_oco_extra_selected() {
-    QRadioButton* rb = qobject_cast<QRadioButton*>(QObject::sender());
-    std::string rb_name = rb->objectName().toStdString();
-    if (opt_sel->select_oco_extra(rb_name)) {
-        ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
-        update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::EXTRAS);
-    }
-}
-
-void ArmyCreator::optional_mc_extra_selected() {
-    QCheckBox* cb = qobject_cast<QCheckBox*>(QObject::sender());
-    std::string cb_name = cb->objectName().toStdString();
-    if (opt_sel->select_mc_extra(cb_name, cb->isChecked())) {
-        ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
-        update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::EXTRAS);
-    }
-}
-
-void ArmyCreator::spawn_magic_weapons_window() {
-    MagicItemWindow* miw = new MagicItemWindow(ItemType::WEAPON);
-    miw->setWindowTitle(tr("Magic Weapon Selection"));
-    miw->setFixedWidth(1366);
-    miw->setFixedHeight(768);
-    miw->show();
-    miw->setAttribute(Qt::WA_DeleteOnClose);
-}
-
-void ArmyCreator::clear_magic_items_selector() {
-    ui->magic_items_selector->clear();
-    for (auto i = 0; i < ui->magic_items_selector->count(); ++i)
-        ui->magic_items_selector->removeTab(i);
-
-}
-
-void ArmyCreator::init_magic_items_selector(std::shared_ptr<unit> current) {
-    auto mih = current->base()->magic_items_handle();
-    // magic weapons
-    auto magic_weapons_box = setup_magic_weapons_tab(*mih, current);
-    if (magic_weapons_box != nullptr) ui->magic_items_selector->addTab(magic_weapons_box, tr("Magic Weapons"));
-    // magic armour
-    auto magic_armour_box = setup_magic_armour_tab(*mih, current);
-    if (magic_armour_box != nullptr) ui->magic_items_selector->addTab(magic_armour_box, tr("Magic Armour"));
-    ui->magic_items_selector->setHidden(false);
 }
 
 QGroupBox* ArmyCreator::setup_magic_weapons_tab(const std::unordered_map<std::string, item>& items,
@@ -428,318 +489,101 @@ QGroupBox* ArmyCreator::setup_magic_armour_tab(const std::unordered_map<std::str
     return box;
 }
 
-QGroupBox* ArmyCreator::init_opt_subweapons_groupbox(
-    WeaponType wt,
-    const std::unordered_map<std::string, std::tuple<WeaponType, ItemClass, double>>& opt_weapons,
-    const std::unordered_map<WeaponType, std::tuple<ItemClass, std::string, double>>& weapons,
-    int id
-) {
-    auto opt_weapon_vec = tools::find_all_if(
-        std::begin(opt_weapons),
-        std::end(opt_weapons),
-        [wt] (const auto& x) { return std::get<0>(x.second) == wt; }
-    );
-    if (opt_weapon_vec.empty()) return nullptr;
-    std::string subbox_label = "";
-    switch (wt) {
-    case WeaponType::MELEE:
-        subbox_label = "Melee";
-        break;
-    case WeaponType::BALLISTIC:
-        subbox_label = "Ranged";
-        break;
-    default: break;
-    }
-    QGroupBox* weapons_subbox = new QGroupBox(tr(subbox_label.data()));
-    QVBoxLayout* weapons_subbox_layout = new QVBoxLayout;
-    bool has_weapon = false;
-    for (const auto& w : opt_weapon_vec) {
-        BaseUnitType but;
-        if (in_tree == InTree::ROSTER) but = st->selected()->base_unit_type();
-        else but = army->get_unit(id)->base_unit_type();
-        std::string pts_str = tools::points_str(std::get<2>(w->second), but);
-        std::string button_label = w->first + " (" + pts_str + ")";
-        std::string button_name = w->first + "_" +
-                std::to_string(static_cast<int>(std::get<0>(w->second))) + "_" +
-                std::to_string(static_cast<int>(std::get<1>(w->second))) + "_radiobutton";
-        QRadioButton* rb = new QRadioButton(tr(button_label.data()));
-        rb->setObjectName(tr(button_name.data()));
-        // check if current unit weapon map contains this weapon
-        if (weapons.count(std::get<0>(w->second))) {
-            if (std::get<1>(weapons.at(std::get<0>(w->second))) == w->first) {
-                rb->setChecked(true);
-                has_weapon = true;
-            }
-        }
-        connect(rb, SIGNAL(clicked(bool)), this, SLOT(optional_weapon_selected()));
-        weapons_subbox_layout->addWidget(rb);
-    }
-    QRadioButton* none_rb = new QRadioButton(tr("None"));
-    std::string none_rb_name = "None_opt_";
-    switch (wt) {
-    case WeaponType::MELEE:
-        none_rb_name += "melee_radiobutton";
-        break;
-    case WeaponType::BALLISTIC:
-        none_rb_name += "ranged_radiobutton";
-        break;
-    default: throw std::runtime_error("Unrecognised weapon type!");
-    }
-    none_rb->setObjectName(tr(none_rb_name.data()));
-    if (!has_weapon) none_rb->setChecked(true);
-    connect(none_rb, SIGNAL(clicked(bool)), this, SLOT(optional_weapon_selected()));
-    weapons_subbox_layout->addWidget(none_rb);
-    weapons_subbox_layout->addStretch(1);
-    weapons_subbox->setLayout(weapons_subbox_layout);
-    return weapons_subbox;
-}
+// unit options box initialisers
 
-QGroupBox* ArmyCreator::init_opt_weapons_groupbox(
-        const std::unordered_map<std::string, std::tuple<WeaponType, ItemClass, double>>& opt_weapons,
-        const std::unordered_map<WeaponType, std::tuple<ItemClass, std::string, double>>& weapons,
-        int id
-     ) {
-    QGroupBox* weapons_box = new QGroupBox(tr("Weapons"));
-    QVBoxLayout* vbox_weapons = new QVBoxLayout;
-    // create the sub group boxes for melee and ranged weapon options
-    auto melee_subbox = init_opt_subweapons_groupbox(WeaponType::MELEE, opt_weapons, weapons, id);
-    if (melee_subbox != nullptr) vbox_weapons->addWidget(melee_subbox);
-    auto ranged_subbox = init_opt_subweapons_groupbox(WeaponType::BALLISTIC, opt_weapons, weapons, id);
-    if (ranged_subbox != nullptr) vbox_weapons->addWidget(ranged_subbox);
+void ArmyCreator::initialise_unit_options_box() {
     std::shared_ptr<unit> current;
+    int curr_id = 0;
     switch (in_tree) {
     case InTree::ARMY:
-    {
-        int id = ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt();
-        current = army->get_unit(id);
+        curr_id = ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt();
+        current = army->get_unit(curr_id);
         break;
-    }
     case InTree::ROSTER:
         current = st->selected();
         break;
-    default: break;
+    default: return;
     }
-    vbox_weapons->addStretch(1);
-    weapons_box->setLayout(vbox_weapons);
-    return weapons_box;
+    QVBoxLayout* vbox = new QVBoxLayout; // overall layout for options box
+    // set-up optional size and command box
+    auto sc_box = initialise_size_command_groupbox(current);
+    if (sc_box != nullptr) vbox->addWidget(sc_box);
+    // set-up optional weapons boxes
+    auto weapons_boxes = initialise_opt_weapons_groupbox(current);
+    if (weapons_boxes.first != nullptr) vbox->addWidget(weapons_boxes.first);
+    if (weapons_boxes.second != nullptr) vbox->addWidget(weapons_boxes.second);
+    // set-up optional armour boxes
+    auto armour_boxes = initialise_opt_armour_groupbox(current);
+    if (armour_boxes.first != nullptr) vbox->addWidget(armour_boxes.first);
+    if (armour_boxes.second != nullptr) vbox->addWidget(armour_boxes.second);
+    // set-up optional mount box
+    auto mount_box = initialise_opt_mounts_groupbox(current);
+    if (mount_box != nullptr) vbox->addWidget(mount_box);
+    // set-up optional extras boxes
+    auto extras_boxes = initialise_opt_extras_groupbox(current);
+    if (extras_boxes.first != nullptr) vbox->addWidget(extras_boxes.first);
+    if (extras_boxes.second != nullptr) vbox->addWidget(extras_boxes.second);
+    ui->options_group_box->setLayout(vbox);
 }
 
-QGroupBox* ArmyCreator::init_opt_subarmour_groupbox(
-    ArmourType at,
-    const std::unordered_map<std::string, std::tuple<ArmourType, ItemClass, double>>& opt_armour,
-    const std::unordered_map<ArmourType, std::tuple<ItemClass, std::string, double>>& armour,
-    int id
-) {
-    auto opt_armour_vec = tools::find_all_if(
-        std::begin(opt_armour),
-        std::end(opt_armour),
-        [at](const auto& x) { return std::get<0>(x.second) == at; }
-    );
-    if (opt_armour_vec.empty()) return nullptr;
-    QGroupBox* ab_armours_box = new QGroupBox();
-    QVBoxLayout* ab_armours_box_layout = new QVBoxLayout;
-    bool has_armour = false;
-    for (const auto& a : opt_armour_vec) {
-        BaseUnitType but;
-        if (in_tree == InTree::ROSTER) but = st->selected()->base_unit_type();
-        else but = army->get_unit(id)->base_unit_type();
-        std::string pts_str = tools::points_str(std::get<2>(a->second), but);
-        std::string button_label = a->first + " (" + pts_str + ")";
-        std::string button_name = a->first + "_" +
-                std::to_string(static_cast<int>(std::get<0>(a->second))) + "_" +
-                std::to_string(static_cast<int>(std::get<1>(a->second))) + "_radiobutton";
-        QRadioButton* rb = new QRadioButton(tr(button_label.data()));
-        rb->setObjectName(tr(button_name.data()));
-        // check if current unit armour map contains this piece of armour
-        if (armour.count(std::get<0>(a->second))) {
-               if (std::get<1>(armour.at(std::get<0>(a->second))) == a->first) {
-                   rb->setChecked(true);
-                   has_armour = true;
-               }
-        }
-        connect(rb, SIGNAL(clicked(bool)), this, SLOT(optional_armour_selected()));
-        ab_armours_box_layout->addWidget(rb);
-    }
-    QRadioButton* none_rb = new QRadioButton(tr("None"));
-    std::string none_rb_name = "None_opt_";
-    switch (at) {
-    case ArmourType::ARMOUR:
-        none_rb_name += "armour_radiobutton";
+QGroupBox* ArmyCreator::initialise_size_command_groupbox(std::shared_ptr<unit> current) {
+    switch (current->base_unit_type()) {
+    case BaseUnitType::NORMAL:
+        if (current->unit_class() == armies::UnitClass::MONSTER) return nullptr;
         break;
-    case ArmourType::SHIELD:
-        none_rb_name += "shield_radiobutton";
+    case BaseUnitType::MIXED:
+        // TODO: change to break; once mixed unit implementation complete
+        return nullptr;
+    default: return nullptr;
+    }
+    QGroupBox* sc_groupbox = new QGroupBox(tr("Size and Command Group"));
+    QVBoxLayout* sc_box_layout = new QVBoxLayout;
+    QHBoxLayout* size_box_layout = new QHBoxLayout;
+    // unit size
+    QLabel* label = new QLabel(tr("Unit size"));
+    QSpinBox* size_sb = new QSpinBox();
+    // command group
+    QGroupBox* command_box = nullptr;
+    if (current->base_unit_type() == BaseUnitType::NORMAL) {
+        auto p = std::dynamic_pointer_cast<normal_unit>(current);
+        size_sb->setMinimum(static_cast<int>(p->min_size()));
+        size_sb->setMaximum(
+            (p->max_size() == std::numeric_limits<std::size_t>::max()) ?
+                1000 : static_cast<int>(p->max_size())
+        );
+        std::string size_sb_name = p->name() + "_spinbox";
+        size_sb->setObjectName(QString(size_sb_name.data()));
+        // set value of spinbox to current unit size
+        if (in_tree == InTree::ARMY) size_sb->setValue(static_cast<int>(p->size()));
+        connect(size_sb, SIGNAL(valueChanged(int)), this, SLOT(change_unit_size()));
+        size_box_layout->addWidget(label);
+        size_box_layout->addWidget(size_sb);
+        size_box_layout->addStretch(1);
+        sc_box_layout->addLayout(size_box_layout);
+    }
+    else { // BaseUnitType::MIXED
+        // TODO: implement
+    }
+    command_box = initialise_command_groupbox(current);
+    if (command_box != nullptr) sc_box_layout->addWidget(command_box);
+    sc_box_layout->addStretch(1);
+    sc_groupbox->setLayout(sc_box_layout);
+    return sc_groupbox;
+}
+
+QGroupBox* ArmyCreator::initialise_command_groupbox(std::shared_ptr<unit> current) {
+    std::unordered_map<CommandGroup, std::pair<std::string, double>> opt_command;
+    std::unordered_map<CommandGroup, std::pair<std::string, double>> command;
+    switch (current->base_unit_type()) {
+    case BaseUnitType::NORMAL:
+    {
+        auto p = std::dynamic_pointer_cast<normal_unit>(current);
+        opt_command = p->handle->optional_command();
+        if (in_tree == InTree::ARMY) command = p->command();
         break;
-    case ArmourType::HELMET:
-        none_rb_name += "helmet_radiobutton";
-        break;
-    default: throw std::runtime_error("Unrecognised armour type!");
     }
-    none_rb->setObjectName(tr(none_rb_name.data()));
-    if (!has_armour) none_rb->setChecked(true);
-    connect(none_rb, SIGNAL(clicked(bool)), this, SLOT(optional_armour_selected()));
-    ab_armours_box_layout->addWidget(none_rb);
-    ab_armours_box_layout->addStretch(1);
-    ab_armours_box->setLayout(ab_armours_box_layout);
-    return ab_armours_box;
-}
-
-QGroupBox* ArmyCreator::init_opt_armour_groupbox(
-        const std::unordered_map<std::string, std::tuple<ArmourType, ItemClass, double>>& opt_armour,
-        const std::unordered_map<ArmourType, std::tuple<ItemClass, std::string, double>>& armour,
-        int id
-     ) {
-    QGroupBox* armours_box = new QGroupBox(tr("Armours"));
-    QVBoxLayout* vbox_armours = new QVBoxLayout;
-    // create the sub group boxes for armour, shield and helmet options
-    auto armours_subbox = init_opt_subarmour_groupbox(ArmourType::ARMOUR, opt_armour, armour, id);
-    if (armours_subbox != nullptr) vbox_armours->addWidget(armours_subbox);
-    auto shields_subbox = init_opt_subarmour_groupbox(ArmourType::SHIELD, opt_armour, armour, id);
-    if (shields_subbox != nullptr) vbox_armours->addWidget(shields_subbox);
-    auto helmets_subbox = init_opt_subarmour_groupbox(ArmourType::HELMET, opt_armour, armour, id);
-    if (helmets_subbox != nullptr) vbox_armours->addWidget(helmets_subbox);
-    vbox_armours->addStretch(1);
-    armours_box->setLayout(vbox_armours);
-    return armours_box;
-}
-
-QGroupBox* ArmyCreator::init_opt_mounts_groupbox(
-        const std::unordered_map<std::string, std::pair<armies::UnitClass, double>>& mounts,
-        int id
-     ) {
-    QGroupBox* mounts_box = new QGroupBox(tr("Mounts"));
-    QVBoxLayout* vbox_mounts = new QVBoxLayout;
-    for (const auto& m : mounts) {
-        auto tmp = tools::split(std::to_string(std::get<1>(m.second)), '.');
-        for (auto& s : tmp) tools::remove_leading_whitespaces(s);
-        std::string pts_str = (tools::starts_with(tmp[1], '0')) ? tmp[0] : tmp[0] + "." + tmp[1].substr(0, 1);
-        std::string permodel = "";
-        if (in_tree == InTree::ROSTER)
-            permodel += (st->selected()->base_unit_type() == BaseUnitType::NORMAL) ? "/model" : "";
-        else
-            permodel += (army->get_unit(id)->base_unit_type() == BaseUnitType::NORMAL) ? "/model" : "";
-        std::string name = m.first + " (" + pts_str + " pts" + permodel + ")";
-        QRadioButton* b = new QRadioButton(tr(name.data()));
-        b->setObjectName(tr((m.first + "_radiobutton").data()));
-        vbox_mounts->addWidget(b);
+    default: return nullptr;
     }
-    QRadioButton* none_rb = new QRadioButton(tr("None"));
-    none_rb->setObjectName(tr("None_mounts_radiobutton"));
-    none_rb->setChecked(true);
-    vbox_mounts->addWidget(none_rb);
-    vbox_mounts->addStretch(1);
-    mounts_box->setLayout(vbox_mounts);
-    return mounts_box;
-}
-
-QGroupBox* ArmyCreator::init_opt_oco_extras_groupbox(
-    const std::unordered_map<
-        std::string,
-        std::pair<bool, double>
-    >& opt_oco_extras,
-    const std::pair<std::string, std::pair<bool, double>>& curr_oco_extra,
-    int id
-) {
-    if (opt_oco_extras.empty()) return nullptr;
-    QGroupBox* oco_box = new QGroupBox();
-    QVBoxLayout* oco_box_layout = new QVBoxLayout;
-    bool has_extra = false;
-    for (const auto& e : opt_oco_extras) {
-        std::string pts_str = tools::points_str(e.second.second);
-        std::string permodel = "";
-        if (in_tree == InTree::ROSTER)
-            permodel += (st->selected()->base_unit_type() == BaseUnitType::NORMAL &&
-                !(e.second.first)) ? "/model" : "";
-        else
-            permodel += (army->get_unit(id)->base_unit_type() == BaseUnitType::NORMAL &&
-                !(e.second.first)) ? "/model" : "";
-        std::string label = e.first + " (" + pts_str + " pts" + permodel + ")";
-        std::string name = e.first + "_radiobutton";
-        QRadioButton* rb = new QRadioButton(tr(label.data()));
-        rb->setObjectName(tr(name.data()));
-        if (curr_oco_extra.first == e.first) {
-            rb->setChecked(true);
-            has_extra = true;
-        }
-        connect(rb, SIGNAL(clicked(bool)), this, SLOT(optional_oco_extra_selected()));
-        oco_box_layout->addWidget(rb);
-    }
-    QRadioButton* none_rb = new QRadioButton(tr("None"));
-    none_rb->setObjectName(tr("None_ocoextra_radiobutton"));
-    if (!has_extra) none_rb->setChecked(true);
-    connect(none_rb, SIGNAL(clicked(bool)), this, SLOT(optional_oco_extra_selected()));
-    oco_box_layout->addWidget(none_rb);
-    oco_box_layout->addStretch(1);
-    oco_box->setLayout(oco_box_layout);
-    return oco_box;
-}
-
-QGroupBox* ArmyCreator::init_opt_mc_extras_groupbox(
-    const std::unordered_map<
-        std::string,
-        std::pair<bool, double>
-    >& opt_mc_extras,
-    const std::unordered_map<
-        std::string,
-        std::pair<bool, double>
-    > curr_mc_extras,
-    int id
-) {
-    if (opt_mc_extras.empty()) return nullptr;
-    QGroupBox* mc_box = new QGroupBox();
-    QVBoxLayout* mc_box_layout = new QVBoxLayout;
-    for (const auto& e : opt_mc_extras) {
-        std::string pts_str = tools::points_str(e.second.second);
-        std::string permodel = "";
-        if (in_tree == InTree::ROSTER)
-            permodel += (st->selected()->base_unit_type() == BaseUnitType::NORMAL &&
-                !(e.second.first)) ? "/model" : "";
-        else
-            permodel += (army->get_unit(id)->base_unit_type() == BaseUnitType::NORMAL &&
-                !(e.second.first)) ? "/model" : "";
-        std::string label = e.first + " (" + pts_str + " pts" + permodel + ")";
-        std::string name = e.first + "_checkbox";
-        QCheckBox* cb = new QCheckBox(tr(label.data()));
-        cb->setObjectName(tr(name.data()));
-        if (curr_mc_extras.count(e.first)) cb->setChecked(true);
-        connect(cb, SIGNAL(clicked(bool)), this, SLOT(optional_mc_extra_selected()));
-        mc_box_layout->addWidget(cb);
-    }
-    mc_box_layout->addStretch(1);
-    mc_box->setLayout(mc_box_layout);
-    return mc_box;
-}
-
-QGroupBox* ArmyCreator::init_opt_extras_groupbox(
-    const std::unordered_map<
-        std::string,
-        std::pair<bool, double>
-    >& opt_oco_extras,
-    const std::unordered_map<
-        std::string,
-        std::pair<bool, double>
-    >& opt_mc_extras,
-    const std::pair<std::string, std::pair<bool, double>>& curr_oco_extra,
-    const std::unordered_map<
-        std::string,
-        std::pair<bool, double>
-    > curr_mc_extras,
-    int id
-) {
-    QGroupBox* extras_box = new QGroupBox(tr("Other"));
-    QVBoxLayout* vbox_extras = new QVBoxLayout;
-    auto oco_extras_subbox = init_opt_oco_extras_groupbox(opt_oco_extras, curr_oco_extra, id);
-    if (oco_extras_subbox != nullptr) vbox_extras->addWidget(oco_extras_subbox);
-    auto mc_extras_subbox = init_opt_mc_extras_groupbox(opt_mc_extras, curr_mc_extras, id);
-    if (mc_extras_subbox != nullptr) vbox_extras->addWidget(mc_extras_subbox);
-    vbox_extras->addStretch(1);
-    extras_box->setLayout(vbox_extras);
-    return extras_box;
-}
-
-QGroupBox* ArmyCreator::init_command_groupbox(
-        const std::unordered_map<CommandGroup, std::pair<std::string, double>>& opt_command,
-        const std::unordered_map<CommandGroup, std::pair<std::string, double>>& command
-    ) {
     if (opt_command.empty()) return nullptr;
     QGroupBox* gb = new QGroupBox(tr("Command Group"));
     QVBoxLayout* vb = new QVBoxLayout;
@@ -784,212 +628,504 @@ QGroupBox* ArmyCreator::init_command_groupbox(
     return gb;
 }
 
-void ArmyCreator::change_unit_size() {
-    QSpinBox* sb = qobject_cast<QSpinBox*>(QObject::sender());
-    std::shared_ptr<unit> current;
-    int curr_id = -1;
-    switch (in_tree) {
-    case InTree::ARMY:
-        curr_id = ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt();
-        current = army->get_unit(curr_id);
-        break;
-    case InTree::ROSTER:
-        current = st->selected();
-        break;
-    default: throw std::runtime_error("No unit selected!");
-    }
+std::pair<QGroupBox*, QGroupBox*> ArmyCreator::initialise_opt_weapons_groupbox(std::shared_ptr<unit> current) {
+    bool has_opt_weapons = false;
+    bool has_champ_opt_weapons = false;
+    std::pair<QGroupBox*, QGroupBox*> boxes = {nullptr, nullptr};
     switch (current->base_unit_type()) {
-    case BaseUnitType::MELEE_CHARACTER:
     case BaseUnitType::MAGE_CHARACTER:
+    case BaseUnitType::MELEE_CHARACTER:
+    {
+        auto p = std::dynamic_pointer_cast<character_unit>(current);
+        if (p->handle_->opt().opt_weapons.empty()) return boxes;
+        has_opt_weapons = true;
         break;
+    }
     case BaseUnitType::NORMAL:
     {
         auto p = std::dynamic_pointer_cast<normal_unit>(current);
-        try {
-            switch (in_tree) {
-            case InTree::ARMY:
-                army->take_snapshot_of(curr_id);
-                p->change_size(static_cast<std::size_t>(sb->value()));
-                army->update_on(curr_id);
-                ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
-                update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::SIZE);
-                break;
-            case InTree::ROSTER:
-                p->change_size(static_cast<std::size_t>(sb->value()));
-                break;
-            default: throw std::runtime_error("No unit selected!");
+        if (p->handle->opt().opt_weapons.empty() && p->handle->champion_opt().opt_weapons.empty())
+            return boxes;
+        if (!p->handle->opt().opt_weapons.empty()) has_opt_weapons = true;
+        if (!p->handle->champion_opt().opt_weapons.empty()) has_champ_opt_weapons = true;
+        break;
+    }
+    default: return boxes;
+    }
+    if (has_opt_weapons) {
+        QGroupBox* weapons_box = new QGroupBox(tr("Weapons"));
+        QVBoxLayout* weapons_box_layout = new QVBoxLayout;
+        auto melee_subbox = initialise_opt_weapons_subgroupbox(WeaponType::MELEE, current, false);
+        if (melee_subbox != nullptr) weapons_box_layout->addWidget(melee_subbox);
+        auto ranged_subbox = initialise_opt_weapons_subgroupbox(WeaponType::BALLISTIC, current, false);
+        if (ranged_subbox != nullptr) weapons_box_layout->addWidget(ranged_subbox);
+        weapons_box_layout->addStretch(1);
+        weapons_box->setLayout(weapons_box_layout);
+        boxes.first = weapons_box;
+    }
+    if (has_champ_opt_weapons) {
+        QGroupBox* weapons_box = new QGroupBox(tr("Champion Weapons"));
+        QVBoxLayout* weapons_box_layout = new QVBoxLayout;
+        auto melee_subbox = initialise_opt_weapons_subgroupbox(WeaponType::MELEE, current, true);
+        if (melee_subbox != nullptr) weapons_box_layout->addWidget(melee_subbox);
+        auto ranged_subbox = initialise_opt_weapons_subgroupbox(WeaponType::BALLISTIC, current, true);
+        if (ranged_subbox != nullptr) weapons_box_layout->addWidget(ranged_subbox);
+        weapons_box_layout->addStretch(1);
+        weapons_box->setLayout(weapons_box_layout);
+        boxes.second = weapons_box;
+    }
+    return boxes;
+}
+
+QGroupBox* ArmyCreator::initialise_opt_weapons_subgroupbox(
+    WeaponType wt, std::shared_ptr<unit> current, bool champion
+) {
+    std::unordered_map<std::string, std::tuple<WeaponType, ItemClass, double>> opt_weapons;
+    std::unordered_map<WeaponType, std::tuple<ItemClass, std::string, double>> curr_weapons;
+    switch (current->base_unit_type()) {
+    case BaseUnitType::MAGE_CHARACTER:
+    case BaseUnitType::MELEE_CHARACTER:
+    {
+        auto p = std::dynamic_pointer_cast<character_unit>(current);
+        opt_weapons = p->handle_->opt().opt_weapons;
+        if (in_tree == InTree::ARMY) curr_weapons = p->weapons();
+        break;
+    }
+    case BaseUnitType::NORMAL:
+    {
+        auto p = std::dynamic_pointer_cast<normal_unit>(current);
+        if (champion) {
+            opt_weapons = p->handle->champion_opt().opt_weapons;
+            p->switch_model_select(ModelSelect::CHAMPION);
+            if (in_tree == InTree::ARMY) curr_weapons = p->weapons();
+            p->switch_model_select(ModelSelect::DEFAULT);
+        }
+        else {
+            opt_weapons = p->handle->opt().opt_weapons;
+            p->switch_model_select(ModelSelect::DEFAULT);
+            if (in_tree == InTree::ARMY) curr_weapons = p->weapons();
+        }
+        break;
+    }
+    default: return nullptr;
+    }
+    auto opt_weapon_vec = tools::find_all_if(
+        std::begin(opt_weapons),
+        std::end(opt_weapons),
+        [wt] (const auto& x) { return std::get<0>(x.second) == wt; }
+    );
+    if (opt_weapon_vec.empty()) return nullptr;
+    std::string subbox_label = "";
+    switch (wt) {
+    case WeaponType::MELEE:
+        subbox_label = "Melee";
+        break;
+    case WeaponType::BALLISTIC:
+        subbox_label = "Ranged";
+        break;
+    default: throw std::runtime_error("Unrecognised weapon type!");
+    }
+    QGroupBox* weapons_subbox = new QGroupBox(tr(subbox_label.data()));
+    QVBoxLayout* weapons_subbox_layout = new QVBoxLayout;
+    bool has_weapon = false;
+    for (const auto& w : opt_weapon_vec) {
+        BaseUnitType but = current->base_unit_type();
+        std::string pts_str = tools::points_str(std::get<2>(w->second), but);
+        std::string button_label = w->first + " (" + pts_str + ")";
+        std::string button_name = w->first + "_" +
+                std::to_string(static_cast<int>(std::get<0>(w->second))) + "_" +
+                std::to_string(static_cast<int>(std::get<1>(w->second))) + "_radiobutton";
+        QRadioButton* rb = new QRadioButton(tr(button_label.data()));
+        rb->setObjectName(tr(button_name.data()));
+        // check if current unit weapon map contains this weapon
+        if (curr_weapons.count(std::get<0>(w->second))) {
+            if (std::get<1>(curr_weapons.at(std::get<0>(w->second))) == w->first) {
+                rb->setChecked(true);
+                has_weapon = true;
             }
-        } catch (const std::invalid_argument&) {}
+        }
+        connect(rb, SIGNAL(clicked(bool)), this, SLOT(optional_weapon_selected()));
+        weapons_subbox_layout->addWidget(rb);
+    }
+    QRadioButton* none_rb = new QRadioButton(tr("None"));
+    std::string none_rb_name = "None_opt_";
+    switch (wt) {
+    case WeaponType::MELEE:
+        none_rb_name += "melee_radiobutton";
         break;
+    case WeaponType::BALLISTIC:
+        none_rb_name += "ranged_radiobutton";
+        break;
+    default: throw std::runtime_error("Unrecognised weapon type!");
     }
-    default: break;
-    }
+    none_rb->setObjectName(tr(none_rb_name.data()));
+    if (!has_weapon) none_rb->setChecked(true);
+    connect(none_rb, SIGNAL(clicked(bool)), this, SLOT(optional_weapon_selected()));
+    weapons_subbox_layout->addWidget(none_rb);
+    weapons_subbox_layout->addStretch(1);
+    weapons_subbox->setLayout(weapons_subbox_layout);
+    return weapons_subbox;
 }
 
-QGroupBox* ArmyCreator::init_size_command_groupbox() {
-    QGroupBox* sc_groupbox = new QGroupBox(tr("Size and Command"));
-    QVBoxLayout* vbox = new QVBoxLayout;
-    QHBoxLayout* hbox = new QHBoxLayout;
-    // unit size
-    QLabel* label = new QLabel(tr("Unit size"));
-    QSpinBox* size_sb = new QSpinBox();
-    // command group
-    QGroupBox* command_buttons;
-    std::unordered_map<
-        CommandGroup, std::pair<std::string, double>
-    > opt_command;
-    std::shared_ptr<unit> current;
-    if (in_tree == InTree::ROSTER) current = st->selected();
-    else {
-        int curr_id = ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt();
-        current = army->get_unit(curr_id);
-    }
-    switch (current->base_unit_type()) {
-    case BaseUnitType::NORMAL:
-    {
-        auto p = std::dynamic_pointer_cast<normal_unit>(current);
-        opt_command = p->handle->optional_command();
-        command_buttons = init_command_groupbox(opt_command, p->command());
-        size_sb->setMinimum(static_cast<int>(p->min_size()));
-        if (p->max_size() == std::numeric_limits<std::size_t>::max())
-            size_sb->setMaximum(1000);
-        else size_sb->setMaximum(static_cast<int>(p->max_size()));
-        std::string size_sb_name = p->name() + "_spinbox";
-        size_sb->setObjectName(QString(size_sb_name.data()));
-        // set the value of the spinbox to the current unit size if army tree unit is selected
-        if (in_tree == InTree::ARMY) size_sb->setValue(static_cast<int>(p->size()));
-        connect(size_sb, SIGNAL(valueChanged(int)), this, SLOT(change_unit_size()));
-        hbox->addWidget(label);
-        hbox->addWidget(size_sb);
-        hbox->addStretch(1);
-        vbox->addLayout(hbox);
-        break;
-    }
-    default:
-        delete size_sb;
-        delete label;
-        delete hbox;
-        delete vbox;
-        delete sc_groupbox;
-        return nullptr;
-    }
-    if (command_buttons != nullptr) vbox->addWidget(command_buttons);
-    vbox->addStretch(1);
-    sc_groupbox->setLayout(vbox);
-    return sc_groupbox;
-}
 
-void ArmyCreator::initialise_unit_options_box() {
-    // optional and current weapons
-    std::unordered_map<
-        std::string,
-        std::tuple<WeaponType, ItemClass, double>
-    > opt_weapons;
-    std::unordered_map<
-        WeaponType,
-        std::tuple<ItemClass, std::string, double>
-    > current_weapons;
-    // optional and current armours
-    std::unordered_map<
-        std::string,
-        std::tuple<ArmourType, ItemClass, double>
-    > opt_armours;
-    std::unordered_map<
-        ArmourType,
-        std::tuple<ItemClass, std::string, double>
-    > current_armours;
-    // optional and current mounts
-    std::unordered_map<std::string, std::pair<armies::UnitClass, double>> opt_mounts;
-    // optional and current extras
-    std::unordered_map<
-        std::string,
-        std::pair<bool, double>
-    > opt_oco_extras;
-    std::unordered_map<
-        std::string,
-        std::pair<bool, double>
-    > opt_mc_extras;
-    std::pair<std::string, std::pair<bool, double>> curr_oco_extra;
-    std::unordered_map<
-        std::string,
-        std::pair<bool, double>
-    > curr_mc_extras;
-    int curr_id = 0;
-    // overall layout for options box
-    QVBoxLayout* vbox = new QVBoxLayout;
-    auto sc_box = init_size_command_groupbox();
-    if (sc_box != nullptr) vbox->addWidget(sc_box);
-    std::shared_ptr<unit> current;
-    if (in_tree == InTree::ROSTER) current = st->selected();
-    else {
-        curr_id = ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt();
-        current = army->get_unit(curr_id);
-    }
+std::pair<QGroupBox*, QGroupBox*> ArmyCreator::initialise_opt_armour_groupbox(std::shared_ptr<unit> current) {
+    bool has_opt_armour = false;
+    bool has_champ_opt_armour = false;
+    std::pair<QGroupBox*, QGroupBox*> boxes = {nullptr, nullptr};
     switch (current->base_unit_type()) {
+    case BaseUnitType::MAGE_CHARACTER:
     case BaseUnitType::MELEE_CHARACTER:
     {
-        auto p = std::dynamic_pointer_cast<melee_character_unit>(current);
-        opt_weapons = p->handle->opt().opt_weapons;
-        opt_armours = p->handle->opt().opt_armour;
-        opt_mounts = p->handle->opt().opt_mounts;
-        opt_oco_extras = p->handle->opt().oco_extras;
-        opt_mc_extras = p->handle->opt().mc_extras;
-        current_weapons = p->weapons();
-        current_armours = p->armour();
-        curr_oco_extra = p->oco_extra();
-        curr_mc_extras = p->mc_extras();
+        auto p = std::dynamic_pointer_cast<character_unit>(current);
+        if (p->handle_->opt().opt_armour.empty()) return boxes;
+        has_opt_armour = true;
         break;
     }
-    case BaseUnitType::MAGE_CHARACTER:
-    {
-        auto p = std::dynamic_pointer_cast<mage_character_unit>(current);
-        opt_weapons = p->handle->opt().opt_weapons;
-        opt_armours = p->handle->opt().opt_armour;
-        opt_mounts = p->handle->opt().opt_mounts;
-        opt_oco_extras = p->handle->opt().oco_extras;
-        opt_mc_extras = p->handle->opt().mc_extras;
-        current_weapons = p->weapons();
-        current_armours = p->armour();
-        curr_oco_extra = p->oco_extra();
-        curr_mc_extras = p->mc_extras();
-        break;
-    }
-    case BaseUnitType::MIXED:
-        // TODO: implement once mixed units are figured out
-        break;
     case BaseUnitType::NORMAL:
     {
         auto p = std::dynamic_pointer_cast<normal_unit>(current);
-        opt_weapons = p->handle->opt().opt_weapons;
-        opt_armours = p->handle->opt().opt_armour;
+        if (p->handle->opt().opt_armour.empty() && p->handle->champion_opt().opt_armour.empty())
+            return boxes;
+        if (!p->handle->opt().opt_armour.empty()) has_opt_armour = true;
+        if (!p->handle->champion_opt().opt_armour.empty()) has_champ_opt_armour = true;
+        break;
+    }
+    default: return boxes;
+    }
+    if (has_opt_armour) {
+        QGroupBox* armour_box = new QGroupBox(tr("Armour"));
+        QVBoxLayout* armour_box_layout = new QVBoxLayout;
+        auto body_subbox = initialise_opt_armour_subgroupbox(ArmourType::ARMOUR, current, false);
+        if (body_subbox != nullptr) armour_box_layout->addWidget(body_subbox);
+        auto shield_subbox = initialise_opt_armour_subgroupbox(ArmourType::SHIELD, current, false);
+        if (shield_subbox != nullptr) armour_box_layout->addWidget(shield_subbox);
+        auto helmet_subbox = initialise_opt_armour_subgroupbox(ArmourType::HELMET, current, false);
+        if (helmet_subbox != nullptr) armour_box_layout->addWidget(helmet_subbox);
+        armour_box_layout->addStretch(1);
+        armour_box->setLayout(armour_box_layout);
+        boxes.first = armour_box;
+    }
+    if (has_champ_opt_armour) {
+        QGroupBox* armour_box = new QGroupBox(tr("Champion Armour"));
+        QVBoxLayout* armour_box_layout = new QVBoxLayout;
+        auto body_subbox = initialise_opt_armour_subgroupbox(ArmourType::ARMOUR, current, true);
+        if (body_subbox != nullptr) armour_box_layout->addWidget(body_subbox);
+        auto shield_subbox = initialise_opt_armour_subgroupbox(ArmourType::SHIELD, current, true);
+        if (shield_subbox != nullptr) armour_box_layout->addWidget(shield_subbox);
+        auto helmet_subbox = initialise_opt_armour_subgroupbox(ArmourType::HELMET, current, true);
+        if (helmet_subbox != nullptr) armour_box_layout->addWidget(helmet_subbox);
+        armour_box_layout->addStretch(1);
+        armour_box->setLayout(armour_box_layout);
+        boxes.second = armour_box;
+    }
+    return boxes;
+}
+
+QGroupBox* ArmyCreator::initialise_opt_armour_subgroupbox(
+    ArmourType at, std::shared_ptr<unit> current, bool champion
+) {
+    std::unordered_map<std::string, std::tuple<ArmourType, ItemClass, double>> opt_armour;
+    std::unordered_map<ArmourType, std::tuple<ItemClass, std::string, double>> curr_armour;
+    switch (current->base_unit_type()) {
+    case BaseUnitType::MAGE_CHARACTER:
+    case BaseUnitType::MELEE_CHARACTER:
+    {
+        auto p = std::dynamic_pointer_cast<character_unit>(current);
+        opt_armour = p->handle_->opt().opt_armour;
+        if (in_tree == InTree::ARMY) curr_armour = p->armour();
+        break;
+    }
+    case BaseUnitType::NORMAL:
+    {
+        auto p = std::dynamic_pointer_cast<normal_unit>(current);
+        if (champion) {
+            opt_armour = p->handle->champion_opt().opt_armour;
+            p->switch_model_select(ModelSelect::CHAMPION);
+            if (in_tree == InTree::ARMY) curr_armour = p->armour();
+            p->switch_model_select(ModelSelect::DEFAULT);
+        }
+        else {
+            opt_armour = p->handle->opt().opt_armour;
+            p->switch_model_select(ModelSelect::DEFAULT);
+            if (in_tree == InTree::ARMY) curr_armour = p->armour();
+        }
+        break;
+    }
+    default: return nullptr;
+    }
+    auto opt_armour_vec = tools::find_all_if(
+        std::begin(opt_armour),
+        std::end(opt_armour),
+        [at] (const auto& x) { return std::get<0>(x.second) == at; }
+    );
+    if (opt_armour_vec.empty()) return nullptr;
+    std::string subbox_label = "";
+    switch (at) {
+    case ArmourType::ARMOUR:
+        subbox_label = "Body Armour";
+        break;
+    case ArmourType::SHIELD:
+        subbox_label = "Shield";
+        break;
+    case ArmourType::HELMET:
+        subbox_label = "Helmet";
+        break;
+    default: throw std::runtime_error("Unrecognised armour type!");
+    }
+    QGroupBox* armour_subbox = new QGroupBox(tr(subbox_label.data()));
+    QVBoxLayout* armour_subbox_layout = new QVBoxLayout;
+    bool has_armour = false;
+    for (const auto& a : opt_armour_vec) {
+        BaseUnitType but = current->base_unit_type();
+        std::string pts_str = tools::points_str(std::get<2>(a->second), but);
+        std::string button_label = a->first + " (" + pts_str + ")";
+        std::string button_name = a->first + "_" +
+                std::to_string(static_cast<int>(std::get<0>(a->second))) + "_" +
+                std::to_string(static_cast<int>(std::get<1>(a->second))) + "_radiobutton";
+        QRadioButton* rb = new QRadioButton(tr(button_label.data()));
+        rb->setObjectName(tr(button_name.data()));
+        // check if current unit armour map contains this piece of armour
+        if (curr_armour.count(std::get<0>(a->second))) {
+               if (std::get<1>(curr_armour.at(std::get<0>(a->second))) == a->first) {
+                   rb->setChecked(true);
+                   has_armour = true;
+               }
+        }
+        connect(rb, SIGNAL(clicked(bool)), this, SLOT(optional_armour_selected()));
+        armour_subbox_layout->addWidget(rb);
+    }
+    QRadioButton* none_rb = new QRadioButton(tr("None"));
+    std::string none_rb_name = "None_opt_";
+    switch (at) {
+    case ArmourType::ARMOUR:
+        none_rb_name += "armour_radiobutton";
+        break;
+    case ArmourType::SHIELD:
+        none_rb_name += "shield_radiobutton";
+        break;
+    case ArmourType::HELMET:
+        none_rb_name += "helmet_radiobutton";
+        break;
+    default: throw std::runtime_error("Unrecognised armour type!");
+    }
+    none_rb->setObjectName(tr(none_rb_name.data()));
+    if (!has_armour) none_rb->setChecked(true);
+    connect(none_rb, SIGNAL(clicked(bool)), this, SLOT(optional_armour_selected()));
+    armour_subbox_layout->addWidget(none_rb);
+    armour_subbox_layout->addStretch(1);
+    armour_subbox->setLayout(armour_subbox_layout);
+    return armour_subbox;
+}
+
+QGroupBox* ArmyCreator::initialise_opt_mounts_groupbox(std::shared_ptr<unit> current) {
+    std::unordered_map<std::string, std::pair<armies::UnitClass, double>> opt_mounts;
+    switch (current->base_unit_type()) {
+    case BaseUnitType::MAGE_CHARACTER:
+    case BaseUnitType::MELEE_CHARACTER:
+    {
+        auto p = std::dynamic_pointer_cast<character_unit>(current);
+        opt_mounts = p->handle_->opt().opt_mounts;
+        break;
+    }
+    case BaseUnitType::NORMAL:
+    {
+        auto p = std::dynamic_pointer_cast<normal_unit>(current);
         opt_mounts = p->handle->opt().opt_mounts;
-        opt_oco_extras = p->handle->opt().oco_extras;
-        opt_mc_extras = p->handle->opt().mc_extras;
-        current_weapons = p->weapons();
-        current_armours = p->armour();
-        curr_oco_extra = p->oco_extra();
-        curr_mc_extras = p->mc_extras();
         break;
     }
-    default:
+    default: return nullptr;
+    }
+    if (opt_mounts.empty()) return nullptr;
+    QGroupBox* mounts_box = new QGroupBox(tr("Mounts"));
+    QVBoxLayout* vbox_mounts = new QVBoxLayout;
+    for (const auto& m : opt_mounts) {
+        auto tmp = tools::split(std::to_string(std::get<1>(m.second)), '.');
+        for (auto& s : tmp) tools::remove_leading_whitespaces(s);
+        std::string pts_str = (tools::starts_with(tmp[1], '0')) ? tmp[0] : tmp[0] + "." + tmp[1].substr(0, 1);
+        std::string permodel = (current->base_unit_type() == BaseUnitType::NORMAL) ? "/model" : "";
+        std::string name = m.first + " (" + pts_str + " pts" + permodel + ")";
+        QRadioButton* b = new QRadioButton(tr(name.data()));
+        b->setObjectName(tr((m.first + "_radiobutton").data()));
+        vbox_mounts->addWidget(b);
+    }
+    QRadioButton* none_rb = new QRadioButton(tr("None"));
+    none_rb->setObjectName(tr("None_mounts_radiobutton"));
+    none_rb->setChecked(true);
+    vbox_mounts->addWidget(none_rb);
+    vbox_mounts->addStretch(1);
+    mounts_box->setLayout(vbox_mounts);
+    return mounts_box;
+}
+
+std::pair<QGroupBox*, QGroupBox*> ArmyCreator::initialise_opt_extras_groupbox(std::shared_ptr<unit> current) {
+    bool has_opt_oco_extras = false;
+    bool has_champ_opt_oco_extras = false;
+    bool has_opt_mc_extras = false;
+    bool has_champ_opt_mc_extras = false;
+    std::pair<QGroupBox*, QGroupBox*> boxes = {nullptr, nullptr};
+    switch (current->base_unit_type()) {
+    case BaseUnitType::MAGE_CHARACTER:
+    case BaseUnitType::MELEE_CHARACTER:
+    {
+        auto p = std::dynamic_pointer_cast<character_unit>(current);
+        if (p->handle_->opt().oco_extras.empty() && p->handle_->opt().mc_extras.empty())
+            return boxes;
+        if (!p->handle_->opt().oco_extras.empty()) has_opt_oco_extras = true;
+        if (!p->handle_->opt().mc_extras.empty()) has_opt_mc_extras = true;
         break;
     }
-    if (!opt_weapons.empty())
-        vbox->addWidget(init_opt_weapons_groupbox(opt_weapons, current_weapons, curr_id));
-    if (!opt_armours.empty())
-        vbox->addWidget(init_opt_armour_groupbox(opt_armours, current_armours, curr_id));
-    if (!opt_mounts.empty())
-        vbox->addWidget(init_opt_mounts_groupbox(opt_mounts, curr_id));
-    if (!(opt_oco_extras.empty() && opt_mc_extras.empty()))
-        vbox->addWidget(init_opt_extras_groupbox(
-            opt_oco_extras,
-            opt_mc_extras,
-            curr_oco_extra,
-            curr_mc_extras,
-            curr_id
-        ));
-    // set overall layout
-    ui->options_group_box->setLayout(vbox);
+    case BaseUnitType::NORMAL:
+    {
+        auto p = std::dynamic_pointer_cast<normal_unit>(current);
+        if (p->handle->opt().oco_extras.empty() && p->handle->opt().mc_extras.empty() &&
+                p->handle->champion_opt().oco_extras.empty() && p->handle->champion_opt().mc_extras.empty())
+            return boxes;
+        if (!p->handle->opt().oco_extras.empty()) has_opt_oco_extras = true;
+        if (!p->handle->opt().mc_extras.empty()) has_opt_mc_extras = true;
+        if (!p->handle->champion_opt().oco_extras.empty()) has_champ_opt_oco_extras = true;
+        if (!p->handle->champion_opt().mc_extras.empty()) has_champ_opt_mc_extras = true;
+        break;
+    }
+    default: return boxes;
+    }
+    if (has_opt_oco_extras || has_opt_mc_extras) {
+        QGroupBox* extras_box = new QGroupBox(tr("Other"));
+        QVBoxLayout* extras_box_layout = new QVBoxLayout;
+        if (has_opt_oco_extras) {
+            auto oco_subbox = initialise_opt_oco_extras_groupbox(current, false);
+            extras_box_layout->addWidget(oco_subbox);
+        }
+        if (has_opt_mc_extras) {
+            auto mc_subbox = initialise_opt_mc_extras_groupbox(current, false);
+            extras_box_layout->addWidget(mc_subbox);
+        }
+        extras_box_layout->addStretch(1);
+        extras_box->setLayout(extras_box_layout);
+        boxes.first = extras_box;
+    }
+    if (has_champ_opt_oco_extras || has_champ_opt_mc_extras) {
+        QGroupBox* extras_box = new QGroupBox(tr("Champion Other"));
+        QVBoxLayout* extras_box_layout = new QVBoxLayout;
+        if (has_champ_opt_oco_extras) {
+            auto oco_subbox = initialise_opt_oco_extras_groupbox(current, true);
+            extras_box_layout->addWidget(oco_subbox);
+        }
+        if (has_champ_opt_mc_extras) {
+            auto mc_subbox = initialise_opt_mc_extras_groupbox(current, true);
+            extras_box_layout->addWidget(mc_subbox);
+        }
+        extras_box_layout->addStretch(1);
+        extras_box->setLayout(extras_box_layout);
+        boxes.second = extras_box;
+    }
+    return boxes;
+}
+
+QGroupBox* ArmyCreator::initialise_opt_oco_extras_groupbox(std::shared_ptr<unit> current, bool champion) {
+    std::unordered_map<std::string, std::pair<bool, double>> opt_oco_extras;
+    std::pair<std::string, std::pair<bool, double>> curr_oco_extra;
+    switch (current->base_unit_type()) {
+    case BaseUnitType::MAGE_CHARACTER:
+    case BaseUnitType::MELEE_CHARACTER:
+    {
+        auto p = std::dynamic_pointer_cast<character_unit>(current);
+        opt_oco_extras = p->handle_->opt().oco_extras;
+        if (in_tree == InTree::ARMY) curr_oco_extra = p->oco_extra();
+        break;
+    }
+    case BaseUnitType::NORMAL:
+    {
+        auto p = std::dynamic_pointer_cast<normal_unit>(current);
+        if (champion) {
+            opt_oco_extras = p->handle->champion_opt().oco_extras;
+            p->switch_model_select(ModelSelect::CHAMPION);
+            if (in_tree == InTree::ARMY) curr_oco_extra = p->oco_extra();
+            p->switch_model_select(ModelSelect::DEFAULT);
+        }
+        else {
+            opt_oco_extras = p->handle->opt().oco_extras;
+            p->switch_model_select(ModelSelect::DEFAULT);
+            if (in_tree == InTree::ARMY) curr_oco_extra = p->oco_extra();
+        }
+        break;
+    }
+    default: return nullptr;
+    }
+    QGroupBox* oco_box = new QGroupBox();
+    QVBoxLayout* oco_box_layout = new QVBoxLayout;
+    bool has_extra = false;
+    for (const auto& e : opt_oco_extras) {
+        std::string pts_str = tools::points_str(e.second.second);
+        std::string permodel = (current->base_unit_type() == BaseUnitType::NORMAL &&
+                                    !(e.second.first)) ? "/model" : "";
+        std::string label = e.first + " (" + pts_str + " pts" + permodel + ")";
+        std::string name = e.first + "_radiobutton";
+        QRadioButton* rb = new QRadioButton(tr(label.data()));
+        rb->setObjectName(tr(name.data()));
+        if (curr_oco_extra.first == e.first) {
+            rb->setChecked(true);
+            has_extra = true;
+        }
+        connect(rb, SIGNAL(clicked(bool)), this, SLOT(optional_oco_extra_selected()));
+        oco_box_layout->addWidget(rb);
+    }
+    QRadioButton* none_rb = new QRadioButton(tr("None"));
+    none_rb->setObjectName(tr("None_ocoextra_radiobutton"));
+    if (!has_extra) none_rb->setChecked(true);
+    connect(none_rb, SIGNAL(clicked(bool)), this, SLOT(optional_oco_extra_selected()));
+    oco_box_layout->addWidget(none_rb);
+    oco_box_layout->addStretch(1);
+    oco_box->setLayout(oco_box_layout);
+    return oco_box;
+}
+
+QGroupBox* ArmyCreator::initialise_opt_mc_extras_groupbox(std::shared_ptr<unit> current, bool champion) {
+    std::unordered_map<std::string, std::pair<bool, double>> opt_mc_extras;
+    std::unordered_map<std::string, std::pair<bool, double>> curr_mc_extras;
+    switch (current->base_unit_type()) {
+    case BaseUnitType::MAGE_CHARACTER:
+    case BaseUnitType::MELEE_CHARACTER:
+    {
+        auto p = std::dynamic_pointer_cast<character_unit>(current);
+        opt_mc_extras = p->handle_->opt().mc_extras;
+        if (in_tree == InTree::ARMY) curr_mc_extras = p->mc_extras();
+        break;
+    }
+    case BaseUnitType::NORMAL:
+    {
+        auto p = std::dynamic_pointer_cast<normal_unit>(current);
+        if (champion) {
+            opt_mc_extras = p->handle->champion_opt().mc_extras;
+            p->switch_model_select(ModelSelect::CHAMPION);
+            if (in_tree == InTree::ARMY) curr_mc_extras = p->mc_extras();
+            p->switch_model_select(ModelSelect::DEFAULT);
+        }
+        else {
+            opt_mc_extras = p->handle->opt().mc_extras;
+            p->switch_model_select(ModelSelect::DEFAULT);
+            if (in_tree == InTree::ARMY) curr_mc_extras = p->mc_extras();
+        }
+        break;
+    }
+    default: return nullptr;
+    }
+    QGroupBox* mc_box = new QGroupBox();
+    QVBoxLayout* mc_box_layout = new QVBoxLayout;
+    for (const auto& e : opt_mc_extras) {
+        std::string pts_str = tools::points_str(e.second.second);
+        std::string permodel = (current->base_unit_type() == BaseUnitType::NORMAL &&
+                                    !(e.second.first)) ? "/model" : "";
+        std::string label = e.first + " (" + pts_str + " pts" + permodel + ")";
+        std::string name = e.first + "_radiobutton";
+        QCheckBox* cb = new QCheckBox(tr(label.data()));
+        cb->setObjectName(tr(name.data()));
+        if (curr_mc_extras.count(e.first)) cb->setChecked(true);
+        connect(cb, SIGNAL(clicked(bool)), this, SLOT(optional_mc_extra_selected()));
+        mc_box_layout->addWidget(cb);
+    }
+    mc_box_layout->addStretch(1);
+    mc_box->setLayout(mc_box_layout);
+    return mc_box;
 }
 
 void ArmyCreator::on_actionExit_triggered() {
@@ -1016,6 +1152,8 @@ void ArmyCreator::on_faction_combobox_currentTextChanged(const QString& faction)
 void ArmyCreator::on_pts_limit_spinbox_valueChanged(double pts) {
     army->change_points_limit(pts);
 }
+
+// tree item changed or activated slots
 
 void ArmyCreator::on_roster_tree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous) {
     (void)(previous);
@@ -1097,6 +1235,8 @@ void ArmyCreator::on_army_tree_currentItemChanged(QTreeWidgetItem *current, QTre
         ui->remove_button->setEnabled(false);
     }
 }
+
+// army_tree modifying button slots
 
 void ArmyCreator::on_add_button_clicked() {
     st->add_unit_to_army_list(id_counter++);
