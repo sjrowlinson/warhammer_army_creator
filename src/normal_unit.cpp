@@ -20,7 +20,7 @@ normal_unit::normal_unit(std::shared_ptr<base_unit> base)
 }
 
 normal_unit::normal_unit(const normal_unit& other)
-    : unit(other), model_select_(other.model_select_),
+    : unit(other),
       size_(other.size_), weapons_(other.weapons_),
       armours_(other.armours_), oco_extra_(other.oco_extra_),
       mc_extras_(other.mc_extras_), champ_weapons_(other.champ_weapons_),
@@ -46,6 +46,7 @@ std::unordered_map<
     case ModelSelect::CHAMPION:
         return champ_weapons_;
     }
+    return weapons_;
  }
 
 std::tuple<ItemClass, std::string, double> normal_unit::melee_weapon() const {
@@ -79,6 +80,7 @@ std::unordered_map<
     case ModelSelect::CHAMPION:
         return champ_armours_;
     }
+    return armours_;
 }
 
 std::unordered_map<
@@ -98,6 +100,7 @@ std::pair<
     case ModelSelect::CHAMPION:
         return {champ_oco_extra_.first, {true, champ_oco_extra_.second}};
     }
+    return oco_extra_;
  }
 
 std::unordered_map<
@@ -118,6 +121,7 @@ std::unordered_map<
         return tmp;
     }
     }
+    return mc_extras_;
  }
 
 std::pair<
@@ -144,9 +148,6 @@ std::unordered_map<
 std::pair<std::string, double> normal_unit::magic_banner() const noexcept {
     return banner;
 }
-
-ModelSelect normal_unit::model_select() const noexcept { return model_select_; }
-void normal_unit::switch_model_select(ModelSelect ms) { model_select_ = ms; }
 
 // current property modifiers
 
@@ -373,26 +374,29 @@ void normal_unit::remove_default_weapon(WeaponType wt) {
 }
 
 void normal_unit::remove_champion_weapon(WeaponType wt) {
+    if (!champ_weapons_.count(wt)) return;
     auto weapon = champ_weapons_[wt];
-    auto def_w = handle->champion_eq().weapons.at(wt);
-    if (def_w.second != std::get<1>(weapon)) {
-        const double pts = std::get<2>(weapon);
-        switch (std::get<0>(weapon)) {
-        case ItemClass::MUNDANE:
-            break;
-        case ItemClass::MAGIC:
-        case ItemClass::COMMON:
-            champ_magic_item_points -= pts;
-            champ_total_item_points -= pts;
-            break;
-        case ItemClass::FACTION:
-            champ_faction_item_points -= pts;
-            champ_total_item_points -= pts;
-            break;
-        }
-        points_ -= pts;
-        champ_weapons_[wt] = {def_w.first, def_w.second, 0.0};
+    auto def_w = handle->champion_eq().weapons.find(wt);
+    if (def_w != handle->champion_eq().weapons.cend()) {
+        if (def_w->second.second == std::get<1>(weapon)) return;
+        champ_weapons_[wt] = {def_w->second.first, def_w->second.second, 0.0};
     }
+    else champ_weapons_.erase(wt);
+    const double pts = std::get<2>(weapon);
+    switch (std::get<0>(weapon)) {
+    case ItemClass::MUNDANE:
+        break;
+    case ItemClass::MAGIC:
+    case ItemClass::COMMON:
+        champ_magic_item_points -= pts;
+        champ_total_item_points -= pts;
+        break;
+    case ItemClass::FACTION:
+        champ_faction_item_points -= pts;
+        champ_total_item_points -= pts;
+        break;
+    }
+    points_ -= pts;
 }
 
 void normal_unit::remove_armour(ArmourType at) {
@@ -419,26 +423,29 @@ void normal_unit::remove_default_armour(ArmourType at) {
 }
 
 void normal_unit::remove_champion_armour(ArmourType at) {
+    if (!champ_armours_.count(at)) return;
     auto armour = champ_armours_[at];
-    auto def_a = handle->champion_eq().armour.at(at);
-    if (def_a.second != std::get<1>(armour)) {
-        const double pts = std::get<2>(armour);
-        switch (std::get<0>(armour)) {
-        case ItemClass::MUNDANE:
-            break;
-        case ItemClass::MAGIC:
-        case ItemClass::COMMON:
-            champ_magic_item_points -= pts;
-            champ_total_item_points -= pts;
-            break;
-        case ItemClass::FACTION:
-            champ_faction_item_points -= pts;
-            champ_total_item_points -= pts;
-            break;
-        }
-        points_ -= pts;
-        champ_armours_[at] = {def_a.first, def_a.second, 0.0};
+    auto def_a = handle->champion_eq().armour.find(at);
+    if (def_a != handle->champion_eq().armour.cend()) {
+        if (def_a->second.second == std::get<1>(armour)) return;
+        champ_armours_[at] = {def_a->second.first, def_a->second.second, 0.0};
     }
+    else champ_armours_.erase(at);
+    const double pts = std::get<2>(armour);
+    switch (std::get<0>(armour)) {
+    case ItemClass::MUNDANE:
+        break;
+    case ItemClass::MAGIC:
+    case ItemClass::COMMON:
+        champ_magic_item_points -= pts;
+        champ_total_item_points -= pts;
+        break;
+    case ItemClass::FACTION:
+        champ_faction_item_points -= pts;
+        champ_total_item_points -= pts;
+        break;
+    }
+    points_ -= pts;
 }
 
 void normal_unit::add_command_member(CommandGroup member) {
@@ -453,6 +460,19 @@ void normal_unit::remove_command_member(CommandGroup member) {
     auto it = command_group.find(member);
     if (it != command_group.end()) {
         points_ -= it->second.second;
+        if (it->first == CommandGroup::CHAMPION) {
+            remove_champion_armour(ArmourType::ARMOUR);
+            remove_champion_armour(ArmourType::SHIELD);
+            remove_champion_armour(ArmourType::HELMET);
+            remove_champion_weapon(WeaponType::MELEE);
+            remove_champion_weapon(WeaponType::BALLISTIC);
+            remove_champion_oco_extra();
+            for (auto extra : mc_extras_)
+                remove_mc_extra(extra.first);
+        }
+        else if (it->first == CommandGroup::STANDARD_BEARER) {
+            remove_banner();
+        }
         command_group.erase(member);
     }
 }

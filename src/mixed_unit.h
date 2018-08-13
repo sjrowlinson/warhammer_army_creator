@@ -13,11 +13,6 @@
 #include <unordered_map>
 #include <utility>
 
-enum class MixedSelect {
-    MASTER,
-    SLAVE
-};
-
 class mixed_unit : public unit {
 public:
     // handle
@@ -25,8 +20,6 @@ public:
 private:
     normal_unit master_;
     normal_unit slave_;
-
-    MixedSelect mixed_select_;
 
     std::size_t master_size_;
     std::size_t slaves_size_;

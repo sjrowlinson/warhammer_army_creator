@@ -53,6 +53,26 @@ namespace tools {
         return s;
     }
 
+    std::string remove_trailing_whitespaces(const std::string& s) {
+        std::string tmp = s;
+        auto it = tmp.rbegin();
+        while (it != tmp.rend() && std::isspace(*it)) {
+            ++it;
+            it = std::reverse_iterator<std::string::iterator>(tmp.erase(it.base()));
+        }
+        return tmp;
+    }
+
+    std::string& trim(std::string& s) {
+        remove_leading_whitespaces(s);
+        return remove_trailing_whitespaces(s);
+    }
+
+    std::string trim(const std::string& s) {
+        auto t1 = remove_leading_whitespaces(s);
+        return remove_trailing_whitespaces(t1);
+    }
+
 	bool starts_with(const std::string& s, char c) {
 		if (s.empty()) return false;
 		return *s.cbegin() == c;

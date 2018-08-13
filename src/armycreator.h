@@ -16,6 +16,7 @@
 #include <QGridLayout>
 #include <QGroupBox>
 #include <QMainWindow>
+#include <QMessageBox>
 #include <QPushButton>
 #include <QRadioButton>
 #include <QString>

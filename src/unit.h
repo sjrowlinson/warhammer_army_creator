@@ -13,10 +13,22 @@
 #include <tuple>
 #include <unordered_map>
 
+enum class ModelSelect {
+    DEFAULT,
+    CHAMPION
+};
+
+enum class MixedSelect {
+    MASTER,
+    SLAVE
+};
+
 class unit {
 private:
     int id_;
 protected:
+    ModelSelect model_select_;
+    MixedSelect mixed_select_;
     double points_;
     std::shared_ptr<base_unit> base_;
 public:
@@ -26,6 +38,12 @@ public:
 
     int id() const noexcept;
     void set_id(int id);
+
+    ModelSelect model_select() const noexcept;
+    void switch_model_select(ModelSelect ms);
+
+    MixedSelect mixed_select() const noexcept;
+    void switch_mixed_select(MixedSelect ms);
 
     // non-pure virtual properties
     virtual double points() const noexcept;

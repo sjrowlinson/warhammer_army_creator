@@ -23,11 +23,21 @@ bool option_selector::select_weapon(const std::string& s) {
         switch (in_tree) {
         case InTree::ARMY:
             army->take_snapshot_of(current->id());
-            current->remove_weapon(wt);
+            if (split[3] == "default") current->remove_weapon(wt);
+            else if (split[3] == "champion") {
+                current->switch_model_select(ModelSelect::CHAMPION);
+                current->remove_weapon(wt);
+                current->switch_model_select(ModelSelect::DEFAULT);
+            }
             army->update_on(current->id());
             return true;
         case InTree::ROSTER:
-            current->remove_weapon(wt);
+            if (split[3] == "default") current->remove_weapon(wt);
+            else if (split[3] == "champion") {
+                current->switch_model_select(ModelSelect::CHAMPION);
+                current->remove_weapon(wt);
+                current->switch_model_select(ModelSelect::DEFAULT);
+            }
             return false;
         default: throw std::runtime_error("No unit selected!");
         }
@@ -37,11 +47,37 @@ bool option_selector::select_weapon(const std::string& s) {
         switch (in_tree) {
         case InTree::ARMY:
             army->take_snapshot_of(current->id());
-            current->pick_weapon(ic, weapon);
+            if (split[3] == "default") {
+                try {
+                    current->pick_weapon(ic, weapon);
+                }
+                catch (const std::invalid_argument&) { throw; }
+            }
+            else if (split[3] == "champion") {
+                current->switch_model_select(ModelSelect::CHAMPION);
+                try {
+                    current->pick_weapon(ic, weapon);
+                }
+                catch (const std::exception&) { throw; }
+                current->switch_model_select(ModelSelect::DEFAULT);
+            }
             army->update_on(current->id());
             return true;
         case InTree::ROSTER:
-            current->pick_weapon(ic, weapon);
+            if (split[3] == "default") {
+                try {
+                    current->pick_weapon(ic, weapon);
+                }
+                catch (const std::invalid_argument&) { throw; }
+            }
+            else if (split[3] == "champion") {
+                current->switch_model_select(ModelSelect::CHAMPION);
+                try {
+                    current->pick_weapon(ic, weapon);
+                }
+                catch (const std::exception&) { throw; }
+                current->switch_model_select(ModelSelect::DEFAULT);
+            }
             return false;
         default: throw std::runtime_error("No unit selected!");
         }
@@ -60,11 +96,21 @@ bool option_selector::select_armour(const std::string& s) {
         switch (in_tree) {
         case InTree::ARMY:
             army->take_snapshot_of(current->id());
-            current->remove_armour(at);
+            if (split[3] == "default") current->remove_armour(at);
+            else if (split[3] == "champion") {
+                current->switch_model_select(ModelSelect::CHAMPION);
+                current->remove_armour(at);
+                current->switch_model_select(ModelSelect::DEFAULT);
+            }
             army->update_on(current->id());
             return true;
         case InTree::ROSTER:
-            current->remove_armour(at);
+            if (split[3] == "default") current->remove_armour(at);
+            else if (split[3] == "champion") {
+                current->switch_model_select(ModelSelect::CHAMPION);
+                current->remove_armour(at);
+                current->switch_model_select(ModelSelect::DEFAULT);
+            }
             return false;
         default: throw std::runtime_error("No unit selected!");
         }
@@ -74,13 +120,33 @@ bool option_selector::select_armour(const std::string& s) {
         switch (in_tree) {
         case InTree::ARMY:
             army->take_snapshot_of(current->id());
-            try {
-                current->pick_armour(ic, armour);
-            } catch (const std::invalid_argument&) {}
+            if (split[3] == "default") {
+                try {
+                    current->pick_armour(ic, armour);
+                } catch (const std::invalid_argument&) { throw; }
+            }
+            else if (split[3] == "champion") {
+                current->switch_model_select(ModelSelect::CHAMPION);
+                try {
+                    current->pick_armour(ic, armour);
+                } catch (const std::exception&) { throw; }
+                current->switch_model_select(ModelSelect::DEFAULT);
+            }
             army->update_on(current->id());
             return true;
         case InTree::ROSTER:
-            current->pick_armour(ic, armour);
+            if (split[3] == "default") {
+                try {
+                    current->pick_armour(ic, armour);
+                } catch (const std::invalid_argument&) { throw; }
+            }
+            else if (split[3] == "champion") {
+                current->switch_model_select(ModelSelect::CHAMPION);
+                try {
+                    current->pick_armour(ic, armour);
+                } catch (const std::exception&) { throw; }
+                current->switch_model_select(ModelSelect::DEFAULT);
+            }
             return false;
         default: throw std::runtime_error("No unit selected!");
         }

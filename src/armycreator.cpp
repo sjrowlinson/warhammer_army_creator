@@ -153,36 +153,74 @@ void ArmyCreator::change_unit_size() {
 void ArmyCreator::optional_weapon_selected() {
     QRadioButton* rb = qobject_cast<QRadioButton*>(QObject::sender());
     std::string rb_name = rb->objectName().toStdString();
-    if (opt_sel->select_weapon(rb_name)) {
-        ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
-        update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::WEAPONS);
+    try {
+        if (opt_sel->select_weapon(rb_name)) {
+            ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+            update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::WEAPONS);
+        }
+    } catch (const std::exception& e) {
+        QMessageBox message_box;
+        message_box.critical(nullptr, tr("Error"), tr(e.what()));
+        message_box.setFixedSize(500, 200);
+        // TODO: clear and re-initialise just the weapons section of unit options box
+        clear_unit_options_box();
+        initialise_unit_options_box();
     }
 }
 
 void ArmyCreator::optional_armour_selected() {
     QRadioButton* rb = qobject_cast<QRadioButton*>(QObject::sender());
     std::string rb_name = rb->objectName().toStdString();
-    if (opt_sel->select_armour(rb_name)) {
+    try {
+        if (opt_sel->select_armour(rb_name)) {
         ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
         update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::ARMOUR);
+        }
+    } catch (const std::exception& e) {
+        QMessageBox message_box;
+        message_box.critical(nullptr, tr("Error"), tr(e.what()));
+        message_box.setFixedSize(500, 200);
+        clear_unit_options_box();
+        initialise_unit_options_box();
     }
 }
 
 void ArmyCreator::optional_mount_selected() {
     QRadioButton* rb = qobject_cast<QRadioButton*>(QObject::sender());
     std::string rb_name = rb->objectName().toStdString();
-    if (opt_sel->select_mount(rb_name)) {
-        ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
-        update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::NAME);
+    try {
+        if (opt_sel->select_mount(rb_name)) {
+            ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+            update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::NAME);
+        }
+    } catch (const std::exception& e) {
+        QMessageBox message_box;
+        message_box.critical(nullptr, tr("Error"), tr(e.what()));
+        message_box.setFixedSize(500, 200);
+        clear_unit_options_box();
+        initialise_unit_options_box();
     }
 }
 
 void ArmyCreator::optional_command_selected() {
     QCheckBox* cb = qobject_cast<QCheckBox*>(QObject::sender());
     std::string cb_name = cb->objectName().toStdString();
-    if (opt_sel->select_command(cb_name, cb->isChecked())) {
-        ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
-        update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::COMMAND);
+    try {
+        if (opt_sel->select_command(cb_name, cb->isChecked())) {
+            ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+            update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::COMMAND);
+            auto split = tools::split(cb_name, '_');
+            if (split[1] == "c" || split[1] == "sb") {
+                clear_unit_options_box();
+                initialise_unit_options_box();
+            }
+        }
+    } catch (const std::exception& e) {
+        QMessageBox message_box;
+        message_box.critical(nullptr, tr("Error"), tr(e.what()));
+        message_box.setFixedSize(500, 200);
+        clear_unit_options_box();
+        initialise_unit_options_box();
     }
 }
 
@@ -603,7 +641,7 @@ QGroupBox* ArmyCreator::initialise_command_groupbox(std::shared_ptr<unit> curren
         std::string pts_str = (tools::starts_with(tmp[1], '0')) ? tmp[0] : tmp[0] + "." + tmp[1].substr(0, 1);
         std::string name = musician.first + " (" + pts_str + " pts)";
         QCheckBox* cb = new QCheckBox(tr(name.data()));
-        cb->setObjectName(tr((musician.first + "_m_checkbox").data()));
+        cb->setObjectName(QString((musician.first + "_m_checkbox").data()));
         if (command.count(CommandGroup::MUSICIAN)) cb->setChecked(true);
         connect(cb, SIGNAL(clicked(bool)), this, SLOT(optional_command_selected()));
         vb->addWidget(cb);
@@ -615,7 +653,7 @@ QGroupBox* ArmyCreator::initialise_command_groupbox(std::shared_ptr<unit> curren
         std::string pts_str = (tools::starts_with(tmp[1], '0')) ? tmp[0] : tmp[0] + "." + tmp[1].substr(0, 1);
         std::string name = sb.first + " (" + pts_str + " pts)";
         QCheckBox* cb = new QCheckBox(tr(name.data()));
-        cb->setObjectName(tr((sb.first + "_sb_checkbox").data()));
+        cb->setObjectName(QString((sb.first + "_sb_checkbox").data()));
         if (command.count(CommandGroup::STANDARD_BEARER)) cb->setChecked(true);
         connect(cb, SIGNAL(clicked(bool)), this, SLOT(optional_command_selected()));
         vb->addWidget(cb);
@@ -627,7 +665,7 @@ QGroupBox* ArmyCreator::initialise_command_groupbox(std::shared_ptr<unit> curren
         std::string pts_str = (tools::starts_with(tmp[1], '0')) ? tmp[0] : tmp[0] + "." + tmp[1].substr(0, 1);
         std::string name = champ.first + " (" + pts_str + " pts)";
         QCheckBox* cb = new QCheckBox(tr(name.data()));
-        cb->setObjectName(tr((champ.first + "_c_checkbox").data()));
+        cb->setObjectName(QString((champ.first + "_c_checkbox").data()));
         if (command.count(CommandGroup::CHAMPION)) cb->setChecked(true);
         connect(cb, SIGNAL(clicked(bool)), this, SLOT(optional_command_selected()));
         vb->addWidget(cb);
@@ -743,9 +781,10 @@ QGroupBox* ArmyCreator::initialise_opt_weapons_subgroupbox(
         std::string button_label = w->first + " (" + pts_str + ")";
         std::string button_name = w->first + "_" +
                 std::to_string(static_cast<int>(std::get<0>(w->second))) + "_" +
-                std::to_string(static_cast<int>(std::get<1>(w->second))) + "_radiobutton";
+                std::to_string(static_cast<int>(std::get<1>(w->second))) + "_" +
+                ((champion) ? "champion" : "default") + "_radiobutton";
         QRadioButton* rb = new QRadioButton(tr(button_label.data()));
-        rb->setObjectName(tr(button_name.data()));
+        rb->setObjectName(QString(button_name.data()));
         // check if current unit weapon map contains this weapon
         if (curr_weapons.count(std::get<0>(w->second))) {
             if (std::get<1>(curr_weapons.at(std::get<0>(w->second))) == w->first) {
@@ -760,14 +799,14 @@ QGroupBox* ArmyCreator::initialise_opt_weapons_subgroupbox(
     std::string none_rb_name = "None_opt_";
     switch (wt) {
     case WeaponType::MELEE:
-        none_rb_name += "melee_radiobutton";
+        none_rb_name += std::string("melee_") + ((champion) ? "champion" : "default") + "_radiobutton";
         break;
     case WeaponType::BALLISTIC:
-        none_rb_name += "ranged_radiobutton";
+        none_rb_name += std::string("ranged_") + ((champion) ? "champion" : "default") + "_radiobutton";
         break;
     default: throw std::runtime_error("Unrecognised weapon type!");
     }
-    none_rb->setObjectName(tr(none_rb_name.data()));
+    none_rb->setObjectName(QString(none_rb_name.data()));
     if (!has_weapon) none_rb->setChecked(true);
     connect(none_rb, SIGNAL(clicked(bool)), this, SLOT(optional_weapon_selected()));
     weapons_subbox_layout->addWidget(none_rb);
@@ -775,7 +814,6 @@ QGroupBox* ArmyCreator::initialise_opt_weapons_subgroupbox(
     weapons_subbox->setLayout(weapons_subbox_layout);
     return weapons_subbox;
 }
-
 
 std::pair<QGroupBox*, QGroupBox*> ArmyCreator::initialise_opt_armour_groupbox(std::shared_ptr<unit> current) {
     bool has_opt_armour = false;
@@ -890,9 +928,10 @@ QGroupBox* ArmyCreator::initialise_opt_armour_subgroupbox(
         std::string button_label = a->first + " (" + pts_str + ")";
         std::string button_name = a->first + "_" +
                 std::to_string(static_cast<int>(std::get<0>(a->second))) + "_" +
-                std::to_string(static_cast<int>(std::get<1>(a->second))) + "_radiobutton";
+                std::to_string(static_cast<int>(std::get<1>(a->second))) + "_" +
+                ((champion) ? "champion" : "default") + "_radiobutton";
         QRadioButton* rb = new QRadioButton(tr(button_label.data()));
-        rb->setObjectName(tr(button_name.data()));
+        rb->setObjectName(QString(button_name.data()));
         // check if current unit armour map contains this piece of armour
         if (curr_armour.count(std::get<0>(a->second))) {
                if (std::get<1>(curr_armour.at(std::get<0>(a->second))) == a->first) {
@@ -907,17 +946,17 @@ QGroupBox* ArmyCreator::initialise_opt_armour_subgroupbox(
     std::string none_rb_name = "None_opt_";
     switch (at) {
     case ArmourType::ARMOUR:
-        none_rb_name += "armour_radiobutton";
+        none_rb_name += std::string("armour_") + ((champion) ? "champion" : "default") + "_radiobutton";
         break;
     case ArmourType::SHIELD:
-        none_rb_name += "shield_radiobutton";
+        none_rb_name += std::string("shield_") + ((champion) ? "champion" : "default") + "_radiobutton";
         break;
     case ArmourType::HELMET:
-        none_rb_name += "helmet_radiobutton";
+        none_rb_name += std::string("helmet_") + ((champion) ? "champion" : "default") + "_radiobutton";
         break;
     default: throw std::runtime_error("Unrecognised armour type!");
     }
-    none_rb->setObjectName(tr(none_rb_name.data()));
+    none_rb->setObjectName(QString(none_rb_name.data()));
     if (!has_armour) none_rb->setChecked(true);
     connect(none_rb, SIGNAL(clicked(bool)), this, SLOT(optional_armour_selected()));
     armour_subbox_layout->addWidget(none_rb);
@@ -958,7 +997,7 @@ QGroupBox* ArmyCreator::initialise_opt_mounts_groupbox(std::shared_ptr<unit> cur
         std::string permodel = (current->base_unit_type() == BaseUnitType::NORMAL) ? "/model" : "";
         std::string name = m.first + " (" + pts_str + " pts" + permodel + ")";
         QRadioButton* b = new QRadioButton(tr(name.data()));
-        b->setObjectName(tr((m.first + "_radiobutton").data()));
+        b->setObjectName(QString((m.first + "_radiobutton").data()));
         if (mount.first == m.first) {
             b->setChecked(true);
             has_mount = true;
@@ -967,7 +1006,7 @@ QGroupBox* ArmyCreator::initialise_opt_mounts_groupbox(std::shared_ptr<unit> cur
         vbox_mounts->addWidget(b);
     }
     QRadioButton* none_rb = new QRadioButton(tr("None"));
-    none_rb->setObjectName(tr("None_mounts_radiobutton"));
+    none_rb->setObjectName(QString("None_mounts_radiobutton"));
     if (!has_mount) none_rb->setChecked(true);
     connect(none_rb, SIGNAL(clicked(bool)), this, SLOT(optional_mount_selected()));
     vbox_mounts->addWidget(none_rb);
@@ -1412,6 +1451,23 @@ void ArmyCreator::update_unit_display(
             weapons_str += QString("\n") + QString("%1 [%2]").arg(
                                std::get<1>(ranged_weapon->second).data(),
                                QString("%1").arg(std::get<2>(ranged_weapon->second))
+                           );
+        u->switch_model_select(ModelSelect::CHAMPION);
+        auto champ_weapons = u->weapons();
+        u->switch_model_select(ModelSelect::DEFAULT);
+        auto champ_melee_weapon = champ_weapons.find(WeaponType::MELEE);
+        auto champ_ranged_weapon = champ_weapons.find(WeaponType::BALLISTIC);
+        if (champ_melee_weapon != champ_weapons.end() &&
+                !(std::get<1>(champ_melee_weapon->second).empty() ||
+                  std::get<1>(champ_melee_weapon->second) == "Hand weapon"))
+            weapons_str += QString("\n%1 [%2]").arg(
+                               (std::get<1>(champ_melee_weapon->second) + " (Champion)").data(),
+                               QString("%1").arg(std::get<2>(champ_melee_weapon->second))
+                           );
+        if (champ_ranged_weapon != champ_weapons.end() && !(std::get<1>(champ_ranged_weapon->second).empty()))
+            weapons_str += QString("\n") + QString("%1 [%2]").arg(
+                               (std::get<1>(champ_ranged_weapon->second) + " (Champion)").data(),
+                               QString("%1").arg(std::get<2>(champ_ranged_weapon->second))
                            );
         item->setText(static_cast<int>(column), weapons_str);
         update_unit_display(item, adding, ArmyTreeColumn::POINTS, copying);

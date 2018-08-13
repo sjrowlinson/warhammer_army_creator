@@ -4,12 +4,11 @@ mixed_unit::mixed_unit(std::shared_ptr<base_unit> base)
     : unit(base),
       handle(std::dynamic_pointer_cast<base_mixed_unit>(base)),
       master_(std::make_shared<base_normal_unit>(handle->master())),
-      slave_(std::make_shared<base_normal_unit>(handle->slave())),
-      mixed_select_(MixedSelect::SLAVE) {}
+      slave_(std::make_shared<base_normal_unit>(handle->slave())) {}
 
 mixed_unit::mixed_unit(const mixed_unit& other)
     : unit(other), handle(other.handle), master_(other.master_),
-      slave_(other.slave_), mixed_select_(other.mixed_select_),
+      slave_(other.slave_),
       master_size_(other.master_size_), slaves_size_(other.slaves_size_) {}
 
 normal_unit& mixed_unit::master() noexcept { return master_; }

@@ -13,14 +13,8 @@
 #include <unordered_map>
 #include <utility>
 
-enum class ModelSelect {
-    DEFAULT,
-    CHAMPION
-};
-
 class normal_unit : public unit {
 private:
-    ModelSelect model_select_;
     // unit size
     std::size_t size_;
 
@@ -110,9 +104,6 @@ public:
         CommandGroup, std::pair<std::string, double>
     > command() const noexcept;
     std::pair<std::string, double> magic_banner() const noexcept;
-
-    ModelSelect model_select() const noexcept;
-    void switch_model_select(ModelSelect ms);
 
     // current property modifiers
     void pick_weapon(ItemClass item_type, std::string name) override;

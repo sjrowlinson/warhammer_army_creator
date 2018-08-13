@@ -234,7 +234,7 @@ namespace tools {
         std::vector<std::string> all = tools::split(s, ',');
         for (const auto& _s : all) {
             auto mount_bs = tools::parse_item_bs(_s);
-            std::string name = mount_bs[0];
+            std::string name = tools::trim(mount_bs[0]);
             armies::UnitClass uc;
             if (mount_bs[1] == "Infantry") uc = armies::UnitClass::INFANTRY;
             else if (mount_bs[1] == "Cavalry") uc = armies::UnitClass::CAVALRY;

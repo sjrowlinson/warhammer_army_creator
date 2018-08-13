@@ -20,7 +20,7 @@ character_unit::character_unit(std::shared_ptr<base_unit> base)
 character_unit::character_unit(const character_unit& other)
  : unit(other), weapons_(other.weapons_), armours_(other.armours_),
    talisman_(other.talisman_), enchanted_item_(other.enchanted_item_),
-   oco_extra_(other.oco_extra_), mc_extras_(other.mc_extras_),
+   oco_extra_(other.oco_extra_), mc_extras_(other.mc_extras_), mount_(other.mount_),
    magic_item_points_(other.magic_item_points_),
    faction_item_points_(other.faction_item_points_),
    total_item_points_(other.total_item_points_),

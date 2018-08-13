@@ -20,6 +20,10 @@ namespace tools {
 	std::string remove_leading_whitespaces(const std::string& s);
 
     std::string& remove_trailing_whitespaces(std::string& s);
+    std::string remove_trailing_whitespaces(const std::string& s);
+
+    std::string& trim(std::string& s);
+    std::string trim(const std::string& s);
 
 	bool starts_with(const std::string& s, char c);
 	bool starts_with(const std::string& s, std::string match);
