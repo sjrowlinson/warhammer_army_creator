@@ -38,17 +38,26 @@ private:
         std::shared_ptr<base_unit>
     > roster;
     // magic and faction items
-    std::unordered_map<
+    std::pair<
         std::string,
-        item
+        std::unordered_map<
+            std::string,
+            item
+        >
     > magic_items;
-    std::unordered_map<
+    std::pair<
         std::string,
-        item
+        std::unordered_map<
+            std::string,
+            item
+        >
     > common_items;
-    std::unordered_map<
+    std::pair<
         std::string,
-        item
+        std::unordered_map<
+            std::string,
+            item
+        >
     > faction_items;
 
     std::shared_ptr<unit> current_selection;
@@ -69,6 +78,9 @@ public:
     void reset(armies::Faction faction, army_list& list);
 
     std::shared_ptr<unit> selected();
+
+    std::string magic_items_name() const noexcept;
+    std::string faction_items_name() const noexcept;
 
     std::vector<std::shared_ptr<base_unit>> lords() const noexcept;
     std::vector<std::shared_ptr<base_unit>> heroes() const noexcept;

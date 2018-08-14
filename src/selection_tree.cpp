@@ -5,7 +5,8 @@ selection_tree::selection_tree(armies::Faction faction, army_list& list) : race(
     QString common_item_filename(":/magic_items/common.mag");
     tools::item_parser ip(common_item_filename, ItemClass::COMMON);
     auto items = ip.parse();
-    for (auto&& item : items) common_items[item.name] = item;
+    common_items.first = ip.name();
+    for (auto&& item : items) common_items.second[item.name] = item;
     QString rfile(std::get<0>(files).data());
     parse_roster_file(rfile);
     QString mifile(std::get<1>(files).data());
@@ -112,8 +113,10 @@ void selection_tree::reset_army_list(army_list& _army) {
 
 void selection_tree::reset(armies::Faction faction, army_list &list) {
     roster.clear();
-    magic_items.clear();
-    faction_items.clear();
+    magic_items.first.clear();
+    magic_items.second.clear();
+    faction_items.first.clear();
+    faction_items.second.clear();
     current_selection.reset();
     race = faction;
     auto files = filenames();
@@ -150,8 +153,16 @@ void selection_tree::parse_roster_file(const QString &rfile_str) {
     tools::roster_parser rp(rfile_str, race);
     auto units = rp.parse();
     for (auto&& x : units) roster[x->name()] = x;
-    std::shared_ptr<std::unordered_map<std::string, item>> sp_common
-        = std::make_shared<std::unordered_map<std::string, item>>(common_items);
+    std::shared_ptr<
+        std::pair<
+            std::string,
+            std::unordered_map<std::string, item>
+        >
+    > sp_common = std::make_shared<
+                      std::pair<
+                          std::string,
+                          std::unordered_map<std::string, item>
+                  >>(common_items);
     for (auto& entry : roster) entry.second->set_common_item_handle(sp_common);
 }
 
@@ -159,18 +170,44 @@ void selection_tree::parse_item_files(const std::pair<QString, QString>& ifile_s
     // parse magic items file first
     tools::item_parser magic_items_parser(ifile_str.first, ItemClass::MAGIC);
     auto mag_items = magic_items_parser.parse();
-    for (auto&& item : mag_items) magic_items[item.name] = item;
-    std::shared_ptr<std::unordered_map<std::string, item>> sp_items
-        = std::make_shared<std::unordered_map<std::string, item>>(magic_items);
+    magic_items.first = magic_items_parser.name();
+    for (auto&& item : mag_items) magic_items.second[item.name] = item;
+    std::shared_ptr<
+        std::pair<
+            std::string,
+            std::unordered_map<std::string, item>
+        >
+    > sp_items = std::make_shared<
+                      std::pair<
+                          std::string,
+                          std::unordered_map<std::string, item>
+                  >>(magic_items);
     for (auto& x : roster) x.second->set_magic_item_handle(sp_items);
     // then faction items file if it exists
     if (tools::split(ifile_str.second.toStdString(), '.').size() < 2U) return;
     tools::item_parser faction_items_parser(ifile_str.second, ItemClass::FACTION);
     auto fac_items = faction_items_parser.parse();
-    for (auto&& item : fac_items) faction_items[item.name] = item;
-    std::shared_ptr<std::unordered_map<std::string, item>> sp_fac_items
-        = std::make_shared<std::unordered_map<std::string, item>>(faction_items);
+    faction_items.first = faction_items_parser.name();
+    for (auto&& item : fac_items) faction_items.second[item.name] = item;
+    std::shared_ptr<
+        std::pair<
+            std::string,
+            std::unordered_map<std::string, item>
+        >
+    > sp_fac_items = std::make_shared<
+                      std::pair<
+                          std::string,
+                          std::unordered_map<std::string, item>
+                  >>(faction_items);
     for (auto& entry : roster) entry.second->set_faction_item_handle(sp_fac_items);
+}
+
+std::string selection_tree::magic_items_name() const noexcept {
+    return magic_items.first;
+}
+
+std::string selection_tree::faction_items_name() const noexcept {
+    return faction_items.first;
 }
 
 std::vector<std::shared_ptr<base_unit>> selection_tree::all_of(armies::UnitType ut) const noexcept {

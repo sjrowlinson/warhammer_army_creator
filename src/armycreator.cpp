@@ -1,6 +1,6 @@
 #include "armycreator.h"
 #include "ui_armycreator.h"
-
+#include <iostream>
 ArmyCreator::ArmyCreator(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::ArmyCreator) {
@@ -12,8 +12,10 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
     st = std::make_shared<selection_tree>(race, *army);
     id_counter = 0;
     in_tree = InTree::NEITHER;
+    ic_selected = ItemClass::COMMON;
     opt_sel = std::make_shared<option_selector>(st, army);
     // set magic_item_selector to hidden initially
+    ui->magic_items_combobox->setHidden(true);
     ui->magic_items_selector->setHidden(true);
     // set army list view header sizes
     ui->army_tree->header()->resizeSection(static_cast<int>(ArmyTreeColumn::NAME), 250); // unit name header
@@ -104,6 +106,12 @@ void ArmyCreator::clear_unit_info_box() {
 void ArmyCreator::clear_unit_options_box() {
     auto c = ui->options_group_box->children();
     for (auto& x : c) delete x;
+}
+
+void ArmyCreator::clear_magic_items_selector() {
+    ui->magic_items_selector->clear();
+    for (auto i = 0; i < ui->magic_items_selector->count(); ++i)
+        ui->magic_items_selector->removeTab(i);
 }
 
 // option box selection slots
@@ -270,21 +278,32 @@ void ArmyCreator::spawn_magic_weapons_window() {
     miw->setAttribute(Qt::WA_DeleteOnClose);
 }
 
-void ArmyCreator::clear_magic_items_selector() {
-    ui->magic_items_selector->clear();
-    for (auto i = 0; i < ui->magic_items_selector->count(); ++i)
-        ui->magic_items_selector->removeTab(i);
-
-}
-
 void ArmyCreator::init_magic_items_selector(std::shared_ptr<unit> current) {
-    auto mih = current->base()->magic_items_handle();
+    std::shared_ptr<
+        std::pair<
+            std::string,
+            std::unordered_map<std::string, item>
+        >
+    > mih;
+    switch (ic_selected) {
+    case ItemClass::COMMON:
+        mih = current->base()->common_items_handle();
+        break;
+    case ItemClass::MAGIC:
+        mih = current->base()->magic_items_handle();
+        break;
+    case ItemClass::FACTION:
+        mih = current->base()->faction_items_handle();
+        break;
+    default: return;
+    }
     // magic weapons
-    auto magic_weapons_box = setup_magic_weapons_tab(*mih, current);
+    auto magic_weapons_box = setup_magic_weapons_tab(mih->second, current);
     if (magic_weapons_box != nullptr) ui->magic_items_selector->addTab(magic_weapons_box, tr("Magic Weapons"));
     // magic armour
-    auto magic_armour_box = setup_magic_armour_tab(*mih, current);
+    auto magic_armour_box = setup_magic_armour_tab(mih->second, current);
     if (magic_armour_box != nullptr) ui->magic_items_selector->addTab(magic_armour_box, tr("Magic Armour"));
+    ui->magic_items_combobox->setHidden(false);
     ui->magic_items_selector->setHidden(false);
 }
 
@@ -420,6 +439,7 @@ void ArmyCreator::initialise_unit_info_box() {
 
 QGroupBox* ArmyCreator::setup_magic_weapons_tab(const std::unordered_map<std::string, item>& items,
                                                 std::shared_ptr<unit> current) {
+    if (items.empty()) return nullptr;
     auto weapons = tools::magic_items_of(items, ItemType::WEAPON);
     if (!std::count_if(weapons.begin(), weapons.end(), [&current](const auto& x) {
             return x.second.allowed_units.empty() || x.second.allowed_units.count(current->name());
@@ -1211,20 +1231,48 @@ void ArmyCreator::on_actionExit_triggered() {
 }
 
 void ArmyCreator::on_faction_combobox_currentTextChanged(const QString& faction) {
-    race = armies::s_map_string_faction[
-        faction.toStdString()
-    ];
+    race = armies::s_map_string_faction[faction.toStdString()];
     army->clear();
     ui->current_pts_label->setText(QString("%1").arg(static_cast<double>(0.0)));
     for (int i = 0; i < 5; ++i)
         ui->army_tree->topLevelItem(i)->setText(6, QString("%1").arg(static_cast<double>(0.0)));
     st->reset(race, *army);
     id_counter = 0;
-    // now fill the roster tree widget
     clear_roster_tree();
     clear_army_tree();
+    clear_unit_info_box();
     clear_unit_options_box();
+    clear_magic_items_selector();
+    // set us to NEITHER tree to avoid attempting to get the current
+    // selected unitt of this->st when roster_tree->currentItem will
+    // no longer point to a valid unit type
+    in_tree = InTree::NEITHER;
+    ui->magic_items_combobox->clear();
     populate_roster_tree();
+    ui->magic_items_combobox->addItem(QString("Common"), QVariant(3));
+    if (!st->magic_items_name().empty())
+        ui->magic_items_combobox->addItem(QString(st->magic_items_name().data()), QVariant(1));
+    if (!st->faction_items_name().empty())
+        ui->magic_items_combobox->addItem(QString(st->faction_items_name().data()), QVariant(2));
+    ui->magic_items_combobox->hide();
+}
+
+void ArmyCreator::on_magic_items_combobox_currentTextChanged(const QString& ic_select) {
+    (void)(ic_select);
+    auto v = ui->magic_items_combobox->currentData().toInt();
+    ic_selected = static_cast<ItemClass>(v);
+    clear_magic_items_selector();
+    std::shared_ptr<unit> current;
+    switch (in_tree) {
+    case InTree::ARMY:
+        current = army->get_unit(ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt());
+        break;
+    case InTree::ROSTER:
+        current = st->selected();
+        break;
+    default: return;
+    }
+    init_magic_items_selector(current);
 }
 
 void ArmyCreator::on_pts_limit_spinbox_valueChanged(double pts) {
@@ -1258,6 +1306,7 @@ void ArmyCreator::on_roster_tree_currentItemChanged(QTreeWidgetItem *current, QT
             break;
         }
         default:
+            ui->magic_items_combobox->hide();
             ui->magic_items_selector->hide();
             break;
         }

@@ -76,6 +76,8 @@ private slots:
 
     void spawn_magic_weapons_window();
 
+    void on_magic_items_combobox_currentTextChanged(const QString &arg1);
+
 private:
     Ui::ArmyCreator* ui;
     armies::Faction race;
@@ -83,6 +85,7 @@ private:
     std::shared_ptr<selection_tree> st;
     int id_counter;
     InTree in_tree;
+    ItemClass ic_selected;
     std::shared_ptr<option_selector> opt_sel;
 
     // roster tree modifying

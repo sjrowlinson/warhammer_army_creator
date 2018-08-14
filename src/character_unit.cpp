@@ -68,8 +68,8 @@ void character_unit::pick_weapon(ItemClass item_type, std::string name) {
     }
     case ItemClass::MAGIC:
     {
-        auto search = handle_->magic_items_handle()->find(name);
-        if (search == handle_->magic_items_handle()->end())
+        auto search = handle_->magic_items_handle()->second.find(name);
+        if (search == handle_->magic_items_handle()->second.end())
             throw std::invalid_argument("Weapon not found!");
         double mi_budget = handle_->magic_item_budget();
         double ti_budget = handle_->total_item_budget();
@@ -99,8 +99,8 @@ void character_unit::pick_weapon(ItemClass item_type, std::string name) {
     }
     case ItemClass::FACTION:
     {
-        auto search = handle_->faction_items_handle()->find(name);
-        if (search == handle_->faction_items_handle()->end())
+        auto search = handle_->faction_items_handle()->second.find(name);
+        if (search == handle_->faction_items_handle()->second.end())
             throw std::invalid_argument("Weapon not found!");
         double fi_budget = handle_->faction_item_budget();
         double ti_budget = handle_->total_item_budget();
@@ -130,8 +130,8 @@ void character_unit::pick_weapon(ItemClass item_type, std::string name) {
     }
     case ItemClass::COMMON:
     {
-        auto search = handle_->common_items_handle()->find(name);
-        if (search == handle_->common_items_handle()->end())
+        auto search = handle_->common_items_handle()->second.find(name);
+        if (search == handle_->common_items_handle()->second.end())
             throw std::invalid_argument("Weapon not found!");
         double mi_budget = handle_->magic_item_budget();
         double ti_budget = handle_->total_item_budget();
@@ -180,8 +180,8 @@ void character_unit::pick_armour(ItemClass item_type, std::string name) {
     }
     case ItemClass::MAGIC:
     {
-        auto search = handle_->magic_items_handle()->find(name);
-        if (search == handle_->magic_items_handle()->end())
+        auto search = handle_->magic_items_handle()->second.find(name);
+        if (search == handle_->magic_items_handle()->second.end())
             throw std::invalid_argument("Armour not found!");
         double mi_budget = handle_->magic_item_budget();
         double ti_budget = handle_->total_item_budget();
@@ -211,8 +211,8 @@ void character_unit::pick_armour(ItemClass item_type, std::string name) {
     }
     case ItemClass::FACTION:
     {
-        auto search = handle_->faction_items_handle()->find(name);
-        if (search == handle_->faction_items_handle()->end())
+        auto search = handle_->faction_items_handle()->second.find(name);
+        if (search == handle_->faction_items_handle()->second.end())
             throw std::invalid_argument("Armour not found!");
         double fi_budget = handle_->faction_item_budget();
         double ti_budget = handle_->total_item_budget();
@@ -242,8 +242,8 @@ void character_unit::pick_armour(ItemClass item_type, std::string name) {
     }
     case ItemClass::COMMON:
     {
-        auto search = handle_->common_items_handle()->find(name);
-        if (search == handle_->common_items_handle()->end())
+        auto search = handle_->common_items_handle()->second.find(name);
+        if (search == handle_->common_items_handle()->second.end())
             throw std::invalid_argument("Armour not found!");
         double mi_budget = handle_->magic_item_budget();
         double ti_budget = handle_->total_item_budget();
@@ -278,8 +278,8 @@ void character_unit::pick_talisman(ItemClass item_class, std::string name) {
     switch (item_class) {
     case ItemClass::MAGIC:
     {
-        auto search = handle_->magic_items_handle()->find(name);
-        if (search == handle_->magic_items_handle()->end())
+        auto search = handle_->magic_items_handle()->second.find(name);
+        if (search == handle_->magic_items_handle()->second.end())
             throw std::runtime_error("Talisman not found!");
         double mi_budget = handle_->magic_item_budget();
         double ti_budget = handle_->total_item_budget();
@@ -305,8 +305,8 @@ void character_unit::pick_talisman(ItemClass item_class, std::string name) {
     }
     case ItemClass::COMMON:
     {
-        auto search = handle_->common_items_handle()->find(name);
-        if (search == handle_->common_items_handle()->end())
+        auto search = handle_->common_items_handle()->second.find(name);
+        if (search == handle_->common_items_handle()->second.end())
             throw std::runtime_error("Talisman not found!");
         double mi_budget = handle_->magic_item_budget();
         double ti_budget = handle_->total_item_budget();
@@ -346,8 +346,8 @@ void character_unit::pick_enchanted_item(ItemClass item_class, std::string name)
     switch (item_class) {
     case ItemClass::MAGIC:
     {
-        auto search = handle_->magic_items_handle()->find(name);
-        if (search == handle_->magic_items_handle()->end())
+        auto search = handle_->magic_items_handle()->second.find(name);
+        if (search == handle_->magic_items_handle()->second.end())
             throw std::runtime_error("Enchanted item not found!");
         double mi_budget = handle_->magic_item_budget();
         double ti_budget = handle_->total_item_budget();
@@ -373,8 +373,8 @@ void character_unit::pick_enchanted_item(ItemClass item_class, std::string name)
     }
     case ItemClass::COMMON:
     {
-        auto search = handle_->common_items_handle()->find(name);
-        if (search == handle_->common_items_handle()->end())
+        auto search = handle_->common_items_handle()->second.find(name);
+        if (search == handle_->common_items_handle()->second.end())
             throw std::runtime_error("Enchanted item not found!");
         double mi_budget = handle_->magic_item_budget();
         double ti_budget = handle_->total_item_budget();

@@ -24,7 +24,7 @@ namespace tools {
     }
 
     void item_parser::count_items() {
-        for (std::size_t i = 0U; i < streampos.size(); ++i) {
+        for (std::size_t i = 1U; i < streampos.size(); ++i) {
             std::string line = read_line(i, false);
             if (tools::starts_with(line, '#') || line.empty()) continue;
             if (!(tools::starts_with(line, "    ") || tools::starts_with(line, '\t')))
@@ -43,6 +43,10 @@ namespace tools {
         std::getline(ss, s);
         if (trim) return tools::remove_leading_whitespaces(s);
         return s;
+    }
+
+    std::string item_parser::name() {
+        return read_line(0);
     }
 
     std::vector<item> item_parser::parse() {

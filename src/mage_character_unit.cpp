@@ -28,8 +28,8 @@ void mage_character_unit::pick_arcane_item(ItemClass item_class, std::string nam
     switch (item_class) {
     case ItemClass::MAGIC:
     {
-        auto search = handle->magic_items_handle()->find(name);
-        if (search == handle->magic_items_handle()->end())
+        auto search = handle->magic_items_handle()->second.find(name);
+        if (search == handle->magic_items_handle()->second.end())
             throw std::runtime_error("Arcane item not found!");
         double mi_budget = handle->magic_item_budget();
         double ti_budget = handle->total_item_budget();
@@ -55,8 +55,8 @@ void mage_character_unit::pick_arcane_item(ItemClass item_class, std::string nam
     }
     case ItemClass::COMMON:
     {
-        auto search = handle->common_items_handle()->find(name);
-        if (search == handle->common_items_handle()->end())
+        auto search = handle->common_items_handle()->second.find(name);
+        if (search == handle->common_items_handle()->second.end())
             throw std::runtime_error("Arcane item not found!");
         double mi_budget = handle->magic_item_budget();
         double ti_budget = handle->total_item_budget();

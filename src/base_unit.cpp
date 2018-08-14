@@ -21,46 +21,55 @@ std::size_t base_unit::min_size() const noexcept { return min_size_; }
 std::size_t base_unit::max_size() const noexcept { return max_size_; }
 
 const std::shared_ptr<
-    std::unordered_map<std::string, item>
+    std::pair<
+        std::string,
+        std::unordered_map<std::string, item>
+    >
 >& base_unit::magic_items_handle() const noexcept {
     return magic_items;
 }
 
 const std::shared_ptr<
-    std::unordered_map<std::string, item>
+    std::pair<
+        std::string,
+        std::unordered_map<std::string, item>
+    >
 >& base_unit::common_items_handle() const noexcept {
     return common_items;
 }
 
 const std::shared_ptr<
-    std::unordered_map<std::string, item>
+    std::pair<
+        std::string,
+        std::unordered_map<std::string, item>
+    >
 >& base_unit::faction_items_handle() const noexcept {
     return faction_items;
 }
 
 void base_unit::set_magic_item_handle(
     const std::shared_ptr<
-        std::unordered_map<
+        std::pair<
             std::string,
-            item
+            std::unordered_map<std::string, item>
         >
     >& items
 ) noexcept { magic_items = items; }
 
 void base_unit::set_common_item_handle(
     const std::shared_ptr<
-        std::unordered_map<
+        std::pair<
             std::string,
-            item
+            std::unordered_map<std::string, item>
         >
     >& items
 ) noexcept { common_items = items; }
 
 void base_unit::set_faction_item_handle(
     const std::shared_ptr<
-        std::unordered_map<
+        std::pair<
             std::string,
-            item
+            std::unordered_map<std::string, item>
         >
     >& items
 ) noexcept { faction_items = items; }

@@ -483,6 +483,16 @@
      <string>Unit Information</string>
     </property>
    </widget>
+   <widget class="QComboBox" name="magic_items_combobox">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>740</y>
+      <width>151</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

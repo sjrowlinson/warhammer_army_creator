@@ -33,6 +33,7 @@ namespace tools {
     public:
         explicit item_parser(const QString& ifile_str, ItemClass ic);
         ~item_parser();
+        std::string name();
         std::vector<item> parse();
     };
 

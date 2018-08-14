@@ -212,8 +212,8 @@ void normal_unit::pick_champion_weapon(ItemClass item_type, std::string name) {
     }
     case ItemClass::MAGIC:
     {
-        auto search = handle->magic_items_handle()->find(name);
-        if (search == handle->magic_items_handle()->end())
+        auto search = handle->magic_items_handle()->second.find(name);
+        if (search == handle->magic_items_handle()->second.end())
             throw std::invalid_argument("Weapon not found!");
         double mi_budget = handle->champion_magic_item_budget();
         double ti_budget = handle->champion_total_item_budget();
@@ -311,8 +311,8 @@ void normal_unit::pick_champion_armour(ItemClass item_type, std::string name) {
     }
     case ItemClass::MAGIC:
     {
-        auto search = handle->magic_items_handle()->find(name);
-        if (search == handle->magic_items_handle()->end())
+        auto search = handle->magic_items_handle()->second.find(name);
+        if (search == handle->magic_items_handle()->second.end())
             throw std::invalid_argument("Armour not found!");
         double mi_budget = handle->champion_magic_item_budget();
         double ti_budget = handle->champion_total_item_budget();
@@ -491,8 +491,8 @@ void normal_unit::pick_banner(ItemClass item_type, std::string name) {
     switch (item_type) {
     case ItemClass::MAGIC:
     {
-        auto search = handle->magic_items_handle()->find(name);
-        if (search == handle->magic_items_handle()->end())
+        auto search = handle->magic_items_handle()->second.find(name);
+        if (search == handle->magic_items_handle()->second.end())
             throw std::invalid_argument("Magic banner not found!");
         if (search->second.points > handle->magic_banner_budget())
             throw std::invalid_argument("Magic banner beyond budget!");
