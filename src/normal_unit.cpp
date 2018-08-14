@@ -34,6 +34,11 @@ normal_unit::normal_unit(const normal_unit& other)
 
 // current property accessors
 
+bool normal_unit::switch_model_select(ModelSelect ms) {
+    model_select_ = ms;
+    return true;
+}
+
 std::size_t normal_unit::size() const noexcept { return size_; }
 
 std::unordered_map<
@@ -467,8 +472,11 @@ void normal_unit::remove_command_member(CommandGroup member) {
             remove_champion_weapon(WeaponType::MELEE);
             remove_champion_weapon(WeaponType::BALLISTIC);
             remove_champion_oco_extra();
-            for (auto extra : mc_extras_)
-                remove_mc_extra(extra.first);
+            std::vector<std::string> champ_extra_names;
+            for (auto extra : champ_mc_extras_) champ_extra_names.push_back(extra.first);
+            for (auto e : champ_extra_names) remove_champion_mc_extra(e);
+            //for (auto extra : champ_mc_extras_)
+            //    remove_champion_mc_extra(extra.first);
         }
         else if (it->first == CommandGroup::STANDARD_BEARER) {
             remove_banner();
@@ -546,6 +554,8 @@ void normal_unit::pick_default_oco_extra(std::string name) {
 }
 
 void normal_unit::pick_champion_oco_extra(std::string name) {
+    if (!(command_group.count(CommandGroup::CHAMPION)))
+        throw std::runtime_error("No champion present in the unit!");
     auto search = handle->champion_opt().oco_extras.find(name);
     if (search == handle->champion_opt().oco_extras.end())
         throw std::invalid_argument("Item not found!");
@@ -578,6 +588,8 @@ void normal_unit::pick_default_mc_extra(std::string name) {
 }
 
 void normal_unit::pick_champion_mc_extra(std::string name) {
+    if (!(command_group.count(CommandGroup::CHAMPION)))
+        throw std::runtime_error("No champion present in the unit!");
     auto search = handle->champion_opt().mc_extras.find(name);
     if (search == handle->champion_opt().mc_extras.end())
         throw std::invalid_argument("Item not found!");

@@ -173,8 +173,8 @@ void ArmyCreator::optional_armour_selected() {
     std::string rb_name = rb->objectName().toStdString();
     try {
         if (opt_sel->select_armour(rb_name)) {
-        ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
-        update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::ARMOUR);
+            ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+            update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::ARMOUR);
         }
     } catch (const std::exception& e) {
         QMessageBox message_box;
@@ -211,6 +211,9 @@ void ArmyCreator::optional_command_selected() {
             update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::COMMAND);
             auto split = tools::split(cb_name, '_');
             if (split[1] == "c" || split[1] == "sb") {
+                update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::WEAPONS);
+                update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::ARMOUR);
+                update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::EXTRAS);
                 clear_unit_options_box();
                 initialise_unit_options_box();
             }
@@ -227,18 +230,34 @@ void ArmyCreator::optional_command_selected() {
 void ArmyCreator::optional_oco_extra_selected() {
     QRadioButton* rb = qobject_cast<QRadioButton*>(QObject::sender());
     std::string rb_name = rb->objectName().toStdString();
-    if (opt_sel->select_oco_extra(rb_name)) {
-        ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
-        update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::EXTRAS);
+    try {
+        if (opt_sel->select_oco_extra(rb_name)) {
+            ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+            update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::EXTRAS);
+        }
+    } catch (const std::exception& e) {
+        QMessageBox message_box;
+        message_box.critical(nullptr, tr("Error"), tr(e.what()));
+        message_box.setFixedSize(500, 200);
+        clear_unit_options_box();
+        initialise_unit_options_box();
     }
 }
 
 void ArmyCreator::optional_mc_extra_selected() {
     QCheckBox* cb = qobject_cast<QCheckBox*>(QObject::sender());
     std::string cb_name = cb->objectName().toStdString();
-    if (opt_sel->select_mc_extra(cb_name, cb->isChecked())) {
-        ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
-        update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::EXTRAS);
+    try {
+        if (opt_sel->select_mc_extra(cb_name, cb->isChecked())) {
+            ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+            update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::EXTRAS);
+        }
+    } catch (const std::exception& e) {
+        QMessageBox message_box;
+        message_box.critical(nullptr, tr("Error"), tr(e.what()));
+        message_box.setFixedSize(500, 200);
+        clear_unit_options_box();
+        initialise_unit_options_box();
     }
 }
 
@@ -1117,9 +1136,9 @@ QGroupBox* ArmyCreator::initialise_opt_oco_extras_groupbox(std::shared_ptr<unit>
         std::string permodel = (current->base_unit_type() == BaseUnitType::NORMAL &&
                                     !(e.second.first)) ? "/model" : "";
         std::string label = e.first + " (" + pts_str + " pts" + permodel + ")";
-        std::string name = e.first + "_radiobutton";
+        std::string name = e.first + "_" + ((champion) ? "champion" : "default") + "_radiobutton";
         QRadioButton* rb = new QRadioButton(tr(label.data()));
-        rb->setObjectName(tr(name.data()));
+        rb->setObjectName(QString(name.data()));
         if (curr_oco_extra.first == e.first) {
             rb->setChecked(true);
             has_extra = true;
@@ -1128,7 +1147,8 @@ QGroupBox* ArmyCreator::initialise_opt_oco_extras_groupbox(std::shared_ptr<unit>
         oco_box_layout->addWidget(rb);
     }
     QRadioButton* none_rb = new QRadioButton(tr("None"));
-    none_rb->setObjectName(tr("None_ocoextra_radiobutton"));
+    std::string none_rb_name = std::string("None_") + ((champion) ? "champion" : "default") + "_ocoextra_radiobutton";
+    none_rb->setObjectName(QString(none_rb_name.data()));
     if (!has_extra) none_rb->setChecked(true);
     connect(none_rb, SIGNAL(clicked(bool)), this, SLOT(optional_oco_extra_selected()));
     oco_box_layout->addWidget(none_rb);
@@ -1174,9 +1194,9 @@ QGroupBox* ArmyCreator::initialise_opt_mc_extras_groupbox(std::shared_ptr<unit> 
         std::string permodel = (current->base_unit_type() == BaseUnitType::NORMAL &&
                                     !(e.second.first)) ? "/model" : "";
         std::string label = e.first + " (" + pts_str + " pts" + permodel + ")";
-        std::string name = e.first + "_radiobutton";
+        std::string name = e.first + "_" + ((champion) ? "champion" : "default") + "_radiobutton";
         QCheckBox* cb = new QCheckBox(tr(label.data()));
-        cb->setObjectName(tr(name.data()));
+        cb->setObjectName(QString(name.data()));
         if (curr_mc_extras.count(e.first)) cb->setChecked(true);
         connect(cb, SIGNAL(clicked(bool)), this, SLOT(optional_mc_extra_selected()));
         mc_box_layout->addWidget(cb);
@@ -1452,23 +1472,24 @@ void ArmyCreator::update_unit_display(
                                std::get<1>(ranged_weapon->second).data(),
                                QString("%1").arg(std::get<2>(ranged_weapon->second))
                            );
-        u->switch_model_select(ModelSelect::CHAMPION);
-        auto champ_weapons = u->weapons();
+        if (u->switch_model_select(ModelSelect::CHAMPION)) {
+            auto champ_weapons = u->weapons();
+            auto champ_melee_weapon = champ_weapons.find(WeaponType::MELEE);
+            auto champ_ranged_weapon = champ_weapons.find(WeaponType::BALLISTIC);
+            if (champ_melee_weapon != champ_weapons.end() &&
+                    !(std::get<1>(champ_melee_weapon->second).empty() ||
+                      std::get<1>(champ_melee_weapon->second) == "Hand weapon"))
+                weapons_str += QString("\n%1 [%2]").arg(
+                                   (std::get<1>(champ_melee_weapon->second) + " (Champion)").data(),
+                                   QString("%1").arg(std::get<2>(champ_melee_weapon->second))
+                               );
+            if (champ_ranged_weapon != champ_weapons.end() && !(std::get<1>(champ_ranged_weapon->second).empty()))
+                weapons_str += QString("\n") + QString("%1 [%2]").arg(
+                                   (std::get<1>(champ_ranged_weapon->second) + " (Champion)").data(),
+                                   QString("%1").arg(std::get<2>(champ_ranged_weapon->second))
+                               );
+        }
         u->switch_model_select(ModelSelect::DEFAULT);
-        auto champ_melee_weapon = champ_weapons.find(WeaponType::MELEE);
-        auto champ_ranged_weapon = champ_weapons.find(WeaponType::BALLISTIC);
-        if (champ_melee_weapon != champ_weapons.end() &&
-                !(std::get<1>(champ_melee_weapon->second).empty() ||
-                  std::get<1>(champ_melee_weapon->second) == "Hand weapon"))
-            weapons_str += QString("\n%1 [%2]").arg(
-                               (std::get<1>(champ_melee_weapon->second) + " (Champion)").data(),
-                               QString("%1").arg(std::get<2>(champ_melee_weapon->second))
-                           );
-        if (champ_ranged_weapon != champ_weapons.end() && !(std::get<1>(champ_ranged_weapon->second).empty()))
-            weapons_str += QString("\n") + QString("%1 [%2]").arg(
-                               (std::get<1>(champ_ranged_weapon->second) + " (Champion)").data(),
-                               QString("%1").arg(std::get<2>(champ_ranged_weapon->second))
-                           );
         item->setText(static_cast<int>(column), weapons_str);
         update_unit_display(item, adding, ArmyTreeColumn::POINTS, copying);
         break;
@@ -1497,6 +1518,28 @@ void ArmyCreator::update_unit_display(
                             std::get<1>(helmet->second).data(),
                             QString("%1").arg(std::get<2>(helmet->second))
                         );
+        if (u->switch_model_select(ModelSelect::CHAMPION)) {
+            auto champ_all_armour = u->armour();
+            auto champ_armour = champ_all_armour.find(ArmourType::ARMOUR);
+            auto champ_shield = champ_all_armour.find(ArmourType::SHIELD);
+            auto champ_helmet = champ_all_armour.find(ArmourType::HELMET);
+            if (champ_armour != champ_all_armour.end() && !(std::get<1>(champ_armour->second).empty()))
+                armour_str += QString("\n%1 [%2]").arg(
+                                (std::get<1>(champ_armour->second) + " (Champion)").data(),
+                                QString("%1").arg(std::get<2>(champ_armour->second))
+                            );
+            if (champ_shield != champ_all_armour.end() && !(std::get<1>(champ_shield->second).empty()))
+                armour_str += QString("%1 [%2]").arg(
+                                (std::get<1>(champ_shield->second) + " (Champion)").data(),
+                                QString("%1").arg(std::get<2>(champ_shield->second))
+                            );
+            if (champ_helmet != champ_all_armour.end() && !(std::get<1>(champ_helmet->second).empty()))
+                armour_str += QString("%1 [%2]").arg(
+                                (std::get<1>(champ_helmet->second) + " (Champion)").data(),
+                                QString("%1").arg(std::get<2>(champ_helmet->second))
+                            );
+        }
+        u->switch_model_select(ModelSelect::DEFAULT);
         item->setText(static_cast<int>(column), armour_str);
         update_unit_display(item, adding, ArmyTreeColumn::POINTS, copying);
         break;
@@ -1558,7 +1601,7 @@ void ArmyCreator::update_unit_display(
                           );
         auto mc_extras = u->mc_extras();
         if (!mc_extras.empty() && !oco_extra.first.empty()) extras_str += QString("\n");
-        for(auto it = std::begin(mc_extras); it != std::end(mc_extras); ++it) {
+        for (auto it = std::begin(mc_extras); it != std::end(mc_extras); ++it) {
             extras_str += QString("%1 [%2]").arg(
                                       it->first.data(),
                                       QString("%1").arg(it->second.second)
@@ -1566,6 +1609,26 @@ void ArmyCreator::update_unit_display(
             if (++it != std::end(mc_extras)) extras_str += QString("\n");
             --it;
         }
+        if (u->switch_model_select(ModelSelect::CHAMPION)) {
+            auto champ_oco_extra = u->oco_extra();
+            if (!(champ_oco_extra.first.empty()))
+                extras_str += QString("\n%1 [%2]").arg(
+                                  (champ_oco_extra.first + " (Champion)").data(),
+                                  QString("%1").arg(champ_oco_extra.second.second)
+                              );
+            auto champ_mc_extras = u->mc_extras();
+            if (!champ_mc_extras.empty() && !champ_oco_extra.first.empty()) extras_str += QString("\n");
+            for (auto it = std::begin(champ_mc_extras); it != std::end(champ_mc_extras); ++it) {
+                extras_str += QString("%1 [%2]").arg(
+                                          (it->first + " (Champion)").data(),
+                                          QString("%1").arg(it->second.second)
+                                      );
+                if (++it != std::end(champ_mc_extras)) extras_str += QString("\n");
+                --it;
+            }
+
+        }
+        u->switch_model_select(ModelSelect::DEFAULT);
         item->setText(static_cast<int>(column), extras_str);
         update_unit_display(item, adding, ArmyTreeColumn::POINTS, copying);
         break;

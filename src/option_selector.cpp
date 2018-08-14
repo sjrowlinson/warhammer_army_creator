@@ -48,34 +48,32 @@ bool option_selector::select_weapon(const std::string& s) {
         case InTree::ARMY:
             army->take_snapshot_of(current->id());
             if (split[3] == "default") {
-                try {
-                    current->pick_weapon(ic, weapon);
-                }
-                catch (const std::invalid_argument&) { throw; }
+                try { current->pick_weapon(ic, weapon); }
+                catch (const std::exception&) { throw; }
             }
             else if (split[3] == "champion") {
                 current->switch_model_select(ModelSelect::CHAMPION);
-                try {
-                    current->pick_weapon(ic, weapon);
+                try { current->pick_weapon(ic, weapon); }
+                catch (const std::exception&) {
+                    current->switch_model_select(ModelSelect::DEFAULT);
+                    throw;
                 }
-                catch (const std::exception&) { throw; }
                 current->switch_model_select(ModelSelect::DEFAULT);
             }
             army->update_on(current->id());
             return true;
         case InTree::ROSTER:
             if (split[3] == "default") {
-                try {
-                    current->pick_weapon(ic, weapon);
-                }
-                catch (const std::invalid_argument&) { throw; }
+                try { current->pick_weapon(ic, weapon); }
+                catch (const std::exception&) { throw; }
             }
             else if (split[3] == "champion") {
                 current->switch_model_select(ModelSelect::CHAMPION);
-                try {
-                    current->pick_weapon(ic, weapon);
+                try { current->pick_weapon(ic, weapon); }
+                catch (const std::exception&) {
+                    current->switch_model_select(ModelSelect::DEFAULT);
+                    throw;
                 }
-                catch (const std::exception&) { throw; }
                 current->switch_model_select(ModelSelect::DEFAULT);
             }
             return false;
@@ -121,30 +119,32 @@ bool option_selector::select_armour(const std::string& s) {
         case InTree::ARMY:
             army->take_snapshot_of(current->id());
             if (split[3] == "default") {
-                try {
-                    current->pick_armour(ic, armour);
-                } catch (const std::invalid_argument&) { throw; }
+                try { current->pick_armour(ic, armour); }
+                catch (const std::exception&) { throw; }
             }
             else if (split[3] == "champion") {
                 current->switch_model_select(ModelSelect::CHAMPION);
-                try {
-                    current->pick_armour(ic, armour);
-                } catch (const std::exception&) { throw; }
+                try { current->pick_armour(ic, armour); }
+                catch (const std::exception&) {
+                    current->switch_model_select(ModelSelect::DEFAULT);
+                    throw;
+                }
                 current->switch_model_select(ModelSelect::DEFAULT);
             }
             army->update_on(current->id());
             return true;
         case InTree::ROSTER:
             if (split[3] == "default") {
-                try {
-                    current->pick_armour(ic, armour);
-                } catch (const std::invalid_argument&) { throw; }
+                try { current->pick_armour(ic, armour); }
+                catch (const std::exception&) { throw; }
             }
             else if (split[3] == "champion") {
                 current->switch_model_select(ModelSelect::CHAMPION);
-                try {
-                    current->pick_armour(ic, armour);
-                } catch (const std::exception&) { throw; }
+                try { current->pick_armour(ic, armour); }
+                catch (const std::exception&) {
+                    current->switch_model_select(ModelSelect::DEFAULT);
+                    throw;
+                }
                 current->switch_model_select(ModelSelect::DEFAULT);
             }
             return false;
@@ -234,11 +234,21 @@ bool option_selector::select_oco_extra(const std::string& s) {
         switch (in_tree) {
         case InTree::ARMY:
             army->take_snapshot_of(current->id());
-            current->remove_oco_extra();
+            if (split[1] == "default") current->remove_oco_extra();
+            else if (split[1] == "champion") {
+                current->switch_model_select(ModelSelect::CHAMPION);
+                current->remove_oco_extra();
+                current->switch_model_select(ModelSelect::DEFAULT);
+            }
             army->update_on(current->id());
             return true;
         case InTree::ROSTER:
-            current->remove_oco_extra();
+            if (split[1] == "default") current->remove_oco_extra();
+            else if (split[1] == "champion") {
+                current->switch_model_select(ModelSelect::CHAMPION);
+                current->remove_oco_extra();
+                current->switch_model_select(ModelSelect::DEFAULT);
+            }
             return false;
         default: throw std::runtime_error("No unit selected!");
         }
@@ -247,11 +257,35 @@ bool option_selector::select_oco_extra(const std::string& s) {
         switch (in_tree) {
         case InTree::ARMY:
             army->take_snapshot_of(current->id());
-            current->pick_oco_extra(extra);
+            if (split[1] == "default") {
+                try { current->pick_oco_extra(extra); }
+                catch (const std::exception&) { throw; }
+            }
+            else if (split[1] == "champion") {
+                current->switch_model_select(ModelSelect::CHAMPION);
+                try { current->pick_oco_extra(extra); }
+                catch (const std::exception&) {
+                    current->switch_model_select(ModelSelect::DEFAULT);
+                    throw;
+                }
+                current->switch_model_select(ModelSelect::DEFAULT);
+            }
             army->update_on(current->id());
             return true;
         case InTree::ROSTER:
-            current->pick_oco_extra(extra);
+            if (split[1] == "default") {
+                try { current->pick_oco_extra(extra); }
+                catch (const std::exception&) { throw; }
+            }
+            else if (split[1] == "champion") {
+                current->switch_model_select(ModelSelect::CHAMPION);
+                try { current->pick_oco_extra(extra); }
+                catch (const std::exception&) {
+                    current->switch_model_select(ModelSelect::DEFAULT);
+                    throw;
+                }
+                current->switch_model_select(ModelSelect::DEFAULT);
+            }
             return false;
         default: throw std::runtime_error("No unit selected!");
         }
@@ -265,11 +299,35 @@ bool option_selector::select_mc_extra(const std::string& s, bool is_checked) {
         switch (in_tree) {
         case InTree::ARMY:
             army->take_snapshot_of(current->id());
-            current->pick_mc_extra(extra);
+            if (split[1] == "default") {
+                try { current->pick_mc_extra(extra); }
+                catch (const std::exception&) { throw; }
+            }
+            else if (split[1] == "champion") {
+                current->switch_model_select(ModelSelect::CHAMPION);
+                try { current->pick_mc_extra(extra); }
+                catch (const std::exception&) {
+                    current->switch_model_select(ModelSelect::DEFAULT);
+                    throw;
+                }
+                current->switch_model_select(ModelSelect::DEFAULT);
+            }
             army->update_on(current->id());
             return true;
         case InTree::ROSTER:
-            current->pick_mc_extra(extra);
+            if (split[1] == "default") {
+                try { current->pick_mc_extra(extra); }
+                catch (const std::exception&) { throw; }
+            }
+            else if (split[1] == "champion") {
+                current->switch_model_select(ModelSelect::CHAMPION);
+                try { current->pick_mc_extra(extra); }
+                catch (const std::exception&) {
+                    current->switch_model_select(ModelSelect::DEFAULT);
+                    throw;
+                }
+                current->switch_model_select(ModelSelect::DEFAULT);
+            }
             return false;
         default: throw std::runtime_error("No unit selected!");
         }
@@ -278,11 +336,21 @@ bool option_selector::select_mc_extra(const std::string& s, bool is_checked) {
         switch (in_tree) {
         case InTree::ARMY:
             army->take_snapshot_of(current->id());
-            current->remove_mc_extra(extra);
+            if (split[1] == "default") current->remove_mc_extra(extra);
+            else if (split[1] == "champion") {
+                current->switch_model_select(ModelSelect::CHAMPION);
+                current->remove_mc_extra(extra);
+                current->switch_model_select(ModelSelect::DEFAULT);
+            }
             army->update_on(current->id());
             return true;
         case InTree::ROSTER:
-            current->remove_mc_extra(extra);
+            if (split[1] == "default") current->remove_mc_extra(extra);
+            else if (split[1] == "champion") {
+                current->switch_model_select(ModelSelect::CHAMPION);
+                current->remove_mc_extra(extra);
+                current->switch_model_select(ModelSelect::DEFAULT);
+            }
             return false;
         default: throw std::runtime_error("No unit selected!");
         }

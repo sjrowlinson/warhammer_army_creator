@@ -28,6 +28,9 @@ public:
     mixed_unit(const mixed_unit& other);
     ~mixed_unit() override = default;
 
+    bool switch_model_select(ModelSelect ms) override;
+    bool switch_mixed_select(MixedSelect ms) override;
+
     normal_unit& master() noexcept;
     normal_unit& slave() noexcept;
 

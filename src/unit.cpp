@@ -13,10 +13,16 @@ int unit::id() const noexcept { return id_; }
 void unit::set_id(int id) { id_ = id; }
 
 ModelSelect unit::model_select() const noexcept { return model_select_; }
-void unit::switch_model_select(ModelSelect ms) { model_select_ = ms; }
+bool unit::switch_model_select(ModelSelect ms) {
+    model_select_ = ms;
+    return false;
+}
 
 MixedSelect unit::mixed_select() const noexcept { return mixed_select_; }
-void unit::switch_mixed_select(MixedSelect ms) { mixed_select_ = ms; }
+bool unit::switch_mixed_select(MixedSelect ms) {
+    mixed_select_ = ms;
+    return false;
+}
 
 double unit::points() const noexcept { return points_; }
 

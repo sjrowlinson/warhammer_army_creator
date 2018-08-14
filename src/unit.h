@@ -40,10 +40,10 @@ public:
     void set_id(int id);
 
     ModelSelect model_select() const noexcept;
-    void switch_model_select(ModelSelect ms);
+    virtual bool switch_model_select(ModelSelect ms);
 
     MixedSelect mixed_select() const noexcept;
-    void switch_mixed_select(MixedSelect ms);
+    virtual bool switch_mixed_select(MixedSelect ms);
 
     // non-pure virtual properties
     virtual double points() const noexcept;

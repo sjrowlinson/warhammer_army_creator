@@ -64,6 +64,8 @@ public:
     normal_unit(const normal_unit& other);
     ~normal_unit() override = default;
 
+    bool switch_model_select(ModelSelect ms) override;
+
     // current property accessors
     std::size_t size() const noexcept;
     std::unordered_map<
