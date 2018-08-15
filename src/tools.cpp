@@ -127,4 +127,18 @@ namespace tools {
         return map;
     }
 
+    std::vector<std::pair<std::string, item>> magic_items_vec_of(
+            const std::unordered_map<std::string, item> &items,
+            ItemType item_type
+    ) {
+        std::vector<std::pair<std::string, item>> vec;
+        auto found = tools::find_all_if(
+            items.begin(),
+            items.end(),
+            [item_type](const auto& x) { return x.second.item_type == item_type; }
+        );
+        for (auto it : found) vec.push_back(*it);
+        return vec;
+    }
+
 }

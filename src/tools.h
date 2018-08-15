@@ -34,6 +34,18 @@ namespace tools {
     std::unordered_map<std::string, item> magic_items_of(
         const std::unordered_map<std::string, item>& items, ItemType item_type
     );
+    std::vector<std::pair<std::string, item>> magic_items_vec_of(
+            const std::unordered_map<std::string, item> &items,
+            ItemType item_type
+    );
+
+
+    template<class TyF, class TyS>
+    constexpr std::vector<std::pair<TyF, TyS>> umap_to_vector(const std::unordered_map<TyF, TyS>& umap) {
+        std::vector<std::pair<TyF, TyS>> vec;
+        for (const auto& p : umap) vec.push_back(p);
+        return vec;
+    }
 
     template<class InputIt, class UnaryPredicate>
     constexpr std::vector<InputIt> find_all_if(InputIt first, InputIt last, UnaryPredicate p) {
