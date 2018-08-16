@@ -2,11 +2,15 @@
 
 mage_character_unit::mage_character_unit(std::shared_ptr<base_unit> base)
     : character_unit(base),
-      handle(std::dynamic_pointer_cast<base_mage_character_unit>(base)) {}
+      handle(std::dynamic_pointer_cast<base_mage_character_unit>(base)) {
+    level_ = {handle->mage_level(), 0.0};
+}
 
 mage_character_unit::mage_character_unit(const mage_character_unit& other)
     : character_unit(other), level_(other.level_), arcane_item_(other.arcane_item_),
       handle(other.handle) {}
+
+bool mage_character_unit::is_mage() const noexcept { return true; }
 
 short mage_character_unit::level() const noexcept {
     return level_.first;
@@ -18,6 +22,11 @@ void mage_character_unit::change_level(short lvl) {
         throw std::invalid_argument("Level upgrade not available!");
     points_ += (search->second - level_.second);
     level_ = *search;
+}
+
+void mage_character_unit::reset_level() {
+    points_ -= level_.second;
+    level_ = {handle->mage_level(), 0.0};
 }
 
 std::pair<std::string, double> mage_character_unit::arcane_item() const noexcept {

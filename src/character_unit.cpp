@@ -27,6 +27,7 @@ character_unit::character_unit(const character_unit& other)
    handle_(other.handle_) {}
 
 bool character_unit::is_character() const noexcept { return true; }
+bool character_unit::is_mage() const noexcept { return false; }
 
 std::size_t character_unit::size() const noexcept { return 1U; }
 

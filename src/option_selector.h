@@ -34,6 +34,8 @@ public:
     bool select_weapon(const std::string& s);
     bool select_armour(const std::string& s);
     bool select_talisman(const std::string& s);
+    bool select_enchanted_item(const std::string& s);
+    bool select_mage_level(const std::string& s);
     bool select_mount(const std::string& s);
     bool select_command(const std::string& s, bool is_checked);
     bool select_oco_extra(const std::string& s);

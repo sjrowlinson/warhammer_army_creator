@@ -68,6 +68,8 @@ private slots:
     void optional_weapon_selected();
     void optional_armour_selected();
     void optional_talisman_selected();
+    void optional_enchanted_item_selected();
+    void optional_level_selected();
     void optional_mount_selected();
     void optional_command_selected();
     void optional_oco_extra_selected();
@@ -114,6 +116,7 @@ private:
     QGroupBox* initialise_opt_armour_subgroupbox(ArmourType at, std::shared_ptr<unit> current, bool champion);
     // mount option boxes
     QGroupBox* initialise_opt_mounts_groupbox(std::shared_ptr<unit> current);
+    QGroupBox* initialise_opt_mage_levels_groupbox(std::shared_ptr<unit> current);
     // extras option boxes
     std::pair<QGroupBox*, QGroupBox*> initialise_opt_extras_groupbox(std::shared_ptr<unit> current);
     QGroupBox* initialise_opt_oco_extras_groupbox(std::shared_ptr<unit> current, bool champion);
@@ -128,6 +131,8 @@ private:
                                        std::shared_ptr<unit> current);
     QGroupBox* setup_talismans_tab(const std::unordered_map<std::string, item>& items,
                                    std::shared_ptr<unit> current);
+    QGroupBox* setup_enchanted_items_tab(const std::unordered_map<std::string, item>& items,
+                                         std::shared_ptr<unit> current);
     //QGroupBox* setup_arcane_items_tab(const std::unordered_map<std::string, item>& items,
     //                                  std::shared_ptr<unit> current);
 

@@ -19,10 +19,13 @@ public:
 
     explicit mage_character_unit(std::shared_ptr<base_unit> base);
     mage_character_unit(const mage_character_unit& other);
-    ~mage_character_unit() = default;
+    ~mage_character_unit() override = default;
+
+    bool is_mage() const noexcept override;
 
     short level() const noexcept;
     void change_level(short lvl);
+    void reset_level();
 
     std::pair<std::string, double> arcane_item() const noexcept;
     void pick_arcane_item(ItemClass item_class, std::string name);

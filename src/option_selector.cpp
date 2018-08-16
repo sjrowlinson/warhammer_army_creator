@@ -186,6 +186,71 @@ bool option_selector::select_talisman(const std::string& s) {
     }
 }
 
+bool option_selector::select_enchanted_item(const std::string& s) {
+    auto split = tools::split(s, '_');
+    auto enchanted = split[0];
+    std::shared_ptr<character_unit> p = std::dynamic_pointer_cast<character_unit>(current);
+    if (enchanted == "None") {
+        switch (in_tree) {
+        case InTree::ARMY:
+            army->take_snapshot_of(p->id());
+            p->remove_enchanted_item();
+            army->update_on(p->id());
+            return true;
+        case InTree::ROSTER:
+            p->remove_enchanted_item();
+            return false;
+        default: throw std::runtime_error("No unit selected!");
+        }
+    }
+    else {
+        ItemClass ic = static_cast<ItemClass>(std::stoi(split[1]));
+        switch (in_tree) {
+        case InTree::ARMY:
+            army->take_snapshot_of(p->id());
+            p->pick_enchanted_item(ic, enchanted);
+            army->update_on(p->id());
+            return true;
+        case InTree::ROSTER:
+            p->pick_enchanted_item(ic, enchanted);
+            return false;
+        default: throw std::runtime_error("No unit selected!");
+        }
+    }
+}
+
+bool option_selector::select_mage_level(const std::string& s) {
+    auto split = tools::split(s, '_');
+    std::shared_ptr<mage_character_unit> p = std::dynamic_pointer_cast<mage_character_unit>(current);
+    if (split[0] == "Default") {
+        switch (in_tree) {
+        case InTree::ARMY:
+            army->take_snapshot_of(p->id());
+            p->reset_level();
+            army->update_on(p->id());
+            return true;
+        case InTree::ROSTER:
+            p->reset_level();
+            return false;
+        default: throw std::runtime_error("No unit selected!");
+        }
+    }
+    else {
+        auto level = static_cast<short>(std::stoi(split[1]));
+        switch (in_tree) {
+        case InTree::ARMY:
+            army->take_snapshot_of(p->id());
+            p->change_level(level);
+            army->update_on(p->id());
+            return true;
+        case InTree::ROSTER:
+            p->change_level(level);
+            return false;
+        default: throw std::runtime_error("No unit selected!");
+        }
+    }
+}
+
 bool option_selector::select_mount(const std::string& s) {
     auto split = tools::split(s, '_');
     auto mount = split[0];

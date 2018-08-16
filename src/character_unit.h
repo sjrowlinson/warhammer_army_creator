@@ -42,6 +42,7 @@ public:
     virtual ~character_unit() override = default;
 
     bool is_character() const noexcept override;
+    virtual bool is_mage() const noexcept override;
 
     std::size_t size() const noexcept;
     std::unordered_map<
