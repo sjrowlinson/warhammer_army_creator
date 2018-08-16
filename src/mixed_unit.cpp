@@ -11,6 +11,8 @@ mixed_unit::mixed_unit(const mixed_unit& other)
       slave_(other.slave_),
       master_size_(other.master_size_), slaves_size_(other.slaves_size_) {}
 
+bool mixed_unit::is_character() const noexcept { return false; }
+
 bool mixed_unit::switch_model_select(ModelSelect ms) {
     model_select_ = ms;
     return true;

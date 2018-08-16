@@ -64,6 +64,8 @@ public:
     normal_unit(const normal_unit& other);
     ~normal_unit() override = default;
 
+    bool is_character() const noexcept override;
+
     bool switch_model_select(ModelSelect ms) override;
 
     // current property accessors

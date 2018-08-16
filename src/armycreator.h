@@ -67,6 +67,7 @@ private slots:
 
     void optional_weapon_selected();
     void optional_armour_selected();
+    void optional_talisman_selected();
     void optional_mount_selected();
     void optional_command_selected();
     void optional_oco_extra_selected();
@@ -125,6 +126,10 @@ private:
                                        std::shared_ptr<unit> current);
     QGroupBox* setup_magic_armour_tab(const std::unordered_map<std::string, item>& items,
                                        std::shared_ptr<unit> current);
+    QGroupBox* setup_talismans_tab(const std::unordered_map<std::string, item>& items,
+                                   std::shared_ptr<unit> current);
+    //QGroupBox* setup_arcane_items_tab(const std::unordered_map<std::string, item>& items,
+    //                                  std::shared_ptr<unit> current);
 
     void update_unit_display(
             QTreeWidgetItem* item,

@@ -39,6 +39,8 @@ public:
     int id() const noexcept;
     void set_id(int id);
 
+    virtual bool is_character() const noexcept = 0;
+
     ModelSelect model_select() const noexcept;
     virtual bool switch_model_select(ModelSelect ms);
 

@@ -28,6 +28,8 @@ public:
     mixed_unit(const mixed_unit& other);
     ~mixed_unit() override = default;
 
+    bool is_character() const noexcept override;
+
     bool switch_model_select(ModelSelect ms) override;
     bool switch_mixed_select(MixedSelect ms) override;
 

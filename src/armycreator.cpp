@@ -217,6 +217,33 @@ void ArmyCreator::optional_armour_selected() {
     init_magic_items_selector(u);
 }
 
+void ArmyCreator::optional_talisman_selected() {
+    QRadioButton* rb = qobject_cast<QRadioButton*>(QObject::sender());
+    std::string rb_name = rb->objectName().toStdString();
+    try {
+        if (opt_sel->select_talisman(rb_name)) {
+            ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+            update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::EXTRAS);
+        }
+    } catch (const std::exception& e) {
+        QMessageBox message_box;
+        message_box.critical(nullptr, tr("Error"), tr(e.what()));
+        message_box.setFixedSize(500, 200);
+    }
+    clear_magic_items_selector();
+    std::shared_ptr<unit> u;
+    switch (in_tree) {
+    case InTree::ARMY:
+        u = army->get_unit(ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt());
+        break;
+    case InTree::ROSTER:
+        u = st->selected();
+        break;
+    default: return;
+    }
+    init_magic_items_selector(u);
+}
+
 void ArmyCreator::optional_mount_selected() {
     QRadioButton* rb = qobject_cast<QRadioButton*>(QObject::sender());
     std::string rb_name = rb->objectName().toStdString();
@@ -329,6 +356,9 @@ void ArmyCreator::init_magic_items_selector(std::shared_ptr<unit> current) {
     // magic armour
     auto magic_armour_box = setup_magic_armour_tab(mih->second, current);
     if (magic_armour_box != nullptr) ui->magic_items_selector->addTab(magic_armour_box, tr("Magic Armour"));
+    // talismans
+    auto talismans_box = setup_talismans_tab(mih->second, current);
+    if (talismans_box != nullptr) ui->magic_items_selector->addTab(talismans_box, tr("Talismans"));
     ui->magic_items_combobox->setHidden(false);
     ui->magic_items_selector->setHidden(false);
 }
@@ -572,6 +602,91 @@ QGroupBox* ArmyCreator::setup_magic_armour_tab(const std::unordered_map<std::str
     vlayout->addWidget(sbox);
     vlayout->addWidget(hbox);
     vlayout->addStretch(1);
+    box->setLayout(vlayout);
+    return box;
+}
+
+QGroupBox* ArmyCreator::setup_talismans_tab(
+    const std::unordered_map<std::string, item>& items,
+    std::shared_ptr<unit> current
+) {
+    auto opt_talismans = tools::magic_items_vec_of(items, ItemType::TALISMAN);
+    if (opt_talismans.empty() || !std::count_if(
+        std::begin(opt_talismans),
+        std::end(opt_talismans),
+        [&current](const auto& x) {
+            return x.second.allowed_units.empty() || x.second.allowed_units.count(current->name());
+        }
+    )) return nullptr;
+    std::sort(
+        std::begin(opt_talismans),
+        std::end(opt_talismans),
+        [](const auto& lhs, const auto& rhs) { return lhs.second.points > rhs.second.points; }
+    );
+    std::pair<std::string, double> talisman;
+    switch (current->base_unit_type()) {
+    case BaseUnitType::MAGE_CHARACTER:
+    case BaseUnitType::MELEE_CHARACTER:
+    {
+        auto p = std::dynamic_pointer_cast<character_unit>(current);
+        talisman = p->talisman();
+        break;
+    }
+    default: return nullptr;
+    }
+    // overall
+    QGroupBox* box = new QGroupBox();
+    QVBoxLayout* vlayout = new QVBoxLayout;
+    const auto max_per_row = 8;
+    auto n_adj = static_cast<std::size_t>(std::ceil(opt_talismans.size()/static_cast<double>(max_per_row)));
+    std::vector<QFrame*> frames(n_adj);
+    for (auto& f : frames) f = new QFrame;
+    std::vector<QHBoxLayout*> hlayouts(n_adj);
+    for (auto& l : hlayouts) l = new QHBoxLayout;
+    std::size_t count = 1U;
+    bool has_talisman = false;
+    for (const auto& t : opt_talismans) {
+        if (t.second.allowed_units.size() && !t.second.allowed_units.count(current->name()))
+            continue;
+        switch (current->base_unit_type()) {
+        case BaseUnitType::MAGE_CHARACTER:
+        {
+            auto p = std::dynamic_pointer_cast<mage_character_unit>(current);
+            if (t.second.points > p->handle->magic_item_budget()) continue;
+            break;
+        }
+        case BaseUnitType::MELEE_CHARACTER:
+        {
+            auto p = std::dynamic_pointer_cast<melee_character_unit>(current);
+            if (t.second.points > p->handle->magic_item_budget()) continue;
+            break;
+        }
+        default: break;
+        }
+        std::string pts_str = tools::points_str(t.second.points);
+        std::string button_name = t.first + "_" +
+                std::to_string(static_cast<int>(t.second.item_class)) + "_radiobutton";
+        QRadioButton* rb = new QRadioButton(tr((t.first + " (" + pts_str + " pts)").data()));
+        rb->setObjectName(QString::fromStdString(button_name));
+        rb->setToolTip(tr(t.second.description.data()));
+        if (talisman.first == t.first) {
+            rb->setChecked(true);
+            has_talisman = true;
+        }
+        connect(rb, SIGNAL(clicked(bool)), this, SLOT(optional_talisman_selected()));
+        hlayouts[count++/max_per_row]->addWidget(rb);
+    }
+    // none button
+    QRadioButton* none_rb = new QRadioButton(tr("None"));
+    none_rb->setObjectName(QString("None_talisman_radiobutton"));
+    if (!has_talisman) none_rb->setChecked(true);
+    connect(none_rb, SIGNAL(clicked(bool)), this, SLOT(optional_talisman_selected()));
+    if (!hlayouts.empty()) (*(--std::end(hlayouts)))->addWidget(none_rb);
+    for (auto l : hlayouts) l->addStretch(1);
+    for (auto i = 0U; i < frames.size(); ++i) {
+        frames[i]->setLayout(hlayouts[i]);
+        vlayout->addWidget(frames[i]);
+    }
     box->setLayout(vlayout);
     return box;
 }
@@ -1811,6 +1926,16 @@ void ArmyCreator::update_unit_display(
 
         }
         u->switch_model_select(ModelSelect::DEFAULT);
+        if (u->is_character()) {
+            auto p = std::dynamic_pointer_cast<character_unit>(u);
+            if (!p->talisman().first.empty()) {
+                if (!extras_str.isEmpty()) extras_str += QString("\n");
+                extras_str += QString("%1 [%2]").arg(
+                    p->talisman().first.data(),
+                    QString("%1").arg(p->talisman().second)
+                );
+            }
+        }
         item->setText(static_cast<int>(column), extras_str);
         update_unit_display(item, adding, ArmyTreeColumn::POINTS, copying);
         break;

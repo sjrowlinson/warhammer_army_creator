@@ -34,6 +34,8 @@ normal_unit::normal_unit(const normal_unit& other)
 
 // current property accessors
 
+bool normal_unit::is_character() const noexcept { return false; }
+
 bool normal_unit::switch_model_select(ModelSelect ms) {
     model_select_ = ms;
     return true;

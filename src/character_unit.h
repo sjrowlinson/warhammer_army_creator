@@ -41,6 +41,8 @@ public:
     character_unit(const character_unit& other);
     virtual ~character_unit() override = default;
 
+    bool is_character() const noexcept override;
+
     std::size_t size() const noexcept;
     std::unordered_map<
         WeaponType,

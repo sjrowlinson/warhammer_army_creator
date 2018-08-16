@@ -197,3 +197,89 @@ Talisman of Preservation
     45
     The Talisman of Preservation grants the bearer a 4+ ward save.
     None
+
+Obsidian Lodestone
+    Talisman
+    45
+    The Obsidian Lodestone grants Magic Resistance (3).
+    None
+
+Talisman of Endurance
+    Talisman
+    30
+    The Talisman of Endurance grants the bearer a 5+ ward save.
+    None
+
+Obsidian Amulet
+    Talisman
+    30
+    The Obsidian Amulet grants the bearer Magic Resistance (2).
+    None
+
+Dawnstone
+    Talisman
+    25
+    The bearer re-rolls failed armour saves.
+    None
+
+Opal Amulet
+    Talisman
+    15
+    One use only. The Opal Amulet bestows a 4+ ward save against the first wound suffered by the bearer, after which its power fades and it canned be used again during the game.
+    None
+
+Obsidian Trinket
+    Talisman
+    15
+    The Obsidian Trinket grants Magic Resistance (1).
+    None
+
+Talisman of Protection
+    Talisman
+    15
+    The Talisman of Protection grants the bearer a 6+ ward save.
+    None
+
+Seed of Rebirth
+    Talisman
+    10
+    The bearer of the Seed of Rebirth has the Regeneration (6+) special rule.
+    None
+
+Dragonbane Gem
+    Talisman
+    5
+    The bearer of the Dragonbane Gem has a 2+ ward save against flaming attacks.
+    None
+
+Pigeon Plucker Pendant
+    Talisman
+    5
+    This items grants the bearer a 5+ ward save against wounds caused in close combat by models that have the Fly special rule.
+    None
+
+Luckstone
+    Talisman
+    5
+    One use only. The Luckstone allows the bearer to re-rol a single failed armour save.
+    None
+
+# Arcane Items
+
+Book of Ashur
+    Arcane
+    70
+    The bearer receives a +1 bonus on attempts to cast and dispel.
+    None
+
+Earthing Rod
+    Arcane
+    25
+    One use only. If the wizard rolls on the miscast table he can re-roll the result.
+    None
+
+Dispel Scroll
+    Arcane
+    25
+    D
+    None

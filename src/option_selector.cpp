@@ -153,6 +153,39 @@ bool option_selector::select_armour(const std::string& s) {
     }
 }
 
+bool option_selector::select_talisman(const std::string& s) {
+    auto split = tools::split(s, '_');
+    auto talisman = split[0];
+    std::shared_ptr<character_unit> p = std::dynamic_pointer_cast<character_unit>(current);
+    if (talisman == "None") {
+        switch (in_tree) {
+        case InTree::ARMY:
+            army->take_snapshot_of(p->id());
+            p->remove_talisman();
+            army->update_on(p->id());
+            return true;
+        case InTree::ROSTER:
+            p->remove_talisman();
+            return false;
+        default: throw std::runtime_error("No unit selected!");
+        }
+    }
+    else {
+        ItemClass ic = static_cast<ItemClass>(std::stoi(split[1]));
+        switch (in_tree) {
+        case InTree::ARMY:
+            army->take_snapshot_of(p->id());
+            p->pick_talisman(ic, talisman);
+            army->update_on(p->id());
+            return true;
+        case InTree::ROSTER:
+            p->pick_talisman(ic, talisman);
+            return false;
+        default: throw std::runtime_error("No unit selected!");
+        }
+    }
+}
+
 bool option_selector::select_mount(const std::string& s) {
     auto split = tools::split(s, '_');
     auto mount = split[0];

@@ -26,6 +26,8 @@ character_unit::character_unit(const character_unit& other)
    total_item_points_(other.total_item_points_),
    handle_(other.handle_) {}
 
+bool character_unit::is_character() const noexcept { return true; }
+
 std::size_t character_unit::size() const noexcept { return 1U; }
 
 std::unordered_map<
@@ -257,41 +259,29 @@ void character_unit::pick_armour(ItemClass item_type, std::string name) {
 void character_unit::pick_talisman(ItemClass item_class, std::string name) {
     switch (item_class) {
     case ItemClass::MAGIC:
-    {
-        auto search = handle_->magic_items_handle()->second.find(name);
-        if (search == handle_->magic_items_handle()->second.end())
-            throw std::runtime_error("Talisman not found!");
-        double mi_budget = handle_->magic_item_budget();
-        double ti_budget = handle_->total_item_budget();
-        if ((search->second.points + magic_item_points_ > mi_budget) ||
-                (search->second.points + total_item_points_ > ti_budget))
-            throw std::runtime_error("Magic item budget exceeded!");
-        // check if the talisman has specific allowed units
-        if (!(search->second.allowed_units.empty())) {
-            std::string unit_name = this->name();
-            // check that this unit is within the magic talismans' allowed units container
-            if (!std::count_if(
-                    std::begin(search->second.allowed_units),
-                    std::end(search->second.allowed_units),
-                    [&unit_name](const auto& x) { return x == unit_name; }
-                )) throw std::invalid_argument("Character cannot take this talisman!");
-        }
-        remove_talisman();
-        talisman_ = {search->first, search->second.points};
-        points_ += search->second.points;
-        magic_item_points_ += search->second.points;
-        total_item_points_ += search->second.points;
-        break;
-    }
     case ItemClass::COMMON:
     {
-        auto search = handle_->common_items_handle()->second.find(name);
-        if (search == handle_->common_items_handle()->second.end())
-            throw std::runtime_error("Talisman not found!");
-        double mi_budget = handle_->magic_item_budget();
-        double ti_budget = handle_->total_item_budget();
-        if ((search->second.points + magic_item_points_ > mi_budget) ||
-                (search->second.points + total_item_points_ > ti_budget))
+        std::unordered_map<std::string, item>::const_iterator search;
+        if (item_class == ItemClass::MAGIC) {
+            search = handle_->magic_items_handle()->second.find(name);
+            if (search == handle_->magic_items_handle()->second.end())
+                throw std::invalid_argument("Talisman not found!");
+        }
+        else {
+            search = handle_->common_items_handle()->second.find(name);
+            if (search == handle_->common_items_handle()->second.end())
+                throw std::invalid_argument("Talisman not found!");
+        }
+        const double mi_budget = handle_->magic_item_budget();
+        const double ti_budget = handle_->total_item_budget();
+        double adj_mip = magic_item_points_;
+        double adj_tip = total_item_points_;
+        if (!talisman_.first.empty()) {
+            adj_mip -= talisman_.second;
+            adj_tip -= talisman_.second;
+        }
+        if ((search->second.points + adj_mip > mi_budget) ||
+                (search->second.points + adj_tip > ti_budget))
             throw std::runtime_error("Magic item budget exceeded!");
         // check if the talisman has specific allowed units
         if (!(search->second.allowed_units.empty())) {
@@ -318,7 +308,7 @@ void character_unit::remove_talisman() {
     points_ -= talisman_.second;
     magic_item_points_ -= talisman_.second;
     total_item_points_ -= talisman_.second;
-    talisman_.first = "";
+    talisman_.first.clear();
     talisman_.second = 0.0;
 }
 
