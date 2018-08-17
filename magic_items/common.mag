@@ -283,3 +283,31 @@ Dispel Scroll
     25
     D
     None
+
+# Enchanted Items
+
+Wizarding Hat
+    Enchanted
+    100
+    The wearer is treated as being a Level 2 Wizard who can use a randomly chosen spell lore. However, he also has the Stupidity special rule.
+    None
+
+Fozzrik's Folding Fortress
+    Enchanted
+    100
+    D
+    None
+
+Arabyan Carpet
+    Enchanted
+    100
+    D
+    None
+
+Crown of Command
+    Enchanted
+    35
+    D
+    None
+
+

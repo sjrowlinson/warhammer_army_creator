@@ -36,41 +36,29 @@ std::pair<std::string, double> mage_character_unit::arcane_item() const noexcept
 void mage_character_unit::pick_arcane_item(ItemClass item_class, std::string name) {
     switch (item_class) {
     case ItemClass::MAGIC:
-    {
-        auto search = handle->magic_items_handle()->second.find(name);
-        if (search == handle->magic_items_handle()->second.end())
-            throw std::runtime_error("Arcane item not found!");
-        double mi_budget = handle->magic_item_budget();
-        double ti_budget = handle->total_item_budget();
-        if ((search->second.points + magic_item_points_ > mi_budget) ||
-                (search->second.points + total_item_points_ > ti_budget))
-            throw std::runtime_error("Magic item budget exceeded!");
-        // check if the arcane item has specific allowed units
-        if (!(search->second.allowed_units.empty())) {
-            std::string unit_name = this->name();
-            // check that this unit is within the arcane items' allowed units container
-            if (!std::count_if(
-                    std::begin(search->second.allowed_units),
-                    std::end(search->second.allowed_units),
-                    [&unit_name](const auto& x) { return x == unit_name; }
-                )) throw std::invalid_argument("Character cannot take this enchanted item!");
-        }
-        remove_arcane_item();
-        arcane_item_ = {search->first, search->second.points};
-        points_ += search->second.points;
-        magic_item_points_ += search->second.points;
-        total_item_points_ += search->second.points;
-        break;
-    }
     case ItemClass::COMMON:
     {
-        auto search = handle->common_items_handle()->second.find(name);
-        if (search == handle->common_items_handle()->second.end())
-            throw std::runtime_error("Arcane item not found!");
-        double mi_budget = handle->magic_item_budget();
-        double ti_budget = handle->total_item_budget();
-        if ((search->second.points + magic_item_points_ > mi_budget) ||
-                (search->second.points + total_item_points_ > ti_budget))
+        std::unordered_map<std::string, item>::const_iterator search;
+        if (item_class == ItemClass::MAGIC) {
+            search = handle_->magic_items_handle()->second.find(name);
+            if (search == handle_->magic_items_handle()->second.end())
+                throw std::invalid_argument("Arcane item not found!");
+        }
+        else {
+            search = handle_->common_items_handle()->second.find(name);
+            if (search == handle_->common_items_handle()->second.end())
+                throw std::invalid_argument("Arcane item not found!");
+        }
+        const double mi_budget = handle->magic_item_budget();
+        const double ti_budget = handle->total_item_budget();
+        double adj_mip = magic_item_points_;
+        double adj_tip = total_item_points_;
+        if (!arcane_item_.first.empty()) {
+            adj_mip -= arcane_item_.second;
+            adj_tip -= arcane_item_.second;
+        }
+        if ((search->second.points + adj_mip > mi_budget) ||
+                (search->second.points + adj_tip > ti_budget))
             throw std::runtime_error("Magic item budget exceeded!");
         // check if the arcane item has specific allowed units
         if (!(search->second.allowed_units.empty())) {
@@ -97,6 +85,6 @@ void mage_character_unit::remove_arcane_item() {
     points_ -= arcane_item_.second;
     magic_item_points_ -= arcane_item_.second;
     total_item_points_ -= arcane_item_.second;
-    arcane_item_.first = "";
+    arcane_item_.first.clear();
     arcane_item_.second = 0.0;
 }

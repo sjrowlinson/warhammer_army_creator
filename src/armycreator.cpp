@@ -214,7 +214,7 @@ void ArmyCreator::optional_armour_selected() {
         break;
     default: return;
     }
-    init_magic_items_selector(u);
+    init_magic_items_selector(u, ItemType::ARMOUR);
 }
 
 void ArmyCreator::optional_talisman_selected() {
@@ -241,7 +241,7 @@ void ArmyCreator::optional_talisman_selected() {
         break;
     default: return;
     }
-    init_magic_items_selector(u);
+    init_magic_items_selector(u, ItemType::TALISMAN);
 }
 
 void ArmyCreator::optional_enchanted_item_selected() {
@@ -268,7 +268,34 @@ void ArmyCreator::optional_enchanted_item_selected() {
         break;
     default: return;
     }
-    init_magic_items_selector(u);
+    init_magic_items_selector(u, ItemType::ENCHANTED);
+}
+
+void ArmyCreator::optional_arcane_item_selected() {
+    QRadioButton* rb = qobject_cast<QRadioButton*>(QObject::sender());
+    std::string rb_name = rb->objectName().toStdString();
+    try {
+        if (opt_sel->select_arcane_item(rb_name)) {
+            ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+            update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::EXTRAS);
+        }
+    } catch (const std::exception& e) {
+        QMessageBox message_box;
+        message_box.critical(nullptr, tr("Error"), tr(e.what()));
+        message_box.setFixedSize(500, 200);
+    }
+    clear_magic_items_selector();
+    std::shared_ptr<unit> u;
+    switch (in_tree) {
+    case InTree::ARMY:
+        u = army->get_unit(ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt());
+        break;
+    case InTree::ROSTER:
+        u = st->selected();
+        break;
+    default: return;
+    }
+    init_magic_items_selector(u, ItemType::ARCANE);
 }
 
 void ArmyCreator::optional_level_selected() {
@@ -375,7 +402,7 @@ void ArmyCreator::spawn_magic_weapons_window() {
 
 // magic item ui initialisation
 
-void ArmyCreator::init_magic_items_selector(std::shared_ptr<unit> current) {
+void ArmyCreator::init_magic_items_selector(std::shared_ptr<unit> current, ItemType focus) {
     std::shared_ptr<
         std::pair<
             std::string,
@@ -406,8 +433,38 @@ void ArmyCreator::init_magic_items_selector(std::shared_ptr<unit> current) {
     // enchanted items
     auto enchanted_box = setup_enchanted_items_tab(mih->second, current);
     if (enchanted_box != nullptr) ui->magic_items_selector->addTab(enchanted_box, tr("Enchanted Items"));
+    // arcane items
+    QGroupBox* arcane_box = nullptr;
+    if (current->is_mage()) {
+        arcane_box = setup_arcane_items_tab(mih->second, current);
+        if (arcane_box != nullptr) ui->magic_items_selector->addTab(arcane_box, tr("Arcane Items"));
+    }
     ui->magic_items_combobox->setHidden(false);
     ui->magic_items_selector->setHidden(false);
+    switch (focus) {
+    case ItemType::WEAPON:
+        if (magic_weapons_box != nullptr)
+            ui->magic_items_selector->setCurrentWidget(magic_weapons_box);
+        break;
+    case ItemType::ARMOUR:
+        if (magic_armour_box != nullptr)
+            ui->magic_items_selector->setCurrentWidget(magic_armour_box);
+        break;
+    case ItemType::TALISMAN:
+        if (talismans_box != nullptr)
+            ui->magic_items_selector->setCurrentWidget(talismans_box);
+        break;
+    case ItemType::ARCANE:
+        if (arcane_box != nullptr)
+            ui->magic_items_selector->setCurrentWidget(arcane_box);
+        break;
+    case ItemType::ENCHANTED:
+        if (enchanted_box != nullptr)
+            ui->magic_items_selector->setCurrentWidget(enchanted_box);
+        break;
+    case ItemType::BANNER: break;
+    case ItemType::OTHER: break;
+    }
 }
 
 QGroupBox* ArmyCreator::setup_magic_weapons_tab(const std::unordered_map<std::string, item>& items,
@@ -807,6 +864,82 @@ QGroupBox* ArmyCreator::setup_enchanted_items_tab(
     none_rb->setObjectName(QString("None_talisman_radiobutton"));
     if (!has_talisman) none_rb->setChecked(true);
     connect(none_rb, SIGNAL(clicked(bool)), this, SLOT(optional_enchanted_item_selected()));
+    if (!hlayouts.empty()) (*(--std::end(hlayouts)))->addWidget(none_rb);
+    for (auto l : hlayouts) l->addStretch(1);
+    for (auto i = 0U; i < frames.size(); ++i) {
+        frames[i]->setLayout(hlayouts[i]);
+        vlayout->addWidget(frames[i]);
+    }
+    box->setLayout(vlayout);
+    return box;
+}
+
+QGroupBox* ArmyCreator::setup_arcane_items_tab(const std::unordered_map<std::string, item>& items,
+                                  std::shared_ptr<unit> current) {
+    auto opt_arcane = tools::magic_items_vec_of(items, ItemType::ARCANE);
+    if (opt_arcane.empty() || !std::count_if(
+        std::begin(opt_arcane),
+        std::end(opt_arcane),
+        [&current](const auto& x) {
+            return x.second.allowed_units.empty() || x.second.allowed_units.count(current->name());
+        }
+    )) return nullptr;
+    std::sort(
+        std::begin(opt_arcane),
+        std::end(opt_arcane),
+        [](const auto& lhs, const auto& rhs) { return lhs.second.points > rhs.second.points; }
+    );
+    std::pair<std::string, double> arcane;
+    switch (current->base_unit_type()) {
+    case BaseUnitType::MAGE_CHARACTER:
+    {
+        auto p = std::dynamic_pointer_cast<mage_character_unit>(current);
+        arcane = p->arcane_item();
+        break;
+    }
+    default: return nullptr;
+    }
+    // overall
+    QGroupBox* box = new QGroupBox();
+    QVBoxLayout* vlayout = new QVBoxLayout;
+    const auto max_per_row = 8;
+    auto n_adj = static_cast<std::size_t>(std::ceil(opt_arcane.size()/static_cast<double>(max_per_row)));
+    std::vector<QFrame*> frames(n_adj);
+    for (auto& f : frames) f = new QFrame;
+    std::vector<QHBoxLayout*> hlayouts(n_adj);
+    for (auto& l : hlayouts) l = new QHBoxLayout;
+    std::size_t count = 1U;
+    bool has_arcane = false;
+    for (const auto& t : opt_arcane) {
+        if (t.second.allowed_units.size() && !t.second.allowed_units.count(current->name()))
+            continue;
+        switch (current->base_unit_type()) {
+        case BaseUnitType::MAGE_CHARACTER:
+        {
+            auto p = std::dynamic_pointer_cast<mage_character_unit>(current);
+            if (t.second.points > p->handle->magic_item_budget()) continue;
+            break;
+        }
+        default: break;
+        }
+        std::string pts_str = tools::points_str(t.second.points);
+        std::string button_name = t.first + "_" +
+                std::to_string(static_cast<int>(t.second.item_class)) + "_radiobutton";
+        QRadioButton* rb = new QRadioButton(tr((t.first + " (" + pts_str + " pts)").data()));
+        rb->setObjectName(QString::fromStdString(button_name));
+        rb->setToolTip(tr(t.second.description.data()));
+        if (arcane.first == t.first) {
+            rb->setChecked(true);
+            has_arcane = true;
+        }
+        connect(rb, SIGNAL(clicked(bool)), this, SLOT(optional_arcane_item_selected()));
+        hlayouts[count++/max_per_row]->addWidget(rb);
+    }
+    // none button
+    QRadioButton* none_rb = new QRadioButton(tr("None"));
+    none_rb->setObjectName(QString("None_arcane_radiobutton"));
+    if (!has_arcane) none_rb->setChecked(true);
+    connect(none_rb, SIGNAL(clicked(bool)), this, SLOT(optional_arcane_item_selected()));
     if (!hlayouts.empty()) (*(--std::end(hlayouts)))->addWidget(none_rb);
     for (auto l : hlayouts) l->addStretch(1);
     for (auto i = 0U; i < frames.size(); ++i) {
@@ -1389,6 +1522,11 @@ QGroupBox* ArmyCreator::initialise_opt_mage_levels_groupbox(std::shared_ptr<unit
     QGroupBox* levels_box = new QGroupBox(tr("Mage Levels"));
     QVBoxLayout* levels_box_layout = new QVBoxLayout;
     bool has_level = false;
+    std::string none_rb_name = "Level " + std::to_string(p->handle->mage_level()) + " (0 pts)";
+    QRadioButton* none_rb = new QRadioButton(tr(none_rb_name.data()));
+    none_rb->setObjectName(QString("Default_levels_radiobutton"));
+    connect(none_rb, SIGNAL(clicked(bool)), this, SLOT(optional_level_selected()));
+    levels_box_layout->addWidget(none_rb);
     for (const auto& l : opt_levels) {
         auto tmp = tools::split(std::to_string(l.second), '.');
         for (auto& s : tmp) tools::remove_leading_whitespaces(s);
@@ -1403,11 +1541,7 @@ QGroupBox* ArmyCreator::initialise_opt_mage_levels_groupbox(std::shared_ptr<unit
         connect(b, SIGNAL(clicked(bool)), this, SLOT(optional_level_selected()));
         levels_box_layout->addWidget(b);
     }
-    QRadioButton* none_rb = new QRadioButton(tr("Default"));
-    none_rb->setObjectName(QString("Default_levels_radiobutton"));
     if (!has_level) none_rb->setChecked(true);
-    connect(none_rb, SIGNAL(clicked(bool)), this, SLOT(optional_level_selected()));
-    levels_box_layout->addWidget(none_rb);
     levels_box_layout->addStretch(1);
     levels_box->setLayout(levels_box_layout);
     return levels_box;
