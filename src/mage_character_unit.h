@@ -13,7 +13,7 @@
 class mage_character_unit : public character_unit {
 private:
     std::pair<short, double> level_;
-    std::pair<std::string, double> arcane_item_;
+    std::pair<std::string, std::pair<ItemClass, double>> arcane_item_;
 public:
     const std::shared_ptr<base_mage_character_unit> handle;
 
@@ -27,7 +27,7 @@ public:
     void change_level(short lvl);
     void reset_level();
 
-    std::pair<std::string, double> arcane_item() const noexcept;
+    std::pair<std::string, std::pair<ItemClass, double>> arcane_item() const noexcept;
     void pick_arcane_item(ItemClass item_class, std::string name);
     void remove_arcane_item();
 };

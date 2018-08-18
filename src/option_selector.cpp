@@ -219,6 +219,38 @@ bool option_selector::select_enchanted_item(const std::string& s) {
     }
 }
 
+bool option_selector::select_other_item(const std::string& s, bool is_checked) {
+    auto split = tools::split(s, '_');
+    auto other = split[0];
+    auto p = std::dynamic_pointer_cast<character_unit>(current);
+    if (!is_checked) {
+        switch (in_tree) {
+        case InTree::ARMY:
+            army->take_snapshot_of(p->id());
+            p->remove_other(other);
+            army->update_on(p->id());
+            return true;
+        case InTree::ROSTER:
+            p->remove_other(other);
+            return false;
+        default: throw std::runtime_error("No unit selected!");
+        }
+    } else {
+        ItemClass ic = static_cast<ItemClass>(std::stoi(split[1]));
+        switch (in_tree) {
+        case InTree::ARMY:
+            army->take_snapshot_of(p->id());
+            p->pick_other(ic, other);
+            army->update_on(p->id());
+            return true;
+        case InTree::ROSTER:
+            p->pick_other(ic, other);
+            return false;
+        default: throw std::runtime_error("No unit selected!");
+        }
+    }
+}
+
 bool option_selector::select_arcane_item(const std::string& s) {
     auto split = tools::split(s, '_');
     auto arcane = split[0];

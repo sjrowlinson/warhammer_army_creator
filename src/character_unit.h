@@ -24,11 +24,11 @@ protected:
         ArmourType,
         std::tuple<ItemClass, std::string, double>
     > armours_;
-    std::pair<std::string, double> talisman_; // TODO: change to pair<string, pair<ItemClass, double>>
-    std::pair<std::string, double> enchanted_item_; // TODO: change to pair<string, pair<ItemClass, double>>
+    std::pair<std::string, std::pair<ItemClass, double>> talisman_;
+    std::pair<std::string, std::pair<ItemClass, double>> enchanted_item_;
     std::pair<std::string, std::pair<bool, double>> oco_extra_;
     std::unordered_map<std::string, std::pair<bool, double>> mc_extras_;
-    std::unordered_map<std::string, double> item_extras_; // TODO: change to unordered_map<string, pair<ItemClass, double>>
+    std::unordered_map<std::string, std::pair<ItemClass, double>> item_extras_;
     std::pair<std::string, std::pair<armies::UnitClass, double>> mount_;
 
     // item points
@@ -56,9 +56,9 @@ public:
         std::tuple<ItemClass, std::string, double>
     > armour() const noexcept override;
 
-    std::pair<std::string, double> talisman() const noexcept;
-    std::pair<std::string, double> enchanted_item() const noexcept;
-    const std::unordered_map<std::string, double>& item_extras() const noexcept;
+    std::pair<std::string, std::pair<ItemClass, double>> talisman() const noexcept;
+    std::pair<std::string, std::pair<ItemClass, double>> enchanted_item() const noexcept;
+    const std::unordered_map<std::string, std::pair<ItemClass, double>>& item_extras() const noexcept;
 
     std::pair<std::string, std::pair<bool, double>> oco_extra() const noexcept override;
     std::unordered_map<std::string, std::pair<bool, double>> mc_extras() const noexcept override;
@@ -82,7 +82,7 @@ public:
     void remove_enchanted_item();
 
     void pick_other(ItemClass item_class, std::string name);
-    void remove_other();
+    void remove_other(std::string name);
 
     void pick_oco_extra(std::string name) override;
     void remove_oco_extra() override;
