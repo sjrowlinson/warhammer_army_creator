@@ -30,6 +30,7 @@ protected:
     std::unordered_map<std::string, std::pair<bool, double>> mc_extras_;
     std::unordered_map<std::string, std::pair<ItemClass, double>> item_extras_;
     std::pair<std::string, std::pair<armies::UnitClass, double>> mount_;
+    std::pair<std::string, std::pair<ItemClass, double>> banner;
 
     // item points
     double magic_item_points_;
@@ -44,6 +45,7 @@ public:
 
     bool is_character() const noexcept override;
     virtual bool is_mage() const noexcept override;
+    bool is_bsb() const noexcept;
 
     std::size_t size() const noexcept;
     std::unordered_map<
@@ -67,6 +69,8 @@ public:
         std::string,
         std::pair<armies::UnitClass, double>
     > mount() const noexcept override;
+
+    std::pair<std::string, std::pair<ItemClass, double>> magic_banner() const noexcept;
 
     // current property modifiers
     void pick_weapon(ItemClass item_type, std::string name) override;
@@ -92,6 +96,10 @@ public:
 
     void pick_mount(std::string name) override;
     void remove_mount() override;
+
+    void pick_banner(ItemClass item_class, std::string name);
+    void remove_banner();
+
 };
 
 #endif // !CHARACTER_UNIT_H

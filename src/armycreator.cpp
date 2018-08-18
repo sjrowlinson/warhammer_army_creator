@@ -505,6 +505,15 @@ void ArmyCreator::spawn_magic_weapons_window() {
 // magic item ui initialisation
 
 void ArmyCreator::init_magic_items_selector(std::shared_ptr<unit> current, ItemType focus) {
+    if (focus != ItemType::BANNER) {
+        switch (current->base_unit_type()) {
+        case BaseUnitType::BASE:
+        case BaseUnitType::MIXED:
+        case BaseUnitType::NORMAL:
+            return;
+        default: break;
+        }
+    }
     std::shared_ptr<
         std::pair<
             std::string,
@@ -543,6 +552,23 @@ void ArmyCreator::init_magic_items_selector(std::shared_ptr<unit> current, ItemT
     if (current->is_mage()) {
         arcane_box = setup_arcane_items_tab(mih->second, current);
         if (arcane_box != nullptr) ui->magic_items_selector->addTab(arcane_box, tr("Arcane Items"));
+    }
+    switch (current->base_unit_type()) {
+    case BaseUnitType::MAGE_CHARACTER:
+    case BaseUnitType::MELEE_CHARACTER:
+    {
+        if (std::dynamic_pointer_cast<character_unit>(current)->is_bsb()) {
+            auto banner_box = setup_banners_tab(mih->second, current);
+            if (!banner_box) ui->magic_items_selector->addTab(banner_box, tr("Magic Standards"));
+        }
+        break;
+    }
+    case BaseUnitType::NORMAL:
+    {
+
+        break;
+    }
+    default: break;
     }
     ui->magic_items_combobox->setHidden(false);
     ui->magic_items_selector->setHidden(false);
@@ -1128,6 +1154,11 @@ QGroupBox* ArmyCreator::setup_other_items_tab(const std::unordered_map<std::stri
     }
     box->setLayout(vlayout);
     return box;
+}
+
+QGroupBox* ArmyCreator::setup_banners_tab(const std::unordered_map<std::string, item>& items,
+                             std::shared_ptr<unit> current) {
+    return nullptr;
 }
 
 // unit info box initialisers

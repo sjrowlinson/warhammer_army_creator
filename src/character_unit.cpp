@@ -30,6 +30,10 @@ character_unit::character_unit(const character_unit& other)
 bool character_unit::is_character() const noexcept { return true; }
 bool character_unit::is_mage() const noexcept { return false; }
 
+bool character_unit::is_bsb() const noexcept {
+    return mc_extras_.count(std::string("Battle Standard Bearer"));
+}
+
 std::size_t character_unit::size() const noexcept { return 1U; }
 
 std::unordered_map<
@@ -57,6 +61,10 @@ std::pair<
     std::string,
     std::pair<armies::UnitClass, double>
 > character_unit::mount() const noexcept { return mount_; }
+
+std::pair<std::string, std::pair<ItemClass, double>> character_unit::magic_banner() const noexcept {
+    return banner;
+}
 
 void character_unit::pick_weapon(ItemClass item_type, std::string name) {
     switch (item_type) {
@@ -657,4 +665,124 @@ void character_unit::remove_mount() {
     mount_.first = "";
     mount_.second.first = handle_->unit_class();
     mount_.second.second = 0.0;
+}
+
+void character_unit::pick_banner(ItemClass item_class, std::string name) {
+    if (!is_bsb())
+        throw std::runtime_error("Non-BSB characters cannot take Magic Standards!");
+    if (is_bsb() && (!talisman_.first.empty() || !enchanted_item_.first.empty() ||
+                     !item_extras_.empty() ||
+                     std::count_if(
+                        std::begin(weapons_), std::end(weapons_),
+                        [](const auto& w) {
+                            return (std::get<0>(w.second) == ItemClass::COMMON ||
+                                    std::get<0>(w.second) == ItemClass::MAGIC);
+                        }
+                     ) ||
+                     std::count_if(
+                        std::begin(armours_), std::end(armours_),
+                        [](const auto& a) {
+                            return (std::get<0>(a.second) == ItemClass::COMMON ||
+                                    std::get<0>(a.second) == ItemClass::MAGIC);
+                        }
+                     ))
+       ) throw std::runtime_error("BSBs equipped with Magic Equipment cannot take Magic Standards!");
+    switch (item_class) {
+    case ItemClass::MAGIC:
+    case ItemClass::COMMON:
+    {
+        std::unordered_map<std::string, item>::const_iterator search;
+        switch (item_class) {
+        case ItemClass::MAGIC:
+            search = handle_->magic_items_handle()->second.find(name);
+            if (search == handle_->magic_items_handle()->second.end())
+                throw std::invalid_argument("Magic banner not found!");
+            break;
+        case ItemClass::COMMON:
+            search = handle_->common_items_handle()->second.find(name);
+            if (search == handle_->common_items_handle()->second.end())
+                throw std::invalid_argument("Magic banner not found!");
+            break;
+        default: break;
+        }
+        const double mi_budget = handle_->magic_item_budget();
+        const double ti_budget = handle_->total_item_budget();
+        double adj_mip = magic_item_points_;
+        double adj_tip = total_item_points_;
+        if (!banner.first.empty()) {
+            adj_mip -= banner.second.second;
+            adj_tip -= banner.second.second;
+        }
+        if ((search->second.points + adj_mip > mi_budget) ||
+                (search->second.points + adj_tip > ti_budget))
+            throw std::runtime_error("Magic item budget exceeded!");
+        // check if the banner has specific allowed units
+        if (!(search->second.allowed_units.empty())) {
+            std::string unit_name = this->name();
+            // check that this unit is within the magic banners' allowed units container
+            if (!std::count_if(
+                    std::begin(search->second.allowed_units),
+                    std::end(search->second.allowed_units),
+                    [&unit_name](const auto& x) { return x == unit_name; }
+                )) throw std::invalid_argument("Character cannot take this magic banner!");
+        }
+        remove_banner();
+        banner = {search->first, {item_class, search->second.points}};
+        points_ += search->second.points;
+        magic_item_points_ += search->second.points;
+        total_item_points_ += search->second.points;
+        break;
+    }
+    case ItemClass::FACTION:
+    {
+        auto search = handle_->faction_items_handle()->second.find(name);
+        if (search == handle_->faction_items_handle()->second.end())
+            throw std::invalid_argument("Magic banner not found!");
+        const double fi_budget = handle_->faction_item_budget();
+        const double ti_budget = handle_->total_item_budget();
+        double adj_fip = faction_item_points_;
+        double adj_tip = total_item_points_;
+        if (!banner.first.empty()) {
+            adj_fip -= banner.second.second;
+            adj_tip -= banner.second.second;
+        }
+        if ((search->second.points + adj_fip > fi_budget) ||
+                (search->second.points + adj_tip > ti_budget))
+            throw std::runtime_error("Faction item budget exceeded!");
+        // check if the faction banner has specific allowed units
+        if (!(search->second.allowed_units.empty())) {
+            std::string unit_name = this->name();
+            // check that this unit is within the magic banners' allowed units container
+            if (!std::count_if(
+                    std::begin(search->second.allowed_units),
+                    std::end(search->second.allowed_units),
+                    [&unit_name](const auto& x) { return x == unit_name; }
+                )) throw std::invalid_argument("Character cannot take this magic banner!");
+        }
+        remove_banner();
+        banner = {search->first, {item_class, search->second.points}};
+        points_ += search->second.points;
+        faction_item_points_ += search->second.points;
+        total_item_points_ += search->second.points;
+        break;
+    }
+    default: break;
+    }
+}
+
+void character_unit::remove_banner() {
+    points_ -= banner.second.second;
+    switch (enchanted_item_.second.first) {
+    case ItemClass::MAGIC:
+    case ItemClass::COMMON:
+        magic_item_points_ -= banner.second.second;
+        break;
+    case ItemClass::FACTION:
+        faction_item_points_ -= banner.second.second;
+        break;
+    default: break;
+    }
+    total_item_points_ -= banner.second.second;
+    banner.first.clear();
+    banner.second.second = 0.0;
 }

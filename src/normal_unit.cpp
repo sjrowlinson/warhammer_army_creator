@@ -153,7 +153,7 @@ std::unordered_map<
     return command_group;
 }
 
-std::pair<std::string, double> normal_unit::magic_banner() const noexcept {
+std::pair<std::string, std::pair<ItemClass, double>> normal_unit::magic_banner() const noexcept {
     return banner;
 }
 
@@ -510,8 +510,7 @@ void normal_unit::pick_banner(ItemClass item_type, std::string name) {
                 )) throw std::invalid_argument("Unit standard bearer cannot take this banner!");
         }
         remove_banner();
-        banner.first = name;
-        banner.second = search->second.points;
+        banner = {search->first, {item_type, search->second.points}};
         points_ += search->second.points;
         break;
     }
@@ -527,9 +526,9 @@ void normal_unit::pick_banner(ItemClass item_type, std::string name) {
 
 void normal_unit::remove_banner() {
     if (banner.first.empty()) return;
-    points_ -= banner.second;
+    /*points_ -= banner.second;
     banner.first = "";
-    banner.second = 0.0;
+    banner.second = 0.0;*/
 }
 
 void normal_unit::pick_oco_extra(std::string name) {
@@ -685,6 +684,6 @@ void normal_unit::change_size(std::size_t n) {
     for (const auto& ce : champ_mc_extras_) points_ += ce.second;
     points_ += n * mount_.second.second;
     for (const auto& m : command_group) points_ += m.second.second;
-    points_ += banner.second;
+    //points_ += banner.second;
     size_ = n;
 }

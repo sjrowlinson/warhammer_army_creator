@@ -142,6 +142,8 @@ private:
                                       std::shared_ptr<unit> current);
     QGroupBox* setup_other_items_tab(const std::unordered_map<std::string, item>& items,
                                    std::shared_ptr<unit> current);
+    QGroupBox* setup_banners_tab(const std::unordered_map<std::string, item>& items,
+                                 std::shared_ptr<unit> current);
 
     void update_unit_display(
             QTreeWidgetItem* item,
