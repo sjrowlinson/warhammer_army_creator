@@ -6,7 +6,7 @@ base_character_unit::base_character_unit(
     armies::UnitClass uc,
     std::string name,
     double pts,
-    std::vector<short>&& stats,
+    std::vector<std::string>&& stats,
     std::vector<std::string>&& sr,
     equipment&& eq,
     options&& opt,
@@ -28,7 +28,7 @@ base_character_unit::base_character_unit(
    total_item_budget_(ti_budget), is_bsb_(is_bsb), mount_name_(mount_name) {}
 
 double base_character_unit::points() const noexcept { return pts_; }
-std::vector<short> base_character_unit::statistics() const noexcept { return stats_; }
+std::vector<std::string> base_character_unit::statistics() const noexcept { return stats_; }
 std::vector<std::string> base_character_unit::special_rules() const noexcept { return sr_; }
 const equipment& base_character_unit::eq() const noexcept { return eq_; }
 const options& base_character_unit::opt() const noexcept { return opt_; }

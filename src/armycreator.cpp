@@ -5,6 +5,7 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::ArmyCreator) {
     ui->setupUi(this);
+    setFixedSize(1800, 1050);
     race = armies::s_map_string_faction[
         ui->faction_combobox->currentText().toStdString()
     ];
@@ -26,11 +27,73 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
     ui->army_tree->header()->resizeSection(static_cast<int>(ArmyTreeColumn::EXTRAS), 180); // extras header
     ui->army_tree->header()->resizeSection(static_cast<int>(ArmyTreeColumn::POINTS), 60); // points header
     ui->remove_button->setEnabled(false);
+    // initialise validity reasons label
+    update_validity_label();
+    ui->validity_reasons_label->setWordWrap(true);
     populate_roster_tree();
 }
 
 ArmyCreator::~ArmyCreator() {
     delete ui;
+}
+
+void ArmyCreator::update_validity_label() {
+    auto reasons = army->invalid_reasons();
+    if (reasons.empty()) { // valid list
+        ui->validity_reasons_label->setText(tr(""));
+        ui->validity_label->setStyleSheet("QLabel { font-size : 10px; } ");
+        QPalette palette = ui->validity_label->palette();
+        palette.setColor(ui->validity_label->foregroundRole(), Qt::darkGreen);
+        ui->validity_label->setPalette(palette);
+        ui->validity_label->setText("Valid List");
+        return;
+    }
+    QPalette pt = ui->validity_label->palette();
+    pt.setColor(ui->validity_label->foregroundRole(), Qt::red);
+    ui->validity_label->setPalette(pt);
+    ui->validity_label->setText("Invalid List:");
+    std::string vrl_text = "";
+    double pts_limit = ui->pts_limit_spinbox->value();
+    for (const auto& r : reasons) {
+        switch (r) {
+        case InvalidListReason::POINTS:
+            vrl_text += "Too many points [" +
+                     tools::points_str(army->current_points()) + "/" +
+                     tools::points_str(pts_limit) + "]";
+            break;
+        case InvalidListReason::LORD_LIMIT:
+            if (!vrl_text.empty()) vrl_text += ", ";
+            vrl_text += "Too many Lord Unit points [" +
+                     tools::points_str(army->lord_points()) + "/" +
+                     tools::points_str(0.25*pts_limit) + "]";
+            break;
+        case InvalidListReason::HERO_LIMIT:
+            if (!vrl_text.empty()) vrl_text += ", ";
+            vrl_text += "Too many Hero Unit points [" +
+                     tools::points_str(army->hero_points()) + "/" +
+                     tools::points_str(0.25*pts_limit) + "]";
+            break;
+        case InvalidListReason::CORE_MINIMUM:
+            if (!vrl_text.empty()) vrl_text += ", ";
+            vrl_text += "Not enough Core Unit points [" +
+                     tools::points_str(army->core_points()) + "/" +
+                     tools::points_str(0.25*pts_limit) + "]";
+            break;
+        case InvalidListReason::SPECIAL_LIMIT:
+            if (!vrl_text.empty()) vrl_text += ", ";
+            vrl_text += "Too many Special Unit points [" +
+                     tools::points_str(army->special_points()) + "/" +
+                     tools::points_str(0.5*pts_limit) + "]";
+            break;
+        case InvalidListReason::RARE_LIMIT:
+            if (!vrl_text.empty()) vrl_text += ", ";
+            vrl_text += "Too many Rare Unit points [" +
+                     tools::points_str(army->rare_points()) + "/" +
+                     tools::points_str(0.25*pts_limit) + "]";
+            break;
+        }
+    }
+    ui->validity_reasons_label->setText(tr(vrl_text.data()));
 }
 
 void ArmyCreator::populate_roster_tree() {
@@ -145,6 +208,7 @@ void ArmyCreator::change_unit_size() {
                 army->update_on(curr_id);
                 ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
                 update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::SIZE);
+                update_validity_label();
                 break;
             case InTree::ROSTER:
                 p->change_size(static_cast<std::size_t>(sb->value()));
@@ -165,6 +229,7 @@ void ArmyCreator::optional_weapon_selected() {
         if (opt_sel->select_weapon(rb_name)) {
             ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::WEAPONS);
+            update_validity_label();
         }
     } catch (const std::exception& e) {
         QMessageBox message_box;
@@ -195,6 +260,7 @@ void ArmyCreator::optional_armour_selected() {
         if (opt_sel->select_armour(rb_name)) {
             ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::ARMOUR);
+            update_validity_label();
         }
     } catch (const std::exception& e) {
         QMessageBox message_box;
@@ -224,6 +290,7 @@ void ArmyCreator::optional_talisman_selected() {
         if (opt_sel->select_talisman(rb_name)) {
             ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::EXTRAS);
+            update_validity_label();
         }
     } catch (const std::exception& e) {
         QMessageBox message_box;
@@ -251,6 +318,7 @@ void ArmyCreator::optional_enchanted_item_selected() {
         if (opt_sel->select_enchanted_item(rb_name)) {
             ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::EXTRAS);
+            update_validity_label();
         }
     } catch (const std::exception& e) {
         QMessageBox message_box;
@@ -278,6 +346,7 @@ void ArmyCreator::optional_arcane_item_selected() {
         if (opt_sel->select_arcane_item(rb_name)) {
             ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::EXTRAS);
+            update_validity_label();
         }
     } catch (const std::exception& e) {
         QMessageBox message_box;
@@ -305,6 +374,7 @@ void ArmyCreator::optional_level_selected() {
         if (opt_sel->select_mage_level(rb_name)) {
             ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::NAME);
+            update_validity_label();
         }
     } catch (const std::exception& e) {
         QMessageBox message_box;
@@ -322,6 +392,7 @@ void ArmyCreator::optional_mount_selected() {
         if (opt_sel->select_mount(rb_name)) {
             ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::NAME);
+            update_validity_label();
         }
     } catch (const std::exception& e) {
         QMessageBox message_box;
@@ -347,6 +418,7 @@ void ArmyCreator::optional_command_selected() {
                 clear_unit_options_box();
                 initialise_unit_options_box();
             }
+            update_validity_label();
         }
     } catch (const std::exception& e) {
         QMessageBox message_box;
@@ -364,6 +436,7 @@ void ArmyCreator::optional_oco_extra_selected() {
         if (opt_sel->select_oco_extra(rb_name)) {
             ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::EXTRAS);
+            update_validity_label();
         }
     } catch (const std::exception& e) {
         QMessageBox message_box;
@@ -381,6 +454,7 @@ void ArmyCreator::optional_mc_extra_selected() {
         if (opt_sel->select_mc_extra(cb_name, cb->isChecked())) {
             ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::EXTRAS);
+            update_validity_label();
         }
     } catch (const std::exception& e) {
         QMessageBox message_box;
@@ -997,16 +1071,15 @@ void ArmyCreator::initialise_unit_info_box() {
         points_label_layout->addWidget(points_label);
         f->setLayout(points_label_layout);
         vbox->addWidget(f);
-
     }
     // add statistics table(s)
     {
         QTableWidget* stats_table = new QTableWidget(2, 9);
         stats_table->horizontalHeader()->setVisible(false);
         stats_table->verticalHeader()->setVisible(false);
-        QStringList tmp = {"M", "WS", "BS", "S", "T", "W", "I", "A", "LD"};
-        for (auto i = 0; i < tmp.size(); ++i) {
-            QTableWidgetItem* entry = new QTableWidgetItem(tmp[i]);
+        QStringList header = {"M", "WS", "BS", "S", "T", "W", "I", "A", "LD"};
+        for (auto i = 0; i < header.size(); ++i) {
+            QTableWidgetItem* entry = new QTableWidgetItem(header[i]);
             entry->setFlags(entry->flags() & ~Qt::ItemIsEditable);
             stats_table->setItem(0, i, entry);
         }
@@ -1019,9 +1092,7 @@ void ArmyCreator::initialise_unit_info_box() {
             auto stats = p->handle_->statistics();
             int count = 0;
             for (const auto& x : stats) {
-                QTableWidgetItem* entry = new QTableWidgetItem(
-                    tr("%1").arg(x)
-                );
+                QTableWidgetItem* entry = new QTableWidgetItem(tr(x.data()));
                 entry->setFlags(entry->flags() & ~Qt::ItemIsEditable);
                 stats_table->setItem(1, count++, entry);
             }
@@ -1033,11 +1104,24 @@ void ArmyCreator::initialise_unit_info_box() {
             auto stats = p->handle->statistics();
             int count = 0;
             for (const auto& x : stats) {
-                QTableWidgetItem* entry = new QTableWidgetItem(
-                    tr("%1").arg(x)
-                );
+                QTableWidgetItem* entry = new QTableWidgetItem(tr(x.data()));
                 entry->setFlags(entry->flags() & ~Qt::ItemIsEditable);
                 stats_table->setItem(1, count++, entry);
+            }
+            auto champ_stats = p->handle->champion_statistics();
+            if (!champ_stats.empty() &&
+                    !std::equal(
+                        std::begin(stats),
+                        std::end(stats),
+                        std::begin(champ_stats)
+                     )) {
+                stats_table->insertRow(2);
+                count = 0;
+                for (const auto& x : champ_stats) {
+                    QTableWidgetItem* entry = new QTableWidgetItem(tr(x.data()));
+                    entry->setFlags(entry->flags() & ~Qt::ItemIsEditable);
+                    stats_table->setItem(2, count++, entry);
+                }
             }
             break;
         }
@@ -1047,7 +1131,7 @@ void ArmyCreator::initialise_unit_info_box() {
         stats_table->resizeColumnsToContents();
         vbox->addWidget(stats_table);
     }
-    // TODO: add list of special rules, probably just as QLabel widget
+    // special rules
     {
         QLabel* special_rules_label = new QLabel();
         switch (u->base_unit_type()) {
@@ -1075,6 +1159,7 @@ void ArmyCreator::initialise_unit_info_box() {
         }
         default: return;
         }
+        special_rules_label->setWordWrap(true);
         vbox->addWidget(special_rules_label);
     }
     ui->unit_info_box->setLayout(vbox);
@@ -1820,6 +1905,7 @@ void ArmyCreator::on_magic_items_combobox_currentTextChanged(const QString& ic_s
 
 void ArmyCreator::on_pts_limit_spinbox_valueChanged(double pts) {
     army->change_points_limit(pts);
+    update_validity_label();
 }
 
 // tree item changed or activated slots
@@ -1925,6 +2011,7 @@ void ArmyCreator::on_add_button_clicked() {
     // in case it gets changed somehow
     in_tree = InTree::ROSTER;
     initialise_unit_options_box();
+    update_validity_label();
 }
 
 void ArmyCreator::on_duplicate_button_clicked() {
@@ -1967,6 +2054,7 @@ void ArmyCreator::on_duplicate_button_clicked() {
     update_unit_display(item, true, ArmyTreeColumn::ALL, true);
     clear_unit_options_box();
     initialise_unit_options_box();
+    update_validity_label();
 }
 
 void ArmyCreator::on_remove_button_clicked() {
@@ -1996,6 +2084,7 @@ void ArmyCreator::on_remove_button_clicked() {
         break;
     }
     clear_unit_options_box();
+    update_validity_label();
     delete item;
 }
 
@@ -2006,6 +2095,7 @@ void ArmyCreator::on_clear_button_clicked() {
         ui->army_tree->topLevelItem(i)->setText(6, QString("%1").arg(static_cast<double>(0.0)));
     clear_army_tree();
     clear_unit_options_box();
+    update_validity_label();
 }
 
 void ArmyCreator::update_unit_display(

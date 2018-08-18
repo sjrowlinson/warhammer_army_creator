@@ -6,7 +6,7 @@ base_melee_character_unit::base_melee_character_unit(
     armies::UnitClass uc,
     std::string name,
     double pts,
-    std::vector<short>&& stats,
+    std::vector<std::string>&& stats,
     std::vector<std::string>&& sr,
     equipment&& eq,
     options&& opt,

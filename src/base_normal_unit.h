@@ -12,13 +12,13 @@ class base_normal_unit : public base_unit {
 private:
     double pts_per_model_;
     // non-champion fields
-    std::vector<short> stats_;
+    std::vector<std::string> stats_;
     std::vector<std::string> sr_; // special rules
     equipment eq_;
     options opt_;
 
     // champion fields
-    std::vector<short> champ_stats_;
+    std::vector<std::string> champ_stats_;
     std::vector<std::string> champ_sr_; // champion special rules
     equipment champ_eq_;
     options champ_opt_;
@@ -43,11 +43,11 @@ public:
         std::size_t min_size,
         std::size_t max_size,
         double pts_per_model,
-        std::vector<short>&& stats,
+        std::vector<std::string>&& stats,
         std::vector<std::string>&& sr,
         equipment&& eq,
         options&& opt,
-        std::vector<short>&& champ_stats,
+        std::vector<std::string>&& champ_stats,
         std::vector<std::string>&& champ_sr,
         equipment&& champ_eq,
         options&& champ_opt,
@@ -64,12 +64,12 @@ public:
 
     double points_per_model() const noexcept;
 
-    const std::vector<short>& statistics() const noexcept;
+    const std::vector<std::string>& statistics() const noexcept;
     const std::vector<std::string>& special_rules() const noexcept;
     const equipment& eq() const noexcept;
     const options& opt() const noexcept;
 
-    const std::vector<short>& champion_statistics() const noexcept;
+    const std::vector<std::string>& champion_statistics() const noexcept;
     const std::vector<std::string>& champion_special_rules() const noexcept;
     const equipment& champion_eq() const noexcept;
     const options& champion_opt() const noexcept;

@@ -295,8 +295,8 @@ Lion Chariot of Chrace
     Special, Chariot, Normal
     120
     1, 1
-    0 5 4 4 0 0 5 1 8
-    0 0 0 5 4 4 0 0 0
+    - 5 4 4 - - 5 1 8
+    - - - 5 4 4 - - -
     Armour Save (4+), Great weapon (crew only), Always Strikes First, Fear, Stubborn, Valour of Ages
     None
     None
@@ -426,8 +426,8 @@ Lothern Skycutter
     Special, Chariot, Normal
     95
     1, 1
-    0 4 4 3 0 0 5 1 8
-    0 0 0 5 4 4 0 0 0
+    - 4 4 3 - - 5 1 8
+    - - - 5 4 4 - - -
     Armour Save (4+), Spears (crew only), Bows (crew only), Always Strikes First, Fly, Valour of Ages
     None
     Eagle Eye Bolt Thrower {True} [25]
@@ -436,8 +436,8 @@ Tiranoc Chariot
     Special, Chariot, Normal
     70
     1, 3
-    0 4 4 3 0 0 5 1 8
-    0 0 0 5 4 4 0 0 0
+    - 4 4 3 - - 5 1 8
+    - - - 5 4 4 - - -
     Armour Save (5+), Spears (crew only), Longbows (crew only), Always Strikes First, Valour of Ages
     None
     None
@@ -448,7 +448,7 @@ Eagle Claw Bolt Thrower
     Rare, Warmachine, Normal
     70
     1, 1
-    0 0 0 0 7 2 0 0 0
+    - - - - 7 2 - - -
     5 4 4 3 3 1 5 1 8
     Repeater Bolt Thrower, Always Strikes First, Martial Prowess, Valour of Ages
     None

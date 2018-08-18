@@ -24,8 +24,7 @@ enum class InvalidListReason {
     HERO_LIMIT,
     CORE_MINIMUM,
     SPECIAL_LIMIT,
-    RARE_LIMIT,
-    VALID
+    RARE_LIMIT
 };
 
 class army_list {
@@ -75,6 +74,8 @@ public:
     double core_points() const noexcept;
     double special_points() const noexcept;
     double rare_points() const noexcept;
+
+    const std::set<InvalidListReason>& invalid_reasons() const noexcept;
 
     std::shared_ptr<unit> get_unit(int id);
     void take_snapshot_of(int id);

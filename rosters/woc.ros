@@ -150,8 +150,8 @@ Forsaken
     Core, Infantry, Normal
     19
     5, None
-    6 4 0 4 4 1 4 -3 8
-    6 4 0 4 4 1 4 -3 8
+    6 4 0 4 4 1 4 D3 8
+    6 4 0 4 4 1 4 D3 8
     Freakish Mutations, Frenzy, Immune to Psychology, Random Attacks (D3)
     None
     Armour: Chaos armour {Mundane} [Armour]
@@ -198,8 +198,8 @@ Chaos Chariot
     Core, Chariot, Normal
     110
     1, 1
-    0 5 3 4 0 0 5 2 8
-    0 0 0 5 5 4 0 0 0
+    - 5 3 4 - - 5 2 8
+    - - - 5 5 4 - - -
     Armour Save (3+), Scythes, Halberds (Chaos Charioteers only)
     Mark of Khorne {False} [10], Mark of Tzeentch {False} [10], Mark of Nurgle {False} [15], Mark of Slaanesh {False} [5]
     None
@@ -387,8 +387,8 @@ Gorebeast Chariot
     Special, Chariot, Normal
     130
     1, 1
-    0 5 3 4 0 0 5 2 8
-    0 0 0 5 6 5 0 0 0
+    - 5 3 4 - - 5 2 8
+    - - - 5 6 5 - - -
     Fear, Gorebeast Charge, Armour Save (3+), Scythes, Halberds (Chaos Charioteers only)
     Mark of Khorne {False} [10], Mark of Tzeentch {False} [10], Mark of Nurgle {False} [10], Mark of Slaanesh {False} [5]
     None
@@ -397,8 +397,8 @@ Chaos Warshrine
     Special, Chariot, Normal
     125
     1, 1
-    0 5 3 4 0 0 5 2 8
-    0 0 0 0 5 5 0 0 0
+    - 5 3 4 - - 5 2 8
+    - - - - 5 5 - - -
     Favour of the Ruinous Powers, Fear, Giver of Glory, Protection of the Dark Gods, Random Attacks (D6+2, Chaos Shrine Bearers only), War Platform
     Mark of Khorne {False} [10], Mark of Tzeentch {False} [10], Mark of Nurgle {False} [10], Mark of Slaanesh {False} [5]
     None
@@ -410,7 +410,7 @@ Hellcannon
     210
     1, 1
     3 4 3 5 6 5 1 5 4
-    Caged Fury, Daemonic Attacks (Hellcannon only), Daemonic Construction, Doomfire
+    Caged Fury, Daemonic Attacks (Hellcannon only), Daemonic Construction, Doomfire, Large Target, Monster and Handles, Terror, Unbreakable
     None
     None
 
@@ -427,7 +427,7 @@ Chaos Giant
     Rare, Monster, Normal
     200
     1, 1
-    6 3 3 6 5 6 3 0 10
+    6 3 3 6 5 6 3 * 10
     Fall Over, Giant Special Attacks, Large Target, Stubborn, Terror
     Giant of Khorne {False} [10], Giant of Tzeentch {False} [15], Giant of Nurgle {False} [15], Giant of Slaanesh {False} [5]
     None
@@ -436,8 +436,8 @@ Chaos Spawn
     Rare, Monstrous Beast, Normal
     50
     1, 1
-    0 3 0 4 5 3 2 0 10
-    0 3 0 4 5 3 2 0 10
+    2D6 3 0 4 5 3 2 D6+1 10
+    2D6 3 0 4 5 3 2 D6+1 10
     Fear, Random Attacks (D6+1), Random Movement (2D6), Unbreakable
     Fear, Random Attacks (D6+1), Random Movement (2D6), Unbreakable
     None

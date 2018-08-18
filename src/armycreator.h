@@ -92,6 +92,8 @@ private:
     ItemClass ic_selected;
     std::shared_ptr<option_selector> opt_sel;
 
+    void update_validity_label();
+
     // roster tree modifying
     void populate_roster_tree();
     void clear_roster_tree();

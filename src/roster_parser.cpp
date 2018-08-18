@@ -338,7 +338,8 @@ namespace tools {
         auto category = armies::s_map_string_unit_class[read_line(blocks[n] + 2)];
         double pts = std::stod(read_line(blocks[n] + 3));
         //auto mm_size = parse_minmax_size(read_line(blocks[n] + 4));
-        auto stats = tools::split_stos(read_line(blocks[n] + 5), ' ');
+        //auto stats = tools::split_stos(read_line(blocks[n] + 5), ' ');
+        auto stats = tools::split(read_line(blocks[n] + 5), ' ');
         auto rules = tools::split(read_line(blocks[n] + 6), ',');
         auto eq = parse_equipment(read_line(blocks[n] + 7));
         auto opt_weapons = parse_optional_weapons(read_line(blocks[n] + 8));
@@ -381,7 +382,8 @@ namespace tools {
         auto category = armies::s_map_string_unit_class[read_line(blocks[n] + 5)];
         double pts = std::stod(read_line(blocks[n] + 6));
         //auto mm_size = parse_minmax_size(read_line(blocks[n] + 7));
-        auto stats = tools::split_stos(read_line(blocks[n] + 8), ' ');
+        //auto stats = tools::split_stos(read_line(blocks[n] + 8), ' ');
+        auto stats = tools::split(read_line(blocks[n] + 8), ' ');
         auto rules = tools::split(read_line(blocks[n] + 9), ',');
         auto eq = parse_equipment(read_line(blocks[n] + 10));
         auto opt_weapons = parse_optional_weapons(read_line(blocks[n] + 11));
@@ -426,8 +428,8 @@ namespace tools {
             name_ = read_line(blocks[n]);
         double pts = std::stod(read_line(blocks[n] + 2 + offset));
         auto mm_size = parse_minmax_size(read_line(blocks[n] + 3 + offset));
-        auto stats = tools::split_stos(read_line(blocks[n] + 4 + offset), ' ');
-        auto champ_stats = tools::split_stos(read_line(blocks[n] + 5 + offset), ' ');
+        auto stats = tools::split(read_line(blocks[n] + 4 + offset), ' ');
+        auto champ_stats = tools::split(read_line(blocks[n] + 5 + offset), ' ');
         auto rules = tools::split(read_line(blocks[n] + 6 + offset), ',');
         auto champ_rules = tools::split(read_line(blocks[n] + 7 + offset), ',');
         auto eq = parse_equipment(read_line(blocks[n] + 8 + offset));
@@ -484,8 +486,8 @@ namespace tools {
         std::string name = read_line(blocks[n]);
         double pts = std::stod(read_line(blocks[n] + 2));
         auto mm_size = parse_minmax_size(read_line(blocks[n] + 3));
-        auto stats = tools::split_stos(read_line(blocks[n] + 4), ' ');
-        std::vector<short> champ_stats;
+        auto stats = tools::split(read_line(blocks[n] + 4), ' ');
+        std::vector<std::string> champ_stats;
         auto rules = tools::split(read_line(blocks[n] + 5), ',');
         std::vector<std::string> champ_rules;
         auto opt_oco_extras = parse_optional_extras(read_line(blocks[n] + 6));
@@ -528,8 +530,8 @@ namespace tools {
         std::string name = read_line(blocks[n]);
         double pts = std::stod(read_line(blocks[n] + 2));
         auto mm_size = parse_minmax_size(read_line(blocks[n] + 3));
-        auto stats = tools::split_stos(read_line(blocks[n] + 4), ' ');
-        auto machine_stats = tools::split_stos(read_line(blocks[n] + 5), ' ');
+        auto stats = tools::split(read_line(blocks[n] + 4), ' ');
+        auto machine_stats = tools::split(read_line(blocks[n] + 5), ' ');
         auto rules = tools::split(read_line(blocks[n] + 6), ',');
         std::vector<std::string> champ_rules;
         auto opt_oco_extras = parse_optional_extras(read_line(blocks[n] + 7));

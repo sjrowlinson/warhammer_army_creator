@@ -458,7 +458,7 @@ Hell Pit Abomination
     Rare, Monster, Normal
     235
     1, 1
-    -3 3 1 6 5 6 4 0 8
+    3D6 3 1 6 5 6 4 * 8
     Impact Hits (D6), Large Target, Regenerate, Shambling Horror, Special Close Combat Attacks, Stubborn, Terror, Too Horrible to Die
     Warpstone Spikes {True} [15]
     None
@@ -467,8 +467,8 @@ Doomwheel
     Rare, Warmachine, Normal
     150
     1, 1
-    -3 0 0 6 6 5 0 0 0
-    0 3 3 2 0 0 4 -2 7
+    3D6 - - 6 6 5 - * -
+    - 3 3 2 - - 4 2D6 7
     Armour save (4+), Grinding Down the Foe, Immune to Psychology, Impact Hits (D6+1), Large Target, Rolling Doom, Terror, Zzzzap!
     None
     None
@@ -477,8 +477,8 @@ Warp Lightning Cannon
     Rare, Warmachine, Normal
     90
     1, 1
-    0 0 0 0 6 4 0 0 0
-    5 3 3 3 3 0 3 3 7
+    - - - - 6 4 - - -
+    5 3 3 3 3 - 3 3 7
     Ponderous War Machine
     None
     None
@@ -487,8 +487,8 @@ Plagueclaw Catapult
     Rare, Warmachine, Normal
     100
     1, 1
-    0 0 0 0 6 4 0 0 0
-    5 3 3 3 4 0 3 -1 7
+    - - - - 6 4 - - -
+    5 3 3 3 4 - 3 D6 7
     Fume-addled Crew, Ponderous War Machine
     None
     None

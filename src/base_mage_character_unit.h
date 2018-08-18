@@ -16,7 +16,7 @@ public:
         armies::UnitClass uc,
         std::string name,
         double pts,
-        std::vector<short>&& stats,
+        std::vector<std::string>&& stats,
         std::vector<std::string>&& sr,
         equipment&& eq,
         options&& opt,

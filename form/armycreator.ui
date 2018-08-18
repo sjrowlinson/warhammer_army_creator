@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1730</width>
+    <width>1800</width>
     <height>1050</height>
    </rect>
   </property>
@@ -432,9 +432,9 @@
     <property name="geometry">
      <rect>
       <x>1340</x>
-      <y>140</y>
-      <width>381</width>
-      <height>861</height>
+      <y>180</y>
+      <width>451</width>
+      <height>821</height>
      </rect>
     </property>
     <property name="title">
@@ -475,8 +475,8 @@
      <rect>
       <x>1340</x>
       <y>0</y>
-      <width>381</width>
-      <height>141</height>
+      <width>451</width>
+      <height>181</height>
      </rect>
     </property>
     <property name="title">
@@ -493,13 +493,39 @@
      </rect>
     </property>
    </widget>
+   <widget class="QLabel" name="validity_label">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>30</y>
+      <width>65</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="validity_reasons_label">
+    <property name="geometry">
+     <rect>
+      <x>319</x>
+      <y>15</y>
+      <width>751</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1730</width>
+     <width>1800</width>
      <height>20</height>
     </rect>
    </property>

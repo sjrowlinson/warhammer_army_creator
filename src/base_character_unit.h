@@ -11,7 +11,7 @@
 class base_character_unit : public base_unit {
 private:
     double pts_;
-    std::vector<short> stats_;
+    std::vector<std::string> stats_;
     std::vector<std::string> sr_;
     equipment eq_;
     options opt_;
@@ -28,7 +28,7 @@ public:
         armies::UnitClass uc,
         std::string name,
         double pts,
-        std::vector<short>&& stats,
+        std::vector<std::string>&& stats,
         std::vector<std::string>&& sr,
         equipment&& eq,
         options&& opt,
@@ -41,7 +41,7 @@ public:
     virtual ~base_character_unit() = default;
 
     double points() const noexcept;
-    std::vector<short> statistics() const noexcept;
+    std::vector<std::string> statistics() const noexcept;
     std::vector<std::string> special_rules() const noexcept;
     const equipment& eq() const noexcept;
     const options& opt() const noexcept;

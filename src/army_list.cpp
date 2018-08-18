@@ -1,6 +1,11 @@
 #include "army_list.h"
 
-army_list::army_list(double points) : points(points) {
+army_list::army_list(double points) :
+    points(points), curr_pts(0.0), lord_lim(0.0),
+    hero_lim(0.0), core_min(0.0), spec_lim(0.0),
+    rare_lim(0.0), army(), lord_pts(0.0), hero_pts(0.0),
+    core_pts(0.0), spec_pts(0.0), rare_pts(0.0),
+    invalidities{InvalidListReason::CORE_MINIMUM}, snap_unit_pts(0.0) {
     determine_limits();
 }
 
@@ -39,10 +44,10 @@ void army_list::add_unit(std::shared_ptr<unit> u) {
         break;
     default:
         throw std::invalid_argument("unit type not recognised, cannot add unit to army list.");
-        break;
     }
     army[u->id()] = u;
     curr_pts += pts;
+    check_validity();
 }
 
 void army_list::remove_unit(int id) {
@@ -200,6 +205,10 @@ double army_list::core_points() const noexcept { return core_pts; }
 double army_list::special_points() const noexcept { return spec_pts; }
 double army_list::rare_points() const noexcept { return rare_pts; }
 
+const std::set<InvalidListReason>& army_list::invalid_reasons() const noexcept {
+    return invalidities;
+}
+
 std::shared_ptr<unit> army_list::get_unit(int id) {
     switch (army[id]->base_unit_type()) {
     case BaseUnitType::MELEE_CHARACTER:
@@ -253,6 +262,7 @@ void army_list::change_points_limit(double pts) {
 void army_list::clear() {
     army.clear();
     invalidities.clear();
+    invalidities.insert(InvalidListReason::CORE_MINIMUM);
     curr_pts = 0.0;
     lord_pts = 0.0;
     hero_pts = 0.0;

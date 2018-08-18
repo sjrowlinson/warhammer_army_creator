@@ -8,11 +8,11 @@ base_normal_unit::base_normal_unit(
     std::size_t min_size,
     std::size_t max_size,
     double pts_per_model,
-    std::vector<short>&& stats,
+    std::vector<std::string>&& stats,
     std::vector<std::string>&& sr,
     equipment&& eq,
     options&& opt,
-    std::vector<short>&& champ_stats,
+    std::vector<std::string>&& champ_stats,
     std::vector<std::string>&& champ_sr,
     equipment&& champ_eq,
     options&& champ_opt,
@@ -41,14 +41,14 @@ base_normal_unit::base_normal_unit(
 
 double base_normal_unit::points_per_model() const noexcept { return pts_per_model_; }
 
-const std::vector<short>& base_normal_unit::statistics() const noexcept { return stats_; }
+const std::vector<std::string>& base_normal_unit::statistics() const noexcept { return stats_; }
 const std::vector<std::string>& base_normal_unit::special_rules() const noexcept {
     return sr_;
 }
 const equipment& base_normal_unit::eq() const noexcept { return eq_; }
 const options& base_normal_unit::opt() const noexcept { return opt_; }
 
-const std::vector<short>& base_normal_unit::champion_statistics() const noexcept {
+const std::vector<std::string>& base_normal_unit::champion_statistics() const noexcept {
     return champ_stats_;
 }
 const std::vector<std::string>& base_normal_unit::champion_special_rules() const noexcept {
