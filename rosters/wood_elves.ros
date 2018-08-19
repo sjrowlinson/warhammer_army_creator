@@ -1,0 +1,181 @@
+# Lords
+
+Glade Lord
+    Lord, Melee
+    Infantry
+    145
+    1, 1
+    5 7 7 4 3 3 8 4 10
+    Always Strikes First, The Arrow of Kurnous, Forest Stalker
+    Armour: Light armour {Mundane} [Armour], Weapon: Asrai Longbow {Mundane} [Ballistic]
+    Asrai spear {Mundane} [Melee] (3), Additional hand weapon {Mundane} [Melee] (3), Great weapon {Mundane} [Melee] (6)
+    Shield {Mundane} [Shield] (3)
+    Elven Steed {Cavalry} [20], Great Eagle {Monstrous Beast} [50], Great Stag {Monstrous Beast} [65], Forest Dragon {Monster} [300]
+    Hagbane tips {True} [3], Trueflight arrows {True} [3], Moonfire shot {True} [4], Starfire shafts {True} [4], Swiftshiver shards {True} [4], Arcane bodkins {True} [5]
+    None
+    100
+    0
+    100
+
+Spellweaver
+    Lord, Mage
+    3
+    4 [35]
+    High Magic, Dark Magic
+    Infantry
+    185
+    1, 1
+    5 4 4 3 3 3 5 1 9
+    Always Strikes First, Blessings of the Ancients, Forest Stalker
+    None
+    Asrai Longbow {Mundane} [Ballistic] (5)
+    None
+    Elven Steed {Cavalry} [20], Great Eagle {Monstrous Beast} [50], Unicorn {Monstrous Beast} [60]
+    None
+    None
+    100
+    0
+    100
+
+Treeman Ancient
+    Lord, Mage
+    2
+    3 [35], 4 [70]
+    Life
+    Monster
+    290
+    1, 1
+    5 4 4 5 6 6 2 3 10
+    Blessings of the Ancients, Flammable, Forest Spirit, Large Target, Scaly Skin (3+), Stubborn, Terror, Tree Whack
+    None
+    None
+    None
+    None
+    None
+    Strangleroots {True} [20]
+    0
+    0
+    0
+
+# Heroes
+
+Glade Captain
+    Hero, Melee
+    Infantry
+    75
+    1, 1
+    5 6 6 4 3 2 7 3 9
+    Always Strikes First, The Arrow of Kurnous, Forest Stalker
+    Armour: Light armour {Mundane} [Armour], Weapon: Asrai Longbow {Mundane} [Ballistic]
+    Asrai spear {Mundane} [Melee] (2), Additional hand weapon {Mundane} [Melee] (2), Great weapon {Mundane} [Melee] (4)
+    Shield {Mundane} [Shield] (2)
+    Elven Steed {Cavalry} [10], Great Eagle {Monstrous Beast} [50], Great Stag {Monstrous Beast} [65]
+    Hagbane tips {True} [3], Trueflight arrows {True} [3], Moonfire shot {True} [4], Starfire shafts {True} [4], Swiftshiver shards {True} [4], Arcane bodkins {True} [5]
+    Battle Standard Bearer {True} [25]
+    50
+    0
+    50
+
+Spellsinger
+    Hero, Mage
+    1
+    2 [35]
+    Lores
+    Infantry
+    80
+    1, 1
+    5 4 4 3 3 2 5 1 8
+    Always Strikes First, Blessings of the Ancients, Forest Stalker
+    None
+    Asrai Longbow {Mundane} [Ballistic] (5)
+    None
+    Elven Steed {Cavalry} [10], Great Eagle {Monstrous Beast} [50], Unicorn {Monstrous Beast} [60]
+    None
+    None
+    50
+    0
+    50
+
+Shadowdancer
+    Hero, Mage
+    0
+    1 [60]
+    Shadow
+    Infantry
+    100
+    1, 1
+    5 8 6 4 3 2 8 3 8
+    Always Strikes First, Blessings of the Ancients, Forest Stalker, Immune to Psychology, Shadow Dances of Loec, Talismanic Tattoos
+    Weapon: Two hand weapons {Mundane} [Melee]
+    None
+    None
+    None
+    None
+    None
+    25
+    0
+    25
+
+Waystalker
+    Hero, Melee
+    Infantry
+    90
+    1, 1
+    5 6 7 4 3 2 7 1 8
+    Always Strikes First, Hawk-eyed Archer, Scouts, Sniper
+    Weapon: Two hand weapons {Mundane} [Melee], Weapon: Asrai Longbow {Mundane} [Ballistic]
+    None
+    None
+    None
+    None
+    None
+    25
+    0
+    25
+
+Branchwraith
+    Hero, Mage
+    1
+    None
+    Life
+    Infantry
+    75
+    1, 1
+    5 6 6 4 4 2 7 3 9
+    Blessings of the Ancients, Fear, Forest Spirit, Hatred
+    None
+    None
+    None
+    None
+    None
+    None
+    0
+    0
+    0
+
+# Core
+
+Glade Guard
+    Core, Infantry, Normal
+    12
+    10, None
+    5 4 4 3 3 1 5 1 8
+    5 4 5 3 3 1 5 1 8
+    Always Strikes First, Forest Stalker
+    Always Strikes First, Forest Stalker
+    Weapon: Asrai Longbow {Mundane} [Ballistic]
+    None
+    None
+    None
+    None
+    None
+    Hagbane tips {False} [3], Trueflight arrows {False} [3], Moonfire shot {False} [4], Starfire shafts {False} [4], Swiftshiver shards {False} [4], Arcane bodkins {False} [5]
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Lord's Bowman [10]
+    0
+    0
+    0
+    25
+

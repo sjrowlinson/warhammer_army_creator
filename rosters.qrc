@@ -4,5 +4,7 @@
         <file alias="empire.ros">rosters/empire.ros</file>
         <file alias="woc.ros">rosters/woc.ros</file>
         <file alias="high_elves.ros">rosters/high_elves.ros</file>
+        <file alias="dwarfs.ros">rosters/dwarfs.ros</file>
+        <file alias="wood_elves.ros">rosters/wood_elves.ros</file>
     </qresource>
 </RCC>

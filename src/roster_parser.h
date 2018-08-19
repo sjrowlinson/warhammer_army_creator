@@ -87,6 +87,12 @@ namespace tools {
                             armies::UnitClass category
                          );
         base_mixed_unit parse_mixed_unit(std::size_t n, armies::UnitType ut, armies::UnitClass category);
+        // unique parsing
+        base_normal_unit parse_gyro_unit(
+            std::size_t n,
+            armies::UnitType ut,
+            armies::UnitClass category
+        );
 
     public:
         explicit roster_parser(const QString& rfile, armies::Faction faction);

@@ -39,6 +39,7 @@ namespace armies {
         {"Dwarfs", Faction::DWARFS},
         {"High Elves", Faction::HIGH_ELVES},
         {"Dark Elves", Faction::DARK_ELVES},
+        {"Wood Elves", Faction::WOOD_ELVES},
         {"Warriors of Chaos", Faction::WARRIORS_OF_CHAOS},
         {"Daemons of Chaos", Faction::DAEMONS_OF_CHAOS},
         {"Beastmen", Faction::BEASTMEN},
