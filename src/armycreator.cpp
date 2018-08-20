@@ -2427,13 +2427,19 @@ void ArmyCreator::update_unit_display(
                           );
         auto mc_extras = u->mc_extras();
         if (!mc_extras.empty() && !oco_extra.first.empty()) extras_str += QString("\n");
-        for (auto it = std::begin(mc_extras); it != std::end(mc_extras); ++it) {
-            extras_str += QString("%1 [%2]").arg(
-                                      it->first.data(),
-                                      QString("%1").arg(it->second.second)
-                                  );
-            if (++it != std::end(mc_extras)) extras_str += QString("\n");
-            --it;
+        if (!mc_extras.empty()) {
+            for (auto it = std::begin(mc_extras),
+                 it_next = std::next(std::begin(mc_extras)); it != std::end(mc_extras); ++it) {
+
+                extras_str += QString("%1 [%2]").arg(
+                                          it->first.data(),
+                                          QString("%1").arg(it->second.second)
+                                      );
+                if (it_next != std::end(mc_extras)) {
+                    extras_str += QString("\n");
+                    ++it_next;
+                }
+            }
         }
         if (u->switch_model_select(ModelSelect::CHAMPION)) {
             auto champ_oco_extra = u->oco_extra();
@@ -2444,13 +2450,18 @@ void ArmyCreator::update_unit_display(
                               );
             auto champ_mc_extras = u->mc_extras();
             if (!champ_mc_extras.empty() && !champ_oco_extra.first.empty()) extras_str += QString("\n");
-            for (auto it = std::begin(champ_mc_extras); it != std::end(champ_mc_extras); ++it) {
-                extras_str += QString("%1 [%2]").arg(
-                                          (it->first + " (Champion)").data(),
-                                          QString("%1").arg(it->second.second)
-                                      );
-                if (++it != std::end(champ_mc_extras)) extras_str += QString("\n");
-                --it;
+            if (!champ_mc_extras.empty()) {
+                for (auto it = std::begin(champ_mc_extras),
+                     it_next = std::next(std::begin(champ_mc_extras)); it != std::end(champ_mc_extras); ++it) {
+                    extras_str += QString("%1 [%2]").arg(
+                                              (it->first + " (Champion)").data(),
+                                              QString("%1").arg(it->second.second)
+                                          );
+                    if (it_next != std::end(champ_mc_extras)) {
+                        extras_str += QString("\n");
+                        ++it_next;
+                    }
+                }
             }
 
         }
