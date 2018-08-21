@@ -31,6 +31,8 @@ protected:
     MixedSelect mixed_select_;
     double points_;
     std::shared_ptr<base_unit> base_;
+
+    void do_replacements(const std::vector<std::string>& replacements, bool champion=false);
 public:
     explicit unit(std::shared_ptr<base_unit> base);
     unit(const unit& other);
@@ -88,11 +90,15 @@ public:
     armies::UnitType unit_type() const noexcept;
     armies::UnitClass unit_class() const noexcept;
 
+    // TODO: add bool replacing=false to remove_weapon and remove_armour
+    // methods so that we override the protection against removing the
+    // weapon/armour held in the unit equipment when performing a replacement
+
     // pure virtual selectors
     virtual void pick_weapon(ItemClass item_type, std::string name) = 0;
-    virtual void remove_weapon(WeaponType wt) = 0;
+    virtual void remove_weapon(WeaponType wt, bool replacing=false) = 0;
     virtual void pick_armour(ItemClass item_type, std::string name) = 0;
-    virtual void remove_armour(ArmourType at) = 0;
+    virtual void remove_armour(ArmourType at, bool replacing=false) = 0;
     virtual void pick_oco_extra(std::string name) = 0;
     virtual void remove_oco_extra() = 0;
     virtual void pick_mc_extra(std::string name) = 0;

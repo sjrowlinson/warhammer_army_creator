@@ -168,16 +168,21 @@ namespace tools {
 
     std::unordered_map<
         std::string,
-        std::tuple<WeaponType, ItemClass, double>
+        std::tuple<WeaponType, ItemClass, double, std::vector<std::string>>
     > roster_parser::parse_optional_weapons(std::string s) {
         std::unordered_map<
             std::string,
-            std::tuple<WeaponType, ItemClass, double>
+            std::tuple<WeaponType, ItemClass, double, std::vector<std::string>>
         > um;
         if (s == "None" || s.empty()) return um;
         std::vector<std::string> all = tools::split(s, ',');
         for (const auto& _s : all) {
-            auto weapon_bsp = tools::parse_item_bsp(_s);
+            std::vector<std::string> replace;
+            auto split = tools::split(_s, ';');
+            if (split.size() > 1) {
+                for (auto& r : tools::split(split[1], ',')) replace.push_back(tools::trim(r));
+            }
+            auto weapon_bsp = tools::parse_item_bsp(split[0]);
             std::string name = weapon_bsp[0];
             ItemClass ic;
             if (weapon_bsp[1] == "Mundane") ic = ItemClass::MUNDANE;
@@ -188,23 +193,27 @@ namespace tools {
             if (weapon_bsp[2] == "Melee") wt = WeaponType::MELEE;
             else if (weapon_bsp[2] == "Ballistic") wt = WeaponType::BALLISTIC;
             double pts = std::stod(weapon_bsp[3]);
-            //um[name] = std::make_pair(wt, pts);
-            um[name] = std::make_tuple(wt, ic, pts);
+            um[name] = std::make_tuple(wt, ic, pts, replace);
         }
         return um;
     }
 
     std::unordered_map<
         std::string,
-        std::tuple<ArmourType, ItemClass, double>
+        std::tuple<ArmourType, ItemClass, double, std::vector<std::string>>
     > roster_parser::parse_optional_armour(std::string s) {
         std::unordered_map<
             std::string,
-            std::tuple<ArmourType, ItemClass, double>
+            std::tuple<ArmourType, ItemClass, double, std::vector<std::string>>
         > um;
         if (s == "None" || s.empty()) return um;
         std::vector<std::string> all = tools::split(s, ',');
         for (const auto& _s : all) {
+            std::vector<std::string> replace;
+            auto split = tools::split(_s, ';');
+            if (split.size() > 1) {
+                for (auto& r : tools::split(split[1], ',')) replace.push_back(tools::trim(r));
+            }
             auto armour_bsp = tools::parse_item_bsp(_s);
             std::string name = armour_bsp[0];
             ItemClass ic;
@@ -217,7 +226,7 @@ namespace tools {
             else if (armour_bsp[2] == "Shield") at = ArmourType::SHIELD;
             else if (armour_bsp[2] == "Helmet") at = ArmourType::HELMET;
             double pts = std::stod(armour_bsp[3]);
-            um[name] = std::make_tuple(at, ic, pts);
+            um[name] = std::make_tuple(at, ic, pts, replace);
         }
         return um;
     }

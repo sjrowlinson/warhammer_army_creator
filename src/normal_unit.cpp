@@ -1,5 +1,5 @@
 #include "normal_unit.h"
-
+#include <iostream>
 normal_unit::normal_unit(std::shared_ptr<base_unit> base)
     : unit(base),
       handle(std::dynamic_pointer_cast<base_normal_unit>(base)) {
@@ -179,6 +179,7 @@ void normal_unit::pick_default_weapon(ItemClass item_type, std::string name) {
             throw std::invalid_argument("Weapon not found!");
         }
         remove_weapon(std::get<0>(search->second));
+        do_replacements(std::get<3>(search->second));
         weapons_[std::get<0>(search->second)] = {
             std::get<1>(search->second),
             search->first,
@@ -205,6 +206,7 @@ void normal_unit::pick_champion_weapon(ItemClass item_type, std::string name) {
         if (search == handle->champion_opt().opt_weapons.cend())
             throw std::invalid_argument("Weapon not found!");
         remove_champion_weapon(std::get<0>(search->second));
+        do_replacements(std::get<3>(search->second), true);
         champ_weapons_[std::get<0>(search->second)] = {
             std::get<1>(search->second),
             search->first,
@@ -278,6 +280,7 @@ void normal_unit::pick_default_armour(ItemClass item_type, std::string name) {
         if (search == handle->opt().opt_armour.end())
             throw std::invalid_argument("Armour not found!");
         remove_armour(std::get<0>(search->second));
+        do_replacements(std::get<3>(search->second));
         armours_[std::get<0>(search->second)] = {
             std::get<1>(search->second),
             search->first,
@@ -304,6 +307,7 @@ void normal_unit::pick_champion_armour(ItemClass item_type, std::string name) {
         if (search == handle->champion_opt().opt_armour.end())
             throw std::invalid_argument("Armour not found!");
         remove_champion_armour(std::get<0>(search->second));
+        do_replacements(std::get<3>(search->second), true);
         champ_armours_[std::get<0>(search->second)] = {
             std::get<1>(search->second),
             search->first,
@@ -358,36 +362,48 @@ void normal_unit::pick_champion_armour(ItemClass item_type, std::string name) {
     }
 }
 
-void normal_unit::remove_weapon(WeaponType wt) {
+void normal_unit::remove_weapon(WeaponType wt, bool replacing) {
     switch (model_select_) {
     case ModelSelect::DEFAULT:
-        remove_default_weapon(wt);
+        remove_default_weapon(wt, replacing);
         break;
     case ModelSelect::CHAMPION:
-        remove_champion_weapon(wt);
+        remove_champion_weapon(wt, replacing);
         break;
     }
 }
 
-void normal_unit::remove_default_weapon(WeaponType wt) {
+void normal_unit::remove_default_weapon(WeaponType wt, bool replacing) {
     if (!weapons_.count(wt)) return;
     auto weapon = weapons_[wt];
     auto search = handle->eq().weapons.find(wt);
-    if (search != handle->eq().weapons.cend()) { // avoid removing default weapon
-        if (search->second.second == std::get<1>(weapon)) return;
-        weapons_[wt] = {search->second.first, search->second.second, 0.0};
+    if (search != handle->eq().weapons.cend()) {
+        if (replacing) {
+            weapons_.erase(wt);
+            if (wt == WeaponType::MELEE)
+                weapons_[wt] = {ItemClass::MUNDANE, "Hand weapon", 0.0};
+        } else {
+            if (search->second.second == std::get<1>(weapon)) return;
+            weapons_[wt] = {search->second.first, search->second.second, 0.0};
+        }
     }
     else weapons_.erase(wt);
     points_ -= size_ * std::get<2>(weapon);
 }
 
-void normal_unit::remove_champion_weapon(WeaponType wt) {
+void normal_unit::remove_champion_weapon(WeaponType wt, bool replacing) {
     if (!champ_weapons_.count(wt)) return;
     auto weapon = champ_weapons_[wt];
     auto def_w = handle->champion_eq().weapons.find(wt);
     if (def_w != handle->champion_eq().weapons.cend()) {
-        if (def_w->second.second == std::get<1>(weapon)) return;
-        champ_weapons_[wt] = {def_w->second.first, def_w->second.second, 0.0};
+        if (replacing) {
+            champ_weapons_.erase(wt);
+            if (wt == WeaponType::MELEE)
+                champ_weapons_[wt] = {ItemClass::MUNDANE, "Hand weapon", 0.0};
+        } else {
+            if (def_w->second.second == std::get<1>(weapon)) return;
+            champ_weapons_[wt] = {def_w->second.first, def_w->second.second, 0.0};
+        }
     }
     else champ_weapons_.erase(wt);
     const double pts = std::get<2>(weapon);
@@ -407,36 +423,42 @@ void normal_unit::remove_champion_weapon(WeaponType wt) {
     points_ -= pts;
 }
 
-void normal_unit::remove_armour(ArmourType at) {
+void normal_unit::remove_armour(ArmourType at, bool replacing) {
     switch (model_select_) {
     case ModelSelect::DEFAULT:
-        remove_default_armour(at);
+        remove_default_armour(at, replacing);
         break;
     case ModelSelect::CHAMPION:
-        remove_champion_armour(at);
+        remove_champion_armour(at, replacing);
         break;
     }
 }
 
-void normal_unit::remove_default_armour(ArmourType at) {
+void normal_unit::remove_default_armour(ArmourType at, bool replacing) {
     if (!armours_.count(at)) return;
     auto armour = armours_[at];
     auto search = handle->eq().armour.find(at);
-    if (search != handle->eq().armour.cend()) { // avoid removing default armour
-        if (search->second.second == std::get<1>(armour)) return;
-        armours_[at] = {search->second.first, search->second.second, 0.0};
+    if (search != handle->eq().armour.cend()) {
+        if (replacing) armours_.erase(at);
+        else {
+            if (search->second.second == std::get<1>(armour)) return;
+            armours_[at] = {search->second.first, search->second.second, 0.0};
+        }
     }
     else armours_.erase(at);
     points_ -= size_ * std::get<2>(armour);
 }
 
-void normal_unit::remove_champion_armour(ArmourType at) {
+void normal_unit::remove_champion_armour(ArmourType at, bool replacing) {
     if (!champ_armours_.count(at)) return;
     auto armour = champ_armours_[at];
     auto def_a = handle->champion_eq().armour.find(at);
     if (def_a != handle->champion_eq().armour.cend()) {
-        if (def_a->second.second == std::get<1>(armour)) return;
-        champ_armours_[at] = {def_a->second.first, def_a->second.second, 0.0};
+        if (replacing) champ_armours_.erase(at);
+        else {
+            if (def_a->second.second == std::get<1>(armour)) return;
+            champ_armours_[at] = {def_a->second.first, def_a->second.second, 0.0};
+        }
     }
     else champ_armours_.erase(at);
     const double pts = std::get<2>(armour);

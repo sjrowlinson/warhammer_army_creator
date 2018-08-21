@@ -24,6 +24,18 @@ bool unit::switch_mixed_select(MixedSelect ms) {
     return false;
 }
 
+void unit::do_replacements(const std::vector<std::string>& replacements, bool champion) {
+    if (champion) switch_model_select(ModelSelect::CHAMPION);
+    for (const auto& r : replacements) {
+        if (r == "Melee") remove_weapon(WeaponType::MELEE, true);
+        else if (r == "Ballistic") remove_weapon(WeaponType::BALLISTIC, true);
+        else if (r == "Body") remove_armour(ArmourType::ARMOUR, true);
+        else if (r == "Shield") remove_armour(ArmourType::SHIELD, true);
+        else if (r == "Helmet") remove_armour(ArmourType::HELMET, true);
+    }
+    switch_model_select(ModelSelect::DEFAULT);
+}
+
 double unit::points() const noexcept { return points_; }
 
 const std::shared_ptr<base_unit>& unit::base() const noexcept {

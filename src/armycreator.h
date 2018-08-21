@@ -4,7 +4,6 @@
 #include "army_list.h"
 #include "army_maps.h"
 #include "magic_item.h"
-#include "magic_item_window.h"
 #include "option_selector.h"
 #include "selection_tree.h"
 
@@ -21,6 +20,7 @@
 #include <QRadioButton>
 #include <QString>
 #include <QSpinBox>
+#include <QTableWidget>
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 #include <QVariant>
@@ -79,8 +79,6 @@ private slots:
 
     void change_unit_size();
 
-    void spawn_magic_weapons_window();
-
     void on_magic_items_combobox_currentTextChanged(const QString &arg1);
 
 private:
@@ -130,19 +128,22 @@ private:
     void init_magic_items_selector(std::shared_ptr<unit> current,
                                    ItemType focus = ItemType::WEAPON);
 
-    QGroupBox* setup_magic_weapons_tab(const std::unordered_map<std::string, item>& items,
+    QGroupBox* setup_items_tab(const std::unordered_map<std::string, item>& items,
+                               std::shared_ptr<unit> current,
+                               ItemType item_type);
+    QGroupBox* setup_magic_weapons_tab(const std::vector<std::pair<std::string, item>>& items,
                                        std::shared_ptr<unit> current);
-    QGroupBox* setup_magic_armour_tab(const std::unordered_map<std::string, item>& items,
+    QGroupBox* setup_magic_armour_tab(const std::vector<std::pair<std::string, item>>& items,
                                        std::shared_ptr<unit> current);
-    QGroupBox* setup_talismans_tab(const std::unordered_map<std::string, item>& items,
+    QGroupBox* setup_talismans_tab(const std::vector<std::pair<std::string, item>>& items,
                                    std::shared_ptr<unit> current);
-    QGroupBox* setup_enchanted_items_tab(const std::unordered_map<std::string, item>& items,
+    QGroupBox* setup_enchanted_items_tab(const std::vector<std::pair<std::string, item>>& items,
                                          std::shared_ptr<unit> current);
-    QGroupBox* setup_arcane_items_tab(const std::unordered_map<std::string, item>& items,
+    QGroupBox* setup_arcane_items_tab(const std::vector<std::pair<std::string, item>>& items,
                                       std::shared_ptr<unit> current);
-    QGroupBox* setup_other_items_tab(const std::unordered_map<std::string, item>& items,
+    QGroupBox* setup_other_items_tab(const std::vector<std::pair<std::string, item>>& items,
                                    std::shared_ptr<unit> current);
-    QGroupBox* setup_banners_tab(const std::unordered_map<std::string, item>& items,
+    QGroupBox* setup_banners_tab(const std::vector<std::pair<std::string, item>>& items,
                                  std::shared_ptr<unit> current);
 
     void update_unit_display(

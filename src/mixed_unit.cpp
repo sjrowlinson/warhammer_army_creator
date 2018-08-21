@@ -101,13 +101,13 @@ void mixed_unit::pick_weapon(ItemClass item_type, std::string name) {
     }
 }
 
-void mixed_unit::remove_weapon(WeaponType wt) {
+void mixed_unit::remove_weapon(WeaponType wt, bool replacing) {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
-        master_.remove_weapon(wt);
+        master_.remove_weapon(wt, replacing);
         break;
     case MixedSelect::SLAVE:
-        slave_.remove_weapon(wt);
+        slave_.remove_weapon(wt, replacing);
         break;
     }
 }
@@ -123,13 +123,13 @@ void mixed_unit::pick_armour(ItemClass item_type, std::string name) {
     }
 }
 
-void mixed_unit::remove_armour(ArmourType at) {
+void mixed_unit::remove_armour(ArmourType at, bool replacing) {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
-        master_.remove_armour(at);
+        master_.remove_armour(at, replacing);
         break;
     case MixedSelect::SLAVE:
-        slave_.remove_armour(at);
+        slave_.remove_armour(at, replacing);
         break;
     }
 }

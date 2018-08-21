@@ -31,7 +31,7 @@ bool character_unit::is_character() const noexcept { return true; }
 bool character_unit::is_mage() const noexcept { return false; }
 
 bool character_unit::is_bsb() const noexcept {
-    return mc_extras_.count(std::string("Battle Standard Bearer"));
+    return mc_extras_.count(std::string("Battle Standard Bearer "));
 }
 
 std::size_t character_unit::size() const noexcept { return 1U; }
@@ -74,6 +74,7 @@ void character_unit::pick_weapon(ItemClass item_type, std::string name) {
         if (search == handle_->opt().opt_weapons.cend())
             throw std::invalid_argument("Weapon not found!");
         remove_weapon(std::get<0>(search->second));
+        do_replacements(std::get<3>(search->second));
         weapons_[std::get<0>(search->second)] = {
             std::get<1>(search->second),
             search->first,
@@ -176,6 +177,7 @@ void character_unit::pick_armour(ItemClass item_type, std::string name) {
         if (search == handle_->opt().opt_armour.cend())
             throw std::invalid_argument("Armour not found!");
         remove_armour(std::get<0>(search->second));
+        do_replacements(std::get<3>(search->second));
         armours_[std::get<0>(search->second)] = {
             std::get<1>(search->second),
             search->first,
@@ -581,13 +583,20 @@ void character_unit::pick_mc_extra(std::string name) {
     points_ += search->second.second;
 }
 
-void character_unit::remove_weapon(WeaponType wt) {
+void character_unit::remove_weapon(WeaponType wt, bool replacing) {
     if (!weapons_.count(wt)) return;
     auto weapon = weapons_[wt];
     auto search = handle_->eq().weapons.find(wt);
-    if (search != handle_->eq().weapons.cend()) { // avoid removing default weapon
-        if (search->second.second == std::get<1>(weapon)) return;
-        weapons_[wt] = {search->second.first, search->second.second, 0.0};
+    if (search != handle_->eq().weapons.cend()) {
+        if (replacing) {
+            weapons_.erase(wt);
+            if (wt == WeaponType::MELEE)
+                weapons_[wt] = {ItemClass::MUNDANE, "Hand weapon", 0.0};
+        }
+        else {
+            if (search->second.second == std::get<1>(weapon)) return;
+            weapons_[wt] = {search->second.first, search->second.second, 0.0};
+        }
     }
     else weapons_.erase(wt);
     // remove points value of weapon
@@ -608,13 +617,17 @@ void character_unit::remove_weapon(WeaponType wt) {
     points_ -= pts;
 }
 
-void character_unit::remove_armour(ArmourType at) {
+void character_unit::remove_armour(ArmourType at, bool replacing) {
     if (!armours_.count(at)) return;
     auto armour = armours_[at];
     auto search = handle_->eq().armour.find(at);
-    if (search != handle_->eq().armour.cend()) { // avoid removing default armour
-        if (search->second.second == std::get<1>(armour)) return;
-        armours_[at] = {search->second.first, search->second.second, 0.0};
+    if (search != handle_->eq().armour.cend()) {
+        if (replacing) {
+            armours_.erase(at);
+        } else {
+            if (search->second.second == std::get<1>(armour)) return;
+            armours_[at] = {search->second.first, search->second.second, 0.0};
+        }
     }
     else armours_.erase(at);
     // remove points value of armour

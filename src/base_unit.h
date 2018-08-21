@@ -39,11 +39,11 @@ struct equipment {
 struct options {
     std::unordered_map<
         std::string,
-        std::tuple<WeaponType, ItemClass, double>
+        std::tuple<WeaponType, ItemClass, double, std::vector<std::string>>
     > opt_weapons;
     std::unordered_map<
         std::string,
-        std::tuple<ArmourType, ItemClass, double>
+        std::tuple<ArmourType, ItemClass, double, std::vector<std::string>>
     > opt_armour;
     std::unordered_map<
         std::string,

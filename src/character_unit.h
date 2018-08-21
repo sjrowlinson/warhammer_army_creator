@@ -74,10 +74,10 @@ public:
 
     // current property modifiers
     void pick_weapon(ItemClass item_type, std::string name) override;
-    void remove_weapon(WeaponType wt) override;
+    void remove_weapon(WeaponType wt, bool replacing=false) override;
 
     void pick_armour(ItemClass item_type, std::string name) override;
-    void remove_armour(ArmourType at) override;
+    void remove_armour(ArmourType at, bool replacing=false) override;
 
     void pick_talisman(ItemClass item_class, std::string name);
     void remove_talisman();

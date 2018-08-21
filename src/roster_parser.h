@@ -51,11 +51,11 @@ namespace tools {
         equipment parse_equipment(std::string s);
         std::unordered_map<
             std::string,
-            std::tuple<WeaponType, ItemClass, double>
+            std::tuple<WeaponType, ItemClass, double, std::vector<std::string>>
         > parse_optional_weapons(std::string s);
         std::unordered_map<
             std::string,
-            std::tuple<ArmourType, ItemClass, double>
+            std::tuple<ArmourType, ItemClass, double, std::vector<std::string>>
         > parse_optional_armour(std::string s);
         std::unordered_map<
             std::string,

@@ -119,13 +119,13 @@ public:
     void pick_champion_weapon(ItemClass item_type, std::string name);
     void pick_champion_armour(ItemClass item_type, std::string name);
 
-    void remove_weapon(WeaponType wt) override;
-    void remove_armour(ArmourType at) override;
+    void remove_weapon(WeaponType wt, bool replacing=false) override;
+    void remove_armour(ArmourType at, bool replacing=false) override;
 
-    void remove_default_weapon(WeaponType wt);
-    void remove_default_armour(ArmourType at);
-    void remove_champion_weapon(WeaponType wt);
-    void remove_champion_armour(ArmourType at);
+    void remove_default_weapon(WeaponType wt, bool replacing=false);
+    void remove_default_armour(ArmourType at, bool replacing=false);
+    void remove_champion_weapon(WeaponType wt, bool replacing=false);
+    void remove_champion_armour(ArmourType at, bool replacing=false);
 
     void add_command_member(CommandGroup member);
     void remove_command_member(CommandGroup member);

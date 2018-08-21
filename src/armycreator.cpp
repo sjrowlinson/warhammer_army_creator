@@ -16,8 +16,8 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
     ic_selected = ItemClass::COMMON;
     opt_sel = std::make_shared<option_selector>(st, army);
     // set magic_item_selector to hidden initially
-    ui->magic_items_combobox->setHidden(true);
-    ui->magic_items_selector->setHidden(true);
+    //ui->magic_items_combobox->setHidden(true);
+    //ui->magic_items_selector->setHidden(true);
     // set army list view header sizes
     ui->army_tree->header()->resizeSection(static_cast<int>(ArmyTreeColumn::NAME), 250); // unit name header
     ui->army_tree->header()->resizeSection(static_cast<int>(ArmyTreeColumn::SIZE), 60); // unit size header
@@ -35,6 +35,10 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
 
 ArmyCreator::~ArmyCreator() {
     delete ui;
+}
+
+void ArmyCreator::on_actionExit_triggered() {
+    QCoreApplication::quit();
 }
 
 void ArmyCreator::update_validity_label() {
@@ -493,19 +497,10 @@ void ArmyCreator::optional_mc_extra_selected() {
     }
 }
 
-void ArmyCreator::spawn_magic_weapons_window() {
-    MagicItemWindow* miw = new MagicItemWindow(ItemType::WEAPON);
-    miw->setWindowTitle(tr("Magic Weapon Selection"));
-    miw->setFixedWidth(1366);
-    miw->setFixedHeight(768);
-    miw->show();
-    miw->setAttribute(Qt::WA_DeleteOnClose);
-}
-
 // magic item ui initialisation
 
 void ArmyCreator::init_magic_items_selector(std::shared_ptr<unit> current, ItemType focus) {
-    if (focus != ItemType::BANNER) {
+    /*if (focus != ItemType::BANNER) {
         switch (current->base_unit_type()) {
         case BaseUnitType::BASE:
         case BaseUnitType::MIXED:
@@ -513,7 +508,7 @@ void ArmyCreator::init_magic_items_selector(std::shared_ptr<unit> current, ItemT
             return;
         default: break;
         }
-    }
+    }*/
     std::shared_ptr<
         std::pair<
             std::string,
@@ -533,39 +528,43 @@ void ArmyCreator::init_magic_items_selector(std::shared_ptr<unit> current, ItemT
     default: return;
     }
     // magic weapons
-    auto magic_weapons_box = setup_magic_weapons_tab(mih->second, current);
+    auto magic_weapons_box = setup_items_tab(mih->second, current, ItemType::WEAPON);
     if (magic_weapons_box != nullptr) ui->magic_items_selector->addTab(magic_weapons_box, tr("Magic Weapons"));
     // magic armour
-    auto magic_armour_box = setup_magic_armour_tab(mih->second, current);
+    auto magic_armour_box = setup_items_tab(mih->second, current, ItemType::ARMOUR);
     if (magic_armour_box != nullptr) ui->magic_items_selector->addTab(magic_armour_box, tr("Magic Armour"));
     // talismans
-    auto talismans_box = setup_talismans_tab(mih->second, current);
+    auto talismans_box = setup_items_tab(mih->second, current, ItemType::TALISMAN);
     if (talismans_box != nullptr) ui->magic_items_selector->addTab(talismans_box, tr("Talismans"));
     // enchanted items
-    auto enchanted_box = setup_enchanted_items_tab(mih->second, current);
+    auto enchanted_box = setup_items_tab(mih->second, current, ItemType::ENCHANTED);
     if (enchanted_box != nullptr) ui->magic_items_selector->addTab(enchanted_box, tr("Enchanted Items"));
     // other items
-    auto other_box = setup_other_items_tab(mih->second, current);
+    auto other_box = setup_items_tab(mih->second, current, ItemType::OTHER);
     if (other_box != nullptr) ui->magic_items_selector->addTab(other_box, tr("Other"));
     // arcane items
     QGroupBox* arcane_box = nullptr;
     if (current->is_mage()) {
-        arcane_box = setup_arcane_items_tab(mih->second, current);
+        arcane_box = setup_items_tab(mih->second, current, ItemType::ARCANE);
         if (arcane_box != nullptr) ui->magic_items_selector->addTab(arcane_box, tr("Arcane Items"));
     }
+    QGroupBox* banner_box = nullptr;
     switch (current->base_unit_type()) {
     case BaseUnitType::MAGE_CHARACTER:
     case BaseUnitType::MELEE_CHARACTER:
     {
         if (std::dynamic_pointer_cast<character_unit>(current)->is_bsb()) {
-            auto banner_box = setup_banners_tab(mih->second, current);
-            if (!banner_box) ui->magic_items_selector->addTab(banner_box, tr("Magic Standards"));
+            banner_box = setup_items_tab(mih->second, current, ItemType::BANNER);
+            if (banner_box != nullptr) ui->magic_items_selector->addTab(banner_box, tr("Magic Standards"));
         }
         break;
     }
     case BaseUnitType::NORMAL:
     {
-
+        if (std::dynamic_pointer_cast<normal_unit>(current)->handle->magic_banner_budget() > 0.0) {
+            banner_box = setup_items_tab(mih->second, current, ItemType::BANNER);
+            if (banner_box != nullptr) ui->magic_items_selector->addTab(banner_box, tr("Magic Standards"));
+        }
         break;
     }
     default: break;
@@ -593,7 +592,10 @@ void ArmyCreator::init_magic_items_selector(std::shared_ptr<unit> current, ItemT
         if (enchanted_box != nullptr)
             ui->magic_items_selector->setCurrentWidget(enchanted_box);
         break;
-    case ItemType::BANNER: break;
+    case ItemType::BANNER:
+        if (banner_box != nullptr)
+            ui->magic_items_selector->setCurrentWidget(banner_box);
+        break;
     case ItemType::OTHER:
         if (other_box != nullptr)
             ui->magic_items_selector->setCurrentWidget(other_box);
@@ -601,22 +603,40 @@ void ArmyCreator::init_magic_items_selector(std::shared_ptr<unit> current, ItemT
     }
 }
 
-QGroupBox* ArmyCreator::setup_magic_weapons_tab(const std::unordered_map<std::string, item>& items,
-                                                std::shared_ptr<unit> current) {
+QGroupBox* ArmyCreator::setup_items_tab(const std::unordered_map<std::string, item>& items,
+                               std::shared_ptr<unit> current,
+                               ItemType item_type) {
     if (items.empty()) return nullptr;
-    auto opt_weapons = tools::magic_items_vec_of(items, ItemType::WEAPON);
-    if (opt_weapons.empty() || !std::count_if(
-            std::begin(opt_weapons),
-            std::end(opt_weapons),
-            [&current](const auto& x) {
-                return x.second.allowed_units.empty() || x.second.allowed_units.count(current->name());
-            })
-        ) return nullptr;
+    auto opt_items = tools::magic_items_vec_of(items, item_type);
+    if (opt_items.empty() || !std::count_if(
+        std::begin(opt_items), std::end(opt_items), [&current](const auto& x) {
+            return x.second.allowed_units.empty() || x.second.allowed_units.count(current->name());
+        }
+    )) return nullptr;
     std::sort(
-        std::begin(opt_weapons),
-        std::end(opt_weapons),
+        std::begin(opt_items), std::end(opt_items),
         [](const auto& lhs, const auto& rhs) { return lhs.second.points > rhs.second.points; }
     );
+    switch (item_type) {
+    case ItemType::WEAPON:
+        return setup_magic_weapons_tab(opt_items, current);
+    case ItemType::ARMOUR:
+        return setup_magic_armour_tab(opt_items, current);
+    case ItemType::TALISMAN:
+        return setup_talismans_tab(opt_items, current);
+    case ItemType::ENCHANTED:
+        return setup_enchanted_items_tab(opt_items, current);
+    case ItemType::ARCANE:
+        return setup_arcane_items_tab(opt_items, current);
+    case ItemType::OTHER:
+        return setup_other_items_tab(opt_items, current);
+    case ItemType::BANNER:
+        return setup_banners_tab(opt_items, current);
+    }
+}
+
+QGroupBox* ArmyCreator::setup_magic_weapons_tab(const std::vector<std::pair<std::string, item>>& opt_weapons,
+                                                std::shared_ptr<unit> current) {
     std::unordered_map<WeaponType, std::tuple<ItemClass, std::string, double>> weapons;
     switch (current->base_unit_type()) {
     case BaseUnitType::MAGE_CHARACTER:
@@ -653,15 +673,10 @@ QGroupBox* ArmyCreator::setup_magic_weapons_tab(const std::unordered_map<std::st
             continue;
         switch (current->base_unit_type()) {
         case BaseUnitType::MAGE_CHARACTER:
-        {
-            auto p = std::dynamic_pointer_cast<mage_character_unit>(current);
-            if (w.second.points > p->handle->magic_item_budget()) continue;
-            break;
-        }
         case BaseUnitType::MELEE_CHARACTER:
         {
-            auto p = std::dynamic_pointer_cast<melee_character_unit>(current);
-            if (w.second.points > p->handle->magic_item_budget()) continue;
+            auto p = std::dynamic_pointer_cast<character_unit>(current);
+            if (w.second.points > p->handle_->magic_item_budget()) continue;
             break;
         }
         default: break;
@@ -719,21 +734,8 @@ QGroupBox* ArmyCreator::setup_magic_weapons_tab(const std::unordered_map<std::st
     return box;
 }
 
-QGroupBox* ArmyCreator::setup_magic_armour_tab(const std::unordered_map<std::string, item>& items,
+QGroupBox* ArmyCreator::setup_magic_armour_tab(const std::vector<std::pair<std::string, item>>& opt_armour,
                                                 std::shared_ptr<unit> current) {
-    auto opt_armour = tools::magic_items_vec_of(items, ItemType::ARMOUR);
-    if (opt_armour.empty() || !std::count_if(
-            std::begin(opt_armour),
-            std::end(opt_armour),
-            [&current](const auto& x) {
-                return x.second.allowed_units.empty() || x.second.allowed_units.count(current->name());
-            })
-        ) return nullptr;
-    std::sort(
-        std::begin(opt_armour),
-        std::end(opt_armour),
-        [](const auto& lhs, const auto& rhs) { return lhs.second.points > rhs.second.points; }
-    );
     std::unordered_map<ArmourType, std::tuple<ItemClass, std::string, double>> armour;
     switch (current->base_unit_type()) {
     case BaseUnitType::MAGE_CHARACTER:
@@ -765,15 +767,10 @@ QGroupBox* ArmyCreator::setup_magic_armour_tab(const std::unordered_map<std::str
             continue;
         switch (current->base_unit_type()) {
         case BaseUnitType::MAGE_CHARACTER:
-        {
-            auto p = std::dynamic_pointer_cast<mage_character_unit>(current);
-            if (a.second.points > p->handle->magic_item_budget()) continue;
-            break;
-        }
         case BaseUnitType::MELEE_CHARACTER:
         {
-            auto p = std::dynamic_pointer_cast<melee_character_unit>(current);
-            if (a.second.points > p->handle->magic_item_budget()) continue;
+            auto p = std::dynamic_pointer_cast<character_unit>(current);
+            if (a.second.points > p->handle_->magic_item_budget()) continue;
             break;
         }
         default: break;
@@ -845,22 +842,9 @@ QGroupBox* ArmyCreator::setup_magic_armour_tab(const std::unordered_map<std::str
 }
 
 QGroupBox* ArmyCreator::setup_talismans_tab(
-    const std::unordered_map<std::string, item>& items,
+    const std::vector<std::pair<std::string, item>>& opt_talismans,
     std::shared_ptr<unit> current
 ) {
-    auto opt_talismans = tools::magic_items_vec_of(items, ItemType::TALISMAN);
-    if (opt_talismans.empty() || !std::count_if(
-        std::begin(opt_talismans),
-        std::end(opt_talismans),
-        [&current](const auto& x) {
-            return x.second.allowed_units.empty() || x.second.allowed_units.count(current->name());
-        }
-    )) return nullptr;
-    std::sort(
-        std::begin(opt_talismans),
-        std::end(opt_talismans),
-        [](const auto& lhs, const auto& rhs) { return lhs.second.points > rhs.second.points; }
-    );
     std::pair<std::string, std::pair<ItemClass, double>> talisman;
     switch (current->base_unit_type()) {
     case BaseUnitType::MAGE_CHARACTER:
@@ -888,15 +872,10 @@ QGroupBox* ArmyCreator::setup_talismans_tab(
             continue;
         switch (current->base_unit_type()) {
         case BaseUnitType::MAGE_CHARACTER:
-        {
-            auto p = std::dynamic_pointer_cast<mage_character_unit>(current);
-            if (t.second.points > p->handle->magic_item_budget()) continue;
-            break;
-        }
         case BaseUnitType::MELEE_CHARACTER:
         {
-            auto p = std::dynamic_pointer_cast<melee_character_unit>(current);
-            if (t.second.points > p->handle->magic_item_budget()) continue;
+            auto p = std::dynamic_pointer_cast<character_unit>(current);
+            if (t.second.points > p->handle_->magic_item_budget()) continue;
             break;
         }
         default: break;
@@ -930,21 +909,8 @@ QGroupBox* ArmyCreator::setup_talismans_tab(
 }
 
 QGroupBox* ArmyCreator::setup_enchanted_items_tab(
-    const std::unordered_map<std::string, item>& items,
+    const std::vector<std::pair<std::string, item>>& opt_enchanted,
     std::shared_ptr<unit> current) {
-    auto opt_enchanted = tools::magic_items_vec_of(items, ItemType::ENCHANTED);
-    if (opt_enchanted.empty() || !std::count_if(
-        std::begin(opt_enchanted),
-        std::end(opt_enchanted),
-        [&current](const auto& x) {
-            return x.second.allowed_units.empty() || x.second.allowed_units.count(current->name());
-        }
-    )) return nullptr;
-    std::sort(
-        std::begin(opt_enchanted),
-        std::end(opt_enchanted),
-        [](const auto& lhs, const auto& rhs) { return lhs.second.points > rhs.second.points; }
-    );
     std::pair<std::string, std::pair<ItemClass, double>> enchanted;
     switch (current->base_unit_type()) {
     case BaseUnitType::MAGE_CHARACTER:
@@ -1008,21 +974,8 @@ QGroupBox* ArmyCreator::setup_enchanted_items_tab(
     return box;
 }
 
-QGroupBox* ArmyCreator::setup_arcane_items_tab(const std::unordered_map<std::string, item>& items,
+QGroupBox* ArmyCreator::setup_arcane_items_tab(const std::vector<std::pair<std::string, item>>& opt_arcane,
                                   std::shared_ptr<unit> current) {
-    auto opt_arcane = tools::magic_items_vec_of(items, ItemType::ARCANE);
-    if (opt_arcane.empty() || !std::count_if(
-        std::begin(opt_arcane),
-        std::end(opt_arcane),
-        [&current](const auto& x) {
-            return x.second.allowed_units.empty() || x.second.allowed_units.count(current->name());
-        }
-    )) return nullptr;
-    std::sort(
-        std::begin(opt_arcane),
-        std::end(opt_arcane),
-        [](const auto& lhs, const auto& rhs) { return lhs.second.points > rhs.second.points; }
-    );
     std::pair<std::string, std::pair<ItemClass, double>> arcane;
     switch (current->base_unit_type()) {
     case BaseUnitType::MAGE_CHARACTER:
@@ -1084,21 +1037,8 @@ QGroupBox* ArmyCreator::setup_arcane_items_tab(const std::unordered_map<std::str
     return box;
 }
 
-QGroupBox* ArmyCreator::setup_other_items_tab(const std::unordered_map<std::string, item>& items,
+QGroupBox* ArmyCreator::setup_other_items_tab(const std::vector<std::pair<std::string, item>>& opt_other,
                                std::shared_ptr<unit> current) {
-    auto opt_other = tools::magic_items_vec_of(items, ItemType::OTHER);
-    if (opt_other.empty() || !std::count_if(
-        std::begin(opt_other),
-        std::end(opt_other),
-        [&current](const auto& x) {
-            return x.second.allowed_units.empty() || x.second.allowed_units.count(current->name());
-        }
-    )) return nullptr;
-    std::sort(
-        std::begin(opt_other),
-        std::end(opt_other),
-        [](const auto& lhs, const auto& rhs) { return lhs.second.points > rhs.second.points; }
-    );
     std::unordered_map<std::string, std::pair<ItemClass, double>> others;
     switch (current->base_unit_type()) {
     case BaseUnitType::MAGE_CHARACTER:
@@ -1120,7 +1060,6 @@ QGroupBox* ArmyCreator::setup_other_items_tab(const std::unordered_map<std::stri
     std::vector<QHBoxLayout*> hlayouts(n_adj);
     for (auto& l : hlayouts) l = new QHBoxLayout;
     std::size_t count = 1U;
-    bool has_other = false;
     for (const auto& t : opt_other) {
         if (t.second.allowed_units.size() && !t.second.allowed_units.count(current->name()))
             continue;
@@ -1140,10 +1079,7 @@ QGroupBox* ArmyCreator::setup_other_items_tab(const std::unordered_map<std::stri
         QCheckBox* cb = new QCheckBox(tr((t.first + " (" + pts_str + " pts)").data()));
         cb->setObjectName(QString::fromStdString(button_name));
         cb->setToolTip(tr(t.second.description.data()));
-        if (others.count(t.first)) {
-            cb->setChecked(true);
-            has_other = true;
-        }
+        if (others.count(t.first)) cb->setChecked(true);
         connect(cb, SIGNAL(clicked(bool)), this, SLOT(optional_other_item_selected()));
         hlayouts[count++/max_per_row]->addWidget(cb);
     }
@@ -1156,9 +1092,72 @@ QGroupBox* ArmyCreator::setup_other_items_tab(const std::unordered_map<std::stri
     return box;
 }
 
-QGroupBox* ArmyCreator::setup_banners_tab(const std::unordered_map<std::string, item>& items,
+QGroupBox* ArmyCreator::setup_banners_tab(const std::vector<std::pair<std::string, item>>& opt_banners,
                              std::shared_ptr<unit> current) {
-    return nullptr;
+    std::pair<std::string, std::pair<ItemClass, double>> banner;
+    switch (current->base_unit_type()) {
+    case BaseUnitType::MAGE_CHARACTER:
+    case BaseUnitType::MELEE_CHARACTER:
+    {
+        banner = (std::dynamic_pointer_cast<character_unit>(current))->magic_banner();
+        break;
+    }
+    case BaseUnitType::NORMAL:
+    {
+        banner = (std::dynamic_pointer_cast<normal_unit>(current))->magic_banner();
+        break;
+    }
+    default: return nullptr;
+    }
+    // overall
+    QGroupBox* box = new QGroupBox();
+    QVBoxLayout* vlayout = new QVBoxLayout;
+    const auto max_per_row = 8;
+    auto n_adj = static_cast<std::size_t>(std::ceil(opt_banners.size()/static_cast<double>(max_per_row)));
+    std::vector<QFrame*> frames(n_adj);
+    for (auto& f : frames) f = new QFrame;
+    std::vector<QHBoxLayout*> hlayouts(n_adj);
+    for (auto& l : hlayouts) l = new QHBoxLayout;
+    std::size_t count = 1U;
+    bool has_banner = false;
+    for (const auto& t : opt_banners) {
+        if (t.second.allowed_units.size() && !t.second.allowed_units.count(current->name()))
+            continue;
+        switch (current->base_unit_type()) {
+        case BaseUnitType::NORMAL:
+        {
+            auto p = std::dynamic_pointer_cast<normal_unit>(current);
+            if (t.second.points > p->handle->magic_banner_budget()) continue;
+            break;
+        }
+        default: break;
+        }
+        std::string pts_str = tools::points_str(t.second.points);
+        std::string button_name = t.first + "_" +
+                std::to_string(static_cast<int>(t.second.item_class)) + "_radiobutton";
+        QRadioButton* rb = new QRadioButton(tr((t.first + " (" + pts_str + " pts)").data()));
+        rb->setObjectName(QString::fromStdString(button_name));
+        rb->setToolTip(tr(t.second.description.data()));
+        if (banner.first == t.first) {
+            rb->setChecked(true);
+            has_banner = true;
+        }
+        //connect(rb, SIGNAL(clicked(bool)), this, SLOT(optional_other_item_selected()));
+        hlayouts[count++/max_per_row]->addWidget(rb);
+    }
+    // none button
+    QRadioButton* none_rb = new QRadioButton(tr("None"));
+    none_rb->setObjectName(QString("None_arcane_radiobutton"));
+    if (!has_banner) none_rb->setChecked(true);
+    //connect(none_rb, SIGNAL(clicked(bool)), this, SLOT(optional_arcane_item_selected()));
+    if (!hlayouts.empty()) (*(--std::end(hlayouts)))->addWidget(none_rb);
+    for (auto l : hlayouts) l->addStretch(1);
+    for (auto i = 0U; i < frames.size(); ++i) {
+        frames[i]->setLayout(hlayouts[i]);
+        vlayout->addWidget(frames[i]);
+    }
+    box->setLayout(vlayout);
+    return box;
 }
 
 // unit info box initialisers
@@ -1498,7 +1497,7 @@ std::pair<QGroupBox*, QGroupBox*> ArmyCreator::initialise_opt_weapons_groupbox(s
 QGroupBox* ArmyCreator::initialise_opt_weapons_subgroupbox(
     WeaponType wt, std::shared_ptr<unit> current, bool champion
 ) {
-    std::unordered_map<std::string, std::tuple<WeaponType, ItemClass, double>> opt_weapons;
+    std::unordered_map<std::string, std::tuple<WeaponType, ItemClass, double, std::vector<std::string>>> opt_weapons;
     std::unordered_map<WeaponType, std::tuple<ItemClass, std::string, double>> curr_weapons;
     switch (current->base_unit_type()) {
     case BaseUnitType::MAGE_CHARACTER:
@@ -1642,7 +1641,7 @@ std::pair<QGroupBox*, QGroupBox*> ArmyCreator::initialise_opt_armour_groupbox(st
 QGroupBox* ArmyCreator::initialise_opt_armour_subgroupbox(
     ArmourType at, std::shared_ptr<unit> current, bool champion
 ) {
-    std::unordered_map<std::string, std::tuple<ArmourType, ItemClass, double>> opt_armour;
+    std::unordered_map<std::string, std::tuple<ArmourType, ItemClass, double, std::vector<std::string>>> opt_armour;
     std::unordered_map<ArmourType, std::tuple<ItemClass, std::string, double>> curr_armour;
     switch (current->base_unit_type()) {
     case BaseUnitType::MAGE_CHARACTER:
@@ -1991,10 +1990,6 @@ QGroupBox* ArmyCreator::initialise_opt_mc_extras_groupbox(std::shared_ptr<unit> 
     return mc_box;
 }
 
-void ArmyCreator::on_actionExit_triggered() {
-    QCoreApplication::quit();
-}
-
 void ArmyCreator::on_faction_combobox_currentTextChanged(const QString& faction) {
     race = armies::s_map_string_faction[faction.toStdString()];
     army->clear();
@@ -2064,18 +2059,7 @@ void ArmyCreator::on_roster_tree_currentItemChanged(QTreeWidgetItem *current, QT
         initialise_unit_info_box();
         initialise_unit_options_box();
         opt_sel->reset(st->selected(), in_tree);
-        switch (st->selected()->unit_type()) {
-        case armies::UnitType::LORD:
-        case armies::UnitType::HERO:
-        {
-            init_magic_items_selector(st->selected());
-            break;
-        }
-        default:
-            ui->magic_items_combobox->hide();
-            ui->magic_items_selector->hide();
-            break;
-        }
+        init_magic_items_selector(st->selected());
     }
     else {
         ui->add_button->setEnabled(false);
@@ -2111,17 +2095,7 @@ void ArmyCreator::on_army_tree_currentItemChanged(QTreeWidgetItem *current, QTre
         initialise_unit_options_box();
         int id = current->data(0, Qt::UserRole).toInt();
         opt_sel->reset(army->get_unit(id), in_tree);
-        switch (army->get_unit(id)->unit_type()) {
-        case armies::UnitType::LORD:
-        case armies::UnitType::HERO:
-        {
-            init_magic_items_selector(army->get_unit(id));
-            break;
-        }
-        default:
-            ui->magic_items_selector->hide();
-            break;
-        }
+        init_magic_items_selector(army->get_unit(id));
     }
     else {
         ui->duplicate_button->setEnabled(false);
