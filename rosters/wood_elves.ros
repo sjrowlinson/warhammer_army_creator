@@ -179,3 +179,302 @@ Glade Guard
     0
     25
 
+Dryads
+    Core, Infantry, Normal
+    11
+    10, None
+    5 4 4 3 4 1 5 2 8
+    5 4 4 3 4 1 5 3 8
+    Fear, Forest Spirit, Hatred
+    Fear, Forest Spirit, Hatred
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Champion: Branch Nymph [10]
+    0
+    0
+    0
+    0
+
+Glade Riders
+    Core, Cavalry, Normal
+    19
+    5, None
+    5 4 4 3 3 1 5 1 8
+    5 4 5 3 3 1 5 1 8
+    Always Strikes First, Ambushers, Fast Cavalry, Forest Stalker
+    Always Strikes First, Ambushers, Fast Cavalry, Forest Stalker
+    Weapon: Asrai spear {Mundane} [Melee], Weapon: Asrai longbow {Mundane} [Ballistic]
+    None
+    None
+    None
+    None
+    None
+    Hagbane tips {False} [3], Trueflight arrows {False} [3], Moonfire shot {False} [4], Starfire shafts {False} [4], Swiftshiver shards {False} [4], Arcane bodkins {False} [5]
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Glade Knight [10]
+    0
+    0
+    0
+    25
+
+Eternal Guard
+    Core, Infantry, Normal
+    11
+    10, None
+    5 5 4 3 3 1 5 1 9
+    5 5 4 3 3 1 5 2 9
+    Always Strikes First, Forest Stalker, Stubborn
+    Always Strikes First, Forest Stalker, Stubborn
+    Weapon: Asrai spear {Mundane} [Melee], Armour: Light armour {Mundane} [Armour]
+    None
+    None
+    None
+    Shield {Mundane} [Shield] (1)
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Eternal Warden [10]
+    0
+    0
+    0
+    25
+
+# Special
+
+Wildwood Rangers
+    Special, Infantry, Normal
+    11
+    10, None
+    5 5 4 3 3 1 5 1 9
+    5 5 4 3 3 1 5 2 9
+    Always Strikes First, Forest Strider, Guardians of the Wildwood, Immune to Psychology
+    Always Strikes First, Forest Strider, Guardians of the Wildwood, Immune to Psychology
+    Weapon: Great weapon {Mundane} [Melee], Armour: Light armour {Mundane} [Armour]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Wildwood Warden [10]
+    0
+    0
+    0
+    25
+
+Wardancers
+    Special, Infantry, Normal
+    15
+    5, None
+    5 6 4 3 3 1 6 1 8
+    5 6 4 3 3 1 6 2 8
+    Always Strikes First, Forest Stalker, Immune to Psychology, Shadow Dances of Loec, Skirmishers, Talismanic Tattoos
+    Always Strikes First, Forest Stalker, Immune to Psychology, Shadow Dances of Loec, Skirmishers, Talismanic Tattoos
+    Weapon: Two hand weapons {Mundane} [Melee]
+    None
+    Asrai spear {Mundane} [Melee] (1)
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Champion: Bladesinger [10]
+    0
+    0
+    0
+    0
+
+Tree Kin
+    Special, Monstrous Infantry, Normal
+    45
+    3, None
+    5 4 4 4 5 3 3 3 8
+    5 4 4 4 5 3 3 4 8
+    Fear, Flammable, Forest Spirit, Scaly Skin (4+)
+    Fear, Flammable, Forest Spirit, Scaly Skin (4+)
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Champion: Tree Kin Elder [10]
+    0
+    0
+    0
+    0
+
+Deepwood Scouts
+    Special, Infantry, Normal
+    13
+    5, None
+    5 4 4 3 3 1 5 1 8
+    5 4 5 3 3 1 5 1 8
+    Always Strikes First, Forest Stalker, Scouts, Skirmishers
+    Always Strikes First, Forest Stalker, Scouts, Skirmishers
+    Weapon: Asrai Longbow {Mundane} [Ballistic]
+    None
+    None
+    None
+    None
+    None
+    Hagbane tips {False} [3], Trueflight arrows {False} [3], Moonfire shot {False} [4], Starfire shafts {False} [4], Swiftshiver shards {False} [4], Arcane bodkins {False} [5]
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Master Scout [10]
+    0
+    0
+    0
+    0
+
+Warhawk Riders
+    Special, Monstrous Cavalry, Normal
+    45
+    3, None
+    5 4 4 3 3 1 5 1 8
+    5 4 4 3 3 1 5 2 8
+    Always Strikes First, Flying Cavalry, Forest Stalker
+    Always Strikes First, Flying Cavalry, Forest Stalker
+    Weapon: Asrai spear {Mundane} [Melee], Weapon: Asrai longbow {Mundane} [Ballistic]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Champion: Wind Rider [10]
+    0
+    0
+    0
+    0
+
+Sisters of the Thorn
+    Special, Cavalry, Normal
+    26
+    5, None
+    5 4 5 3 3 1 5 1 9
+    5 4 6 3 3 1 5 1 9
+    Always Strikes First, Daughters of Eternity, Deepwood Coven, Fast Cavalry, Forest Stalker, Poisoned Attacks
+    Always Strikes First, Daughters of Eternity, Deepwood Coven, Fast Cavalry, Forest Stalker, Poisoned Attacks
+    Weapon: Asrai spear {Mundane} [Melee], Weapon: Asrai longbow {Mundane} [Ballistic]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Handmaiden of the Thorn [10]
+    0
+    0
+    0
+    50
+
+Wild Riders
+    Special, Cavalry, Normal
+    26
+    5, None
+    5 5 4 4 3 1 5 1 9
+    5 5 4 4 3 1 5 2 9
+    Always Strikes First, Devastating Charge, Fast Cavalry, Fear, Forest Stalker, Frenzy, Talismanic Tatoos
+    Always Strikes First, Devastating Charge, Fast Cavalry, Fear, Forest Stalker, Frenzy, Talismanic Tatoos
+    Weapon: Asrai spear {Mundane} [Melee], Armour: Light armour {Mundane} [Armour]
+    None
+    None
+    None
+    Shields {Mundane} [Armour] (2)
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Wild Hunter [10]
+    0
+    0
+    0
+    50
+
+# Rare
+
+Waywatchers
+    Rare, Infantry, Normal
+    20
+    5, None
+    5 4 5 3 3 1 5 1 8
+    5 4 6 3 3 1 5 1 8
+    Always Strikes First, Forest Stalker, Hawk-eyed Archer, Scouts, Skirmishers
+    Always Strikes First, Forest Stalker, Hawk-eyed Archer, Scouts, Skirmishers
+    Weapon: Asrai Longbow {Mundane} [Ballistic], Weapon: Two hand weapons {Mundane} [Melee]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Champion: Waywatcher Sentinel [10]
+    0
+    0
+    0
+    0
+
+Great Eagles
+    Rare, Monstrous Beast, Normal
+    50
+    1, None
+    2 5 0 4 4 3 4 2 8
+    2 5 0 4 4 3 4 2 8
+    Fly
+    Fly
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    0
+    0
+    0
+    0
+
+Treeman
+    Rare, Monster, Normal
+    225
+    1, 1
+    5 6 6 5 6 5 2 5 9
+    Flammable, Forest Spirit, Large Target, Scaly Skin (3+), Stubborn, Terror, Tree Whack
+    None
+    Strangleroots {True} [20]

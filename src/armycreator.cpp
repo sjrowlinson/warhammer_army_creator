@@ -5,7 +5,7 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::ArmyCreator) {
     ui->setupUi(this);
-    setFixedSize(1800, 1050);
+    setFixedSize(1800, 1250);
     race = armies::s_map_string_faction[
         ui->faction_combobox->currentText().toStdString()
     ];
@@ -653,7 +653,7 @@ QGroupBox* ArmyCreator::setup_magic_weapons_tab(const std::vector<std::pair<std:
     // melee box
     QGroupBox* mbox = new QGroupBox(tr("Melee"));
     // set-up frames and associated horizontal layouts for melee weapons box
-    const auto max_per_row = 8;
+    const auto max_per_row = 7;
     auto n_melee_adj = static_cast<std::size_t>(std::ceil(std::count_if(std::begin(opt_weapons), std::end(opt_weapons),
                                  [](const auto& x) { return x.second.weapon_type == WeaponType::MELEE; })
                        /static_cast<double>(max_per_row)));
@@ -859,7 +859,7 @@ QGroupBox* ArmyCreator::setup_talismans_tab(
     // overall
     QGroupBox* box = new QGroupBox();
     QVBoxLayout* vlayout = new QVBoxLayout;
-    const auto max_per_row = 8;
+    const auto max_per_row = 7;
     auto n_adj = static_cast<std::size_t>(std::ceil(opt_talismans.size()/static_cast<double>(max_per_row)));
     std::vector<QFrame*> frames(n_adj);
     for (auto& f : frames) f = new QFrame;
@@ -925,7 +925,7 @@ QGroupBox* ArmyCreator::setup_enchanted_items_tab(
     // overall
     QGroupBox* box = new QGroupBox();
     QVBoxLayout* vlayout = new QVBoxLayout;
-    const auto max_per_row = 8;
+    const auto max_per_row = 7;
     auto n_adj = static_cast<std::size_t>(std::ceil(opt_enchanted.size()/static_cast<double>(max_per_row)));
     std::vector<QFrame*> frames(n_adj);
     for (auto& f : frames) f = new QFrame;
@@ -989,7 +989,7 @@ QGroupBox* ArmyCreator::setup_arcane_items_tab(const std::vector<std::pair<std::
     // overall
     QGroupBox* box = new QGroupBox();
     QVBoxLayout* vlayout = new QVBoxLayout;
-    const auto max_per_row = 8;
+    const auto max_per_row = 7;
     auto n_adj = static_cast<std::size_t>(std::ceil(opt_arcane.size()/static_cast<double>(max_per_row)));
     std::vector<QFrame*> frames(n_adj);
     for (auto& f : frames) f = new QFrame;
@@ -1053,7 +1053,7 @@ QGroupBox* ArmyCreator::setup_other_items_tab(const std::vector<std::pair<std::s
     // overall
     QGroupBox* box = new QGroupBox();
     QVBoxLayout* vlayout = new QVBoxLayout;
-    const auto max_per_row = 8;
+    const auto max_per_row = 7;
     auto n_adj = static_cast<std::size_t>(std::ceil(opt_other.size()/static_cast<double>(max_per_row)));
     std::vector<QFrame*> frames(n_adj);
     for (auto& f : frames) f = new QFrame;
@@ -1112,7 +1112,7 @@ QGroupBox* ArmyCreator::setup_banners_tab(const std::vector<std::pair<std::strin
     // overall
     QGroupBox* box = new QGroupBox();
     QVBoxLayout* vlayout = new QVBoxLayout;
-    const auto max_per_row = 8;
+    const auto max_per_row = 7;
     auto n_adj = static_cast<std::size_t>(std::ceil(opt_banners.size()/static_cast<double>(max_per_row)));
     std::vector<QFrame*> frames(n_adj);
     for (auto& f : frames) f = new QFrame;
@@ -1173,6 +1173,7 @@ void ArmyCreator::initialise_unit_info_box() {
         break;
     default: break;
     }
+    ui->unit_info_box->setTitle(tr(u->name().data()));
     // overall layout for unit info box
     QVBoxLayout* vbox = new QVBoxLayout;
     // add points label widget in a frame

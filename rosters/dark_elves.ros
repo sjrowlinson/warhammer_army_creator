@@ -1,0 +1,148 @@
+# Lords
+
+Dreadlord
+    Lord, Melee
+    Infantry
+    140
+    1, 1
+    5 7 7 4 3 3 8 4 10
+    Always Strikes First, Hatred (High Elves), Murderous Prowess
+    Armour: Light armour {Mundane} [Armour]
+    Additional hand weapon {Mundane} [Melee] (3), Halberd {Mundane} [Melee] (3), Lance {Mundane} [Melee] (7), Great weapon {Mundane} [Melee] (6), Repeater crossbow {Mundane} [Ballistic] (5), Repeater handbow {Mundane} [Ballistic] (5), Brace of repeater handbows {Mundane} [Ballistic] (10)
+    Heavy armour {Mundane} [Armour] (6), Shield {Mundane} [Shield] (3)
+    Dark Steed {Cavalry} [20], Cold One {Monstrous Beast} [25], Dark Pegasus {Monstrous Beast} [50], Cold One Chariot {Chariot} [120], Manticore {Monster} [150], Black Dragon {Monster} [300]
+    None
+    Sea Dragon Cloak {True} [8]
+    100
+    0
+    100
+
+Supreme Sorceress
+    Lord, Mage
+    3
+    4 [35]
+    Dark Magic, Lores
+    Infantry
+    185
+    1, 1
+    5 4 4 3 3 3 5 1 9
+    Always Strikes First, Hatred (High Elves), Hekarti's Blessing, Murderous Prowess
+    None
+    None
+    None
+    Dark Steed {Cavalry} [20], Cold One {Monstrous Beast} [25], Dark Pegasus {Monstrous Beast} [50], Manticore {Monster} [150], Black Dragon {Monster} [300]
+    None
+    None
+    100
+    0
+    100
+
+# TODO: handle Sea Dragon cloak in equipment
+High Beastmaster
+    Lord, Melee
+    Infantry
+    300
+    1, 1
+    5 7 7 4 3 3 8 3 9
+    Always Strikes First, Beastslaver, Hatred (High Elves), Murderous Prowess
+    Armour: Light armour {Mundane} [Armour]
+    None
+    None
+    Manticore {Monster} [0], Scourgerunner Chariot {Chariot} [0]
+    None
+    None
+    100
+    0
+    100
+
+# TODO: handle Sea Dragon cloak in equipment
+Black Ark Fleetmaster
+    Lord, Melee
+    Infantry
+    155
+    1, 1
+    5 6 6 4 3 3 7 3 9
+    Always Strikes First, Hatred (High Elves), Murderous Prowess, Show No Weakness
+    Armour: Light armour {Mundane} [Armour], Weapon: Two hand weapons {Mundane} [Melee]
+    None
+    None
+    None
+    None
+    None
+    50
+    0
+    50
+
+# Heroes
+
+Sorceress
+    Hero, Mage
+    1
+    2 [35]
+    Dark Magic, Lores
+    Infantry
+    80
+    1, 1
+    5 4 4 3 3 2 5 1 8
+    Always Strikes First, Hatred (High Elves), Hekarti's Blessing, Murderous Prowess
+    None
+    None
+    None
+    Dark Steed {Cavalry} [10], Cold One {Monstrous Beast} [12], Dark Pegasus {Monstrous Beast} [50]
+    None
+    None
+    50
+    0
+    50
+
+Master
+    Hero, Melee
+    Infantry
+    70
+    1, 1
+    5 7 7 4 3 3 8 4 10
+    Always Strikes First, Hatred (High Elves), Murderous Prowess
+    Armour: Light armour {Mundane} [Armour]
+    Additional hand weapon {Mundane} [Melee] (2), Halberd {Mundane} [Melee] (2), Lance {Mundane} [Melee] (6), Great weapon {Mundane} [Melee] (4), Repeater crossbow {Mundane} [Ballistic] (5), Repeater handbow {Mundane} [Ballistic] (5), Brace of repeater handbows {Mundane} [Ballistic] (10)
+    Heavy armour {Mundane} [Armour] (4), Shield {Mundane} [Shield] (2)
+    Dark Steed {Cavalry} [10], Cold One {Monstrous Beast} [12], Dark Pegasus {Monstrous Beast} [50], Cold One Chariot {Chariot} [120], Manticore {Monster} [150]
+    None
+    Sea Dragon Cloak {True} [8], Battle Standard Bearer {True} [25]
+    100
+    0
+    100
+
+# TODO: 50 point magic item budget only for a single magic weapon
+Death Hag
+    Hero, Melee
+    Infantry
+    85
+    1, 1
+    5 6 6 4 3 2 7 3 9
+    Always Strikes First, Frenzy, Hatred (High Elves), Murderous Prowess, Poisoned Attacks
+    Weapon: Two hand weapons {Mundane} [Melee]
+    None
+    None
+    Cauldron of Blood {Chariot} [190]
+    Cry of War {True} [15], Witchbrew {True} [30], Rune of Khaine {True} [40]
+    Battle Standard Bearer {True} [25]
+    50
+    0
+    50
+
+Khainite Assassin
+    Hero, Melee
+    Infantry
+    90
+    1, 1
+    5 9 9 4 3 2 10 3 8
+    A Killer not a Leader, Always Strikes First, Hatred (High Elves), Hidden, Immune to Psychology, Murderous Prowess, Poisoned Attacks
+    Weapon: Throwing weapons {Mundane} [Ballistic]
+    Additional hand weapon {Mundane} [Melee] (2), Repeater handbow {Mundane} [Ballistic] (5)
+    None
+    None
+    Black Lotus {True} [15], Dark Venom {True} [20], Manbane {True} [20]
+    None
+    50
+    0
+    50
