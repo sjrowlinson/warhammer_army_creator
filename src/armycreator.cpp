@@ -5,7 +5,7 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::ArmyCreator) {
     ui->setupUi(this);
-    setFixedSize(1800, 1250);
+    setFixedSize(1800, 1050);
     race = armies::s_map_string_faction[
         ui->faction_combobox->currentText().toStdString()
     ];
@@ -15,9 +15,6 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
     in_tree = InTree::NEITHER;
     ic_selected = ItemClass::COMMON;
     opt_sel = std::make_shared<option_selector>(st, army);
-    // set magic_item_selector to hidden initially
-    //ui->magic_items_combobox->setHidden(true);
-    //ui->magic_items_selector->setHidden(true);
     // set army list view header sizes
     ui->army_tree->header()->resizeSection(static_cast<int>(ArmyTreeColumn::NAME), 250); // unit name header
     ui->army_tree->header()->resizeSection(static_cast<int>(ArmyTreeColumn::SIZE), 60); // unit size header
@@ -500,15 +497,6 @@ void ArmyCreator::optional_mc_extra_selected() {
 // magic item ui initialisation
 
 void ArmyCreator::init_magic_items_selector(std::shared_ptr<unit> current, ItemType focus) {
-    /*if (focus != ItemType::BANNER) {
-        switch (current->base_unit_type()) {
-        case BaseUnitType::BASE:
-        case BaseUnitType::MIXED:
-        case BaseUnitType::NORMAL:
-            return;
-        default: break;
-        }
-    }*/
     std::shared_ptr<
         std::pair<
             std::string,

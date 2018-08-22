@@ -7,7 +7,7 @@ namespace tools {
 		std::stringstream ss(s);
 		std::string item;
 		while (std::getline(ss, item, delim)) elems.push_back(item);
-		for (auto& _s : elems) tools::remove_leading_whitespaces(_s);
+        for (auto& _s : elems) tools::trim(_s);
 		return elems;
 	}
 
@@ -22,7 +22,7 @@ namespace tools {
 
     std::string points_str(double value) {
         auto tmp = tools::split(std::to_string(value), '.');
-        for (auto& s : tmp) tools::remove_leading_whitespaces(s);
+        for (auto& s : tmp) tools::trim(s);
         return (tools::starts_with(tmp[1], '0')) ? tmp[0] : tmp[0] + "." + tmp[1].substr(0, 1);
     }
 

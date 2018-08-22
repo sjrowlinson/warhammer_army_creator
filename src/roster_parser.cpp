@@ -75,7 +75,7 @@ namespace tools {
             );
             double pts = std::stod(pts_str);
             map[convert[tmp[0]]] = std::make_pair(
-                tools::remove_trailing_whitespaces(name_pts[0]), pts
+                tools::trim(name_pts[0]), pts
             );
         }
         return map;
@@ -118,7 +118,7 @@ namespace tools {
             case 0:
             {
                 auto item_bs = tools::parse_item_bs(vec[1]);
-                std::string name = item_bs[0];
+                std::string name = tools::trim(item_bs[0]);
                 ItemClass ic;
                 if (item_bs[1] == "Mundane") ic = ItemClass::MUNDANE;
                 else if (item_bs[1] == "Magic") ic = ItemClass::MAGIC;
@@ -133,7 +133,7 @@ namespace tools {
             case 1:
             {
                 auto item_bs = tools::parse_item_bs(vec[1]);
-                std::string name = item_bs[0];
+                std::string name = tools::trim(item_bs[0]);
                 ItemClass ic;
                 if (item_bs[1] == "Mundane") ic = ItemClass::MUNDANE;
                 else if (item_bs[1] == "Magic") ic = ItemClass::MAGIC;
@@ -183,7 +183,7 @@ namespace tools {
                 for (auto& r : tools::split(split[1], ',')) replace.push_back(tools::trim(r));
             }
             auto weapon_bsp = tools::parse_item_bsp(split[0]);
-            std::string name = weapon_bsp[0];
+            std::string name = tools::trim(weapon_bsp[0]);
             ItemClass ic;
             if (weapon_bsp[1] == "Mundane") ic = ItemClass::MUNDANE;
             else if (weapon_bsp[1] == "Magic") ic = ItemClass::MAGIC;
@@ -215,7 +215,7 @@ namespace tools {
                 for (auto& r : tools::split(split[1], ',')) replace.push_back(tools::trim(r));
             }
             auto armour_bsp = tools::parse_item_bsp(_s);
-            std::string name = armour_bsp[0];
+            std::string name = tools::trim(armour_bsp[0]);
             ItemClass ic;
             if (armour_bsp[1] == "Mundane") ic = ItemClass::MUNDANE;
             else if (armour_bsp[1] == "Magic") ic = ItemClass::MAGIC;
@@ -271,7 +271,7 @@ namespace tools {
         std::vector<std::string> all = tools::split(s, ',');
         for (const auto& _s : all) {
             auto extras_bs = tools::parse_item_bs(_s);
-            std::string name = extras_bs[0];
+            std::string name = tools::trim(extras_bs[0]);
             bool is_singular = (extras_bs[1] == "True");
             double pts = std::stod(extras_bs[2]);
             um[name] = std::make_pair(is_singular, pts);

@@ -36,6 +36,8 @@ protected:
     double magic_item_points_;
     double faction_item_points_;
     double total_item_points_;
+
+    void pick_magic_item(ItemType item_type, ItemClass item_class, const std::string& name);
 public:
     const std::shared_ptr<base_character_unit> handle_;
 
