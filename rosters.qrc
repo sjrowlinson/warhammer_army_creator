@@ -6,5 +6,7 @@
         <file alias="high_elves.ros">rosters/high_elves.ros</file>
         <file alias="dwarfs.ros">rosters/dwarfs.ros</file>
         <file alias="wood_elves.ros">rosters/wood_elves.ros</file>
+        <file alias="dark_elves.ros">rosters/dark_elves.ros</file>
+        <file alias="beastmen.ros">rosters/beastmen.ros</file>
     </qresource>
 </RCC>

@@ -55,6 +55,7 @@ std::tuple<std::string, std::string, std::string> selection_tree::filenames() co
     case armies::Faction::BEASTMEN:
         roster_file += "beastmen.ros";
         magic_item_file += "beastmen.mag";
+        faction_item_file += "beastmen.fit";
         break;
     case armies::Faction::CHAOS_DWARFS:
         roster_file += "chaos_dwarfs.ros";

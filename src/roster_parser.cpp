@@ -1,5 +1,5 @@
 #include "roster_parser.h"
-#include <iostream>
+
 namespace tools {
 
     roster_parser::roster_parser(const QString& rfile, armies::Faction _faction)
@@ -180,7 +180,7 @@ namespace tools {
             std::vector<std::string> replace;
             auto split = tools::split(_s, ';');
             if (split.size() > 1) {
-                for (auto& r : tools::split(split[1], ',')) replace.push_back(tools::trim(r));
+                for (auto& r : tools::split(split[1], '/')) replace.push_back(tools::trim(r));
             }
             auto weapon_bsp = tools::parse_item_bsp(split[0]);
             std::string name = tools::trim(weapon_bsp[0]);
@@ -212,7 +212,7 @@ namespace tools {
             std::vector<std::string> replace;
             auto split = tools::split(_s, ';');
             if (split.size() > 1) {
-                for (auto& r : tools::split(split[1], ',')) replace.push_back(tools::trim(r));
+                for (auto& r : tools::split(split[1], '/')) replace.push_back(tools::trim(r));
             }
             auto armour_bsp = tools::parse_item_bsp(_s);
             std::string name = tools::trim(armour_bsp[0]);

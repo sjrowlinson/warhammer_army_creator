@@ -1,0 +1,413 @@
+# Lords
+
+Beastlord
+    Lord, Melee
+    Infantry
+    145
+    1, 1
+    5 6 3 5 5 3 5 4 9
+    Primal Fury, Man-bane
+    None
+    Great weapon {Mundane} [Melee] (12), Additional hand weapon {Mundane} [Melee] (8)
+    Light armour {Mundane} [Armour] (3), Heavy armour {Mundane} [Armour] (6), Shield {Mundane} [Shield] (3)
+    Tuskgor Chariot {Chariot} [80], Razorgor Chariot {Chariot} [145]
+    None
+    None
+    100
+    100
+    100
+
+Doombull
+    Lord, Melee
+    Monstrous Infantry
+    235
+    1, 1
+    6 6 3 6 5 5 5 5 8
+    Bloodgreed, Fear, Frenzy, Impact Hits (D3), Slaughterer's Call
+    None
+    Great weapon {Mundane} [Melee] (15), Additional hand weapon {Mundane} [Melee] (8)
+    Light armour {Mundane} [Armour] (6), Heavy armour {Mundane} [Armour] (12), Shield {Mundane} [Shield] (6)
+    None
+    None
+    None
+    100
+    100
+    100
+
+Great Bray-Shaman
+    Lord, Mage
+    3
+    4 [35]
+    Wild, Beasts, Death, Shadow
+    Infantry
+    200
+    1, 1
+    5 5 3 4 5 3 4 2 8
+    Primal Fury
+    None
+    Additional hand weapon {Mundane} [Melee] (4)
+    None
+    Tuskgor Chariot {Chariot} [80], Razorgor Chariot {Chariot} [145]
+    None
+    None
+    100
+    100
+    100
+
+# Heroes
+
+Wargor
+    Hero, Melee
+    Infantry
+    85
+    1, 1
+    5 5 3 4 5 2 4 3 8
+    Primal Fury, Man-bane
+    None
+    Great weapon {Mundane} [Melee] (4), Additional hand weapon {Mundane} [Melee] (4)
+    Light armour {Mundane} [Armour] (2), Heavy armour {Mundane} [Armour] (4), Shield {Mundane} [Shield] (2)
+    Tuskgor Chariot {Chariot} [80], Razorgor Chariot {Chariot} [145]
+    None
+    Battle Standard Bearer {True} [25]
+    50
+    50
+    50
+
+Gorebull
+    Hero, Melee
+    Monstrous Infantry
+    160
+    1, 1
+    6 5 3 5 5 4 4 4 7
+    Bloodgreed, Fear, Frenzy, Impact Hits (D3), Slaughterer's Call
+    None
+    Great weapon {Mundane} [Melee] (10), Additional hand weapon {Mundane} [Melee] (5)
+    Light armour {Mundane} [Armour] (4), Heavy armour {Mundane} [Armour] (8), Shield {Mundane} [Shield] (4)
+    None
+    None
+    Battle Standard Bearer {True} [25]
+    50
+    50
+    50
+
+Bray-Shaman
+    Hero, Mage
+    1
+    2 [35]
+    Wild, Beasts, Death, Shadow
+    Infantry
+    200
+    1, 1
+    5 5 3 4 5 3 4 2 8
+    Primal Fury
+    None
+    Additional hand weapon {Mundane} [Melee] (2)
+    None
+    Tuskgor Chariot {Chariot} [80], Razorgor Chariot {Chariot} [145]
+    None
+    None
+    50
+    50
+    50
+
+# Core
+
+Gor Herd
+    Core, Infantry, Normal
+    7
+    10, None
+    5 4 3 3 4 1 3 1 7
+    5 4 3 3 4 1 3 2 7
+    Primal Fury, Beastman Ambush
+    Primal Fury, Beastman Ambush
+    None
+    None
+    Additional hand weapons {Mundane} [Melee] (1); Shield
+    None
+    Shields {Mundane} [Shield] (1); Melee
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [5], Standard Bearer: Standard Bearer [10], Champion: Foe-render [10]
+    0
+    0
+    0
+    0
+
+Ungor Herd
+    Core, Infantry, Normal
+    5
+    10, None
+    5 3 3 3 3 1 3 1 6
+    5 3 3 3 3 1 3 2 6
+    Primal Fury, Beastman Ambush
+    Primal Fury, Beastman Ambush
+    Armour: Shield {Mundane} [Shield]
+    None
+    Spears {Mundane} [Melee] (1)
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [3], Standard Bearer: Standard Bearer [6], Champion: Halfhorn [6]
+    0
+    0
+    0
+    0
+
+Ungor Raiders
+    Core, Infantry, Normal
+    5
+    5, 10
+    5 3 3 3 3 1 3 1 6
+    5 3 4 3 3 1 3 1 6
+    Primal Fury, Beastman Ambush, Skirmishers
+    Primal Fury, Beastman Ambush, Skirmishers
+    Weapon: Short bow {Mundane} [Ballistic]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [3], Champion: Halfhorn [6]
+    0
+    0
+    0
+    0
+
+Tuskgor Chariot
+    Core, Chariot, Normal
+    80
+    1, 1
+    - 4 3 4 - - 3 1 7
+    - - - 5 4 4 - - -
+    Armour Save (4+), Great weapon (Bestigor only), Spear (Gor only), Primal Fury
+    None
+    None
+
+Chaos Warhounds
+    Core, Warbeast, Normal
+    6
+    5, None
+    7 4 0 3 3 1 3 1 5
+    7 4 0 3 3 1 3 1 5
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Scaly Skin (6+) {False} [1], Poisoned Attacks {False} [3]
+    None
+    None
+    0
+    0
+    0
+    0
+
+# Specials
+
+Minotaurs
+    Special, Monstrous Infantry, Normal
+    55
+    3, None
+    6 4 3 5 4 3 3 3 7
+    6 4 3 5 4 3 3 4 7
+    Bloodgreed, Fear, Impact Hits (1)
+    Bloodgreed, Fear, Impact Hits (1)
+    Armour: Light armour {Mundane} [Armour]
+    None
+    Additional hand weapons {Mundane} [Melee] (4), Great weapons {Mundane} [Melee] (8); Shield
+    None
+    Shields {Mundane} [Shield] (4); Melee
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [20], Champion: Bloodkine [20]
+    25
+    0
+    25
+    0
+
+Centigors
+    Special, Cavalry, Normal
+    25
+    5, None
+    8 4 3 4 4 1 2 2 7
+    8 4 3 4 4 1 2 3 7
+    Primal Fury, Drunken
+    Primal Fury, Drunken
+    Armour: Light armour {Mundane} [Armour], Armour: Shield {Mundane} [Shield], Weapon: Spear {Mundane} [Melee]
+    None
+    Great weapons {Mundane} [Melee] (3); Shields, Throwing axes {Mundane} [Ballistic] (2)
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [7], Standard Bearer: Standard Bearer [14], Champion: Gorehoof [14]
+    0
+    0
+    0
+    0
+
+Harpies
+    Special, Infantry, Normal
+    11
+    5, 10
+    5 3 0 3 3 1 5 2 6
+    5 3 0 3 3 1 5 2 6
+    Fly
+    Fly
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Scouts {False} [3]
+    None
+    None
+    0
+    0
+    0
+    0
+
+Bestigor Herd
+    Special, Infantry, Normal
+    12
+    10, None
+    5 4 3 3 4 1 3 1 7
+    5 4 3 3 4 1 3 2 7
+    Primal Fury, Despoilers
+    Primal Fury, Despoilers
+    Weapon: Great weapon {Mundane} [Melee], Armour: Heavy armour {Mundane} [Armour]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [6], Standard Bearer: Standard Bearer [12], Champion: Gouge-horn [12]
+    0
+    25
+    25
+    50
+
+Razorgor Chariot
+    Special, Chariot, Normal
+    145
+    1, 1
+    - 4 3 4 - - 3 1 7
+    - - - 5 5 5 - - -
+    Armour Save (4+), Great weapon (Bestigor only), Spear (Gor only), Primal Fury, Fear, Thunderous Charge
+    None
+    None
+
+Razorgor Herd
+    Special, Monstrous Beast, Normal
+    55
+    1, None
+    7 3 0 5 5 3 2 4 6
+    7 3 0 5 5 3 2 4 6
+    Fear, Thunderous Charge
+    Fear, Thunderous Charge
+    Weapon: Tusks hooves and a bad attitude {Mundane} [Melee]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    0
+    0
+    0
+    0
+
+# Rare
+
+Cygor
+    Rare, Monster, Normal
+    275
+    1, 1
+    7 2 1 6 5 5 3 5 8
+    Ghostsight, Hurl Attack, Immune to Psychology, Large Target, Magic Resistance (2), Soul-eater, Stubborn, Terror
+    None
+    None
+
+Ghorgon
+    Rare, Monster, Normal
+    275
+    1, 1
+    7 4 0 6 6 6 3 6 10
+    Bloodgreed, Frenzy, Immune to Psychology, Large Target, Strength from Flesh, Stubborn, Swallow Whole, Terror
+    None
+    None
+
+Chaos Spawn
+    Rare, Monstrous Beast, Normal
+    55
+    1, 1
+    2D6 3 0 4 5 3 2 D6+1 10
+    2D6 3 0 4 5 3 2 D6+1 10
+    Fear, Flailing Appendages, Lurching Horror, Unbreakable
+    Fear, Flailing Appendages, Lurching Horror, Unbreakable
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    0
+    0
+    0
+    0
+
+Giant
+    Rare, Monster, Normal
+    225
+    1, 1
+    6 3 3 6 5 6 3 * 10
+    Fall Over, Giant Special Attacks, Large Target, Stubborn, Terror, Immune to Psychology, Longshanks
+    None
+    None
+
+Jabberslythe
+    Rare, Monster, Normal
+    275
+    1, 1
+    8 4 4 5 5 5 3 5 9
+    Aura of Madness, Fly, Immune to Psychology, Large Target, Poisoned Attacks, Slythey Tongue, Spurting Bile-blood, Terror
+    None
+    None

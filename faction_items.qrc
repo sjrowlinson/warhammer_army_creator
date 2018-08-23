@@ -2,5 +2,6 @@
     <qresource prefix="/faction_items">
         <file alias="skaven.fit">faction_items/skaven.fit</file>
         <file alias="woc.fit">faction_items/woc.fit</file>
+        <file alias="beastmen.fit">faction_items/beastmen.fit</file>
     </qresource>
 </RCC>

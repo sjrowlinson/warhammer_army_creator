@@ -146,3 +146,396 @@ Khainite Assassin
     50
     0
     50
+
+# Core
+
+Dreadspears
+    Core, Infantry, Normal
+    9
+    10, None
+    5 4 4 3 3 1 5 1 8
+    5 4 4 3 3 1 5 2 8
+    Always Strikes First, Hatred (High Elves), Murderous Prowess
+    Always Strikes First, Hatred (High Elves), Murderous Prowess
+    Weapon: Spear {Mundane} [Melee], Armour: Light armour {Mundane} [Armour], Armour: Shield {Mundane} [Shield]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Lordling [10]
+    0
+    0
+    0
+    25
+
+Bleakswords
+    Core, Infantry, Normal
+    9
+    10, None
+    5 4 4 3 3 1 5 1 8
+    5 4 4 3 3 1 5 2 8
+    Always Strikes First, Hatred (High Elves), Murderous Prowess
+    Always Strikes First, Hatred (High Elves), Murderous Prowess
+    Armour: Light armour {Mundane} [Armour], Armour: Shield {Mundane} [Shield]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Lordling [10]
+    0
+    0
+    0
+    25
+
+Darkshards
+    Core, Infantry, Normal
+    12
+    10, None
+    5 4 4 3 3 1 5 1 8
+    5 4 5 3 3 1 5 1 8
+    Always Strikes First, Hatred (High Elves), Murderous Prowess
+    Always Strikes First, Hatred (High Elves), Murderous Prowess
+    Armour: Light armour {Mundane} [Armour], Weapon: Repeater crossbow {Mundane} [Ballistic]
+    None
+    None
+    None
+    Shields {Mundane} [Shield] (1)
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Guardmaster [10]
+    0
+    0
+    0
+    25
+
+# TODO: handle Sea Dragon cloak in equipment
+Black Ark Corsairs
+    Core, Infantry, Normal
+    9
+    10, None
+    5 4 4 3 3 1 5 1 8
+    5 4 4 3 3 1 5 2 8
+    Always Strikes First, Hatred (High Elves), Murderous Prowess
+    Always Strikes First, Hatred (High Elves), Murderous Prowess
+    Armour: Light armour {Mundane} [Armour]
+    None
+    Additional hand weapons {Mundane} [Melee] (2), Repeater handbows {Mundane} [Ballistic] (2)
+    Brace of repeater handbows {Mundane} [Ballistic] (4)
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Reaver [10]
+    0
+    0
+    0
+    25
+
+Dark Riders
+    Core, Cavalry, Normal
+    16
+    5, None
+    5 4 4 3 3 1 5 1 8
+    5 4 5 3 3 1 5 1 8
+    Always Strikes First, Fast Cavalry, Hatred (High Elves), Murderous Prowess
+    Always Strikes First, Fast Cavalry, Hatred (High Elves), Murderous Prowess
+    Weapon: Spear {Mundane} [Melee], Armour: Light armour {Mundane} [Armour]
+    None
+    Repeater crossbows {Mundane} [Ballistic] (3)
+    None
+    Shields {Mundane} [Shield] (2)
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Herald [10]
+    0
+    0
+    0
+    0
+
+Witch Elves
+    Core, Infantry, Normal
+    11
+    10, None
+    5 4 4 3 3 1 6 1 8
+    5 4 4 3 3 1 6 2 8
+    Always Strikes First, Frenzy, Hatred (High Elves), Madness of Khaine, Murderous Prowess, Poisoned Attacks
+    Always Strikes First, Frenzy, Hatred (High Elves), Madness of Khaine, Murderous Prowess, Poisoned Attacks
+    Weapon: Two hand weapons {Mundane} [Melee]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Hag [10]
+    0
+    0
+    0
+    50
+
+# Special
+
+# TODO: champion magic item for weapon only
+Cold One Knights
+    Special, Cavalry, Normal
+    30
+    5, None
+    5 5 4 4 3 1 6 1 9
+    5 5 4 4 3 1 6 2 9
+    Always Strikes First, Fear, Hatred (High Elves), Murderous Prowess, Stupidity, Thick-shinned
+    Always Strikes First, Fear, Hatred (High Elves), Murderous Prowess, Stupidity, Thick-shinned
+    Weapon: Lance {Mundane} [Melee], Armour: Heavy armour {Mundane} [Armour], Armour: Shield {Mundane} [Shield]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Dread Knight [10]
+    25
+    0
+    25
+    50
+
+# TODO: champion magic item for weapon only
+Black Guard of Naggarond
+    Special, Infantry, Normal
+    15
+    10, None
+    5 5 4 3 3 1 6 2 9
+    5 5 4 3 3 1 6 3 9
+    Always Strikes First, Eternal Hatred, Immune to Psychology, Murderous Prowess, Stubborn
+    Always Strikes First, Eternal Hatred, Immune to Psychology, Murderous Prowess, Stubborn
+    Weapon: Halberd {Mundane} [Melee], Armour: Heavy armour {Mundane} [Armour]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Tower Master [10]
+    25
+    0
+    25
+    50
+
+Shades
+    Special, Infantry, Normal
+    16
+    5, None
+    5 5 5 3 3 1 5 1 8
+    5 5 6 3 3 1 5 1 8
+    Always Strikes First, Hatred (High Elves), Murderous Prowess, Scouts, Skirmishers
+    Always Strikes First, Hatred (High Elves), Murderous Prowess, Scouts, Skirmishers
+    Weapon: Repeater crossbow {Mundane} [Ballistic]
+    None
+    Additional hand weapons {Mundane} [Melee] (2), Great weapons {Mundane} [Melee] (2)
+    None
+    Light armour {Mundane} [Armour] (1)
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Bloodshade [10]
+    0
+    0
+    0
+    0
+
+Cold One Chariot
+    Special, Chariot, Normal
+    115
+    1, 1
+    - 5 4 4 - - 6 1 9
+    - - - 5 4 4 - - -
+    Armour Save (3+), Spears (crew only), Repeater crossbows (crew only), Always Strikes First, Fear, Hatred (High Elves), Murderous Prowess, Stupidity
+    None
+    None
+
+Har Ganeth Executioners
+    Special, Infantry, Normal
+    12
+    10, None
+    5 5 4 4 3 1 5 1 9
+    5 5 4 4 3 1 5 2 9
+    Always Strikes First, Hatred (High Elves), Killing Blow, Murderous Prowess
+    Always Strikes First, Hatred (High Elves), Killing Blow, Murderous Prowess
+    Weapon: Great weapon {Mundane} [Melee], Armour: Heavy armour {Mundane} [Armour]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Draich Master [10]
+    0
+    0
+    0
+    50
+
+Repeater Bolt Thrower
+    Special, Warmachine, Normal
+    70
+    1, 1
+    - - - - 7 2 - - -
+    5 4 4 3 3 1 5 1 8
+    Repeater Bolt Thrower, Always Strikes First, Hatred (High Elves), Murderous Prowess
+    None
+    None
+
+Harpies
+    Special, Infantry, Normal
+    15
+    5, None
+    5 3 0 3 3 1 5 2 6
+    5 3 0 3 3 1 5 2 6
+    Fly
+    Fly
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    0
+    0
+    0
+    0
+
+Scourgerunner Chariot
+    Special, Chariot, Normal
+    150
+    1, 1
+    - 4 4 3 - - 5 2 8
+    - - - 4 4 4 - - -
+    Armour Save (5+), Spears (crew only), Ravager harpoon {chariot}, Repeater crossbows (crew only), Always Strikes First, Fear, Hatred (High Elves), Murderous Prowess, Stupidity
+    None
+    None
+
+War Hydra
+    Special, Monster, Normal
+    160
+    1, 1
+    6 4 4 5 5 5 2 3+* 6
+    If One Head is Severed..., ...Another Takes its Place, Large Target, Scaly Skin (4+), Terror
+    Fiery Breath {True} [20], Spit Fire {True} [20]
+    None
+
+# Rare
+
+Doomfire Warlocks
+    Rare, Cavalry, Normal
+    25
+    5, None
+    5 4 4 4 3 1 5 2 8
+    5 4 4 4 3 1 5 3 8
+    Always Strikes First, Cursed Coven, Fast Cavalry, Hatred (High Elves), Murderous Prowess, Poisoned Attacks, Prey of the Dark Prince
+    Always Strikes First, Cursed Coven, Fast Cavalry, Hatred (High Elves), Murderous Prowess, Poisoned Attacks, Prey of the Dark Prince
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Champion: Master of Warlocks [10]
+    0
+    0
+    0
+    0
+
+Bloodwrack Medusa
+    Rare, Monstrous Infantry, Normal
+    90
+    1, 1
+    7 5 5 4 4 3 5 3 2
+    7 5 5 4 4 3 5 3 2
+    Always Strikes First, Avert Your Gaze!, Bloodwrack Stare, Fear, Frenzy, Hatred (High Elves), Murderous Prowess
+    Always Strikes First, Avert Your Gaze!, Bloodwrack Stare, Fear, Frenzy, Hatred (High Elves), Murderous Prowess
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    0
+    0
+    0
+    0
+
+Kharibdyss
+    Rare, Monster, Normal
+    160
+    1, 1
+    6 5 0 7 5 5 4 5 6
+    Abyssal Howl, Feast of Bones, Large Target, Poisoned Attacks, Scaly Skin (4+), Terror
+    None
+    None
+
+Sisters of Slaughter
+    Rare, Infantry, Normal
+    15
+    10, None
+    5 6 4 3 3 1 6 2 9
+    5 6 4 3 3 1 6 3 9
+    Always Strikes First, Dance of Death, Hatred (High Elves), Murderous Prowess, The Trial of Blades
+    Always Strikes First, Dance of Death, Hatred (High Elves), Murderous Prowess, The Trial of Blades
+    Armour: Shield {Mundane} [Shield]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Handmaiden of Shards [10]
+    0
+    0
+    0
+    50

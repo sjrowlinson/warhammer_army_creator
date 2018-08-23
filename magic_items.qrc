@@ -6,5 +6,7 @@
         <file alias="common.mag">magic_items/common.mag</file>
         <file alias="high_elves.mag">magic_items/high_elves.mag</file>
         <file alias="wood_elves.mag">magic_items/wood_elves.mag</file>
+        <file alias="dark_elves.mag">magic_items/dark_elves.mag</file>
+        <file alias="beastmen.mag">magic_items/beastmen.mag</file>
     </qresource>
 </RCC>

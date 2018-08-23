@@ -1,0 +1,193 @@
+Treasures of the Herdstones
+
+# Weapons
+
+Primeval Club
+    Weapon, Melee
+    100
+    When rolling To Wound, the owner's Strength is treated as equal to the unmodified Leadership value of the target model.
+    None
+
+Axe of Men
+    Weapon, Melee
+    75
+    This weapon has the Killing Blow special rule. In addition, if the bearer kills an enemy character in a challenge, he and any unit he leads are Unbreakable and cause Terror so long as he leads them.
+    None
+
+Stonecrusher Mace
+    Weapon, Melee
+    65
+    The Stonecrusher Mace confers +3 Strength. When rolling To Wound against war machines and chariots or buildings, the character's Strength is increased to 10.
+    None
+
+Mangelder
+    Weapon, Melee
+    50
+    The bearer causes Terror. In addition, any model wounded by this weapon loses 1 point of Leadership for each Wound it suffers.
+    None
+
+Hunting Spear
+    Weapon, Melee
+    50
+    The Hunting Spear counts as a spear in close combat. It can be thrown with a range of 24". Resolve each hit like a single bolt from a bolt thrower. Note that you may shoot after moving (but not marching) and stand & shoot with the Hunting Spear.
+    None
+
+Axes of Khorgor
+    Weapon, Melee
+    40
+    Requires two hands. The bearer gains +1 Attack and may re-roll any missed To Hit rolls in close combat.
+    None
+
+The Steel-Claws
+    Weapon, Melee
+    35
+    Requires two hands. The Steel-Claws confer an extra 03 Attacks to the wielder (roll at the beginning of each round of close combat) . If a 6 is rolled when determining the number of attacks, all the bearer's attacks that round will ignore armour saves.
+    None
+
+The Brass Cleaver
+    Weapon, Melee
+    30
+    The Brass Cleaver confers a single bonus attack against each of the models in base contact with the bearer. In a challenge it confers one bonus attack and no more.
+    None
+
+Everbleed
+    Weapon, Melee
+    25
+    Every time an enemy model suffers an unsaved wound from this weapon, roll a D6. On the result of a 6, the enemy loses an additional wound, with no saves of any kind allowed, and you must roll again. Keep on rolling as long as the result is a 6.
+    None
+
+# Armour
+
+Blade-Blunter Armour
+    Armour, Armour
+    50
+    Heavy armour. At the end of each round of close combat, roll a D6 for each magic weapon that hit the wearer of the armour. On the result of a 2+, the enemy item loses its special rules and ceases to count as a magic weapon. Instead it will count as a normal weapon of its type for the remainder of the battle.
+    None
+
+Trollhide
+    Armour, Armour
+    50
+    Light armour. The wearer gains the Regeneration rule.
+    None
+
+Pelt of the Shadowgave
+    Armour, Armour
+    45
+    Light armour. All shooting attacks directed at the bearer or his unit are at -1 To Hit. Spells that target the bearer or his unit deduct 2 from the casting roll.
+    None
+
+Blackened Plate
+    Armour, Armour
+    20
+    Heavy armour. The wearer of the Blackened Plate has a 2+ ward save against all flaming attacks. Models in any unit that he is with have a 4+ ward save against such attacks.
+    None
+
+Ramhorn Helm
+    Armour, Helmet
+    15
+    6+ armour save. This may be combined with other armour as normal. For every armour save he passes, the bearer may immediately make a bonus attack at his basic Strength.
+    None
+
+# Enchanted items
+
+Shard of the Herdstone
+    Enchanted
+    50
+    At the start of your Magic phase each friendly Wizard within 6" of the herdstone generates an additional power dice.
+    None
+
+Horn of the Great Hunt
+    Enchanted
+    50
+    Bound Spell. Power Level 3. It counts as the Bestial Surge spell, except that every friendly Beastman unit within 36" is affected.
+    Beastlord, Wargor
+
+Horn of the First Beast
+    Enchanted
+    50
+    All Beastmen units within 36" can re-roll failed Primal Fury tests.
+    Beastlord, Wargor
+
+Stone of Spite
+    Enchanted
+    25
+    One use only. Bound spell. Power Level 5. Every Arcane Item within 18" immediately explodes in the hands of its bearer (friend and foe). Each bearer of an Arcane Item within range suffers D6 Strength 4 hits per item. The items are immediately destroyed.
+    None
+
+Skin of Man
+    Enchanted
+    15
+    The bearer of the Skin of Man has the Scout ability.
+    Bray-Shaman
+
+Cacophonous Dirge
+    Enchanted
+    15
+    Enemy musicians fighting in the same combat as the bearer have no effect.
+    None
+
+# Talismans
+
+Eye of Night
+    Talisman
+    45
+    The Eye of Night grants the bearer Magic Resistance (2). In addition, if an enemy Wizard within 24" attempts to cast a spell from the tore of Life, the Lore of Heavens or the Lore of Light and suffers a miscast, you may force them to re-roll the result on the Miscast table.
+    None
+
+Chalice of Dark Rain
+    Talisman
+    40
+    One use only. At the beginning of the enemy Shooting phase, the bearer can summon a storm of mud and worms with which to blind his enemies. For the rest of the phase, all enemy missile units are at -1 To Hit. Weapons or attacks that do not use Ballistic Skill may only fire on the roll of a 4+.
+    None
+
+# Arcane Items
+
+Skull of Rarkos
+    Arcane
+    60
+    All friendly Beastman Wizards within 6" (including the bearer himself) add 1 to their casting results.
+    Great Bray-Shaman, Bray-Shaman
+
+Staff of Darkoth
+    Arcane
+    50
+    Bound spell. Power Level 3. This item casts the Viletide spell.
+    Great Bray-Shaman, Bray-Shaman
+
+Hagtree Fetish
+    Arcane
+    20
+    Choose an enemy unit within 24" at the start of each Magic phase. Any failed To Wound rolls made during the Magic phase against that unit may be re-rolled.
+    Great Bray-Shaman, Bray-Shaman
+
+Jagged Dagger
+    Arcane
+    10
+    Every enemy model killed in close combat by the bearer of the Jagged Dagger must be kept to one side. Each model kept to the side in such a manner may be 'expended' in the Magic phase to allow the bearer to roll an additional power dice.
+    Great Bray-Shaman, Bray-Shaman
+
+# Magic Banners
+
+The Beast Banner
+    Banner
+    75
+    The bearer and any unit he has joined have a +1 bonus to their Strength.
+    None
+
+Totem of Rust
+    Banner
+    50
+    All units, friend or foe, within 6" of the Totem of Rust treat their armour save as one worse than it actually is. For instance, a model with heavy armour would only have an armour save of 6+. All units in base contact with the unit carrying the totem, including the unit itself, treat their armour saves as two worse than it actually is instead. This does not affect Scaly Skin saves!
+    None
+
+Manbane Standard
+    Banner
+    35
+    All enemy units within 6" of the Manbane Standard suffer -1 to their Leadership characteristic.
+    None
+
+The Banner of Outrage
+    Banner
+    20
+    The bearer's unit automatically passes Primal Fury tests (there is no need to roll). Enemy units Hate the bearer's unit.
+    None
