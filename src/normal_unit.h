@@ -108,7 +108,7 @@ public:
     std::unordered_map<
         CommandGroup, std::pair<std::string, double>
     > command() const noexcept;
-    std::pair<std::string, std::pair<ItemClass, double>> magic_banner() const noexcept;
+    std::pair<std::string, std::pair<ItemClass, double>> magic_banner() const noexcept override;
 
     // current property modifiers
     void pick_weapon(ItemClass item_type, std::string name) override;
@@ -129,8 +129,8 @@ public:
 
     void add_command_member(CommandGroup member);
     void remove_command_member(CommandGroup member);
-    void pick_banner(ItemClass item_type, std::string name);
-    void remove_banner();
+    void pick_banner(ItemClass item_type, std::string name) override;
+    void remove_banner() override;
 
     void pick_oco_extra(std::string name) override;
     void pick_mc_extra(std::string name) override;

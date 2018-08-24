@@ -72,7 +72,7 @@ public:
         std::pair<armies::UnitClass, double>
     > mount() const noexcept override;
 
-    std::pair<std::string, std::pair<ItemClass, double>> magic_banner() const noexcept;
+    std::pair<std::string, std::pair<ItemClass, double>> magic_banner() const noexcept override;
 
     // current property modifiers
     void pick_weapon(ItemClass item_type, std::string name) override;
@@ -99,8 +99,8 @@ public:
     void pick_mount(std::string name) override;
     void remove_mount() override;
 
-    void pick_banner(ItemClass item_class, std::string name);
-    void remove_banner();
+    void pick_banner(ItemClass item_class, std::string name) override;
+    void remove_banner() override;
 
 };
 

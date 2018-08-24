@@ -70,6 +70,7 @@ private slots:
     void optional_talisman_selected();
     void optional_enchanted_item_selected();
     void optional_other_item_selected();
+    void optional_banner_selected();
     void optional_arcane_item_selected();
     void optional_level_selected();
     void optional_mount_selected();

@@ -90,6 +90,15 @@ std::pair<
     }
 }
 
+std::pair<std::string, std::pair<ItemClass, double>> mixed_unit::magic_banner() const noexcept {
+    switch (mixed_select_) {
+    case MixedSelect::MASTER:
+        return master_.magic_banner();
+    case MixedSelect::SLAVE:
+        return slave_.magic_banner();
+    }
+}
+
 void mixed_unit::pick_weapon(ItemClass item_type, std::string name) {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
@@ -196,6 +205,28 @@ void mixed_unit::remove_mount() {
         break;
     case MixedSelect::SLAVE:
         slave_.remove_mount();
+        break;
+    }
+}
+
+void mixed_unit::pick_banner(ItemClass item_class, std::string name) {
+    switch (mixed_select_) {
+    case MixedSelect::MASTER:
+        master_.pick_banner(item_class, name);
+        break;
+    case MixedSelect::SLAVE:
+        slave_.pick_banner(item_class, name);
+        break;
+    }
+}
+
+void mixed_unit::remove_banner() {
+    switch (mixed_select_) {
+    case MixedSelect::MASTER:
+        master_.remove_banner();
+        break;
+    case MixedSelect::SLAVE:
+        slave_.remove_banner();
         break;
     }
 }

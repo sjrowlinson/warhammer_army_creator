@@ -102,16 +102,14 @@ void character_unit::pick_magic_item(ItemType item_type, ItemClass item_class, c
             }
             break;
         case ItemType::BANNER:
-            if (!banner.first.empty()) {
-                adj_mip -= banner.second.second;
-                adj_tip -= banner.second.second;
-            }
             break;
         default: break;
         }
-        if ((search->second.points + adj_mip > mi_budget) ||
-                (search->second.points + adj_tip > ti_budget))
-            throw std::runtime_error("Item budget exceeded!");
+        if (item_type != ItemType::BANNER) {
+            if ((search->second.points + adj_mip > mi_budget) ||
+                    (search->second.points + adj_tip > ti_budget))
+                throw std::runtime_error("Item budget exceeded!");
+        }
         // check if the item has specific allowed units
         if (!(search->second.allowed_units.empty())) {
             std::string unit_name = this->name();
@@ -157,9 +155,11 @@ void character_unit::pick_magic_item(ItemType item_type, ItemClass item_class, c
         default: break;
         }
         points_ += search->second.points;
-        if (item_class == ItemClass::FACTION) faction_item_points_ += search->second.points;
-        else magic_item_points_ += search->second.points;
-        total_item_points_ += search->second.points;
+        if (item_type != ItemType::BANNER) {
+            if (item_class == ItemClass::FACTION) faction_item_points_ += search->second.points;
+            else magic_item_points_ += search->second.points;
+            total_item_points_ += search->second.points;
+        }
         break;
     }
     case ItemClass::MUNDANE: break;

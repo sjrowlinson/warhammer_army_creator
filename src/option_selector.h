@@ -37,6 +37,7 @@ public:
     bool select_enchanted_item(const std::string& s);
     bool select_arcane_item(const std::string& s);
     bool select_other_item(const std::string& s, bool is_checked);
+    bool select_banner(const std::string& s);
     bool select_mage_level(const std::string& s);
     bool select_mount(const std::string& s);
     bool select_command(const std::string& s, bool is_checked);

@@ -370,6 +370,34 @@ void ArmyCreator::optional_other_item_selected() {
     init_magic_items_selector(u, ItemType::OTHER);
 }
 
+void ArmyCreator::optional_banner_selected() {
+    QRadioButton* rb = qobject_cast<QRadioButton*>(QObject::sender());
+    std::string rb_name = rb->objectName().toStdString();
+    try {
+        if (opt_sel->select_banner(rb_name)) {
+            ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+            update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::EXTRAS);
+            update_validity_label();
+        }
+    } catch (const std::exception& e) {
+        QMessageBox message_box;
+        message_box.critical(nullptr, tr("Error"), tr(e.what()));
+        message_box.setFixedSize(500, 200);
+    }
+    clear_magic_items_selector();
+    std::shared_ptr<unit> u;
+    switch (in_tree) {
+    case InTree::ARMY:
+        u = army->get_unit(ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt());
+        break;
+    case InTree::ROSTER:
+        u = st->selected();
+        break;
+    default: return;
+    }
+    init_magic_items_selector(u, ItemType::BANNER);
+}
+
 void ArmyCreator::optional_arcane_item_selected() {
     QRadioButton* rb = qobject_cast<QRadioButton*>(QObject::sender());
     std::string rb_name = rb->objectName().toStdString();
@@ -1128,7 +1156,7 @@ QGroupBox* ArmyCreator::setup_banners_tab(const std::vector<std::pair<std::strin
     for (auto& f : frames) f = new QFrame;
     std::vector<QHBoxLayout*> hlayouts(n_adj);
     for (auto& l : hlayouts) l = new QHBoxLayout;
-    std::size_t count = 1U;
+    std::size_t count = 0U;
     bool has_banner = false;
     for (const auto& t : opt_banners) {
         if (t.second.allowed_units.size() && !t.second.allowed_units.count(current->name()))
@@ -1152,14 +1180,14 @@ QGroupBox* ArmyCreator::setup_banners_tab(const std::vector<std::pair<std::strin
             rb->setChecked(true);
             has_banner = true;
         }
-        //connect(rb, SIGNAL(clicked(bool)), this, SLOT(optional_other_item_selected()));
+        connect(rb, SIGNAL(clicked(bool)), this, SLOT(optional_banner_selected()));
         hlayouts[count++/max_per_row]->addWidget(rb);
     }
     // none button
     QRadioButton* none_rb = new QRadioButton(tr("None"));
     none_rb->setObjectName(QString("None_arcane_radiobutton"));
     if (!has_banner) none_rb->setChecked(true);
-    //connect(none_rb, SIGNAL(clicked(bool)), this, SLOT(optional_arcane_item_selected()));
+    connect(none_rb, SIGNAL(clicked(bool)), this, SLOT(optional_banner_selected()));
     if (!hlayouts.empty()) (*(--std::end(hlayouts)))->addWidget(none_rb);
     for (auto l : hlayouts) l->addStretch(1);
     for (auto i = 0U; i < frames.size(); ++i) {
@@ -2489,6 +2517,14 @@ void ArmyCreator::update_unit_display(
                     );
                 }
             }
+        }
+        auto banner = u->magic_banner();
+        if (!(banner.first.empty())) {
+            if (!extras_str.isEmpty()) extras_str += QString("\n");
+            extras_str += QString("%1 [%2]").arg(
+                              banner.first.data(),
+                              QString("%1").arg(banner.second.second)
+                          );
         }
         item->setText(static_cast<int>(column), extras_str);
         update_unit_display(item, adding, ArmyTreeColumn::POINTS, copying);

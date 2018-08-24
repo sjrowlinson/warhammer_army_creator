@@ -251,6 +251,37 @@ bool option_selector::select_other_item(const std::string& s, bool is_checked) {
     }
 }
 
+bool option_selector::select_banner(const std::string& s) {
+    auto split = tools::split(s, '_');
+    auto banner = split[0];
+    if (banner == "None") {
+        switch (in_tree) {
+        case InTree::ARMY:
+            army->take_snapshot_of(current->id());
+            current->remove_banner();
+            army->update_on(current->id());
+            return true;
+        case InTree::ROSTER:
+            current->remove_banner();
+            return false;
+        default: throw std::runtime_error("No unit selected!");
+        }
+    } else {
+        ItemClass ic = static_cast<ItemClass>(std::stoi(split[1]));
+        switch (in_tree) {
+        case InTree::ARMY:
+            army->take_snapshot_of(current->id());
+            current->pick_banner(ic, banner);
+            army->update_on(current->id());
+            return true;
+        case InTree::ROSTER:
+            current->pick_banner(ic, banner);
+            return false;
+        default: throw std::runtime_error("No unit selected!");
+        }
+    }
+}
+
 bool option_selector::select_arcane_item(const std::string& s) {
     auto split = tools::split(s, '_');
     auto arcane = split[0];

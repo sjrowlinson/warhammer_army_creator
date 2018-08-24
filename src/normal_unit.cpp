@@ -515,11 +515,20 @@ void normal_unit::pick_banner(ItemClass item_type, std::string name) {
         throw std::runtime_error("Unit contains no standard bearer!");
     switch (item_type) {
     case ItemClass::MAGIC:
+    case ItemClass::COMMON:
     {
-        auto search = handle->magic_items_handle()->second.find(name);
-        if (search == handle->magic_items_handle()->second.end())
-            throw std::invalid_argument("Magic banner not found!");
-        if (search->second.points > handle->magic_banner_budget())
+        std::unordered_map<std::string, item>::const_iterator search;
+        if (item_type == ItemClass::MAGIC) {
+            search = handle->magic_items_handle()->second.find(name);
+            if (search == handle->magic_items_handle()->second.end())
+                throw std::invalid_argument("Magic banner not found!");
+        } else {
+            search = handle->common_items_handle()->second.find(name);
+            if (search == handle->common_items_handle()->second.end())
+                throw std::invalid_argument("Magic banner not found!");
+        }
+        double adj_bb = (banner.first.empty()) ? 0.0 : banner.second.second;
+        if (search->second.points - adj_bb > handle->magic_banner_budget())
             throw std::invalid_argument("Magic banner beyond budget!");
         // check if the magic weapon has specific allowed units
         if (!(search->second.allowed_units.empty())) {
@@ -538,9 +547,6 @@ void normal_unit::pick_banner(ItemClass item_type, std::string name) {
     }
     case ItemClass::FACTION:
         // TODO: implement once we have a faction_items handle
-        break;
-    case ItemClass::COMMON:
-        // TODO: implement once we have a common_items handle
         break;
     default: break;
     }

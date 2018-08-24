@@ -60,6 +60,8 @@ public:
         std::pair<armies::UnitClass, double>
     > mount() const noexcept override;
 
+    std::pair<std::string, std::pair<ItemClass, double>> magic_banner() const noexcept override;
+
     void pick_weapon(ItemClass item_type, std::string name) override;
     void remove_weapon(WeaponType wt, bool replacing=false) override;
     void pick_armour(ItemClass item_type, std::string name) override;
@@ -70,6 +72,8 @@ public:
     void remove_mc_extra(std::string name) override;
     void pick_mount(std::string name) override;
     void remove_mount() override;
+    void pick_banner(ItemClass item_class, std::string name) override;
+    void remove_banner() override;
 };
 
 #endif // !MIXED_UNIT_H
