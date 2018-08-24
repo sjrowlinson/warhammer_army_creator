@@ -1,6 +1,6 @@
 #include "armycreator.h"
 #include "ui_armycreator.h"
-#include <iostream>
+
 ArmyCreator::ArmyCreator(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::ArmyCreator) {
@@ -230,6 +230,7 @@ void ArmyCreator::optional_weapon_selected() {
         if (opt_sel->select_weapon(rb_name)) {
             ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::WEAPONS);
+            update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::ARMOUR);
             update_validity_label();
         }
     } catch (const std::exception& e) {
@@ -261,6 +262,7 @@ void ArmyCreator::optional_armour_selected() {
         if (opt_sel->select_armour(rb_name)) {
             ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::ARMOUR);
+            update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::WEAPONS);
             update_validity_label();
         }
     } catch (const std::exception& e) {
@@ -655,7 +657,7 @@ QGroupBox* ArmyCreator::setup_magic_weapons_tab(const std::vector<std::pair<std:
     QHBoxLayout* rhlayout = new QHBoxLayout;
     bool has_weapon_m = false;
     bool has_weapon_r = false;
-    std::size_t count_m = 1U;
+    std::size_t count_m = 0U;
     for (const auto& w : opt_weapons) {
         if (w.second.allowed_units.size() && !w.second.allowed_units.count(current->name()))
             continue;
@@ -853,7 +855,7 @@ QGroupBox* ArmyCreator::setup_talismans_tab(
     for (auto& f : frames) f = new QFrame;
     std::vector<QHBoxLayout*> hlayouts(n_adj);
     for (auto& l : hlayouts) l = new QHBoxLayout;
-    std::size_t count = 1U;
+    std::size_t count = 0U;
     bool has_talisman = false;
     for (const auto& t : opt_talismans) {
         if (t.second.allowed_units.size() && !t.second.allowed_units.count(current->name()))
@@ -879,7 +881,12 @@ QGroupBox* ArmyCreator::setup_talismans_tab(
             has_talisman = true;
         }
         connect(rb, SIGNAL(clicked(bool)), this, SLOT(optional_talisman_selected()));
-        hlayouts[count++/max_per_row]->addWidget(rb);
+        try { hlayouts.at(count++/max_per_row)->addWidget(rb); }
+        catch (const std::out_of_range& e) {
+            QMessageBox message_box;
+            message_box.critical(nullptr, tr("Error"), tr(e.what()));
+            message_box.setFixedSize(500, 200);
+        }
     }
     // none button
     QRadioButton* none_rb = new QRadioButton(tr("None"));
@@ -919,8 +926,8 @@ QGroupBox* ArmyCreator::setup_enchanted_items_tab(
     for (auto& f : frames) f = new QFrame;
     std::vector<QHBoxLayout*> hlayouts(n_adj);
     for (auto& l : hlayouts) l = new QHBoxLayout;
-    std::size_t count = 1U;
-    bool has_talisman = false;
+    std::size_t count = 0U;
+    bool has_enchanted = false;
     for (const auto& t : opt_enchanted) {
         if (t.second.allowed_units.size() && !t.second.allowed_units.count(current->name()))
             continue;
@@ -942,15 +949,20 @@ QGroupBox* ArmyCreator::setup_enchanted_items_tab(
         rb->setToolTip(tr(t.second.description.data()));
         if (enchanted.first == t.first) {
             rb->setChecked(true);
-            has_talisman = true;
+            has_enchanted = true;
         }
         connect(rb, SIGNAL(clicked(bool)), this, SLOT(optional_enchanted_item_selected()));
-        hlayouts[count++/max_per_row]->addWidget(rb);
+        try { hlayouts.at(count++/max_per_row)->addWidget(rb); }
+        catch (const std::out_of_range& e) {
+            QMessageBox message_box;
+            message_box.critical(nullptr, tr("Error"), tr(e.what()));
+            message_box.setFixedSize(500, 200);
+        }
     }
     // none button
     QRadioButton* none_rb = new QRadioButton(tr("None"));
     none_rb->setObjectName(QString("None_talisman_radiobutton"));
-    if (!has_talisman) none_rb->setChecked(true);
+    if (!has_enchanted) none_rb->setChecked(true);
     connect(none_rb, SIGNAL(clicked(bool)), this, SLOT(optional_enchanted_item_selected()));
     if (!hlayouts.empty()) (*(--std::end(hlayouts)))->addWidget(none_rb);
     for (auto l : hlayouts) l->addStretch(1);
@@ -983,7 +995,7 @@ QGroupBox* ArmyCreator::setup_arcane_items_tab(const std::vector<std::pair<std::
     for (auto& f : frames) f = new QFrame;
     std::vector<QHBoxLayout*> hlayouts(n_adj);
     for (auto& l : hlayouts) l = new QHBoxLayout;
-    std::size_t count = 1U;
+    std::size_t count = 0U;
     bool has_arcane = false;
     for (const auto& t : opt_arcane) {
         if (t.second.allowed_units.size() && !t.second.allowed_units.count(current->name()))
@@ -1008,7 +1020,12 @@ QGroupBox* ArmyCreator::setup_arcane_items_tab(const std::vector<std::pair<std::
             has_arcane = true;
         }
         connect(rb, SIGNAL(clicked(bool)), this, SLOT(optional_arcane_item_selected()));
-        hlayouts[count++/max_per_row]->addWidget(rb);
+        try { hlayouts.at(count++/max_per_row)->addWidget(rb); }
+        catch (const std::out_of_range& e) {
+            QMessageBox message_box;
+            message_box.critical(nullptr, tr("Error"), tr(e.what()));
+            message_box.setFixedSize(500, 200);
+        }
     }
     // none button
     QRadioButton* none_rb = new QRadioButton(tr("None"));
@@ -1047,7 +1064,7 @@ QGroupBox* ArmyCreator::setup_other_items_tab(const std::vector<std::pair<std::s
     for (auto& f : frames) f = new QFrame;
     std::vector<QHBoxLayout*> hlayouts(n_adj);
     for (auto& l : hlayouts) l = new QHBoxLayout;
-    std::size_t count = 1U;
+    std::size_t count = 0U;
     for (const auto& t : opt_other) {
         if (t.second.allowed_units.size() && !t.second.allowed_units.count(current->name()))
             continue;
@@ -1069,7 +1086,12 @@ QGroupBox* ArmyCreator::setup_other_items_tab(const std::vector<std::pair<std::s
         cb->setToolTip(tr(t.second.description.data()));
         if (others.count(t.first)) cb->setChecked(true);
         connect(cb, SIGNAL(clicked(bool)), this, SLOT(optional_other_item_selected()));
-        hlayouts[count++/max_per_row]->addWidget(cb);
+        try { hlayouts.at(count++/max_per_row)->addWidget(cb); }
+        catch (const std::out_of_range& e) {
+            QMessageBox message_box;
+            message_box.critical(nullptr, tr("Error"), tr(e.what()));
+            message_box.setFixedSize(500, 200);
+        }
     }
     for (auto l : hlayouts) l->addStretch(1);
     for (auto i = 0U; i < frames.size(); ++i) {

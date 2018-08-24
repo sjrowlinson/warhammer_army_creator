@@ -1,0 +1,95 @@
+Chaos Steed
+    Warbeast
+    8 3 0 4 3 1 3 1 5
+    None
+    None
+    None
+    None
+
+Barded Chaos Steed
+    Warbeast
+    7 3 0 4 1 3 1 5
+    None
+    None
+    None
+    None
+
+Steed of Slaanesh
+    Warbeast
+    10 3 0 3 3 1 5 1 7
+    Armour Piercing, Daemonic Attacks, Fast Cavalry, Fear, Poisoned Attacks
+    None
+    None
+    Mark of Slaanesh
+
+Disc of Tzeentch
+    Warbeast
+    1 3 0 4 4 1 4 3 7
+    Daemonic Attacks, Fear, Fly
+    None
+    None
+    Mark of Tzeentch
+
+Daemonic Mount
+    Monstrous Beast
+    8 4 0 5 5 3 3 2 8
+    Daemonic Attacks, Fear
+    None
+    Barding [15]
+    None
+
+Palanquin of Nurgle
+    Monstrous Beast
+    4 3 3 3 3 4 3 6 7
+    Daemonic Attacks, Fear
+    None
+    None
+    Mark of Nurgle
+
+Juggernaught of Khorne
+    Monstrous Beast
+    7 5 0 5 4 3 2 3 7
+    Brass Behemoth, Daemonic Attacks, Fear, Murderous Charge
+    None
+    None
+    Mark of Khorne
+
+Chaos Chariot
+    Chariot
+    - - - 5 5 4 - - -
+    Armour Save (3+), Scythes
+    Mark of Khorne [10], Mark of Tzeentch [10], Mark of Nurgle [15], Mark of Slaanesh [5]
+    None
+    None
+
+Chaos Warshrine
+    Chariot
+    - - - - 5 5 - - -
+    Favour of the Ruinous Powers, Fear, Giver of Glory, Protection of the Dark Gods, War Platform
+    Mark of Khorne [10], Mark of Tzeentch [10], Mark of Nurgle [15], Mark of Slaanesh [5]
+    None
+    None
+
+Gorebeast Chariot
+    Chariot
+    - - - 5 6 5 - - -
+    Fear, Gorebeast Charge, Armour Save (3+), Scythes
+    Mark of Khorne [10], Mark of Tzeentch [10], Mark of Nurgle [15], Mark of Slaanesh [5]
+    None
+    None
+
+Manticore
+    Monster
+    6 5 0 5 5 4 5 4 5
+    Fly, Killing Blow, Large Target, Terror, Uncontrollable
+    None
+    Iron Hard Skin [25], Venom Tail [10]
+    None
+
+Chaos Dragon
+    Monster
+    6 6 0 6 6 6 3 6 8
+    Dark Fire of Chaos, Fly, Fumes of Contagion, Large Target, Scaly Skin (3+), Terror
+    None
+    None
+    None

@@ -1,4 +1,4 @@
-Scavenge Pile
+The Scavenge Pile
 
 Warpmusket
     Weapon, Ballistic
@@ -15,17 +15,17 @@ Poisoned Attacks
 Tail Weapon
     Other
     8
-    D
+    A model with this additional blade, spike or mace can make an additional S3 attack at the user's WS and Initiative. It can be used in addition to other attacks including an additional hand weapon or even a magic weapon, although it gains no magical properties.
     None
 
 Warplock Pistol
     Weapon, Ballistic
     8
-    D
+    A warplock pistol follows the rules for pistols except that it has a range of 10". A warplock pistol is Armour Piercing, uses Unstable Ammunition and is a Warpstone Ammunition.
     None
 
 Rat Hound Bodyguard
     Other
     5
-    D
+    A model with a Rat Hound upgrade can make an additional WS3, S3 attack. This attack is made at the owner's Initiative, however, on a To Hit roll of 1 the rat hound will instead inflict an automatic hit on its owner.
     None

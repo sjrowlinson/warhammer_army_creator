@@ -68,11 +68,27 @@ void character_unit::pick_magic_item(ItemType item_type, ItemClass item_class, c
             }
             break;
         case ItemType::ARMOUR:
-            if (armours_.find(search->second.armour_type) != armours_.end()) {
-                adj_mip -= std::get<2>(armours_[search->second.armour_type]);
-                adj_tip -= std::get<2>(armours_[search->second.armour_type]);
+        {
+            // protect against cases where user tries to pick another piece of
+            // magic armour not in the category being changed
+            auto at = search->second.armour_type;
+            if (item_class == ItemClass::COMMON || item_class == ItemClass::MAGIC) {
+                if(std::count_if(
+                    std::begin(armours_),
+                    std::end(armours_),
+                    [at](const auto& a) {
+                        return (std::get<0>(a.second) == ItemClass::COMMON ||
+                                std::get<0>(a.second) == ItemClass::MAGIC) &&
+                                a.first != at;
+                    }
+                )) throw std::invalid_argument("Cannot choose multiple pieces of magic armour!");
+            }
+            if (armours_.find(at) != armours_.end()) {
+                adj_mip -= std::get<2>(armours_[at]);
+                adj_tip -= std::get<2>(armours_[at]);
             }
             break;
+        }
         case ItemType::TALISMAN:
             if (!talisman_.first.empty()) {
                 adj_mip -= talisman_.second.second;

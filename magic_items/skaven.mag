@@ -109,13 +109,13 @@ Warpstone Tokens
 Skavenbrew
     Enchanted
     50
-    Description
+    One use only. A character carring Skavenbrew can force any unit of Clanrats or Stormvermin in base contact to guzzle the vile liquid. Champions are affected but no character models would be so unwise as to drink the potion.\nRoll a D6 after the brew is consumed.\n1 - Gone Bad. The unit takes D6 Strength 3 automatics hits with no armour save. The Skavenbrew has no additional effect.\n2-3 - Inspired Hatred. The unit now has hatred of all enemies.\n4-5 - Frenzied. The unit is now subject to Frenzy.\n6 - Rabid. The unit's metabolism is driven hyper-active, ramping up to a feverish pitch. The unit is subject to Frenzy, but instead of adding +1 Attacks, add +2 Attacks. In each following friendly Compulsory Move phase the unit will take D6 automatic wounds as some of the ratmen collapse, hearts or brains bursting with fury.
     Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
 
 Skalm
     Enchanted
     30
-    D
+    One use only. At the beginning of any phase (friend or foe's) announce you are using Skalm. The bearer is instantly cured of any wounds suffered so far. Skalm is of no use to models that are already dead. Skalm can only be used by the bearer, sharing such a precious thing is not something a Skaven would contemplate.
     Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
 
 Pipes of Piebald
@@ -140,7 +140,7 @@ Warpstone Stars
 Infernal Bomb
     Enchanted
     30
-    D
+
     Assassin
 
 Smoke Bombs
@@ -153,19 +153,19 @@ Smoke Bombs
 Brass Orb
     Enchanted
     50
-    D
+    One use only. In the Shooting phase, the user can throw the orb. Place the small round template with its centre anywhere within 8" of the character. Scatter the template as you would for a stone thrower shot. Models touched by the template must take an Initiative test or be destroyed, with no saves of any kind allowed. Remember that a 6 is always a failure. "Look Out Sir!" works as normal. If a misfire is rolled, centre the template on the model throwing the globe.
     Warlock Engineer
 
 Doomrocket
     Weapon, Ballistic
     30
-    D
+    One use only. To fire the Doomrocket the owning player must nominate a direction and the number of dice he intends to roll for range. He can choose between 4 and 10 dice. The tocket will travel a number of inches equal to the total of the dice rolled and this determines where the large round template is placed. Any model touched by the template suffers a Strength 5 hit from the resulting explosion. If three or more rolls of 1 occur during the firing, the rocket has gone off course.
     Warlock Engineer
 
 Death Globe
     Weapon, Ballistic
     25
-    D
+    One use only. A character equipped with such a weapon can throw it in any Shooting phase. The Death Globe is thrown just as the Brass Orb. All models touched by the template suffer a wound on the result of a 4+, with no armour save allowed.
     Warlock Engineer
 
 Warlock Optics

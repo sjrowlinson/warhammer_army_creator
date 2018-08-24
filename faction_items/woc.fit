@@ -15,7 +15,7 @@ Collar of Khorne
 Unholy Strike
     Talisman
     35
-    D
+    Instead of striking normally, the character can choose to make a single special Attack. If he does so, and the Attack hits, the hit is resolved at double the character’s Strength and has the Multiple Wounds (D3) special rule.
     None
 
 Flaming Breath
@@ -39,7 +39,7 @@ Scaled Skin
 Allure of Slaanesh
     Other
     15
-    D
+    Any opponent wishing to strike the character in close combat must first pass a Leadership test (test immediately before the model rolls To Hit). If the test is failed, that model cannot make any close combat attacks that phase. This does not affect Attacks that do not roll To Hit.
     None
 
 Poisonous Slime
@@ -51,7 +51,7 @@ Poisonous Slime
 Acid Ichor
     Other
     10
-    D
+    Whenever this character suffers an unsaved Wound in close combat, the model that inflicted that hit must pass an Initiative test or suffer a Strength 4 hit. Wounds inflicted by Acid Ichor count towards the combat result.
     None
 
 Burning Body
@@ -75,7 +75,7 @@ Third Eye of Tzeentch
 Nurgle's Rot
     Other
     10
-    D
+    At the start of every Magic phase, every enemy model in base contact with the character suffers a single Strength 1 hit, with no armour saves allowed.
     None
 
 Hideous Visage
