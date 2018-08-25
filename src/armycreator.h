@@ -31,6 +31,7 @@ class ArmyCreator;
 }
 
 class OptionBox;
+class MagicItemBox;
 
 enum class ArmyTreeColumn {
     NAME,
@@ -89,11 +90,12 @@ private:
     armies::Faction race;
     std::shared_ptr<army_list> army;
     std::shared_ptr<selection_tree> st;
+    std::shared_ptr<unit> current;
     int id_counter;
     InTree in_tree;
-    ItemClass ic_selected;
     std::shared_ptr<option_selector> opt_sel;
     std::shared_ptr<OptionBox> ob;
+    std::shared_ptr<MagicItemBox> mib;
 
     void update_validity_label();
 
@@ -104,36 +106,15 @@ private:
     // army tree modifying
     void clear_army_tree();
 
+    // info box modifying
     void clear_unit_info_box();
     void initialise_unit_info_box();
 
-    void clear_magic_items_selector();
-    void init_magic_items_selector(std::shared_ptr<unit> current,
-                                   ItemType focus = ItemType::WEAPON);
-
-    QGroupBox* setup_items_tab(const std::unordered_map<std::string, item>& items,
-                               std::shared_ptr<unit> current,
-                               ItemType item_type);
-    QGroupBox* setup_magic_weapons_tab(const std::vector<std::pair<std::string, item>>& items,
-                                       std::shared_ptr<unit> current);
-    QGroupBox* setup_magic_armour_tab(const std::vector<std::pair<std::string, item>>& items,
-                                       std::shared_ptr<unit> current);
-    QGroupBox* setup_talismans_tab(const std::vector<std::pair<std::string, item>>& items,
-                                   std::shared_ptr<unit> current);
-    QGroupBox* setup_enchanted_items_tab(const std::vector<std::pair<std::string, item>>& items,
-                                         std::shared_ptr<unit> current);
-    QGroupBox* setup_arcane_items_tab(const std::vector<std::pair<std::string, item>>& items,
-                                      std::shared_ptr<unit> current);
-    QGroupBox* setup_other_items_tab(const std::vector<std::pair<std::string, item>>& items,
-                                   std::shared_ptr<unit> current);
-    QGroupBox* setup_banners_tab(const std::vector<std::pair<std::string, item>>& items,
-                                 std::shared_ptr<unit> current);
-
     void update_unit_display(
-            QTreeWidgetItem* item,
-            bool adding,
-            ArmyTreeColumn column = ArmyTreeColumn::ALL,
-            bool copying = false
+        QTreeWidgetItem* item,
+        bool adding,
+        ArmyTreeColumn column = ArmyTreeColumn::ALL,
+        bool copying = false
     );
 
 };

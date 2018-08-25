@@ -59,6 +59,7 @@ void OptionBox::command_box_helper(QLayout* layout,
 void OptionBox::clear() {
     auto c = box->children();
     for (auto& x : c) delete x;
+    current.reset();
 }
 
 void OptionBox::reset(std::shared_ptr<unit> current_, InTree in_tree_) {
@@ -66,7 +67,8 @@ void OptionBox::reset(std::shared_ptr<unit> current_, InTree in_tree_) {
     in_tree = in_tree_;
 }
 
-void OptionBox::reinitialise() {
+bool OptionBox::reinitialise() {
+    if (current == nullptr) return false;
     QVBoxLayout* vbox = new QVBoxLayout;
     QGroupBox* sc_box = make_size_command_box();
     if (sc_box != nullptr) vbox->addWidget(sc_box);
@@ -86,6 +88,7 @@ void OptionBox::reinitialise() {
     if (extras_boxes.first != nullptr) vbox->addWidget(extras_boxes.first);
     if (extras_boxes.second != nullptr) vbox->addWidget(extras_boxes.second);
     box->setLayout(vbox);
+    return true;
 }
 
 QGroupBox* OptionBox::make_size_command_box() {

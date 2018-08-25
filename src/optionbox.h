@@ -61,7 +61,7 @@ public:
 
     void reset(std::shared_ptr<unit> current_, InTree in_tree_);
 
-    void reinitialise();
+    bool reinitialise();
     void clear();
 };
 
