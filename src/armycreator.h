@@ -8,6 +8,7 @@
 #include "selection_tree.h"
 
 #include <functional>
+#include <iostream>
 #include <memory>
 #include <unordered_map>
 
@@ -17,10 +18,15 @@
 #include <QMainWindow>
 #include <QMessageBox>
 #include <QPushButton>
+#ifndef QT_NO_PRINTER
+#include <QPrinter>
+#include <QPrintDialog>
+#endif
 #include <QRadioButton>
 #include <QString>
 #include <QSpinBox>
 #include <QTableWidget>
+#include <QTextDocument>
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 #include <QVariant>
@@ -67,6 +73,7 @@ private slots:
     void on_duplicate_button_clicked();
     void on_remove_button_clicked();
     void on_clear_button_clicked();
+    void on_export_button_clicked();
 
     void optional_weapon_selected();
     void optional_armour_selected();
@@ -84,7 +91,6 @@ private slots:
     void change_unit_size();
 
     void on_magic_items_combobox_currentTextChanged(const QString &arg1);
-
 private:
     Ui::ArmyCreator* ui;
     armies::Faction race;
@@ -110,6 +116,11 @@ private:
     void clear_unit_info_box();
     void initialise_unit_info_box();
 
+
+    void update_unit_command_display_helper(
+        const std::unordered_map<CommandGroup, std::pair<std::string, double>>& command,
+        QString& command_str
+    );
     void update_unit_display(
         QTreeWidgetItem* item,
         bool adding,

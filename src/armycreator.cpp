@@ -1015,36 +1015,18 @@ void ArmyCreator::update_unit_display(
         case BaseUnitType::NORMAL:
         {
             auto p = std::dynamic_pointer_cast<normal_unit>(u);
-            auto command = p->command();
-            auto musician_it = command.find(CommandGroup::MUSICIAN);
-            auto sb_it = command.find(CommandGroup::STANDARD_BEARER);
-            auto champion_it = command.find(CommandGroup::CHAMPION);
             QString command_str;
-            if (musician_it != command.end()) {
-                command_str += QString("%1 [%2]").arg(
-                                  std::get<0>(musician_it->second).data(),
-                                  QString("%1").arg(std::get<1>(musician_it->second))
-                               );
-            }
-            if (sb_it != command.end()) {
-                if (musician_it != command.end()) command_str += QString("\n");
-                command_str += QString("%1 [%2]").arg(
-                                  std::get<0>(sb_it->second).data(),
-                                  QString("%1").arg(std::get<1>(sb_it->second))
-                               );
-            }
-            if (champion_it != command.end()) {
-                if (sb_it != command.end() || musician_it != command.end()) command_str += QString("\n");
-                command_str += QString("%1 [%2]").arg(
-                                  std::get<0>(champion_it->second).data(),
-                                  QString("%1").arg(std::get<1>(champion_it->second))
-                               );
-            }
+            update_unit_command_display_helper(p->command(), command_str);
             item->setText(static_cast<int>(column), command_str);
             break;
         }
         case BaseUnitType::MIXED:
         {
+            auto p = std::dynamic_pointer_cast<mixed_unit>(u);
+            QString command_str;
+            update_unit_command_display_helper(p->master().command(), command_str);
+            update_unit_command_display_helper(p->slave().command(), command_str);
+            item->setText(static_cast<int>(column), command_str);
             break;
         }
         default: break;
@@ -1225,4 +1207,78 @@ void ArmyCreator::update_unit_display(
         default: break;
         }
     }
+}
+
+void ArmyCreator::update_unit_command_display_helper(
+    const std::unordered_map<CommandGroup, std::pair<std::string, double>>& command,
+    QString& command_str
+        ) {
+    auto musician_it = command.find(CommandGroup::MUSICIAN);
+    auto sb_it = command.find(CommandGroup::STANDARD_BEARER);
+    auto champion_it = command.find(CommandGroup::CHAMPION);
+    if (musician_it != command.end()) {
+        command_str += QString("%1 [%2]").arg(
+                          std::get<0>(musician_it->second).data(),
+                          QString("%1").arg(std::get<1>(musician_it->second))
+                       );
+    }
+    if (sb_it != command.end()) {
+        if (!command_str.isEmpty()) command_str += QString("\n");
+        command_str += QString("%1 [%2]").arg(
+                          std::get<0>(sb_it->second).data(),
+                          QString("%1").arg(std::get<1>(sb_it->second))
+                       );
+    }
+    if (champion_it != command.end()) {
+        if (!command_str.isEmpty()) command_str += QString("\n");
+        command_str += QString("%1 [%2]").arg(
+                          std::get<0>(champion_it->second).data(),
+                          QString("%1").arg(std::get<1>(champion_it->second))
+                       );
+    }
+}
+
+void ArmyCreator::on_export_button_clicked() {
+    QString str_stream;
+    QTextStream out(&str_stream);
+    const int row_count = ui->army_tree->model()->rowCount();
+    const int col_count = ui->army_tree->model()->columnCount();
+    out <<  "<html>\n"
+        "<head>\n"
+        "<meta Content=\"Text/html; charset=Windows-1251\">\n"
+        <<  QString("<title>%1</title>\n").arg("Title")
+        <<  "</head>\n"
+        "<body bgcolor=#ffffff link=#5000A0>\n"
+        "<table border=1 cellspacing=0 cellpadding=2>\n";
+    // headers
+    out << "<thead><tr bgcolor=#f0f0f0>";
+    for (int column = 0; column < col_count; column++)
+        if (!ui->army_tree->isColumnHidden(column))
+            out << QString("<th>%1</th>").arg(ui->army_tree->model()->headerData(column, Qt::Horizontal).toString());
+    out << "</tr></thead>\n";
+    // data table
+    for (int row = 0; row < row_count; row++) {
+        out << "<tr>";
+        for (int column = 0; column < col_count; column++) {
+            if (!ui->army_tree->isColumnHidden(column)) {
+                QString data =
+                    ui->army_tree->model()->data(ui->army_tree->model()->index(row, column)).toString().simplified();
+                std::cout << data.toStdString() << std::endl;
+                out << QString("<td bkcolor=0>%1</td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
+            }
+        }
+        out << "</tr>\n";
+    }
+    out <<  "</table>\n"
+        "</body>\n"
+        "</html>\n";
+    QTextDocument* document = new QTextDocument();
+    document->setHtml(str_stream);
+    QPrinter printer;
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    printer.setPaperSize(QPrinter::A4);
+    printer.setOutputFileName(QString("test.pdf"));
+    document->setPageSize(printer.pageRect().size());
+    document->print(&printer);
+    delete document;
 }
