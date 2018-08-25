@@ -4,7 +4,9 @@ mixed_unit::mixed_unit(std::shared_ptr<base_unit> base)
     : unit(base),
       handle(std::dynamic_pointer_cast<base_mixed_unit>(base)),
       master_(std::make_shared<base_normal_unit>(handle->master())),
-      slave_(std::make_shared<base_normal_unit>(handle->slave())) {}
+      slave_(std::make_shared<base_normal_unit>(handle->slave())) {
+    mixed_select_ = MixedSelect::SLAVE;
+}
 
 mixed_unit::mixed_unit(const mixed_unit& other)
     : unit(other), handle(other.handle), master_(other.master_),
@@ -229,5 +231,30 @@ void mixed_unit::remove_banner() {
         slave_.remove_banner();
         break;
     }
+}
+
+void mixed_unit::change_size(std::size_t n) {
+    switch (mixed_select_) {
+    case MixedSelect::MASTER:
+        try { change_master_size(n); }
+        catch (const std::invalid_argument&) { throw ; }
+        break;
+    case MixedSelect::SLAVE:
+        try { change_slave_size(n); }
+        catch (const std::invalid_argument&) { throw ; }
+        break;
+    }
+}
+
+void mixed_unit::change_master_size(std::size_t n) {
+    if (static_cast<double>(n)/slave_.size() > handle->ratio_limit())
+        throw std::invalid_argument("Master:Slave size ratio limit exceeded!");
+    master_.change_size(n);
+}
+
+void mixed_unit::change_slave_size(std::size_t n) {
+    if ( master_.size()/static_cast<double>(n) > handle->ratio_limit())
+        throw std::invalid_argument("Master:Slave size ratio limit exceeded!");
+    slave_.change_size(n);
 }
 

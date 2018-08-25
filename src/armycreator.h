@@ -30,6 +30,8 @@ namespace Ui {
 class ArmyCreator;
 }
 
+class OptionBox;
+
 enum class ArmyTreeColumn {
     NAME,
     SIZE,
@@ -91,6 +93,7 @@ private:
     InTree in_tree;
     ItemClass ic_selected;
     std::shared_ptr<option_selector> opt_sel;
+    std::shared_ptr<OptionBox> ob;
 
     void update_validity_label();
 
@@ -103,27 +106,6 @@ private:
 
     void clear_unit_info_box();
     void initialise_unit_info_box();
-
-    // unit options box modifying
-    void clear_unit_options_box();
-    void initialise_unit_options_box();
-
-    // size and command group option box
-    QGroupBox* initialise_size_command_groupbox(std::shared_ptr<unit> current);
-    QGroupBox* initialise_command_groupbox(std::shared_ptr<unit> current);
-    // weapons option boxes
-    std::pair<QGroupBox*, QGroupBox*> initialise_opt_weapons_groupbox(std::shared_ptr<unit> current);
-    QGroupBox* initialise_opt_weapons_subgroupbox(WeaponType wt, std::shared_ptr<unit> current, bool champion);
-    // armour option boxes
-    std::pair<QGroupBox*, QGroupBox*> initialise_opt_armour_groupbox(std::shared_ptr<unit> current);
-    QGroupBox* initialise_opt_armour_subgroupbox(ArmourType at, std::shared_ptr<unit> current, bool champion);
-    // mount option boxes
-    QGroupBox* initialise_opt_mounts_groupbox(std::shared_ptr<unit> current);
-    QGroupBox* initialise_opt_mage_levels_groupbox(std::shared_ptr<unit> current);
-    // extras option boxes
-    std::pair<QGroupBox*, QGroupBox*> initialise_opt_extras_groupbox(std::shared_ptr<unit> current);
-    QGroupBox* initialise_opt_oco_extras_groupbox(std::shared_ptr<unit> current, bool champion);
-    QGroupBox* initialise_opt_mc_extras_groupbox(std::shared_ptr<unit> current, bool champion);
 
     void clear_magic_items_selector();
     void init_magic_items_selector(std::shared_ptr<unit> current,

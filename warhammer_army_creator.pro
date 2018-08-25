@@ -47,6 +47,7 @@ SOURCES += \
         src/mixed_unit.cpp \
         src/normal_unit.cpp \
         src/option_selector.cpp \
+        src/optionbox.cpp
 
 HEADERS += \
         src/armycreator.h \
@@ -71,6 +72,7 @@ HEADERS += \
         src/mixed_unit.h \
         src/normal_unit.h \
         src/option_selector.h \
+        src/optionbox.h
 
 FORMS += \
         form/armycreator.ui

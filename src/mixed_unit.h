@@ -74,6 +74,10 @@ public:
     void remove_mount() override;
     void pick_banner(ItemClass item_class, std::string name) override;
     void remove_banner() override;
+
+    void change_size(std::size_t n);
+    void change_master_size(std::size_t n);
+    void change_slave_size(std::size_t n);
 };
 
 #endif // !MIXED_UNIT_H

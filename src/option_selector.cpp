@@ -417,6 +417,42 @@ bool option_selector::select_command(const std::string& s, bool is_checked) {
             }
         }
     }
+    case BaseUnitType::MIXED:
+    {
+        auto p = std::dynamic_pointer_cast<mixed_unit>(current);
+        bool is_master = split[2] == "master";
+        if (is_checked) {
+            switch (in_tree) {
+            case InTree::ARMY:
+                army->take_snapshot_of(p->id());
+                if (is_master) p->master().add_command_member(member);
+                else p->slave().add_command_member(member);
+                army->update_on(p->id());
+                return true;
+            case InTree::ROSTER:
+                if (is_master) p->master().add_command_member(member);
+                else p->slave().add_command_member(member);
+                return false;
+            default: throw std::runtime_error("No unit selected!");
+            }
+        }
+        else {
+            switch (in_tree) {
+            case InTree::ARMY:
+                army->take_snapshot_of(p->id());
+                if (is_master) p->master().remove_command_member(member);
+                else p->slave().remove_command_member(member);
+                army->update_on(p->id());
+                return true;
+            case InTree::ROSTER:
+                if (is_master) p->master().remove_command_member(member);
+                else p->slave().remove_command_member(member);
+                return false;
+            default: throw std::runtime_error("No unit selected!");
+            }
+        }
+
+    }
     default: return false;
     }
 }
