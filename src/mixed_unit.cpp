@@ -258,3 +258,6 @@ void mixed_unit::change_slave_size(std::size_t n) {
     slave_.change_size(n);
 }
 
+std::string mixed_unit::html_table_row() const {
+    return std::string();
+}

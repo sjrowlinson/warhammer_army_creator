@@ -1241,33 +1241,41 @@ void ArmyCreator::update_unit_command_display_helper(
 void ArmyCreator::on_export_button_clicked() {
     QString str_stream;
     QTextStream out(&str_stream);
-    const int row_count = ui->army_tree->model()->rowCount();
     const int col_count = ui->army_tree->model()->columnCount();
     out <<  "<html>\n"
         "<head>\n"
         "<meta Content=\"Text/html; charset=Windows-1251\">\n"
         <<  QString("<title>%1</title>\n").arg("Title")
         <<  "</head>\n"
-        "<body bgcolor=#ffffff link=#5000A0>\n"
-        "<table border=1 cellspacing=0 cellpadding=2>\n";
+            "<style>"
+                "body {font-family: Verdana; background-color: #FFFFFF;}\n"
+                "thead {font-size: 16px;}\n"
+                "td {font-size: 14px;}\n"
+            "</style>\n"
+        "<body>\n"
+        "<table border=1 cellspacing=0>\n";
     // headers
-    out << "<thead><tr bgcolor=#f0f0f0>";
+    out << "<thead><tr style=\"background-color: #000000\">";
     for (int column = 0; column < col_count; column++)
         if (!ui->army_tree->isColumnHidden(column))
-            out << QString("<th>%1</th>").arg(ui->army_tree->model()->headerData(column, Qt::Horizontal).toString());
+            out << QString("<th style=\"color: #FFFFFF\">%1</th>")
+                   .arg(ui->army_tree->model()->headerData(column, Qt::Horizontal).toString());
     out << "</tr></thead>\n";
     // data table
-    for (int row = 0; row < row_count; row++) {
+    auto item = ui->army_tree->topLevelItem(0);
+    while (item != nullptr) {
         out << "<tr>";
-        for (int column = 0; column < col_count; column++) {
-            if (!ui->army_tree->isColumnHidden(column)) {
-                QString data =
-                    ui->army_tree->model()->data(ui->army_tree->model()->index(row, column)).toString().simplified();
-                std::cout << data.toStdString() << std::endl;
-                out << QString("<td bkcolor=0>%1</td>").arg((!data.isEmpty()) ? data : QString("&nbsp;"));
-            }
+        for (int col = 0; col < col_count; ++col) {
+            QString text = item->text(col);
+            if (item->parent() == nullptr)
+                out << QString("<td style=\"background-color: #C0C0C0\"><strong>%1</strong></td>")
+                       .arg((!text.isEmpty()) ? text : QString("&nbsp;"));
+            else
+                out << QString("<td style=\"background-color: #FFFFFF\">%1</td>")
+                       .arg((!text.isEmpty()) ? text : QString("&nbsp;"));
         }
         out << "</tr>\n";
+        item = ui->army_tree->itemBelow(item);
     }
     out <<  "</table>\n"
         "</body>\n"
@@ -1277,6 +1285,7 @@ void ArmyCreator::on_export_button_clicked() {
     QPrinter printer;
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setPaperSize(QPrinter::A4);
+    printer.setPageOrientation(QPageLayout::Landscape);
     printer.setOutputFileName(QString("test.pdf"));
     document->setPageSize(printer.pageRect().size());
     document->print(&printer);

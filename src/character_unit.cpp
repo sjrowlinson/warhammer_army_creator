@@ -497,3 +497,43 @@ void character_unit::remove_banner() {
     banner.first.clear();
     banner.second.second = 0.0;
 }
+
+std::string character_unit::html_table_row() const {
+    std::string row = "<tr>";
+    //row += "<td>STUFF GOES HERE</td>";
+    // unit name
+    row += "<td>" + name() + "</td>\n";
+    // unit size
+    row += "<td>1</td>\n";
+    // unit mage level
+    row += "<td>0</td>\n";
+    // unit mount
+    row += "<td>" + (mount_.first.empty() ? "&nbsp;" : mount_.first) + "</td>\n";
+    // weapons
+    if (weapons_.count(WeaponType::MELEE))
+        row += "<td>Melee weapon: " +
+                std::get<1>(weapons_.at(WeaponType::MELEE)) +
+                (weapons_.count(WeaponType::BALLISTIC) ? "<br/>" : "</td>\n");
+    if (weapons_.count(WeaponType::BALLISTIC))
+        row +=  std::string(weapons_.count(WeaponType::MELEE) ? "" : "<td>") + "Ranged weapon: " +
+                std::get<1>(weapons_.at(WeaponType::BALLISTIC)) + "</td>\n";
+    // armour
+    if (armours_.count(ArmourType::ARMOUR))
+        row += "<td>Body armour: " +
+                std::get<1>(armours_.at(ArmourType::ARMOUR)) +
+                (armours_.count(ArmourType::SHIELD) || armours_.count(ArmourType::HELMET)
+                    ? "<br/>" : "</td>\n");
+    if (armours_.count(ArmourType::SHIELD))
+        row +=  std::string(armours_.count(ArmourType::ARMOUR) ? "" : "<td>") + "Shield: " +
+                std::get<1>(armours_.at(ArmourType::SHIELD)) +
+                (armours_.count(ArmourType::HELMET) ? "<br/>" : "</td>\n");
+    if (armours_.count(ArmourType::HELMET))
+        row +=  std::string((armours_.count(ArmourType::ARMOUR) || armours_.count(ArmourType::SHIELD))
+                            ? "" : "<td>") + "Shield: " +
+                std::get<1>(armours_.at(ArmourType::HELMET)) + "</td>\n";
+    // command
+    row += "<td>&nbsp;</td>";
+    // extras
+    row += "</tr>\n";
+    return row;
+}

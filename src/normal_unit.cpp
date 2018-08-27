@@ -715,3 +715,7 @@ void normal_unit::change_size(std::size_t n) {
     points_ += banner.second.second;
     size_ = n;
 }
+
+std::string normal_unit::html_table_row() const {
+    return std::string();
+}

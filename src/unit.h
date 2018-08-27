@@ -92,10 +92,6 @@ public:
     armies::UnitType unit_type() const noexcept;
     armies::UnitClass unit_class() const noexcept;
 
-    // TODO: add bool replacing=false to remove_weapon and remove_armour
-    // methods so that we override the protection against removing the
-    // weapon/armour held in the unit equipment when performing a replacement
-
     // pure virtual selectors
     virtual void pick_weapon(ItemClass item_type, std::string name) = 0;
     virtual void remove_weapon(WeaponType wt, bool replacing=false) = 0;
@@ -109,6 +105,8 @@ public:
     virtual void remove_mount() = 0;
     virtual void pick_banner(ItemClass item_class, std::string name) = 0;
     virtual void remove_banner() = 0;
+
+    virtual std::string html_table_row() const = 0;
 };
 
 #endif // !UNIT_H

@@ -133,3 +133,7 @@ void mage_character_unit::remove_arcane_item() {
     arcane_item_.first.clear();
     arcane_item_.second.second = 0.0;
 }
+
+std::string mage_character_unit::html_table_row() const {
+    return std::string();
+}

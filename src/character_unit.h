@@ -102,6 +102,7 @@ public:
     void pick_banner(ItemClass item_class, std::string name) override;
     void remove_banner() override;
 
+    virtual std::string html_table_row() const override;
 };
 
 #endif // !CHARACTER_UNIT_H
