@@ -500,26 +500,23 @@ void character_unit::remove_banner() {
 
 std::string character_unit::html_table_row() const {
     std::string row = "<tr>";
-    //row += "<td>STUFF GOES HERE</td>";
     // unit name
     row += "<td>" + name() + "</td>\n";
-    // unit size
-    row += "<td>1</td>\n";
-    // unit mage level
-    row += "<td>0</td>\n";
     // unit mount
     row += "<td>" + (mount_.first.empty() ? "&nbsp;" : mount_.first) + "</td>\n";
+    // unit mage level
+    row += "<td>0</td>\n";
     // weapons
     if (weapons_.count(WeaponType::MELEE))
-        row += "<td>Melee weapon: " +
+        row += "<td>Melee: " +
                 std::get<1>(weapons_.at(WeaponType::MELEE)) +
                 (weapons_.count(WeaponType::BALLISTIC) ? "<br/>" : "</td>\n");
     if (weapons_.count(WeaponType::BALLISTIC))
-        row +=  std::string(weapons_.count(WeaponType::MELEE) ? "" : "<td>") + "Ranged weapon: " +
+        row +=  std::string(weapons_.count(WeaponType::MELEE) ? "" : "<td>") + "Ranged: " +
                 std::get<1>(weapons_.at(WeaponType::BALLISTIC)) + "</td>\n";
     // armour
     if (armours_.count(ArmourType::ARMOUR))
-        row += "<td>Body armour: " +
+        row += "<td>Body: " +
                 std::get<1>(armours_.at(ArmourType::ARMOUR)) +
                 (armours_.count(ArmourType::SHIELD) || armours_.count(ArmourType::HELMET)
                     ? "<br/>" : "</td>\n");
@@ -531,9 +528,41 @@ std::string character_unit::html_table_row() const {
         row +=  std::string((armours_.count(ArmourType::ARMOUR) || armours_.count(ArmourType::SHIELD))
                             ? "" : "<td>") + "Shield: " +
                 std::get<1>(armours_.at(ArmourType::HELMET)) + "</td>\n";
-    // command
-    row += "<td>&nbsp;</td>";
-    // extras
+    // talisman
+    row += "<td>";
+    if (!talisman_.first.empty()) row += talisman_.first;
+    else row += "&nbsp;";
+    row += "</td>\n";
+    // enchanted item
+    row += "<td>";
+    if (!enchanted_item_.first.empty()) row += enchanted_item_.first;
+    else row += "&nbsp;";
+    row += "</td>\n";
+    // arcane item
+    row += "<td>&nbsp;</td>\n";
+    // magic/faction item extras
+    row += "<td>";
+    for (const auto& x : item_extras_) row += x.first + "<br/>";
+    if (item_extras_.empty()) row += "&nbsp;";
+    row += "</td>\n";
+    // other extras
+    row += "<td>";
+    if (!oco_extra_.first.empty()) row += oco_extra_.first + (mc_extras().empty() ? "" : "<br/>");
+    for (const auto& x : mc_extras_) row += x.first + "<br/>";
+    if (oco_extra_.first.empty() && mc_extras_.empty()) row += "&nbsp;";
+    row += "</td>\n";
+    // banner (if BSB)
+    row += "<td>";
+    if (!banner.first.empty()) row += banner.first;
+    else row += "&nbsp;";
+    row += "</td>\n";
+    // characteristics
+    row += "<td>";
+    for (const auto& x : handle_->statistics()) row += x + " ";
+    row += "</td>\n";
+    // points
+    row += "<td>" + tools::points_str(points()) + "</td>\n";
+    // end row
     row += "</tr>\n";
     return row;
 }

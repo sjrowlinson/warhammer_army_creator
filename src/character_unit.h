@@ -5,6 +5,7 @@
 #include "base_unit.h"
 #include "base_character_unit.h"
 #include "unit.h"
+#include "tools.h"
 
 #include <memory>
 #include <stdexcept>

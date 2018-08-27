@@ -310,3 +310,45 @@ void army_list::determine_limits() {
     spec_lim = 2.0*percent_25;
     rare_lim = percent_25;
 }
+
+std::string army_list::html_lords_table() const {
+    std::vector<std::string> headers = {
+        "Unit", "Mount", "Wizard Level", "Weapons", "Armour", "Talisman", "Enchanted Item",
+        "Arcane Item", "Other Magic/Faction Items", "Other Extras", "Banner", "Characteristics",
+        "Points"
+    };
+    std::string table = "<table border=1 cellspacing=1 cellpadding=2>\n";
+    table += "<thead><tr style=\"background-color: #000000\"><th colspan=\"13\" \
+            style=\"color: #FFFFFF\">Lords</th></tr></thead>\n";
+    table += "<thead><tr style=\"background-color: #C0C0C0\">";
+    for (const auto& h : headers) table += "<th style=\"color: #FFFFFF\">" + h + "</th>\n";
+    table += "</tr></thead>\n";
+    //table += "<tbody>";
+    for (const auto& x : army) {
+        if (x.second->unit_type() == armies::UnitType::LORD)
+            table += std::dynamic_pointer_cast<character_unit>(x.second)->html_table_row();
+    }
+    table += "</table>";
+    return table;
+}
+
+std::string army_list::html_heroes_table() const {
+    std::vector<std::string> headers = {
+        "Unit", "Mount", "Wizard Level", "Weapons", "Armour", "Talisman", "Enchanted Item",
+        "Arcane Item", "Other Magic/Faction Items", "Other Extras", "Banner", "Characteristics",
+        "Points"
+    };
+    std::string table = "<table border=1 cellspacing=1 cellpadding=2>\n";
+    table += "<thead><tr style=\"background-color: #000000\"><th colspan=\"13\" \
+            style=\"color: #FFFFFF\">Heroes</th></tr></thead>\n";
+    table += "<thead><tr style=\"background-color: #C0C0C0\">";
+    for (const auto& h : headers) table += "<th style=\"color: #FFFFFF\">" + h + "</th>\n";
+    table += "</tr></thead>\n";
+    //table += "<tbody>";
+    for (const auto& x : army) {
+        if (x.second->unit_type() == armies::UnitType::HERO)
+            table += std::dynamic_pointer_cast<character_unit>(x.second)->html_table_row();
+    }
+    table += "</table>";
+    return table;
+}

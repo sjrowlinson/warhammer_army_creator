@@ -86,6 +86,9 @@ public:
     void clear();
     // other
     bool is_valid() const noexcept;
+
+    std::string html_lords_table() const;
+    std::string html_heroes_table() const;
 };
 
 #endif // !ARMY_LIST_H

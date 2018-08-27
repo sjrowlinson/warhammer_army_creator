@@ -1241,8 +1241,24 @@ void ArmyCreator::update_unit_command_display_helper(
 void ArmyCreator::on_export_button_clicked() {
     QString str_stream;
     QTextStream out(&str_stream);
-    const int col_count = ui->army_tree->model()->columnCount();
+    //const int col_count = ui->army_tree->model()->columnCount();
     out <<  "<html>\n"
+            "<head>\n"
+            "<meta Content=\"Text/html; charset=Windows-1251\">\n"
+            <<  QString("<title>%1</title>\n").arg("Title")
+            <<  "</head>\n"
+                "<style>"
+                    "body {font-family: Verdana; background-color: #FFFFFF;}\n"
+                    "thead {font-size: 10px;}\n"
+                    "td {font-size: 8px;}\n"
+                "</style>\n"
+            "<body>\n";
+    out << QString(army->html_lords_table().data());
+    out << "\n<br/>\n";
+    out << QString(army->html_heroes_table().data());
+    out << "</body>\n"
+           "</html>\n";
+    /*out <<  "<html>\n"
         "<head>\n"
         "<meta Content=\"Text/html; charset=Windows-1251\">\n"
         <<  QString("<title>%1</title>\n").arg("Title")
@@ -1279,7 +1295,7 @@ void ArmyCreator::on_export_button_clicked() {
     }
     out <<  "</table>\n"
         "</body>\n"
-        "</html>\n";
+        "</html>\n";*/
     QTextDocument* document = new QTextDocument();
     document->setHtml(str_stream);
     QPrinter printer;
