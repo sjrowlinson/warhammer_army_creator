@@ -48,6 +48,7 @@ public:
 
     bool is_character() const noexcept override;
     virtual bool is_mage() const noexcept override;
+    bool is_mixed() const noexcept override;
     bool is_bsb() const noexcept;
 
     std::size_t size() const noexcept;

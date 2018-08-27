@@ -29,6 +29,7 @@ character_unit::character_unit(const character_unit& other)
 
 bool character_unit::is_character() const noexcept { return true; }
 bool character_unit::is_mage() const noexcept { return false; }
+bool character_unit::is_mixed() const noexcept { return false; }
 
 bool character_unit::is_bsb() const noexcept {
     return mc_extras_.count(std::string("Battle Standard Bearer"));
@@ -526,8 +527,11 @@ std::string character_unit::html_table_row() const {
                 (armours_.count(ArmourType::HELMET) ? "<br/>" : "</td>\n");
     if (armours_.count(ArmourType::HELMET))
         row +=  std::string((armours_.count(ArmourType::ARMOUR) || armours_.count(ArmourType::SHIELD))
-                            ? "" : "<td>") + "Shield: " +
+                            ? "" : "<td>") + "Helmet: " +
                 std::get<1>(armours_.at(ArmourType::HELMET)) + "</td>\n";
+    if (!armours_.count(ArmourType::ARMOUR) &&
+            !armours_.count(ArmourType::SHIELD) &&
+            !armours_.count(ArmourType::HELMET)) row += "<td>&nbsp;</td>";
     // talisman
     row += "<td>";
     if (!talisman_.first.empty()) row += talisman_.first;

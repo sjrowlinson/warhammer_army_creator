@@ -162,7 +162,7 @@ std::string mage_character_unit::html_table_row() const {
                 (armours_.count(ArmourType::HELMET) ? "<br/>" : "</td>\n");
     if (armours_.count(ArmourType::HELMET))
         row +=  std::string((armours_.count(ArmourType::ARMOUR) || armours_.count(ArmourType::SHIELD))
-                            ? "" : "<td>") + "Shield: " +
+                            ? "" : "<td>") + "Helmet: " +
                 std::get<1>(armours_.at(ArmourType::HELMET)) + "</td>\n";
     if (!armours_.count(ArmourType::ARMOUR) &&
             !armours_.count(ArmourType::SHIELD) &&
@@ -180,7 +180,7 @@ std::string mage_character_unit::html_table_row() const {
     // arcane item
     row += "<td>";
     if (!arcane_item_.first.empty()) row += arcane_item_.first;
-    else row += "&nbsp";
+    else row += "&nbsp;";
     row += "</td>\n";
     // magic/faction item extras
     row += "<td>";

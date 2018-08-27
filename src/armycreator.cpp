@@ -1256,46 +1256,15 @@ void ArmyCreator::on_export_button_clicked() {
     out << QString(army->html_lords_table().data());
     out << "\n<br/>\n";
     out << QString(army->html_heroes_table().data());
+    out << "\n<br/>\n";
+    out << QString(army->html_core_table().data());
+    out << "\n<br/>\n";
+    out << QString(army->html_special_table().data());
+    out << "\n<br/>\n";
+    out << QString(army->html_rare_table().data());
+    out << "\n<br/>\n";
     out << "</body>\n"
            "</html>\n";
-    /*out <<  "<html>\n"
-        "<head>\n"
-        "<meta Content=\"Text/html; charset=Windows-1251\">\n"
-        <<  QString("<title>%1</title>\n").arg("Title")
-        <<  "</head>\n"
-            "<style>"
-                "body {font-family: Verdana; background-color: #FFFFFF;}\n"
-                "thead {font-size: 16px;}\n"
-                "td {font-size: 14px;}\n"
-            "</style>\n"
-        "<body>\n"
-        "<table border=1 cellspacing=0>\n";
-    // headers
-    out << "<thead><tr style=\"background-color: #000000\">";
-    for (int column = 0; column < col_count; column++)
-        if (!ui->army_tree->isColumnHidden(column))
-            out << QString("<th style=\"color: #FFFFFF\">%1</th>")
-                   .arg(ui->army_tree->model()->headerData(column, Qt::Horizontal).toString());
-    out << "</tr></thead>\n";
-    // data table
-    auto item = ui->army_tree->topLevelItem(0);
-    while (item != nullptr) {
-        out << "<tr>";
-        for (int col = 0; col < col_count; ++col) {
-            QString text = item->text(col);
-            if (item->parent() == nullptr)
-                out << QString("<td style=\"background-color: #C0C0C0\"><strong>%1</strong></td>")
-                       .arg((!text.isEmpty()) ? text : QString("&nbsp;"));
-            else
-                out << QString("<td style=\"background-color: #FFFFFF\">%1</td>")
-                       .arg((!text.isEmpty()) ? text : QString("&nbsp;"));
-        }
-        out << "</tr>\n";
-        item = ui->army_tree->itemBelow(item);
-    }
-    out <<  "</table>\n"
-        "</body>\n"
-        "</html>\n";*/
     QTextDocument* document = new QTextDocument();
     document->setHtml(str_stream);
     QPrinter printer;

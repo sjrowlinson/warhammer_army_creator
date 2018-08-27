@@ -43,6 +43,7 @@ public:
 
     virtual bool is_character() const noexcept = 0;
     virtual bool is_mage() const noexcept = 0;
+    virtual bool is_mixed() const noexcept = 0;
 
     ModelSelect model_select() const noexcept;
     virtual bool switch_model_select(ModelSelect ms);

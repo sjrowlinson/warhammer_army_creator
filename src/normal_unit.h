@@ -5,6 +5,7 @@
 #include "base_unit.h"
 #include "base_normal_unit.h"
 #include "unit.h"
+#include "tools.h"
 
 #include <memory>
 #include <stdexcept>
@@ -66,6 +67,7 @@ public:
 
     bool is_character() const noexcept override;
     bool is_mage() const noexcept override;
+    bool is_mixed() const noexcept override;
 
     bool switch_model_select(ModelSelect ms) override;
 

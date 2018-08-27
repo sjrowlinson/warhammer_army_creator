@@ -36,6 +36,7 @@ normal_unit::normal_unit(const normal_unit& other)
 
 bool normal_unit::is_character() const noexcept { return false; }
 bool normal_unit::is_mage() const noexcept { return false; }
+bool normal_unit::is_mixed() const noexcept { return false; }
 
 bool normal_unit::switch_model_select(ModelSelect ms) {
     model_select_ = ms;
@@ -717,5 +718,75 @@ void normal_unit::change_size(std::size_t n) {
 }
 
 std::string normal_unit::html_table_row() const {
-    return std::string();
+    std::string row = "<tr>";
+    // unit name
+    row += "<td>" + name() + "</td>\n";
+    // unit size
+    row += "<td>" + std::to_string(size_) + "</td>\n";
+    // unit mount
+    row += "<td>" + (mount_.first.empty() ? "&nbsp;" : mount_.first) + "</td>\n";
+    // weapons
+    if (weapons_.count(WeaponType::MELEE))
+        row += "<td>Melee: " +
+                std::get<1>(weapons_.at(WeaponType::MELEE)) +
+                (weapons_.count(WeaponType::BALLISTIC) ? "<br/>" : "</td>\n");
+    if (weapons_.count(WeaponType::BALLISTIC))
+        row +=  std::string(weapons_.count(WeaponType::MELEE) ? "" : "<td>") + "Ranged: " +
+                std::get<1>(weapons_.at(WeaponType::BALLISTIC)) + "</td>\n";
+    if (!weapons_.count(WeaponType::MELEE) &&
+            !weapons_.count(WeaponType::BALLISTIC)) row += "<td>&nbsp;</td>";
+    // armour
+    if (armours_.count(ArmourType::ARMOUR))
+        row += "<td>Body: " +
+                std::get<1>(armours_.at(ArmourType::ARMOUR)) +
+                (armours_.count(ArmourType::SHIELD) || armours_.count(ArmourType::HELMET)
+                    ? "<br/>" : "</td>\n");
+    if (armours_.count(ArmourType::SHIELD))
+        row +=  std::string(armours_.count(ArmourType::ARMOUR) ? "" : "<td>") + "Shield: " +
+                std::get<1>(armours_.at(ArmourType::SHIELD)) +
+                (armours_.count(ArmourType::HELMET) ? "<br/>" : "</td>\n");
+    if (armours_.count(ArmourType::HELMET))
+        row +=  std::string((armours_.count(ArmourType::ARMOUR) || armours_.count(ArmourType::SHIELD))
+                            ? "" : "<td>") + "Helmet: " +
+                std::get<1>(armours_.at(ArmourType::HELMET)) + "</td>\n";
+    if (!armours_.count(ArmourType::ARMOUR) &&
+            !armours_.count(ArmourType::SHIELD) &&
+            !armours_.count(ArmourType::HELMET)) row += "<td>&nbsp;</td>";
+    // extras
+    row += "<td>";
+    if (!oco_extra_.first.empty()) row += oco_extra_.first + (mc_extras().empty() ? "" : "<br/>");
+    for (const auto& x : mc_extras_) row += x.first + "<br/>";
+    if (oco_extra_.first.empty() && mc_extras_.empty()) row += "&nbsp;";
+    row += "</td>\n";
+    // command
+    if (command_group.count(CommandGroup::MUSICIAN))
+        row += "<td>" +
+                command_group.at(CommandGroup::MUSICIAN).first +
+                (command_group.count(CommandGroup::STANDARD_BEARER) || command_group.count(CommandGroup::CHAMPION)
+                    ? "<br/>" : "</td>\n");
+    if (command_group.count(CommandGroup::STANDARD_BEARER))
+        row +=  std::string(command_group.count(CommandGroup::MUSICIAN) ? "" : "<td>") +
+                command_group.at(CommandGroup::STANDARD_BEARER).first +
+                (command_group.count(CommandGroup::CHAMPION) ? "<br/>" : "</td>\n");
+    if (command_group.count(CommandGroup::CHAMPION))
+        row +=  std::string((command_group.count(CommandGroup::MUSICIAN)
+                             || command_group.count(CommandGroup::STANDARD_BEARER))
+                            ? "" : "<td>") + command_group.at(CommandGroup::CHAMPION).first + "</td>\n";
+    if (!command_group.count(CommandGroup::MUSICIAN) &&
+            !command_group.count(CommandGroup::STANDARD_BEARER) &&
+            !command_group.count(CommandGroup::CHAMPION)) row += "<td>&nbsp;</td>";
+    // banner
+    row += "<td>";
+    if (!banner.first.empty()) row += banner.first;
+    else row += "&nbsp;";
+    row += "</td>\n";
+    // characteristics
+    row += "<td>";
+    for (const auto& x : handle->statistics()) row += x + " ";
+    row += "</td>\n";
+    // points
+    row += "<td>" + tools::points_str(points()) + "</td>\n";
+    // end row
+    row += "</tr>\n";
+    return row;
 }

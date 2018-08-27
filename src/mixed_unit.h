@@ -30,6 +30,7 @@ public:
 
     bool is_character() const noexcept override;
     bool is_mage() const noexcept override;
+    bool is_mixed() const noexcept override;
 
     bool switch_model_select(ModelSelect ms) override;
     bool switch_mixed_select(MixedSelect ms) override;
