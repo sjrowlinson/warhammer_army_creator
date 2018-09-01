@@ -64,7 +64,6 @@ private:
 
     std::reference_wrapper<army_list> army;
 
-    //std::pair<std::string, std::string> filenames() const noexcept;
     std::tuple<std::string, std::string, std::string> filenames() const noexcept;
     void parse_roster_file(const QString& rfile_str);
     void parse_item_files(const std::pair<QString, QString>& ifile_str);

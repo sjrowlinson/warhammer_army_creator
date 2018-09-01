@@ -311,121 +311,82 @@ void army_list::determine_limits() {
     rare_lim = percent_25;
 }
 
-std::string army_list::html_lords_table() const {
-    std::vector<std::string> headers = {
-        "Unit", "Mount", "Wizard Level", "Weapons", "Armour", "Talisman", "Enchanted Item",
-        "Arcane Item", "Other Magic/Faction Items", "Other Extras", "Banner", "Characteristics",
-        "Points"
-    };
+std::string army_list::html_table(armies::UnitType ut) const {
+    std::vector<std::string> headers;
+    switch (ut) {
+    case armies::UnitType::LORD:
+    case armies::UnitType::HERO:
+        headers = {
+            "Unit", "Mount", "Wizard Level", "Weapons", "Armour", "Talisman", "Enchanted Item",
+            "Arcane Item", "Other Magic/Faction Items", "Other Extras", "Banner", "Characteristics",
+            "Points"
+        };
+        break;
+    case armies::UnitType::CORE:
+    case armies::UnitType::SPECIAL:
+    case armies::UnitType::RARE:
+        headers = {
+                "Unit", "Size", "Mount", "Weapons", "Armour", "Extras", "Command",
+                "Banner", "Characteristics", "Points"
+        };
+        break;
+    default: throw std::invalid_argument("Invalid unit type!");
+    }
     std::string table = "<table border=1 cellspacing=1 cellpadding=2 width=100%>\n";
-    table += "<thead><tr style=\"background-color: #000000\"><th colspan=\"13\" \
-            style=\"color: #FFFFFF\">Lords (" + tools::points_str(lord_pts) + "/" +
-            tools::points_str(lord_lim) + " points)" + "</th></tr></thead>\n";
+    // make unit type header
+    table += "<thead><tr style=\"background-color: #000000\">\n";
+    switch (ut) {
+    case armies::UnitType::LORD:
+        table += "<th colspan=\"13\" style=\"color: #FFFFFF\">";
+        table += "Lords (" + tools::points_str(lord_pts) + "/" + tools::points_str(lord_lim);
+        break;
+    case armies::UnitType::HERO:
+        table += "<th colspan=\"13\" style=\"color: #FFFFFF\">";
+        table += "Heroes (" + tools::points_str(hero_pts) + "/" + tools::points_str(hero_lim);
+        break;
+    case armies::UnitType::CORE:
+        table += "<th colspan=\"10\" style=\"color: #FFFFFF\">";
+        table += "Core Units (" + tools::points_str(core_pts);
+        break;
+    case armies::UnitType::SPECIAL:
+        table += "<th colspan=\"10\" style=\"color: #FFFFFF\">";
+        table += "Special Units (" + tools::points_str(spec_pts) + "/" + tools::points_str(spec_lim);
+        break;
+    case armies::UnitType::RARE:
+        table += "<th colspan=\"10\" style=\"color: #FFFFFF\">";
+        table += "Rare Units (" + tools::points_str(rare_pts) + "/" + tools::points_str(rare_lim);
+        break;
+    default: break;
+    }
+    table += " points)</th></tr></thead>\n";
+    // make field headers
     table += "<thead><tr style=\"background-color: #C0C0C0\">";
-    for (const auto& h : headers) table += "<th style=\"color: #FFFFFF\">" + h + "</th>\n";
+    for (const auto& h : headers) table += "<th style = \"color: #FFFFFF\">" + h + "</th\n>";
     table += "</tr></thead>\n";
-    //table += "<tbody>";
+    // fill table
     for (const auto& x : army) {
-        if (x.second->unit_type() == armies::UnitType::LORD)
-            table += std::dynamic_pointer_cast<character_unit>(x.second)->html_table_row();
+        if (x.second->unit_type() == ut) table += x.second->html_table_row();
     }
     table += "</table>";
     return table;
+}
+
+std::string army_list::html_lords_table() const {
+    return html_table(armies::UnitType::LORD);
 }
 
 std::string army_list::html_heroes_table() const {
-    std::vector<std::string> headers = {
-        "Unit", "Mount", "Wizard Level", "Weapons", "Armour", "Talisman", "Enchanted Item",
-        "Arcane Item", "Other Magic/Faction Items", "Other Extras", "Banner", "Characteristics",
-        "Points"
-    };
-    std::string table = "<table border=1 cellspacing=1 cellpadding=2 width=100%>\n";
-    table += "<thead><tr style=\"background-color: #000000\"><th colspan=\"13\" \
-            style=\"color: #FFFFFF\">Heroes (" + tools::points_str(hero_pts) + "/" +
-            tools::points_str(hero_lim) + " points)" + "</th></tr></thead>\n";
-    table += "<thead><tr style=\"background-color: #C0C0C0\">";
-    for (const auto& h : headers) table += "<th style=\"color: #FFFFFF\">" + h + "</th>\n";
-    table += "</tr></thead>\n";
-    //table += "<tbody>";
-    for (const auto& x : army) {
-        if (x.second->unit_type() == armies::UnitType::HERO)
-            table += std::dynamic_pointer_cast<character_unit>(x.second)->html_table_row();
-    }
-    table += "</table>";
-    return table;
+    return html_table(armies::UnitType::HERO);
 }
 
 std::string army_list::html_core_table() const {
-    std::vector<std::string> headers = {
-        "Unit", "Size", "Mount", "Weapons", "Armour", "Extras", "Command",
-        "Banner", "Characteristics", "Points"
-    };
-    std::string table = "<table border=1 cellspacing=1 cellpadding=2 width=100%>\n";
-    table += "<thead><tr style=\"background-color: #000000\"><th colspan=\"10\" \
-            style=\"color: #FFFFFF\">Core Units (" + tools::points_str(core_pts) +
-            " points)" + "</th></tr></thead>\n";
-    table += "<thead><tr style=\"background-color: #C0C0C0\">";
-    for (const auto& h : headers) table += "<th style=\"color: #FFFFFF\">" + h + "</th>\n";
-    table += "</tr></thead>\n";
-    //table += "<tbody>";
-    for (const auto& x : army) {
-        if (x.second->unit_type() == armies::UnitType::CORE) {
-            if (x.second->is_mixed())
-                table += std::dynamic_pointer_cast<mixed_unit>(x.second)->html_table_row();
-            else
-                table += std::dynamic_pointer_cast<normal_unit>(x.second)->html_table_row();
-        }
-    }
-    table += "</table>";
-    return table;
+    return html_table(armies::UnitType::CORE);
 }
 
 std::string army_list::html_special_table() const {
-    std::vector<std::string> headers = {
-        "Unit", "Size", "Mount", "Weapons", "Armour", "Extras", "Command",
-        "Banner", "Characteristics", "Points"
-    };
-    std::string table = "<table border=1 cellspacing=1 cellpadding=2 width=100%>\n";
-    table += "<thead><tr style=\"background-color: #000000\"><th colspan=\"10\" \
-            style=\"color: #FFFFFF\">Special Units (" + tools::points_str(spec_pts) + "/" +
-            tools::points_str(spec_lim) + " points)" + "</th></tr></thead>\n";
-    table += "<thead><tr style=\"background-color: #C0C0C0\">";
-    for (const auto& h : headers) table += "<th style=\"color: #FFFFFF\">" + h + "</th>\n";
-    table += "</tr></thead>\n";
-    //table += "<tbody>";
-    for (const auto& x : army) {
-        if (x.second->unit_type() == armies::UnitType::SPECIAL) {
-            if (x.second->is_mixed())
-                table += std::dynamic_pointer_cast<mixed_unit>(x.second)->html_table_row();
-            else
-                table += std::dynamic_pointer_cast<normal_unit>(x.second)->html_table_row();
-        }
-    }
-    table += "</table>";
-    return table;
+    return html_table(armies::UnitType::SPECIAL);
 }
 
 std::string army_list::html_rare_table() const {
-    std::vector<std::string> headers = {
-        "Unit", "Size", "Mount", "Weapons", "Armour", "Extras", "Command",
-        "Banner", "Characteristics", "Points"
-    };
-    std::string table = "<table border=1 cellspacing=1 cellpadding=2 width=100%>\n";
-    table += "<thead><tr style=\"background-color: #000000\"><th colspan=\"10\" \
-            style=\"color: #FFFFFF\">Rare Units (" + tools::points_str(rare_pts) + "/" +
-            tools::points_str(rare_lim) + " points)" + "</th></tr></thead>\n";
-    table += "<thead><tr style=\"background-color: #C0C0C0\">";
-    for (const auto& h : headers) table += "<th style=\"color: #FFFFFF\">" + h + "</th>\n";
-    table += "</tr></thead>\n";
-    //table += "<tbody>";
-    for (const auto& x : army) {
-        if (x.second->unit_type() == armies::UnitType::RARE) {
-            if (x.second->is_mixed())
-                table += std::dynamic_pointer_cast<mixed_unit>(x.second)->html_table_row();
-            else
-                table += std::dynamic_pointer_cast<normal_unit>(x.second)->html_table_row();
-        }
-    }
-    table += "</table>";
-    return table;
+    return html_table(armies::UnitType::RARE);
 }

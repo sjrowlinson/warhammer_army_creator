@@ -50,6 +50,7 @@ private:
 
     void check_validity();
     void determine_limits();
+    std::string html_table(armies::UnitType ut) const;
 public:
     army_list(double points);
     ~army_list();

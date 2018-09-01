@@ -790,7 +790,8 @@ std::string normal_unit::html_table_row() const {
     row += "<tr>\n";
     for (const auto& x : handle->statistics()) row += "<td align=\"center\">" + x + "</td>\n";
     row += "</tr>\n";
-    if (!std::equal(std::begin(handle->statistics()),
+    if (!handle->champion_statistics().empty() &&
+            !std::equal(std::begin(handle->statistics()),
                     std::end(handle->statistics()),
                     std::begin(handle->champion_statistics()))) {
         // => champion member characteristics

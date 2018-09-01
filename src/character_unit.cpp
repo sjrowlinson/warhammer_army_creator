@@ -454,7 +454,7 @@ void character_unit::remove_mount() {
 
 void character_unit::pick_banner(ItemClass item_class, std::string name) {
     if (!is_bsb())
-        throw std::runtime_error("Non-BSB characters cannot take Magic Standards!");
+        throw std::runtime_error("Only the Battle Standard Bearer may take a Magic Standard!");
     if (is_bsb() && (!talisman_.first.empty() || !enchanted_item_.first.empty() ||
                      !item_extras_.empty() ||
                      std::count_if(

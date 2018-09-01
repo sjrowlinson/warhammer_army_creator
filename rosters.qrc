@@ -9,5 +9,6 @@
         <file alias="dark_elves.ros">rosters/dark_elves.ros</file>
         <file alias="beastmen.ros">rosters/beastmen.ros</file>
         <file alias="woc.mnt">rosters/woc.mnt</file>
+        <file alias="skaven.mnt">rosters/skaven.mnt</file>
     </qresource>
 </RCC>
