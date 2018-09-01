@@ -39,6 +39,7 @@ protected:
     double total_item_points_;
 
     void pick_magic_item(ItemType item_type, ItemClass item_class, const std::string& name);
+    std::string html_table_row_both(short mlevel, std::string arcane) const;
 public:
     const std::shared_ptr<base_character_unit> handle_;
 

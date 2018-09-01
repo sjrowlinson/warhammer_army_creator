@@ -319,7 +319,8 @@ std::string army_list::html_lords_table() const {
     };
     std::string table = "<table border=1 cellspacing=1 cellpadding=2 width=100%>\n";
     table += "<thead><tr style=\"background-color: #000000\"><th colspan=\"13\" \
-            style=\"color: #FFFFFF\">Lords</th></tr></thead>\n";
+            style=\"color: #FFFFFF\">Lords (" + tools::points_str(lord_pts) + "/" +
+            tools::points_str(lord_lim) + " points)" + "</th></tr></thead>\n";
     table += "<thead><tr style=\"background-color: #C0C0C0\">";
     for (const auto& h : headers) table += "<th style=\"color: #FFFFFF\">" + h + "</th>\n";
     table += "</tr></thead>\n";
@@ -340,7 +341,8 @@ std::string army_list::html_heroes_table() const {
     };
     std::string table = "<table border=1 cellspacing=1 cellpadding=2 width=100%>\n";
     table += "<thead><tr style=\"background-color: #000000\"><th colspan=\"13\" \
-            style=\"color: #FFFFFF\">Heroes</th></tr></thead>\n";
+            style=\"color: #FFFFFF\">Heroes (" + tools::points_str(hero_pts) + "/" +
+            tools::points_str(hero_lim) + " points)" + "</th></tr></thead>\n";
     table += "<thead><tr style=\"background-color: #C0C0C0\">";
     for (const auto& h : headers) table += "<th style=\"color: #FFFFFF\">" + h + "</th>\n";
     table += "</tr></thead>\n";
@@ -360,7 +362,8 @@ std::string army_list::html_core_table() const {
     };
     std::string table = "<table border=1 cellspacing=1 cellpadding=2 width=100%>\n";
     table += "<thead><tr style=\"background-color: #000000\"><th colspan=\"10\" \
-            style=\"color: #FFFFFF\">Core Units</th></tr></thead>\n";
+            style=\"color: #FFFFFF\">Core Units (" + tools::points_str(core_pts) +
+            " points)" + "</th></tr></thead>\n";
     table += "<thead><tr style=\"background-color: #C0C0C0\">";
     for (const auto& h : headers) table += "<th style=\"color: #FFFFFF\">" + h + "</th>\n";
     table += "</tr></thead>\n";
@@ -384,7 +387,8 @@ std::string army_list::html_special_table() const {
     };
     std::string table = "<table border=1 cellspacing=1 cellpadding=2 width=100%>\n";
     table += "<thead><tr style=\"background-color: #000000\"><th colspan=\"10\" \
-            style=\"color: #FFFFFF\">Special Units</th></tr></thead>\n";
+            style=\"color: #FFFFFF\">Special Units (" + tools::points_str(spec_pts) + "/" +
+            tools::points_str(spec_lim) + " points)" + "</th></tr></thead>\n";
     table += "<thead><tr style=\"background-color: #C0C0C0\">";
     for (const auto& h : headers) table += "<th style=\"color: #FFFFFF\">" + h + "</th>\n";
     table += "</tr></thead>\n";
@@ -408,7 +412,8 @@ std::string army_list::html_rare_table() const {
     };
     std::string table = "<table border=1 cellspacing=1 cellpadding=2 width=100%>\n";
     table += "<thead><tr style=\"background-color: #000000\"><th colspan=\"10\" \
-            style=\"color: #FFFFFF\">Rare Units</th></tr></thead>\n";
+            style=\"color: #FFFFFF\">Rare Units (" + tools::points_str(rare_pts) + "/" +
+            tools::points_str(rare_lim) + " points)" + "</th></tr></thead>\n";
     table += "<thead><tr style=\"background-color: #C0C0C0\">";
     for (const auto& h : headers) table += "<th style=\"color: #FFFFFF\">" + h + "</th>\n";
     table += "</tr></thead>\n";

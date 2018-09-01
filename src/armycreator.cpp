@@ -1241,7 +1241,6 @@ void ArmyCreator::update_unit_command_display_helper(
 void ArmyCreator::on_export_button_clicked() {
     QString str_stream;
     QTextStream out(&str_stream);
-    //const int col_count = ui->army_tree->model()->columnCount();
     out <<  "<html>\n"
             "<head>\n"
             "<meta Content=\"Text/html; charset=Windows-1251\">\n"
@@ -1252,7 +1251,14 @@ void ArmyCreator::on_export_button_clicked() {
                     "thead {font-size: 10px;}\n"
                     "td {font-size: 8px;}\n"
                 "</style>\n"
-            "<body>\n";
+            "<body>\n"
+            "<header>\n"
+             << QString("<h1>A %1/%2 points %3 army list</h1>").arg(
+                    tools::points_str(army->current_points()).data(),
+                    tools::points_str(ui->pts_limit_spinbox->value()).data(),
+                    ui->faction_combobox->currentText()
+                )
+            << "</header><br/>\n";
     out << QString(army->html_lords_table().data());
     out << "\n<br/>\n";
     out << QString(army->html_heroes_table().data());
@@ -1271,7 +1277,7 @@ void ArmyCreator::on_export_button_clicked() {
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setPaperSize(QPrinter::A4);
     printer.setPageOrientation(QPageLayout::Landscape);
-    printer.setOutputFileName(QString("test.pdf"));
+    printer.setOutputFileName(QString("test1.pdf"));
     document->setPageSize(printer.pageRect().size());
     document->print(&printer);
     delete document;

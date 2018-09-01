@@ -727,27 +727,27 @@ std::string normal_unit::html_table_row() const {
     row += "<td>" + (mount_.first.empty() ? "&nbsp;" : mount_.first) + "</td>\n";
     // weapons
     if (weapons_.count(WeaponType::MELEE))
-        row += "<td>Melee: " +
+        row += "<td><strong>Melee:</strong> " +
                 std::get<1>(weapons_.at(WeaponType::MELEE)) +
                 (weapons_.count(WeaponType::BALLISTIC) ? "<br/>" : "</td>\n");
     if (weapons_.count(WeaponType::BALLISTIC))
-        row +=  std::string(weapons_.count(WeaponType::MELEE) ? "" : "<td>") + "Ranged: " +
+        row +=  std::string(weapons_.count(WeaponType::MELEE) ? "" : "<td>") + "<strong>Ranged:</strong> " +
                 std::get<1>(weapons_.at(WeaponType::BALLISTIC)) + "</td>\n";
     if (!weapons_.count(WeaponType::MELEE) &&
             !weapons_.count(WeaponType::BALLISTIC)) row += "<td>&nbsp;</td>";
     // armour
     if (armours_.count(ArmourType::ARMOUR))
-        row += "<td>Body: " +
+        row += "<td><strong>Body:</strong> " +
                 std::get<1>(armours_.at(ArmourType::ARMOUR)) +
                 (armours_.count(ArmourType::SHIELD) || armours_.count(ArmourType::HELMET)
                     ? "<br/>" : "</td>\n");
     if (armours_.count(ArmourType::SHIELD))
-        row +=  std::string(armours_.count(ArmourType::ARMOUR) ? "" : "<td>") + "Shield: " +
+        row +=  std::string(armours_.count(ArmourType::ARMOUR) ? "" : "<td>") + "<strong>Shield:</strong> " +
                 std::get<1>(armours_.at(ArmourType::SHIELD)) +
                 (armours_.count(ArmourType::HELMET) ? "<br/>" : "</td>\n");
     if (armours_.count(ArmourType::HELMET))
         row +=  std::string((armours_.count(ArmourType::ARMOUR) || armours_.count(ArmourType::SHIELD))
-                            ? "" : "<td>") + "Helmet: " +
+                            ? "" : "<td>") + "<strong>Helmet:</strong> " +
                 std::get<1>(armours_.at(ArmourType::HELMET)) + "</td>\n";
     if (!armours_.count(ArmourType::ARMOUR) &&
             !armours_.count(ArmourType::SHIELD) &&
@@ -781,9 +781,25 @@ std::string normal_unit::html_table_row() const {
     else row += "&nbsp;";
     row += "</td>\n";
     // characteristics
-    row += "<td>";
-    for (const auto& x : handle->statistics()) row += x + " ";
-    row += "</td>\n";
+    row += "<td><table border=1 cellspacing=0 cellpadding=1 width=100%>\n";
+    row += "<thead><tr>\n"
+            "<th>M</th><th>WS</th><th>BS</th><th>S</th><th>T</th><th>W</th>"
+            "<th>I</th><th>A</th><th>Ld</th>\n"
+           "</tr></thead>\n";
+    // => default member characteristics
+    row += "<tr>\n";
+    for (const auto& x : handle->statistics()) row += "<td align=\"center\">" + x + "</td>\n";
+    row += "</tr>\n";
+    if (!std::equal(std::begin(handle->statistics()),
+                    std::end(handle->statistics()),
+                    std::begin(handle->champion_statistics()))) {
+        // => champion member characteristics
+        row += "<tr>\n";
+        for (const auto& x : handle->champion_statistics())
+            row += "<td align=\"center\">" + x + "</td>\n";
+        row += "</tr>\n";
+    }
+    row += "</table></td>\n";
     // points
     row += "<td>" + tools::points_str(points()) + "</td>\n";
     // end row
