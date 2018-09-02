@@ -8,6 +8,7 @@
 #include "base_melee_character_unit.h"
 #include "base_mixed_unit.h"
 #include "base_normal_unit.h"
+#include "file_parser.h"
 #include "tools.h"
 
 #include <algorithm>
@@ -19,24 +20,13 @@
 #include <utility>
 #include <vector>
 
-#include <QFile>
 #include <QString>
-#include <QTextStream>
 
 namespace tools {
 
-    class roster_parser {
+    class roster_parser : public file_parser {
     private:
-        QFile f;
-        std::stringstream ss;
-        std::vector<std::stringstream::streampos> streampos;
-        std::vector<std::size_t> blocks;
         armies::Faction faction;
-
-        void cache();
-        void count_units();
-        void navigate_to_line(std::size_t n);
-        std::string read_line(std::size_t n, bool trim=true);
 
         // common parsing
         std::pair<std::size_t, std::size_t> parse_minmax_size(std::string s);
@@ -96,7 +86,7 @@ namespace tools {
 
     public:
         explicit roster_parser(const QString& rfile, armies::Faction faction);
-        ~roster_parser();
+        ~roster_parser() = default;
 
         std::vector<std::shared_ptr<base_unit>> parse();
     };

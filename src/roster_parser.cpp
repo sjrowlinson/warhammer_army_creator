@@ -3,45 +3,8 @@
 namespace tools {
 
     roster_parser::roster_parser(const QString& rfile, armies::Faction _faction)
-        : f(rfile) {
-        f.open(QIODevice::ReadOnly | QIODevice::Text);
-        QTextStream in(&f);
-        std::string content = in.readAll().toStdString();
-        ss = std::stringstream(content);
-        faction = _faction;
-        cache();
-    }
-
-    roster_parser::~roster_parser() { f.close(); }
-
-    void roster_parser::cache() {
-        std::string s;
-        while (ss) {
-            streampos.push_back(ss.tellg());
-            std::getline(ss, s);
-        }
-    }
-
-    void roster_parser::count_units() {
-        for (std::size_t i = 0U; i < streampos.size(); ++i) {
-            std::string line = read_line(i, false);
-            if (line.empty() || tools::starts_with(line, '#')) continue;
-            if (!(tools::starts_with(line, "    ") || tools::starts_with(line, '\t')))
-                blocks.push_back(i);
-        }
-    }
-
-    void roster_parser::navigate_to_line(std::size_t n) {
-        ss.clear();
-        ss.seekg(streampos[n]);
-    }
-
-    std::string roster_parser::read_line(std::size_t n, bool trim) {
-        navigate_to_line(n);
-        std::string s;
-        std::getline(ss, s);
-        if (trim) return tools::remove_leading_whitespaces(s);
-        return s;
+        : file_parser(rfile), faction(_faction) {
+        find_blocks();
     }
 
     std::pair<std::size_t, std::size_t> roster_parser::parse_minmax_size(std::string s) {
@@ -280,7 +243,6 @@ namespace tools {
     }
 
     std::vector<std::shared_ptr<base_unit>> roster_parser::parse() {
-        count_units();
         std::vector<std::shared_ptr<base_unit>> units;
         units.reserve(blocks.size());
         for (std::size_t i = 0U; i < blocks.size(); ++i) {

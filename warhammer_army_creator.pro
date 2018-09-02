@@ -31,8 +31,10 @@ SOURCES += \
         src/armycreator.cpp \
         src/army_list.cpp \
         src/army_maps.cpp \
+        src/file_parser.cpp \
         src/item_parser.cpp \
         src/roster_parser.cpp \
+        src/mounts_parser.cpp \
         src/selection_tree.cpp \
         src/tools.cpp \
         src/base_unit.cpp \
@@ -56,9 +58,11 @@ HEADERS += \
         src/army_list.h \
         src/army_maps.h \
         src/base_unit.h \
+        src/file_parser.h \
         src/item_parser.h \
         src/magic_item.h \
         src/roster_parser.h \
+        src/mounts_parser.h \
         src/selection_tree.h \
         src/tools.h \
         src/base_unit.h \
