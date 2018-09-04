@@ -158,6 +158,7 @@ void army_list::remove_rare() {
 }
 
 double army_list::current_points() const noexcept { return curr_pts; }
+double army_list::point_limit() const noexcept { return points; }
 
 std::size_t army_list::nlords() const noexcept {
     return static_cast<std::size_t>(std::count_if(

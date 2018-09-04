@@ -55,6 +55,7 @@ public:
     army_list(double points);
     ~army_list();
     double current_points() const noexcept;
+    double point_limit() const noexcept;
     // add/remove units
     void add_unit(std::shared_ptr<unit> u);
     void remove_unit(int id);

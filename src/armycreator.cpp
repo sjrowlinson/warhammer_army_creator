@@ -1248,27 +1248,27 @@ void ArmyCreator::on_export_button_clicked() {
             <<  "</head>\n"
                 "<style>"
                     "body {font-family: Verdana; background-color: #FFFFFF;}\n"
-                    "thead {font-size: 10px;}\n"
-                    "td {font-size: 8px;}\n"
-                "</style>\n"
+                    << QString("thead {font-size: %1px;}\n").arg(
+                           army->point_limit() > 2000.0 ? "8" : "10"
+                       )
+                    << QString("td {font-size: %1px;}\n").arg(
+                           army->point_limit() > 2000.0 ? "6" : "8"
+                       )
+                << "</style>\n"
             "<body>\n"
             "<header>\n"
-             << QString("<h1>A %1/%2 points %3 army list</h1>").arg(
+             << QString("<h2>A %1/%2 points %3 army list</h2>").arg(
                     tools::points_str(army->current_points()).data(),
-                    tools::points_str(ui->pts_limit_spinbox->value()).data(),
+                    tools::points_str(army->point_limit()).data(),
                     ui->faction_combobox->currentText()
                 )
-            << "</header><br/>\n";
+            << "</header>\n";
     out << QString(army->html_lords_table().data());
-    out << "\n<br/>\n";
     out << QString(army->html_heroes_table().data());
     out << "\n<br/>\n";
     out << QString(army->html_core_table().data());
-    out << "\n<br/>\n";
     out << QString(army->html_special_table().data());
-    out << "\n<br/>\n";
     out << QString(army->html_rare_table().data());
-    out << "\n<br/>\n";
     out << "</body>\n"
            "</html>\n";
     QTextDocument* document = new QTextDocument();
@@ -1277,7 +1277,7 @@ void ArmyCreator::on_export_button_clicked() {
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setPaperSize(QPrinter::A4);
     printer.setPageOrientation(QPageLayout::Landscape);
-    printer.setOutputFileName(QString("test1.pdf"));
+    printer.setOutputFileName(QString("test.pdf"));
     document->setPageSize(printer.pageRect().size());
     document->print(&printer);
     delete document;
