@@ -326,9 +326,19 @@ std::string mixed_unit::html_table_row() const {
     else row += "&nbsp;";
     row += "</td>\n";
     // characteristics
-    row += "<td>";
-    for (const auto& x : handle->slave().statistics()) row += x + " ";
-    row += "</td>\n";
+    row += "<td><table border=1 cellspacing=0 cellpadding=1 width=100%>\n";
+    row += "<thead><tr>\n"
+            "<th>M</th><th>WS</th><th>BS</th><th>S</th><th>T</th><th>W</th>"
+            "<th>I</th><th>A</th><th>Ld</th>\n"
+           "</tr></thead>\n";
+    // => slave characteristics
+    row += "<tr>\n";
+    for (const auto& x : handle->slave().statistics()) row += "<td align=\"center\">" + x + "</td>\n";
+    row += "</tr>\n";
+    // => master characteristics
+    row += "<tr>\n";
+    for (const auto& x : handle->master().statistics()) row += "<td align=\"center\">" + x + "</td>\n";
+    row += "</tr>\n";
     // points
     row += "<td>" + tools::points_str(points()) + "</td>\n";
     // end row

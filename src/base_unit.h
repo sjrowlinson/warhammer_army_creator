@@ -18,6 +18,18 @@ enum class CommandGroup {
     CHAMPION
 };
 
+enum class RestrictionField {
+    WEAPON,
+    ARMOUR,
+    TALISMAN,
+    ENCHANTED,
+    ARCANE,
+    BANNER,
+    OCO_EXTRA,
+    MC_EXTRA,
+    OTHER
+};
+
 struct equipment {
     std::unordered_map<
         WeaponType,
@@ -57,6 +69,27 @@ struct options {
         std::string,
         std::pair<bool, double>
     > mc_extras;
+};
+
+struct mount {
+    std::string name;
+    armies::UnitClass unit_class;
+    std::vector<std::string> statistics;
+    std::vector<std::string> special_rules;
+    // one-choice-only extra
+    std::unordered_map<std::string, double> oco_extras;
+    // multiple choice extras
+    std::unordered_map<std::string, double> mc_extras;
+    // unit can only take the mount as an option if restrictions is either empty or
+    // if the unit instance has all of the std::string instances corresponding to
+    // a given RestrictionField - e.g. Disc of Tzeentch has:
+    //     restrictions = {RestrictionField::OCO_EXTRA, {"Mark of Tzeentch"}};
+    // such that a character can only choose a Disc of Tzeentch as a mount if they
+    // have "Mark of Tzeentch" in their oco_extra field
+    std::unordered_map<
+        RestrictionField,
+        std::vector<std::string>
+    > restrictions;
 };
 
 enum class BaseUnitType {

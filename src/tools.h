@@ -28,6 +28,7 @@ namespace tools {
 	bool starts_with(const std::string& s, char c);
 	bool starts_with(const std::string& s, std::string match);
 
+    std::pair<std::string, double> parse_item_points(std::string s);
     std::vector<std::string> parse_item_bs(std::string s);
     std::vector<std::string> parse_item_bsp(std::string s);
 
@@ -55,6 +56,24 @@ namespace tools {
         }
         return found;
     }
+
+    // convenience mapping functions for enums <=> strings
+
+    armies::Faction string_to_faction(const std::string& s);
+    std::string faction_to_string(armies::Faction f);
+
+    /*armies::UnitType string_to_unit_type(const std::string& s);
+    std::string unit_type_to_string(armies::UnitType ut);
+
+    armies::UnitClass string_to_unit_class(const std::string& s);
+    std::string unit_class_to_string(armies::UnitClass uc);
+
+    CommandGroup string_to_command(const std::string& s);
+    std::string command_to_string(CommandGroup cg);*/
+
+    RestrictionField string_to_restriction(const std::string& s);
+    //std::string restriction_to_string(RestrictionField rf);
+
 }
 
 #endif // !TOOLS_H

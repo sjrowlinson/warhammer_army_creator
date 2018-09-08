@@ -71,7 +71,7 @@ QGroupBox* MagicItemBox::make_weapons_tab(const std::vector<std::pair<std::strin
     // melee box
     QGroupBox* mbox = new QGroupBox(creator->tr("Melee"));
     // set-up frames and associated horizontal layouts for melee weapons box
-    const auto max_per_row = 7;
+    const auto max_per_row = 6;
     auto n_melee_adj = static_cast<std::size_t>(std::ceil(std::count_if(std::begin(opt_weapons), std::end(opt_weapons),
                                  [](const auto& x) { return x.second.weapon_type == WeaponType::MELEE; })
                        /static_cast<double>(max_per_row)));
@@ -273,7 +273,7 @@ QGroupBox* MagicItemBox::make_talismans_tab(const std::vector<std::pair<std::str
     // overall
     QGroupBox* box = new QGroupBox();
     QVBoxLayout* vlayout = new QVBoxLayout;
-    const auto max_per_row = 7;
+    const auto max_per_row = 6;
     auto n_adj = static_cast<std::size_t>(std::ceil(opt_talismans.size()/static_cast<double>(max_per_row)));
     std::vector<QFrame*> frames(n_adj);
     for (auto& f : frames) f = new QFrame;
@@ -342,7 +342,7 @@ QGroupBox* MagicItemBox::make_enchanted_tab(const std::vector<std::pair<std::str
     // overall
     QGroupBox* box = new QGroupBox();
     QVBoxLayout* vlayout = new QVBoxLayout;
-    const auto max_per_row = 7;
+    const auto max_per_row = 6;
     auto n_adj = static_cast<std::size_t>(std::ceil(opt_enchanted.size()/static_cast<double>(max_per_row)));
     std::vector<QFrame*> frames(n_adj);
     for (auto& f : frames) f = new QFrame;
@@ -410,7 +410,7 @@ QGroupBox* MagicItemBox::make_arcane_tab(const std::vector<std::pair<std::string
     // overall
     QGroupBox* box = new QGroupBox();
     QVBoxLayout* vlayout = new QVBoxLayout;
-    const auto max_per_row = 7;
+    const auto max_per_row = 6;
     auto n_adj = static_cast<std::size_t>(std::ceil(opt_arcane.size()/static_cast<double>(max_per_row)));
     std::vector<QFrame*> frames(n_adj);
     for (auto& f : frames) f = new QFrame;
@@ -482,7 +482,7 @@ QGroupBox* MagicItemBox::make_banners_tab(const std::vector<std::pair<std::strin
     // overall
     QGroupBox* box = new QGroupBox();
     QVBoxLayout* vlayout = new QVBoxLayout;
-    const auto max_per_row = 7;
+    const auto max_per_row = 5;
     auto n_adj = static_cast<std::size_t>(std::ceil(opt_banners.size()/static_cast<double>(max_per_row)));
     std::vector<QFrame*> frames(n_adj);
     for (auto& f : frames) f = new QFrame;
@@ -545,7 +545,7 @@ QGroupBox* MagicItemBox::make_other_tab(const std::vector<std::pair<std::string,
     // overall
     QGroupBox* box = new QGroupBox();
     QVBoxLayout* vlayout = new QVBoxLayout;
-    const auto max_per_row = 7;
+    const auto max_per_row = 6;
     auto n_adj = static_cast<std::size_t>(std::ceil(opt_other.size()/static_cast<double>(max_per_row)));
     std::vector<QFrame*> frames(n_adj);
     for (auto& f : frames) f = new QFrame;

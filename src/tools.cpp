@@ -86,6 +86,12 @@ namespace tools {
 		return true;
 	}
 
+    std::pair<std::string, double> parse_item_points(std::string s) {
+        auto bstart = tools::split(s, '[');
+        auto bend = tools::split(bstart[1], ']');
+        return {bstart[0], std::stod(bend[0])};
+    }
+
     std::vector<std::string> parse_item_bs(std::string s) {
         std::vector<std::string> brace_start = tools::split(s, '{');
         std::vector<std::string> brace_end = tools::split(brace_start[1], '}');
@@ -140,5 +146,73 @@ namespace tools {
         for (auto it : found) vec.push_back(*it);
         return vec;
     }
+
+    // convenience mapping functions for enums <=> strings
+
+    armies::Faction string_to_faction(const std::string& s) {
+        std::unordered_map<
+            std::string,
+            armies::Faction
+        > map_to = {
+            {"The Empire", armies::Faction::EMPIRE},
+            {"Bretonnia", armies::Faction::BRETONNIA},
+            {"Dwarfs", armies::Faction::DWARFS},
+            {"High Elves", armies::Faction::HIGH_ELVES},
+            {"Dark Elves", armies::Faction::DARK_ELVES},
+            {"Wood Elves", armies::Faction::WOOD_ELVES},
+            {"Warriors of Chaos", armies::Faction::WARRIORS_OF_CHAOS},
+            {"Daemons of Chaos", armies::Faction::DAEMONS_OF_CHAOS},
+            {"Beastmen", armies::Faction::BEASTMEN},
+            {"Chaos Dwarfs", armies::Faction::CHAOS_DWARFS},
+            {"Vampire Counts", armies::Faction::VAMPIRE_COUNTS},
+            {"Tomb Kings", armies::Faction::TOMB_KINGS},
+            {"Ogre Kingdoms", armies::Faction::OGRE_KINGDOMS},
+            {"Skaven", armies::Faction::SKAVEN},
+            {"Orcs and Goblins", armies::Faction::ORCS_AND_GOBLINS}
+        };
+        return map_to[s];
+    }
+    std::string faction_to_string(armies::Faction f) {
+        std::unordered_map<
+           armies::Faction,
+           std::string
+        > map_to = {
+            {armies::Faction::EMPIRE, "The Empire"},
+            {armies::Faction::BRETONNIA, "Bretonnia"},
+            {armies::Faction::DWARFS, "Dwarfs"},
+            {armies::Faction::HIGH_ELVES, "High Elves"},
+            {armies::Faction::DARK_ELVES, "Dark Elves"},
+            {armies::Faction::WOOD_ELVES, "Wood Elves"},
+            {armies::Faction::WARRIORS_OF_CHAOS, "Warriors of Chaos"},
+            {armies::Faction::DAEMONS_OF_CHAOS, "Daemons of Chaos"},
+            {armies::Faction::BEASTMEN, "Beastmen"},
+            {armies::Faction::CHAOS_DWARFS, "Chaos Dwarfs"},
+            {armies::Faction::VAMPIRE_COUNTS, "Vampire Counts"},
+            {armies::Faction::TOMB_KINGS, "Tomb Kings"},
+            {armies::Faction::OGRE_KINGDOMS, "Ogre Kingdoms"},
+            {armies::Faction::SKAVEN, "Skaven"},
+            {armies::Faction::ORCS_AND_GOBLINS, "Orcs and Goblins"}
+        };
+        return map_to[f];
+    }
+
+    RestrictionField string_to_restriction(const std::string& s) {
+        std::unordered_map<std::string, RestrictionField> map_to = {
+            {"Weapon", RestrictionField::WEAPON},
+            {"Armour", RestrictionField::ARMOUR},
+            {"Talisman", RestrictionField::TALISMAN},
+            {"Enchanted", RestrictionField::ENCHANTED},
+            {"Arcane", RestrictionField::ARCANE},
+            {"Banner", RestrictionField::BANNER},
+            {"oco_extra", RestrictionField::OCO_EXTRA},
+            {"mc_extra", RestrictionField::MC_EXTRA},
+            {"other", RestrictionField::OTHER}
+        };
+        return map_to[s];
+    }
+    //std::string restriction_to_string(RestrictionField rf) {
+//
+  //  }
+
 
 }

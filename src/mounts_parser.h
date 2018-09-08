@@ -2,6 +2,7 @@
 #define MOUNTS_PARSER_H
 
 #include "army_maps.h"
+#include "base_unit.h"
 #include "file_parser.h"
 #include "tools.h"
 
@@ -10,11 +11,17 @@
 namespace tools {
 
     class mounts_parser : public file_parser {
+    private:
+        std::unordered_map<std::string, double> parse_extras(std::string s);
+        std::unordered_map<
+            RestrictionField,
+            std::vector<std::string>
+        > parse_restrictions(std::string s);
     public:
         explicit mounts_parser(const QString& rfile);
         ~mounts_parser() = default;
 
-
+        std::vector<mount> parse();
     };
 
 }

@@ -20,7 +20,7 @@ Steed of Slaanesh
     Armour Piercing, Daemonic Attacks, Fast Cavalry, Fear, Poisoned Attacks
     None
     None
-    Mark of Slaanesh
+    oco_extras: Mark of Slaanesh
 
 Disc of Tzeentch
     Warbeast
@@ -28,7 +28,7 @@ Disc of Tzeentch
     Daemonic Attacks, Fear, Fly
     None
     None
-    Mark of Tzeentch
+    oco_extras: Mark of Tzeentch
 
 Daemonic Mount
     Monstrous Beast
@@ -44,7 +44,7 @@ Palanquin of Nurgle
     Daemonic Attacks, Fear
     None
     None
-    Mark of Nurgle
+    oco_extras: Mark of Nurgle
 
 Juggernaught of Khorne
     Monstrous Beast
@@ -52,7 +52,7 @@ Juggernaught of Khorne
     Brass Behemoth, Daemonic Attacks, Fear, Murderous Charge
     None
     None
-    Mark of Khorne
+    oco_extras: Mark of Khorne
 
 Chaos Chariot
     Chariot
