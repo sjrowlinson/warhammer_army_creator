@@ -597,6 +597,21 @@ QGroupBox* OptionBox::make_mounts_boxes() {
         }
         creator->connect(b, SIGNAL(clicked(bool)), creator, SLOT(optional_mount_selected()));
         vbox_mounts->addWidget(b);
+        // spawn another group box containing mount options
+        auto mount_meta = current->base()->mounts_handle()->find(m.first);
+        if (mount_meta != current->base()->mounts_handle()->end() &&
+                mount_meta->second.has_options()) {
+            QGroupBox* mount_options_box = new QGroupBox(creator->tr("Options"));
+            QVBoxLayout* mob_layout = new QVBoxLayout;
+            for (const auto& mo : mount_meta->second.mc_extras) {
+                std::string mo_name = mo.first + " (" + tools::points_str(mo.second) + " pts)";
+                QCheckBox* cb = new QCheckBox(creator->tr(mo_name.data()));
+                mob_layout->addWidget(cb);
+                mob_layout->addStretch(1);
+                mount_options_box->setLayout(mob_layout);
+                vbox_mounts->addWidget(mount_options_box);
+            }
+        }
     }
     QRadioButton* none_rb = new QRadioButton(creator->tr("None"));
     none_rb->setObjectName(QString("None_mounts_radiobutton"));

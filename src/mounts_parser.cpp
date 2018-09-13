@@ -25,6 +25,7 @@ namespace tools {
             RestrictionField,
             std::vector<std::string>
         > um;
+        if (s.empty() || s == "None") return um;
         auto restriction = tools::split(s, ';');
         for (const auto& r : restriction) {
             auto split = tools::split(r, ':');

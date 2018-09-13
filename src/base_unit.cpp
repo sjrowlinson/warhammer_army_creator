@@ -21,6 +21,21 @@ std::size_t base_unit::min_size() const noexcept { return min_size_; }
 std::size_t base_unit::max_size() const noexcept { return max_size_; }
 
 const std::shared_ptr<
+    std::unordered_map<
+        std::string, mount
+    >
+>& base_unit::mounts_handle() const noexcept { return mounts; }
+void base_unit::set_mounts_handle(
+    const std::shared_ptr<
+       std::unordered_map<
+           std::string, mount
+       >
+    >& mts
+        ) noexcept {
+    mounts = mts;
+}
+
+const std::shared_ptr<
     std::pair<
         std::string,
         std::unordered_map<std::string, item>

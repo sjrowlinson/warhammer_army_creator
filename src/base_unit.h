@@ -90,6 +90,7 @@ struct mount {
         RestrictionField,
         std::vector<std::string>
     > restrictions;
+    bool has_options() const noexcept { return oco_extras.size() || mc_extras.size(); }
 };
 
 enum class BaseUnitType {
@@ -113,6 +114,12 @@ private:
     std::size_t min_size_;
     std::size_t max_size_;
 
+    // handle to mounts
+    std::shared_ptr<
+        std::unordered_map<
+            std::string, mount
+        >
+    > mounts;
     // handle to magic items
     std::shared_ptr<
         std::pair<
@@ -153,6 +160,18 @@ public:
     std::size_t min_size() const noexcept;
     std::size_t max_size() const noexcept;
 
+    const std::shared_ptr<
+        std::unordered_map<
+            std::string, mount
+        >
+    >& mounts_handle() const noexcept;
+    void set_mounts_handle(
+        const std::shared_ptr<
+           std::unordered_map<
+               std::string, mount
+           >
+        >& mts
+    ) noexcept;
     const std::shared_ptr<
         std::pair<
             std::string,

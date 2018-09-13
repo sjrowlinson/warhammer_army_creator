@@ -14,6 +14,7 @@
 #include "magic_item.h"
 #include "melee_character_unit.h"
 #include "mixed_unit.h"
+#include "mounts_parser.h"
 #include "normal_unit.h"
 #include "roster_parser.h"
 #include "tools.h"
@@ -29,6 +30,8 @@
 
 #include <QString>
 
+#include <iostream>
+
 class selection_tree {
 private:
     armies::Faction race;
@@ -37,6 +40,11 @@ private:
         std::string,
         std::shared_ptr<base_unit>
     > roster;
+    // faction mounts
+    std::unordered_map<
+        std::string,
+        mount
+    > mounts;
     // magic and faction items
     std::pair<
         std::string,
@@ -64,8 +72,9 @@ private:
 
     std::reference_wrapper<army_list> army;
 
-    std::tuple<std::string, std::string, std::string> filenames() const noexcept;
+    std::tuple<std::string, std::string, std::string, std::string> filenames() const noexcept;
     void parse_roster_file(const QString& rfile_str);
+    void parse_mount_file(const QString& mfile_str);
     void parse_item_files(const std::pair<QString, QString>& ifile_str);
     std::vector<std::shared_ptr<base_unit>> all_of(armies::UnitType ut) const noexcept;
 public:

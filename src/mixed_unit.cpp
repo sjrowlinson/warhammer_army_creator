@@ -270,7 +270,7 @@ std::string mixed_unit::html_table_row() const {
     row += "<td>&nbsp;</td>\n";
     // weapons
     if (slave_.weapons().count(WeaponType::MELEE))
-        row += "<td>Melee: " +
+        row += "<td><strong>Melee:</strong> " +
                 std::get<1>(slave_.weapons().at(WeaponType::MELEE)) +
                 (slave_.weapons().count(WeaponType::BALLISTIC) ? "<br/>" : "</td>\n");
     if (slave_.weapons().count(WeaponType::BALLISTIC))

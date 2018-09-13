@@ -14,8 +14,9 @@ selection_tree::selection_tree(armies::Faction faction, army_list& list) : race(
     parse_item_files(std::make_pair(mifile, fifile));
 }
 
-std::tuple<std::string, std::string, std::string> selection_tree::filenames() const noexcept {
+std::tuple<std::string, std::string, std::string, std::string> selection_tree::filenames() const noexcept {
     std::string roster_file = ":/rosters/";
+    std::string mounts_file = ":/rosters/";
     std::string magic_item_file = ":/magic_items/";
     std::string faction_item_file = ":/faction_items/";
     switch (race) {
@@ -45,6 +46,7 @@ std::tuple<std::string, std::string, std::string> selection_tree::filenames() co
         break;
     case armies::Faction::WARRIORS_OF_CHAOS:
         roster_file += "woc.ros";
+        mounts_file += "woc.mnt";
         magic_item_file += "woc.mag";
         faction_item_file += "woc.fit";
         break;
@@ -75,6 +77,7 @@ std::tuple<std::string, std::string, std::string> selection_tree::filenames() co
         break;
     case armies::Faction::SKAVEN:
         roster_file += "skaven.ros";
+        mounts_file += "skaven.mnt";
         magic_item_file += "skaven.mag";
         faction_item_file += "skaven.fit";
         break;
@@ -87,7 +90,7 @@ std::tuple<std::string, std::string, std::string> selection_tree::filenames() co
         magic_item_file += "empire.mag";
         break;
     }
-    return {roster_file, magic_item_file, faction_item_file};
+    return {roster_file, mounts_file, magic_item_file, faction_item_file};
 }
 
 void selection_tree::change_selection(const std::string& name) {
@@ -123,8 +126,10 @@ void selection_tree::reset(armies::Faction faction, army_list &list) {
     auto files = filenames();
     QString rfile(std::get<0>(files).data());
     parse_roster_file(rfile);
-    QString mifile(std::get<1>(files).data());
-    QString fifile(std::get<2>(files).data());
+    QString mfile(std::get<1>(files).data());
+    parse_mount_file(mfile);
+    QString mifile(std::get<2>(files).data());
+    QString fifile(std::get<3>(files).data());
     parse_item_files(std::make_pair(mifile, fifile));
     reset_army_list(list);
 }
@@ -165,6 +170,22 @@ void selection_tree::parse_roster_file(const QString &rfile_str) {
                           std::unordered_map<std::string, item>
                   >>(common_items);
     for (auto& entry : roster) entry.second->set_common_item_handle(sp_common);
+}
+
+void selection_tree::parse_mount_file(const QString& mfile_str) {
+    tools::mounts_parser mp(mfile_str);
+    auto mounts_vec = mp.parse();
+    for (auto&& x : mounts_vec) mounts[x.name] = x;
+    std::shared_ptr<
+        std::unordered_map<
+            std::string, mount
+        >
+    > sp_mounts = std::make_shared<
+        std::unordered_map<
+            std::string, mount
+        >
+    >(mounts);
+    for (auto& entry : roster) entry.second->set_mounts_handle(sp_mounts);
 }
 
 void selection_tree::parse_item_files(const std::pair<QString, QString>& ifile_str) {
