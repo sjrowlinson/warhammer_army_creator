@@ -36,6 +36,8 @@ bool character_unit::is_bsb() const noexcept {
 }
 
 void character_unit::pick_magic_item(ItemType item_type, ItemClass item_class, const std::string& name) {
+    if (item_type != ItemType::BANNER && !banner.first.empty())
+        throw std::runtime_error("BSBs equipped with a Magic Standard cannot take Magic Items!");
     switch (item_class) {
     case ItemClass::MAGIC:
     case ItemClass::COMMON:

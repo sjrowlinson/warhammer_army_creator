@@ -30,6 +30,8 @@ protected:
     std::pair<std::string, std::pair<bool, double>> oco_extra_;
     std::unordered_map<std::string, std::pair<bool, double>> mc_extras_;
     std::unordered_map<std::string, std::pair<ItemClass, double>> item_extras_;
+    // TODO: change to use new mount system, i.e:
+    // std::pair<std::string, std::pair<mount, double>> mount_;
     std::pair<std::string, std::pair<armies::UnitClass, double>> mount_;
     std::pair<std::string, std::pair<ItemClass, double>> banner;
 

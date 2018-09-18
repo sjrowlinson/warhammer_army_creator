@@ -1,0 +1,432 @@
+# Lords
+
+Tomb King
+    Lord, Melee
+    Infantry
+    170
+    1, 1
+    4 6 3 5 5 4 3 4 10
+    The Curse, Flammable, My Will Be Done, Nehekharan Undead
+    Armour: Light armour {Mundane} [Armour]
+    Great weapon {Mundane} [Melee] (6), Flail {Mundane} [Melee] (6), Spear {Mundane} [Melee] (3)
+    Shield {Mundane} [Shield] (3)
+    Skeleton Chariot {Chariot} [55], Khemrian Warsphinx {Monster} [210]
+    None
+    None
+    100
+    0
+    100
+
+Liche High Priest
+    Lord, Mage
+    3
+    4 [35]
+    Nehekhara, Light, Death
+    Infantry
+    175
+    1, 1
+    4 3 3 3 4 3 2 1 8
+    Nehekharan Undead
+    None
+    None
+    None
+    Skeletal Steed {Warbeast} [15]
+    None
+    None
+    100
+    0
+    100
+
+# Heroes
+
+Tomb Prince
+    Hero, Melee
+    Infantry
+    100
+    1, 1
+    4 5 3 4 5 3 3 3 9
+    The Curse, Flammable, My Will Be Done, Nehekharan Undead
+    Armour: Light armour {Mundane} [Armour]
+    Great weapon {Mundane} [Melee] (4), Flail {Mundane} [Melee] (4), Spear {Mundane} [Melee] (2)
+    Shield {Mundane} [Shield] (2)
+    Skeleton Chariot {Chariot} [55], Khemrian Warsphinx {Monster} [210]
+    None
+    None
+    50
+    0
+    50
+
+Tomb Herald
+    Hero, Melee
+    Infantry
+    60
+    1, 1
+    4 4 3 4 4 2 3 3 8
+    Flammable, Killing Blow, Nehekharan Undead, Sworn Bodyguard
+    Armour: Light armour {Mundane} [Armour]
+    Great weapon {Mundane} [Melee] (4), Flail {Mundane} [Melee] (4), Spear {Mundane} [Melee] (2), Halberd {Mundane} [Melee] (2)
+    Shield {Mundane} [Shield] (2)
+    Skeleton Chariot {Chariot} [55], Skeletal Steed {Warbeast} [10]
+    None
+    Battle Standard Bearer {True} [25]
+    50
+    0
+    50
+
+Liche Priest
+    Lord, Mage
+    1
+    2 [35]
+    Nehekhara, Light, Death
+    Infantry
+    70
+    1, 1
+    4 3 3 3 3 2 2 1 7
+    Nehekharan Undead
+    None
+    None
+    None
+    Skeletal Steed {Warbeast} [10]
+    None
+    None
+    50
+    0
+    50
+
+Nectrotect
+    Hero, Melee
+    Infantry
+    60
+    1, 1
+    4 3 3 4 4 2 3 2 7
+    Flammable, Nehekharan Undead, Stone Shaper, Wrath of the Creator, Hatred
+    Armour: Light armour {Mundane} [Armour], Weapon: Two hand weapons {Mundane} [Melee]
+    None
+    None
+    None
+    None
+    None
+    50
+    0
+    50
+
+# Core
+
+Skeleton Warriors
+    Core, Infantry, Normal
+    4
+    10, None
+    4 2 2 3 3 1 2 1 5
+    4 2 2 3 3 1 2 2 5
+    Nehekharan Undead
+    Nehekharan Undead
+    Armour: Shield {Mundane} [Shield]
+    None
+    Spears {Mundane} [Melee] (1)
+    None
+    Light armour {Mundane} [Armour] (1)
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Master of Arms [10]
+    0
+    0
+    0
+    0
+
+Skeleton Archers
+    Core, Infantry, Normal
+    6
+    10, None
+    4 2 2 3 3 1 2 1 5
+    4 2 3 3 3 1 2 1 5
+    Arrows of Asaph, Nehekharan Undead
+    Arrows of Asaph, Nehekharan Undead
+    Weapon: Bow {Mundane} [Ballistic]
+    None
+    None
+    None
+    Light armour {Mundane} [Armour] (1)
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Master of Arrows [10]
+    0
+    0
+    0
+    0
+
+Skeleton Horsemen
+    Core, Cavalry, Normal
+    12
+    5, None
+    4 2 2 3 3 1 2 1 5
+    4 2 2 3 3 1 2 2 5
+    Nehekharan Undead, Vanguard
+    Nehekharan Undead, Vanguard
+    Armour: Shield {Mundane} [Shield], Weapon: Spear {Mundane} [Melee]
+    None
+    None
+    None
+    Light armour {Mundane} [Armour] (2)
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Master of Horse [10]
+    0
+    0
+    0
+    0
+
+Skeleton Horse Archers
+    Core, Cavalry, Normal
+    14
+    5, None
+    4 2 2 3 3 1 2 1 5
+    4 2 2 3 3 1 2 2 5
+    Arrows of Asaph, Fast Cavalry, Nehekharan Undead, Scouts
+    Arrows of Asaph, Fast Cavalry, Nehekharan Undead, Scouts
+    Armour: Shield {Mundane} [Shield], Weapon: Bow {Mundane} [Ballistic]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Master of Scouts [10]
+    0
+    0
+    0
+    0
+
+#Skeleton Chariots
+#    Core, Chariot, Normal
+#    55
+#    3, None
+#    - 3 2 3 - - 2 2 7
+#    - - - 4 4 3 - - -
+#    Armour Save (5+), 'And the Tomb Kings Rode to War...', Arrows of Asaph, Chariot Legions, Nehekharan Undead
+#    None
+#    None
+
+# Special
+
+Tomb Guard
+    Special, Infantry, Normal
+    11
+    10, None
+    4 3 3 4 4 1 3 1 8
+    4 3 3 4 4 1 3 2 8
+    Killing Blow, Nehekharan Undead
+    Killing Blow, Nehekharan Undead
+    Armour: Shield {Mundane} [Shield], Armour: Light armour {Mundane} [Armour]
+    None
+    Halberds {Mundane} [Melee] (2)
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Tomb Captain [10]
+    0
+    0
+    0
+    50
+
+Necropolis Knights
+    Special, Monstrous Cavalry, Normal
+    65
+    3, None
+    4 4 3 4 4 1 3 2 8
+    4 4 3 4 4 1 3 3 8
+    Animated Construct, Killing Blow, Nehekharan Undead, Stone Hide
+    Animated Construct, Killing Blow, Nehekharan Undead, Stone Hide
+    Weapon: Spear {Mundane} [Melee]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Entombed Beneath the Sands {False} [5]
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Necropolis Captain [10]
+    0
+    0
+    0
+    0
+
+Tomb Scorpion
+    Special, Monstrous Beast, Normal
+    60
+    1, 1
+    7 4 0 5 5 3 3 4 8
+    7 4 0 5 5 3 3 4 8
+    Animated Construct, Entombed Beneath the Sands, Killing Blow, Magic Resistance (1), Nehekharan Undead, Poisoned Attacks
+    Animated Construct, Entombed Beneath the Sands, Killing Blow, Magic Resistance (1), Nehekharan Undead, Poisoned Attacks
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    0
+    0
+    0
+    0
+
+Ushabti
+    Special, Monstrous Infantry, Normal
+    50
+    3, None
+    5 4 2 4 4 3 3 3 8
+    5 4 2 4 4 3 3 4 8
+    Animated Construct, Arrows of Asaph, Nehekharan Undead
+    Animated Construct, Arrows of Asaph, Nehekharan Undead
+    Weapon: Great weapon {Mundane} [Melee]
+    None
+    Additional hand weapons {Mundane} [Melee] (0), Great bows {Mundane} [Ballistic] (0)
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Ushabti Ancient [10]
+    0
+    0
+    0
+    0
+
+Tomb Swarm
+    Special, Swarm, Normal
+    40
+    2, 10
+    4 3 0 2 2 5 1 5 10
+    Entombed Beneath the Sands, Nehekharan Undead, Poisoned Attacks
+    None
+    None
+
+Carrion
+    Special, Warbeast, Normal
+    24
+    3, None
+    2 3 0 4 4 2 3 3 4
+    2 3 0 4 4 2 3 3 4
+    Fly, Nehekharan Undead
+    Fly, Nehekharan Undead
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    0
+    0
+    0
+    0
+
+Khemrian Warsphinx
+    Special, Monster, Normal
+    210
+    1, 1
+    6 4 0 5 8 5 1 4 8
+    Animated Construct, Howdah Crew, Killing Blow, Large Target, Nehekharan Undead, Terror, Thundercrush Attack
+    None
+    Envenomed Sting {True} [10], Fiery Roar {True} [20]
+
+Sepulchral Stalkers
+    Special, Monstrous Beast, Normal
+    55
+    3, None
+    7 3 3 4 4 3 3 2 8
+    7 3 3 4 4 3 3 2 8
+    Animated Construct, Entombed Beneath the Sands, Nehekharan Undead, Transmogrifying Gaze
+    Animated Construct, Entombed Beneath the Sands, Nehekharan Undead, Transmogrifying Gaze
+    Weapon: Halberd {Mundane} [Melee]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    0
+    0
+    0
+    0
+
+# Rare
+
+Necrolith Colossus
+    Rare, Monster, Normal
+    170
+    1, 1
+    6 3 2 6 6 5 1 4 8
+    Animated Construct, Arrows of Asaph, Large Target, Nehekharan Undead, Terror, Unstoppable Assault
+    None
+    Additional hand weapon {True} [5], Great weapon {True} [10], Bow of the desert {True} [20]
+
+Hierotitan
+    Rare, Monster, Normal
+    175
+    1, 1
+    6 3 0 6 6 5 1 3 8
+    Animated Construct, Large Target, Nehekharan Undead, Spirit Conduit, Terror
+    None
+    None
+
+Necrosphinx
+    Special, Monster, Normal
+    225
+    1, 1
+    6 4 0 5 8 5 1 5 8
+    Animated Construct, Decapitating Strike, Fly, Killing Blow, Large Target, Nehekharan Undead, Terror
+    None
+    Envenomed Sting {True} [10]
+
+Screaming Skull Catapult
+    Rare, Warmachine, Normal
+    90
+    1, 1
+    - - - - 7 3 - - -
+    4 2 2 3 3 1 2 1 5
+    Nehekharan Undead, Screaming Skulls
+    None
+    Skulls of the Foe {True} [30]
+
+Casket of Souls
+    Rare, Warmachine, Normal
+    135
+    1, 1
+    - - - - 10 3 - - -
+    4 3 3 3 3 1 3 2 8
+    Covenant of Power, Killing Blow, Light of Death, Nehekharan Undead, Unleashed Souls
+    None
+    None

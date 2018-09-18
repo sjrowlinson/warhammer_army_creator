@@ -10,5 +10,6 @@
         <file alias="beastmen.ros">rosters/beastmen.ros</file>
         <file alias="woc.mnt">rosters/woc.mnt</file>
         <file alias="skaven.mnt">rosters/skaven.mnt</file>
+        <file alias="tomb_kings.ros">rosters/tomb_kings.ros</file>
     </qresource>
 </RCC>

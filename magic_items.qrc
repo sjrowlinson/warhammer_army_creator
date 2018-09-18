@@ -8,5 +8,6 @@
         <file alias="wood_elves.mag">magic_items/wood_elves.mag</file>
         <file alias="dark_elves.mag">magic_items/dark_elves.mag</file>
         <file alias="beastmen.mag">magic_items/beastmen.mag</file>
+        <file alias="tomb_kings.mag">magic_items/tomb_kings.mag</file>
     </qresource>
 </RCC>

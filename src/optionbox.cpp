@@ -598,6 +598,7 @@ QGroupBox* OptionBox::make_mounts_boxes() {
         creator->connect(b, SIGNAL(clicked(bool)), creator, SLOT(optional_mount_selected()));
         vbox_mounts->addWidget(b);
         // spawn another group box containing mount options
+        if (current->base()->mounts_handle() == nullptr) continue;
         auto mount_meta = current->base()->mounts_handle()->find(m.first);
         if (mount_meta != current->base()->mounts_handle()->end() &&
                 mount_meta->second.has_options()) {

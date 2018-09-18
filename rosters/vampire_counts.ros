@@ -1,0 +1,255 @@
+# Lords
+
+Vampire Lord
+    Lord, Mage
+    1
+    2 [35], 3 [35], 4 [35]
+    Death, Shadow, Vampires
+    Infantry
+    220
+    1, 1
+    6 7 5 5 5 3 7 5 10
+    The Hunger, Undead, Vampiric
+    None
+    Great weapon {Mundane} [Melee] (10), Additional hand weapon {Mundane} [Melee] (4), Lance {Mundane} [Melee] (10)
+    Shield {Mundane} [Shield] (3), Heavy armour {Mundane} [Armour] (6)
+    Barded Nightmare {Warbeast} [24], Hellsteed {Warbeast} [30], Abyssal Terror {Monster} [120], Zombie Dragon {Monster} [245], Coven Throne {Chariot} [230]
+    None
+    None
+    100
+    100
+    200
+
+Master Necromancer
+    Lord, Mage
+    3
+    4 [35]
+    Death, Vampires
+    Infantry
+    165
+    1, 1
+    4 3 3 3 4 3 3 1 8
+    Undead
+    None
+    None
+    None
+    Barded Nightmare {Warbeast} [20], Hellsteed {Warbeast} [30], Abyssal Terror {Monster} [120], Corpse Cart {Chariot} [90]
+    None
+    Master of the Dead {True} [20]
+    100
+    0
+    100
+
+Strigoi Ghoul King
+    Lord, Mage
+    1
+    None
+    Vampires
+    Infantry
+    260
+    1, 1
+    6 6 3 5 5 3 8 5 9
+    The Hunger, Infinite Hatred, Poisoned Attacks, Regeneration (5+), Undead, Vampiric
+    None
+    None
+    None
+    Terrorgheist {Monster} [225]
+    None
+    None
+    100
+    100
+    200
+
+# Heroes
+
+Master Necromancer
+    Hero, Mage
+    1
+    2 [35]
+    Death, Vampires
+    Infantry
+    65
+    1, 1
+    4 3 3 3 3 2 3 1 7
+    Undead
+    None
+    None
+    None
+    Nightmare {Warbeast} [15], Corpse Cart {Chariot} [90]
+    None
+    Master of the Dead {True} [20]
+    50
+    0
+    50
+
+Vampire
+    Hero, Mage
+    1
+    2 [35]
+    Death, Shadow, Vampires
+    Infantry
+    105
+    1, 1
+    6 6 4 5 4 2 6 4 7
+    The Hunger, Undead, Vampiric
+    None
+    Great weapon {Mundane} [Melee] (8), Additional hand weapon {Mundane} [Melee] (3), Lance {Mundane} [Melee] (8)
+    Shield {Mundane} [Shield] (2), Heavy armour {Mundane} [Armour] (4)
+    Barded Nightmare {Warbeast} [16], Hellsteed {Warbeast} [30], Coven Throne {Chariot} [230]
+    None
+    Battle Standard Bearer {True} [25]
+    50
+    50
+    100
+
+Wight King
+    Hero, Melee
+    Infantry
+    85
+    1, 1
+    4 4 0 4 5 3 4 3 9
+    Killing Blow, Undead
+    Armour: Heavy armour {Mundane} [Armour]
+    Great weapon {Mundane} [Melee] (5), Additional hand weapon {Mundane} [Melee] (2), Lance {Mundane} [Melee] (5)
+    Shield {Mundane} [Shield] (4)
+    Skeletal Steed {Warbeast} [12]
+    None
+    Battle Standard Bearer {True} [25]
+    50
+    0
+    50
+
+Cairn Wraith
+    Hero, Melee
+    Infantry
+    60
+    1, 1
+    6 3 0 3 3 2 2 3 5
+    Chill Grasp, Ethereal, Terror, Undead
+    Weapon: Great weapon {Mundane} [Melee]
+    None
+    None
+    None
+    None
+    None
+    0
+    0
+    0
+
+Tomb Banshee
+    Hero, Melee
+    Infantry
+    95
+    1, 1
+    6 3 0 3 3 2 3 1 5
+    Ethereal, Ghostly Howl, Terror, Undead
+    None
+    None
+    None
+    None
+    None
+    None
+    0
+    0
+    0
+
+# Core
+
+Zombies
+    Core, Infantry, Normal
+    3
+    20, None
+    4 1 0 3 3 1 1 1 2
+    4 1 0 3 3 1 1 1 2
+    Always Strikes Last, The Newly Dead, Undead
+    Always Strikes Last, The Newly Dead, Undead
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [5], Standard Bearer: Standard Bearer [5]
+    0
+    0
+    0
+    0
+
+Skeleton Warriors
+    Core, Infantry, Normal
+    5
+    10, None
+    4 2 2 3 3 1 2 1 3
+    4 2 2 3 3 1 2 2 3
+    Undead
+    Undead
+    Armour: Shield {Mundane} [Shield], Armour: Light armour {Mundane} [Armour]
+    None
+    Spears {Mundane} [Melee] (0)
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Skeleton Champion [10]
+    0
+    0
+    0
+    25
+
+Crypt Ghouls
+    Core, Infantry, Normal
+    10
+    10, None
+    4 3 0 3 4 1 3 2 5
+    4 3 0 3 4 1 3 3 5
+    Poisoned Attacks, Undead
+    Poisoned Attacks, Undead
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Champion: Crypt Ghast [10]
+    0
+    0
+    0
+    0
+
+Dire Wolves
+    Core, Warbeast, Normal
+    8
+    5, 20
+    9 3 0 3 3 1 3 1 3
+    9 3 0 3 3 1 3 2 3
+    Slavering Charge, Undead, Vanguard
+    Slavering Charge, Undead, Vanguard
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Champion: Doom Wolf [10]
+    0
+    0
+    0
+    0
+
+
+
