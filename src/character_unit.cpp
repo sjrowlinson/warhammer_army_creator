@@ -372,14 +372,13 @@ void character_unit::pick_oco_extra(std::string name) {
     points_ += search->second.second;
 }
 
-bool character_unit::pick_mc_extra(std::string name) {
+void character_unit::pick_mc_extra(std::string name) {
     auto search = handle_->opt().mc_extras.find(name);
     if (search == handle_->opt().mc_extras.end())
         throw std::invalid_argument("Item not found!");
-    if (mc_extras_.count(name)) return false;
+    if (mc_extras_.count(name)) return;
     mc_extras_[name] = search->second;
     points_ += search->second.second;
-    return name == "Battle Standard Bearer";
 }
 
 void character_unit::remove_weapon(WeaponType wt, bool replacing) {
@@ -453,13 +452,12 @@ void character_unit::remove_oco_extra() {
     oco_extra_.second.second = 0.0;
 }
 
-bool character_unit::remove_mc_extra(std::string name) {
+void character_unit::remove_mc_extra(std::string name) {
     auto search = mc_extras_.find(name);
     if (search != mc_extras_.end()) {
         points_ -= search->second.second;
         mc_extras_.erase(name);
     }
-    return name == "Battle Standard Bearer";
 }
 
 void character_unit::pick_mount(std::string name) {

@@ -168,7 +168,7 @@ void mixed_unit::remove_oco_extra() {
     }
 }
 
-bool mixed_unit::pick_mc_extra(std::string name) {
+void mixed_unit::pick_mc_extra(std::string name) {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
         master_.pick_mc_extra(name);
@@ -177,10 +177,9 @@ bool mixed_unit::pick_mc_extra(std::string name) {
         slave_.pick_mc_extra(name);
         break;
     }
-    return false;
 }
 
-bool mixed_unit::remove_mc_extra(std::string name) {
+void mixed_unit::remove_mc_extra(std::string name) {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
         master_.remove_mc_extra(name);
@@ -189,7 +188,6 @@ bool mixed_unit::remove_mc_extra(std::string name) {
         slave_.remove_mc_extra(name);
         break;
     }
-    return false;
 }
 
 void mixed_unit::pick_mount(std::string name) {

@@ -47,7 +47,6 @@ private:
     double rare_pts;
     std::set<InvalidListReason> invalidities;
     double snap_unit_pts;
-    bool has_bsb_;
 
     void check_validity();
     void determine_limits();
@@ -79,7 +78,6 @@ public:
     double rare_points() const noexcept;
     // bsb flag methods
     bool has_bsb() const noexcept;
-    void set_bsb_flag(bool flag) noexcept;
 
     const std::set<InvalidListReason>& invalid_reasons() const noexcept;
 

@@ -786,8 +786,6 @@ void ArmyCreator::on_add_button_clicked() {
 void ArmyCreator::on_duplicate_button_clicked() {
     QTreeWidgetItem* curr_item = ui->army_tree->currentItem();
     auto u = army->get_unit(curr_item->data(0, Qt::UserRole).toInt());
-    // TODO: add check to unit class as to whether it has any magic items and
-    // prevent the duplication if so
     if (u->has_non_duplicable_items()) {
         QMessageBox message_box;
         message_box.critical(nullptr, tr("Error"), tr("Cannot duplicate a unit with magic item(s)!"));

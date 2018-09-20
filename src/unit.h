@@ -101,9 +101,8 @@ public:
     virtual void remove_armour(ArmourType at, bool replacing=false) = 0;
     virtual void pick_oco_extra(std::string name) = 0;
     virtual void remove_oco_extra() = 0;
-    // note: mc_extra modifiers return true if the extra is BSB, false otherwise
-    virtual bool pick_mc_extra(std::string name) = 0;
-    virtual bool remove_mc_extra(std::string name) = 0;
+    virtual void pick_mc_extra(std::string name) = 0;
+    virtual void remove_mc_extra(std::string name) = 0;
     virtual void pick_mount(std::string name) = 0;
     virtual void remove_mount() = 0;
     virtual void pick_banner(ItemClass item_class, std::string name) = 0;

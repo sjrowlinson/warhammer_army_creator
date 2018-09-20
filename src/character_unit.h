@@ -100,8 +100,8 @@ public:
     void pick_oco_extra(std::string name) override;
     void remove_oco_extra() override;
 
-    bool pick_mc_extra(std::string name) override;
-    bool remove_mc_extra(std::string name) override;
+    void pick_mc_extra(std::string name) override;
+    void remove_mc_extra(std::string name) override;
 
     void pick_mount(std::string name) override;
     void remove_mount() override;

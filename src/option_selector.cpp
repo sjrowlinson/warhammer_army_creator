@@ -545,7 +545,6 @@ bool option_selector::select_mc_extra(const std::string& s, bool is_checked) {
                 current->switch_model_select(ModelSelect::DEFAULT);
             }
             army->update_on(current->id());
-            army->set_bsb_flag(extra == "Battle Standard Bearer");
             return true;
         case InTree::ROSTER:
             if (split[1] == "default") {
@@ -561,7 +560,6 @@ bool option_selector::select_mc_extra(const std::string& s, bool is_checked) {
                 }
                 current->switch_model_select(ModelSelect::DEFAULT);
             }
-            army->set_bsb_flag(extra == "Battle Standard Bearer");
             return false;
         default: throw std::runtime_error("No unit selected!");
         }
@@ -584,20 +582,20 @@ bool option_selector::select_mc_extra(const std::string& s, bool is_checked) {
         case InTree::ARMY:
             army->take_snapshot_of(current->id());
             if (split[1] == "default")
-                army->set_bsb_flag(!current->remove_mc_extra(extra));
+                current->remove_mc_extra(extra);
             else if (split[1] == "champion") {
                 current->switch_model_select(ModelSelect::CHAMPION);
-                army->set_bsb_flag(!current->remove_mc_extra(extra));
+                current->remove_mc_extra(extra);
                 current->switch_model_select(ModelSelect::DEFAULT);
             }
             army->update_on(current->id());
             return true;
         case InTree::ROSTER:
             if (split[1] == "default")
-                army->set_bsb_flag(!current->remove_mc_extra(extra));
+                current->remove_mc_extra(extra);
             else if (split[1] == "champion") {
                 current->switch_model_select(ModelSelect::CHAMPION);
-                army->set_bsb_flag(!current->remove_mc_extra(extra));
+                current->remove_mc_extra(extra);
                 current->switch_model_select(ModelSelect::DEFAULT);
             }
             return false;
