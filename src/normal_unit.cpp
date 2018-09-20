@@ -597,7 +597,7 @@ void normal_unit::pick_champion_oco_extra(std::string name) {
     points_ += search->second.second;
 }
 
-void normal_unit::pick_mc_extra(std::string name) {
+bool normal_unit::pick_mc_extra(std::string name) {
     switch (model_select_) {
     case ModelSelect::DEFAULT:
         pick_default_mc_extra(name);
@@ -606,6 +606,7 @@ void normal_unit::pick_mc_extra(std::string name) {
         pick_champion_mc_extra(name);
         break;
     }
+    return false;
 }
 
 void normal_unit::pick_default_mc_extra(std::string name) {
@@ -652,7 +653,7 @@ void normal_unit::remove_champion_oco_extra() {
     champ_oco_extra_.second = 0.0;
 }
 
-void normal_unit::remove_mc_extra(std::string name) {
+bool normal_unit::remove_mc_extra(std::string name) {
     switch (model_select_) {
     case ModelSelect::DEFAULT:
         remove_default_mc_extra(name);
@@ -661,6 +662,7 @@ void normal_unit::remove_mc_extra(std::string name) {
         remove_champion_mc_extra(name);
         break;
     }
+    return false;
 }
 
 void normal_unit::remove_default_mc_extra(std::string name) {

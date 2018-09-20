@@ -24,6 +24,10 @@ bool unit::switch_mixed_select(MixedSelect ms) {
     return false;
 }
 
+bool unit::has_non_duplicable_items() const noexcept {
+    return false;
+}
+
 void unit::do_replacements(const std::vector<std::string>& replacements, bool champion) {
     if (champion) switch_model_select(ModelSelect::CHAMPION);
     for (const auto& r : replacements) {

@@ -54,6 +54,8 @@ public:
     bool is_mixed() const noexcept override;
     bool is_bsb() const noexcept;
 
+    bool has_non_duplicable_items() const noexcept override;
+
     std::size_t size() const noexcept;
     std::unordered_map<
         WeaponType,
@@ -98,8 +100,8 @@ public:
     void pick_oco_extra(std::string name) override;
     void remove_oco_extra() override;
 
-    void pick_mc_extra(std::string name) override;
-    void remove_mc_extra(std::string name) override;
+    bool pick_mc_extra(std::string name) override;
+    bool remove_mc_extra(std::string name) override;
 
     void pick_mount(std::string name) override;
     void remove_mount() override;

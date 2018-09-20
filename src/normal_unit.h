@@ -135,7 +135,7 @@ public:
     void remove_banner() override;
 
     void pick_oco_extra(std::string name) override;
-    void pick_mc_extra(std::string name) override;
+    bool pick_mc_extra(std::string name) override;
 
     void pick_default_oco_extra(std::string name);
     void pick_default_mc_extra(std::string name);
@@ -143,7 +143,7 @@ public:
     void pick_champion_mc_extra(std::string name);
 
     void remove_oco_extra() override;
-    void remove_mc_extra(std::string name) override;
+    bool remove_mc_extra(std::string name) override;
 
     void remove_default_oco_extra();
     void remove_champion_oco_extra();

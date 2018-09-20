@@ -5,7 +5,8 @@ army_list::army_list(double points) :
     hero_lim(0.0), core_min(0.0), spec_lim(0.0),
     rare_lim(0.0), army(), lord_pts(0.0), hero_pts(0.0),
     core_pts(0.0), spec_pts(0.0), rare_pts(0.0),
-    invalidities{InvalidListReason::CORE_MINIMUM}, snap_unit_pts(0.0) {
+    invalidities{InvalidListReason::CORE_MINIMUM}, snap_unit_pts(0.0),
+    has_bsb_(false) {
     determine_limits();
 }
 
@@ -53,6 +54,9 @@ void army_list::add_unit(std::shared_ptr<unit> u) {
 void army_list::remove_unit(int id) {
     auto pts = army[id]->points();
     armies::UnitType unit_type = army[id]->unit_type();
+    if (unit_type == armies::UnitType::HERO &&
+            army[id]->mc_extras().count("Battle Standard Bearer"))
+        has_bsb_ = false;
     army.erase(id);
     curr_pts -= pts;
     switch (unit_type) {
@@ -206,6 +210,9 @@ double army_list::core_points() const noexcept { return core_pts; }
 double army_list::special_points() const noexcept { return spec_pts; }
 double army_list::rare_points() const noexcept { return rare_pts; }
 
+bool army_list::has_bsb() const noexcept { return has_bsb_; }
+void army_list::set_bsb_flag(bool flag) noexcept { has_bsb_ = flag; }
+
 const std::set<InvalidListReason>& army_list::invalid_reasons() const noexcept {
     return invalidities;
 }
@@ -270,6 +277,7 @@ void army_list::clear() {
     core_pts = 0.0;
     spec_pts = 0.0;
     rare_pts = 0.0;
+    has_bsb_ = false;
 }
 
 bool army_list::is_valid() const noexcept {

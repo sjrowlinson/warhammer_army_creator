@@ -788,6 +788,20 @@ void ArmyCreator::on_duplicate_button_clicked() {
     auto u = army->get_unit(curr_item->data(0, Qt::UserRole).toInt());
     // TODO: add check to unit class as to whether it has any magic items and
     // prevent the duplication if so
+    if (u->has_non_duplicable_items()) {
+        QMessageBox message_box;
+        message_box.critical(nullptr, tr("Error"), tr("Cannot duplicate a unit with magic item(s)!"));
+        message_box.setFixedSize(500, 200);
+        return;
+    }
+    if (u->is_character()) {
+        if (std::dynamic_pointer_cast<character_unit>(u)->is_bsb()) {
+            QMessageBox message_box;
+            message_box.critical(nullptr, tr("Error"), tr("Cannot duplicate the Battle Standard Bearer!"));
+            message_box.setFixedSize(500, 200);
+            return;
+        }
+    }
     std::shared_ptr<unit> cpy_ptr;
     switch (u->base_unit_type()) {
     case BaseUnitType::MAGE_CHARACTER:

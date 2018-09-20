@@ -35,6 +35,30 @@ bool character_unit::is_bsb() const noexcept {
     return mc_extras_.count(std::string("Battle Standard Bearer"));
 }
 
+bool character_unit::has_non_duplicable_items() const noexcept {
+    return std::count_if(
+        std::begin(weapons_),
+        std::end(weapons_),
+        [](const auto& w) {
+            return std::get<0>(w.second) != ItemClass::MUNDANE;
+        }
+    ) ||
+    std::count_if(
+        std::begin(armours_),
+        std::end(armours_),
+        [](const auto& a) {
+            return std::get<0>(a.second) != ItemClass::MUNDANE;
+        }
+    ) || !talisman_.first.empty() || !enchanted_item_.first.empty() ||
+    std::count_if(
+        std::begin(item_extras_),
+        std::end(item_extras_),
+        [](const auto& e) {
+            return std::get<0>(e.second) != ItemClass::MUNDANE;
+        }
+    ) || !banner.first.empty();
+}
+
 void character_unit::pick_magic_item(ItemType item_type, ItemClass item_class, const std::string& name) {
     if (item_type != ItemType::BANNER && !banner.first.empty())
         throw std::runtime_error("BSBs equipped with a Magic Standard cannot take Magic Items!");
@@ -348,13 +372,14 @@ void character_unit::pick_oco_extra(std::string name) {
     points_ += search->second.second;
 }
 
-void character_unit::pick_mc_extra(std::string name) {
+bool character_unit::pick_mc_extra(std::string name) {
     auto search = handle_->opt().mc_extras.find(name);
     if (search == handle_->opt().mc_extras.end())
         throw std::invalid_argument("Item not found!");
-    if (mc_extras_.count(name)) return;
+    if (mc_extras_.count(name)) return false;
     mc_extras_[name] = search->second;
     points_ += search->second.second;
+    return name == "Battle Standard Bearer";
 }
 
 void character_unit::remove_weapon(WeaponType wt, bool replacing) {
@@ -428,12 +453,13 @@ void character_unit::remove_oco_extra() {
     oco_extra_.second.second = 0.0;
 }
 
-void character_unit::remove_mc_extra(std::string name) {
+bool character_unit::remove_mc_extra(std::string name) {
     auto search = mc_extras_.find(name);
     if (search != mc_extras_.end()) {
         points_ -= search->second.second;
         mc_extras_.erase(name);
     }
+    return name == "Battle Standard Bearer";
 }
 
 void character_unit::pick_mount(std::string name) {
@@ -486,7 +512,7 @@ void character_unit::pick_banner(ItemClass item_class, std::string name) {
 
 void character_unit::remove_banner() {
     points_ -= banner.second.second;
-    switch (enchanted_item_.second.first) {
+    switch (banner.second.first) {
     case ItemClass::MAGIC:
     case ItemClass::COMMON:
         magic_item_points_ -= banner.second.second;

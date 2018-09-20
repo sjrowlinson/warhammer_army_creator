@@ -69,6 +69,8 @@ void OptionBox::reset(std::shared_ptr<unit> current_, InTree in_tree_) {
 
 bool OptionBox::reinitialise() {
     if (current == nullptr) return false;
+    std::string box_title = current->name() + " Options";
+    box->setTitle(creator->tr(box_title.data()));
     QVBoxLayout* vbox = new QVBoxLayout;
     QGroupBox* sc_box = make_size_command_box();
     if (sc_box != nullptr) vbox->addWidget(sc_box);
