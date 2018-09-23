@@ -19,9 +19,9 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
     ui->duplicate_button->setEnabled(false);
     ui->remove_button->setEnabled(false);
     // core logic initialisation
-    race = armies::s_map_string_faction[
+    race = enum_convert::STRING_TO_FACTION.at(
         ui->faction_combobox->currentText().toStdString()
-    ];
+    );
     army = std::make_shared<army_list>(ui->pts_limit_spinbox->value());
     st = std::make_shared<selection_tree>(race, *army);
     current = nullptr;
@@ -644,7 +644,7 @@ void ArmyCreator::initialise_unit_info_box() {
 }
 
 void ArmyCreator::on_faction_combobox_currentTextChanged(const QString& faction) {
-    race = armies::s_map_string_faction[faction.toStdString()];
+    race = enum_convert::STRING_TO_FACTION.at(faction.toStdString());
     army->clear();
     ui->current_pts_label->setText(QString("%1").arg(static_cast<double>(0.0)));
     for (int i = 0; i < 5; ++i)
@@ -844,23 +844,23 @@ void ArmyCreator::on_remove_button_clicked() {
     QTreeWidgetItem* item = ui->army_tree->currentItem();
     QVariant v = item->data(0, Qt::UserRole);
     int id = v.toInt();
-    armies::UnitType unit_type = army->get_unit(id)->unit_type();
+    UnitType unit_type = army->get_unit(id)->unit_type();
     army->remove_unit(id);
     ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
     switch (unit_type) {
-    case armies::UnitType::LORD:
+    case UnitType::LORD:
         ui->army_tree->topLevelItem(0)->setText(6, QString("%1").arg(army->lord_points()));
         break;
-    case armies::UnitType::HERO:
+    case UnitType::HERO:
         ui->army_tree->topLevelItem(1)->setText(6, QString("%1").arg(army->hero_points()));
         break;
-    case armies::UnitType::CORE:
+    case UnitType::CORE:
         ui->army_tree->topLevelItem(2)->setText(6, QString("%1").arg(army->core_points()));
         break;
-    case armies::UnitType::SPECIAL:
+    case UnitType::SPECIAL:
         ui->army_tree->topLevelItem(3)->setText(6, QString("%1").arg(army->special_points()));
         break;
-    case armies::UnitType::RARE:
+    case UnitType::RARE:
         ui->army_tree->topLevelItem(4)->setText(6, QString("%1").arg(army->rare_points()));
         break;
     default:
@@ -1164,27 +1164,27 @@ void ArmyCreator::update_unit_display(
         if (adding) {
             int pts_col = static_cast<int>(ArmyTreeColumn::POINTS);
             switch (u->unit_type()) {
-            case armies::UnitType::LORD:
+            case UnitType::LORD:
                 ui->army_tree->topLevelItem(0)->addChild(item);
                 ui->army_tree->topLevelItem(0)->setText(pts_col, QString("%1").arg(army->lord_points()));
                 ui->army_tree->topLevelItem(0)->setExpanded(true);
                 break;
-            case armies::UnitType::HERO:
+            case UnitType::HERO:
                 ui->army_tree->topLevelItem(1)->addChild(item);
                 ui->army_tree->topLevelItem(1)->setText(pts_col, QString("%1").arg(army->hero_points()));
                 ui->army_tree->topLevelItem(1)->setExpanded(true);
                 break;
-            case armies::UnitType::CORE:
+            case UnitType::CORE:
                 ui->army_tree->topLevelItem(2)->addChild(item);
                 ui->army_tree->topLevelItem(2)->setText(pts_col, QString("%1").arg(army->core_points()));
                 ui->army_tree->topLevelItem(2)->setExpanded(true);
                 break;
-            case armies::UnitType::SPECIAL:
+            case UnitType::SPECIAL:
                 ui->army_tree->topLevelItem(3)->addChild(item);
                 ui->army_tree->topLevelItem(3)->setText(pts_col, QString("%1").arg(army->special_points()));
                 ui->army_tree->topLevelItem(3)->setExpanded(true);
                 break;
-            case armies::UnitType::RARE:
+            case UnitType::RARE:
                 ui->army_tree->topLevelItem(4)->addChild(item);
                 ui->army_tree->topLevelItem(4)->setText(pts_col, QString("%1").arg(army->rare_points()));
                 ui->army_tree->topLevelItem(4)->setExpanded(true);
@@ -1201,19 +1201,19 @@ void ArmyCreator::update_unit_display(
     if (!adding) {
         int pts_col = static_cast<int>(ArmyTreeColumn::POINTS);
         switch (u->unit_type()) {
-        case armies::UnitType::LORD:
+        case UnitType::LORD:
             ui->army_tree->topLevelItem(0)->setText(pts_col, QString("%1").arg(army->lord_points()));
             break;
-        case armies::UnitType::HERO:
+        case UnitType::HERO:
             ui->army_tree->topLevelItem(1)->setText(pts_col, QString("%1").arg(army->hero_points()));
             break;
-        case armies::UnitType::CORE:
+        case UnitType::CORE:
             ui->army_tree->topLevelItem(2)->setText(pts_col, QString("%1").arg(army->core_points()));
             break;
-        case armies::UnitType::SPECIAL:
+        case UnitType::SPECIAL:
             ui->army_tree->topLevelItem(3)->setText(pts_col, QString("%1").arg(army->special_points()));
             break;
-        case armies::UnitType::RARE:
+        case UnitType::RARE:
             ui->army_tree->topLevelItem(4)->setText(pts_col, QString("%1").arg(army->rare_points()));
             break;
         default: break;

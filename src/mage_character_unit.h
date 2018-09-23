@@ -1,7 +1,7 @@
 #ifndef MAGE_CHARACTER_UNIT_H
 #define MAGE_CHARACTER_UNIT_H
 
-#include "army_maps.h"
+#include "enums.h"
 #include "base_unit.h"
 #include "base_mage_character_unit.h"
 #include "character_unit.h"

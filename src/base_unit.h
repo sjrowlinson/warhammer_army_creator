@@ -1,7 +1,7 @@
 #ifndef BASE_UNIT_H
 #define BASE_UNIT_H
 
-#include "army_maps.h"
+#include "enums.h"
 #include "magic_item.h"
 
 #include <algorithm>
@@ -11,24 +11,6 @@
 #include <unordered_map>
 #include <utility>
 #include <vector>
-
-enum class CommandGroup {
-    MUSICIAN,
-    STANDARD_BEARER,
-    CHAMPION
-};
-
-enum class RestrictionField {
-    WEAPON,
-    ARMOUR,
-    TALISMAN,
-    ENCHANTED,
-    ARCANE,
-    BANNER,
-    OCO_EXTRA,
-    MC_EXTRA,
-    OTHER
-};
 
 struct equipment {
     std::unordered_map<
@@ -59,7 +41,7 @@ struct options {
     > opt_armour;
     std::unordered_map<
         std::string,
-        std::pair<armies::UnitClass, double>
+        std::pair<UnitClass, double>
     > opt_mounts;
     std::unordered_map<
         std::string,
@@ -73,7 +55,7 @@ struct options {
 
 struct mount {
     std::string name;
-    armies::UnitClass unit_class;
+    UnitClass unit_class;
     std::vector<std::string> statistics;
     std::vector<std::string> special_rules;
     // one-choice-only extra
@@ -93,22 +75,14 @@ struct mount {
     bool has_options() const noexcept { return oco_extras.size() || mc_extras.size(); }
 };
 
-enum class BaseUnitType {
-    NORMAL,
-    MIXED,
-    MELEE_CHARACTER,
-    MAGE_CHARACTER,
-    BASE
-};
-
 class base_unit {
 protected:
     BaseUnitType but;
 private:
     // enums
-    armies::Faction faction_;
-    armies::UnitType ut_;
-    armies::UnitClass uc_;
+    Faction faction_;
+    UnitType ut_;
+    UnitClass uc_;
     // basic
     std::string name_;
     std::size_t min_size_;
@@ -141,9 +115,9 @@ private:
     > faction_items;
 public:
     explicit base_unit(
-        armies::Faction faction,
-        armies::UnitType ut,
-        armies::UnitClass uc,
+        Faction faction,
+        UnitType ut,
+        UnitClass uc,
         std::string name,
         std::size_t min_size,
         std::size_t max_size = std::numeric_limits<std::size_t>::max()
@@ -152,9 +126,9 @@ public:
 
     BaseUnitType base_unit_type() const noexcept;
 
-    armies::Faction faction() const noexcept;
-    armies::UnitType unit_type() const noexcept;
-    armies::UnitClass unit_class() const noexcept;
+    Faction faction() const noexcept;
+    UnitType unit_type() const noexcept;
+    UnitClass unit_class() const noexcept;
 
     std::string name() const noexcept;
     std::size_t min_size() const noexcept;

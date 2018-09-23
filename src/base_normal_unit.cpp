@@ -1,9 +1,9 @@
 #include "base_normal_unit.h"
 
 base_normal_unit::base_normal_unit(
-    armies::Faction faction,
-    armies::UnitType ut,
-    armies::UnitClass uc,
+    Faction faction,
+    UnitType ut,
+    UnitClass uc,
     std::string name,
     std::size_t min_size,
     std::size_t max_size,

@@ -1,7 +1,7 @@
 #ifndef NORMAL_UNIT_H
 #define NORMAL_UNIT_H
 
-#include "army_maps.h"
+#include "enums.h"
 #include "base_unit.h"
 #include "base_normal_unit.h"
 #include "unit.h"
@@ -49,7 +49,7 @@ private:
     // mounts
     std::pair<
         std::string,
-        std::pair<armies::UnitClass, double>
+        std::pair<UnitClass, double>
     > mount_;
 
     // command
@@ -104,7 +104,7 @@ public:
 
     std::pair<
         std::string,
-        std::pair<armies::UnitClass, double>
+        std::pair<UnitClass, double>
     > mount() const noexcept override;
 
     std::unordered_map<

@@ -145,7 +145,7 @@ std::unordered_map<
 
 std::pair<
     std::string,
-    std::pair<armies::UnitClass, double>
+    std::pair<UnitClass, double>
 > normal_unit::mount() const noexcept { return mount_; }
 
 std::unordered_map<

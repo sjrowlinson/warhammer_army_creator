@@ -17,27 +17,27 @@ void army_list::add_unit(std::shared_ptr<unit> u) {
     if (curr_pts + pts > points)
         invalidities.insert(InvalidListReason::POINTS);
     switch (u->unit_type()) {
-    case armies::UnitType::LORD:
+    case UnitType::LORD:
         if (lord_pts + pts > lord_lim)
             invalidities.insert(InvalidListReason::LORD_LIMIT);
         lord_pts += pts;
         break;
-    case armies::UnitType::HERO:
+    case UnitType::HERO:
         if (hero_pts + pts > hero_lim)
             invalidities.insert(InvalidListReason::HERO_LIMIT);
         hero_pts += pts;
         break;
-    case armies::UnitType::CORE:
+    case UnitType::CORE:
         if (core_pts + pts < core_min)
             invalidities.insert(InvalidListReason::CORE_MINIMUM);
         core_pts += pts;
         break;
-    case armies::UnitType::SPECIAL:
+    case UnitType::SPECIAL:
         if (spec_pts + pts < spec_lim)
             invalidities.insert(InvalidListReason::SPECIAL_LIMIT);
         spec_pts += pts;
         break;
-    case armies::UnitType::RARE:
+    case UnitType::RARE:
         if (rare_pts + pts < rare_lim)
             invalidities.insert(InvalidListReason::RARE_LIMIT);
         rare_pts += pts;
@@ -52,23 +52,23 @@ void army_list::add_unit(std::shared_ptr<unit> u) {
 
 void army_list::remove_unit(int id) {
     auto pts = army[id]->points();
-    armies::UnitType unit_type = army[id]->unit_type();
+    UnitType unit_type = army[id]->unit_type();
     army.erase(id);
     curr_pts -= pts;
     switch (unit_type) {
-    case armies::UnitType::LORD:
+    case UnitType::LORD:
         lord_pts -= pts;
         break;
-    case armies::UnitType::HERO:
+    case UnitType::HERO:
         hero_pts -= pts;
         break;
-    case armies::UnitType::CORE:
+    case UnitType::CORE:
         core_pts -= pts;
         break;
-    case armies::UnitType::SPECIAL:
+    case UnitType::SPECIAL:
         spec_pts -= pts;
         break;
-    case armies::UnitType::RARE:
+    case UnitType::RARE:
         rare_pts -= pts;
         break;
     default:
@@ -80,11 +80,11 @@ void army_list::remove_unit(int id) {
 void army_list::remove_lords() {
     double pts = 0.0;
     for (const auto& x : army) {
-        if (x.second->unit_type() == armies::UnitType::LORD)
+        if (x.second->unit_type() == UnitType::LORD)
             pts += x.second->points();
     }
     for (auto it = std::begin(army); it != std::end(army);) {
-        if (it->second->unit_type() == armies::UnitType::LORD)
+        if (it->second->unit_type() == UnitType::LORD)
             it = army.erase(it);
         else ++it;
     }
@@ -96,11 +96,11 @@ void army_list::remove_lords() {
 void army_list::remove_heroes() {
     double pts = 0.0;
     for (const auto& x : army) {
-        if (x.second->unit_type() == armies::UnitType::HERO)
+        if (x.second->unit_type() == UnitType::HERO)
             pts += x.second->points();
     }
     for (auto it = std::begin(army); it != std::end(army);) {
-        if (it->second->unit_type() == armies::UnitType::HERO)
+        if (it->second->unit_type() == UnitType::HERO)
             it = army.erase(it);
         else ++it;
     }
@@ -112,11 +112,11 @@ void army_list::remove_heroes() {
 void army_list::remove_core() {
     double pts = 0.0;
     for (const auto& x : army) {
-        if (x.second->unit_type() == armies::UnitType::CORE)
+        if (x.second->unit_type() == UnitType::CORE)
             pts += x.second->points();
     }
     for (auto it = std::begin(army); it != std::end(army);) {
-        if (it->second->unit_type() == armies::UnitType::CORE)
+        if (it->second->unit_type() == UnitType::CORE)
             it = army.erase(it);
         else ++it;
     }
@@ -128,11 +128,11 @@ void army_list::remove_core() {
 void army_list::remove_special() {
     double pts = 0.0;
     for (const auto& x : army) {
-        if (x.second->unit_type() == armies::UnitType::SPECIAL)
+        if (x.second->unit_type() == UnitType::SPECIAL)
             pts += x.second->points();
     }
     for (auto it = std::begin(army); it != std::end(army);) {
-        if (it->second->unit_type() == armies::UnitType::SPECIAL)
+        if (it->second->unit_type() == UnitType::SPECIAL)
             it = army.erase(it);
         else ++it;
     }
@@ -144,11 +144,11 @@ void army_list::remove_special() {
 void army_list::remove_rare() {
     double pts = 0.0;
     for (const auto& x : army) {
-        if (x.second->unit_type() == armies::UnitType::RARE)
+        if (x.second->unit_type() == UnitType::RARE)
             pts += x.second->points();
     }
     for (auto it = std::begin(army); it != std::end(army);) {
-        if (it->second->unit_type() == armies::UnitType::RARE)
+        if (it->second->unit_type() == UnitType::RARE)
             it = army.erase(it);
         else ++it;
     }
@@ -164,7 +164,7 @@ std::size_t army_list::nlords() const noexcept {
     return static_cast<std::size_t>(std::count_if(
         std::begin(army),
         std::end(army),
-        [](const auto& x) { return x.second->unit_type() == armies::UnitType::LORD; }
+        [](const auto& x) { return x.second->unit_type() == UnitType::LORD; }
     ));
 }
 
@@ -172,7 +172,7 @@ std::size_t army_list::nheroes() const noexcept {
     return static_cast<std::size_t>(std::count_if(
         std::begin(army),
         std::end(army),
-        [](const auto& x) { return x.second->unit_type() == armies::UnitType::HERO; }
+        [](const auto& x) { return x.second->unit_type() == UnitType::HERO; }
     ));
 }
 
@@ -180,7 +180,7 @@ std::size_t army_list::ncore() const noexcept {
     return static_cast<std::size_t>(std::count_if(
         std::begin(army),
         std::end(army),
-        [](const auto& x) { return x.second->unit_type() == armies::UnitType::CORE; }
+        [](const auto& x) { return x.second->unit_type() == UnitType::CORE; }
     ));
 }
 
@@ -188,7 +188,7 @@ std::size_t army_list::nspecial() const noexcept {
     return static_cast<std::size_t>(std::count_if(
         std::begin(army),
         std::end(army),
-        [](const auto& x) { return x.second->unit_type() == armies::UnitType::SPECIAL; }
+        [](const auto& x) { return x.second->unit_type() == UnitType::SPECIAL; }
     ));
 }
 
@@ -196,7 +196,7 @@ std::size_t army_list::nrare() const noexcept {
     return static_cast<std::size_t>(std::count_if(
         std::begin(army),
         std::end(army),
-        [](const auto& x) { return x.second->unit_type() == armies::UnitType::RARE; }
+        [](const auto& x) { return x.second->unit_type() == UnitType::RARE; }
     ));
 }
 
@@ -242,19 +242,19 @@ void army_list::update_on(int id) {
     double diff = army[id]->points() - snap_unit_pts;
     curr_pts += diff;
     switch (army[id]->unit_type()) {
-    case armies::UnitType::LORD:
+    case UnitType::LORD:
         lord_pts += diff;
         break;
-    case armies::UnitType::HERO:
+    case UnitType::HERO:
         hero_pts += diff;
         break;
-    case armies::UnitType::CORE:
+    case UnitType::CORE:
         core_pts += diff;
         break;
-    case armies::UnitType::SPECIAL:
+    case UnitType::SPECIAL:
         spec_pts += diff;
         break;
-    case armies::UnitType::RARE:
+    case UnitType::RARE:
         rare_pts += diff;
         break;
     default: break;
@@ -320,20 +320,20 @@ void army_list::determine_limits() {
     rare_lim = percent_25;
 }
 
-std::string army_list::html_table(armies::UnitType ut) const {
+std::string army_list::html_table(UnitType ut) const {
     std::vector<std::string> headers;
     switch (ut) {
-    case armies::UnitType::LORD:
-    case armies::UnitType::HERO:
+    case UnitType::LORD:
+    case UnitType::HERO:
         headers = {
             "Unit", "Mount", "Wizard Level", "Weapons", "Armour", "Talisman", "Enchanted Item",
             "Arcane Item", "Other Magic/Faction Items", "Other Extras", "Banner", "Characteristics",
             "Points"
         };
         break;
-    case armies::UnitType::CORE:
-    case armies::UnitType::SPECIAL:
-    case armies::UnitType::RARE:
+    case UnitType::CORE:
+    case UnitType::SPECIAL:
+    case UnitType::RARE:
         headers = {
                 "Unit", "Size", "Mount", "Weapons", "Armour", "Extras", "Command",
                 "Banner", "Characteristics", "Points"
@@ -345,23 +345,23 @@ std::string army_list::html_table(armies::UnitType ut) const {
     // make unit type header
     table += "<thead><tr style=\"background-color: #000000\">\n";
     switch (ut) {
-    case armies::UnitType::LORD:
+    case UnitType::LORD:
         table += "<th colspan=\"13\" style=\"color: #FFFFFF\">";
         table += "Lords (" + tools::points_str(lord_pts) + "/" + tools::points_str(lord_lim);
         break;
-    case armies::UnitType::HERO:
+    case UnitType::HERO:
         table += "<th colspan=\"13\" style=\"color: #FFFFFF\">";
         table += "Heroes (" + tools::points_str(hero_pts) + "/" + tools::points_str(hero_lim);
         break;
-    case armies::UnitType::CORE:
+    case UnitType::CORE:
         table += "<th colspan=\"10\" style=\"color: #FFFFFF\">";
         table += "Core Units (" + tools::points_str(core_pts);
         break;
-    case armies::UnitType::SPECIAL:
+    case UnitType::SPECIAL:
         table += "<th colspan=\"10\" style=\"color: #FFFFFF\">";
         table += "Special Units (" + tools::points_str(spec_pts) + "/" + tools::points_str(spec_lim);
         break;
-    case armies::UnitType::RARE:
+    case UnitType::RARE:
         table += "<th colspan=\"10\" style=\"color: #FFFFFF\">";
         table += "Rare Units (" + tools::points_str(rare_pts) + "/" + tools::points_str(rare_lim);
         break;
@@ -381,21 +381,21 @@ std::string army_list::html_table(armies::UnitType ut) const {
 }
 
 std::string army_list::html_lords_table() const {
-    return html_table(armies::UnitType::LORD);
+    return html_table(UnitType::LORD);
 }
 
 std::string army_list::html_heroes_table() const {
-    return html_table(armies::UnitType::HERO);
+    return html_table(UnitType::HERO);
 }
 
 std::string army_list::html_core_table() const {
-    return html_table(armies::UnitType::CORE);
+    return html_table(UnitType::CORE);
 }
 
 std::string army_list::html_special_table() const {
-    return html_table(armies::UnitType::SPECIAL);
+    return html_table(UnitType::SPECIAL);
 }
 
 std::string army_list::html_rare_table() const {
-    return html_table(armies::UnitType::RARE);
+    return html_table(UnitType::RARE);
 }

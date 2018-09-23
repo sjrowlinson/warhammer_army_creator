@@ -2,7 +2,7 @@
 
 namespace tools {
 
-    roster_parser::roster_parser(const QString& rfile, armies::Faction _faction)
+    roster_parser::roster_parser(const QString& rfile, Faction _faction)
         : file_parser(rfile), faction(_faction) {
         find_blocks();
     }
@@ -23,11 +23,6 @@ namespace tools {
             CommandGroup, std::pair<std::string, double>
         > map;
         if (s == "None" || s.empty()) return map;
-        std::unordered_map<std::string, CommandGroup> convert = {
-            {"Musician", CommandGroup::MUSICIAN},
-            {"Standard Bearer", CommandGroup::STANDARD_BEARER},
-            {"Champion", CommandGroup::CHAMPION}
-        };
         std::vector<std::string> entries = tools::split(s, ',');
         for (const auto& x : entries) {
             std::vector<std::string> tmp = tools::split(x, ':');
@@ -37,7 +32,7 @@ namespace tools {
                 name_pts[1].begin(), name_pts[1].end(), std::back_inserter(pts_str), [](auto x) { return x != ']'; }
             );
             double pts = std::stod(pts_str);
-            map[convert[tmp[0]]] = std::make_pair(
+            map[enum_convert::STRING_TO_COMMAND.at(tmp[0])] = std::make_pair(
                 tools::trim(name_pts[0]), pts
             );
         }
@@ -66,59 +61,38 @@ namespace tools {
             e.weapons[WeaponType::MELEE] = {ItemClass::MUNDANE, "Hand weapon"};
             return e;
         }
-        std::unordered_map<std::string, int> map_to = {
-            {"Weapon", 0},
-            {"Armour", 1},
-            {"Talisman", 2},
-            {"Arcane Item", 3},
-            {"Enchanted Item", 4},
-            {"Banner", 5}
-        };
         std::vector<std::string> all = tools::split(s, ',');
         for (const auto& _s : all) {
             std::vector<std::string> vec = tools::split(_s, ':');
-            switch (map_to[vec[0]]) {
-            case 0:
+            switch (enum_convert::STRING_TO_ITEM_TYPE.at(vec[0])) {
+            case ItemType::WEAPON:
             {
                 auto item_bs = tools::parse_item_bs(vec[1]);
                 std::string name = tools::trim(item_bs[0]);
-                ItemClass ic;
-                if (item_bs[1] == "Mundane") ic = ItemClass::MUNDANE;
-                else if (item_bs[1] == "Magic") ic = ItemClass::MAGIC;
-                else if (item_bs[1] == "Common") ic = ItemClass::COMMON;
-                else if (item_bs[1] == "Faction") ic = ItemClass::FACTION;
-                WeaponType wt;
-                if (item_bs[2] == "Melee") wt = WeaponType::MELEE;
-                else if (item_bs[2] == "Ballistic") wt = WeaponType::BALLISTIC;
+                ItemClass ic = enum_convert::STRING_TO_ITEM_CLASS.at(item_bs[1]);
+                WeaponType wt = enum_convert::STRING_TO_WEAPON_TYPE.at(item_bs[2]);
                 e.weapons[wt] = {ic, name};
                 break;
             }
-            case 1:
+            case ItemType::ARMOUR:
             {
                 auto item_bs = tools::parse_item_bs(vec[1]);
                 std::string name = tools::trim(item_bs[0]);
-                ItemClass ic;
-                if (item_bs[1] == "Mundane") ic = ItemClass::MUNDANE;
-                else if (item_bs[1] == "Magic") ic = ItemClass::MAGIC;
-                else if (item_bs[1] == "Common") ic = ItemClass::COMMON;
-                else if (item_bs[1] == "Faction") ic = ItemClass::FACTION;
-                ArmourType at;
-                if (item_bs[2] == "Armour") at = ArmourType::ARMOUR;
-                else if (item_bs[2] == "Shield") at = ArmourType::SHIELD;
-                else if (item_bs[2] == "Helmet") at = ArmourType::HELMET;
+                ItemClass ic = enum_convert::STRING_TO_ITEM_CLASS.at(item_bs[1]);
+                ArmourType at = enum_convert::STRING_TO_ARMOUR_TYPE.at(item_bs[2]);
                 e.armour[at] = {ic, name};
                 break;
             }
-            case 2:
+            case ItemType::TALISMAN:
                 e.talismans.push_back(vec[1]);
                 break;
-            case 3:
+            case ItemType::ARCANE:
                 e.arcane.push_back(vec[1]);
                 break;
-            case 4:
+            case ItemType::ENCHANTED:
                 e.enchanted.push_back(vec[1]);
                 break;
-            case 5:
+            case ItemType::BANNER:
                 e.banners.push_back(vec[1]);
                 break;
             default: break;
@@ -147,14 +121,8 @@ namespace tools {
             }
             auto weapon_bsp = tools::parse_item_bsp(split[0]);
             std::string name = tools::trim(weapon_bsp[0]);
-            ItemClass ic;
-            if (weapon_bsp[1] == "Mundane") ic = ItemClass::MUNDANE;
-            else if (weapon_bsp[1] == "Magic") ic = ItemClass::MAGIC;
-            else if (weapon_bsp[1] == "Common") ic = ItemClass::COMMON;
-            else if (weapon_bsp[1] == "Faction") ic = ItemClass::FACTION;
-            WeaponType wt;
-            if (weapon_bsp[2] == "Melee") wt = WeaponType::MELEE;
-            else if (weapon_bsp[2] == "Ballistic") wt = WeaponType::BALLISTIC;
+            ItemClass ic = enum_convert::STRING_TO_ITEM_CLASS.at(weapon_bsp[1]);
+            WeaponType wt = enum_convert::STRING_TO_WEAPON_TYPE.at(weapon_bsp[2]);
             double pts = std::stod(weapon_bsp[3]);
             um[name] = std::make_tuple(wt, ic, pts, replace);
         }
@@ -179,15 +147,8 @@ namespace tools {
             }
             auto armour_bsp = tools::parse_item_bsp(_s);
             std::string name = tools::trim(armour_bsp[0]);
-            ItemClass ic;
-            if (armour_bsp[1] == "Mundane") ic = ItemClass::MUNDANE;
-            else if (armour_bsp[1] == "Magic") ic = ItemClass::MAGIC;
-            else if (armour_bsp[1] == "Common") ic = ItemClass::COMMON;
-            else if (armour_bsp[1] == "Faction") ic = ItemClass::FACTION;
-            ArmourType at;
-            if (armour_bsp[2] == "Armour") at = ArmourType::ARMOUR;
-            else if (armour_bsp[2] == "Shield") at = ArmourType::SHIELD;
-            else if (armour_bsp[2] == "Helmet") at = ArmourType::HELMET;
+            ItemClass ic = enum_convert::STRING_TO_ITEM_CLASS.at(armour_bsp[1]);
+            ArmourType at = enum_convert::STRING_TO_ARMOUR_TYPE.at(armour_bsp[2]);
             double pts = std::stod(armour_bsp[3]);
             um[name] = std::make_tuple(at, ic, pts, replace);
         }
@@ -196,26 +157,18 @@ namespace tools {
 
     std::unordered_map<
         std::string,
-        std::pair<armies::UnitClass, double>
+        std::pair<UnitClass, double>
     > roster_parser::parse_optional_mounts(std::string s) {
         std::unordered_map<
             std::string,
-            std::pair<armies::UnitClass, double>
+            std::pair<UnitClass, double>
         > um;
         if (s == "None" || s.empty()) return um;
         std::vector<std::string> all = tools::split(s, ',');
         for (const auto& _s : all) {
             auto mount_bs = tools::parse_item_bs(_s);
             std::string name = tools::trim(mount_bs[0]);
-            armies::UnitClass uc;
-            if (mount_bs[1] == "Infantry") uc = armies::UnitClass::INFANTRY;
-            else if (mount_bs[1] == "Cavalry") uc = armies::UnitClass::CAVALRY;
-            else if (mount_bs[1] == "Monstrous Cavalry") uc = armies::UnitClass::MONSTROUS_CAVALRY;
-            else if (mount_bs[1] == "Monstrous Beast") uc = armies::UnitClass::MONSTROUS_BEAST;
-            else if (mount_bs[1] == "Warbeast") uc = armies::UnitClass::WARBEASTS;
-            else if (mount_bs[1] == "Chariot") uc = armies::UnitClass::CHARIOT;
-            else if (mount_bs[1] == "Monster") uc = armies::UnitClass::MONSTER;
-            else if (mount_bs[1] == "Unique") uc = armies::UnitClass::UNIQUE;
+            UnitClass uc = enum_convert::STRING_TO_UNIT_CLASS.at(mount_bs[1]);
             double pts = std::stod(mount_bs[2]);
             um[name] = std::make_pair(uc, pts);
         }
@@ -248,10 +201,10 @@ namespace tools {
         for (std::size_t i = 0U; i < blocks.size(); ++i) {
             std::string types = read_line(blocks[i] + 1);
             auto types_split = tools::split(types, ',');
-            armies::UnitType ut = armies::s_map_string_unit_type[types_split[0]];
+            UnitType ut = enum_convert::STRING_TO_UNIT_TYPE.at(types_split[0]);
             switch (ut) {
-            case armies::UnitType::LORD:
-            case armies::UnitType::HERO:
+            case UnitType::LORD:
+            case UnitType::HERO:
                 if (types_split[1] == "Melee")
                     units.push_back(std::make_shared<base_melee_character_unit>(
                         parse_melee_character(i, ut)
@@ -261,30 +214,30 @@ namespace tools {
                         parse_mage_character(i, ut)
                     ));
                 break;
-            case armies::UnitType::CORE:
-            case armies::UnitType::SPECIAL:
-            case armies::UnitType::RARE:
+            case UnitType::CORE:
+            case UnitType::SPECIAL:
+            case UnitType::RARE:
             {
-                auto category = armies::s_map_string_unit_class[types_split[1]];
+                auto category = enum_convert::STRING_TO_UNIT_CLASS.at(types_split[1]);
                 if (types_split[2] == "Normal") {
                     switch (category) {
-                    case armies::UnitClass::MONSTER:
-                    case armies::UnitClass::SWARM:
+                    case UnitClass::MONSTER:
+                    case UnitClass::SWARM:
                         units.push_back(
                                   std::make_shared<base_normal_unit>(
                                       parse_minimal_normal_unit(i, ut, category)
                                   )
                               );
                         break;
-                    case armies::UnitClass::WARMACHINE:
-                    case armies::UnitClass::CHARIOT:
+                    case UnitClass::WARMACHINE:
+                    case UnitClass::CHARIOT:
                         units.push_back(
                                   std::make_shared<base_normal_unit>(
                                       parse_warmachine(i, ut, category)
                                   )
                               );
                         break;
-                    case armies::UnitClass::UNIQUE:
+                    case UnitClass::UNIQUE:
                     {
                         auto name = read_line(blocks[i]);
                         if (name == "Gyrocopter" || name == "Gyrobomber")
@@ -315,9 +268,9 @@ namespace tools {
         return units;
     }
 
-    base_melee_character_unit roster_parser::parse_melee_character(std::size_t n, armies::UnitType ut) {
+    base_melee_character_unit roster_parser::parse_melee_character(std::size_t n, UnitType ut) {
         std::string name = read_line(blocks[n]);
-        auto category = armies::s_map_string_unit_class[read_line(blocks[n] + 2)];
+        auto category = enum_convert::STRING_TO_UNIT_CLASS.at(read_line(blocks[n] + 2));
         double pts = std::stod(read_line(blocks[n] + 3));
         auto stats = tools::split(read_line(blocks[n] + 5), ' ');
         auto rules = tools::split(read_line(blocks[n] + 6), ',');
@@ -354,12 +307,12 @@ namespace tools {
         return tmp;
     }
 
-    base_mage_character_unit roster_parser::parse_mage_character(std::size_t n, armies::UnitType ut) {
+    base_mage_character_unit roster_parser::parse_mage_character(std::size_t n, UnitType ut) {
         std::string name = read_line(blocks[n]);
         short level = static_cast<short>(std::stoi(read_line(blocks[n] + 2)));
         auto level_upgrades = parse_mage_upgrades(read_line(blocks[n] + 3));
         auto lores = tools::split(read_line(blocks[n] + 4), ',');
-        auto category = armies::s_map_string_unit_class[read_line(blocks[n] + 5)];
+        auto category = enum_convert::STRING_TO_UNIT_CLASS.at(read_line(blocks[n] + 5));
         double pts = std::stod(read_line(blocks[n] + 6));
         auto stats = tools::split(read_line(blocks[n] + 8), ' ');
         auto rules = tools::split(read_line(blocks[n] + 9), ',');
@@ -400,7 +353,7 @@ namespace tools {
     }
 
     base_normal_unit roster_parser::parse_normal_unit(
-        std::size_t n, armies::UnitType ut, armies::UnitClass category, std::string name_, std::size_t offset
+        std::size_t n, UnitType ut, UnitClass category, std::string name_, std::size_t offset
     ) {
         if (name_.empty())
             name_ = read_line(blocks[n]);
@@ -460,7 +413,7 @@ namespace tools {
         return tmp;
     }
 
-    base_normal_unit roster_parser::parse_minimal_normal_unit(std::size_t n, armies::UnitType ut, armies::UnitClass category) {
+    base_normal_unit roster_parser::parse_minimal_normal_unit(std::size_t n, UnitType ut, UnitClass category) {
         std::string name = read_line(blocks[n]);
         double pts = std::stod(read_line(blocks[n] + 2));
         auto mm_size = parse_minmax_size(read_line(blocks[n] + 3));
@@ -504,7 +457,7 @@ namespace tools {
         return tmp;
     }
 
-    base_normal_unit roster_parser::parse_warmachine(std::size_t n, armies::UnitType ut, armies::UnitClass category) {
+    base_normal_unit roster_parser::parse_warmachine(std::size_t n, UnitType ut, UnitClass category) {
         std::string name = read_line(blocks[n]);
         double pts = std::stod(read_line(blocks[n] + 2));
         auto mm_size = parse_minmax_size(read_line(blocks[n] + 3));
@@ -548,7 +501,7 @@ namespace tools {
         return tmp;
     }
 
-    base_mixed_unit roster_parser::parse_mixed_unit(std::size_t n, armies::UnitType ut, armies::UnitClass category) {
+    base_mixed_unit roster_parser::parse_mixed_unit(std::size_t n, UnitType ut, UnitClass category) {
         auto slave = parse_normal_unit(n, ut, category);
         auto master = parse_normal_unit(n, ut, category, slave.name(), 21U);
         base_mixed_unit tmp(
@@ -561,8 +514,8 @@ namespace tools {
 
     base_normal_unit roster_parser::parse_gyro_unit(
         std::size_t n,
-        armies::UnitType ut,
-        armies::UnitClass category
+        UnitType ut,
+        UnitClass category
     ) {
         std::string name = read_line(blocks[n]);
         double pts = std::stod(read_line(blocks[n] + 2));

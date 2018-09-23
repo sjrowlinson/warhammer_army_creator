@@ -1,7 +1,7 @@
 #ifndef CHARACTER_UNIT_H
 #define CHARACTER_UNIT_H
 
-#include "army_maps.h"
+#include "enums.h"
 #include "base_unit.h"
 #include "base_character_unit.h"
 #include "unit.h"
@@ -32,7 +32,7 @@ protected:
     std::unordered_map<std::string, std::pair<ItemClass, double>> item_extras_;
     // TODO: change to use new mount system, i.e:
     // std::pair<std::string, std::pair<mount, double>> mount_;
-    std::pair<std::string, std::pair<armies::UnitClass, double>> mount_;
+    std::pair<std::string, std::pair<UnitClass, double>> mount_;
     std::pair<std::string, std::pair<ItemClass, double>> banner;
 
     // item points
@@ -76,7 +76,7 @@ public:
 
     std::pair<
         std::string,
-        std::pair<armies::UnitClass, double>
+        std::pair<UnitClass, double>
     > mount() const noexcept override;
 
     std::pair<std::string, std::pair<ItemClass, double>> magic_banner() const noexcept override;

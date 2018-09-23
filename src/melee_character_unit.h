@@ -1,7 +1,6 @@
 #ifndef MELEE_CHARACTER_UNIT_H
 #define MELEE_CHARACTER_UNIT_H
 
-#include "army_maps.h"
 #include "base_unit.h"
 #include "base_melee_character_unit.h"
 #include "character_unit.h"

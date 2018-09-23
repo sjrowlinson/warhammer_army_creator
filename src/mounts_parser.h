@@ -1,7 +1,7 @@
 #ifndef MOUNTS_PARSER_H
 #define MOUNTS_PARSER_H
 
-#include "army_maps.h"
+#include "enums.h"
 #include "base_unit.h"
 #include "file_parser.h"
 #include "tools.h"

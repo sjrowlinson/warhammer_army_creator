@@ -83,7 +83,7 @@ std::unordered_map<
 
 std::pair<
     std::string,
-    std::pair<armies::UnitClass, double>
+    std::pair<UnitClass, double>
 > mixed_unit::mount() const noexcept {
     switch (mixed_select_) {
     case MixedSelect::MASTER:

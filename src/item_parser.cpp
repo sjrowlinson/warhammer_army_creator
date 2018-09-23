@@ -12,33 +12,6 @@ namespace tools {
     }
 
     std::vector<item> item_parser::parse() {
-        std::unordered_map<
-            std::string,
-            ItemType
-        > map_to_item = {
-            {"Weapon", ItemType::WEAPON},
-            {"Armour", ItemType::ARMOUR},
-            {"Talisman", ItemType::TALISMAN},
-            {"Arcane", ItemType::ARCANE},
-            {"Enchanted", ItemType::ENCHANTED},
-            {"Banner", ItemType::BANNER},
-            {"Other", ItemType::OTHER}
-        };
-        std::unordered_map<
-            std::string,
-            WeaponType
-        > map_to_weapon = {
-            {"Melee", WeaponType::MELEE},
-            {"Ballistic", WeaponType::BALLISTIC}
-        };
-        std::unordered_map<
-            std::string,
-            ArmourType
-        > map_to_armour = {
-            {"Armour", ArmourType::ARMOUR},
-            {"Shield", ArmourType::SHIELD},
-            {"Helmet", ArmourType::HELMET}
-        };
         std::vector<item> items; items.reserve(blocks.size());
         for (std::size_t i = 0U; i < blocks.size(); ++i) {
             std::string name = read_line(blocks[i]);
@@ -49,13 +22,13 @@ namespace tools {
             ArmourType at = ArmourType::NONE;
             if (mits[0] == "Weapon") {
                 mit = ItemType::WEAPON;
-                wt = map_to_weapon[mits[1]];
+                wt = enum_convert::STRING_TO_WEAPON_TYPE.at(mits[1]);
             }
             else if (mits[0] == "Armour") {
                 mit = ItemType::ARMOUR;
-                at = map_to_armour[mits[1]];
+                at = enum_convert::STRING_TO_ARMOUR_TYPE.at(mits[1]);
             }
-            else mit = map_to_item[mits[0]];
+            else mit = enum_convert::STRING_TO_ITEM_TYPE.at(mits[0]);
             double points = std::stod(read_line(blocks[i] + 2));
             std::string descr = read_line(blocks[i] + 3);
             std::string allowed = read_line(blocks[i] + 4);

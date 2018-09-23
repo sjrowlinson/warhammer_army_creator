@@ -1,7 +1,6 @@
 #ifndef SELECTION_TREE_H
 #define SELECTION_TREE_H
 
-#include "army_maps.h"
 #include "army_list.h"
 #include "base_unit.h"
 #include "base_character_unit.h"
@@ -9,6 +8,7 @@
 #include "base_melee_character_unit.h"
 #include "base_mixed_unit.h"
 #include "base_normal_unit.h"
+#include "enums.h"
 #include "item_parser.h"
 #include "mage_character_unit.h"
 #include "magic_item.h"
@@ -34,7 +34,7 @@
 
 class selection_tree {
 private:
-    armies::Faction race;
+    Faction race;
     // roster of units
     std::unordered_map<
         std::string,
@@ -76,14 +76,14 @@ private:
     void parse_roster_file(const QString& rfile_str);
     void parse_mount_file(const QString& mfile_str);
     void parse_item_files(const std::pair<QString, QString>& ifile_str);
-    std::vector<std::shared_ptr<base_unit>> all_of(armies::UnitType ut) const noexcept;
+    std::vector<std::shared_ptr<base_unit>> all_of(UnitType ut) const noexcept;
 public:
-    selection_tree(armies::Faction faction, army_list& list);
+    selection_tree(Faction faction, army_list& list);
     ~selection_tree() = default;
     void add_unit_to_army_list(int id);
     void change_selection(const std::string& name);
     void reset_army_list(army_list&_army);
-    void reset(armies::Faction faction, army_list& list);
+    void reset(Faction faction, army_list& list);
 
     std::shared_ptr<unit> selected();
 

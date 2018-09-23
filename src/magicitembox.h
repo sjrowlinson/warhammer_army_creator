@@ -4,7 +4,7 @@
 class ArmyCreator;
 
 #include "army_list.h"
-#include "army_maps.h"
+#include "enums.h"
 #include "magic_item.h"
 #include "option_selector.h"
 #include "selection_tree.h"

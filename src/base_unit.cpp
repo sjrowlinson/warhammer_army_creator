@@ -1,9 +1,9 @@
 #include "base_unit.h"
 
 base_unit::base_unit(
-    armies::Faction faction,
-    armies::UnitType ut,
-    armies::UnitClass uc,
+    Faction faction,
+    UnitType ut,
+    UnitClass uc,
     std::string name,
     std::size_t min_size,
     std::size_t max_size
@@ -12,9 +12,9 @@ base_unit::base_unit(
 
 BaseUnitType base_unit::base_unit_type() const noexcept { return but; }
 
-armies::Faction base_unit::faction() const noexcept { return faction_; }
-armies::UnitType base_unit::unit_type() const noexcept { return ut_; }
-armies::UnitClass base_unit::unit_class() const noexcept { return uc_; }
+Faction base_unit::faction() const noexcept { return faction_; }
+UnitType base_unit::unit_type() const noexcept { return ut_; }
+UnitClass base_unit::unit_class() const noexcept { return uc_; }
 
 std::string base_unit::name() const noexcept { return name_; }
 std::size_t base_unit::min_size() const noexcept { return min_size_; }

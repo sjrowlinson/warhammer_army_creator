@@ -1,27 +1,17 @@
 #ifndef UNIT_H
 #define UNIT_H
 
-#include "army_maps.h"
 #include "base_unit.h"
 #include "base_mage_character_unit.h"
 #include "base_melee_character_unit.h"
 #include "base_normal_unit.h"
 #include "base_mixed_unit.h"
 #include "base_unit.h"
+#include "enums.h"
 
 #include <memory>
 #include <tuple>
 #include <unordered_map>
-
-enum class ModelSelect {
-    DEFAULT,
-    CHAMPION
-};
-
-enum class MixedSelect {
-    MASTER,
-    SLAVE
-};
 
 class unit {
 private:
@@ -79,7 +69,7 @@ public:
     virtual
     std::pair<
         std::string,
-        std::pair<armies::UnitClass, double>
+        std::pair<UnitClass, double>
     > mount() const noexcept = 0;
 
     virtual std::pair<std::string, std::pair<ItemClass, double>> magic_banner() const noexcept = 0;
@@ -90,9 +80,9 @@ public:
     std::string name() const noexcept;
     std::size_t min_size() const noexcept;
     std::size_t max_size() const noexcept;
-    armies::Faction faction() const noexcept;
-    armies::UnitType unit_type() const noexcept;
-    armies::UnitClass unit_class() const noexcept;
+    Faction faction() const noexcept;
+    UnitType unit_type() const noexcept;
+    UnitClass unit_class() const noexcept;
 
     // pure virtual selectors
     virtual void pick_weapon(ItemClass item_type, std::string name) = 0;

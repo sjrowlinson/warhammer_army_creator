@@ -62,14 +62,14 @@ std::size_t unit::max_size() const noexcept {
     return base_->max_size();
 }
 
-armies::Faction unit::faction() const noexcept {
+Faction unit::faction() const noexcept {
     return base_->faction();
 }
 
-armies::UnitType unit::unit_type() const noexcept {
+UnitType unit::unit_type() const noexcept {
     return base_->unit_type();
 }
 
-armies::UnitClass unit::unit_class() const noexcept {
+UnitClass unit::unit_class() const noexcept {
     return base_->unit_class();
 }

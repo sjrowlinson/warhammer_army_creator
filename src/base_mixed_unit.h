@@ -1,7 +1,6 @@
 #ifndef BASE_MIXED_UNIT_H
 #define BASE_MIXED_UNIT_H
 
-#include "army_maps.h"
 #include "base_unit.h"
 #include "base_normal_unit.h"
 

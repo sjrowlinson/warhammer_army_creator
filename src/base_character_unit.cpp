@@ -1,9 +1,9 @@
 #include "base_character_unit.h"
 
 base_character_unit::base_character_unit(
-    armies::Faction faction,
-    armies::UnitType ut,
-    armies::UnitClass uc,
+    Faction faction,
+    UnitType ut,
+    UnitClass uc,
     std::string name,
     double pts,
     std::vector<std::string>&& stats,

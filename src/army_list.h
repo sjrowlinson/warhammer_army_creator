@@ -1,8 +1,7 @@
 #ifndef ARMY_LIST_H
 #define ARMY_LIST_H
-#include "army_maps.h"
-#include "unit.h"
 
+#include "enums.h"
 #include "unit.h"
 #include "mage_character_unit.h"
 #include "melee_character_unit.h"
@@ -17,15 +16,6 @@
 #include <stdexcept>
 #include <unordered_map>
 #include <vector>
-
-enum class InvalidListReason {
-    POINTS,
-    LORD_LIMIT,
-    HERO_LIMIT,
-    CORE_MINIMUM,
-    SPECIAL_LIMIT,
-    RARE_LIMIT
-};
 
 class army_list {
 private:
@@ -50,7 +40,7 @@ private:
 
     void check_validity();
     void determine_limits();
-    std::string html_table(armies::UnitType ut) const;
+    std::string html_table(UnitType ut) const;
 public:
     army_list(double points);
     ~army_list();

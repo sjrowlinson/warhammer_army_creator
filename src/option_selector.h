@@ -1,17 +1,12 @@
 #ifndef OPTION_SELECTOR_H
 #define OPTION_SELECTOR_H
 #include "army_list.h"
+#include "enums.h"
 #include "selection_tree.h"
 #include "unit.h"
 
 #include <memory>
 #include <string>
-
-enum class InTree {
-    ROSTER,
-    ARMY,
-    NEITHER
-};
 
 class option_selector {
 private:

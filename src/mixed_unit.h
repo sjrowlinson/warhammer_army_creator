@@ -1,7 +1,6 @@
 #ifndef MIXED_UNIT_H
 #define MIXED_UNIT_H
 
-#include "army_maps.h"
 #include "base_unit.h"
 #include "base_mixed_unit.h"
 #include "base_normal_unit.h"
@@ -58,7 +57,7 @@ public:
     > mc_extras() const noexcept override;
     std::pair<
         std::string,
-        std::pair<armies::UnitClass, double>
+        std::pair<UnitClass, double>
     > mount() const noexcept override;
 
     std::pair<std::string, std::pair<ItemClass, double>> magic_banner() const noexcept override;

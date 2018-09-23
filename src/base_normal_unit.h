@@ -1,7 +1,7 @@
 #ifndef BASE_NORMAL_UNIT_H
 #define BASE_NORMAL_UNIT_H
 
-#include "army_maps.h"
+#include "enums.h"
 #include "base_unit.h"
 
 #include <string>
@@ -36,9 +36,9 @@ private:
     std::string mount_name_;
 public:
     base_normal_unit(
-        armies::Faction faction,
-        armies::UnitType ut,
-        armies::UnitClass uc,
+        Faction faction,
+        UnitType ut,
+        UnitClass uc,
         std::string name,
         std::size_t min_size,
         std::size_t max_size,

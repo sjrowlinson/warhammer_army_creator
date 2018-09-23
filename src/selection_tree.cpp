@@ -1,6 +1,6 @@
 #include "selection_tree.h"
 
-selection_tree::selection_tree(armies::Faction faction, army_list& list) : race(faction), army(list) {
+selection_tree::selection_tree(Faction faction, army_list& list) : race(faction), army(list) {
     auto files = filenames();
     QString common_item_filename(":/magic_items/common.mag");
     tools::item_parser ip(common_item_filename, ItemClass::COMMON);
@@ -20,68 +20,68 @@ std::tuple<std::string, std::string, std::string, std::string> selection_tree::f
     std::string magic_item_file = ":/magic_items/";
     std::string faction_item_file = ":/faction_items/";
     switch (race) {
-    case armies::Faction::EMPIRE:
+    case Faction::EMPIRE:
         roster_file += "empire.ros";
         magic_item_file += "empire.mag";
         break;
-    case armies::Faction::BRETONNIA:
+    case Faction::BRETONNIA:
         roster_file += "bretonnia.ros";
         magic_item_file += "bretonnia.mag";
         break;
-    case armies::Faction::DWARFS:
+    case Faction::DWARFS:
         roster_file += "dwarfs.ros";
         magic_item_file += "dwarfs.mag";
         break;
-    case armies::Faction::HIGH_ELVES:
+    case Faction::HIGH_ELVES:
         roster_file += "high_elves.ros";
         magic_item_file += "high_elves.mag";
         break;
-    case armies::Faction::WOOD_ELVES:
+    case Faction::WOOD_ELVES:
         roster_file += "wood_elves.ros";
         magic_item_file += "wood_elves.mag";
         break;
-    case armies::Faction::DARK_ELVES:
+    case Faction::DARK_ELVES:
         roster_file += "dark_elves.ros";
         magic_item_file += "dark_elves.mag";
         break;
-    case armies::Faction::WARRIORS_OF_CHAOS:
+    case Faction::WARRIORS_OF_CHAOS:
         roster_file += "woc.ros";
         mounts_file += "woc.mnt";
         magic_item_file += "woc.mag";
         faction_item_file += "woc.fit";
         break;
-    case armies::Faction::DAEMONS_OF_CHAOS:
+    case Faction::DAEMONS_OF_CHAOS:
         roster_file += "doc.ros";
         magic_item_file += "doc.mag";
         break;
-    case armies::Faction::BEASTMEN:
+    case Faction::BEASTMEN:
         roster_file += "beastmen.ros";
         magic_item_file += "beastmen.mag";
         faction_item_file += "beastmen.fit";
         break;
-    case armies::Faction::CHAOS_DWARFS:
+    case Faction::CHAOS_DWARFS:
         roster_file += "chaos_dwarfs.ros";
         magic_item_file += "chaos_dwarfs.mag";
         break;
-    case armies::Faction::VAMPIRE_COUNTS:
+    case Faction::VAMPIRE_COUNTS:
         roster_file += "vampire_counts.ros";
         magic_item_file += "vampire_counts.mag";
         break;
-    case armies::Faction::TOMB_KINGS:
+    case Faction::TOMB_KINGS:
         roster_file += "tomb_kings.ros";
         magic_item_file += "tomb_kings.mag";
         break;
-    case armies::Faction::OGRE_KINGDOMS:
+    case Faction::OGRE_KINGDOMS:
         roster_file += "ogre_kingdoms.ros";
         magic_item_file += "ogre_kingdoms.mag";
         break;
-    case armies::Faction::SKAVEN:
+    case Faction::SKAVEN:
         roster_file += "skaven.ros";
         mounts_file += "skaven.mnt";
         magic_item_file += "skaven.mag";
         faction_item_file += "skaven.fit";
         break;
-    case armies::Faction::ORCS_AND_GOBLINS:
+    case Faction::ORCS_AND_GOBLINS:
         roster_file += "orcs_goblins.ros";
         magic_item_file += "orcs_goblins.mag";
         break;
@@ -115,7 +115,7 @@ void selection_tree::reset_army_list(army_list& _army) {
     army = _army;
 }
 
-void selection_tree::reset(armies::Faction faction, army_list &list) {
+void selection_tree::reset(Faction faction, army_list &list) {
     roster.clear();
     magic_items.first.clear();
     magic_items.second.clear();
@@ -232,7 +232,7 @@ std::string selection_tree::faction_items_name() const noexcept {
     return faction_items.first;
 }
 
-std::vector<std::shared_ptr<base_unit>> selection_tree::all_of(armies::UnitType ut) const noexcept {
+std::vector<std::shared_ptr<base_unit>> selection_tree::all_of(UnitType ut) const noexcept {
     std::vector<std::shared_ptr<base_unit>> v;
     for (const auto& x : roster) {
         if (x.second->unit_type() == ut) v.push_back(x.second);
@@ -241,17 +241,17 @@ std::vector<std::shared_ptr<base_unit>> selection_tree::all_of(armies::UnitType 
 }
 
 std::vector<std::shared_ptr<base_unit>> selection_tree::lords() const noexcept {
-    return all_of(armies::UnitType::LORD);
+    return all_of(UnitType::LORD);
 }
 std::vector<std::shared_ptr<base_unit>> selection_tree::heroes() const noexcept {
-    return all_of(armies::UnitType::HERO);
+    return all_of(UnitType::HERO);
 }
 std::vector<std::shared_ptr<base_unit>> selection_tree::core() const noexcept {
-    return all_of(armies::UnitType::CORE);
+    return all_of(UnitType::CORE);
 }
 std::vector<std::shared_ptr<base_unit>> selection_tree::special() const noexcept {
-    return all_of(armies::UnitType::SPECIAL);
+    return all_of(UnitType::SPECIAL);
 }
 std::vector<std::shared_ptr<base_unit>> selection_tree::rare() const noexcept {
-    return all_of(armies::UnitType::RARE);
+    return all_of(UnitType::RARE);
 }

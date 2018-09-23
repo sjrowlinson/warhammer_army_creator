@@ -1,38 +1,10 @@
 #ifndef MAGIC_ITEM_H
 #define MAGIC_ITEM_H
 
+#include "enums.h"
+
 #include <string>
 #include <unordered_set>
-
-enum class ItemClass {
-    MUNDANE,
-    MAGIC,
-    FACTION,
-    COMMON
-};
-
-enum class ItemType {
-    WEAPON,
-    ARMOUR,
-    TALISMAN,
-    ARCANE,
-    ENCHANTED,
-    BANNER,
-    OTHER
-};
-
-enum class WeaponType {
-    MELEE,
-    BALLISTIC,
-    NONE
-};
-
-enum class ArmourType {
-    ARMOUR,
-    SHIELD,
-    HELMET,
-    NONE
-};
 
 struct item {
     ItemClass item_class;

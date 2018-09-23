@@ -1,7 +1,7 @@
 #ifndef BASE_MAGE_CHARACTER_UNIT_H
 #define BASE_MAGE_CHARACTER_UNIT_H
 
-#include "army_maps.h"
+#include "enums.h"
 #include "base_character_unit.h"
 
 class base_mage_character_unit : public base_character_unit {
@@ -11,9 +11,9 @@ private:
     std::vector<std::string> lores_;
 public:
     base_mage_character_unit(
-        armies::Faction faction,
-        armies::UnitType ut,
-        armies::UnitClass uc,
+        Faction faction,
+        UnitType ut,
+        UnitClass uc,
         std::string name,
         double pts,
         std::vector<std::string>&& stats,

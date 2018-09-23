@@ -1,7 +1,7 @@
 #ifndef ITEM_PARSER_H
 #define ITEM_PARSER_H
 
-#include "army_maps.h"
+#include "enums.h"
 #include "file_parser.h"
 #include "magic_item.h"
 #include "tools.h"

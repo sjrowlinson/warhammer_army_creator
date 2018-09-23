@@ -96,7 +96,7 @@ bool OptionBox::reinitialise() {
 QGroupBox* OptionBox::make_size_command_box() {
     switch (current->base_unit_type()) {
     case BaseUnitType::NORMAL:
-        if (current->unit_class() == armies::UnitClass::MONSTER) return nullptr;
+        if (current->unit_class() == UnitClass::MONSTER) return nullptr;
         break;
     case BaseUnitType::MIXED:
         break;
@@ -561,8 +561,8 @@ QGroupBox* OptionBox::make_mage_levels_box() {
 }
 
 QGroupBox* OptionBox::make_mounts_boxes() {
-    std::unordered_map<std::string, std::pair<armies::UnitClass, double>> opt_mounts;
-    std::pair<std::string, std::pair<armies::UnitClass, double>> mount;
+    std::unordered_map<std::string, std::pair<UnitClass, double>> opt_mounts;
+    std::pair<std::string, std::pair<UnitClass, double>> mount;
     switch (current->base_unit_type()) {
     case BaseUnitType::MAGE_CHARACTER:
     case BaseUnitType::MELEE_CHARACTER:

@@ -1,8 +1,8 @@
 #ifndef BASE_CHARACTER_UNIT_H
 #define BASE_CHARACTER_UNIT_H
 
-#include "army_maps.h"
 #include "base_unit.h"
+#include "enums.h"
 
 #include <string>
 #include <unordered_map>
@@ -23,9 +23,9 @@ private:
     std::string mount_name_;
 public:
     base_character_unit(
-        armies::Faction faction,
-        armies::UnitType ut,
-        armies::UnitClass uc,
+        Faction faction,
+        UnitType ut,
+        UnitClass uc,
         std::string name,
         double pts,
         std::vector<std::string>&& stats,

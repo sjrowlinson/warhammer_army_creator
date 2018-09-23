@@ -2,7 +2,7 @@
 #define ARMYCREATOR_H
 
 #include "army_list.h"
-#include "army_maps.h"
+#include "enums.h"
 #include "magic_item.h"
 #include "option_selector.h"
 #include "selection_tree.h"
@@ -38,17 +38,6 @@ class ArmyCreator;
 
 class OptionBox;
 class MagicItemBox;
-
-enum class ArmyTreeColumn {
-    NAME,
-    SIZE,
-    WEAPONS,
-    ARMOUR,
-    COMMAND,
-    EXTRAS,
-    POINTS,
-    ALL
-};
 
 class ArmyCreator : public QMainWindow {
     Q_OBJECT
@@ -93,7 +82,7 @@ private slots:
     void on_magic_items_combobox_currentTextChanged(const QString &arg1);
 private:
     Ui::ArmyCreator* ui;
-    armies::Faction race;
+    Faction race;
     std::shared_ptr<army_list> army;
     std::shared_ptr<selection_tree> st;
     std::shared_ptr<unit> current;

@@ -29,7 +29,7 @@ namespace tools {
         auto restriction = tools::split(s, ';');
         for (const auto& r : restriction) {
             auto split = tools::split(r, ':');
-            RestrictionField rf = tools::string_to_restriction(split[0]);
+            RestrictionField rf = enum_convert::STRING_TO_RESTRICTION.at(split[0]);
             auto restriction_names = tools::split(split[1], ',');
             for (auto& x : restriction_names) tools::trim(x);
             um[rf] = restriction_names;
@@ -42,7 +42,7 @@ namespace tools {
         mounts.reserve(blocks.size());
         for (std::size_t i = 0U; i < blocks.size(); ++i) {
             std::string name = read_line(blocks[i]);
-            auto unit_class = armies::s_map_string_unit_class[read_line(blocks[i] + 1)];
+            auto unit_class = enum_convert::STRING_TO_UNIT_CLASS.at(read_line(blocks[i] + 1));
             auto stats = tools::split(read_line(blocks[i] + 2), ' ');
             auto sr = tools::split(read_line(blocks[i] + 3), ',');
             auto oco_extras = parse_extras(read_line(blocks[i] + 4));

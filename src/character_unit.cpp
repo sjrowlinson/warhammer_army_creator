@@ -218,7 +218,7 @@ std::unordered_map<std::string, std::pair<bool, double>> character_unit::mc_extr
 
 std::pair<
     std::string,
-    std::pair<armies::UnitClass, double>
+    std::pair<UnitClass, double>
 > character_unit::mount() const noexcept { return mount_; }
 
 std::pair<std::string, std::pair<ItemClass, double>> character_unit::magic_banner() const noexcept {
