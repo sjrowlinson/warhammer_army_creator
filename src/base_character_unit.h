@@ -3,6 +3,8 @@
 
 #include "base_unit.h"
 #include "enums.h"
+#include "equipment.h"
+#include "options.h"
 
 #include <string>
 #include <unordered_map>

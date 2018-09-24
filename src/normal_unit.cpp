@@ -9,11 +9,11 @@ normal_unit::normal_unit(std::shared_ptr<base_unit> base)
     champ_magic_item_points = 0.0;
     champ_faction_item_points = 0.0;
     champ_total_item_points = 0.0;
-    for (const auto& x : handle->eq().weapons) {
+    for (const auto& x : handle->eq().weapons()) {
         auto p = x.second;
         weapons_[x.first] = {p.first, p.second, 0.0};
     }
-    for (const auto& x : handle->eq().armour) {
+    for (const auto& x : handle->eq().armours()) {
         auto p = x.second;
         armours_[x.first] = {p.first, p.second, 0.0};
     }
@@ -143,10 +143,7 @@ std::unordered_map<
     double
 > normal_unit::champion_mc_extras() const noexcept { return champ_mc_extras_; }
 
-std::pair<
-    std::string,
-    std::pair<UnitClass, double>
-> normal_unit::mount() const noexcept { return mount_; }
+std::pair<mount, double> normal_unit::mnt() const noexcept { return mount_; }
 
 std::unordered_map<
     CommandGroup, std::pair<std::string, double>
@@ -175,8 +172,8 @@ void normal_unit::pick_default_weapon(ItemClass item_type, std::string name) {
     switch (item_type) {
     case ItemClass::MUNDANE:
     {
-        auto search = handle->opt().opt_weapons.find(name);
-        if (search == handle->opt().opt_weapons.cend()) {
+        auto search = handle->opt().weapons().find(name);
+        if (search == handle->opt().weapons().cend()) {
             throw std::invalid_argument("Weapon not found!");
         }
         remove_weapon(std::get<0>(search->second));
@@ -203,8 +200,8 @@ void normal_unit::pick_champion_weapon(ItemClass item_type, std::string name) {
     switch (item_type) {
     case ItemClass::MUNDANE:
     {
-        auto search = handle->champion_opt().opt_weapons.find(name);
-        if (search == handle->champion_opt().opt_weapons.cend())
+        auto search = handle->champion_opt().weapons().find(name);
+        if (search == handle->champion_opt().weapons().cend())
             throw std::invalid_argument("Weapon not found!");
         remove_champion_weapon(std::get<0>(search->second));
         do_replacements(std::get<3>(search->second), true);
@@ -277,8 +274,8 @@ void normal_unit::pick_default_armour(ItemClass item_type, std::string name) {
     switch (item_type) {
     case ItemClass::MUNDANE:
     {
-        auto search = handle->opt().opt_armour.find(name);
-        if (search == handle->opt().opt_armour.end())
+        auto search = handle->opt().armour().find(name);
+        if (search == handle->opt().armour().end())
             throw std::invalid_argument("Armour not found!");
         remove_armour(std::get<0>(search->second));
         do_replacements(std::get<3>(search->second));
@@ -304,8 +301,8 @@ void normal_unit::pick_champion_armour(ItemClass item_type, std::string name) {
     switch (item_type) {
     case ItemClass::MUNDANE:
     {
-        auto search = handle->champion_opt().opt_armour.find(name);
-        if (search == handle->champion_opt().opt_armour.end())
+        auto search = handle->champion_opt().armour().find(name);
+        if (search == handle->champion_opt().armour().end())
             throw std::invalid_argument("Armour not found!");
         remove_champion_armour(std::get<0>(search->second));
         do_replacements(std::get<3>(search->second), true);
@@ -377,8 +374,8 @@ void normal_unit::remove_weapon(WeaponType wt, bool replacing) {
 void normal_unit::remove_default_weapon(WeaponType wt, bool replacing) {
     if (!weapons_.count(wt)) return;
     auto weapon = weapons_[wt];
-    auto search = handle->eq().weapons.find(wt);
-    if (search != handle->eq().weapons.cend()) {
+    auto search = handle->eq().weapons().find(wt);
+    if (search != handle->eq().weapons().cend()) {
         if (replacing) {
             weapons_.erase(wt);
             if (wt == WeaponType::MELEE)
@@ -395,8 +392,8 @@ void normal_unit::remove_default_weapon(WeaponType wt, bool replacing) {
 void normal_unit::remove_champion_weapon(WeaponType wt, bool replacing) {
     if (!champ_weapons_.count(wt)) return;
     auto weapon = champ_weapons_[wt];
-    auto def_w = handle->champion_eq().weapons.find(wt);
-    if (def_w != handle->champion_eq().weapons.cend()) {
+    auto def_w = handle->champion_eq().weapons().find(wt);
+    if (def_w != handle->champion_eq().weapons().cend()) {
         if (replacing) {
             champ_weapons_.erase(wt);
             if (wt == WeaponType::MELEE)
@@ -438,8 +435,8 @@ void normal_unit::remove_armour(ArmourType at, bool replacing) {
 void normal_unit::remove_default_armour(ArmourType at, bool replacing) {
     if (!armours_.count(at)) return;
     auto armour = armours_[at];
-    auto search = handle->eq().armour.find(at);
-    if (search != handle->eq().armour.cend()) {
+    auto search = handle->eq().armours().find(at);
+    if (search != handle->eq().armours().cend()) {
         if (replacing) armours_.erase(at);
         else {
             if (search->second.second == std::get<1>(armour)) return;
@@ -453,8 +450,8 @@ void normal_unit::remove_default_armour(ArmourType at, bool replacing) {
 void normal_unit::remove_champion_armour(ArmourType at, bool replacing) {
     if (!champ_armours_.count(at)) return;
     auto armour = champ_armours_[at];
-    auto def_a = handle->champion_eq().armour.find(at);
-    if (def_a != handle->champion_eq().armour.cend()) {
+    auto def_a = handle->champion_eq().armours().find(at);
+    if (def_a != handle->champion_eq().armours().cend()) {
         if (replacing) champ_armours_.erase(at);
         else {
             if (def_a->second.second == std::get<1>(armour)) return;
@@ -572,8 +569,8 @@ void normal_unit::pick_oco_extra(std::string name) {
 }
 
 void normal_unit::pick_default_oco_extra(std::string name) {
-    auto search = handle->opt().oco_extras.find(name);
-    if (search == handle->opt().oco_extras.end())
+    auto search = handle->opt().oco_extras().find(name);
+    if (search == handle->opt().oco_extras().end())
         throw std::invalid_argument("Item not found!");
     if (oco_extra_.first == name) return;
     const double prev_pts = oco_extra_.second.second;
@@ -587,8 +584,8 @@ void normal_unit::pick_default_oco_extra(std::string name) {
 void normal_unit::pick_champion_oco_extra(std::string name) {
     if (!(command_group.count(CommandGroup::CHAMPION)))
         throw std::runtime_error("No champion present in the unit!");
-    auto search = handle->champion_opt().oco_extras.find(name);
-    if (search == handle->champion_opt().oco_extras.end())
+    auto search = handle->champion_opt().oco_extras().find(name);
+    if (search == handle->champion_opt().oco_extras().end())
         throw std::invalid_argument("Item not found!");
     if (champ_oco_extra_.first == name) return;
     points_ -= champ_oco_extra_.second;
@@ -609,8 +606,8 @@ void normal_unit::pick_mc_extra(std::string name) {
 }
 
 void normal_unit::pick_default_mc_extra(std::string name) {
-    auto search = handle->opt().mc_extras.find(name);
-    if (search == handle->opt().mc_extras.end())
+    auto search = handle->opt().mc_extras().find(name);
+    if (search == handle->opt().mc_extras().end())
         throw std::invalid_argument("Item not found!");
     if (mc_extras_.count(name)) return;
     mc_extras_[name] = search->second;
@@ -621,8 +618,8 @@ void normal_unit::pick_default_mc_extra(std::string name) {
 void normal_unit::pick_champion_mc_extra(std::string name) {
     if (!(command_group.count(CommandGroup::CHAMPION)))
         throw std::runtime_error("No champion present in the unit!");
-    auto search = handle->champion_opt().mc_extras.find(name);
-    if (search == handle->champion_opt().mc_extras.end())
+    auto search = handle->champion_opt().mc_extras().find(name);
+    if (search == handle->champion_opt().mc_extras().end())
         throw std::invalid_argument("Item not found!");
     if (champ_mc_extras_.count(name)) return;
     champ_mc_extras_[name] = search->second.second;
@@ -681,21 +678,21 @@ void normal_unit::remove_champion_mc_extra(std::string name) {
 }
 
 void normal_unit::pick_mount(std::string name) {
-    auto search = handle->opt().opt_mounts.find(name);
-    if (search == handle->opt().opt_mounts.end())
+    if (mount_.first.name() == name) return;
+    auto opt_search = handle->opt().mounts().find(name);
+    auto mnt_search = handle->mounts_handle()->find(name);
+    if (opt_search == handle->opt().mounts().end() ||
+            mnt_search == handle->mounts_handle()->end())
         throw std::invalid_argument("Mount not found!");
-    if (mount_.first == name) return;
-    points_ -= size_ * mount_.second.second;
-    mount_.first = name;
-    mount_.second = search->second;
-    points_ += size_ * search->second.second;
+    points_ -= size_ * mount_.second;
+    mount_ = {mnt_search->second, opt_search->second};
+    points_ += size_ * opt_search->second;
 }
 
 void normal_unit::remove_mount() {
-    points_ -= size_ * mount_.second.second;
-    mount_.first = "";
-    mount_.second.first = handle->unit_class();
-    mount_.second.second = 0.0;
+    points_ -= size_ * mount_.second;
+    mount_.first = mount();
+    mount_.second = 0.0;
 }
 
 void normal_unit::change_size(std::size_t n) {
@@ -711,7 +708,7 @@ void normal_unit::change_size(std::size_t n) {
     for (const auto& ca : champ_armours_) points_ += std::get<2>(ca.second);
     points_ += champ_oco_extra_.second;
     for (const auto& ce : champ_mc_extras_) points_ += ce.second;
-    points_ += n * mount_.second.second;
+    points_ += n * mount_.second;
     for (const auto& m : command_group) points_ += m.second.second;
     points_ += banner.second.second;
     size_ = n;
@@ -724,7 +721,7 @@ std::string normal_unit::html_table_row() const {
     // unit size
     row += "<td>" + std::to_string(size_) + "</td>\n";
     // unit mount
-    row += "<td>" + (mount_.first.empty() ? "&nbsp;" : mount_.first) + "</td>\n";
+    row += "<td>" + (mount_.first.name().empty() ? "&nbsp;" : mount_.first.name()) + "</td>\n";
     // weapons
     if (weapons_.count(WeaponType::MELEE))
         row += "<td><strong>Melee:</strong> " +

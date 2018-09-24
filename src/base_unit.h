@@ -3,6 +3,7 @@
 
 #include "enums.h"
 #include "magic_item.h"
+#include "mount.h"
 
 #include <algorithm>
 #include <limits>
@@ -11,69 +12,6 @@
 #include <unordered_map>
 #include <utility>
 #include <vector>
-
-struct equipment {
-    std::unordered_map<
-        WeaponType,
-        std::pair<ItemClass, std::string>
-    > weapons;
-    std::unordered_map<
-        ArmourType,
-        std::pair<ItemClass, std::string>
-    > armour;
-    std::vector<std::string> talismans;
-    std::vector<std::string> arcane;
-    std::vector<std::string> enchanted;
-    std::vector<std::string> banners;
-
-    equipment()
-        : weapons(), armour(), talismans(), arcane(), enchanted(), banners() {}
-};
-
-struct options {
-    std::unordered_map<
-        std::string,
-        std::tuple<WeaponType, ItemClass, double, std::vector<std::string>>
-    > opt_weapons;
-    std::unordered_map<
-        std::string,
-        std::tuple<ArmourType, ItemClass, double, std::vector<std::string>>
-    > opt_armour;
-    std::unordered_map<
-        std::string,
-        std::pair<UnitClass, double>
-    > opt_mounts;
-    std::unordered_map<
-        std::string,
-        std::pair<bool, double>
-    > oco_extras;
-    std::unordered_map<
-        std::string,
-        std::pair<bool, double>
-    > mc_extras;
-};
-
-struct mount {
-    std::string name;
-    UnitClass unit_class;
-    std::vector<std::string> statistics;
-    std::vector<std::string> special_rules;
-    // one-choice-only extra
-    std::unordered_map<std::string, double> oco_extras;
-    // multiple choice extras
-    std::unordered_map<std::string, double> mc_extras;
-    // unit can only take the mount as an option if restrictions is either empty or
-    // if the unit instance has all of the std::string instances corresponding to
-    // a given RestrictionField - e.g. Disc of Tzeentch has:
-    //     restrictions = {RestrictionField::OCO_EXTRA, {"Mark of Tzeentch"}};
-    // such that a character can only choose a Disc of Tzeentch as a mount if they
-    // have "Mark of Tzeentch" in their oco_extra field
-    std::unordered_map<
-        RestrictionField,
-        std::vector<std::string>
-    > restrictions;
-    bool has_options() const noexcept { return oco_extras.size() || mc_extras.size(); }
-};
 
 class base_unit {
 protected:

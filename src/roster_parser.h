@@ -49,7 +49,7 @@ namespace tools {
         > parse_optional_armour(std::string s);
         std::unordered_map<
             std::string,
-            std::pair<UnitClass, double>
+            double
         > parse_optional_mounts(std::string s);
         std::unordered_map<
             std::string,

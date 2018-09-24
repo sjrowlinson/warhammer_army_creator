@@ -228,17 +228,17 @@ std::pair<QGroupBox*, QGroupBox*> OptionBox::make_weapons_boxes() {
     case BaseUnitType::MELEE_CHARACTER:
     {
         auto p = std::dynamic_pointer_cast<character_unit>(current);
-        if (p->handle_->opt().opt_weapons.empty()) return boxes;
+        if (p->handle_->opt().weapons().empty()) return boxes;
         has_opt_weapons = true;
         break;
     }
     case BaseUnitType::NORMAL:
     {
         auto p = std::dynamic_pointer_cast<normal_unit>(current);
-        if (p->handle->opt().opt_weapons.empty() && p->handle->champion_opt().opt_weapons.empty())
+        if (p->handle->opt().weapons().empty() && p->handle->champion_opt().weapons().empty())
             return boxes;
-        if (!p->handle->opt().opt_weapons.empty()) has_opt_weapons = true;
-        if (!p->handle->champion_opt().opt_weapons.empty()) has_champ_opt_weapons = true;
+        if (!p->handle->opt().weapons().empty()) has_opt_weapons = true;
+        if (!p->handle->champion_opt().weapons().empty()) has_champ_opt_weapons = true;
         break;
     }
     default: return boxes;
@@ -287,7 +287,7 @@ QGroupBox* OptionBox::make_weapons_subbox(WeaponType wt, bool champion) {
     case BaseUnitType::MELEE_CHARACTER:
     {
         auto p = std::dynamic_pointer_cast<character_unit>(current);
-        opt_weapons = p->handle_->opt().opt_weapons;
+        opt_weapons = p->handle_->opt().weapons();
         curr_weapons = p->weapons();
         break;
     }
@@ -295,13 +295,13 @@ QGroupBox* OptionBox::make_weapons_subbox(WeaponType wt, bool champion) {
     {
         auto p = std::dynamic_pointer_cast<normal_unit>(current);
         if (champion) {
-            opt_weapons = p->handle->champion_opt().opt_weapons;
+            opt_weapons = p->handle->champion_opt().weapons();
             p->switch_model_select(ModelSelect::CHAMPION);
             curr_weapons = p->weapons();
             p->switch_model_select(ModelSelect::DEFAULT);
         }
         else {
-            opt_weapons = p->handle->opt().opt_weapons;
+            opt_weapons = p->handle->opt().weapons();
             p->switch_model_select(ModelSelect::DEFAULT);
             curr_weapons = p->weapons();
         }
@@ -377,17 +377,17 @@ std::pair<QGroupBox*, QGroupBox*> OptionBox::make_armour_boxes() {
     case BaseUnitType::MELEE_CHARACTER:
     {
         auto p = std::dynamic_pointer_cast<character_unit>(current);
-        if (p->handle_->opt().opt_armour.empty()) return boxes;
+        if (p->handle_->opt().armour().empty()) return boxes;
         has_opt_armour = true;
         break;
     }
     case BaseUnitType::NORMAL:
     {
         auto p = std::dynamic_pointer_cast<normal_unit>(current);
-        if (p->handle->opt().opt_armour.empty() && p->handle->champion_opt().opt_armour.empty())
+        if (p->handle->opt().armour().empty() && p->handle->champion_opt().armour().empty())
             return boxes;
-        if (!p->handle->opt().opt_armour.empty()) has_opt_armour = true;
-        if (!p->handle->champion_opt().opt_armour.empty()) has_champ_opt_armour = true;
+        if (!p->handle->opt().armour().empty()) has_opt_armour = true;
+        if (!p->handle->champion_opt().armour().empty()) has_champ_opt_armour = true;
         break;
     }
     default: return boxes;
@@ -440,7 +440,7 @@ QGroupBox* OptionBox::make_armour_subbox(ArmourType at, bool champion) {
     case BaseUnitType::MELEE_CHARACTER:
     {
         auto p = std::dynamic_pointer_cast<character_unit>(current);
-        opt_armour = p->handle_->opt().opt_armour;
+        opt_armour = p->handle_->opt().armour();
         curr_armour = p->armour();
         break;
     }
@@ -448,13 +448,13 @@ QGroupBox* OptionBox::make_armour_subbox(ArmourType at, bool champion) {
     {
         auto p = std::dynamic_pointer_cast<normal_unit>(current);
         if (champion) {
-            opt_armour = p->handle->champion_opt().opt_armour;
+            opt_armour = p->handle->champion_opt().armour();
             p->switch_model_select(ModelSelect::CHAMPION);
             curr_armour = p->armour();
             p->switch_model_select(ModelSelect::DEFAULT);
         }
         else {
-            opt_armour = p->handle->opt().opt_armour;
+            opt_armour = p->handle->opt().armour();
             p->switch_model_select(ModelSelect::DEFAULT);
             curr_armour = p->armour();
         }
@@ -561,22 +561,22 @@ QGroupBox* OptionBox::make_mage_levels_box() {
 }
 
 QGroupBox* OptionBox::make_mounts_boxes() {
-    std::unordered_map<std::string, std::pair<UnitClass, double>> opt_mounts;
-    std::pair<std::string, std::pair<UnitClass, double>> mount;
+    std::unordered_map<std::string, double> opt_mounts;
+    std::pair<mount, double> mount_;
     switch (current->base_unit_type()) {
     case BaseUnitType::MAGE_CHARACTER:
     case BaseUnitType::MELEE_CHARACTER:
     {
         auto p = std::dynamic_pointer_cast<character_unit>(current);
-        opt_mounts = p->handle_->opt().opt_mounts;
-        mount = p->mount();
+        opt_mounts = p->handle_->opt().mounts();
+        mount_ = p->mnt();
         break;
     }
     case BaseUnitType::NORMAL:
     {
         auto p = std::dynamic_pointer_cast<normal_unit>(current);
-        opt_mounts = p->handle->opt().opt_mounts;
-        mount = p->mount();
+        opt_mounts = p->handle->opt().mounts();
+        mount_ = p->mnt();
         break;
     }
     default: return nullptr;
@@ -586,14 +586,14 @@ QGroupBox* OptionBox::make_mounts_boxes() {
     QVBoxLayout* vbox_mounts = new QVBoxLayout;
     bool has_mount = false;
     for (const auto& m : opt_mounts) {
-        auto tmp = tools::split(std::to_string(std::get<1>(m.second)), '.');
+        auto tmp = tools::split(std::to_string(m.second), '.');
         for (auto& s : tmp) tools::remove_leading_whitespaces(s);
         std::string pts_str = (tools::starts_with(tmp[1], '0')) ? tmp[0] : tmp[0] + "." + tmp[1].substr(0, 1);
         std::string permodel = (current->base_unit_type() == BaseUnitType::NORMAL) ? "/model" : "";
         std::string name = m.first + " (" + pts_str + " pts" + permodel + ")";
         QRadioButton* b = new QRadioButton(creator->tr(name.data()));
         b->setObjectName(QString((m.first + "_radiobutton").data()));
-        if (mount.first == m.first) {
+        if (mount_.first.name() == m.first) {
             b->setChecked(true);
             has_mount = true;
         }
@@ -606,7 +606,7 @@ QGroupBox* OptionBox::make_mounts_boxes() {
                 mount_meta->second.has_options()) {
             QGroupBox* mount_options_box = new QGroupBox(creator->tr("Options"));
             QVBoxLayout* mob_layout = new QVBoxLayout;
-            for (const auto& mo : mount_meta->second.mc_extras) {
+            for (const auto& mo : mount_meta->second.mc_extras()) {
                 std::string mo_name = mo.first + " (" + tools::points_str(mo.second) + " pts)";
                 QCheckBox* cb = new QCheckBox(creator->tr(mo_name.data()));
                 mob_layout->addWidget(cb);
@@ -637,22 +637,22 @@ std::pair<QGroupBox*, QGroupBox*> OptionBox::make_extras_boxes() {
     case BaseUnitType::MELEE_CHARACTER:
     {
         auto p = std::dynamic_pointer_cast<character_unit>(current);
-        if (p->handle_->opt().oco_extras.empty() && p->handle_->opt().mc_extras.empty())
+        if (p->handle_->opt().oco_extras().empty() && p->handle_->opt().mc_extras().empty())
             return boxes;
-        if (!p->handle_->opt().oco_extras.empty()) has_opt_oco_extras = true;
-        if (!p->handle_->opt().mc_extras.empty()) has_opt_mc_extras = true;
+        if (!p->handle_->opt().oco_extras().empty()) has_opt_oco_extras = true;
+        if (!p->handle_->opt().mc_extras().empty()) has_opt_mc_extras = true;
         break;
     }
     case BaseUnitType::NORMAL:
     {
         auto p = std::dynamic_pointer_cast<normal_unit>(current);
-        if (p->handle->opt().oco_extras.empty() && p->handle->opt().mc_extras.empty() &&
-                p->handle->champion_opt().oco_extras.empty() && p->handle->champion_opt().mc_extras.empty())
+        if (p->handle->opt().oco_extras().empty() && p->handle->opt().mc_extras().empty() &&
+                p->handle->champion_opt().oco_extras().empty() && p->handle->champion_opt().mc_extras().empty())
             return boxes;
-        if (!p->handle->opt().oco_extras.empty()) has_opt_oco_extras = true;
-        if (!p->handle->opt().mc_extras.empty()) has_opt_mc_extras = true;
-        if (!p->handle->champion_opt().oco_extras.empty()) has_champ_opt_oco_extras = true;
-        if (!p->handle->champion_opt().mc_extras.empty()) has_champ_opt_mc_extras = true;
+        if (!p->handle->opt().oco_extras().empty()) has_opt_oco_extras = true;
+        if (!p->handle->opt().mc_extras().empty()) has_opt_mc_extras = true;
+        if (!p->handle->champion_opt().oco_extras().empty()) has_champ_opt_oco_extras = true;
+        if (!p->handle->champion_opt().mc_extras().empty()) has_champ_opt_mc_extras = true;
         break;
     }
     default: return boxes;
@@ -698,7 +698,7 @@ QGroupBox* OptionBox::make_oco_extras_subbox(bool champion) {
     case BaseUnitType::MELEE_CHARACTER:
     {
         auto p = std::dynamic_pointer_cast<character_unit>(current);
-        opt_oco_extras = p->handle_->opt().oco_extras;
+        opt_oco_extras = p->handle_->opt().oco_extras();
         if (in_tree == InTree::ARMY) curr_oco_extra = p->oco_extra();
         break;
     }
@@ -706,13 +706,13 @@ QGroupBox* OptionBox::make_oco_extras_subbox(bool champion) {
     {
         auto p = std::dynamic_pointer_cast<normal_unit>(current);
         if (champion) {
-            opt_oco_extras = p->handle->champion_opt().oco_extras;
+            opt_oco_extras = p->handle->champion_opt().oco_extras();
             p->switch_model_select(ModelSelect::CHAMPION);
             if (in_tree == InTree::ARMY) curr_oco_extra = p->oco_extra();
             p->switch_model_select(ModelSelect::DEFAULT);
         }
         else {
-            opt_oco_extras = p->handle->opt().oco_extras;
+            opt_oco_extras = p->handle->opt().oco_extras();
             p->switch_model_select(ModelSelect::DEFAULT);
             if (in_tree == InTree::ARMY) curr_oco_extra = p->oco_extra();
         }
@@ -757,7 +757,7 @@ QGroupBox* OptionBox::make_mc_extras_subbox(bool champion) {
     case BaseUnitType::MELEE_CHARACTER:
     {
         auto p = std::dynamic_pointer_cast<character_unit>(current);
-        opt_mc_extras = p->handle_->opt().mc_extras;
+        opt_mc_extras = p->handle_->opt().mc_extras();
         if (in_tree == InTree::ARMY) curr_mc_extras = p->mc_extras();
         break;
     }
@@ -765,13 +765,13 @@ QGroupBox* OptionBox::make_mc_extras_subbox(bool champion) {
     {
         auto p = std::dynamic_pointer_cast<normal_unit>(current);
         if (champion) {
-            opt_mc_extras = p->handle->champion_opt().mc_extras;
+            opt_mc_extras = p->handle->champion_opt().mc_extras();
             p->switch_model_select(ModelSelect::CHAMPION);
             if (in_tree == InTree::ARMY) curr_mc_extras = p->mc_extras();
             p->switch_model_select(ModelSelect::DEFAULT);
         }
         else {
-            opt_mc_extras = p->handle->opt().mc_extras;
+            opt_mc_extras = p->handle->opt().mc_extras();
             p->switch_model_select(ModelSelect::DEFAULT);
             if (in_tree == InTree::ARMY) curr_mc_extras = p->mc_extras();
         }

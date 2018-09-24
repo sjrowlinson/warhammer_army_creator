@@ -48,14 +48,15 @@ namespace tools {
             auto oco_extras = parse_extras(read_line(blocks[i] + 4));
             auto mc_extras = parse_extras(read_line(blocks[i] + 5));
             auto restrictions = parse_restrictions(read_line(blocks[i] + 6));
-            mount mnt;
-            mnt.name = name;
-            mnt.unit_class = unit_class;
-            mnt.statistics = stats;
-            mnt.special_rules = sr;
-            mnt.oco_extras = oco_extras;
-            mnt.mc_extras = mc_extras;
-            mnt.restrictions = restrictions;
+            mount mnt(
+                std::move(name),
+                unit_class,
+                std::move(stats),
+                std::move(sr),
+                std::move(oco_extras),
+                std::move(mc_extras),
+                std::move(restrictions)
+            );
             mounts.push_back(mnt);
         }
         return mounts;

@@ -56,10 +56,24 @@ namespace tools {
     }
 
     equipment roster_parser::parse_equipment(std::string s) {
-        equipment e;
+        std::unordered_map<
+            WeaponType,
+            std::pair<ItemClass, std::string>
+        > weapons;
+        std::unordered_map<
+            ArmourType,
+            std::pair<ItemClass, std::string>
+        > armour;
+        std::vector<std::string> talismans;
+        std::vector<std::string> arcane;
+        std::vector<std::string> enchanted;
+        std::vector<std::string> banners;
         if (s == "None" || s.empty()) {
-            e.weapons[WeaponType::MELEE] = {ItemClass::MUNDANE, "Hand weapon"};
-            return e;
+            weapons[WeaponType::MELEE] = {ItemClass::MUNDANE, "Hand weapon"};
+            return {
+                std::move(weapons), std::move(armour), std::move(talismans),
+                std::move(arcane), std::move(enchanted), std::move(banners)
+            };
         }
         std::vector<std::string> all = tools::split(s, ',');
         for (const auto& _s : all) {
@@ -71,7 +85,7 @@ namespace tools {
                 std::string name = tools::trim(item_bs[0]);
                 ItemClass ic = enum_convert::STRING_TO_ITEM_CLASS.at(item_bs[1]);
                 WeaponType wt = enum_convert::STRING_TO_WEAPON_TYPE.at(item_bs[2]);
-                e.weapons[wt] = {ic, name};
+                weapons[wt] = {ic, name};
                 break;
             }
             case ItemType::ARMOUR:
@@ -80,27 +94,30 @@ namespace tools {
                 std::string name = tools::trim(item_bs[0]);
                 ItemClass ic = enum_convert::STRING_TO_ITEM_CLASS.at(item_bs[1]);
                 ArmourType at = enum_convert::STRING_TO_ARMOUR_TYPE.at(item_bs[2]);
-                e.armour[at] = {ic, name};
+                armour[at] = {ic, name};
                 break;
             }
             case ItemType::TALISMAN:
-                e.talismans.push_back(vec[1]);
+                talismans.push_back(vec[1]);
                 break;
             case ItemType::ARCANE:
-                e.arcane.push_back(vec[1]);
+                arcane.push_back(vec[1]);
                 break;
             case ItemType::ENCHANTED:
-                e.enchanted.push_back(vec[1]);
+                enchanted.push_back(vec[1]);
                 break;
             case ItemType::BANNER:
-                e.banners.push_back(vec[1]);
+                banners.push_back(vec[1]);
                 break;
             default: break;
             }
         }
-        if (!(e.weapons.count(WeaponType::MELEE)))
-            e.weapons[WeaponType::MELEE] = {ItemClass::MUNDANE, "Hand weapon"};
-        return e;
+        if (!(weapons.count(WeaponType::MELEE)))
+            weapons[WeaponType::MELEE] = {ItemClass::MUNDANE, "Hand weapon"};
+        return {
+            std::move(weapons), std::move(armour), std::move(talismans),
+            std::move(arcane), std::move(enchanted), std::move(banners)
+        };
     }
 
     std::unordered_map<
@@ -157,20 +174,20 @@ namespace tools {
 
     std::unordered_map<
         std::string,
-        std::pair<UnitClass, double>
+        double
     > roster_parser::parse_optional_mounts(std::string s) {
         std::unordered_map<
             std::string,
-            std::pair<UnitClass, double>
+            double
         > um;
         if (s == "None" || s.empty()) return um;
         std::vector<std::string> all = tools::split(s, ',');
         for (const auto& _s : all) {
             auto mount_bs = tools::parse_item_bs(_s);
             std::string name = tools::trim(mount_bs[0]);
-            UnitClass uc = enum_convert::STRING_TO_UNIT_CLASS.at(mount_bs[1]);
+            //UnitClass uc = enum_convert::STRING_TO_UNIT_CLASS.at(mount_bs[1]);
             double pts = std::stod(mount_bs[2]);
-            um[name] = std::make_pair(uc, pts);
+            um[name] = pts;
         }
         return um;
     }
@@ -280,12 +297,13 @@ namespace tools {
         auto opt_mounts = parse_optional_mounts(read_line(blocks[n] + 10));
         auto opt_oco_extras = parse_optional_extras(read_line(blocks[n] + 11));
         auto opt_mc_extras = parse_optional_extras(read_line(blocks[n] + 12));
-        options opt;
-        opt.opt_weapons = opt_weapons;
-        opt.opt_armour = opt_armours;
-        opt.opt_mounts = opt_mounts;
-        opt.oco_extras = opt_oco_extras;
-        opt.mc_extras = opt_mc_extras;
+        options opt(
+            std::move(opt_weapons),
+            std::move(opt_armours),
+            std::move(opt_mounts),
+            std::move(opt_oco_extras),
+            std::move(opt_mc_extras)
+        );
         double mi_budget = std::stod(read_line(blocks[n] + 13));
         double fi_budget = std::stod(read_line(blocks[n] + 14));
         double ti_budget = std::stod(read_line(blocks[n] + 15));
@@ -322,12 +340,13 @@ namespace tools {
         auto opt_mounts = parse_optional_mounts(read_line(blocks[n] + 13));
         auto opt_oco_extras = parse_optional_extras(read_line(blocks[n] + 14));
         auto opt_mc_extras = parse_optional_extras(read_line(blocks[n] + 15));
-        options opt;
-        opt.opt_weapons = opt_weapons;
-        opt.opt_armour = opt_armours;
-        opt.opt_mounts = opt_mounts;
-        opt.oco_extras = opt_oco_extras;
-        opt.mc_extras = opt_mc_extras;
+        options opt(
+            std::move(opt_weapons),
+            std::move(opt_armours),
+            std::move(opt_mounts),
+            std::move(opt_oco_extras),
+            std::move(opt_mc_extras)
+        );
         double mi_budget = std::stod(read_line(blocks[n] + 16));
         double fi_budget = std::stod(read_line(blocks[n] + 17));
         double ti_budget = std::stod(read_line(blocks[n] + 18));
@@ -373,16 +392,22 @@ namespace tools {
         auto champ_opt_oco_extras = parse_optional_extras(read_line(blocks[n] + 15 + offset));
         auto opt_mc_extras = parse_optional_extras(read_line(blocks[n] + 16 + offset));
         auto champ_opt_mc_extras = parse_optional_extras(read_line(blocks[n] + 17 + offset));
-        options opt;
-        opt.opt_weapons = opt_weapons;
-        opt.opt_armour = opt_armours;
-        opt.oco_extras = opt_oco_extras;
-        opt.mc_extras = opt_mc_extras;
-        options champ_opt;
-        champ_opt.opt_weapons = champ_opt_weapons;
-        champ_opt.opt_armour = champ_opt_armours;
-        champ_opt.oco_extras = champ_opt_oco_extras;
-        champ_opt.mc_extras = champ_opt_mc_extras;
+        auto opt_mounts = std::unordered_map<std::string, double>();
+        auto champ_opt_mounts = std::unordered_map<std::string, double>();
+        options opt(
+            std::move(opt_weapons),
+            std::move(opt_armours),
+            std::move(opt_mounts),
+            std::move(opt_oco_extras),
+            std::move(opt_mc_extras)
+        );
+        options champ_opt(
+            std::move(champ_opt_weapons),
+            std::move(champ_opt_armours),
+            std::move(champ_opt_mounts),
+            std::move(champ_opt_oco_extras),
+            std::move(champ_opt_mc_extras)
+        );
         auto command = parse_command(read_line(blocks[n] + 18 + offset));
         double champ_mi_budget = std::stod(read_line(blocks[n] + 19 + offset));
         double champ_fi_budget = std::stod(read_line(blocks[n] + 20 + offset));
@@ -425,10 +450,8 @@ namespace tools {
         auto opt_mc_extras = parse_optional_extras(read_line(blocks[n] + 7));
         equipment eq;
         equipment champ_eq;
-        options opt;
+        options opt(std::move(opt_oco_extras), std::move(opt_mc_extras));
         options champ_opt;
-        opt.oco_extras = opt_oco_extras;
-        opt.mc_extras = opt_mc_extras;
         std::unordered_map<
             CommandGroup, std::pair<std::string, double>
         > command;
@@ -469,10 +492,8 @@ namespace tools {
         auto opt_mc_extras = parse_optional_extras(read_line(blocks[n] + 8));
         equipment eq;
         equipment champ_eq;
-        options opt;
+        options opt(std::move(opt_oco_extras), std::move(opt_mc_extras));
         options champ_opt;
-        opt.oco_extras = opt_oco_extras;
-        opt.mc_extras = opt_mc_extras;
         std::unordered_map<
             CommandGroup, std::pair<std::string, double>
         > command;
@@ -528,10 +549,8 @@ namespace tools {
         auto opt_oco_extras = parse_optional_extras(read_line(blocks[n] + 7));
         auto opt_mc_extras = parse_optional_extras(read_line(blocks[n] + 8));
         equipment champ_eq;
-        options opt;
+        options opt(std::move(opt_oco_extras), std::move(opt_mc_extras));
         options champ_opt;
-        opt.oco_extras = opt_oco_extras;
-        opt.mc_extras = opt_mc_extras;
         std::unordered_map<
             CommandGroup, std::pair<std::string, double>
         > command;

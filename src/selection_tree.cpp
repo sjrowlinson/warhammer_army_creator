@@ -7,11 +7,7 @@ selection_tree::selection_tree(Faction faction, army_list& list) : race(faction)
     auto items = ip.parse();
     common_items.first = ip.name();
     for (auto&& item : items) common_items.second[item.name] = item;
-    QString rfile(std::get<0>(files).data());
-    parse_roster_file(rfile);
-    QString mifile(std::get<1>(files).data());
-    QString fifile(std::get<2>(files).data());
-    parse_item_files(std::make_pair(mifile, fifile));
+    reset(faction, list);
 }
 
 std::tuple<std::string, std::string, std::string, std::string> selection_tree::filenames() const noexcept {
@@ -22,6 +18,7 @@ std::tuple<std::string, std::string, std::string, std::string> selection_tree::f
     switch (race) {
     case Faction::EMPIRE:
         roster_file += "empire.ros";
+        mounts_file += "empire.mnt";
         magic_item_file += "empire.mag";
         break;
     case Faction::BRETONNIA:
@@ -56,6 +53,7 @@ std::tuple<std::string, std::string, std::string, std::string> selection_tree::f
         break;
     case Faction::BEASTMEN:
         roster_file += "beastmen.ros";
+        mounts_file += "beastmen.mnt";
         magic_item_file += "beastmen.mag";
         faction_item_file += "beastmen.fit";
         break;
@@ -87,6 +85,7 @@ std::tuple<std::string, std::string, std::string, std::string> selection_tree::f
         break;
     default:
         roster_file += "empire.ros";
+        mounts_file += "empire.mnt";
         magic_item_file += "empire.mag";
         break;
     }
@@ -175,7 +174,7 @@ void selection_tree::parse_roster_file(const QString &rfile_str) {
 void selection_tree::parse_mount_file(const QString& mfile_str) {
     tools::mounts_parser mp(mfile_str);
     auto mounts_vec = mp.parse();
-    for (auto&& x : mounts_vec) mounts[x.name] = x;
+    for (auto&& x : mounts_vec) mounts[x.name()] = x;
     std::shared_ptr<
         std::unordered_map<
             std::string, mount

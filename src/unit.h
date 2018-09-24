@@ -66,11 +66,7 @@ public:
         std::string,
         std::pair<bool, double>
     > mc_extras() const noexcept = 0;
-    virtual
-    std::pair<
-        std::string,
-        std::pair<UnitClass, double>
-    > mount() const noexcept = 0;
+    virtual std::pair<mount, double> mnt() const noexcept = 0;
 
     virtual std::pair<std::string, std::pair<ItemClass, double>> magic_banner() const noexcept = 0;
 

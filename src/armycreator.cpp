@@ -903,7 +903,8 @@ void ArmyCreator::update_unit_display(
             auto p = std::dynamic_pointer_cast<mage_character_unit>(u);
             mlevel_str = " [Level " + std::to_string(p->level()) + "] ";
         }
-        std::string name = u->name() + mlevel_str + ((u->mount().first.empty()) ? "" : "\n(" + u->mount().first + ")");
+        std::string name = u->name() + mlevel_str +
+                ((u->mnt().first.name().empty()) ? "" : "\n(" + u->mnt().first.name() + ")");
         item->setText(static_cast<int>(column), QString(name.data()));
         update_unit_display(item, adding, ArmyTreeColumn::POINTS, copying);
         break;

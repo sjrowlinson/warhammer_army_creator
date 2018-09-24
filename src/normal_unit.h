@@ -47,10 +47,7 @@ private:
     double champ_total_item_points;
 
     // mounts
-    std::pair<
-        std::string,
-        std::pair<UnitClass, double>
-    > mount_;
+    std::pair<mount, double> mount_;
 
     // command
     std::unordered_map<
@@ -102,10 +99,7 @@ public:
         double
     > champion_mc_extras() const noexcept;
 
-    std::pair<
-        std::string,
-        std::pair<UnitClass, double>
-    > mount() const noexcept override;
+    std::pair<mount, double> mnt() const noexcept override;
 
     std::unordered_map<
         CommandGroup, std::pair<std::string, double>

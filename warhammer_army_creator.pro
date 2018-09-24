@@ -30,6 +30,9 @@ SOURCES += \
         src/main.cpp \
         src/armycreator.cpp \
         src/army_list.cpp \
+        src/equipment.cpp \
+        src/options.cpp \
+        src/mount.cpp \
         src/file_parser.cpp \
         src/item_parser.cpp \
         src/roster_parser.cpp \
@@ -55,6 +58,9 @@ SOURCES += \
 HEADERS += \
         src/armycreator.h \
         src/army_list.h \
+        src/equipment.h \
+        src/options.h \
+        src/mount.h \
         src/enums.h \
         src/base_unit.h \
         src/file_parser.h \

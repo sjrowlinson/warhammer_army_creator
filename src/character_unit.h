@@ -4,6 +4,7 @@
 #include "enums.h"
 #include "base_unit.h"
 #include "base_character_unit.h"
+#include "mount.h"
 #include "unit.h"
 #include "tools.h"
 
@@ -31,8 +32,8 @@ protected:
     std::unordered_map<std::string, std::pair<bool, double>> mc_extras_;
     std::unordered_map<std::string, std::pair<ItemClass, double>> item_extras_;
     // TODO: change to use new mount system, i.e:
-    // std::pair<std::string, std::pair<mount, double>> mount_;
-    std::pair<std::string, std::pair<UnitClass, double>> mount_;
+    std::pair<mount, double> mount_;
+    //std::pair<std::string, std::pair<UnitClass, double>> mount_;
     std::pair<std::string, std::pair<ItemClass, double>> banner;
 
     // item points
@@ -74,10 +75,7 @@ public:
     std::pair<std::string, std::pair<bool, double>> oco_extra() const noexcept override;
     std::unordered_map<std::string, std::pair<bool, double>> mc_extras() const noexcept override;
 
-    std::pair<
-        std::string,
-        std::pair<UnitClass, double>
-    > mount() const noexcept override;
+    std::pair<mount, double> mnt() const noexcept override;
 
     std::pair<std::string, std::pair<ItemClass, double>> magic_banner() const noexcept override;
 

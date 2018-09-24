@@ -81,15 +81,13 @@ std::unordered_map<
     }
 }
 
-std::pair<
-    std::string,
-    std::pair<UnitClass, double>
-> mixed_unit::mount() const noexcept {
+std::pair<mount, double>
+mixed_unit::mnt() const noexcept {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
-        return master_.mount();
+        return master_.mnt();
     case MixedSelect::SLAVE:
-        return slave_.mount();
+        return slave_.mnt();
     }
 }
 

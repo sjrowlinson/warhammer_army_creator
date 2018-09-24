@@ -1,0 +1,63 @@
+Warhorse
+    Warbeast
+    8 3 3 3 3 1 3 1 5
+    None
+    None
+    Barding [6]
+    None
+
+Imperial Pegasus
+    Monstrous Beast
+    8 3 0 4 4 3 4 2 6
+    Fly
+    None
+    Iron-hard Hooves [5], Swift as the Wind [10]
+    None
+
+Imperial Griffon
+    Monster
+    6 5 0 6 5 5 4 4 7
+    Fly, Large Target, Terror
+    None
+    Bloodroar [25], Two Heads [30]
+    None
+
+Mechanical Steed
+    Warbeast
+    7 1 0 4 4 1 1 1 2
+    Impact Hits (D3), Unreliable
+    None
+    None
+    None
+
+The Imperial Dragon
+    Monster
+    6 6 0 6 6 6 3 5 8
+    Fly, Fiery Breath, Large Target, Scaly Skin (3+), Terror
+    None
+    None
+    None
+
+The War Altar of Sigmar
+    Chariot
+    - - - 5 5 5 - - -
+    Holy Fervour, Large Target, The Power of Sigmar, Stubborn, Ward Save (4+)
+    None
+    Horn of Sigismund [10]
+    None
+
+Celestial Hurricanum
+    Chariot
+    - - - 5 5 5 - - -
+    Large Target, Locus of Azyr, Portents of Battle, Storm of Shemtek
+    None
+    None
+    None
+
+Luminark of Hysh
+    Chariot
+    - - - 5 5 5 - - -
+    Aura of Protection, Large Target, Locus of Hysh, Solheim's Bolt of Illumination
+    None
+    None
+    None

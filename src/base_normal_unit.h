@@ -1,8 +1,10 @@
 #ifndef BASE_NORMAL_UNIT_H
 #define BASE_NORMAL_UNIT_H
 
-#include "enums.h"
 #include "base_unit.h"
+#include "enums.h"
+#include "equipment.h"
+#include "options.h"
 
 #include <string>
 #include <unordered_map>

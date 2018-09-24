@@ -4,11 +4,11 @@ character_unit::character_unit(std::shared_ptr<base_unit> base)
     : unit(base),
       handle_(std::dynamic_pointer_cast<base_character_unit>(base)) {
     points_ = handle_->points();
-    for (const auto& w : handle_->eq().weapons) {
+    for (const auto& w : handle_->eq().weapons()) {
         auto p = w.second;
         weapons_[w.first] = {p.first, p.second, 0.0};
     }
-    for (const auto& a : handle_->eq().armour) {
+    for (const auto& a : handle_->eq().armours()) {
         auto p = a.second;
         armours_[a.first] = {p.first, p.second, 0.0};
     }
@@ -216,10 +216,7 @@ const std::unordered_map<std::string, std::pair<ItemClass, double>>& character_u
 std::pair<std::string, std::pair<bool, double>> character_unit::oco_extra() const noexcept { return oco_extra_; }
 std::unordered_map<std::string, std::pair<bool, double>> character_unit::mc_extras() const noexcept { return mc_extras_; }
 
-std::pair<
-    std::string,
-    std::pair<UnitClass, double>
-> character_unit::mount() const noexcept { return mount_; }
+std::pair<mount, double> character_unit::mnt() const noexcept { return mount_; }
 
 std::pair<std::string, std::pair<ItemClass, double>> character_unit::magic_banner() const noexcept {
     return banner;
@@ -229,8 +226,8 @@ void character_unit::pick_weapon(ItemClass item_type, std::string name) {
     switch (item_type) {
     case ItemClass::MUNDANE:
     {
-        auto search = handle_->opt().opt_weapons.find(name);
-        if (search == handle_->opt().opt_weapons.cend())
+        auto search = handle_->opt().weapons().find(name);
+        if (search == handle_->opt().weapons().cend())
             throw std::invalid_argument("Weapon not found!");
         remove_weapon(std::get<0>(search->second));
         do_replacements(std::get<3>(search->second));
@@ -254,8 +251,8 @@ void character_unit::pick_armour(ItemClass item_type, std::string name) {
     switch (item_type) {
     case ItemClass::MUNDANE:
     {
-        auto search = handle_->opt().opt_armour.find(name);
-        if (search == handle_->opt().opt_armour.cend())
+        auto search = handle_->opt().armour().find(name);
+        if (search == handle_->opt().armour().cend())
             throw std::invalid_argument("Armour not found!");
         remove_armour(std::get<0>(search->second));
         do_replacements(std::get<3>(search->second));
@@ -362,8 +359,8 @@ void character_unit::remove_other(std::string name) {
 }
 
 void character_unit::pick_oco_extra(std::string name) {
-    auto search = handle_->opt().oco_extras.find(name);
-    if (search == handle_->opt().oco_extras.end())
+    auto search = handle_->opt().oco_extras().find(name);
+    if (search == handle_->opt().oco_extras().end())
         throw std::invalid_argument("Item not found!");
     if (oco_extra_.first == name) return;
     points_ -= oco_extra_.second.second;
@@ -373,8 +370,8 @@ void character_unit::pick_oco_extra(std::string name) {
 }
 
 void character_unit::pick_mc_extra(std::string name) {
-    auto search = handle_->opt().mc_extras.find(name);
-    if (search == handle_->opt().mc_extras.end())
+    auto search = handle_->opt().mc_extras().find(name);
+    if (search == handle_->opt().mc_extras().end())
         throw std::invalid_argument("Item not found!");
     if (mc_extras_.count(name)) return;
     mc_extras_[name] = search->second;
@@ -384,8 +381,8 @@ void character_unit::pick_mc_extra(std::string name) {
 void character_unit::remove_weapon(WeaponType wt, bool replacing) {
     if (!weapons_.count(wt)) return;
     auto weapon = weapons_[wt];
-    auto search = handle_->eq().weapons.find(wt);
-    if (search != handle_->eq().weapons.cend()) {
+    auto search = handle_->eq().weapons().find(wt);
+    if (search != handle_->eq().weapons().cend()) {
         if (replacing) {
             weapons_.erase(wt);
             if (wt == WeaponType::MELEE)
@@ -418,8 +415,8 @@ void character_unit::remove_weapon(WeaponType wt, bool replacing) {
 void character_unit::remove_armour(ArmourType at, bool replacing) {
     if (!armours_.count(at)) return;
     auto armour = armours_[at];
-    auto search = handle_->eq().armour.find(at);
-    if (search != handle_->eq().armour.cend()) {
+    auto search = handle_->eq().armours().find(at);
+    if (search != handle_->eq().armours().cend()) {
         if (replacing) {
             armours_.erase(at);
         } else {
@@ -461,21 +458,21 @@ void character_unit::remove_mc_extra(std::string name) {
 }
 
 void character_unit::pick_mount(std::string name) {
-    auto search = handle_->opt().opt_mounts.find(name);
-    if (search == handle_->opt().opt_mounts.end())
+    if (mount_.first.name() == name) return;
+    auto opt_search = handle_->opt().mounts().find(name);
+    auto mnt_search = handle_->mounts_handle()->find(name);
+    if (opt_search == handle_->opt().mounts().end() ||
+            mnt_search == handle_->mounts_handle()->end())
         throw std::invalid_argument("Mount not found!");
-    if (mount_.first == name) return;
-    points_ -= mount_.second.second;
-    mount_.first = name;
-    mount_.second = search->second;
-    points_ += search->second.second;
+    points_ -= mount_.second;
+    mount_ = {mnt_search->second, opt_search->second};
+    points_ += opt_search->second;
 }
 
 void character_unit::remove_mount() {
-    points_ -= mount_.second.second;
-    mount_.first = "";
-    mount_.second.first = handle_->unit_class();
-    mount_.second.second = 0.0;
+    points_ -= mount_.second;
+    mount_.first = mount();
+    mount_.second = 0.0;
 }
 
 void character_unit::pick_banner(ItemClass item_class, std::string name) {
@@ -530,7 +527,7 @@ std::string character_unit::html_table_row_both(short mlevel, std::string arcane
     // unit name
     row += "<td>" + name() + "</td>\n";
     // unit mount
-    row += "<td>" + (mount_.first.empty() ? "&nbsp;" : mount_.first) + "</td>\n";
+    row += "<td>" + (mount_.first.name().empty() ? "&nbsp;" : mount_.first.name()) + "</td>\n";
     // unit mage level
     if (mlevel == -1) row += "<td>None</td>\n";
     else row += "<td>Level " + std::to_string(mlevel) + "</td>\n";
