@@ -73,3 +73,15 @@ UnitType unit::unit_type() const noexcept {
 UnitClass unit::unit_class() const noexcept {
     return base_->unit_class();
 }
+
+void unit::pick_mount_option(const std::string& name, bool oco) {
+    (void)(name);
+    (void)(oco);
+    return;
+}
+void unit::remove_mount_option(const std::string& name, bool oco) {
+    (void)(name);
+    (void)(oco);
+    return;
+}
+

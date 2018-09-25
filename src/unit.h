@@ -66,7 +66,12 @@ public:
         std::string,
         std::pair<bool, double>
     > mc_extras() const noexcept = 0;
-    virtual std::pair<mount, double> mnt() const noexcept = 0;
+    virtual const std::tuple<
+        mount,
+        double,
+        std::pair<std::string, double>,
+        std::unordered_map<std::string, double>
+    >& mnt() const noexcept = 0;
 
     virtual std::pair<std::string, std::pair<ItemClass, double>> magic_banner() const noexcept = 0;
 
@@ -93,6 +98,9 @@ public:
     virtual void remove_mount() = 0;
     virtual void pick_banner(ItemClass item_class, std::string name) = 0;
     virtual void remove_banner() = 0;
+
+    virtual void pick_mount_option(const std::string& name, bool oco);
+    virtual void remove_mount_option(const std::string& name, bool oco);
 
     virtual std::string html_table_row() const = 0;
 };

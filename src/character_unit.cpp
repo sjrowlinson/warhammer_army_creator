@@ -216,7 +216,12 @@ const std::unordered_map<std::string, std::pair<ItemClass, double>>& character_u
 std::pair<std::string, std::pair<bool, double>> character_unit::oco_extra() const noexcept { return oco_extra_; }
 std::unordered_map<std::string, std::pair<bool, double>> character_unit::mc_extras() const noexcept { return mc_extras_; }
 
-std::pair<mount, double> character_unit::mnt() const noexcept { return mount_; }
+const std::tuple<
+    mount,
+    double,
+    std::pair<std::string, double>,
+    std::unordered_map<std::string, double>
+>& character_unit::mnt() const noexcept { return mount_; }
 
 std::pair<std::string, std::pair<ItemClass, double>> character_unit::magic_banner() const noexcept {
     return banner;
@@ -458,21 +463,53 @@ void character_unit::remove_mc_extra(std::string name) {
 }
 
 void character_unit::pick_mount(std::string name) {
-    if (mount_.first.name() == name) return;
+    if (std::get<0>(mount_).name() == name) return;
     auto opt_search = handle_->opt().mounts().find(name);
     auto mnt_search = handle_->mounts_handle()->find(name);
     if (opt_search == handle_->opt().mounts().end() ||
             mnt_search == handle_->mounts_handle()->end())
         throw std::invalid_argument("Mount not found!");
-    points_ -= mount_.second;
-    mount_ = {mnt_search->second, opt_search->second};
+    remove_mount();
+    mount_ = {mnt_search->second, opt_search->second, {}, {}};
     points_ += opt_search->second;
 }
 
 void character_unit::remove_mount() {
-    points_ -= mount_.second;
-    mount_.first = mount();
-    mount_.second = 0.0;
+    points_ -= std::get<1>(mount_);
+    points_ -= std::get<2>(mount_).second;
+    for (const auto& x : std::get<3>(mount_)) points_ -= x.second;
+    std::get<0>(mount_) = mount();
+    std::get<1>(mount_) = 0.0;
+    std::get<2>(mount_).first.clear();
+    std::get<2>(mount_).second = 0.0;
+    std::get<3>(mount_).clear();
+}
+
+void character_unit::pick_mount_option(const std::string& name, bool oco) {
+    std::unordered_map<std::string, double>::const_iterator search;
+    if (oco) {
+        search = std::get<0>(mount_).oco_extras().find(name);
+        std::get<2>(mount_) = *search;
+    } else {
+        search = std::get<0>(mount_).mc_extras().find(name);
+        std::get<3>(mount_).insert(*search);
+    }
+    points_ += search->second;
+}
+
+void character_unit::remove_mount_option(const std::string& name, bool oco) {
+    if (oco) {
+        if (std::get<2>(mount_).first != name)
+            throw std::invalid_argument("Current mount does not have this option selected!");
+        points_ -= std::get<2>(mount_).second;
+        std::get<2>(mount_).first.clear();
+        std::get<2>(mount_).second = 0.0;
+    } else {
+        if (!std::get<3>(mount_).count(name))
+            throw std::invalid_argument("Current mount does not have this option selected!");
+        points_ -= std::get<3>(mount_).at(name);
+        std::get<3>(mount_).erase(name);
+    }
 }
 
 void character_unit::pick_banner(ItemClass item_class, std::string name) {
@@ -527,7 +564,7 @@ std::string character_unit::html_table_row_both(short mlevel, std::string arcane
     // unit name
     row += "<td>" + name() + "</td>\n";
     // unit mount
-    row += "<td>" + (mount_.first.name().empty() ? "&nbsp;" : mount_.first.name()) + "</td>\n";
+    row += "<td>" + (std::get<0>(mount_).name().empty() ? "&nbsp;" : std::get<0>(mount_).name()) + "</td>\n";
     // unit mage level
     if (mlevel == -1) row += "<td>None</td>\n";
     else row += "<td>Level " + std::to_string(mlevel) + "</td>\n";

@@ -40,6 +40,7 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
         ui->magic_items_combobox->addItem(QString(st->magic_items_name().data()), QVariant(1));
     if (!st->faction_items_name().empty())
         ui->magic_items_combobox->addItem(QString(st->faction_items_name().data()), QVariant(2));
+    ui->opt_box_scrollarea->setWidgetResizable(true);
 }
 
 ArmyCreator::~ArmyCreator() {
@@ -429,10 +430,10 @@ void ArmyCreator::optional_mount_selected() {
         QMessageBox message_box;
         message_box.critical(nullptr, tr("Error"), tr(e.what()));
         message_box.setFixedSize(500, 200);
-        ob->clear();
-        ob->reset(current, in_tree);
-        ob->reinitialise();
     }
+    ob->clear();
+    ob->reset(current, in_tree);
+    ob->reinitialise();
 }
 
 void ArmyCreator::optional_command_selected() {
@@ -904,7 +905,7 @@ void ArmyCreator::update_unit_display(
             mlevel_str = " [Level " + std::to_string(p->level()) + "] ";
         }
         std::string name = u->name() + mlevel_str +
-                ((u->mnt().first.name().empty()) ? "" : "\n(" + u->mnt().first.name() + ")");
+                ((std::get<0>(u->mnt()).name().empty()) ? "" : "\n(" + std::get<0>(u->mnt()).name() + ")");
         item->setText(static_cast<int>(column), QString(name.data()));
         update_unit_display(item, adding, ArmyTreeColumn::POINTS, copying);
         break;

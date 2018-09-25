@@ -562,7 +562,12 @@ QGroupBox* OptionBox::make_mage_levels_box() {
 
 QGroupBox* OptionBox::make_mounts_boxes() {
     std::unordered_map<std::string, double> opt_mounts;
-    std::pair<mount, double> mount_;
+    std::tuple<
+        mount,
+        double,
+        std::pair<std::string, double>,
+        std::unordered_map<std::string, double>
+    > mount_;
     switch (current->base_unit_type()) {
     case BaseUnitType::MAGE_CHARACTER:
     case BaseUnitType::MELEE_CHARACTER:
@@ -593,7 +598,7 @@ QGroupBox* OptionBox::make_mounts_boxes() {
         std::string name = m.first + " (" + pts_str + " pts" + permodel + ")";
         QRadioButton* b = new QRadioButton(creator->tr(name.data()));
         b->setObjectName(QString((m.first + "_radiobutton").data()));
-        if (mount_.first.name() == m.first) {
+        if (std::get<0>(mount_).name() == m.first) {
             b->setChecked(true);
             has_mount = true;
         }
@@ -603,7 +608,8 @@ QGroupBox* OptionBox::make_mounts_boxes() {
         if (current->base()->mounts_handle() == nullptr) continue;
         auto mount_meta = current->base()->mounts_handle()->find(m.first);
         if (mount_meta != current->base()->mounts_handle()->end() &&
-                mount_meta->second.has_options()) {
+                mount_meta->second.has_options() &&
+                std::get<0>(mount_).name() == m.first) { // only show the options if the associated mount is selected
             QGroupBox* mount_options_box = new QGroupBox(creator->tr("Options"));
             QVBoxLayout* mob_layout = new QVBoxLayout;
             for (const auto& mo : mount_meta->second.mc_extras()) {

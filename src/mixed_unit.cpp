@@ -81,8 +81,12 @@ std::unordered_map<
     }
 }
 
-std::pair<mount, double>
-mixed_unit::mnt() const noexcept {
+const std::tuple<
+    mount,
+    double,
+    std::pair<std::string, double>,
+    std::unordered_map<std::string, double>
+>& mixed_unit::mnt() const noexcept {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
         return master_.mnt();

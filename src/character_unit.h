@@ -31,9 +31,12 @@ protected:
     std::pair<std::string, std::pair<bool, double>> oco_extra_;
     std::unordered_map<std::string, std::pair<bool, double>> mc_extras_;
     std::unordered_map<std::string, std::pair<ItemClass, double>> item_extras_;
-    // TODO: change to use new mount system, i.e:
-    std::pair<mount, double> mount_;
-    //std::pair<std::string, std::pair<UnitClass, double>> mount_;
+    std::tuple<
+        mount,
+        double,
+        std::pair<std::string, double>,
+        std::unordered_map<std::string, double>
+    > mount_;
     std::pair<std::string, std::pair<ItemClass, double>> banner;
 
     // item points
@@ -75,7 +78,12 @@ public:
     std::pair<std::string, std::pair<bool, double>> oco_extra() const noexcept override;
     std::unordered_map<std::string, std::pair<bool, double>> mc_extras() const noexcept override;
 
-    std::pair<mount, double> mnt() const noexcept override;
+    const std::tuple<
+        mount,
+        double,
+        std::pair<std::string, double>,
+        std::unordered_map<std::string, double>
+    >& mnt() const noexcept override;
 
     std::pair<std::string, std::pair<ItemClass, double>> magic_banner() const noexcept override;
 
@@ -106,6 +114,9 @@ public:
 
     void pick_banner(ItemClass item_class, std::string name) override;
     void remove_banner() override;
+
+    void pick_mount_option(const std::string& name, bool oco) override;
+    void remove_mount_option(const std::string& name, bool oco) override;
 
     virtual std::string html_table_row() const override;
 };

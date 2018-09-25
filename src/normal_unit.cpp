@@ -143,7 +143,12 @@ std::unordered_map<
     double
 > normal_unit::champion_mc_extras() const noexcept { return champ_mc_extras_; }
 
-std::pair<mount, double> normal_unit::mnt() const noexcept { return mount_; }
+const std::tuple<
+    mount,
+    double,
+    std::pair<std::string, double>,
+    std::unordered_map<std::string, double>
+>& normal_unit::mnt() const noexcept { return mount_; }
 
 std::unordered_map<
     CommandGroup, std::pair<std::string, double>
@@ -678,21 +683,26 @@ void normal_unit::remove_champion_mc_extra(std::string name) {
 }
 
 void normal_unit::pick_mount(std::string name) {
-    if (mount_.first.name() == name) return;
+    if (std::get<0>(mount_).name() == name) return;
     auto opt_search = handle->opt().mounts().find(name);
     auto mnt_search = handle->mounts_handle()->find(name);
     if (opt_search == handle->opt().mounts().end() ||
             mnt_search == handle->mounts_handle()->end())
         throw std::invalid_argument("Mount not found!");
-    points_ -= size_ * mount_.second;
-    mount_ = {mnt_search->second, opt_search->second};
-    points_ += size_ * opt_search->second;
+    remove_mount();
+    mount_ = {mnt_search->second, opt_search->second, {}, {}};
+    points_ += opt_search->second;
 }
 
 void normal_unit::remove_mount() {
-    points_ -= size_ * mount_.second;
-    mount_.first = mount();
-    mount_.second = 0.0;
+    points_ -= std::get<1>(mount_);
+    points_ -= std::get<2>(mount_).second;
+    for (const auto& x : std::get<3>(mount_)) points_ -= x.second;
+    std::get<0>(mount_) = mount();
+    std::get<1>(mount_) = 0.0;
+    std::get<2>(mount_).first.clear();
+    std::get<2>(mount_).second = 0.0;
+    std::get<3>(mount_).clear();
 }
 
 void normal_unit::change_size(std::size_t n) {
@@ -708,7 +718,7 @@ void normal_unit::change_size(std::size_t n) {
     for (const auto& ca : champ_armours_) points_ += std::get<2>(ca.second);
     points_ += champ_oco_extra_.second;
     for (const auto& ce : champ_mc_extras_) points_ += ce.second;
-    points_ += n * mount_.second;
+    points_ += n * std::get<1>(mount_);
     for (const auto& m : command_group) points_ += m.second.second;
     points_ += banner.second.second;
     size_ = n;
@@ -721,7 +731,7 @@ std::string normal_unit::html_table_row() const {
     // unit size
     row += "<td>" + std::to_string(size_) + "</td>\n";
     // unit mount
-    row += "<td>" + (mount_.first.name().empty() ? "&nbsp;" : mount_.first.name()) + "</td>\n";
+    row += "<td>" + (std::get<0>(mount_).name().empty() ? "&nbsp;" : std::get<0>(mount_).name()) + "</td>\n";
     // weapons
     if (weapons_.count(WeaponType::MELEE))
         row += "<td><strong>Melee:</strong> " +
