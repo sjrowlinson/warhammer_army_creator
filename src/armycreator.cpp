@@ -436,6 +436,44 @@ void ArmyCreator::optional_mount_selected() {
     ob->reinitialise();
 }
 
+void ArmyCreator::optional_mount_oco_extra_selected() {
+    QRadioButton* rb = qobject_cast<QRadioButton*>(QObject::sender());
+    std::string rb_name = rb->objectName().toStdString();
+    try {
+        if (opt_sel->select_mount_oco_extra(rb_name)) {
+            ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+            update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::NAME);
+            update_validity_label();
+        }
+    } catch (const std::exception& e) {
+        QMessageBox message_box;
+        message_box.critical(nullptr, tr("Error"), tr(e.what()));
+        message_box.setFixedSize(500, 200);
+        ob->clear();
+        ob->reset(current, in_tree);
+        ob->reinitialise();
+    }
+}
+
+void ArmyCreator::optional_mount_mc_extra_selected() {
+    QCheckBox* cb = qobject_cast<QCheckBox*>(QObject::sender());
+    std::string cb_name = cb->objectName().toStdString();
+    try {
+        if (opt_sel->select_mount_mc_extra(cb_name, cb->isChecked())) {
+            ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+            update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::NAME);
+            update_validity_label();
+        }
+    } catch (const std::exception& e) {
+        QMessageBox message_box;
+        message_box.critical(nullptr, tr("Error"), tr(e.what()));
+        message_box.setFixedSize(500, 200);
+        ob->clear();
+        ob->reset(current, in_tree);
+        ob->reinitialise();
+    }
+}
+
 void ArmyCreator::optional_command_selected() {
     QCheckBox* cb = qobject_cast<QCheckBox*>(QObject::sender());
     std::string cb_name = cb->objectName().toStdString();
@@ -906,6 +944,10 @@ void ArmyCreator::update_unit_display(
         }
         std::string name = u->name() + mlevel_str +
                 ((std::get<0>(u->mnt()).name().empty()) ? "" : "\n(" + std::get<0>(u->mnt()).name() + ")");
+        if (!std::get<2>(u->mnt()).first.empty())
+            name += "\n    " + std::get<2>(u->mnt()).first;
+        for (const auto& x : std::get<3>(u->mnt()))
+            name += "\n    " + x.first;
         item->setText(static_cast<int>(column), QString(name.data()));
         update_unit_display(item, adding, ArmyTreeColumn::POINTS, copying);
         break;
@@ -1095,7 +1137,6 @@ void ArmyCreator::update_unit_display(
                     }
                 }
             }
-
         }
         u->switch_model_select(ModelSelect::DEFAULT);
         if (u->is_character()) {

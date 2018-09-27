@@ -35,6 +35,8 @@ public:
     bool select_banner(const std::string& s);
     bool select_mage_level(const std::string& s);
     bool select_mount(const std::string& s);
+    bool select_mount_oco_extra(const std::string& s);
+    bool select_mount_mc_extra(const std::string& s, bool is_checked);
     bool select_command(const std::string& s, bool is_checked);
     bool select_oco_extra(const std::string& s);
     bool select_mc_extra(const std::string& s, bool is_checked);

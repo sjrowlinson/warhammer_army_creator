@@ -610,16 +610,51 @@ QGroupBox* OptionBox::make_mounts_boxes() {
         if (mount_meta != current->base()->mounts_handle()->end() &&
                 mount_meta->second.has_options() &&
                 std::get<0>(mount_).name() == m.first) { // only show the options if the associated mount is selected
-            QGroupBox* mount_options_box = new QGroupBox(creator->tr("Options"));
-            QVBoxLayout* mob_layout = new QVBoxLayout;
-            for (const auto& mo : mount_meta->second.mc_extras()) {
-                std::string mo_name = mo.first + " (" + tools::points_str(mo.second) + " pts)";
-                QCheckBox* cb = new QCheckBox(creator->tr(mo_name.data()));
-                mob_layout->addWidget(cb);
-                mob_layout->addStretch(1);
-                mount_options_box->setLayout(mob_layout);
-                vbox_mounts->addWidget(mount_options_box);
+            QFrame* f = new QFrame();
+            QHBoxLayout* frame_layout = new QHBoxLayout;
+            QGroupBox* mount_oco_options_box = (mount_meta->second.oco_extras().empty()) ?
+                        nullptr : new QGroupBox(creator->tr("Options (single"));
+            QGroupBox* mount_mc_options_box = (mount_meta->second.mc_extras().empty()) ?
+                        nullptr : new QGroupBox(creator->tr("Options (multiple)"));
+            if (mount_oco_options_box != nullptr) {
+                QVBoxLayout* mntopt_layout = new QVBoxLayout;
+                bool has_option = false;
+                for (const auto& mo : mount_meta->second.oco_extras()) {
+                    std::string mo_name = mo.first + " (" + tools::points_str(mo.second) + " pts)";
+                    QRadioButton* rb = new QRadioButton(creator->tr(mo_name.data()));
+                    rb->setObjectName(QString::fromStdString(mo.first + "_radiobutton"));
+                    if (std::get<2>(mount_).first == mo.first) {
+                        rb->setChecked(true);
+                        has_option = true;
+                    }
+                    creator->connect(rb, SIGNAL(clicked(bool)), creator, SLOT(optional_mount_oco_extra_selected()));
+                    mntopt_layout->addWidget(rb);
+                }
+                QRadioButton* none_rb = new QRadioButton(creator->tr("None"));
+                none_rb->setObjectName(QString("None_mountocooptions_radiobutton"));
+                if (!has_option) none_rb->setChecked(true);
+                creator->connect(none_rb, SIGNAL(clicked(bool)), creator, SLOT(optional_mount_oco_extra_selected()));
+                mntopt_layout->addWidget(none_rb);
+                mntopt_layout->addStretch(1);
+                mount_oco_options_box->setLayout(mntopt_layout);
+                frame_layout->addWidget(mount_oco_options_box);
             }
+            if (mount_mc_options_box != nullptr) {
+                QVBoxLayout* mntopt_layout = new QVBoxLayout;
+                for (const auto& mo : mount_meta->second.mc_extras()) {
+                    std::string mo_name = mo.first + " (" + tools::points_str(mo.second) + " pts)";
+                    QCheckBox* cb = new QCheckBox(creator->tr(mo_name.data()));
+                    cb->setObjectName(QString::fromStdString(mo.first + "_checkbox"));
+                    if (std::get<3>(mount_).count(mo.first)) cb->setChecked(true);
+                    creator->connect(cb, SIGNAL(clicked(bool)), creator, SLOT(optional_mount_mc_extra_selected()));
+                    mntopt_layout->addWidget(cb);
+                }
+                mntopt_layout->addStretch(1);
+                mount_mc_options_box->setLayout(mntopt_layout);
+                frame_layout->addWidget(mount_mc_options_box);
+            }
+            f->setLayout(frame_layout);
+            vbox_mounts->addWidget(f);
         }
     }
     QRadioButton* none_rb = new QRadioButton(creator->tr("None"));
@@ -792,7 +827,7 @@ QGroupBox* OptionBox::make_mc_extras_subbox(bool champion) {
         std::string permodel = (current->base_unit_type() == BaseUnitType::NORMAL &&
                                     !(e.second.first)) ? "/model" : "";
         std::string label = e.first + " (" + pts_str + " pts" + permodel + ")";
-        std::string name = e.first + "_" + ((champion) ? "champion" : "default") + "_radiobutton";
+        std::string name = e.first + "_" + ((champion) ? "champion" : "default") + "_checkbox";
         QCheckBox* cb = new QCheckBox(creator->tr(label.data()));
         cb->setObjectName(QString(name.data()));
         if (curr_mc_extras.count(e.first)) cb->setChecked(true);

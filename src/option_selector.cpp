@@ -378,6 +378,72 @@ bool option_selector::select_mount(const std::string& s) {
     }
 }
 
+bool option_selector::select_mount_oco_extra(const std::string& s) {
+    auto split = tools::split(s, '_');
+    auto extra = split[0];
+    if (extra == "None") {
+        switch (in_tree) {
+        case InTree::ARMY:
+            army->take_snapshot_of(current->id());
+            current->remove_mount_option(std::get<2>(current->mnt()).first, true);
+            army->update_on(current->id());
+            return true;
+        case InTree::ROSTER:
+            current->remove_mount_option(std::get<2>(current->mnt()).first, true);
+            return false;
+        default: throw std::runtime_error("No unit selected!");
+        }
+    }
+    else {
+        switch (in_tree) {
+        case InTree::ARMY:
+            army->take_snapshot_of(current->id());
+            try { current->pick_mount_option(extra, true); }
+            catch (const std::exception&) { throw; }
+            army->update_on(current->id());
+            return true;
+        case InTree::ROSTER:
+            try { current->pick_mount_option(extra, true); }
+            catch (const std::exception&) { throw; }
+            return false;
+        default: throw std::runtime_error("No unit selected!");
+        }
+    }
+}
+
+bool option_selector::select_mount_mc_extra(const std::string& s, bool is_checked) {
+    auto split = tools::split(s, '_');
+    auto extra = split[0];
+    if (is_checked) {
+        switch (in_tree) {
+        case InTree::ARMY:
+            army->take_snapshot_of(current->id());
+            try { current->pick_mount_option(extra, false); }
+            catch (const std::exception&) { throw; }
+            army->update_on(current->id());
+            return true;
+        case InTree::ROSTER:
+            try { current->pick_mount_option(extra, false); }
+            catch (const std::exception&) { throw; }
+            return false;
+        default: throw std::runtime_error("No unit selected!");
+        }
+    }
+    else {
+        switch (in_tree) {
+        case InTree::ARMY:
+            army->take_snapshot_of(current->id());
+            current->remove_mount_option(extra, false);
+            army->update_on(current->id());
+            return true;
+        case InTree::ROSTER:
+            current->remove_mount_option(extra, false);
+            return false;
+        default: throw std::runtime_error("No unit selected!");
+        }
+    }
+}
+
 bool option_selector::select_command(const std::string& s, bool is_checked) {
     auto split = tools::split(s, '_');
     auto name = split[0];

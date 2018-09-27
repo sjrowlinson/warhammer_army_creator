@@ -73,6 +73,8 @@ private slots:
     void optional_arcane_item_selected();
     void optional_level_selected();
     void optional_mount_selected();
+    void optional_mount_oco_extra_selected();
+    void optional_mount_mc_extra_selected();
     void optional_command_selected();
     void optional_oco_extra_selected();
     void optional_mc_extra_selected();
