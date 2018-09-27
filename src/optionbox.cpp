@@ -613,7 +613,7 @@ QGroupBox* OptionBox::make_mounts_boxes() {
             QFrame* f = new QFrame();
             QHBoxLayout* frame_layout = new QHBoxLayout;
             QGroupBox* mount_oco_options_box = (mount_meta->second.oco_extras().empty()) ?
-                        nullptr : new QGroupBox(creator->tr("Options (single"));
+                        nullptr : new QGroupBox(creator->tr("Options (single)"));
             QGroupBox* mount_mc_options_box = (mount_meta->second.mc_extras().empty()) ?
                         nullptr : new QGroupBox(creator->tr("Options (multiple)"));
             if (mount_oco_options_box != nullptr) {
