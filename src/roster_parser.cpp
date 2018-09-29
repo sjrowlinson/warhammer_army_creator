@@ -248,11 +248,18 @@ namespace tools {
                         break;
                     case UnitClass::WARMACHINE:
                     case UnitClass::CHARIOT:
-                        units.push_back(
-                                  std::make_shared<base_normal_unit>(
-                                      parse_warmachine(i, ut, category)
-                                  )
-                              );
+                        if (faction == Faction::TOMB_KINGS &&
+                                read_line(blocks[i]) == "Skeleton Chariots")
+                            units.push_back(std::make_shared<base_normal_unit>(
+                                    parse_normal_unit(i, ut, category)
+                                )
+                            );
+                        else
+                            units.push_back(
+                                      std::make_shared<base_normal_unit>(
+                                          parse_warmachine(i, ut, category)
+                                    )
+                                );
                         break;
                     case UnitClass::UNIQUE:
                     {

@@ -13,5 +13,9 @@
         <file alias="tomb_kings.ros">rosters/tomb_kings.ros</file>
         <file alias="beastmen.mnt">rosters/beastmen.mnt</file>
         <file alias="empire.mnt">rosters/empire.mnt</file>
+        <file alias="dark_elves.mnt">rosters/dark_elves.mnt</file>
+        <file alias="high_elves.mnt">rosters/high_elves.mnt</file>
+        <file alias="tomb_kings.mnt">rosters/tomb_kings.mnt</file>
+        <file alias="wood_elves.mnt">rosters/wood_elves.mnt</file>
     </qresource>
 </RCC>

@@ -31,14 +31,17 @@ std::tuple<std::string, std::string, std::string, std::string> selection_tree::f
         break;
     case Faction::HIGH_ELVES:
         roster_file += "high_elves.ros";
+        mounts_file += "high_elves.mnt";
         magic_item_file += "high_elves.mag";
         break;
     case Faction::WOOD_ELVES:
         roster_file += "wood_elves.ros";
+        mounts_file += "wood_elves.mnt";
         magic_item_file += "wood_elves.mag";
         break;
     case Faction::DARK_ELVES:
         roster_file += "dark_elves.ros";
+        mounts_file += "dark_elves.mnt";
         magic_item_file += "dark_elves.mag";
         break;
     case Faction::WARRIORS_OF_CHAOS:
@@ -67,6 +70,7 @@ std::tuple<std::string, std::string, std::string, std::string> selection_tree::f
         break;
     case Faction::TOMB_KINGS:
         roster_file += "tomb_kings.ros";
+        mounts_file += "tomb_kings.mnt";
         magic_item_file += "tomb_kings.mag";
         break;
     case Faction::OGRE_KINGDOMS:

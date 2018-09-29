@@ -1,0 +1,23 @@
+Skeletal Steed
+    Warbeast
+    8 2 0 3 3 1 2 1 5
+    Nehekharan Undead
+    None
+    None
+    None
+
+Skeleton Chariot
+    Chariot
+    - - - 4 4 3 - - -
+    'And the Tomb Kings Rode to War...', Chariot Legions, Nehekharan Undead
+    None
+    None
+    None
+
+Khemrian Warsphinx
+    Monster
+    6 4 0 5 8 5 1 4 8
+    Animated Construct, Howdah Crew, Large Target, Nehekharan Undead, Terror, Thundercrush Attack
+    None
+    Envenomed Sting [10], Fiery Roar [20]
+    None

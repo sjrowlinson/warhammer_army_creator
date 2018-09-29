@@ -74,7 +74,7 @@ Tomb Herald
     50
 
 Liche Priest
-    Lord, Mage
+    Hero, Mage
     1
     2 [35]
     Nehekhara, Light, Death
@@ -208,15 +208,29 @@ Skeleton Horse Archers
     0
     0
 
-#Skeleton Chariots
-#    Core, Chariot, Normal
-#    55
-#    3, None
-#    - 3 2 3 - - 2 2 7
-#    - - - 4 4 3 - - -
-#    Armour Save (5+), 'And the Tomb Kings Rode to War...', Arrows of Asaph, Chariot Legions, Nehekharan Undead
-#    None
-#    None
+Skeleton Chariots
+    Core, Chariot, Normal
+    55
+    3, None
+    - 3 2 3 - - 2 2 7
+    - 3 2 3 - - 2 3 7
+    Arrows of Asaph
+    Arrows off Asaph
+    Weapon: Spear {Mundane} [Melee], Weapon: Bow {Mundane} [Ballistic]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Master of Chariots [10]
+    0
+    0
+    0
+    25
 
 # Special
 
