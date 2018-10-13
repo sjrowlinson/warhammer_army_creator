@@ -440,6 +440,9 @@
       <height>241</height>
      </rect>
     </property>
+    <property name="mouseTracking">
+     <bool>true</bool>
+    </property>
     <property name="currentIndex">
      <number>-1</number>
     </property>
@@ -525,7 +528,7 @@
       <x>1360</x>
       <y>200</y>
       <width>431</width>
-      <height>801</height>
+      <height>571</height>
      </rect>
     </property>
     <property name="widgetResizable">
@@ -537,7 +540,7 @@
        <x>0</x>
        <y>0</y>
        <width>429</width>
-       <height>799</height>
+       <height>569</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -549,6 +552,35 @@
        </widget>
       </item>
      </layout>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="item_descr_gb">
+    <property name="geometry">
+     <rect>
+      <x>1360</x>
+      <y>780</y>
+      <width>421</width>
+      <height>221</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Item Description</string>
+    </property>
+    <widget class="QLabel" name="item_descr_label">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>401</width>
+       <height>181</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
     </widget>
    </widget>
   </widget>

@@ -1,8 +1,9 @@
 #include "magicitembox.h"
 #include "armycreator.h"
 
-MagicItemBox::MagicItemBox(ArmyCreator* creator_, QTabWidget* box_) :
-    creator(creator_), box(box_), in_tree(InTree::NEITHER), ic_selected(ItemClass::COMMON) {}
+MagicItemBox::MagicItemBox(ArmyCreator* creator_, QTabWidget* box_, QGroupBox* descr_box_, QLabel* descr_label_) :
+    creator(creator_), box(box_), descr_box(descr_box_), descr_label(descr_label_),
+    in_tree(InTree::NEITHER), ic_selected(ItemClass::COMMON) {}
 
 void MagicItemBox::clear() {
     /*auto c = box->children();
@@ -115,6 +116,8 @@ QGroupBox* MagicItemBox::make_weapons_tab(const std::vector<std::pair<std::strin
                 case WeaponType::BALLISTIC: has_weapon_r = true; break;
                 default: break;
                 }
+                descr_box->setTitle(QString::fromStdString(w.first));
+                descr_label->setText(QString::fromStdString(w.second.description));
             }
         }
         creator->connect(rb, SIGNAL(clicked(bool)), creator, SLOT(optional_weapon_selected()));
@@ -209,6 +212,8 @@ QGroupBox* MagicItemBox::make_armour_tab(const std::vector<std::pair<std::string
                 case ArmourType::HELMET: has_helmet = true; break;
                 default: break;
                 }
+                descr_box->setTitle(QString::fromStdString(a.first));
+                descr_label->setText(QString::fromStdString(a.second.description));
             }
         }
         creator->connect(rb, SIGNAL(clicked(bool)), creator, SLOT(optional_armour_selected()));
@@ -303,6 +308,8 @@ QGroupBox* MagicItemBox::make_talismans_tab(const std::vector<std::pair<std::str
         if (talisman.first == t.first) {
             rb->setChecked(true);
             has_talisman = true;
+            descr_box->setTitle(QString::fromStdString(t.first));
+            descr_label->setText(QString::fromStdString(t.second.description));
         }
         creator->connect(rb, SIGNAL(clicked(bool)), creator, SLOT(optional_talisman_selected()));
         try { hlayouts.at(count++/max_per_row)->addWidget(rb); }
@@ -372,6 +379,8 @@ QGroupBox* MagicItemBox::make_enchanted_tab(const std::vector<std::pair<std::str
         if (enchanted.first == t.first) {
             rb->setChecked(true);
             has_enchanted = true;
+            descr_box->setTitle(QString::fromStdString(t.first));
+            descr_label->setText(QString::fromStdString(t.second.description));
         }
         creator->connect(rb, SIGNAL(clicked(bool)), creator, SLOT(optional_enchanted_item_selected()));
         try { hlayouts.at(count++/max_per_row)->addWidget(rb); }
@@ -439,6 +448,8 @@ QGroupBox* MagicItemBox::make_arcane_tab(const std::vector<std::pair<std::string
         if (arcane.first == t.first) {
             rb->setChecked(true);
             has_arcane = true;
+            descr_box->setTitle(QString::fromStdString(t.first));
+            descr_label->setText(QString::fromStdString(t.second.description));
         }
         creator->connect(rb, SIGNAL(clicked(bool)), creator, SLOT(optional_arcane_item_selected()));
         try { hlayouts.at(count++/max_per_row)->addWidget(rb); }
@@ -511,6 +522,8 @@ QGroupBox* MagicItemBox::make_banners_tab(const std::vector<std::pair<std::strin
         if (banner.first == t.first) {
             rb->setChecked(true);
             has_banner = true;
+            descr_box->setTitle(QString::fromStdString(t.first));
+            descr_label->setText(QString::fromStdString(t.second.description));
         }
         creator->connect(rb, SIGNAL(clicked(bool)), creator, SLOT(optional_banner_selected()));
         hlayouts[count++/max_per_row]->addWidget(rb);

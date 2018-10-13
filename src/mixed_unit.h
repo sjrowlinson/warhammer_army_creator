@@ -22,6 +22,11 @@ private:
 
     std::size_t master_size_;
     std::size_t slaves_size_;
+protected:
+    std::pair<bool, std::string> restriction_check(
+        RestrictionField picking,
+        const std::unordered_map<RestrictionField, std::vector<std::string>>& restrictions
+    ) const override;
 public:
     explicit mixed_unit(std::shared_ptr<base_unit> base);
     mixed_unit(const mixed_unit& other);

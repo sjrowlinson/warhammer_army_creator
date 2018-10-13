@@ -2,6 +2,14 @@ Common
 
 # Magic Weapons
 
+# Name
+#     ItemType, <ItemSubType>
+#     Points
+#     Description
+#     Allowed units ("None" if all allowed)
+#     Limit ("None" if unlimited amount allowed)
+#     Restrictions ("None" if no restrictions)
+
 Giant Blade
     Weapon, Melee
     60

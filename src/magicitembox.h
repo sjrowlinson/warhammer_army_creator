@@ -27,6 +27,8 @@ class MagicItemBox {
 private:
     ArmyCreator* creator;
     QTabWidget* box;
+    QGroupBox* descr_box;
+    QLabel* descr_label;
     std::shared_ptr<unit> current;
     InTree in_tree;
     ItemClass ic_selected;
@@ -43,7 +45,7 @@ private:
     QGroupBox* make_banners_tab(const std::vector<std::pair<std::string, item>>& opt_banners);
     QGroupBox* make_other_tab(const std::vector<std::pair<std::string, item>>& opt_other);
 public:
-    MagicItemBox(ArmyCreator* creator_, QTabWidget* box_);
+    MagicItemBox(ArmyCreator* creator_, QTabWidget* box_, QGroupBox* descr_box_, QLabel* descr_label_);
     ~MagicItemBox() = default;
 
     void reset(std::shared_ptr<unit> current_, InTree in_tree_);

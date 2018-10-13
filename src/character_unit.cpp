@@ -59,6 +59,106 @@ bool character_unit::has_non_duplicable_items() const noexcept {
     ) || !banner.first.empty();
 }
 
+std::pair<bool, std::string> character_unit::restriction_check(
+    RestrictionField picking,
+    const std::unordered_map<RestrictionField, std::vector<std::string>>& restrictions
+) const {
+    std::pair<bool, std::string> p = {false, ""};
+    for (const auto& restr : restrictions) {
+        switch (restr.first) {
+        case RestrictionField::WEAPON:
+            for (const auto& w : restr.second) {
+                if (std::none_of(std::begin(weapons_), std::end(weapons_),
+                                 [&w](const auto& x) { return std::get<1>(x.second) == w; })
+                        ) {
+                    if (p.first) p.second += ", " + w;
+                    else p.second += "Character requires: " + w;
+                    p.first = true;
+                }
+            }
+            break;
+        case RestrictionField::ARMOUR:
+            for (const auto& a : restr.second) {
+                if (std::none_of(std::begin(armours_), std::end(armours_),
+                                 [&a](const auto& x) { return std::get<1>(x.second) == a; })
+                        ) {
+                    if (p.first) p.second += ", " + a;
+                    else p.second += "Character requires: " + a;
+                    p.first = true;
+                }
+            }
+            break;
+        case RestrictionField::TALISMAN:
+            for (const auto& t : restr.second) {
+                if (talisman_.first != t) {
+                    if (p.first) p.second += ", " + t;
+                    else p.second += "Character requires: " + t;
+                    p.first = true;
+                }
+            }
+            break;
+        case RestrictionField::ENCHANTED:
+            for (const auto& e : restr.second) {
+                if (enchanted_item_.first != e) {
+                    if (p.first) p.second += ", " + e;
+                    else p.second += "Character requires: " + e;
+                    p.first = true;
+                }
+            }
+            break;
+        case RestrictionField::BANNER:
+            for (const auto& b : restr.second) {
+                if (banner.first != b) {
+                    if (p.first) p.second += ", " + b;
+                    else p.second += "Character requires: " + b;
+                    p.first = true;
+                }
+            }
+            break;
+        case RestrictionField::MOUNT:
+            for (const auto& m : restr.second) {
+                if (std::get<0>(mount_).name() != m) {
+                    if (p.first) p.second += ", " + m;
+                    else p.second += "Character requires: " + m;
+                    p.first = true;
+                }
+            }
+            break;
+        case RestrictionField::OCO_EXTRA:
+            for (const auto& r : restr.second) {
+                if (oco_extra_.first != r) {
+                    if (p.first) p.second += ", " + r;
+                    else p.second += "Character requires: " + r;
+                    p.first = true;
+                }
+            }
+            break;
+        case RestrictionField::MC_EXTRA:
+            for (const auto& r : restr.second) {
+                if (!mc_extras_.count(r)) {
+                    if (p.first) p.second += ", " + r;
+                    else p.second += "Character requires: " + r;
+                    p.first = true;
+                }
+            }
+            break;
+        case RestrictionField::OTHER:
+            for (const auto& o : restr.second) {
+                if (!item_extras_.count(o)) {
+                    if (p.first) p.second += ", " + o;
+                    else p.second += "Character requires: " + o;
+                    p.first = true;
+                }
+            }
+            break;
+        default: break;
+        }
+    }
+    if (p.first)
+        p.second += " to choose this " + enum_convert::RESTRICTION_TO_STRING.at(picking) + "!";
+    return p;
+}
+
 void character_unit::pick_magic_item(ItemType item_type, ItemClass item_class, const std::string& name) {
     if (item_type != ItemType::BANNER && !banner.first.empty())
         throw std::runtime_error("BSBs equipped with a Magic Standard cannot take Magic Items!");
@@ -469,6 +569,9 @@ void character_unit::pick_mount(std::string name) {
     if (opt_search == handle_->opt().mounts().end() ||
             mnt_search == handle_->mounts_handle()->end())
         throw std::invalid_argument("Mount not found!");
+    auto restr = restriction_check(RestrictionField::MOUNT, mnt_search->second.restrictions());
+    if (restr.first)
+        throw std::invalid_argument(restr.second);
     remove_mount();
     mount_ = {mnt_search->second, opt_search->second, {}, {}};
     points_ += opt_search->second;

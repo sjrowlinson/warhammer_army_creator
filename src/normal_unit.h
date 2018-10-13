@@ -67,6 +67,11 @@ public:
     normal_unit(const normal_unit& other);
     ~normal_unit() override = default;
 
+    std::pair<bool, std::string> restriction_check(
+        RestrictionField picking,
+        const std::unordered_map<RestrictionField, std::vector<std::string>>& restrictions
+    ) const override;
+
     bool is_character() const noexcept override;
     bool is_mage() const noexcept override;
     bool is_mixed() const noexcept override;

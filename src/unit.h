@@ -23,6 +23,10 @@ protected:
     std::shared_ptr<base_unit> base_;
 
     void do_replacements(const std::vector<std::string>& replacements, bool champion=false);
+    virtual std::pair<bool, std::string> restriction_check(
+        RestrictionField picking,
+        const std::unordered_map<RestrictionField, std::vector<std::string>>& restrictions
+    ) const = 0;
 public:
     explicit unit(std::shared_ptr<base_unit> base);
     unit(const unit& other);

@@ -74,6 +74,7 @@ enum class RestrictionField {
     ENCHANTED,
     ARCANE,
     BANNER,
+    MOUNT,
     OCO_EXTRA,
     MC_EXTRA,
     OTHER
@@ -251,6 +252,7 @@ namespace enum_convert {
         {"Enchanted", RestrictionField::ENCHANTED},
         {"Arcane", RestrictionField::ARCANE},
         {"Banner", RestrictionField::BANNER},
+        {"Mount", RestrictionField::MOUNT},
         {"oco_extra", RestrictionField::OCO_EXTRA},
         {"mc_extra", RestrictionField::MC_EXTRA},
         {"other", RestrictionField::OTHER}
@@ -264,6 +266,7 @@ namespace enum_convert {
         {RestrictionField::ENCHANTED, "Enchanted"},
         {RestrictionField::ARCANE, "Arcane"},
         {RestrictionField::BANNER, "Banner"},
+        {RestrictionField::MOUNT, "Mount"},
         {RestrictionField::OCO_EXTRA, "oco_extra"},
         {RestrictionField::MC_EXTRA, "mc_extra"},
         {RestrictionField::OTHER, "other"},

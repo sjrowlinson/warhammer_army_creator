@@ -13,6 +13,18 @@ mixed_unit::mixed_unit(const mixed_unit& other)
       slave_(other.slave_),
       master_size_(other.master_size_), slaves_size_(other.slaves_size_) {}
 
+std::pair<bool, std::string> mixed_unit::restriction_check(
+    RestrictionField picking,
+    const std::unordered_map<RestrictionField, std::vector<std::string>>& restrictions
+) const {
+    switch (mixed_select_) {
+    case MixedSelect::MASTER:
+        return master_.restriction_check(picking, restrictions);
+    case MixedSelect::SLAVE:
+        return slave_.restriction_check(picking, restrictions);
+    }
+}
+
 bool mixed_unit::is_character() const noexcept { return false; }
 bool mixed_unit::is_mage() const noexcept { return false; }
 bool mixed_unit::is_mixed() const noexcept { return true; }

@@ -27,7 +27,7 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
     current = nullptr;
     opt_sel = std::make_shared<option_selector>(st, army);
     ob = std::make_shared<OptionBox>(this, ui->options_group_box);
-    mib = std::make_shared<MagicItemBox>(this, ui->magic_items_selector);
+    mib = std::make_shared<MagicItemBox>(this, ui->magic_items_selector, ui->item_descr_gb, ui->item_descr_label);
     populate_roster_tree();
     id_counter = 0; // unit ID counter
     in_tree = InTree::NEITHER;
@@ -696,6 +696,8 @@ void ArmyCreator::on_faction_combobox_currentTextChanged(const QString& faction)
     clear_unit_info_box();
     ob->clear();
     mib->clear();
+    ui->item_descr_gb->setTitle(tr("Item Description"));
+    ui->item_descr_label->setText(tr(""));
     // set us to NEITHER tree to avoid attempting to get the current
     // selected unitt of this->st when roster_tree->currentItem will
     // no longer point to a valid unit type
@@ -733,6 +735,8 @@ void ArmyCreator::on_roster_tree_currentItemChanged(QTreeWidgetItem *current, QT
     clear_unit_info_box();
     ob->clear();
     mib->clear();
+    ui->item_descr_gb->setTitle(tr("Item Description"));
+    ui->item_descr_label->setText(tr(""));
     std::string name = current->text(0).toStdString();
     if (name != "Lords" && name != "Heroes" && name != "Core" &&
             name != "Special" && name != "Rare") {
@@ -772,6 +776,8 @@ void ArmyCreator::on_army_tree_currentItemChanged(QTreeWidgetItem *current, QTre
     clear_unit_info_box();
     ob->clear();
     mib->clear();
+    ui->item_descr_gb->setTitle(tr("Item Description"));
+    ui->item_descr_label->setText(tr(""));
     std::string name = current->text(0).toStdString();
     if (name != "Lords" && name != "Heroes" && name != "Core" &&
             name != "Special" && name != "Rare") {
