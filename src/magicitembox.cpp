@@ -53,6 +53,7 @@ QGroupBox* MagicItemBox::make_items_tab(const std::unordered_map<std::string, it
     case ItemType::BANNER:
         return make_banners_tab(opt_items);
     }
+    return nullptr;
 }
 
 QGroupBox* MagicItemBox::make_weapons_tab(const std::vector<std::pair<std::string, item>>& opt_weapons) {
@@ -163,6 +164,9 @@ QGroupBox* MagicItemBox::make_armour_tab(const std::vector<std::pair<std::string
     {
         auto p = std::dynamic_pointer_cast<character_unit>(current);
         armour = p->armour();
+        // mages with no armour already present in their
+        // default equipment cannot choose magic armour
+        if (p->is_mage() && p->handle_->eq().armours().empty()) return nullptr;
         break;
     }
     default: return nullptr;

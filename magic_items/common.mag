@@ -15,11 +15,15 @@ Giant Blade
     60
     Close combat attacks made with this sword are resolved at +3 Strength.
     None
+    1
+    None
 
 Sword of Bloodshed
     Weapon, Melee
     60
     The wielder has +3 Attacks.
+    None
+    1
     None
 
 Obsidian Blade
@@ -27,11 +31,15 @@ Obsidian Blade
     50
     Armour saves cannot be taken against wounds caused by the Obsidian Blade.
     None
+    1
+    None
 
 Ogre Blade
     Weapon, Melee
     40
     Close combat attacks made with this sword are resolved at +2 Strength.
+    None
+    1
     None
 
 Sword of Strife
@@ -39,11 +47,15 @@ Sword of Strife
     40
     The wielder of the Sword of Strife has +2 Attacks.
     None
+    1
+    None
 
 Fencer's Blades
     Weapon, Melee
     35
     Paired weapons. The bearer has Weapon Skill 10.
+    None
+    1
     None
 
 Sword of Anti-Heroes
@@ -51,11 +63,15 @@ Sword of Anti-Heroes
     30
     The bearer has +1 Strength and +1 Attack for every enemy character in base contact with him or his unit. These bonuses are calculated at the start of each round of close combat and last until its end.
     None
+    1
+    None
 
 Spellthieving Sword
     Weapon, Melee
     25
     A Wizard that suffers unsaved wounds from the Spellthieving Sword loses one of his spells (determined randomly) for each unsaved wound.
+    None
+    1
     None
 
 Sword of Swift Slaying
@@ -63,11 +79,15 @@ Sword of Swift Slaying
     25
     The wielder of the Sword of Swift Slaying has the Always Strike First special rule.
     None
+    1
+    None
 
 Sword of Battle
     Weapon, Melee
     20
     The wielder has +1 Attack.
+    None
+    1
     None
 
 Berserker Sword
@@ -75,11 +95,15 @@ Berserker Sword
     20
     The bearer has the Frenzy special rule and can never lose his Frenzy.
     None
+    1
+    None
 
 Sword of Might
     Weapon, Melee
     20
     Close combat attacks made with this sword are resolved at +1 Strength.
+    None
+    1
     None
 
 Gold Sigil Sword
@@ -87,11 +111,15 @@ Gold Sigil Sword
     15
     Attacks from the Gold Sigil Sword are made at Initiative 10.
     None
+    1
+    None
 
 Sword of Striking
     Weapon, Melee
     15
     Attacks with the Sword of Striking receive a +1 bonus to hit.
+    None
+    1
     None
 
 Biting Blade
@@ -99,11 +127,15 @@ Biting Blade
     10
     Close combat attacks made by the Biting Blade are armour piercing.
     None
+    1
+    None
 
 Relic Sword
     Weapon, Melee
     10
     Attacks made with the Relic Sword will always wound on 5+, unless they would normally need a lower result.
+    None
+    1
     None
 
 Shrieking Blade
@@ -111,17 +143,23 @@ Shrieking Blade
     10
     The bearer causes Fear.
     None
+    1
+    None
 
 Tormentor Sword
     Weapon, Melee
     5
     A monster or character that suffers an unsaved wound from the Tormentor Sword has the Stupidity special rule for the rest of the game.
     None
+    1
+    None
 
 Warrior Bane
     Weapon, Melee
     5
     A monster or character that suffers unsaved wounds from Warrior Bane permanently loses one Attack for each unsaved wound (to a minimum of Attacks 1).
+    None
+    1
     None
 
 # Magic Armour
@@ -131,11 +169,15 @@ Armour of Destiny
     50
     Heavy armour. The Armour of Destiny grants the wearer a 4+ ward save.
     None
+    1
+    None
 
 Trickster's Helm
     Armour, Helmet
     50
     The wearer counts his armour save as being one point higher than normal. Any successful roll to wound made against the wearer of the Trickster's Helm must be re-rolled.
+    None
+    1
     None
 
 Armour of Silvered Steel
@@ -143,11 +185,15 @@ Armour of Silvered Steel
     45
     The Armour of Silvered Steel grants its wearer a 2+ armour save that cannot be improved by any means.
     None
+    1
+    None
 
 Armour of Fortune
     Armour, Armour
     35
     Heavy armour. The Armour of Fortune grants the wearer a 5+ ward save.
+    None
+    1
     None
 
 Helm of Discord
@@ -155,11 +201,15 @@ Helm of Discord
     30
     The wearer counts his armour save as being one point higher than normal. In addition, at the start of each Close Combat phase, choose an enemy character in base contact with the bearer or his unit. That character must immediately take a Leadership test. If the test is failed, the character succumbs to the helm's sibilant whispers of malice and jealousy. In this Close Combat phase, the victim cannot make attacks and is hit automatically.
     None
+    1
+    None
 
 Glittering Scales
     Armour, Armour
     25
     Light armour. Enemies suffer a -1 to hit penalty when attempting to strike the wearer in close combat.
+    None
+    1
     None
 
 Shield of Ptolos
@@ -167,11 +217,15 @@ Shield of Ptolos
     25
     Shield. The bearer has a +1 armour save against shooting attacks.
     None
+    1
+    None
 
 Spellshield
     Armour, Shield
     20
     Shield. The bearer gains Magic Resistance (1).
+    None
+    1
     None
 
 Gambler's Armour
@@ -179,11 +233,15 @@ Gambler's Armour
     20
     Heavy armour. The Gambler's Armour grants the wearer a 6+ ward save.
     None
+    1
+    None
 
 Dragonhelm
     Armour, Helmet
     10
     The wearer counts his armour save as being one point higher than normal. The wearer has a 2+ ward save against flaming attacks.
+    None
+    1
     None
 
 Enchanted Shield
@@ -191,11 +249,15 @@ Enchanted Shield
     5
     Shield. The bearer counts his armour save as being two points higher than normal, rather than the usual one point that a shield would normally grant.
     None
+    1
+    None
 
 Charmed Shield
     Armour, Shield
     5
     Shield. One use only. The first hit suffered by the bearer of the Charmed Shield is discounted on a roll of 2+.
+    None
+    1
     None
 
 # Talismans
@@ -205,11 +267,15 @@ Talisman of Preservation
     45
     The Talisman of Preservation grants the bearer a 4+ ward save.
     None
+    1
+    None
 
 Obsidian Lodestone
     Talisman
     45
     The Obsidian Lodestone grants Magic Resistance (3).
+    None
+    1
     None
 
 Talisman of Endurance
@@ -217,11 +283,15 @@ Talisman of Endurance
     30
     The Talisman of Endurance grants the bearer a 5+ ward save.
     None
+    1
+    None
 
 Obsidian Amulet
     Talisman
     30
     The Obsidian Amulet grants the bearer Magic Resistance (2).
+    None
+    1
     None
 
 Dawnstone
@@ -229,11 +299,15 @@ Dawnstone
     25
     The bearer re-rolls failed armour saves.
     None
+    1
+    None
 
 Opal Amulet
     Talisman
     15
     One use only. The Opal Amulet bestows a 4+ ward save against the first wound suffered by the bearer, after which its power fades and it canned be used again during the game.
+    None
+    1
     None
 
 Obsidian Trinket
@@ -241,11 +315,15 @@ Obsidian Trinket
     15
     The Obsidian Trinket grants Magic Resistance (1).
     None
+    1
+    None
 
 Talisman of Protection
     Talisman
     15
     The Talisman of Protection grants the bearer a 6+ ward save.
+    None
+    1
     None
 
 Seed of Rebirth
@@ -253,11 +331,15 @@ Seed of Rebirth
     10
     The bearer of the Seed of Rebirth has the Regeneration (6+) special rule.
     None
+    1
+    None
 
 Dragonbane Gem
     Talisman
     5
     The bearer of the Dragonbane Gem has a 2+ ward save against flaming attacks.
+    None
+    1
     None
 
 Pigeon Plucker Pendant
@@ -265,11 +347,15 @@ Pigeon Plucker Pendant
     5
     This items grants the bearer a 5+ ward save against wounds caused in close combat by models that have the Fly special rule.
     None
+    1
+    None
 
 Luckstone
     Talisman
     5
     One use only. The Luckstone allows the bearer to re-rol a single failed armour save.
+    None
+    1
     None
 
 # Arcane Items
@@ -279,11 +365,15 @@ Book of Ashur
     70
     The bearer receives a +1 bonus on attempts to cast and dispel.
     None
+    1
+    None
 
 Feedback Scroll
     Arcane
     50
     One use only. When an enemy spell has been cast, a Wizard who has a Feedback Scroll can read it instead of attempting to dispel the spell. The spell is cast as normal, but, after the spell has been resolved, roll a dice for every dice used to cast the spell. The casting Wizard takes a wound for every result of 5+ rolled, with no armour saves allowed.
+    None
+    1
     None
 
 Scroll of Leeching
@@ -291,11 +381,15 @@ Scroll of Leeching
     50
     One use only. When an enemy spell has been cast, a Wizard who has a Scroll of Leeching can read it instead of attempting to dispel the spell. The spell is cast as normal, but, after the spell has been resolved, the bearer of the scroll adds a number of dispel dice to his pool equal to the number of dice used to cast the spell (remember that your dispel pool cannot exceed 12 dice).
     None
+    1
+    None
 
 Sivejir's Hex Scroll
     Arcane
     50
     One use only. When an enemy spell has been cast, a Wizard who has a Hex Scroll can read it instead of attempting to dispel the spell. The spell is cast as normal, but a portion of the spell's energy is transformed and redirected at the caster. The enemy wizard can resist the spell's effects by rolling equal to or under his wizard level on a D6. If he fails, an amphibian transformation takes hold and he becomes a small, slimy toad! Whilst transformed, the wizard cannot channel or cast spells, all of his magic items and mundane equipment (armour, weapons, etc.) temporarily stop working and all of his characteristics are reduced to 1 (except for his wounds, which are unaffected). His controlling player can roll a D6 at the start of each of his subsequent magic phases; the spell dissipates on a roll of 4+ and the wizard returns to his normal form (but still attempts to eat flies for several days afterward).
+    None
+    1
     None
 
 Power Scroll
@@ -303,11 +397,15 @@ Power Scroll
     35
     One use only. A Power Scroll can be used when the Wizard makes a casting attempt During that casting attempt, any roll of a double will cause irresistible force (and a miscast).
     None
+    1
+    None
 
 Wand of Jet
     Arcane
     35
     One use only. The bearer can increase one of his casting results by an additional +D6, after other casting dice have been rolled. This extra power dice can contribute to casting a spell with irresistible force (and a miscast).
+    None
+    1
     None
 
 Forbidden Rod
@@ -315,11 +413,15 @@ Forbidden Rod
     35
     One use only. The forbidden rod adds +D6 dice to the power pool at the start of the caster's own magic phase, but also inflicts D3 wounds on the bearer (with no armour saves allowed).
     None
+    1
+    None
 
 Trickster's Shard
     Arcane
     25
     One use only. Declare you are using this item at the start of one of your magic phases. For the duration of the phase, when one of the bearer's spells is dispelled by an enemy wizard, roll a D6. On a 5+, that wizard suffers a wound with no armour saves allowed.
+    None
+    1
     None
 
 Earthing Rod
@@ -327,11 +429,15 @@ Earthing Rod
     25
     One use only. If the wizard rolls on the miscast table he can re-roll the result.
     None
+    1
+    None
 
 Dispel Scroll
     Arcane
     25
     One use only. When an enemy spell has been cast, a wizard who has a dispel scroll can read it instead of attempting to dispel the spell by using dispel dice. This automatically dispels the enemy spell; no dice roll is required. Note that even a dispel scroll will not help if the spell has been cast with irresistible force. Note also that a dispel scroll cannot be used to dispel spells that remain in play other than at the moment they are cast.
+    None
+    1
     None
 
 Power Stone
@@ -339,11 +445,15 @@ Power Stone
     20
     One use only. The Wizard can declare that he is using the power stone immediately before casting a spell If he does so, two extra dice are added to the power dice that he is going to roll (you still need to roll at least one dice from the power pool).
     None
+    1
+    None
 
 Sceptre of Stability
     Arcane
     15
     One use only. The bearer can choose to increase one of his dispel results by an additional +D6, after his other dispel dice have been rolled. This extra dispel dice can contribute to dispelling with irresistible force.
+    None
+    1
     None
 
 Channelling Staff
@@ -351,11 +461,15 @@ Channelling Staff
     15
     The Wizard adds +1 to all of his channeling attempts.
     None
+    1
+    None
 
 Scroll of Shielding
     Arcane
     15
     One use only. When an enemy spell has been cast, a Wizard who has a Scroll of Shielding can read it instead of attempting to dispel the spell. The spell is cast as normal, but the target of the spell is granted a 4+ ward save against any wounds caused by the spell.
+    None
+    1
     None
 
 # Enchanted Items
@@ -365,11 +479,15 @@ Wizarding Hat
     100
     The wearer is treated as being a Level 2 Wizard who can use a randomly chosen spell lore. However, he also has the Stupidity special rule.
     None
+    1
+    None
 
 Fozzrik's Folding Fortress
     Enchanted
     100
     After deployment zones have been agreed, but before the armies have been deployed, place a watchtower building (or scratch-built structure of a similar size) in your deployment zone to represent the Folding Fortress. This is treated as a standard building. If you do not have a suitable building to place, you cannot use Fozzrik's Folding Fortress.
+    None
+    1
     None
 
 Arabyan Carpet
@@ -377,11 +495,15 @@ Arabyan Carpet
     100
     Infantry or monstrous infantry models on foot only. The owner of this magical carpet has the Fly special rule. However, he cannot join units.
     None
+    1
+    None
 
 Crown of Command
     Enchanted
     35
     The bearer of the Crown of Command has the Stubborn special rule.
+    None
+    1
     None
 
 Healing Potion
@@ -389,11 +511,15 @@ Healing Potion
     35
     One use only. The Healing Potion can be drunk at the start of the controlling player's turn. The imbiber immediately recovers D6 Wounds lost in the battle.
     None
+    1
+    None
 
 Feathertoe Torc
     Enchanted
     35
     Flying creatures (and their riders) must re-roll successful rolls to hit against the bearer (and any unit he is with) in close combat.
+    None
+    1
     None
 
 Ruby Ring of Ruin
@@ -401,11 +527,15 @@ Ruby Ring of Ruin
     25
     Bound spell (power level 3). The Ruby Ring of Ruin contains the Fireball spell (see the Lore of Fire).
     None
+    1
+    None
 
 The Terrifying Mask of EEE!
     Enchanted
     25
     The wearer of this mask causes Terror. However, other models can never use his Leadership.
+    None
+    1
     None
 
 Potion of Strength
@@ -413,11 +543,15 @@ Potion of Strength
     20
     One use only. The Potion of Strength can be drunk at the start of any player's turn. The imbiber has +3 Strength until the end of the turn.
     None
+    1
+    None
 
 Potion of Toughness
     Enchanted
     20
     One use only. The Potion of Toughness can be drunk at the start of any player's turn. The imbiber has +3 Toughness until the end of the turn.
+    None
+    1
     None
 
 The Other Trickster's Shard
@@ -425,11 +559,15 @@ The Other Trickster's Shard
     15
     Models in base contact with the bearer (friends and foes) must re-roll successful ward saves.
     None
+    1
+    None
 
 Ironcurse Icon
     Enchanted
     5
     The character (and any unit he is with) gain a 6+ ward save against war machine weapons.
+    None
+    1
     None
 
 Potion of Foolhardiness
@@ -437,11 +575,15 @@ Potion of Foolhardiness
     5
     One use only. The Potion of Foolhardiness can be drunk at the start of any player's turn. The imbiber has the Immune to Psychology and the Devastating Charge special rules until the end of the player turn.
     None
+    1
+    None
 
 Potion of Speed
     Enchanted
     5
     One use only. The Potion of Speed can be drunk at the start of any player's turn. The imbiber has +3 Initiative until the end of the turn.
+    None
+    1
     None
 
 # Magic Standards
@@ -451,11 +593,15 @@ Rampager's Standard
     55
     A unit with this magic standard can re-roll its charge distance dice.
     None
+    1
+    None
 
 Wailing Banner
     Banner
     50
     A unit with this banner causes Terror in its enemies.
+    None
+    1
     None
 
 Ranger's Standard
@@ -463,11 +609,15 @@ Ranger's Standard
     50
     A unit with the Ranger's Standard has the Strider special rule.
     None
+    1
+    None
 
 Razor Standard
     Banner
     45
     Models in a unit with the Razor Standard have the Armour Piercing special rule.
+    None
+    1
     None
 
 War Banner
@@ -475,11 +625,15 @@ War Banner
     35
     A unit with this banner adds +1 to combat resolution.
     None
+    1
+    None
 
 Banner of Swiftness
     Banner
     15
     Models in a unit with the Banner of Swiftness have +1 to their Movement characteristic.
+    None
+    1
     None
 
 Lichebone Pennant
@@ -487,11 +641,15 @@ Lichebone Pennant
     15
     Models in a unit with the Lichebone Pennant have Magic Resistance (1).
     None
+    1
+    None
 
 Standard of Discipline
     Banner
     15
     Models in a unit with the Standard of Discipline have +1 Leadership, but cannot use the General's Inspiring Presence special rule.
+    None
+    1
     None
 
 Banner of Eternal Flame
@@ -499,15 +657,21 @@ Banner of Eternal Flame
     10
     Models in a unit with the Banner of Eternal Flame have Flaming Attacks.
     None
+    1
+    None
 
 Gleaming Pennant
     Banner
     5
     One use only. A unit with the Gleaming Pennant can re-roll its first failed Leadership test.
     None
+    1
+    None
 
 Scarecrow Banner
     Banner
     5
     A unit with the Scarecrow Banner causes Fear in models with the Fly special rule.
+    None
+    1
     None

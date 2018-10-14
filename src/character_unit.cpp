@@ -189,11 +189,15 @@ void character_unit::pick_magic_item(ItemType item_type, ItemClass item_class, c
         double adj_tip = total_item_points_;
         switch (item_type) {
         case ItemType::WEAPON:
+        {
+            auto restr = restriction_check(RestrictionField::WEAPON, search->second.restrictions);
+            if (restr.first) throw std::invalid_argument(restr.second);
             if (weapons_.find(search->second.weapon_type) != weapons_.end()) {
                 adj_mip -= std::get<2>(weapons_[search->second.weapon_type]);
                 adj_tip -= std::get<2>(weapons_[search->second.weapon_type]);
             }
             break;
+        }
         case ItemType::ARMOUR:
         {
             // protect against cases where user tries to pick another piece of
@@ -210,6 +214,8 @@ void character_unit::pick_magic_item(ItemType item_type, ItemClass item_class, c
                     }
                 )) throw std::invalid_argument("Cannot choose multiple pieces of magic armour!");
             }
+            auto restr = restriction_check(RestrictionField::ARMOUR, search->second.restrictions);
+            if (restr.first) throw std::invalid_argument(restr.second);
             if (armours_.find(at) != armours_.end()) {
                 adj_mip -= std::get<2>(armours_[at]);
                 adj_tip -= std::get<2>(armours_[at]);
@@ -217,19 +223,37 @@ void character_unit::pick_magic_item(ItemType item_type, ItemClass item_class, c
             break;
         }
         case ItemType::TALISMAN:
+        {
+            auto restr = restriction_check(RestrictionField::TALISMAN, search->second.restrictions);
+            if (restr.first) throw std::invalid_argument(restr.second);
             if (!talisman_.first.empty()) {
                 adj_mip -= talisman_.second.second;
                 adj_tip -= talisman_.second.second;
             }
             break;
+        }
         case ItemType::ENCHANTED:
+        {
+            auto restr = restriction_check(RestrictionField::ENCHANTED, search->second.restrictions);
+            if (restr.first) throw std::invalid_argument(restr.second);
             if (!enchanted_item_.first.empty()) {
                 adj_mip -= enchanted_item_.second.second;
                 adj_tip -= enchanted_item_.second.second;
             }
             break;
+        }
         case ItemType::BANNER:
+        {
+            auto restr = restriction_check(RestrictionField::BANNER, search->second.restrictions);
+            if (restr.first) throw std::invalid_argument(restr.second);
             break;
+        }
+        case ItemType::OTHER:
+        {
+            auto restr = restriction_check(RestrictionField::OTHER, search->second.restrictions);
+            if (restr.first) throw std::invalid_argument(restr.second);
+            break;
+        }
         default: break;
         }
         if (item_type != ItemType::BANNER) {
@@ -570,8 +594,7 @@ void character_unit::pick_mount(std::string name) {
             mnt_search == handle_->mounts_handle()->end())
         throw std::invalid_argument("Mount not found!");
     auto restr = restriction_check(RestrictionField::MOUNT, mnt_search->second.restrictions());
-    if (restr.first)
-        throw std::invalid_argument(restr.second);
+    if (restr.first) throw std::invalid_argument(restr.second);
     remove_mount();
     mount_ = {mnt_search->second, opt_search->second, {}, {}};
     points_ += opt_search->second;
@@ -734,6 +757,11 @@ std::string character_unit::html_table_row_both(short mlevel, std::string arcane
     row += "<tr>\n";
     for (const auto& x : handle_->statistics()) row += "<td align=\"center\">" + x + "</td>\n";
     row += "</tr>\n";
+    if (!std::get<0>(mount_).name().empty()) {
+        row += "<tr>\n";
+        for (const auto& x : std::get<0>(mount_).statistics()) row += "<td align=\"center\">" + x + "</td>\n";
+        row += "</tr>\n";
+    }
     row += "</table></td>\n";
     // points
     row += "<td>" + tools::points_str(points()) + "</td>\n";

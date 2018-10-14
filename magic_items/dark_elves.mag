@@ -5,11 +5,15 @@ Hydra Blade
     100
     The wielder of the Hydra Blade has the Random Attacks (D6+A) special rule. In addition, at the start of any round of close combat in which the bearer will fight, he must take a Leadership test with a -2 modifier before striking any blows. If the test is passed, nothing extra happens. If the test is failed, the wielder suffers a -5 penalty to Weapon Skill (to a minimum of 1) but gains the Heroic Killing Blow special rule until the end of the round.
     None
+    1
+    None
 
 Chillblade
     Weapon, Melee
     50
     Attacks made with the Chillblade wound automatically. Any model that suffers one or more unsaved Wounds from the Chillblade must immediately pass a Toughness test or suffer -3 to its Attacks characteristic (to a minimum of 1) until the end of the following Close Combat phase.
+    None
+    1
     None
 
 Black Dragon Egg
@@ -17,11 +21,15 @@ Black Dragon Egg
     50
     One use only. The bearer may consume this item at the start of any player turn. For the rest of that turn, the consumer has Strength and Toughness 6, and a Strength 2 Breath Weapon, against which no armour saves can be taken.
     None
+    1
+    None
 
 Cloak of Twilight
     Enchanted
     50
     The wearer of the Cloak of Twilight has a 3+ ward save against Wounds caused by shooting attacks and spells. Furthermore, in the first round of any close combat, the wearer has both the Killing Blow and Multiple Wounds (D3) special rules.
+    None
+    1
     None
 
 The Black Amulet
@@ -29,11 +37,15 @@ The Black Amulet
     60
     The wearer of the Black Amulet has a 4+ ward save. Furthermore, each time the bearer of the Black Amulet makes a successful ward save while fighting in a challenge, the Black Amulet inflicts one Wound on the bearer's opponent. Armour saves cannot be taken against Wounds caused by the Black Amulet.
     None
+    1
+    None
 
 Ring of Hotek
     Talisman
     50
     The bearer has the Magic Resistance (3) special rule. In addition, any enemy Wizard that attempts to cast or target a spell on a unit within 6" of the bearer will suffer a miscast on a roll of double 1, as well as double 6. Miscasts caused by a roll of double 1 do not benefit from irrestible force.
+    None
+    1
     None
 
 Banner of Nagarythe
@@ -41,21 +53,29 @@ Banner of Nagarythe
     100
     All models in the unit carrying the banner have the Unbreakable special rule, as do Alith Anar, any Shadow Warriors and any Shadow-walkers (from Warhammer: High Elves) if their unit is within 12" of the banner.
     None
+    1
+    None
 
 The Gem of Spite
     Arcane
     35
     Whenever the bearer suffers a miscast, the Gem of Spite inflicts a single Strength 6 hit on every enemy Wizard within 12". Each time a Wound is caused by the Gem of Spite, your opponent can discard a dice from his dispel pool. If they do so, the Wound is negated and has no effect.
     Supreme Sorceress, Sorceress
+    1
+    None
 
 The Sacrificial Dagger
     Arcane
     25
     Once per casting attempt, after the casting dice a rolled but before a dispel attempt is made, the bearer if this magic item can sacrifice one model in her unit. Choose which model is sacrificed - it is immediately removed as a casualty with no saves of any kind allowed - then roll a D6. On a 4+, the Sorceress gains an extra power dice that must be rolled and added to the casting result; dispel attempts can now be made and the spell resolved. On a roll of 3 or less, the sacrifice has not generated enough power - you can either immediately sacrifice another model from the unit and roll again, following the procedure above, or accept the original casting result (if the bearer is the only model remaining in the unit, no further sacrifices can be attempted).
     Supreme Sorceress, Sorceress
+    1
+    None
 
 Tome of Furion
     Arcane
     25
     When the bearer of the Tome of Furion generates spells from the Lore of Dark Magic, she can choose one spell - the rest must be generated following the normal rules.
     Supreme Sorceress, Sorceress
+    1
+    None

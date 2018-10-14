@@ -5,11 +5,15 @@ The Blade of Leaping Gold
     70
     The Blade of Leaping Gold grants the wielder +3 Attacks. In addition, any roll of 6 To Wound made with The Blade of Leaping Gold ignores armour saves.
     None
+    1
+    None
 
 Star Lance
     Weapon, Melee
     30
     Mounted character only. The Star Lance can only be used in a turn in which the bearer makes a successful charge. Attacks with the Star Lance are resolved at +3 Strength, and armour saves cannot be taken against Wounds caused by the Star Lance. If the bearer did not make a successful charge this turn, or if his mount has been slain, he must instead fight using another weapon.
+    None
+    1
     None
 
 The Reaver Bow
@@ -17,29 +21,39 @@ The Reaver Bow
     25
     Range: 30". Strength: +1. Special Rules: Volley Fire, Multiple Shots (3).
     None
+    1
+    None
 
 Armour of Caledor
     Armour, Armour
     50
     The Armour of Caledor grants the wearer a 2+ armour save that cannot be improved by any means. In addition, the Armour of Caledor grants the bearer a 6+ ward save and the Fireborn special rule.
     Prince, Anointed of Asuryan, Noble, Dragon Mage of Caledor, Lothern Sea Helm, Handmaiden of the Everqueen
+    1
+    None
 
 Shadow Armour
     Armour, Armour
     25
     Model on foot only. The wearer of the Shadow Armour has a 5+ armour save. In addition, the wearer has both the Scouts and Strider special rules.
     Prince, Anointed of Asuryan, Noble, Lothern Sea Helm, Handmaiden of the Everqueen
+    1
+    None
 
 Shield of the Merwyrm
     Armour, Shield
     15
     Shield. Unless he is fighting with a weapon that has the Requires Two Hands special rule, the bearer of the Shield of the Merwyrm has a parry save of 4+ (even if he's fighting with a magic weapon).
     Prince, Anointed of Asuryan, Noble, Lothern Sea Helm, Handmaiden of the Everqueen
+    1
+    None
 
 Golden Crown of Atrazar
     Talisman
     10
     One use only. The Golden Crown of Atrazar bestows a 2+ ward save against the first wounding hit suffered by the wearer (which cancels out not only the Wound, but also any Killing Blow or Multiple Wounds special rules the attack has) after which its power fades and it cannot be used again during the game.
+    None
+    1
     None
 
 Moranion's Wayshard
@@ -47,11 +61,15 @@ Moranion's Wayshard
     50
     Model on foot only. The bearer of Moranion's Wayshard has the Ambushers special rule. He can also give the Ambushers special rule to a friendly Archers or Spearmen unit, up to 30 models in size and chosen from Warhammer: High Elves, immediately before deployment. If he does so, he immediately joins the unit and cannot leave it until the turn after the one in which the combined unit has deployed.
     None
+    1
+    None
 
 Khaines' Ring of Fury
     Enchanted
     25
     Bound spell (power level 3). Khaine's Ring of Fury contains the Soul Quench spell.
+    None
+    1
     None
 
 Gem of Sunfire
@@ -59,11 +77,15 @@ Gem of Sunfire
     20
     One use only. During the turn in which the Gem of Sunfire is used, all of the bearer's spells, shooting attacks and close combat attacks (and his mount's, if he has one) have a +1 bonus To Wound (rolls of 1 still fail) provided that they also have the Flaming Attacks special rule.
     None
+    1
+    None
 
 Cloak of Beards
     Enchanted
     10
     D
+    None
+    1
     None
 
 Book of Hoeth
@@ -71,9 +93,13 @@ Book of Hoeth
     55
     The Book of Hoeth allows the bearer to re-roll a single dice from each of his casting or dispel attempts. Results of 6 cannot be re-rolled.
     Archmage, Loremaster of Hoeth
+    1
+    None
 
 Banner of the World Dragon
     Banner
     50
     All models in a unit that carries the Banner of the World Dragon have a 2+ ward save against all Wounds caused by spells, magic weapons and magical attacks. Furthermore, all Dragons (friend or foe) within 12" of the Banner of the World Dragon have the Stubborn special rule.
+    None
+    1
     None

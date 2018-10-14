@@ -5,11 +5,15 @@ Hellfire Sword
     65
     Close combat attacks made with the Hellfire Sword have the Flaming Attacks and Multiple Wounds (D3) special rules. No armour saves can be taken against Wounds caused by the Hellfire Sword. After all close combat blows have been struck, roll a D6 for every foe slain by the Hellfire Sword - on the roll of a 6, the slain foe’s body explodes, inflicting an additional D6 Strength 4 hits on the enemy unit with the Flaming Attacks special rule. Unsaved Wounds inflicted in this way count towards the combat result. At the end of each of the wielder’s turns, roll a D6; on the roll of a 1, he suffers one Wound with no armour saves allowed.
     None
+    1
+    None
 
 Sword of Change
     Weapon, Melee
     30
     If an enemy character or monster is slain by the Sword of Change in close combat, roll a D6. On the roll of a 4+, the model is transformed into a Chaos Spawn under the control of the owner of the Sword of Change, exactiy as if the enemy model were a Chaos Champion that had suffered a Spawndom result on the Eye of the Gods table.
+    None
+    1
     None
 
 Filth Mace
@@ -17,11 +21,15 @@ Filth Mace
     30
     Close combat attacks made with the Filth Mace have the Poisoned Attacks special rule. Once the wielder has killed an enemy model in close combat, he immediately gains the Terror special rule and, from the start of the next Close Combat phase (friend or foe),all subsequent Attacks made with the Filth Mace that result in a successful Poisoned Attack have the Multiple Wounds (D3) special rule.
     None
+    1
+    oco_extra: Mark of Nurgle
 
 Helm of Many Eyes
     Armour, Helmet
     25
     The bearer ofthe Helm of Many Eyes counts his armour save as being one higher than normal. In addition, the bearer has both the Always Strikes First and Stupidity special rules.
+    None
+    1
     None
 
 Skull of Katam
@@ -29,11 +37,15 @@ Skull of Katam
     15
     The bearer of the Skull of Katam can choose to consult it before attempting to channel power dice. If he does so, roll 6 dice instead of 1. If the bearer consulted the Skull of Katam, he suffers a -1 Leadership penalty for the rest of the game for every result of a 1 rolled when channelling — if it is ever reduced to 0, he is immediately removed as a casualty. A Wizard with the Mark of Tzeentch may not re-roll channelling results of a 1 when using the Skull of Katam.
     Chaos Sorcerer Lord, Daemon Prince, Chaos Sorcerer
+    1
+    None
 
 Chalice of Chaos
     Enchanted
     10
     See page 63 of Warhammer: Warriors of Chaos.
+    None
+    1
     None
 
 Pendant of Slaanesh
@@ -41,15 +53,22 @@ Pendant of Slaanesh
     50
     The bearer of the Pendant of Slaanesh can only join units that have the Mark of Slaanesh. No other character may join the same unit as the bearer and he cannot join units that already contain a character. Whenever the bearer, or his unit, take a Break test, it is taken on one less dice than usual (note that a Break test cannot be passed with Insane Courage on a single D6). In addition, for each unsaved Wound the bearer suffers, he gains +1 Attack for the rest of the battle.
     None
+    1
+    oco_extra: Mark of Slaanesh
 
 Blasted Standard
     Banner
     25
     Each time the bearer, or his unit, suffer a hit from a shooting attack, roll a D6 immediately before rolling To Wound. On the roll of 2+, the Strength of that hit is halved. However, if the result is a 1, the Strength of that hit is instead doubled. Attacks that do not roll To Wound, or that wound automatically, are not affected by the Blasted Standard.
     None
+    1
+    oco_extra: Mark of Tzeentch
 
 Banner of Rage
     Banner
     25
     The bearer of the Banner of Rage can only join units that are completely comprised of models with the Mark of Khorne. Only characters that have the Mark of Khorne may join the same unit as the bearer. Whilst the bearer is alive, neither he, nor his unit, can ever lose their Frenzy special rule. If the bearer joins a unit that has lost its Frenzy, the unit immediately regains the Frenzy special rule.
     None
+    1
+    oco_extra: Mark of Khorne
+

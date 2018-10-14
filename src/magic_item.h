@@ -4,6 +4,7 @@
 #include "enums.h"
 
 #include <string>
+#include <unordered_map>
 #include <unordered_set>
 
 struct item {
@@ -14,7 +15,12 @@ struct item {
     std::string name;
     std::string description;
     double points;
+    int limit;
     std::unordered_set<std::string> allowed_units;
+    std::unordered_map<
+        RestrictionField,
+        std::vector<std::string>
+    > restrictions;
 };
 
 #endif // !MAGIC_ITEM_H

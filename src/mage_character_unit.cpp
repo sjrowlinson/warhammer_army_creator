@@ -56,6 +56,8 @@ void mage_character_unit::pick_arcane_item(ItemClass item_class, std::string nam
         const double ti_budget = handle->total_item_budget();
         double adj_mip = magic_item_points_;
         double adj_tip = total_item_points_;
+        auto restr = restriction_check(RestrictionField::ARCANE, search->second.restrictions);
+        if (restr.first) throw std::invalid_argument(restr.second);
         if (!arcane_item_.first.empty()) {
             adj_mip -= arcane_item_.second.second;
             adj_tip -= arcane_item_.second.second;
@@ -89,6 +91,8 @@ void mage_character_unit::pick_arcane_item(ItemClass item_class, std::string nam
         const double ti_budget = handle_->total_item_budget();
         double adj_fip = faction_item_points_;
         double adj_tip = total_item_points_;
+        auto restr = restriction_check(RestrictionField::ARCANE, search->second.restrictions);
+        if (restr.first) throw std::invalid_argument(restr.second);
         if (!arcane_item_.first.empty()) {
             adj_fip -= arcane_item_.second.second;
             adj_tip -= arcane_item_.second.second;
