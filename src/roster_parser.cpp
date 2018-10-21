@@ -212,6 +212,28 @@ namespace tools {
         return um;
     }
 
+    std::tuple<double, std::size_t, ItemClass, ItemType> roster_parser::parse_item_budget(const std::string& s) {
+        if (s == "None" || s.empty()) return {0.0, 1U, ItemClass::NONE, ItemType::NONE};
+        std::vector<std::string> points_w_opts = tools::split(s, ';');
+        if (points_w_opts.size() == 1)
+            return {std::stod(points_w_opts[0]), 1U, ItemClass::NONE, ItemType::NONE};
+        double pts = std::stod(points_w_opts[0]);
+        ItemClass ic = ItemClass::NONE;
+        std::size_t num = 1U;
+        ItemType it = ItemType::NONE;
+        std::vector<std::string> opts = tools::split(points_w_opts[1], ',');
+        for (const auto& x : opts) {
+            std::vector<std::string> y = tools::split(x, ':');
+            if (y[0] == "itemclass")
+                ic = enum_convert::STRING_TO_ITEM_CLASS.at(y[1]);
+            else if (y[0] == "num")
+                num = static_cast<std::size_t>(std::stoul(y[1]));
+            else if (y[0] == "type")
+                it = enum_convert::STRING_TO_ITEM_TYPE.at(y[1]);
+        }
+        return {pts, num, ic, it};
+    }
+
     std::vector<std::shared_ptr<base_unit>> roster_parser::parse() {
         std::vector<std::shared_ptr<base_unit>> units;
         units.reserve(blocks.size());

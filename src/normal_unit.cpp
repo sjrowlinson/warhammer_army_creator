@@ -253,6 +253,7 @@ void normal_unit::pick_default_weapon(ItemClass item_type, std::string name) {
         throw std::invalid_argument("Cannot give magic weapons to this unit!");
     case ItemClass::FACTION:
         throw std::invalid_argument("Cannot give faction weapons to this unit!");
+    default: break;
     }
 }
 
@@ -318,6 +319,7 @@ void normal_unit::pick_champion_weapon(ItemClass item_type, std::string name) {
         // => implementation should be very similar to ItemClass::MAGIC case
         break;
     }
+    default: break;
     }
 }
 
@@ -354,6 +356,7 @@ void normal_unit::pick_default_armour(ItemClass item_type, std::string name) {
         throw std::invalid_argument("Cannot give magic armour to this unit!");
     case ItemClass::FACTION:
         throw std::invalid_argument("Cannot give faction armour to this unit!");
+    default: break;
     }
 }
 
@@ -419,10 +422,11 @@ void normal_unit::pick_champion_armour(ItemClass item_type, std::string name) {
         // => implementation should be very similar to ItemClass::MAGIC case
         break;
     }
+    default: break;
     }
 }
 
-void normal_unit::remove_weapon(WeaponType wt, bool replacing) {
+std::string normal_unit::remove_weapon(WeaponType wt, bool replacing) {
     switch (model_select_) {
     case ModelSelect::DEFAULT:
         remove_default_weapon(wt, replacing);
@@ -431,6 +435,8 @@ void normal_unit::remove_weapon(WeaponType wt, bool replacing) {
         remove_champion_weapon(wt, replacing);
         break;
     }
+    // FIXME: temporary, do proper handling in above methods
+    return "";
 }
 
 void normal_unit::remove_default_weapon(WeaponType wt, bool replacing) {
@@ -469,6 +475,7 @@ void normal_unit::remove_champion_weapon(WeaponType wt, bool replacing) {
     const double pts = std::get<2>(weapon);
     switch (std::get<0>(weapon)) {
     case ItemClass::MUNDANE:
+    case ItemClass::NONE:
         break;
     case ItemClass::MAGIC:
     case ItemClass::COMMON:
@@ -524,6 +531,7 @@ void normal_unit::remove_champion_armour(ArmourType at, bool replacing) {
     const double pts = std::get<2>(armour);
     switch (std::get<0>(armour)) {
     case ItemClass::MUNDANE:
+    case ItemClass::NONE:
         break;
     case ItemClass::MAGIC:
     case ItemClass::COMMON:

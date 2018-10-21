@@ -89,9 +89,13 @@ public:
     UnitType unit_type() const noexcept;
     UnitClass unit_class() const noexcept;
 
-    // pure virtual selectors
+    // item selectors
+    // TODO: change all of these to return value of remove_weapon - i.e.
+    // return a string encoding the item removed (so the item being replaced
+    // for pick methods and the item being directly removed for remove
+    // methods) => may not need this signature for mounts though, only items
     virtual void pick_weapon(ItemClass item_type, std::string name) = 0;
-    virtual void remove_weapon(WeaponType wt, bool replacing=false) = 0;
+    virtual std::string remove_weapon(WeaponType wt, bool replacing=false) = 0;
     virtual void pick_armour(ItemClass item_type, std::string name) = 0;
     virtual void remove_armour(ArmourType at, bool replacing=false) = 0;
     virtual void pick_oco_extra(std::string name) = 0;

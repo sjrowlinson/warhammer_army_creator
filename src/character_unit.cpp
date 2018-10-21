@@ -313,7 +313,9 @@ void character_unit::pick_magic_item(ItemType item_type, ItemClass item_class, c
         }
         break;
     }
-    case ItemClass::MUNDANE: break;
+    case ItemClass::MUNDANE:
+    case ItemClass::NONE:
+        break;
     }
 }
 
@@ -373,6 +375,7 @@ void character_unit::pick_weapon(ItemClass item_type, std::string name) {
     case ItemClass::FACTION:
         pick_magic_item(ItemType::WEAPON, item_type, name);
         break;
+    default: return;
     }
 }
 
@@ -398,6 +401,7 @@ void character_unit::pick_armour(ItemClass item_type, std::string name) {
     case ItemClass::FACTION:
         pick_magic_item(ItemType::ARMOUR, item_type, name);
         break;
+    default: return;
     }
 }
 
@@ -507,8 +511,8 @@ void character_unit::pick_mc_extra(std::string name) {
     points_ += search->second.second;
 }
 
-void character_unit::remove_weapon(WeaponType wt, bool replacing) {
-    if (!weapons_.count(wt)) return;
+std::string character_unit::remove_weapon(WeaponType wt, bool replacing) {
+    if (!weapons_.count(wt)) return "";
     auto weapon = weapons_[wt];
     auto search = handle_->eq().weapons().find(wt);
     if (search != handle_->eq().weapons().cend()) {
@@ -518,7 +522,7 @@ void character_unit::remove_weapon(WeaponType wt, bool replacing) {
                 weapons_[wt] = {ItemClass::MUNDANE, "Hand weapon", 0.0};
         }
         else {
-            if (search->second.second == std::get<1>(weapon)) return;
+            if (search->second.second == std::get<1>(weapon)) return "";
             weapons_[wt] = {search->second.first, search->second.second, 0.0};
         }
     }
@@ -527,6 +531,7 @@ void character_unit::remove_weapon(WeaponType wt, bool replacing) {
     const double pts = std::get<2>(weapon);
     switch (std::get<0>(weapon)) {
     case ItemClass::MUNDANE:
+    case ItemClass::NONE:
         break;
     case ItemClass::MAGIC:
     case ItemClass::COMMON:
@@ -539,6 +544,7 @@ void character_unit::remove_weapon(WeaponType wt, bool replacing) {
         break;
     }
     points_ -= pts;
+    return std::get<1>(weapon);
 }
 
 void character_unit::remove_armour(ArmourType at, bool replacing) {
@@ -558,6 +564,7 @@ void character_unit::remove_armour(ArmourType at, bool replacing) {
     const double pts = std::get<2>(armour);
     switch (std::get<0>(armour)) {
     case ItemClass::MUNDANE:
+    case ItemClass::NONE:
         break;
     case ItemClass::MAGIC:
     case ItemClass::COMMON:

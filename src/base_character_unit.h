@@ -7,6 +7,7 @@
 #include "options.h"
 
 #include <string>
+#include <tuple>
 #include <unordered_map>
 #include <vector>
 
@@ -18,8 +19,11 @@ private:
     equipment eq_;
     options opt_;
     double magic_item_budget_;
+    // std::tuple<double, std::size_t, ItemClass, ItemType> magic_item_budget_;
     double faction_item_budget_;
+    // std::tuple<double, std::size_t, ItemClass, ItemType> faction_item_budget_;
     double total_item_budget_;
+    // std::pair<double, std::size_t> total_item_budget_;
     bool is_bsb_;
 
     std::string mount_name_;

@@ -52,8 +52,8 @@ QGroupBox* MagicItemBox::make_items_tab(const std::unordered_map<std::string, it
         return make_other_tab(opt_items);
     case ItemType::BANNER:
         return make_banners_tab(opt_items);
+    default: return nullptr;
     }
-    return nullptr;
 }
 
 QGroupBox* MagicItemBox::make_weapons_tab(const std::vector<std::pair<std::string, item>>& opt_weapons) {

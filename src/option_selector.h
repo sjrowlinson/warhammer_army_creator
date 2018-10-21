@@ -14,6 +14,8 @@ private:
     std::shared_ptr<army_list> army;
     InTree in_tree;
     std::shared_ptr<unit> current;
+
+    void item_limit_check(bool is_magic, ItemClass ic, const std::string& s);
 public:
     explicit option_selector(
         std::shared_ptr<selection_tree> st_,

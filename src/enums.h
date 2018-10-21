@@ -96,7 +96,8 @@ enum class ItemClass {
     MUNDANE,
     MAGIC,
     FACTION,
-    COMMON
+    COMMON,
+    NONE
 };
 
 enum class ItemType {
@@ -106,7 +107,8 @@ enum class ItemType {
     ARCANE,
     ENCHANTED,
     BANNER,
-    OTHER
+    OTHER,
+    NONE
 };
 
 enum class WeaponType {

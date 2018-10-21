@@ -66,7 +66,7 @@ namespace tools {
                 std::vector<std::string> vec = tools::split(allowed, ',');
                 for (const auto& x : vec) itm.allowed_units.insert(x);
             }
-            if (limit != "None") itm.limit = std::stoi(limit);
+            if (limit != "None") itm.limit = static_cast<unsigned int>(std::stoul(limit));
             else itm.limit = std::numeric_limits<int>::max();
             itm.restrictions = restrs;
             items.push_back(itm);

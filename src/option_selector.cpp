@@ -12,38 +12,78 @@ void option_selector::reset(std::shared_ptr<unit> current_, InTree in_tree_) {
 
 // selectors
 
+void option_selector::item_limit_check(bool is_magic, ItemClass ic, const std::string& s) {
+    if (!is_magic) return;
+    std::unordered_map<std::string, item>::const_iterator item_it;
+    switch (ic) {
+    case ItemClass::COMMON:
+        item_it = current->base()->common_items_handle()->second.find(s);
+        break;
+    case ItemClass::MAGIC:
+        item_it = current->base()->magic_items_handle()->second.find(s);
+        break;
+    case ItemClass::FACTION:
+        item_it = current->base()->faction_items_handle()->second.find(s);
+        break;
+    default: break;
+    }
+    auto itm_search = army->item_track_map().find(s);
+    if (itm_search != army->item_track_map().cend()) {
+        if (!(itm_search->second < item_it->second.limit)) {
+            std::string msg = "Cannot have more than " + std::to_string(item_it->second.limit)
+                    + ' ' + s + " items in a single army!";
+            throw std::runtime_error(msg);
+        }
+    }
+}
+
 bool option_selector::select_weapon(const std::string& s) {
     auto split = tools::split(s, '_');
     auto weapon = split[0];
+    if (current == nullptr) throw std::runtime_error("No unit selected!");
     if (weapon == "None") { // None radio button selected
         WeaponType wt;
         if (split[2] == "melee") wt = WeaponType::MELEE;
         else if (split[2] == "ranged") wt = WeaponType::BALLISTIC;
         else wt = WeaponType::NONE;
+        std::string rmvd_wpn = "";
         switch (in_tree) {
         case InTree::ARMY:
             army->take_snapshot_of(current->id());
-            if (split[3] == "default") current->remove_weapon(wt);
+            if (split[3] == "default") rmvd_wpn = current->remove_weapon(wt);
             else if (split[3] == "champion") {
                 current->switch_model_select(ModelSelect::CHAMPION);
-                current->remove_weapon(wt);
+                rmvd_wpn = current->remove_weapon(wt);
                 current->switch_model_select(ModelSelect::DEFAULT);
             }
             army->update_on(current->id());
+            if (!rmvd_wpn.empty() && (current->base()->common_items_handle()->second.count(rmvd_wpn) ||
+                    current->base()->magic_items_handle()->second.count(rmvd_wpn) ||
+                    current->base()->faction_items_handle()->second.count(rmvd_wpn)))
+                army->decr_item_tracker(rmvd_wpn);
             return true;
         case InTree::ROSTER:
-            if (split[3] == "default") current->remove_weapon(wt);
+            if (split[3] == "default") rmvd_wpn = current->remove_weapon(wt);
             else if (split[3] == "champion") {
                 current->switch_model_select(ModelSelect::CHAMPION);
-                current->remove_weapon(wt);
+                rmvd_wpn = current->remove_weapon(wt);
                 current->switch_model_select(ModelSelect::DEFAULT);
             }
+            if (!rmvd_wpn.empty() && (current->base()->common_items_handle()->second.count(rmvd_wpn) ||
+                    current->base()->magic_items_handle()->second.count(rmvd_wpn) ||
+                    current->base()->faction_items_handle()->second.count(rmvd_wpn)))
+                army->decr_item_tracker(rmvd_wpn);
             return false;
         default: throw std::runtime_error("No unit selected!");
         }
     }
     else {
+        const bool is_magical = current->base()->common_items_handle()->second.count(weapon) ||
+                    current->base()->magic_items_handle()->second.count(weapon) ||
+                    current->base()->faction_items_handle()->second.count(weapon);
         ItemClass ic = static_cast<ItemClass>(std::stoi(split[2]));
+        try { item_limit_check(is_magical, ic, weapon); }
+        catch (const std::runtime_error&) { throw; }
         switch (in_tree) {
         case InTree::ARMY:
             army->take_snapshot_of(current->id());
@@ -61,6 +101,7 @@ bool option_selector::select_weapon(const std::string& s) {
                 current->switch_model_select(ModelSelect::DEFAULT);
             }
             army->update_on(current->id());
+            if (is_magical) army->incr_item_tracker(weapon);
             return true;
         case InTree::ROSTER:
             if (split[3] == "default") {
@@ -76,6 +117,7 @@ bool option_selector::select_weapon(const std::string& s) {
                 }
                 current->switch_model_select(ModelSelect::DEFAULT);
             }
+            if (is_magical) army->incr_item_tracker(weapon);
             return false;
         default: throw std::runtime_error("No unit selected!");
         }

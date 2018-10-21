@@ -55,6 +55,12 @@ namespace tools {
             std::string,
             std::pair<bool, double>
         > parse_optional_extras(std::string s);
+        std::tuple<
+            double,
+            std::size_t,
+            ItemClass,
+            ItemType
+        > parse_item_budget(const std::string& s);
 
         // specialised parsing
         base_melee_character_unit parse_melee_character(std::size_t n, UnitType ut);

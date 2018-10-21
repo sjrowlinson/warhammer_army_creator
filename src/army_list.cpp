@@ -3,7 +3,7 @@
 army_list::army_list(double points) :
     points(points), curr_pts(0.0), lord_lim(0.0),
     hero_lim(0.0), core_min(0.0), spec_lim(0.0),
-    rare_lim(0.0), army(), lord_pts(0.0), hero_pts(0.0),
+    rare_lim(0.0), army(), item_tracker(), lord_pts(0.0), hero_pts(0.0),
     core_pts(0.0), spec_pts(0.0), rare_pts(0.0),
     invalidities{InvalidListReason::CORE_MINIMUM}, snap_unit_pts(0.0) {
     determine_limits();
@@ -159,6 +159,19 @@ void army_list::remove_rare() {
 
 double army_list::current_points() const noexcept { return curr_pts; }
 double army_list::point_limit() const noexcept { return points; }
+
+const std::unordered_map<std::string, unsigned int>& army_list::item_track_map() const noexcept {
+    return item_tracker;
+}
+
+void army_list::incr_item_tracker(const std::string& s) {
+    ++item_tracker[s];
+}
+
+void army_list::decr_item_tracker(const std::string& s) {
+    --item_tracker[s];
+    if (!item_tracker[s]) item_tracker.erase(s);
+}
 
 std::size_t army_list::nlords() const noexcept {
     return static_cast<std::size_t>(std::count_if(

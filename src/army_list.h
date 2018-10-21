@@ -30,6 +30,7 @@ private:
         int,
         std::shared_ptr<unit>
     > army;
+    std::unordered_map<std::string, unsigned int> item_tracker;
     double lord_pts;
     double hero_pts;
     double core_pts;
@@ -46,6 +47,9 @@ public:
     ~army_list();
     double current_points() const noexcept;
     double point_limit() const noexcept;
+    const std::unordered_map<std::string, unsigned int>& item_track_map() const noexcept;
+    void incr_item_tracker(const std::string& s);
+    void decr_item_tracker(const std::string& s);
     // add/remove units
     void add_unit(std::shared_ptr<unit> u);
     void remove_unit(int id);

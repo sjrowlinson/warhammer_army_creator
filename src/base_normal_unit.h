@@ -24,8 +24,11 @@ private:
     std::vector<std::string> champ_sr_; // champion special rules
     equipment champ_eq_;
     options champ_opt_;
+    // TODO: change to => std::tuple<double, std::size_t, ItemClass, ItemType> champ_mi_budget_;
     double champ_mi_budget_;
+    // TODO: change to => std::tuple<double, std::size_t, ItemClass, ItemType> champ_fi_budget_;
     double champ_fi_budget_;
+    // TODO: change to => std::tuple<double, std::size_t, ItemClass, ItemType> champ_ti_budget_;
     double champ_ti_budget_;
 
     // command group

@@ -127,7 +127,7 @@ void mixed_unit::pick_weapon(ItemClass item_type, std::string name) {
     }
 }
 
-void mixed_unit::remove_weapon(WeaponType wt, bool replacing) {
+std::string mixed_unit::remove_weapon(WeaponType wt, bool replacing) {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
         master_.remove_weapon(wt, replacing);
@@ -136,6 +136,8 @@ void mixed_unit::remove_weapon(WeaponType wt, bool replacing) {
         slave_.remove_weapon(wt, replacing);
         break;
     }
+    // FIXME: temporary, do proper handling in above methods
+    return "";
 }
 
 void mixed_unit::pick_armour(ItemClass item_type, std::string name) {

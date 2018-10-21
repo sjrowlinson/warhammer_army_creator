@@ -182,6 +182,9 @@ Stormvermin
     15
     15
     50
+# TODO: change faction item budget line to below to indicate that a Fangleader may only
+#       choose a single piece of equipment worth up to 15 pts from the Scavenge-Pile
+#   15 ; num : 1
 
 Skavenslaves
     Core, Infantry, Normal
