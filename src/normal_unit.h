@@ -122,42 +122,42 @@ public:
     std::pair<std::string, std::pair<ItemClass, double>> magic_banner() const noexcept override;
 
     // current property modifiers
-    void pick_weapon(ItemClass item_type, std::string name) override;
-    void pick_armour(ItemClass item_type, std::string name) override;
+    std::string pick_weapon(ItemClass item_type, std::string name) override;
+    std::string pick_armour(ItemClass item_type, std::string name) override;
 
-    void pick_default_weapon(ItemClass item_type, std::string name);
-    void pick_default_armour(ItemClass item_type, std::string name);
-    void pick_champion_weapon(ItemClass item_type, std::string name);
-    void pick_champion_armour(ItemClass item_type, std::string name);
+    std::string pick_default_weapon(ItemClass item_type, std::string name);
+    std::string pick_default_armour(ItemClass item_type, std::string name);
+    std::string pick_champion_weapon(ItemClass item_type, std::string name);
+    std::string pick_champion_armour(ItemClass item_type, std::string name);
 
     std::string remove_weapon(WeaponType wt, bool replacing=false) override;
-    void remove_armour(ArmourType at, bool replacing=false) override;
+    std::string remove_armour(ArmourType at, bool replacing=false) override;
 
-    void remove_default_weapon(WeaponType wt, bool replacing=false);
-    void remove_default_armour(ArmourType at, bool replacing=false);
-    void remove_champion_weapon(WeaponType wt, bool replacing=false);
-    void remove_champion_armour(ArmourType at, bool replacing=false);
+    std::string remove_default_weapon(WeaponType wt, bool replacing=false);
+    std::string remove_default_armour(ArmourType at, bool replacing=false);
+    std::string remove_champion_weapon(WeaponType wt, bool replacing=false);
+    std::string remove_champion_armour(ArmourType at, bool replacing=false);
 
     void add_command_member(CommandGroup member);
     void remove_command_member(CommandGroup member);
-    void pick_banner(ItemClass item_type, std::string name) override;
-    void remove_banner() override;
+    std::string pick_banner(ItemClass item_type, std::string name) override;
+    std::string remove_banner() override;
 
-    void pick_oco_extra(std::string name) override;
-    void pick_mc_extra(std::string name) override;
+    std::string pick_oco_extra(std::string name) override;
+    std::string pick_mc_extra(std::string name) override;
 
-    void pick_default_oco_extra(std::string name);
-    void pick_default_mc_extra(std::string name);
-    void pick_champion_oco_extra(std::string name);
-    void pick_champion_mc_extra(std::string name);
+    std::string pick_default_oco_extra(std::string name);
+    std::string pick_default_mc_extra(std::string name);
+    std::string pick_champion_oco_extra(std::string name);
+    std::string pick_champion_mc_extra(std::string name);
 
-    void remove_oco_extra() override;
-    void remove_mc_extra(std::string name) override;
+    std::string remove_oco_extra() override;
+    std::string remove_mc_extra(std::string name) override;
 
-    void remove_default_oco_extra();
-    void remove_champion_oco_extra();
-    void remove_default_mc_extra(std::string name);
-    void remove_champion_mc_extra(std::string name);
+    std::string remove_default_oco_extra();
+    std::string remove_champion_oco_extra();
+    std::string remove_default_mc_extra(std::string name);
+    std::string remove_champion_mc_extra(std::string name);
 
     void pick_mount(std::string name) override;
     void remove_mount() override;

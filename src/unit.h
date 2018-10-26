@@ -94,18 +94,18 @@ public:
     // return a string encoding the item removed (so the item being replaced
     // for pick methods and the item being directly removed for remove
     // methods) => may not need this signature for mounts though, only items
-    virtual void pick_weapon(ItemClass item_type, std::string name) = 0;
+    virtual std::string pick_weapon(ItemClass item_type, std::string name) = 0;
     virtual std::string remove_weapon(WeaponType wt, bool replacing=false) = 0;
-    virtual void pick_armour(ItemClass item_type, std::string name) = 0;
-    virtual void remove_armour(ArmourType at, bool replacing=false) = 0;
-    virtual void pick_oco_extra(std::string name) = 0;
-    virtual void remove_oco_extra() = 0;
-    virtual void pick_mc_extra(std::string name) = 0;
-    virtual void remove_mc_extra(std::string name) = 0;
+    virtual std::string pick_armour(ItemClass item_type, std::string name) = 0;
+    virtual std::string remove_armour(ArmourType at, bool replacing=false) = 0;
+    virtual std::string pick_oco_extra(std::string name) = 0;
+    virtual std::string remove_oco_extra() = 0;
+    virtual std::string pick_mc_extra(std::string name) = 0;
+    virtual std::string remove_mc_extra(std::string name) = 0;
     virtual void pick_mount(std::string name) = 0;
     virtual void remove_mount() = 0;
-    virtual void pick_banner(ItemClass item_class, std::string name) = 0;
-    virtual void remove_banner() = 0;
+    virtual std::string pick_banner(ItemClass item_class, std::string name) = 0;
+    virtual std::string remove_banner() = 0;
 
     virtual void pick_mount_option(const std::string& name, bool oco);
     virtual void remove_mount_option(const std::string& name, bool oco);

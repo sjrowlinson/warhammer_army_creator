@@ -159,9 +159,10 @@ std::pair<bool, std::string> character_unit::restriction_check(
     return p;
 }
 
-void character_unit::pick_magic_item(ItemType item_type, ItemClass item_class, const std::string& name) {
+std::string character_unit::pick_magic_item(ItemType item_type, ItemClass item_class, const std::string& name) {
     if (item_type != ItemType::BANNER && !banner.first.empty())
         throw std::runtime_error("BSBs equipped with a Magic Standard cannot take Magic Items!");
+    std::string removed = "";
     switch (item_class) {
     case ItemClass::MAGIC:
     case ItemClass::COMMON:
@@ -273,7 +274,7 @@ void character_unit::pick_magic_item(ItemType item_type, ItemClass item_class, c
         }
         switch (item_type) {
         case ItemType::WEAPON:
-            remove_weapon(search->second.weapon_type);
+            removed = remove_weapon(search->second.weapon_type);
             weapons_[search->second.weapon_type] = {
                 item_class,
                 search->first,
@@ -281,7 +282,7 @@ void character_unit::pick_magic_item(ItemType item_type, ItemClass item_class, c
             };
             break;
         case ItemType::ARMOUR:
-            remove_armour(search->second.armour_type);
+            removed = remove_armour(search->second.armour_type);
             armours_[search->second.armour_type] = {
                 item_class,
                 search->first,
@@ -289,15 +290,15 @@ void character_unit::pick_magic_item(ItemType item_type, ItemClass item_class, c
             };
             break;
         case ItemType::TALISMAN:
-            remove_talisman();
+            removed = remove_talisman();
             talisman_ = {search->first, {item_class, search->second.points}};
             break;
         case ItemType::ENCHANTED:
-            remove_enchanted_item();
+            removed = remove_enchanted_item();
             enchanted_item_ = {search->first, {item_class, search->second.points}};
             break;
         case ItemType::BANNER:
-            remove_banner();
+            removed = remove_banner();
             banner = {search->first, {item_class, search->second.points}};
             break;
         case ItemType::OTHER:
@@ -317,6 +318,7 @@ void character_unit::pick_magic_item(ItemType item_type, ItemClass item_class, c
     case ItemClass::NONE:
         break;
     }
+    return removed;
 }
 
 std::size_t character_unit::size() const noexcept { return 1U; }
@@ -353,14 +355,15 @@ std::pair<std::string, std::pair<ItemClass, double>> character_unit::magic_banne
     return banner;
 }
 
-void character_unit::pick_weapon(ItemClass item_type, std::string name) {
+std::string character_unit::pick_weapon(ItemClass item_type, std::string name) {
+    std::string removed;
     switch (item_type) {
     case ItemClass::MUNDANE:
     {
         auto search = handle_->opt().weapons().find(name);
         if (search == handle_->opt().weapons().cend())
             throw std::invalid_argument("Weapon not found!");
-        remove_weapon(std::get<0>(search->second));
+        removed = remove_weapon(std::get<0>(search->second));
         do_replacements(std::get<3>(search->second));
         weapons_[std::get<0>(search->second)] = {
             std::get<1>(search->second),
@@ -373,20 +376,22 @@ void character_unit::pick_weapon(ItemClass item_type, std::string name) {
     case ItemClass::MAGIC:
     case ItemClass::COMMON:
     case ItemClass::FACTION:
-        pick_magic_item(ItemType::WEAPON, item_type, name);
+        removed = pick_magic_item(ItemType::WEAPON, item_type, name);
         break;
-    default: return;
+    default: break;
     }
+    return removed;
 }
 
-void character_unit::pick_armour(ItemClass item_type, std::string name) {
+std::string character_unit::pick_armour(ItemClass item_type, std::string name) {
+    std::string removed;
     switch (item_type) {
     case ItemClass::MUNDANE:
     {
         auto search = handle_->opt().armour().find(name);
         if (search == handle_->opt().armour().cend())
             throw std::invalid_argument("Armour not found!");
-        remove_armour(std::get<0>(search->second));
+        removed = remove_armour(std::get<0>(search->second));
         do_replacements(std::get<3>(search->second));
         armours_[std::get<0>(search->second)] = {
             std::get<1>(search->second),
@@ -399,24 +404,28 @@ void character_unit::pick_armour(ItemClass item_type, std::string name) {
     case ItemClass::MAGIC:
     case ItemClass::COMMON:
     case ItemClass::FACTION:
-        pick_magic_item(ItemType::ARMOUR, item_type, name);
+        removed = pick_magic_item(ItemType::ARMOUR, item_type, name);
         break;
-    default: return;
+    default: break;
     }
+    return removed;
 }
 
-void character_unit::pick_talisman(ItemClass item_class, std::string name) {
+std::string character_unit::pick_talisman(ItemClass item_class, std::string name) {
+    std::string removed;
     switch (item_class) {
     case ItemClass::MAGIC:
     case ItemClass::COMMON:
     case ItemClass::FACTION:
-        pick_magic_item(ItemType::TALISMAN, item_class, name);
+        removed = pick_magic_item(ItemType::TALISMAN, item_class, name);
         break;
     default: break;
     }
+    return removed;
 }
 
-void character_unit::remove_talisman() {
+std::string character_unit::remove_talisman() {
+    std::string removed = talisman_.first;
     points_ -= talisman_.second.second;
     switch (talisman_.second.first) {
     case ItemClass::MAGIC:
@@ -431,20 +440,24 @@ void character_unit::remove_talisman() {
     total_item_points_ -= talisman_.second.second;
     talisman_.first.clear();
     talisman_.second.second = 0.0;
+    return removed;
 }
 
-void character_unit::pick_enchanted_item(ItemClass item_class, std::string name) {
+std::string character_unit::pick_enchanted_item(ItemClass item_class, std::string name) {
+    std::string removed;
     switch (item_class) {
     case ItemClass::MAGIC:
     case ItemClass::COMMON:
     case ItemClass::FACTION:
-        pick_magic_item(ItemType::ENCHANTED, item_class, name);
+        removed = pick_magic_item(ItemType::ENCHANTED, item_class, name);
         break;
     default: break;
     }
+    return removed;
 }
 
-void character_unit::remove_enchanted_item() {
+std::string character_unit::remove_enchanted_item() {
+    std::string removed = enchanted_item_.first;
     points_ -= enchanted_item_.second.second;
     switch (enchanted_item_.second.first) {
     case ItemClass::MAGIC:
@@ -459,20 +472,23 @@ void character_unit::remove_enchanted_item() {
     total_item_points_ -= enchanted_item_.second.second;
     enchanted_item_.first.clear();
     enchanted_item_.second.second = 0.0;
+    return removed;
 }
 
-void character_unit::pick_other(ItemClass item_class, std::string name) {
+std::string character_unit::pick_other(ItemClass item_class, std::string name) {
+    std::string removed;
     switch (item_class) {
     case ItemClass::MAGIC:
     case ItemClass::COMMON:
     case ItemClass::FACTION:
-        pick_magic_item(ItemType::OTHER, item_class, name);
+        removed = pick_magic_item(ItemType::OTHER, item_class, name);
         break;
     default: break;
     }
+    return removed;
 }
 
-void character_unit::remove_other(std::string name) {
+std::string character_unit::remove_other(std::string name) {
     auto search = item_extras_.find(name);
     if (search == item_extras_.end())
         throw std::invalid_argument("Unit does not have this item!");
@@ -489,30 +505,35 @@ void character_unit::remove_other(std::string name) {
     }
     total_item_points_ -= search->second.second;
     item_extras_.erase(name);
+    return name;
 }
 
-void character_unit::pick_oco_extra(std::string name) {
+std::string character_unit::pick_oco_extra(std::string name) {
+    std::string removed;
     auto search = handle_->opt().oco_extras().find(name);
     if (search == handle_->opt().oco_extras().end())
         throw std::invalid_argument("Item not found!");
-    if (oco_extra_.first == name) return;
+    if (oco_extra_.first == name) return removed;
+    removed = oco_extra_.first;
     points_ -= oco_extra_.second.second;
     oco_extra_.first = name;
     oco_extra_.second = search->second;
     points_ += search->second.second;
+    return removed;
 }
 
-void character_unit::pick_mc_extra(std::string name) {
+std::string character_unit::pick_mc_extra(std::string name) {
     auto search = handle_->opt().mc_extras().find(name);
     if (search == handle_->opt().mc_extras().end())
         throw std::invalid_argument("Item not found!");
-    if (mc_extras_.count(name)) return;
+    if (mc_extras_.count(name)) return std::string();
     mc_extras_[name] = search->second;
     points_ += search->second.second;
+    return std::string();
 }
 
 std::string character_unit::remove_weapon(WeaponType wt, bool replacing) {
-    if (!weapons_.count(wt)) return "";
+    if (!weapons_.count(wt)) return std::string();
     auto weapon = weapons_[wt];
     auto search = handle_->eq().weapons().find(wt);
     if (search != handle_->eq().weapons().cend()) {
@@ -522,7 +543,7 @@ std::string character_unit::remove_weapon(WeaponType wt, bool replacing) {
                 weapons_[wt] = {ItemClass::MUNDANE, "Hand weapon", 0.0};
         }
         else {
-            if (search->second.second == std::get<1>(weapon)) return "";
+            if (search->second.second == std::get<1>(weapon)) return std::string();
             weapons_[wt] = {search->second.first, search->second.second, 0.0};
         }
     }
@@ -547,15 +568,15 @@ std::string character_unit::remove_weapon(WeaponType wt, bool replacing) {
     return std::get<1>(weapon);
 }
 
-void character_unit::remove_armour(ArmourType at, bool replacing) {
-    if (!armours_.count(at)) return;
+std::string character_unit::remove_armour(ArmourType at, bool replacing) {
+    if (!armours_.count(at)) return std::string();
     auto armour = armours_[at];
     auto search = handle_->eq().armours().find(at);
     if (search != handle_->eq().armours().cend()) {
         if (replacing) {
             armours_.erase(at);
         } else {
-            if (search->second.second == std::get<1>(armour)) return;
+            if (search->second.second == std::get<1>(armour)) return std::string();
             armours_[at] = {search->second.first, search->second.second, 0.0};
         }
     }
@@ -577,20 +598,24 @@ void character_unit::remove_armour(ArmourType at, bool replacing) {
         break;
     }
     points_ -= pts;
+    return std::get<1>(armour);
 }
 
-void character_unit::remove_oco_extra() {
+std::string character_unit::remove_oco_extra() {
+    std::string removed = oco_extra_.first;
     points_ -= oco_extra_.second.second;
     oco_extra_.first = "";
     oco_extra_.second.second = 0.0;
+    return removed;
 }
 
-void character_unit::remove_mc_extra(std::string name) {
+std::string character_unit::remove_mc_extra(std::string name) {
     auto search = mc_extras_.find(name);
     if (search != mc_extras_.end()) {
         points_ -= search->second.second;
         mc_extras_.erase(name);
     }
+    return name;
 }
 
 void character_unit::pick_mount(std::string name) {
@@ -645,7 +670,7 @@ void character_unit::remove_mount_option(const std::string& name, bool oco) {
     }
 }
 
-void character_unit::pick_banner(ItemClass item_class, std::string name) {
+std::string character_unit::pick_banner(ItemClass item_class, std::string name) {
     if (!is_bsb())
         throw std::runtime_error("Only the Battle Standard Bearer may take a Magic Standard!");
     if (is_bsb() && (!talisman_.first.empty() || !enchanted_item_.first.empty() ||
@@ -665,17 +690,20 @@ void character_unit::pick_banner(ItemClass item_class, std::string name) {
                         }
                      ))
        ) throw std::runtime_error("BSBs equipped with Magic Equipment cannot take Magic Standards!");
+    std::string removed;
     switch (item_class) {
     case ItemClass::MAGIC:
     case ItemClass::COMMON:
     case ItemClass::FACTION:
-        pick_magic_item(ItemType::BANNER, item_class, name);
+        removed = pick_magic_item(ItemType::BANNER, item_class, name);
         break;
     default: break;
     }
+    return removed;
 }
 
-void character_unit::remove_banner() {
+std::string character_unit::remove_banner() {
+    std::string removed = banner.first;
     points_ -= banner.second.second;
     switch (banner.second.first) {
     case ItemClass::MAGIC:
@@ -690,6 +718,7 @@ void character_unit::remove_banner() {
     total_item_points_ -= banner.second.second;
     banner.first.clear();
     banner.second.second = 0.0;
+    return removed;
 }
 
 std::string character_unit::html_table_row_both(short mlevel, std::string arcane) const {

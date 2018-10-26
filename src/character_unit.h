@@ -44,7 +44,7 @@ protected:
     double faction_item_points_;
     double total_item_points_;
 
-    void pick_magic_item(ItemType item_type, ItemClass item_class, const std::string& name);
+    std::string pick_magic_item(ItemType item_type, ItemClass item_class, const std::string& name);
     std::string html_table_row_both(short mlevel, std::string arcane) const;
 
     std::pair<bool, std::string> restriction_check(
@@ -93,32 +93,32 @@ public:
     std::pair<std::string, std::pair<ItemClass, double>> magic_banner() const noexcept override;
 
     // current property modifiers
-    void pick_weapon(ItemClass item_type, std::string name) override;
+    std::string pick_weapon(ItemClass item_type, std::string name) override;
     std::string remove_weapon(WeaponType wt, bool replacing=false) override;
 
-    void pick_armour(ItemClass item_type, std::string name) override;
-    void remove_armour(ArmourType at, bool replacing=false) override;
+    std::string pick_armour(ItemClass item_type, std::string name) override;
+    std::string remove_armour(ArmourType at, bool replacing=false) override;
 
-    void pick_talisman(ItemClass item_class, std::string name);
-    void remove_talisman();
+    std::string pick_talisman(ItemClass item_class, std::string name);
+    std::string remove_talisman();
 
-    void pick_enchanted_item(ItemClass item_class, std::string name);
-    void remove_enchanted_item();
+    std::string pick_enchanted_item(ItemClass item_class, std::string name);
+    std::string remove_enchanted_item();
 
-    void pick_other(ItemClass item_class, std::string name);
-    void remove_other(std::string name);
+    std::string pick_other(ItemClass item_class, std::string name);
+    std::string remove_other(std::string name);
 
-    void pick_oco_extra(std::string name) override;
-    void remove_oco_extra() override;
+    std::string pick_oco_extra(std::string name) override;
+    std::string remove_oco_extra() override;
 
-    void pick_mc_extra(std::string name) override;
-    void remove_mc_extra(std::string name) override;
+    std::string pick_mc_extra(std::string name) override;
+    std::string remove_mc_extra(std::string name) override;
 
     void pick_mount(std::string name) override;
     void remove_mount() override;
 
-    void pick_banner(ItemClass item_class, std::string name) override;
-    void remove_banner() override;
+    std::string pick_banner(ItemClass item_class, std::string name) override;
+    std::string remove_banner() override;
 
     void pick_mount_option(const std::string& name, bool oco) override;
     void remove_mount_option(const std::string& name, bool oco) override;

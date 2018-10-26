@@ -38,15 +38,15 @@ void option_selector::item_limit_check(bool is_magic, ItemClass ic, const std::s
 }
 
 bool option_selector::select_weapon(const std::string& s) {
+    if (current == nullptr) throw std::runtime_error("No unit selected!");
     auto split = tools::split(s, '_');
     auto weapon = split[0];
-    if (current == nullptr) throw std::runtime_error("No unit selected!");
     if (weapon == "None") { // None radio button selected
         WeaponType wt;
         if (split[2] == "melee") wt = WeaponType::MELEE;
         else if (split[2] == "ranged") wt = WeaponType::BALLISTIC;
         else wt = WeaponType::NONE;
-        std::string rmvd_wpn = "";
+        std::string rmvd_wpn;
         switch (in_tree) {
         case InTree::ARMY:
             army->take_snapshot_of(current->id());
@@ -84,16 +84,17 @@ bool option_selector::select_weapon(const std::string& s) {
         ItemClass ic = static_cast<ItemClass>(std::stoi(split[2]));
         try { item_limit_check(is_magical, ic, weapon); }
         catch (const std::runtime_error&) { throw; }
+        std::string rmvd_wpn;
         switch (in_tree) {
         case InTree::ARMY:
             army->take_snapshot_of(current->id());
             if (split[3] == "default") {
-                try { current->pick_weapon(ic, weapon); }
+                try { rmvd_wpn = current->pick_weapon(ic, weapon); }
                 catch (const std::exception&) { throw; }
             }
             else if (split[3] == "champion") {
                 current->switch_model_select(ModelSelect::CHAMPION);
-                try { current->pick_weapon(ic, weapon); }
+                try { rmvd_wpn = current->pick_weapon(ic, weapon); }
                 catch (const std::exception&) {
                     current->switch_model_select(ModelSelect::DEFAULT);
                     throw;
@@ -101,22 +102,30 @@ bool option_selector::select_weapon(const std::string& s) {
                 current->switch_model_select(ModelSelect::DEFAULT);
             }
             army->update_on(current->id());
+            if (!rmvd_wpn.empty() && (current->base()->common_items_handle()->second.count(rmvd_wpn) ||
+                    current->base()->magic_items_handle()->second.count(rmvd_wpn) ||
+                    current->base()->faction_items_handle()->second.count(rmvd_wpn)))
+                army->decr_item_tracker(rmvd_wpn);
             if (is_magical) army->incr_item_tracker(weapon);
             return true;
         case InTree::ROSTER:
             if (split[3] == "default") {
-                try { current->pick_weapon(ic, weapon); }
+                try { rmvd_wpn = current->pick_weapon(ic, weapon); }
                 catch (const std::exception&) { throw; }
             }
             else if (split[3] == "champion") {
                 current->switch_model_select(ModelSelect::CHAMPION);
-                try { current->pick_weapon(ic, weapon); }
+                try { rmvd_wpn = current->pick_weapon(ic, weapon); }
                 catch (const std::exception&) {
                     current->switch_model_select(ModelSelect::DEFAULT);
                     throw;
                 }
                 current->switch_model_select(ModelSelect::DEFAULT);
             }
+            if (!rmvd_wpn.empty() && (current->base()->common_items_handle()->second.count(rmvd_wpn) ||
+                    current->base()->magic_items_handle()->second.count(rmvd_wpn) ||
+                    current->base()->faction_items_handle()->second.count(rmvd_wpn)))
+                army->decr_item_tracker(rmvd_wpn);
             if (is_magical) army->incr_item_tracker(weapon);
             return false;
         default: throw std::runtime_error("No unit selected!");
@@ -125,6 +134,7 @@ bool option_selector::select_weapon(const std::string& s) {
 }
 
 bool option_selector::select_armour(const std::string& s) {
+    if (current == nullptr) throw std::runtime_error("No unit selected!");
     auto split = tools::split(s, '_');
     auto armour = split[0];
     if (armour == "None") {
@@ -133,40 +143,55 @@ bool option_selector::select_armour(const std::string& s) {
         else if (split[2] == "shield") at = ArmourType::SHIELD;
         else if (split[2] == "helmet") at = ArmourType::HELMET;
         else at = ArmourType::NONE;
+        std::string rmvd_armour;
         switch (in_tree) {
         case InTree::ARMY:
             army->take_snapshot_of(current->id());
-            if (split[3] == "default") current->remove_armour(at);
+            if (split[3] == "default") rmvd_armour = current->remove_armour(at);
             else if (split[3] == "champion") {
                 current->switch_model_select(ModelSelect::CHAMPION);
-                current->remove_armour(at);
+                rmvd_armour = current->remove_armour(at);
                 current->switch_model_select(ModelSelect::DEFAULT);
             }
             army->update_on(current->id());
+            if (!rmvd_armour.empty() && (current->base()->common_items_handle()->second.count(rmvd_armour) ||
+                    current->base()->magic_items_handle()->second.count(rmvd_armour) ||
+                    current->base()->faction_items_handle()->second.count(rmvd_armour)))
+                army->decr_item_tracker(rmvd_armour);
             return true;
         case InTree::ROSTER:
-            if (split[3] == "default") current->remove_armour(at);
+            if (split[3] == "default") rmvd_armour = current->remove_armour(at);
             else if (split[3] == "champion") {
                 current->switch_model_select(ModelSelect::CHAMPION);
-                current->remove_armour(at);
+                rmvd_armour = current->remove_armour(at);
                 current->switch_model_select(ModelSelect::DEFAULT);
             }
+            if (!rmvd_armour.empty() && (current->base()->common_items_handle()->second.count(rmvd_armour) ||
+                    current->base()->magic_items_handle()->second.count(rmvd_armour) ||
+                    current->base()->faction_items_handle()->second.count(rmvd_armour)))
+                army->decr_item_tracker(rmvd_armour);
             return false;
         default: throw std::runtime_error("No unit selected!");
         }
     }
     else {
+        const bool is_magical = current->base()->common_items_handle()->second.count(armour) ||
+                    current->base()->magic_items_handle()->second.count(armour) ||
+                    current->base()->faction_items_handle()->second.count(armour);
         ItemClass ic = static_cast<ItemClass>(std::stoi(split[2]));
+        try { item_limit_check(is_magical, ic, armour); }
+        catch (const std::runtime_error&) { throw; }
+        std::string rmvd_armour;
         switch (in_tree) {
         case InTree::ARMY:
             army->take_snapshot_of(current->id());
             if (split[3] == "default") {
-                try { current->pick_armour(ic, armour); }
+                try { rmvd_armour = current->pick_armour(ic, armour); }
                 catch (const std::exception&) { throw; }
             }
             else if (split[3] == "champion") {
                 current->switch_model_select(ModelSelect::CHAMPION);
-                try { current->pick_armour(ic, armour); }
+                try { rmvd_armour = current->pick_armour(ic, armour); }
                 catch (const std::exception&) {
                     current->switch_model_select(ModelSelect::DEFAULT);
                     throw;
@@ -174,21 +199,31 @@ bool option_selector::select_armour(const std::string& s) {
                 current->switch_model_select(ModelSelect::DEFAULT);
             }
             army->update_on(current->id());
+            if (!rmvd_armour.empty() && (current->base()->common_items_handle()->second.count(rmvd_armour) ||
+                    current->base()->magic_items_handle()->second.count(rmvd_armour) ||
+                    current->base()->faction_items_handle()->second.count(rmvd_armour)))
+                army->decr_item_tracker(rmvd_armour);
+            if (is_magical) army->incr_item_tracker(armour);
             return true;
         case InTree::ROSTER:
             if (split[3] == "default") {
-                try { current->pick_armour(ic, armour); }
+                try { rmvd_armour = current->pick_armour(ic, armour); }
                 catch (const std::exception&) { throw; }
             }
             else if (split[3] == "champion") {
                 current->switch_model_select(ModelSelect::CHAMPION);
-                try { current->pick_armour(ic, armour); }
+                try { rmvd_armour = current->pick_armour(ic, armour); }
                 catch (const std::exception&) {
                     current->switch_model_select(ModelSelect::DEFAULT);
                     throw;
                 }
                 current->switch_model_select(ModelSelect::DEFAULT);
             }
+            if (!rmvd_armour.empty() && (current->base()->common_items_handle()->second.count(rmvd_armour) ||
+                    current->base()->magic_items_handle()->second.count(rmvd_armour) ||
+                    current->base()->faction_items_handle()->second.count(rmvd_armour)))
+                army->decr_item_tracker(rmvd_armour);
+            if (is_magical) army->incr_item_tracker(armour);
             return false;
         default: throw std::runtime_error("No unit selected!");
         }

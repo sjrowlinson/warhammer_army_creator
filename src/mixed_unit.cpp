@@ -23,6 +23,7 @@ std::pair<bool, std::string> mixed_unit::restriction_check(
     case MixedSelect::SLAVE:
         return slave_.restriction_check(picking, restrictions);
     }
+    return master_.restriction_check(picking, restrictions);
 }
 
 bool mixed_unit::is_character() const noexcept { return false; }
@@ -55,6 +56,7 @@ std::unordered_map<
     case MixedSelect::SLAVE:
         return slave_.weapons();
     }
+    return master_.weapons();
 }
 
 std::unordered_map<
@@ -67,6 +69,7 @@ std::unordered_map<
     case MixedSelect::SLAVE:
         return slave_.armour();
     }
+    return master_.armour();
 }
 
 std::pair<
@@ -79,6 +82,7 @@ std::pair<
     case MixedSelect::SLAVE:
         return slave_.oco_extra();
     }
+    return master_.oco_extra();
 }
 
 std::unordered_map<
@@ -91,6 +95,7 @@ std::unordered_map<
     case MixedSelect::SLAVE:
         return slave_.mc_extras();
     }
+    return master_.mc_extras();
 }
 
 const std::tuple<
@@ -105,6 +110,7 @@ const std::tuple<
     case MixedSelect::SLAVE:
         return slave_.mnt();
     }
+    return master_.mnt();
 }
 
 std::pair<std::string, std::pair<ItemClass, double>> mixed_unit::magic_banner() const noexcept {
@@ -114,96 +120,87 @@ std::pair<std::string, std::pair<ItemClass, double>> mixed_unit::magic_banner() 
     case MixedSelect::SLAVE:
         return slave_.magic_banner();
     }
+    return master_.magic_banner();
 }
 
-void mixed_unit::pick_weapon(ItemClass item_type, std::string name) {
+std::string mixed_unit::pick_weapon(ItemClass item_type, std::string name) {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
-        master_.pick_weapon(item_type, name);
-        break;
+        return master_.pick_weapon(item_type, name);
     case MixedSelect::SLAVE:
-        slave_.pick_weapon(item_type, name);
-        break;
+        return slave_.pick_weapon(item_type, name);
     }
+    return master_.pick_weapon(item_type, name);
 }
 
 std::string mixed_unit::remove_weapon(WeaponType wt, bool replacing) {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
-        master_.remove_weapon(wt, replacing);
-        break;
+        return master_.remove_weapon(wt, replacing);
     case MixedSelect::SLAVE:
-        slave_.remove_weapon(wt, replacing);
-        break;
+        return slave_.remove_weapon(wt, replacing);
     }
-    // FIXME: temporary, do proper handling in above methods
-    return "";
+    return master_.remove_weapon(wt, replacing);
 }
 
-void mixed_unit::pick_armour(ItemClass item_type, std::string name) {
+std::string mixed_unit::pick_armour(ItemClass item_type, std::string name) {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
-        master_.pick_armour(item_type, name);
-        break;
+        return master_.pick_armour(item_type, name);
     case MixedSelect::SLAVE:
-        slave_.pick_armour(item_type, name);
-        break;
+        return slave_.pick_armour(item_type, name);
     }
+    return master_.pick_armour(item_type, name);
 }
 
-void mixed_unit::remove_armour(ArmourType at, bool replacing) {
+std::string mixed_unit::remove_armour(ArmourType at, bool replacing) {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
-        master_.remove_armour(at, replacing);
-        break;
+        return master_.remove_armour(at, replacing);
     case MixedSelect::SLAVE:
-        slave_.remove_armour(at, replacing);
-        break;
+        return slave_.remove_armour(at, replacing);
     }
+    return master_.remove_armour(at, replacing);
 }
 
-void mixed_unit::pick_oco_extra(std::string name) {
+std::string mixed_unit::pick_oco_extra(std::string name) {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
-        master_.pick_oco_extra(name);
-        break;
+        return master_.pick_oco_extra(name);
     case MixedSelect::SLAVE:
-        slave_.pick_oco_extra(name);
-        break;
+        return slave_.pick_oco_extra(name);
     }
+    return master_.pick_oco_extra(name);
 }
 
-void mixed_unit::remove_oco_extra() {
+std::string mixed_unit::remove_oco_extra() {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
-        master_.remove_oco_extra();
-        break;
+        return master_.remove_oco_extra();
     case MixedSelect::SLAVE:
-        slave_.remove_oco_extra();
-        break;
+        return slave_.remove_oco_extra();
     }
+    return master_.remove_oco_extra();
 }
 
-void mixed_unit::pick_mc_extra(std::string name) {
+std::string mixed_unit::pick_mc_extra(std::string name) {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
-        master_.pick_mc_extra(name);
-        break;
+        return master_.pick_mc_extra(name);
     case MixedSelect::SLAVE:
-        slave_.pick_mc_extra(name);
-        break;
+        return slave_.pick_mc_extra(name);
     }
+    return master_.pick_mc_extra(name);
 }
 
-void mixed_unit::remove_mc_extra(std::string name) {
+std::string mixed_unit::remove_mc_extra(std::string name) {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
-        master_.remove_mc_extra(name);
-        break;
+        return master_.remove_mc_extra(name);
     case MixedSelect::SLAVE:
-        slave_.remove_mc_extra(name);
-        break;
+        return slave_.remove_mc_extra(name);
     }
+    return master_.remove_mc_extra(name);
 }
 
 void mixed_unit::pick_mount(std::string name) {
@@ -228,26 +225,24 @@ void mixed_unit::remove_mount() {
     }
 }
 
-void mixed_unit::pick_banner(ItemClass item_class, std::string name) {
+std::string mixed_unit::pick_banner(ItemClass item_class, std::string name) {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
-        master_.pick_banner(item_class, name);
-        break;
+        return master_.pick_banner(item_class, name);
     case MixedSelect::SLAVE:
-        slave_.pick_banner(item_class, name);
-        break;
+        return slave_.pick_banner(item_class, name);;
     }
+    return master_.pick_banner(item_class, name);
 }
 
-void mixed_unit::remove_banner() {
+std::string mixed_unit::remove_banner() {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
-        master_.remove_banner();
-        break;
+        return master_.remove_banner();
     case MixedSelect::SLAVE:
-        slave_.remove_banner();
-        break;
+        return slave_.remove_banner();
     }
+    return master_.remove_banner();
 }
 
 void mixed_unit::change_size(std::size_t n) {
