@@ -696,6 +696,7 @@ bool MagicItemBox::reinitialise(ItemType focus) {
         if (other_tab != nullptr)
             box->setCurrentWidget(other_tab);
         break;
+    default: break;
     }
     return true;
 }
