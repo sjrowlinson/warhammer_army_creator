@@ -28,8 +28,8 @@ public:
     void reset_level();
 
     std::pair<std::string, std::pair<ItemClass, double>> arcane_item() const noexcept;
-    void pick_arcane_item(ItemClass item_class, std::string name);
-    void remove_arcane_item();
+    std::string pick_arcane_item(ItemClass item_class, std::string name);
+    std::string remove_arcane_item();
 
     std::string html_table_row() const override;
 };

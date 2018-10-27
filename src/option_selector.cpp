@@ -41,39 +41,31 @@ bool option_selector::select_weapon(const std::string& s) {
     if (current == nullptr) throw std::runtime_error("No unit selected!");
     auto split = tools::split(s, '_');
     auto weapon = split[0];
+    std::string removed;
     if (weapon == "None") { // None radio button selected
         WeaponType wt;
         if (split[2] == "melee") wt = WeaponType::MELEE;
         else if (split[2] == "ranged") wt = WeaponType::BALLISTIC;
         else wt = WeaponType::NONE;
-        std::string rmvd_wpn;
         switch (in_tree) {
         case InTree::ARMY:
             army->take_snapshot_of(current->id());
-            if (split[3] == "default") rmvd_wpn = current->remove_weapon(wt);
+            if (split[3] == "default") removed = current->remove_weapon(wt);
             else if (split[3] == "champion") {
                 current->switch_model_select(ModelSelect::CHAMPION);
-                rmvd_wpn = current->remove_weapon(wt);
+                removed = current->remove_weapon(wt);
                 current->switch_model_select(ModelSelect::DEFAULT);
             }
             army->update_on(current->id());
-            if (!rmvd_wpn.empty() && (current->base()->common_items_handle()->second.count(rmvd_wpn) ||
-                    current->base()->magic_items_handle()->second.count(rmvd_wpn) ||
-                    current->base()->faction_items_handle()->second.count(rmvd_wpn)))
-                army->decr_item_tracker(rmvd_wpn);
-            return true;
+            break;
         case InTree::ROSTER:
-            if (split[3] == "default") rmvd_wpn = current->remove_weapon(wt);
+            if (split[3] == "default") removed = current->remove_weapon(wt);
             else if (split[3] == "champion") {
                 current->switch_model_select(ModelSelect::CHAMPION);
-                rmvd_wpn = current->remove_weapon(wt);
+                removed = current->remove_weapon(wt);
                 current->switch_model_select(ModelSelect::DEFAULT);
             }
-            if (!rmvd_wpn.empty() && (current->base()->common_items_handle()->second.count(rmvd_wpn) ||
-                    current->base()->magic_items_handle()->second.count(rmvd_wpn) ||
-                    current->base()->faction_items_handle()->second.count(rmvd_wpn)))
-                army->decr_item_tracker(rmvd_wpn);
-            return false;
+            break;
         default: throw std::runtime_error("No unit selected!");
         }
     }
@@ -84,17 +76,16 @@ bool option_selector::select_weapon(const std::string& s) {
         ItemClass ic = static_cast<ItemClass>(std::stoi(split[2]));
         try { item_limit_check(is_magical, ic, weapon); }
         catch (const std::runtime_error&) { throw; }
-        std::string rmvd_wpn;
         switch (in_tree) {
         case InTree::ARMY:
             army->take_snapshot_of(current->id());
             if (split[3] == "default") {
-                try { rmvd_wpn = current->pick_weapon(ic, weapon); }
+                try { removed = current->pick_weapon(ic, weapon); }
                 catch (const std::exception&) { throw; }
             }
             else if (split[3] == "champion") {
                 current->switch_model_select(ModelSelect::CHAMPION);
-                try { rmvd_wpn = current->pick_weapon(ic, weapon); }
+                try { removed = current->pick_weapon(ic, weapon); }
                 catch (const std::exception&) {
                     current->switch_model_select(ModelSelect::DEFAULT);
                     throw;
@@ -102,75 +93,63 @@ bool option_selector::select_weapon(const std::string& s) {
                 current->switch_model_select(ModelSelect::DEFAULT);
             }
             army->update_on(current->id());
-            if (!rmvd_wpn.empty() && (current->base()->common_items_handle()->second.count(rmvd_wpn) ||
-                    current->base()->magic_items_handle()->second.count(rmvd_wpn) ||
-                    current->base()->faction_items_handle()->second.count(rmvd_wpn)))
-                army->decr_item_tracker(rmvd_wpn);
-            if (is_magical) army->incr_item_tracker(weapon);
-            return true;
+            break;
         case InTree::ROSTER:
             if (split[3] == "default") {
-                try { rmvd_wpn = current->pick_weapon(ic, weapon); }
+                try { removed = current->pick_weapon(ic, weapon); }
                 catch (const std::exception&) { throw; }
             }
             else if (split[3] == "champion") {
                 current->switch_model_select(ModelSelect::CHAMPION);
-                try { rmvd_wpn = current->pick_weapon(ic, weapon); }
+                try { removed = current->pick_weapon(ic, weapon); }
                 catch (const std::exception&) {
                     current->switch_model_select(ModelSelect::DEFAULT);
                     throw;
                 }
                 current->switch_model_select(ModelSelect::DEFAULT);
             }
-            if (!rmvd_wpn.empty() && (current->base()->common_items_handle()->second.count(rmvd_wpn) ||
-                    current->base()->magic_items_handle()->second.count(rmvd_wpn) ||
-                    current->base()->faction_items_handle()->second.count(rmvd_wpn)))
-                army->decr_item_tracker(rmvd_wpn);
-            if (is_magical) army->incr_item_tracker(weapon);
-            return false;
+            break;
         default: throw std::runtime_error("No unit selected!");
         }
+        if (is_magical) army->incr_item_tracker(weapon);
     }
+    if (!removed.empty() && (current->base()->common_items_handle()->second.count(removed) ||
+            current->base()->magic_items_handle()->second.count(removed) ||
+            current->base()->faction_items_handle()->second.count(removed)))
+        army->decr_item_tracker(removed);
+    return in_tree == InTree::ARMY;
 }
 
 bool option_selector::select_armour(const std::string& s) {
     if (current == nullptr) throw std::runtime_error("No unit selected!");
     auto split = tools::split(s, '_');
     auto armour = split[0];
+    std::string removed;
     if (armour == "None") {
         ArmourType at;
         if (split[2] == "armour") at = ArmourType::ARMOUR;
         else if (split[2] == "shield") at = ArmourType::SHIELD;
         else if (split[2] == "helmet") at = ArmourType::HELMET;
         else at = ArmourType::NONE;
-        std::string rmvd_armour;
         switch (in_tree) {
         case InTree::ARMY:
             army->take_snapshot_of(current->id());
-            if (split[3] == "default") rmvd_armour = current->remove_armour(at);
+            if (split[3] == "default") removed = current->remove_armour(at);
             else if (split[3] == "champion") {
                 current->switch_model_select(ModelSelect::CHAMPION);
-                rmvd_armour = current->remove_armour(at);
+                removed = current->remove_armour(at);
                 current->switch_model_select(ModelSelect::DEFAULT);
             }
             army->update_on(current->id());
-            if (!rmvd_armour.empty() && (current->base()->common_items_handle()->second.count(rmvd_armour) ||
-                    current->base()->magic_items_handle()->second.count(rmvd_armour) ||
-                    current->base()->faction_items_handle()->second.count(rmvd_armour)))
-                army->decr_item_tracker(rmvd_armour);
-            return true;
+            break;
         case InTree::ROSTER:
-            if (split[3] == "default") rmvd_armour = current->remove_armour(at);
+            if (split[3] == "default") removed = current->remove_armour(at);
             else if (split[3] == "champion") {
                 current->switch_model_select(ModelSelect::CHAMPION);
-                rmvd_armour = current->remove_armour(at);
+                removed = current->remove_armour(at);
                 current->switch_model_select(ModelSelect::DEFAULT);
             }
-            if (!rmvd_armour.empty() && (current->base()->common_items_handle()->second.count(rmvd_armour) ||
-                    current->base()->magic_items_handle()->second.count(rmvd_armour) ||
-                    current->base()->faction_items_handle()->second.count(rmvd_armour)))
-                army->decr_item_tracker(rmvd_armour);
-            return false;
+            break;
         default: throw std::runtime_error("No unit selected!");
         }
     }
@@ -181,17 +160,16 @@ bool option_selector::select_armour(const std::string& s) {
         ItemClass ic = static_cast<ItemClass>(std::stoi(split[2]));
         try { item_limit_check(is_magical, ic, armour); }
         catch (const std::runtime_error&) { throw; }
-        std::string rmvd_armour;
         switch (in_tree) {
         case InTree::ARMY:
             army->take_snapshot_of(current->id());
             if (split[3] == "default") {
-                try { rmvd_armour = current->pick_armour(ic, armour); }
+                try { removed = current->pick_armour(ic, armour); }
                 catch (const std::exception&) { throw; }
             }
             else if (split[3] == "champion") {
                 current->switch_model_select(ModelSelect::CHAMPION);
-                try { rmvd_armour = current->pick_armour(ic, armour); }
+                try { removed = current->pick_armour(ic, armour); }
                 catch (const std::exception&) {
                     current->switch_model_select(ModelSelect::DEFAULT);
                     throw;
@@ -199,197 +177,264 @@ bool option_selector::select_armour(const std::string& s) {
                 current->switch_model_select(ModelSelect::DEFAULT);
             }
             army->update_on(current->id());
-            if (!rmvd_armour.empty() && (current->base()->common_items_handle()->second.count(rmvd_armour) ||
-                    current->base()->magic_items_handle()->second.count(rmvd_armour) ||
-                    current->base()->faction_items_handle()->second.count(rmvd_armour)))
-                army->decr_item_tracker(rmvd_armour);
-            if (is_magical) army->incr_item_tracker(armour);
-            return true;
+            break;
         case InTree::ROSTER:
             if (split[3] == "default") {
-                try { rmvd_armour = current->pick_armour(ic, armour); }
+                try { removed = current->pick_armour(ic, armour); }
                 catch (const std::exception&) { throw; }
             }
             else if (split[3] == "champion") {
                 current->switch_model_select(ModelSelect::CHAMPION);
-                try { rmvd_armour = current->pick_armour(ic, armour); }
+                try { removed = current->pick_armour(ic, armour); }
                 catch (const std::exception&) {
                     current->switch_model_select(ModelSelect::DEFAULT);
                     throw;
                 }
                 current->switch_model_select(ModelSelect::DEFAULT);
             }
-            if (!rmvd_armour.empty() && (current->base()->common_items_handle()->second.count(rmvd_armour) ||
-                    current->base()->magic_items_handle()->second.count(rmvd_armour) ||
-                    current->base()->faction_items_handle()->second.count(rmvd_armour)))
-                army->decr_item_tracker(rmvd_armour);
-            if (is_magical) army->incr_item_tracker(armour);
-            return false;
+            break;
         default: throw std::runtime_error("No unit selected!");
         }
+        if (is_magical) army->incr_item_tracker(armour);
     }
+    if (!removed.empty() && (current->base()->common_items_handle()->second.count(removed) ||
+            current->base()->magic_items_handle()->second.count(removed) ||
+            current->base()->faction_items_handle()->second.count(removed)))
+        army->decr_item_tracker(removed);
+    return in_tree == InTree::ARMY;
 }
 
 bool option_selector::select_talisman(const std::string& s) {
+    if (current == nullptr) throw std::runtime_error("No unit selected!");
     auto split = tools::split(s, '_');
     auto talisman = split[0];
     std::shared_ptr<character_unit> p = std::dynamic_pointer_cast<character_unit>(current);
+    std::string removed;
     if (talisman == "None") {
         switch (in_tree) {
         case InTree::ARMY:
             army->take_snapshot_of(p->id());
-            p->remove_talisman();
+            removed = p->remove_talisman();
             army->update_on(p->id());
-            return true;
+            break;
         case InTree::ROSTER:
-            p->remove_talisman();
-            return false;
+            removed = p->remove_talisman();
+            break;
         default: throw std::runtime_error("No unit selected!");
         }
     }
     else {
+        const bool is_magical = current->base()->common_items_handle()->second.count(talisman) ||
+                    current->base()->magic_items_handle()->second.count(talisman) ||
+                    current->base()->faction_items_handle()->second.count(talisman);
         ItemClass ic = static_cast<ItemClass>(std::stoi(split[1]));
+        try { item_limit_check(is_magical, ic, talisman); }
+        catch (const std::runtime_error& ) { throw; }
+        std::string removed;
         switch (in_tree) {
         case InTree::ARMY:
             army->take_snapshot_of(p->id());
-            p->pick_talisman(ic, talisman);
+            removed = p->pick_talisman(ic, talisman);
             army->update_on(p->id());
-            return true;
+            break;
         case InTree::ROSTER:
-            p->pick_talisman(ic, talisman);
-            return false;
+            removed = p->pick_talisman(ic, talisman);
+            if (!removed.empty() && (current->base()->common_items_handle()->second.count(removed) ||
+                    current->base()->magic_items_handle()->second.count(removed) ||
+                    current->base()->faction_items_handle()->second.count(removed)))
+                army->decr_item_tracker(removed);
+            break;
         default: throw std::runtime_error("No unit selected!");
         }
+        if (is_magical) army->incr_item_tracker(talisman);
     }
+    if (!removed.empty() && (current->base()->common_items_handle()->second.count(removed) ||
+            current->base()->magic_items_handle()->second.count(removed) ||
+            current->base()->faction_items_handle()->second.count(removed)))
+        army->decr_item_tracker(removed);
+    return in_tree == InTree::ARMY;
 }
 
 bool option_selector::select_enchanted_item(const std::string& s) {
+    if (current == nullptr) throw std::runtime_error("No unit selected!");
     auto split = tools::split(s, '_');
     auto enchanted = split[0];
     std::shared_ptr<character_unit> p = std::dynamic_pointer_cast<character_unit>(current);
+    std::string removed;
     if (enchanted == "None") {
         switch (in_tree) {
         case InTree::ARMY:
             army->take_snapshot_of(p->id());
-            p->remove_enchanted_item();
+            removed = p->remove_enchanted_item();
             army->update_on(p->id());
-            return true;
+            break;
         case InTree::ROSTER:
-            p->remove_enchanted_item();
-            return false;
+            removed = p->remove_enchanted_item();
+            break;
         default: throw std::runtime_error("No unit selected!");
         }
     }
     else {
+        const bool is_magical = current->base()->common_items_handle()->second.count(enchanted) ||
+                    current->base()->magic_items_handle()->second.count(enchanted) ||
+                    current->base()->faction_items_handle()->second.count(enchanted);
         ItemClass ic = static_cast<ItemClass>(std::stoi(split[1]));
+        try { item_limit_check(is_magical, ic, enchanted); }
+        catch (const std::runtime_error& ) { throw; }
+        std::string removed;
         switch (in_tree) {
         case InTree::ARMY:
             army->take_snapshot_of(p->id());
             p->pick_enchanted_item(ic, enchanted);
             army->update_on(p->id());
-            return true;
+            break;
         case InTree::ROSTER:
             p->pick_enchanted_item(ic, enchanted);
-            return false;
+            break;
         default: throw std::runtime_error("No unit selected!");
         }
+        if (is_magical) army->incr_item_tracker(enchanted);
     }
+    if (!removed.empty() && (current->base()->common_items_handle()->second.count(removed) ||
+            current->base()->magic_items_handle()->second.count(removed) ||
+            current->base()->faction_items_handle()->second.count(removed)))
+        army->decr_item_tracker(removed);
+    return in_tree == InTree::ARMY;
 }
 
 bool option_selector::select_other_item(const std::string& s, bool is_checked) {
+    if (current == nullptr) throw std::runtime_error("No unit selected!");
     auto split = tools::split(s, '_');
     auto other = split[0];
     auto p = std::dynamic_pointer_cast<character_unit>(current);
+    std::string removed;
     if (!is_checked) {
         switch (in_tree) {
         case InTree::ARMY:
             army->take_snapshot_of(p->id());
-            p->remove_other(other);
+            removed = p->remove_other(other);
             army->update_on(p->id());
-            return true;
+            break;
         case InTree::ROSTER:
-            p->remove_other(other);
-            return false;
+            removed = p->remove_other(other);
+            break;
         default: throw std::runtime_error("No unit selected!");
         }
     } else {
+        const bool is_magical = current->base()->common_items_handle()->second.count(other) ||
+                    current->base()->magic_items_handle()->second.count(other) ||
+                    current->base()->faction_items_handle()->second.count(other);
         ItemClass ic = static_cast<ItemClass>(std::stoi(split[1]));
+        try { item_limit_check(is_magical, ic, other); }
+        catch (const std::runtime_error& ) { throw; }
         switch (in_tree) {
         case InTree::ARMY:
             army->take_snapshot_of(p->id());
-            p->pick_other(ic, other);
+            removed = p->pick_other(ic, other);
             army->update_on(p->id());
-            return true;
+            break;
         case InTree::ROSTER:
-            p->pick_other(ic, other);
-            return false;
+            removed = p->pick_other(ic, other);
+            break;
         default: throw std::runtime_error("No unit selected!");
         }
+        if (is_magical) army->incr_item_tracker(other);
     }
+    if (!removed.empty() && (current->base()->common_items_handle()->second.count(removed) ||
+            current->base()->magic_items_handle()->second.count(removed) ||
+            current->base()->faction_items_handle()->second.count(removed)))
+        army->decr_item_tracker(removed);
+    return in_tree == InTree::ARMY;
 }
 
 bool option_selector::select_banner(const std::string& s) {
+    if (current == nullptr) throw std::runtime_error("No unit selected!");
     auto split = tools::split(s, '_');
     auto banner = split[0];
+    std::string removed;
     if (banner == "None") {
         switch (in_tree) {
         case InTree::ARMY:
             army->take_snapshot_of(current->id());
-            current->remove_banner();
+            removed = current->remove_banner();
             army->update_on(current->id());
-            return true;
+            break;
         case InTree::ROSTER:
-            current->remove_banner();
-            return false;
+            removed = current->remove_banner();
+            break;
         default: throw std::runtime_error("No unit selected!");
         }
     } else {
+        const bool is_magical = current->base()->common_items_handle()->second.count(banner) ||
+                    current->base()->magic_items_handle()->second.count(banner) ||
+                    current->base()->faction_items_handle()->second.count(banner);
         ItemClass ic = static_cast<ItemClass>(std::stoi(split[1]));
+        try { item_limit_check(is_magical, ic, banner); }
+        catch (const std::runtime_error& ) { throw; }
         switch (in_tree) {
         case InTree::ARMY:
             army->take_snapshot_of(current->id());
-            current->pick_banner(ic, banner);
+            removed = current->pick_banner(ic, banner);
             army->update_on(current->id());
-            return true;
+            break;
         case InTree::ROSTER:
-            current->pick_banner(ic, banner);
-            return false;
+            removed = current->pick_banner(ic, banner);
+            break;
         default: throw std::runtime_error("No unit selected!");
         }
+        if (is_magical) army->incr_item_tracker(banner);
     }
+    if (!removed.empty() && (current->base()->common_items_handle()->second.count(removed) ||
+            current->base()->magic_items_handle()->second.count(removed) ||
+            current->base()->faction_items_handle()->second.count(removed)))
+        army->decr_item_tracker(removed);
+    return in_tree == InTree::ARMY;
 }
 
 bool option_selector::select_arcane_item(const std::string& s) {
+    if (current == nullptr) throw std::runtime_error("No unit selected!");
     auto split = tools::split(s, '_');
     auto arcane = split[0];
     auto p = std::dynamic_pointer_cast<mage_character_unit>(current);
+    std::string removed;
     if (arcane == "None") {
         switch (in_tree) {
         case InTree::ARMY:
             army->take_snapshot_of(p->id());
-            p->remove_arcane_item();
+            removed = p->remove_arcane_item();
             army->update_on(p->id());
-            return true;
+            break;
         case InTree::ROSTER:
-            p->remove_arcane_item();
-            return false;
+            removed = p->remove_arcane_item();
+            break;
         default: throw std::runtime_error("No unit selected!");
         }
     }
     else {
+        const bool is_magical = current->base()->common_items_handle()->second.count(arcane) ||
+                    current->base()->magic_items_handle()->second.count(arcane) ||
+                    current->base()->faction_items_handle()->second.count(arcane);
         ItemClass ic = static_cast<ItemClass>(std::stoi(split[1]));
+        try { item_limit_check(is_magical, ic, arcane); }
+        catch (const std::runtime_error& ) { throw; }
         switch (in_tree) {
         case InTree::ARMY:
             army->take_snapshot_of(p->id());
-            p->pick_arcane_item(ic, arcane);
+            removed = p->pick_arcane_item(ic, arcane);
             army->update_on(p->id());
-            return true;
+            break;
         case InTree::ROSTER:
-            p->pick_arcane_item(ic, arcane);
-            return false;
+            removed = p->pick_arcane_item(ic, arcane);
+            break;
         default: throw std::runtime_error("No unit selected!");
         }
+        if (is_magical) army->incr_item_tracker(arcane);
     }
+    if (!removed.empty() && (current->base()->common_items_handle()->second.count(removed) ||
+            current->base()->magic_items_handle()->second.count(removed) ||
+            current->base()->faction_items_handle()->second.count(removed)))
+        army->decr_item_tracker(removed);
+    return in_tree == InTree::ARMY;
 }
 
 bool option_selector::select_mage_level(const std::string& s) {
@@ -601,6 +646,7 @@ bool option_selector::select_command(const std::string& s, bool is_checked) {
 }
 
 bool option_selector::select_oco_extra(const std::string& s) {
+    if (current == nullptr) throw std::runtime_error("No unit selected!");
     auto split = tools::split(s, '_');
     auto extra = split[0];
     if (extra == "None") {

@@ -33,7 +33,8 @@ std::pair<std::string, std::pair<ItemClass, double>> mage_character_unit::arcane
     return arcane_item_;
 }
 
-void mage_character_unit::pick_arcane_item(ItemClass item_class, std::string name) {
+std::string mage_character_unit::pick_arcane_item(ItemClass item_class, std::string name) {
+    std::string removed;
     switch (item_class) {
     case ItemClass::MAGIC:
     case ItemClass::COMMON:
@@ -75,7 +76,7 @@ void mage_character_unit::pick_arcane_item(ItemClass item_class, std::string nam
                     [&unit_name](const auto& x) { return x == unit_name; }
                 )) throw std::invalid_argument("Character cannot take this enchanted item!");
         }
-        remove_arcane_item();
+        removed = remove_arcane_item();
         arcane_item_ = {search->first, {item_class, search->second.points}};
         points_ += search->second.points;
         magic_item_points_ += search->second.points;
@@ -110,7 +111,7 @@ void mage_character_unit::pick_arcane_item(ItemClass item_class, std::string nam
                     [&unit_name](const auto& x) { return x == unit_name; }
                 )) throw std::invalid_argument("Character cannot take this arcane item!");
         }
-        remove_arcane_item();
+        removed = remove_arcane_item();
         arcane_item_ = {search->first, {item_class, search->second.points}};
         points_ += search->second.points;
         faction_item_points_ += search->second.points;
@@ -119,9 +120,11 @@ void mage_character_unit::pick_arcane_item(ItemClass item_class, std::string nam
     }
     default: break;
     }
+    return removed;
 }
 
-void mage_character_unit::remove_arcane_item() {
+std::string mage_character_unit::remove_arcane_item() {
+    std::string removed = arcane_item_.first;
     points_ -= arcane_item_.second.second;
     switch (arcane_item_.second.first) {
     case ItemClass::MAGIC:
@@ -136,6 +139,7 @@ void mage_character_unit::remove_arcane_item() {
     total_item_points_ -= arcane_item_.second.second;
     arcane_item_.first.clear();
     arcane_item_.second.second = 0.0;
+    return removed;
 }
 
 std::string mage_character_unit::html_table_row() const {
