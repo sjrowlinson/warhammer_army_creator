@@ -515,6 +515,30 @@ std::string character_unit::pick_oco_extra(std::string name) {
         throw std::invalid_argument("Item not found!");
     if (oco_extra_.first == name) return removed;
     removed = oco_extra_.first;
+    if (handle_->faction() == Faction::SKAVEN) {
+        if (name.find("Warpstone Tokens")) {
+            const double mi_budget = handle_->magic_item_budget();
+            const double ti_budget = handle_->total_item_budget();
+            double adj_mip = magic_item_points_;
+            double adj_tip = total_item_points_;
+            if (oco_extra_.first.find("Warpstone Tokens")) {
+                adj_mip -= oco_extra_.second.second;
+                adj_tip -= oco_extra_.second.second;
+            }
+            if (search->second.second + adj_mip > mi_budget ||
+                    search->second.second + adj_tip > ti_budget)
+                throw std::runtime_error("Item budget exceeded!");
+            magic_item_points_ += search->second.second;
+            total_item_points_ += search->second.second;
+            if (oco_extra_.first.find("Warpstone Tokens")) {
+                magic_item_points_ -= oco_extra_.second.second;
+                total_item_points_ -= oco_extra_.second.second;
+            }
+            // warptokens are arbitrarily duplicable across an army
+            // so return an empty string to avoid doing limit checking
+            removed.clear();
+        }
+    }
     points_ -= oco_extra_.second.second;
     oco_extra_.first = name;
     oco_extra_.second = search->second;

@@ -51,7 +51,7 @@ Grey Seer
     None
     None
     Screaming Bell {Unique} [200]
-    None
+    One Warpstone Token {True} [15], Two Warpstone Tokens {True} [30], Three Warpstone Tokens {True} [45], Four Warpstone Tokens {True} [60], Five Warpstone Tokens {True} [75], Six Warpstone Tokens {True} [90]
     None
     100
     100
@@ -90,7 +90,7 @@ Warlock Engineer
     Warlock-Augmented Weapon {Mundane} [Melee] (45), Warplock Pistol {Mundane} [Ballistic] (8), Warpmusket {Mundane} [Ballistic] (15)
     None
     None
-    None
+    One Warpstone Token {True} [15], Two Warpstone Tokens {True} [30], Three Warpstone Tokens {True} [45]
     None
     50
     50
