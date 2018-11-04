@@ -62,7 +62,7 @@ Strigoi Ghoul King
 
 # Heroes
 
-Master Necromancer
+Necromancer
     Hero, Mage
     1
     2 [35]
@@ -251,5 +251,262 @@ Dire Wolves
     0
     0
 
+Corpse Cart
+    Special, Chariot, Normal
+    90
+    1, 1
+    - 3 0 3 - - 2 1 5
+    - - - 4 4 4 - - -
+    Armour Save (5+), Random Attacks (2D6) (The Restless Dead only), Regeneration, Undead, Vigour Mortis
+    Balefire {False} [15], Unholy Lodestone {False} [30]
+    Spear {False} [1]
 
+Grave Guard
+    Special, Infantry, Normal
+    11
+    10, None
+    4 3 0 4 4 1 3 1 6
+    4 3 0 4 4 1 3 2 6
+    Killing Blow, Undead
+    Killing Blow, Undead
+    Armour: Shield {Mundane} [Shield], Armour: Heavy armour {Mundane} [Armour]
+    None
+    Great weapons {Mundane} [Melee] (1); Shield
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Seneschal [10]
+    0
+    0
+    0
+    50
 
+Black Knights
+    Special, Cavalry, Normal
+    21
+    5, None
+    4 3 0 4 4 1 3 1 6
+    4 3 0 4 4 1 3 2 6
+    Killing Blow, Undead, Spectral Steeds
+    Killing Blow, Undead, Spectral Steeds
+    Armour: Shield {Mundane} [Shield], Armour: Heavy armour {Mundane} [Armour]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Barding {False} (3), Lances {False} (2)
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Hell Knight [10]
+    0
+    0
+    0
+    50
+
+Crypt Horrors
+    Special, Monstrous Infantry, Normal
+    38
+    3, None
+    6 3 0 4 5 3 2 3 5
+    6 3 0 4 5 3 2 4 5
+    Poisoned Attacks, Regeneration (5+), Undead
+    Poisoned Attacks, Regeneration (5+), Undead
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Champion: Crypt Haunter [10]
+    0
+    0
+    0
+    0
+
+Fell Bats
+    Special, Warbeast, Normal
+    16
+    2, None
+    1 3 0 3 3 2 3 2 3
+    1 3 0 3 3 2 3 2 3
+    Fly, Undead
+    Fly, Undead
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    0
+    0
+    0
+    0
+
+Bat Swarms
+    Special, Swarm, Normal
+    35
+    2, None
+    1 3 0 2 2 5 4 5 3
+    Cloud of Horror, Hover, Undead
+    None
+    None
+
+Spirit Host
+    Special, Swarm, Normal
+    45
+    1, 10
+    6 3 0 3 3 4 1 4 4
+    Ethereal, Undead
+    None
+    None
+
+Hexwraiths
+    Special, Cavalry, Normal
+    30
+    5, 10
+    6 3 0 3 3 1 2 1 5
+    6 3 0 3 3 1 2 2 5
+    Ethereal, Fast Cavalry, Soul Reapers, Soulstriders, Spectral Hunters, Terror, Undead
+    Ethereal, Fast Cavalry, Soul Reapers, Soulstriders, Spectral Hunters, Terror, Undead
+    Weapon: Great weapon {Mundane} [Melee]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Champion: Hellwraith [10]
+    0
+    0
+    0
+    0
+
+Vargheists
+    Special, Monstrous Infantry, Normal
+    46
+    3, None
+    6 4 0 5 4 3 4 3 7
+    6 4 0 5 4 3 4 4 7
+    Fly, Frenzy, Undead, Vampiric
+    Fly, Frenzy, Undead, Vampiric
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Champion: Vargoyle [10]
+    0
+    0
+    0
+    0
+
+Varghulf
+    Rare, Monster, Normal
+    175
+    1, 1
+    8 5 0 5 5 4 4 5 4
+    Bestial Fury, Hatred, Regeneration, Terror, Undead, Vampiric
+    None
+    None
+
+#TODO: Kastellan can take magic weapon up to 25 pts, standard bearer can
+#      take Flag of Blood Keep (75 pts) if no other magic banner taken
+Blood Knights
+    Rare, Cavalry, Normal
+    50
+    5, None
+    4 5 3 5 4 1 5 2 7
+    4 5 3 5 4 1 5 3 7
+    Frenzy, Martial Honour, Undead, Vampiric
+    Frenzy, Martial Honour, Undead, Vampiric
+    Armour: Shield {Mundane} [Shield], Armour: Heavy armour {Mundane} [Armour], Weapon: Lance {Mundane} [Melee]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Kastellan [15]
+    0
+    0
+    0
+    50
+
+Cairn Wraiths
+    Rare, Infantry, Normal
+    50
+    3, 10
+    6 3 0 3 3 2 2 3 5
+    6 3 0 3 3 2 2 1 5
+    Chill Grasp, Ethereal, Ghostly Howl, Terror, Undead
+    Chill Grasp, Ethereal, Ghostly Howl, Terror, Undead
+    Weapon: Great weapon {Mundane} [Melee]
+    Weapon: Hand weapon {Mundane} [Melee]
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    None
+    Champion: Tomb Banshee [10]
+    0
+    0
+    0
+    0
+
+Black Coach
+    Rare, Chariot, Normal
+    195
+    1, 1
+    - 3 0 3 - - 2 3 5
+    - - - 5 6 4 - - -
+    Armour Save (3+), Chill Grasp, Evocation of Death, Terror, Undead, Vampiric, Ward Save (4+)
+    None
+    None
+
+Terrorgheist
+    Rare, Monster, Normal
+    225
+    1, 1
+    6 3 0 5 6 6 3 4 4
+    Death Shriek, Fly, Large Target, Regenerate (6+), Terror, Undead
+    None
+    Rancid Maw {False} [15], Infested {False} [10]
+
+Mortis Engine
+    Rare, Chariot, Normal
+    220
+    1, 1
+    - 3 0 3 - - 2 1 5
+    - - - 5 5 5 - - -
+    Armour Save (5+), Banshee Swarm, Large Target, Random Attacks (2D6) (Spirit Horde only), Regeneration, Spectral Steeds, Terror, The Reliquary, Undead
+    None
+    Blasphemous Tome {False} [20]

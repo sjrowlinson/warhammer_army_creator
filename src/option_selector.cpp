@@ -72,7 +72,8 @@ bool option_selector::select_weapon(const std::string& s) {
     else {
         const bool is_magical = current->base()->common_items_handle()->second.count(weapon) ||
                     current->base()->magic_items_handle()->second.count(weapon) ||
-                    current->base()->faction_items_handle()->second.count(weapon);
+                    (current->base()->faction_items_handle() == nullptr ?
+                       false : current->base()->faction_items_handle()->second.count(weapon));
         ItemClass ic = static_cast<ItemClass>(std::stoi(split[2]));
         try { item_limit_check(is_magical, ic, weapon); }
         catch (const std::runtime_error&) { throw; }
@@ -115,7 +116,8 @@ bool option_selector::select_weapon(const std::string& s) {
     }
     if (!removed.empty() && (current->base()->common_items_handle()->second.count(removed) ||
             current->base()->magic_items_handle()->second.count(removed) ||
-            current->base()->faction_items_handle()->second.count(removed)))
+            (current->base()->faction_items_handle() == nullptr ?
+                false : current->base()->faction_items_handle()->second.count(removed))))
         army->decr_item_tracker(removed);
     return in_tree == InTree::ARMY;
 }
@@ -156,7 +158,8 @@ bool option_selector::select_armour(const std::string& s) {
     else {
         const bool is_magical = current->base()->common_items_handle()->second.count(armour) ||
                     current->base()->magic_items_handle()->second.count(armour) ||
-                    current->base()->faction_items_handle()->second.count(armour);
+                    (current->base()->faction_items_handle() == nullptr ?
+                       false : current->base()->faction_items_handle()->second.count(armour));
         ItemClass ic = static_cast<ItemClass>(std::stoi(split[2]));
         try { item_limit_check(is_magical, ic, armour); }
         catch (const std::runtime_error&) { throw; }
@@ -199,7 +202,8 @@ bool option_selector::select_armour(const std::string& s) {
     }
     if (!removed.empty() && (current->base()->common_items_handle()->second.count(removed) ||
             current->base()->magic_items_handle()->second.count(removed) ||
-            current->base()->faction_items_handle()->second.count(removed)))
+            (current->base()->faction_items_handle() == nullptr ?
+                false : current->base()->faction_items_handle()->second.count(removed))))
         army->decr_item_tracker(removed);
     return in_tree == InTree::ARMY;
 }
@@ -226,11 +230,11 @@ bool option_selector::select_talisman(const std::string& s) {
     else {
         const bool is_magical = current->base()->common_items_handle()->second.count(talisman) ||
                     current->base()->magic_items_handle()->second.count(talisman) ||
-                    current->base()->faction_items_handle()->second.count(talisman);
+                    (current->base()->faction_items_handle() == nullptr ?
+                       false : current->base()->faction_items_handle()->second.count(talisman));
         ItemClass ic = static_cast<ItemClass>(std::stoi(split[1]));
         try { item_limit_check(is_magical, ic, talisman); }
         catch (const std::runtime_error& ) { throw; }
-        std::string removed;
         switch (in_tree) {
         case InTree::ARMY:
             army->take_snapshot_of(p->id());
@@ -239,10 +243,6 @@ bool option_selector::select_talisman(const std::string& s) {
             break;
         case InTree::ROSTER:
             removed = p->pick_talisman(ic, talisman);
-            if (!removed.empty() && (current->base()->common_items_handle()->second.count(removed) ||
-                    current->base()->magic_items_handle()->second.count(removed) ||
-                    current->base()->faction_items_handle()->second.count(removed)))
-                army->decr_item_tracker(removed);
             break;
         default: throw std::runtime_error("No unit selected!");
         }
@@ -250,7 +250,8 @@ bool option_selector::select_talisman(const std::string& s) {
     }
     if (!removed.empty() && (current->base()->common_items_handle()->second.count(removed) ||
             current->base()->magic_items_handle()->second.count(removed) ||
-            current->base()->faction_items_handle()->second.count(removed)))
+            (current->base()->faction_items_handle() == nullptr ?
+                false : current->base()->faction_items_handle()->second.count(removed))))
         army->decr_item_tracker(removed);
     return in_tree == InTree::ARMY;
 }
@@ -277,19 +278,19 @@ bool option_selector::select_enchanted_item(const std::string& s) {
     else {
         const bool is_magical = current->base()->common_items_handle()->second.count(enchanted) ||
                     current->base()->magic_items_handle()->second.count(enchanted) ||
-                    current->base()->faction_items_handle()->second.count(enchanted);
+                    (current->base()->faction_items_handle() == nullptr ?
+                       false : current->base()->faction_items_handle()->second.count(enchanted));
         ItemClass ic = static_cast<ItemClass>(std::stoi(split[1]));
         try { item_limit_check(is_magical, ic, enchanted); }
         catch (const std::runtime_error& ) { throw; }
-        std::string removed;
         switch (in_tree) {
         case InTree::ARMY:
             army->take_snapshot_of(p->id());
-            p->pick_enchanted_item(ic, enchanted);
+            removed = p->pick_enchanted_item(ic, enchanted);
             army->update_on(p->id());
             break;
         case InTree::ROSTER:
-            p->pick_enchanted_item(ic, enchanted);
+            removed = p->pick_enchanted_item(ic, enchanted);
             break;
         default: throw std::runtime_error("No unit selected!");
         }
@@ -297,7 +298,8 @@ bool option_selector::select_enchanted_item(const std::string& s) {
     }
     if (!removed.empty() && (current->base()->common_items_handle()->second.count(removed) ||
             current->base()->magic_items_handle()->second.count(removed) ||
-            current->base()->faction_items_handle()->second.count(removed)))
+            (current->base()->faction_items_handle() == nullptr ?
+                false : current->base()->faction_items_handle()->second.count(removed))))
         army->decr_item_tracker(removed);
     return in_tree == InTree::ARMY;
 }
@@ -323,7 +325,8 @@ bool option_selector::select_other_item(const std::string& s, bool is_checked) {
     } else {
         const bool is_magical = current->base()->common_items_handle()->second.count(other) ||
                     current->base()->magic_items_handle()->second.count(other) ||
-                    current->base()->faction_items_handle()->second.count(other);
+                    (current->base()->faction_items_handle() == nullptr ?
+                       false : current->base()->faction_items_handle()->second.count(other));
         ItemClass ic = static_cast<ItemClass>(std::stoi(split[1]));
         try { item_limit_check(is_magical, ic, other); }
         catch (const std::runtime_error& ) { throw; }
@@ -342,7 +345,8 @@ bool option_selector::select_other_item(const std::string& s, bool is_checked) {
     }
     if (!removed.empty() && (current->base()->common_items_handle()->second.count(removed) ||
             current->base()->magic_items_handle()->second.count(removed) ||
-            current->base()->faction_items_handle()->second.count(removed)))
+            (current->base()->faction_items_handle() == nullptr ?
+                false : current->base()->faction_items_handle()->second.count(removed))))
         army->decr_item_tracker(removed);
     return in_tree == InTree::ARMY;
 }
@@ -367,7 +371,8 @@ bool option_selector::select_banner(const std::string& s) {
     } else {
         const bool is_magical = current->base()->common_items_handle()->second.count(banner) ||
                     current->base()->magic_items_handle()->second.count(banner) ||
-                    current->base()->faction_items_handle()->second.count(banner);
+                    (current->base()->faction_items_handle() == nullptr ?
+                       false : current->base()->faction_items_handle()->second.count(banner));
         ItemClass ic = static_cast<ItemClass>(std::stoi(split[1]));
         try { item_limit_check(is_magical, ic, banner); }
         catch (const std::runtime_error& ) { throw; }
@@ -386,7 +391,8 @@ bool option_selector::select_banner(const std::string& s) {
     }
     if (!removed.empty() && (current->base()->common_items_handle()->second.count(removed) ||
             current->base()->magic_items_handle()->second.count(removed) ||
-            current->base()->faction_items_handle()->second.count(removed)))
+            (current->base()->faction_items_handle() == nullptr ?
+                false : current->base()->faction_items_handle()->second.count(removed))))
         army->decr_item_tracker(removed);
     return in_tree == InTree::ARMY;
 }
@@ -413,7 +419,8 @@ bool option_selector::select_arcane_item(const std::string& s) {
     else {
         const bool is_magical = current->base()->common_items_handle()->second.count(arcane) ||
                     current->base()->magic_items_handle()->second.count(arcane) ||
-                    current->base()->faction_items_handle()->second.count(arcane);
+                    (current->base()->faction_items_handle() == nullptr ?
+                       false : current->base()->faction_items_handle()->second.count(arcane));
         ItemClass ic = static_cast<ItemClass>(std::stoi(split[1]));
         try { item_limit_check(is_magical, ic, arcane); }
         catch (const std::runtime_error& ) { throw; }
@@ -432,7 +439,8 @@ bool option_selector::select_arcane_item(const std::string& s) {
     }
     if (!removed.empty() && (current->base()->common_items_handle()->second.count(removed) ||
             current->base()->magic_items_handle()->second.count(removed) ||
-            current->base()->faction_items_handle()->second.count(removed)))
+            (current->base()->faction_items_handle() == nullptr ?
+                false : current->base()->faction_items_handle()->second.count(removed))))
         army->decr_item_tracker(removed);
     return in_tree == InTree::ARMY;
 }

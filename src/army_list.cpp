@@ -283,6 +283,7 @@ void army_list::change_points_limit(double pts) {
 
 void army_list::clear() {
     army.clear();
+    item_tracker.clear();
     invalidities.clear();
     invalidities.insert(InvalidListReason::CORE_MINIMUM);
     curr_pts = 0.0;

@@ -301,13 +301,13 @@ Gutter Runners
     Weapon: Two hand weapons {Mundane} [Melee], Weapon: Throwing stars {Mundane} [Ballistic]
     None
     Snare-net {Mundane} [Melee] (0), Slings {Mundane} [Ballistic] (1)
-    Weeping Blade {Mundane} [Melee] (30)
+    Weeping blade {Mundane} [Melee] (30)
     None
     None
     Warp-grinder {True} [60]
     None
     Poisoned Attacks {False} [5]
-    Smoke Bombs {True} [10]
+    Smoke bombs {True} [10]
     Champion: Deathrunner [12]
     0
     0
