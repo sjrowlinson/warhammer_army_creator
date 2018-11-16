@@ -543,17 +543,8 @@ void ArmyCreator::optional_mc_extra_selected() {
 // unit info box initialisers
 
 void ArmyCreator::initialise_unit_info_box() {
-    std::shared_ptr<unit> u;
-    switch (in_tree) {
-    case InTree::ARMY:
-        u = army->get_unit(ui->army_tree->currentItem()->data(0, Qt::UserRole).toInt());
-        break;
-    case InTree::ROSTER:
-        u = st->selected();
-        break;
-    default: break;
-    }
-    ui->unit_info_box->setTitle(tr(u->name().data()));
+    if (current == nullptr) return;
+    ui->unit_info_box->setTitle(tr(current->name().data()));
     // overall layout for unit info box
     QVBoxLayout* vbox = new QVBoxLayout;
     // add points label widget in a frame
@@ -562,11 +553,11 @@ void ArmyCreator::initialise_unit_info_box() {
         QHBoxLayout* points_label_layout = new QHBoxLayout;
         QLabel* pre_points_label;
         QLabel* points_label;
-        switch (u->base_unit_type()) {
+        switch (current->base_unit_type()) {
         case BaseUnitType::MAGE_CHARACTER:
         case BaseUnitType::MELEE_CHARACTER:
         {
-            auto p = std::dynamic_pointer_cast<character_unit>(u);
+            auto p = std::dynamic_pointer_cast<character_unit>(current);
             pre_points_label = new QLabel(tr("Points:"));
             points_label = new QLabel(
                 QString(tools::points_str(p->handle_->points(), p->base_unit_type()).data())
@@ -575,7 +566,7 @@ void ArmyCreator::initialise_unit_info_box() {
         }
         case BaseUnitType::NORMAL:
         {
-            auto p = std::dynamic_pointer_cast<normal_unit>(u);
+            auto p = std::dynamic_pointer_cast<normal_unit>(current);
             pre_points_label = new QLabel(tr("Points per model:"));
             points_label = new QLabel(
                 QString(tools::points_str(p->handle->points_per_model(), BaseUnitType::NORMAL).data())
@@ -601,11 +592,11 @@ void ArmyCreator::initialise_unit_info_box() {
             stats_table->setItem(0, i, entry);
         }
         //stats_table->setHorizontalHeaderLabels(tmp);
-        switch (u->base_unit_type()) {
+        switch (current->base_unit_type()) {
         case BaseUnitType::MAGE_CHARACTER:
         case BaseUnitType::MELEE_CHARACTER:
         {
-            auto p = std::dynamic_pointer_cast<character_unit>(u);
+            auto p = std::dynamic_pointer_cast<character_unit>(current);
             auto stats = p->handle_->statistics();
             int count = 0;
             for (const auto& x : stats) {
@@ -617,7 +608,7 @@ void ArmyCreator::initialise_unit_info_box() {
         }
         case BaseUnitType::NORMAL:
         {
-            auto p = std::dynamic_pointer_cast<normal_unit>(u);
+            auto p = std::dynamic_pointer_cast<normal_unit>(current);
             auto stats = p->handle->statistics();
             int count = 0;
             for (const auto& x : stats) {
@@ -651,11 +642,11 @@ void ArmyCreator::initialise_unit_info_box() {
     // special rules
     {
         QLabel* special_rules_label = new QLabel();
-        switch (u->base_unit_type()) {
+        switch (current->base_unit_type()) {
         case BaseUnitType::MAGE_CHARACTER:
         case BaseUnitType::MELEE_CHARACTER:
         {
-            auto p = std::dynamic_pointer_cast<character_unit>(u);
+            auto p = std::dynamic_pointer_cast<character_unit>(current);
             auto sr = p->handle_->special_rules();
             std::string rules_str = "Special Rules: ";
             for (const auto& s : sr)
@@ -666,7 +657,7 @@ void ArmyCreator::initialise_unit_info_box() {
         }
         case BaseUnitType::NORMAL:
         {
-            auto p = std::dynamic_pointer_cast<normal_unit>(u);
+            auto p = std::dynamic_pointer_cast<normal_unit>(current);
             auto sr = p->handle->special_rules();
             std::string rules_str = "Special Rules: ";
             for (const auto& s : sr)
