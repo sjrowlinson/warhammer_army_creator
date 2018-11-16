@@ -41,6 +41,7 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
     if (!st->faction_items_name().empty())
         ui->magic_items_combobox->addItem(QString(st->faction_items_name().data()), QVariant(2));
     ui->opt_box_scrollarea->setWidgetResizable(true);
+    ui->magic_item_box_scrollarea->setWidgetResizable(true);
 }
 
 ArmyCreator::~ArmyCreator() {

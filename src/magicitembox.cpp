@@ -24,7 +24,7 @@ void MagicItemBox::reset_category(ItemClass ic_selected_) {
     ic_selected = ic_selected_;
 }
 
-QGroupBox* MagicItemBox::make_items_tab(const std::unordered_map<std::string, item>& items,
+QScrollArea* MagicItemBox::make_items_tab(const std::unordered_map<std::string, item>& items,
                                         ItemType item_type) {
     if (items.empty()) return nullptr;
     auto opt_items = tools::magic_items_vec_of(items, item_type);
@@ -56,7 +56,8 @@ QGroupBox* MagicItemBox::make_items_tab(const std::unordered_map<std::string, it
     }
 }
 
-QGroupBox* MagicItemBox::make_weapons_tab(const std::vector<std::pair<std::string, item>>& opt_weapons) {
+QScrollArea* MagicItemBox::make_weapons_tab(const std::vector<std::pair<std::string, item>>& opt_weapons) {
+    QScrollArea* sa = new QScrollArea();
     std::unordered_map<WeaponType, std::tuple<ItemClass, std::string, double>> weapons;
     switch (current->base_unit_type()) {
     case BaseUnitType::MAGE_CHARACTER:
@@ -153,10 +154,14 @@ QGroupBox* MagicItemBox::make_weapons_tab(const std::vector<std::pair<std::strin
     vlayout->addWidget(rbox);
     vlayout->addStretch(1);
     box->setLayout(vlayout);
-    return box;
+    sa->setWidget(box);
+    sa->setWidgetResizable(true);
+    return sa;
+    //return box;
 }
 
-QGroupBox* MagicItemBox::make_armour_tab(const std::vector<std::pair<std::string, item>>& opt_armour) {
+QScrollArea* MagicItemBox::make_armour_tab(const std::vector<std::pair<std::string, item>>& opt_armour) {
+    QScrollArea* sa = new QScrollArea();
     std::unordered_map<ArmourType, std::tuple<ItemClass, std::string, double>> armour;
     switch (current->base_unit_type()) {
     case BaseUnitType::MAGE_CHARACTER:
@@ -264,10 +269,14 @@ QGroupBox* MagicItemBox::make_armour_tab(const std::vector<std::pair<std::string
     vlayout->addWidget(hbox);
     vlayout->addStretch(1);
     box->setLayout(vlayout);
-    return box;
+    //return box;
+    sa->setWidget(box);
+    sa->setWidgetResizable(true);
+    return sa;
 }
 
-QGroupBox* MagicItemBox::make_talismans_tab(const std::vector<std::pair<std::string, item>>& opt_talismans) {
+QScrollArea* MagicItemBox::make_talismans_tab(const std::vector<std::pair<std::string, item>>& opt_talismans) {
+    QScrollArea* sa = new QScrollArea();
     std::pair<std::string, std::pair<ItemClass, double>> talisman;
     switch (current->base_unit_type()) {
     case BaseUnitType::MAGE_CHARACTER:
@@ -335,10 +344,14 @@ QGroupBox* MagicItemBox::make_talismans_tab(const std::vector<std::pair<std::str
         vlayout->addWidget(frames[i]);
     }
     box->setLayout(vlayout);
-    return box;
+    //return box;
+    sa->setWidget(box);
+    sa->setWidgetResizable(true);
+    return sa;
 }
 
-QGroupBox* MagicItemBox::make_enchanted_tab(const std::vector<std::pair<std::string, item>>& opt_enchanted) {
+QScrollArea* MagicItemBox::make_enchanted_tab(const std::vector<std::pair<std::string, item>>& opt_enchanted) {
+    QScrollArea* sa = new QScrollArea();
     std::pair<std::string, std::pair<ItemClass, double>> enchanted;
     switch (current->base_unit_type()) {
     case BaseUnitType::MAGE_CHARACTER:
@@ -406,10 +419,14 @@ QGroupBox* MagicItemBox::make_enchanted_tab(const std::vector<std::pair<std::str
         vlayout->addWidget(frames[i]);
     }
     box->setLayout(vlayout);
-    return box;
+    //return box;
+    sa->setWidget(box);
+    sa->setWidgetResizable(true);
+    return sa;
 }
 
-QGroupBox* MagicItemBox::make_arcane_tab(const std::vector<std::pair<std::string, item>>& opt_arcane) {
+QScrollArea* MagicItemBox::make_arcane_tab(const std::vector<std::pair<std::string, item>>& opt_arcane) {
+    QScrollArea* sa = new QScrollArea();
     std::pair<std::string, std::pair<ItemClass, double>> arcane;
     switch (current->base_unit_type()) {
     case BaseUnitType::MAGE_CHARACTER:
@@ -475,10 +492,14 @@ QGroupBox* MagicItemBox::make_arcane_tab(const std::vector<std::pair<std::string
         vlayout->addWidget(frames[i]);
     }
     box->setLayout(vlayout);
-    return box;
+    //return box;
+    sa->setWidget(box);
+    sa->setWidgetResizable(true);
+    return sa;
 }
 
-QGroupBox* MagicItemBox::make_banners_tab(const std::vector<std::pair<std::string, item>>& opt_banners) {
+QScrollArea* MagicItemBox::make_banners_tab(const std::vector<std::pair<std::string, item>>& opt_banners) {
+    QScrollArea* sa = new QScrollArea();
     std::pair<std::string, std::pair<ItemClass, double>> banner;
     switch (current->base_unit_type()) {
     case BaseUnitType::MAGE_CHARACTER:
@@ -544,10 +565,14 @@ QGroupBox* MagicItemBox::make_banners_tab(const std::vector<std::pair<std::strin
         vlayout->addWidget(frames[i]);
     }
     box->setLayout(vlayout);
-    return box;
+    //return box;
+    sa->setWidget(box);
+    sa->setWidgetResizable(true);
+    return sa;
 }
 
-QGroupBox* MagicItemBox::make_other_tab(const std::vector<std::pair<std::string, item>>& opt_other) {
+QScrollArea* MagicItemBox::make_other_tab(const std::vector<std::pair<std::string, item>>& opt_other) {
+    QScrollArea* sa = new QScrollArea();
     std::unordered_map<std::string, std::pair<ItemClass, double>> others;
     switch (current->base_unit_type()) {
     case BaseUnitType::MAGE_CHARACTER:
@@ -603,7 +628,10 @@ QGroupBox* MagicItemBox::make_other_tab(const std::vector<std::pair<std::string,
         vlayout->addWidget(frames[i]);
     }
     box->setLayout(vlayout);
-    return box;
+    //return box;
+    sa->setWidget(box);
+    sa->setWidgetResizable(true);
+    return sa;
 }
 
 bool MagicItemBox::reinitialise(ItemType focus) {
@@ -641,12 +669,14 @@ bool MagicItemBox::reinitialise(ItemType focus) {
     auto other_tab = make_items_tab(mih->second, ItemType::OTHER);
     if (other_tab != nullptr) box->addTab(other_tab, creator->tr("Other"));
     // arcane items
-    QGroupBox* arcane_tab = nullptr;
+    //QGroupBox* arcane_tab = nullptr;
+    QScrollArea* arcane_tab = nullptr;
     if (current->is_mage()) {
         arcane_tab = make_items_tab(mih->second, ItemType::ARCANE);
         if (arcane_tab != nullptr) box->addTab(arcane_tab, creator->tr("Arcane Items"));
     }
-    QGroupBox* banner_tab = nullptr;
+    //QGroupBox* banner_tab = nullptr;
+    QScrollArea* banner_tab = nullptr;
     switch (current->base_unit_type()) {
     case BaseUnitType::MAGE_CHARACTER:
     case BaseUnitType::MELEE_CHARACTER:

@@ -138,18 +138,7 @@ void selection_tree::reset(Faction faction, army_list &list) {
 }
 
 std::shared_ptr<unit> selection_tree::selected() {
-    switch (current_selection->base_unit_type()) {
-    case BaseUnitType::MELEE_CHARACTER:
-        return std::dynamic_pointer_cast<melee_character_unit>(current_selection);
-    case BaseUnitType::MAGE_CHARACTER:
-        return std::dynamic_pointer_cast<mage_character_unit>(current_selection);
-    case BaseUnitType::MIXED:
-        return std::dynamic_pointer_cast<mixed_unit>(current_selection);
-    case BaseUnitType::NORMAL:
-        return std::dynamic_pointer_cast<normal_unit>(current_selection);
-    default:
-        return current_selection;
-    }
+    return current_selection;
 }
 
 void selection_tree::add_unit_to_army_list(int id) {

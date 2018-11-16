@@ -232,19 +232,7 @@ const std::set<InvalidListReason>& army_list::invalid_reasons() const noexcept {
 }
 
 std::shared_ptr<unit> army_list::get_unit(int id) {
-    switch (army[id]->base_unit_type()) {
-    case BaseUnitType::MELEE_CHARACTER:
-        return std::dynamic_pointer_cast<melee_character_unit>(army[id]);
-    case BaseUnitType::MAGE_CHARACTER:
-        return std::dynamic_pointer_cast<mage_character_unit>(army[id]);
-    case BaseUnitType::MIXED:
-        return std::dynamic_pointer_cast<mixed_unit>(army[id]);
-    case BaseUnitType::NORMAL:
-        return std::dynamic_pointer_cast<normal_unit>(army[id]);
-    default:
-        return army[id];
-    }
-    //return army[id];
+    return army[id];
 }
 
 void army_list::take_snapshot_of(int id) {

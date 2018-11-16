@@ -428,25 +428,6 @@
      <string>Clear</string>
     </property>
    </widget>
-   <widget class="QTabWidget" name="magic_items_selector">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>780</y>
-      <width>1341</width>
-      <height>241</height>
-     </rect>
-    </property>
-    <property name="mouseTracking">
-     <bool>true</bool>
-    </property>
-    <property name="currentIndex">
-     <number>-1</number>
-    </property>
-   </widget>
    <widget class="QPushButton" name="duplicate_button">
     <property name="geometry">
      <rect>
@@ -531,6 +512,12 @@
       <height>571</height>
      </rect>
     </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Sunken</enum>
+    </property>
     <property name="widgetResizable">
      <bool>true</bool>
     </property>
@@ -581,6 +568,51 @@
      <property name="wordWrap">
       <bool>true</bool>
      </property>
+    </widget>
+   </widget>
+   <widget class="QScrollArea" name="magic_item_box_scrollarea">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>780</y>
+      <width>1341</width>
+      <height>221</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::NoFrame</enum>
+    </property>
+    <property name="widgetResizable">
+     <bool>true</bool>
+    </property>
+    <widget class="QWidget" name="scrollAreaWidgetContents_2">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>1341</width>
+       <height>221</height>
+      </rect>
+     </property>
+     <widget class="QTabWidget" name="magic_items_selector">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>1341</width>
+        <height>221</height>
+       </rect>
+      </property>
+      <property name="mouseTracking">
+       <bool>true</bool>
+      </property>
+      <property name="currentIndex">
+       <number>-1</number>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>

@@ -19,6 +19,7 @@ class ArmyCreator;
 #include <QGroupBox>
 #include <QLabel>
 #include <QLayout>
+#include <QScrollArea>
 #include <QSpinBox>
 #include <QString>
 #include <QTabWidget>
@@ -35,15 +36,15 @@ private:
 
     // generic method to do some common checks and book-keeping before
     // calling specific function according to item_type value
-    QGroupBox* make_items_tab(const std::unordered_map<std::string, item>& items,
+    QScrollArea* make_items_tab(const std::unordered_map<std::string, item>& items,
                               ItemType item_type);
-    QGroupBox* make_weapons_tab(const std::vector<std::pair<std::string, item>>& opt_weapons);
-    QGroupBox* make_armour_tab(const std::vector<std::pair<std::string, item>>& opt_armour);
-    QGroupBox* make_talismans_tab(const std::vector<std::pair<std::string, item>>& opt_talismans);
-    QGroupBox* make_enchanted_tab(const std::vector<std::pair<std::string, item>>& opt_enchanted);
-    QGroupBox* make_arcane_tab(const std::vector<std::pair<std::string, item>>& opt_arcane);
-    QGroupBox* make_banners_tab(const std::vector<std::pair<std::string, item>>& opt_banners);
-    QGroupBox* make_other_tab(const std::vector<std::pair<std::string, item>>& opt_other);
+    QScrollArea* make_weapons_tab(const std::vector<std::pair<std::string, item>>& opt_weapons);
+    QScrollArea* make_armour_tab(const std::vector<std::pair<std::string, item>>& opt_armour);
+    QScrollArea* make_talismans_tab(const std::vector<std::pair<std::string, item>>& opt_talismans);
+    QScrollArea* make_enchanted_tab(const std::vector<std::pair<std::string, item>>& opt_enchanted);
+    QScrollArea* make_arcane_tab(const std::vector<std::pair<std::string, item>>& opt_arcane);
+    QScrollArea* make_banners_tab(const std::vector<std::pair<std::string, item>>& opt_banners);
+    QScrollArea* make_other_tab(const std::vector<std::pair<std::string, item>>& opt_other);
 public:
     MagicItemBox(ArmyCreator* creator_, QTabWidget* box_, QGroupBox* descr_box_, QLabel* descr_label_);
     ~MagicItemBox() = default;
