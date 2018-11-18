@@ -1330,8 +1330,34 @@ void ArmyCreator::on_export_button_clicked() {
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setPaperSize(QPrinter::A4);
     printer.setPageOrientation(QPageLayout::Landscape);
-    printer.setOutputFileName(QString("test.pdf"));
+    QString doc_dir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    QString faction_str = QString::fromStdString(enum_convert::FACTION_TO_STRING.at(race));
+    if (QStandardPaths::locate(
+                QStandardPaths::DocumentsLocation,
+                QString("WHFB_ArmyLists"),
+                QStandardPaths::LocateOption::LocateDirectory
+            ).isEmpty()
+    ) {
+        QDir docs(doc_dir);
+        docs.mkdir(QString("WHFB_ArmyLists"));
+    }
+    if (QStandardPaths::locate(
+                QStandardPaths::DocumentsLocation,
+                QString("WHFB_ArmyLists/") + faction_str,
+                QStandardPaths::LocateOption::LocateDirectory
+            ).isEmpty()
+            ) {
+        QDir faction_dir(doc_dir + QString("/WHFB_ArmyLists"));
+        faction_dir.mkdir(faction_str);
+    }
+    QString file_name = QString::fromStdString(tools::points_str(army->point_limit()) + "pts_list.pdf");
+    printer.setOutputFileName(doc_dir + "/WHFB_ArmyLists/" + faction_str + "/" + file_name);
     document->setPageSize(printer.pageRect().size());
     document->print(&printer);
+    QMessageBox message_box;
+    message_box.information(nullptr, tr("Army list written"),
+        tr((QString("Army list successfully written to: ") + printer.outputFileName()).toStdString().data())
+    );
+    message_box.setFixedSize(500, 200);
     delete document;
 }

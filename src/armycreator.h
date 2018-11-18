@@ -8,11 +8,11 @@
 #include "selection_tree.h"
 
 #include <functional>
-#include <iostream>
 #include <memory>
 #include <unordered_map>
 
 #include <QCheckBox>
+#include <QDir>
 #include <QGridLayout>
 #include <QGroupBox>
 #include <QMainWindow>
@@ -23,8 +23,9 @@
 #include <QPrintDialog>
 #endif
 #include <QRadioButton>
-#include <QString>
 #include <QSpinBox>
+#include <QStandardPaths>
+#include <QString>
 #include <QTableWidget>
 #include <QTextDocument>
 #include <QTreeWidget>

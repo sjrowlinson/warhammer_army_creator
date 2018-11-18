@@ -6,12 +6,8 @@ MagicItemBox::MagicItemBox(ArmyCreator* creator_, QTabWidget* box_, QGroupBox* d
     in_tree(InTree::NEITHER), ic_selected(ItemClass::COMMON) {}
 
 void MagicItemBox::clear() {
-    /*auto c = box->children();
-    for (auto& x : c) delete x;
-    box->clear();*/
+    for (auto i = 0; i < box->count(); ++i) delete box->widget(i);
     box->clear();
-    for (auto i = 0; i < box->count(); ++i)
-        box->removeTab(i);
     current.reset();
 }
 
