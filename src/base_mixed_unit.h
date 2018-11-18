@@ -14,8 +14,8 @@ private:
     base_normal_unit master_;
     base_normal_unit slave_;
 public:
-    base_mixed_unit(
-        std::string name,
+    explicit base_mixed_unit(
+        const std::string& name,
         base_normal_unit&& master,
         base_normal_unit&& slave
     );

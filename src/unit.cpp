@@ -1,6 +1,6 @@
 #include "unit.h"
 
-unit::unit(std::shared_ptr<base_unit> base)
+unit::unit(const std::shared_ptr<base_unit>& base)
     : id_(0), model_select_(ModelSelect::DEFAULT),
       mixed_select_(MixedSelect::SLAVE), points_(0.0), base_(base) {}
 
@@ -50,7 +50,7 @@ BaseUnitType unit::base_unit_type() const noexcept {
     return base_->base_unit_type();
 }
 
-std::string unit::name() const noexcept {
+const std::string& unit::name() const noexcept {
     return base_->name();
 }
 

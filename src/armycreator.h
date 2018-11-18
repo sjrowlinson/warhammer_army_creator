@@ -86,14 +86,19 @@ private slots:
 private:
     Ui::ArmyCreator* ui;
     Faction race;
+    // handles to the army list and roster
     std::shared_ptr<army_list> army;
     std::shared_ptr<selection_tree> st;
+    // handle to currently selected unit (can be in roster or army tree)
     std::shared_ptr<unit> current;
     int id_counter;
     InTree in_tree;
     std::shared_ptr<option_selector> opt_sel;
     std::shared_ptr<OptionBox> ob;
     std::shared_ptr<MagicItemBox> mib;
+    // directory related fields
+    const QString army_list_dir = "WHFB_ArmyLists";
+    QString documents_dir;
 
     void update_validity_label();
 
@@ -108,6 +113,8 @@ private:
     void clear_unit_info_box();
     void initialise_unit_info_box();
 
+
+    void setup_export_directories();
 
     void update_unit_command_display_helper(
         const std::unordered_map<CommandGroup, std::pair<std::string, double>>& command,

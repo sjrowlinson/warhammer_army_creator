@@ -40,8 +40,8 @@ private:
         ArmourType,
         std::tuple<ItemClass, std::string, double>
     > champ_armours_;
-    std::pair<std::string, double> champ_oco_extra_;
-    std::unordered_map<std::string, double> champ_mc_extras_;
+    std::pair<std::string, std::pair<bool, double>> champ_oco_extra_;
+    std::unordered_map<std::string, std::pair<bool, double>> champ_mc_extras_;
     double champ_magic_item_points;
     double champ_faction_item_points;
     double champ_total_item_points;
@@ -63,7 +63,7 @@ public:
     // handle
     const std::shared_ptr<base_normal_unit> handle;
 
-    explicit normal_unit(std::shared_ptr<base_unit> base);
+    explicit normal_unit(const std::shared_ptr<base_unit>& base);
     normal_unit(const normal_unit& other);
     ~normal_unit() override = default;
 
@@ -80,34 +80,34 @@ public:
 
     // current property accessors
     std::size_t size() const noexcept;
-    std::unordered_map<
+    const std::unordered_map<
         WeaponType,
         std::tuple<ItemClass, std::string, double>
-    > weapons() const noexcept override;
+    >& weapons() const noexcept override;
     std::tuple<ItemClass, std::string, double> melee_weapon() const;
     std::tuple<ItemClass, std::string, double> ranged_weapon() const;
     std::tuple<ItemClass, std::string, double> champion_melee_weapon() const;
     std::tuple<ItemClass, std::string, double> champion_ranged_weapon() const;
 
-    std::unordered_map<
+    const std::unordered_map<
         ArmourType,
         std::tuple<ItemClass, std::string, double>
-    > armour() const noexcept override;
-        std::unordered_map<
+    >& armour() const noexcept override;
+    const std::unordered_map<
         ArmourType,
         std::tuple<ItemClass, std::string, double>
-    > champion_armour() const noexcept;
+    >& champion_armour() const noexcept;
 
-    std::pair<std::string, std::pair<bool, double>> oco_extra() const noexcept override;
-    std::unordered_map<
+    const std::pair<std::string, std::pair<bool, double>>& oco_extra() const noexcept override;
+    const std::unordered_map<
         std::string,
         std::pair<bool, double>
-    > mc_extras() const noexcept override;
-    std::pair<std::string, double> champion_oco_extra() const noexcept;
-    std::unordered_map<
+    >& mc_extras() const noexcept override;
+    const std::pair<std::string, std::pair<bool, double>>& champion_oco_extra() const noexcept;
+    const std::unordered_map<
         std::string,
-        double
-    > champion_mc_extras() const noexcept;
+        std::pair<bool, double>
+    >& champion_mc_extras() const noexcept;
 
     const std::tuple<
         mount,
@@ -116,19 +116,19 @@ public:
         std::unordered_map<std::string, double>
     >& mnt() const noexcept override;
 
-    std::unordered_map<
+    const std::unordered_map<
         CommandGroup, std::pair<std::string, double>
-    > command() const noexcept;
-    std::pair<std::string, std::pair<ItemClass, double>> magic_banner() const noexcept override;
+    >& command() const noexcept;
+    const std::pair<std::string, std::pair<ItemClass, double>>& magic_banner() const noexcept override;
 
     // current property modifiers
-    std::string pick_weapon(ItemClass item_type, std::string name) override;
-    std::string pick_armour(ItemClass item_type, std::string name) override;
+    std::string pick_weapon(ItemClass item_type, const std::string& name) override;
+    std::string pick_armour(ItemClass item_type, const std::string& name) override;
 
-    std::string pick_default_weapon(ItemClass item_type, std::string name);
-    std::string pick_default_armour(ItemClass item_type, std::string name);
-    std::string pick_champion_weapon(ItemClass item_type, std::string name);
-    std::string pick_champion_armour(ItemClass item_type, std::string name);
+    std::string pick_default_weapon(ItemClass item_type, const std::string& name);
+    std::string pick_default_armour(ItemClass item_type, const std::string& name);
+    std::string pick_champion_weapon(ItemClass item_type, const std::string& name);
+    std::string pick_champion_armour(ItemClass item_type, const std::string& name);
 
     std::string remove_weapon(WeaponType wt, bool replacing=false) override;
     std::string remove_armour(ArmourType at, bool replacing=false) override;
@@ -140,26 +140,26 @@ public:
 
     void add_command_member(CommandGroup member);
     void remove_command_member(CommandGroup member);
-    std::string pick_banner(ItemClass item_type, std::string name) override;
+    std::string pick_banner(ItemClass item_type, const std::string& name) override;
     std::string remove_banner() override;
 
-    std::string pick_oco_extra(std::string name) override;
-    std::string pick_mc_extra(std::string name) override;
+    std::string pick_oco_extra(const std::string& name) override;
+    std::string pick_mc_extra(const std::string& name) override;
 
-    std::string pick_default_oco_extra(std::string name);
-    std::string pick_default_mc_extra(std::string name);
-    std::string pick_champion_oco_extra(std::string name);
-    std::string pick_champion_mc_extra(std::string name);
+    std::string pick_default_oco_extra(const std::string& name);
+    std::string pick_default_mc_extra(const std::string& name);
+    std::string pick_champion_oco_extra(const std::string& name);
+    std::string pick_champion_mc_extra(const std::string& name);
 
     std::string remove_oco_extra() override;
-    std::string remove_mc_extra(std::string name) override;
+    std::string remove_mc_extra(const std::string& name) override;
 
     std::string remove_default_oco_extra();
     std::string remove_champion_oco_extra();
-    std::string remove_default_mc_extra(std::string name);
-    std::string remove_champion_mc_extra(std::string name);
+    std::string remove_default_mc_extra(const std::string& name);
+    std::string remove_champion_mc_extra(const std::string& name);
 
-    void pick_mount(std::string name) override;
+    void pick_mount(const std::string& name) override;
     void remove_mount() override;
 
     void change_size(std::size_t n);

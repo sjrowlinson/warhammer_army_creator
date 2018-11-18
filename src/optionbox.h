@@ -56,10 +56,10 @@ private:
     QGroupBox* make_oco_extras_subbox(bool champion);
     QGroupBox* make_mc_extras_subbox(bool champion);
 public:
-    OptionBox(ArmyCreator* creator_, QGroupBox* box_);
+    explicit OptionBox(ArmyCreator* creator_, QGroupBox* box_);
     ~OptionBox() = default;
 
-    void reset(std::shared_ptr<unit> current_, InTree in_tree_);
+    void reset(const std::shared_ptr<unit>& current_, InTree in_tree_);
 
     bool reinitialise();
     void clear();

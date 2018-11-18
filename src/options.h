@@ -33,7 +33,7 @@ private:
     > mc_extras_;
 public:
     options();
-    options(
+    explicit options(
         std::unordered_map<
             std::string,
             std::tuple<WeaponType, ItemClass, double, std::vector<std::string>>

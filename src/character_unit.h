@@ -54,7 +54,7 @@ protected:
 public:
     const std::shared_ptr<base_character_unit> handle_;
 
-    explicit character_unit(std::shared_ptr<base_unit> base);
+    explicit character_unit(const std::shared_ptr<base_unit>& base);
     character_unit(const character_unit& other);
     virtual ~character_unit() override = default;
 
@@ -66,22 +66,22 @@ public:
     bool has_non_duplicable_items() const noexcept override;
 
     std::size_t size() const noexcept;
-    std::unordered_map<
+    const std::unordered_map<
         WeaponType,
         std::tuple<ItemClass, std::string, double>
-    > weapons() const noexcept override;
+    >& weapons() const noexcept override;
 
-    std::unordered_map<
+    const std::unordered_map<
         ArmourType,
         std::tuple<ItemClass, std::string, double>
-    > armour() const noexcept override;
+    >& armour() const noexcept override;
 
-    std::pair<std::string, std::pair<ItemClass, double>> talisman() const noexcept;
-    std::pair<std::string, std::pair<ItemClass, double>> enchanted_item() const noexcept;
+    const std::pair<std::string, std::pair<ItemClass, double>>& talisman() const noexcept;
+    const std::pair<std::string, std::pair<ItemClass, double>>& enchanted_item() const noexcept;
     const std::unordered_map<std::string, std::pair<ItemClass, double>>& item_extras() const noexcept;
 
-    std::pair<std::string, std::pair<bool, double>> oco_extra() const noexcept override;
-    std::unordered_map<std::string, std::pair<bool, double>> mc_extras() const noexcept override;
+    const std::pair<std::string, std::pair<bool, double>>& oco_extra() const noexcept override;
+    const std::unordered_map<std::string, std::pair<bool, double>>& mc_extras() const noexcept override;
 
     const std::tuple<
         mount,
@@ -90,34 +90,34 @@ public:
         std::unordered_map<std::string, double>
     >& mnt() const noexcept override;
 
-    std::pair<std::string, std::pair<ItemClass, double>> magic_banner() const noexcept override;
+    const std::pair<std::string, std::pair<ItemClass, double>>& magic_banner() const noexcept override;
 
     // current property modifiers
-    std::string pick_weapon(ItemClass item_type, std::string name) override;
+    std::string pick_weapon(ItemClass item_type, const std::string& name) override;
     std::string remove_weapon(WeaponType wt, bool replacing=false) override;
 
-    std::string pick_armour(ItemClass item_type, std::string name) override;
+    std::string pick_armour(ItemClass item_type, const std::string& name) override;
     std::string remove_armour(ArmourType at, bool replacing=false) override;
 
-    std::string pick_talisman(ItemClass item_class, std::string name);
+    std::string pick_talisman(ItemClass item_class, const std::string& name);
     std::string remove_talisman();
 
-    std::string pick_enchanted_item(ItemClass item_class, std::string name);
+    std::string pick_enchanted_item(ItemClass item_class, const std::string& name);
     std::string remove_enchanted_item();
 
-    std::string pick_other(ItemClass item_class, std::string name);
-    std::string remove_other(std::string name);
+    std::string pick_other(ItemClass item_class, const std::string& name);
+    std::string remove_other(const std::string& name);
 
-    std::string pick_oco_extra(std::string name) override;
+    std::string pick_oco_extra(const std::string& name) override;
     std::string remove_oco_extra() override;
 
-    std::string pick_mc_extra(std::string name) override;
-    std::string remove_mc_extra(std::string name) override;
+    std::string pick_mc_extra(const std::string& name) override;
+    std::string remove_mc_extra(const std::string& name) override;
 
-    void pick_mount(std::string name) override;
+    void pick_mount(const std::string& name) override;
     void remove_mount() override;
 
-    std::string pick_banner(ItemClass item_class, std::string name) override;
+    std::string pick_banner(ItemClass item_class, const std::string& name) override;
     std::string remove_banner() override;
 
     void pick_mount_option(const std::string& name, bool oco) override;

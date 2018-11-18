@@ -28,11 +28,11 @@ private:
 
     std::string mount_name_;
 public:
-    base_character_unit(
+    explicit base_character_unit(
         Faction faction,
         UnitType ut,
         UnitClass uc,
-        std::string name,
+        const std::string& name,
         double pts,
         std::vector<std::string>&& stats,
         std::vector<std::string>&& sr,
@@ -47,15 +47,15 @@ public:
     virtual ~base_character_unit() = default;
 
     double points() const noexcept;
-    std::vector<std::string> statistics() const noexcept;
-    std::vector<std::string> special_rules() const noexcept;
+    const std::vector<std::string>& statistics() const noexcept;
+    const std::vector<std::string>& special_rules() const noexcept;
     const equipment& eq() const noexcept;
     const options& opt() const noexcept;
     double magic_item_budget() const noexcept;
     double faction_item_budget() const noexcept;
     double total_item_budget() const noexcept;
     bool bsb() const noexcept;
-    std::string mount_name() const noexcept;
+    const std::string& mount_name() const noexcept;
 };
 
 #endif // !BASE_CHARACTER_UNIT_H

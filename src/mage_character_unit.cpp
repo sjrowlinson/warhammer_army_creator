@@ -1,6 +1,6 @@
 #include "mage_character_unit.h"
 
-mage_character_unit::mage_character_unit(std::shared_ptr<base_unit> base)
+mage_character_unit::mage_character_unit(const std::shared_ptr<base_unit>& base)
     : character_unit(base),
       handle(std::dynamic_pointer_cast<base_mage_character_unit>(base)) {
     level_ = {handle->mage_level(), 0.0};
@@ -29,11 +29,11 @@ void mage_character_unit::reset_level() {
     level_ = {handle->mage_level(), 0.0};
 }
 
-std::pair<std::string, std::pair<ItemClass, double>> mage_character_unit::arcane_item() const noexcept {
+const std::pair<std::string, std::pair<ItemClass, double>>& mage_character_unit::arcane_item() const noexcept {
     return arcane_item_;
 }
 
-std::string mage_character_unit::pick_arcane_item(ItemClass item_class, std::string name) {
+std::string mage_character_unit::pick_arcane_item(ItemClass item_class, const std::string& name) {
     std::string removed;
     switch (item_class) {
     case ItemClass::MAGIC:

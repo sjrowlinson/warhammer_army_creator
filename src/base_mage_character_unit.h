@@ -10,11 +10,11 @@ private:
     std::unordered_map<short, double> level_upgrades_;
     std::vector<std::string> lores_;
 public:
-    base_mage_character_unit(
+    explicit base_mage_character_unit(
         Faction faction,
         UnitType ut,
         UnitClass uc,
-        std::string name,
+        const std::string& name,
         double pts,
         std::vector<std::string>&& stats,
         std::vector<std::string>&& sr,

@@ -17,7 +17,7 @@ private:
 public:
     const std::shared_ptr<base_mage_character_unit> handle;
 
-    explicit mage_character_unit(std::shared_ptr<base_unit> base);
+    explicit mage_character_unit(const std::shared_ptr<base_unit>& base);
     mage_character_unit(const mage_character_unit& other);
     ~mage_character_unit() override = default;
 
@@ -27,8 +27,8 @@ public:
     void change_level(short lvl);
     void reset_level();
 
-    std::pair<std::string, std::pair<ItemClass, double>> arcane_item() const noexcept;
-    std::string pick_arcane_item(ItemClass item_class, std::string name);
+    const std::pair<std::string, std::pair<ItemClass, double>>& arcane_item() const noexcept;
+    std::string pick_arcane_item(ItemClass item_class, const std::string& name);
     std::string remove_arcane_item();
 
     std::string html_table_row() const override;

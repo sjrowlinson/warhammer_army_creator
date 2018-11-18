@@ -7,11 +7,11 @@
 class base_melee_character_unit : public base_character_unit {
 private:
 public:
-    base_melee_character_unit(
+    explicit base_melee_character_unit(
         Faction faction,
         UnitType ut,
         UnitClass uc,
-        std::string name,
+        const std::string& name,
         double pts,
         std::vector<std::string>&& stats,
         std::vector<std::string>&& sr,

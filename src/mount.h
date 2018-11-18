@@ -29,7 +29,7 @@ private:
     > restrictions_;
 public:
     mount();
-    mount(
+    explicit mount(
         std::string&& _name,
         UnitClass _uc,
         std::vector<std::string>&& _stats,

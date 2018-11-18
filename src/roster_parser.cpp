@@ -70,7 +70,7 @@ namespace tools {
         std::vector<std::string> banners;
         if (s == "None" || s.empty()) {
             weapons[WeaponType::MELEE] = {ItemClass::MUNDANE, "Hand weapon"};
-            return {
+            return equipment{
                 std::move(weapons), std::move(armour), std::move(talismans),
                 std::move(arcane), std::move(enchanted), std::move(banners)
             };
@@ -114,7 +114,7 @@ namespace tools {
         }
         if (!(weapons.count(WeaponType::MELEE)))
             weapons[WeaponType::MELEE] = {ItemClass::MUNDANE, "Hand weapon"};
-        return {
+        return equipment{
             std::move(weapons), std::move(armour), std::move(talismans),
             std::move(arcane), std::move(enchanted), std::move(banners)
         };

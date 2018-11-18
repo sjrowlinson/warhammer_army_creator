@@ -1,6 +1,6 @@
 #include "mixed_unit.h"
 
-mixed_unit::mixed_unit(std::shared_ptr<base_unit> base)
+mixed_unit::mixed_unit(const std::shared_ptr<base_unit>& base)
     : unit(base),
       handle(std::dynamic_pointer_cast<base_mixed_unit>(base)),
       master_(std::make_shared<base_normal_unit>(handle->master())),
@@ -46,10 +46,10 @@ double mixed_unit::points() const noexcept {
     return master_.points() + slave_.points();
 }
 
-std::unordered_map<
+const std::unordered_map<
     WeaponType,
     std::tuple<ItemClass, std::string, double>
-> mixed_unit::weapons() const noexcept {
+>& mixed_unit::weapons() const noexcept {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
         return master_.weapons();
@@ -59,10 +59,10 @@ std::unordered_map<
     return master_.weapons();
 }
 
-std::unordered_map<
+const std::unordered_map<
     ArmourType,
     std::tuple<ItemClass, std::string, double>
-> mixed_unit::armour() const noexcept {
+>& mixed_unit::armour() const noexcept {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
         return master_.armour();
@@ -72,10 +72,10 @@ std::unordered_map<
     return master_.armour();
 }
 
-std::pair<
+const std::pair<
     std::string,
     std::pair<bool, double>
-> mixed_unit::oco_extra() const noexcept {
+>& mixed_unit::oco_extra() const noexcept {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
         return master_.oco_extra();
@@ -85,10 +85,10 @@ std::pair<
     return master_.oco_extra();
 }
 
-std::unordered_map<
+const std::unordered_map<
     std::string,
     std::pair<bool, double>
-> mixed_unit::mc_extras() const noexcept {
+>& mixed_unit::mc_extras() const noexcept {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
         return master_.mc_extras();
@@ -113,7 +113,7 @@ const std::tuple<
     return master_.mnt();
 }
 
-std::pair<std::string, std::pair<ItemClass, double>> mixed_unit::magic_banner() const noexcept {
+const std::pair<std::string, std::pair<ItemClass, double>>& mixed_unit::magic_banner() const noexcept {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
         return master_.magic_banner();
@@ -123,7 +123,7 @@ std::pair<std::string, std::pair<ItemClass, double>> mixed_unit::magic_banner() 
     return master_.magic_banner();
 }
 
-std::string mixed_unit::pick_weapon(ItemClass item_type, std::string name) {
+std::string mixed_unit::pick_weapon(ItemClass item_type, const std::string& name) {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
         return master_.pick_weapon(item_type, name);
@@ -143,7 +143,7 @@ std::string mixed_unit::remove_weapon(WeaponType wt, bool replacing) {
     return master_.remove_weapon(wt, replacing);
 }
 
-std::string mixed_unit::pick_armour(ItemClass item_type, std::string name) {
+std::string mixed_unit::pick_armour(ItemClass item_type, const std::string& name) {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
         return master_.pick_armour(item_type, name);
@@ -163,7 +163,7 @@ std::string mixed_unit::remove_armour(ArmourType at, bool replacing) {
     return master_.remove_armour(at, replacing);
 }
 
-std::string mixed_unit::pick_oco_extra(std::string name) {
+std::string mixed_unit::pick_oco_extra(const std::string& name) {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
         return master_.pick_oco_extra(name);
@@ -183,7 +183,7 @@ std::string mixed_unit::remove_oco_extra() {
     return master_.remove_oco_extra();
 }
 
-std::string mixed_unit::pick_mc_extra(std::string name) {
+std::string mixed_unit::pick_mc_extra(const std::string& name) {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
         return master_.pick_mc_extra(name);
@@ -193,7 +193,7 @@ std::string mixed_unit::pick_mc_extra(std::string name) {
     return master_.pick_mc_extra(name);
 }
 
-std::string mixed_unit::remove_mc_extra(std::string name) {
+std::string mixed_unit::remove_mc_extra(const std::string& name) {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
         return master_.remove_mc_extra(name);
@@ -203,7 +203,7 @@ std::string mixed_unit::remove_mc_extra(std::string name) {
     return master_.remove_mc_extra(name);
 }
 
-void mixed_unit::pick_mount(std::string name) {
+void mixed_unit::pick_mount(const std::string& name) {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
         master_.pick_mount(name);
@@ -225,7 +225,7 @@ void mixed_unit::remove_mount() {
     }
 }
 
-std::string mixed_unit::pick_banner(ItemClass item_class, std::string name) {
+std::string mixed_unit::pick_banner(ItemClass item_class, const std::string& name) {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
         return master_.pick_banner(item_class, name);

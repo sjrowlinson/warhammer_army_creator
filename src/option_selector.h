@@ -19,13 +19,13 @@ private:
     bool is_selection_magical(const std::string& selection) const;
 public:
     explicit option_selector(
-        std::shared_ptr<selection_tree> st_,
-        std::shared_ptr<army_list> army_
+        const std::shared_ptr<selection_tree>& st_,
+        const std::shared_ptr<army_list>& army_
     );
 
     // resets the option_selector instance to point
     // to a newly selected unit
-    void reset(std::shared_ptr<unit> current_, InTree in_tree_);
+    void reset(const std::shared_ptr<unit>& current_, InTree in_tree_);
 
     // selectors
 

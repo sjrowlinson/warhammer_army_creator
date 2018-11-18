@@ -42,6 +42,7 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
         ui->magic_items_combobox->addItem(QString(st->faction_items_name().data()), QVariant(2));
     ui->opt_box_scrollarea->setWidgetResizable(true);
     ui->magic_item_box_scrollarea->setWidgetResizable(true);
+    setup_export_directories();
 }
 
 ArmyCreator::~ArmyCreator() {
@@ -1291,6 +1292,32 @@ void ArmyCreator::update_unit_command_display_helper(
     }
 }
 
+void ArmyCreator::setup_export_directories() {
+    documents_dir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    //auto faction_str = ui->faction_combobox->currentText();
+    if (QStandardPaths::locate(
+                QStandardPaths::DocumentsLocation,
+                army_list_dir,
+                QStandardPaths::LocateOption::LocateDirectory
+            ).isEmpty()
+    ) {
+        QDir docs(documents_dir);
+        docs.mkdir(QString("WHFB_ArmyLists"));
+    }
+    for (const auto& x : enum_convert::STRING_TO_FACTION) {
+        auto faction_str = QString::fromStdString(x.first);
+        if (QStandardPaths::locate(
+                    QStandardPaths::DocumentsLocation,
+                    army_list_dir + '/' + faction_str,
+                    QStandardPaths::LocateOption::LocateDirectory
+                ).isEmpty()
+                ) {
+            QDir faction_dir(documents_dir + QString("/WHFB_ArmyLists"));
+            faction_dir.mkdir(faction_str);
+        }
+    }
+}
+
 void ArmyCreator::on_export_button_clicked() {
     QString str_stream;
     QTextStream out(&str_stream);
@@ -1330,34 +1357,25 @@ void ArmyCreator::on_export_button_clicked() {
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setPaperSize(QPrinter::A4);
     printer.setPageOrientation(QPageLayout::Landscape);
-    QString doc_dir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-    QString faction_str = QString::fromStdString(enum_convert::FACTION_TO_STRING.at(race));
-    if (QStandardPaths::locate(
-                QStandardPaths::DocumentsLocation,
-                QString("WHFB_ArmyLists"),
-                QStandardPaths::LocateOption::LocateDirectory
-            ).isEmpty()
-    ) {
-        QDir docs(doc_dir);
-        docs.mkdir(QString("WHFB_ArmyLists"));
-    }
-    if (QStandardPaths::locate(
-                QStandardPaths::DocumentsLocation,
-                QString("WHFB_ArmyLists/") + faction_str,
-                QStandardPaths::LocateOption::LocateDirectory
-            ).isEmpty()
-            ) {
-        QDir faction_dir(doc_dir + QString("/WHFB_ArmyLists"));
-        faction_dir.mkdir(faction_str);
-    }
     QString file_name = QString::fromStdString(tools::points_str(army->point_limit()) + "pts_list.pdf");
-    printer.setOutputFileName(doc_dir + "/WHFB_ArmyLists/" + faction_str + "/" + file_name);
+    printer.setOutputFileName(documents_dir + '/' + army_list_dir + '/'
+                              + ui->faction_combobox->currentText() + "/" + file_name);
     document->setPageSize(printer.pageRect().size());
     document->print(&printer);
     QMessageBox message_box;
-    message_box.information(nullptr, tr("Army list written"),
-        tr((QString("Army list successfully written to: ") + printer.outputFileName()).toStdString().data())
-    );
+    if (QStandardPaths::locate(
+                QStandardPaths::DocumentsLocation,
+                army_list_dir + '/' + ui->faction_combobox->currentText() + '/' + file_name,
+                QStandardPaths::LocateOption::LocateFile
+            ).isEmpty())
+        message_box.information(nullptr, tr("Write failure"),
+            tr((QString("An access error occurred when trying to write the army list to: ")
+                + printer.outputFileName()).toStdString().data())
+        );
+    else
+        message_box.information(nullptr, tr("Army list written"),
+            tr((QString("Army list successfully written to: ") + printer.outputFileName()).toStdString().data())
+        );
     message_box.setFixedSize(500, 200);
     delete document;
 }

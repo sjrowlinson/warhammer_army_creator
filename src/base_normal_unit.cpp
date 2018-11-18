@@ -4,7 +4,7 @@ base_normal_unit::base_normal_unit(
     Faction faction,
     UnitType ut,
     UnitClass uc,
-    std::string name,
+    const std::string& name,
     std::size_t min_size,
     std::size_t max_size,
     double pts_per_model,
@@ -73,4 +73,4 @@ const std::unordered_map<
 }
 double base_normal_unit::magic_banner_budget() const noexcept { return magic_banner_budget_; }
 
-std::string base_normal_unit::mount_name() const noexcept { return mount_name_; }
+const std::string& base_normal_unit::mount_name() const noexcept { return mount_name_; }

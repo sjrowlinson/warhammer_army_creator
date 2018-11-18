@@ -24,7 +24,7 @@ private:
     std::vector<std::string> banners_;
 public:
     equipment();
-    equipment(
+    explicit equipment(
         std::unordered_map<
             WeaponType,
             std::pair<ItemClass, std::string>

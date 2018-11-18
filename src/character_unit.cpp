@@ -1,6 +1,6 @@
 #include "character_unit.h"
 
-character_unit::character_unit(std::shared_ptr<base_unit> base)
+character_unit::character_unit(const std::shared_ptr<base_unit>& base)
     : unit(base),
       handle_(std::dynamic_pointer_cast<base_character_unit>(base)) {
     points_ = handle_->points();
@@ -323,26 +323,34 @@ std::string character_unit::pick_magic_item(ItemType item_type, ItemClass item_c
 
 std::size_t character_unit::size() const noexcept { return 1U; }
 
-std::unordered_map<
+const std::unordered_map<
     WeaponType,
     std::tuple<ItemClass, std::string, double>
-> character_unit::weapons() const noexcept { return weapons_; }
+>& character_unit::weapons() const noexcept { return weapons_; }
 
-std::unordered_map<
+const std::unordered_map<
     ArmourType,
     std::tuple<ItemClass, std::string, double>
-> character_unit::armour() const noexcept { return armours_; }
+>& character_unit::armour() const noexcept { return armours_; }
 
-std::pair<std::string, std::pair<ItemClass, double>> character_unit::talisman() const noexcept { return talisman_; }
+const std::pair<std::string, std::pair<ItemClass, double>>& character_unit::talisman() const noexcept {
+    return talisman_;
+}
 
-std::pair<std::string, std::pair<ItemClass, double>> character_unit::enchanted_item() const noexcept { return enchanted_item_; }
+const std::pair<std::string, std::pair<ItemClass, double>>& character_unit::enchanted_item() const noexcept {
+    return enchanted_item_;
+}
 
 const std::unordered_map<std::string, std::pair<ItemClass, double>>& character_unit::item_extras() const noexcept {
     return item_extras_;
 }
 
-std::pair<std::string, std::pair<bool, double>> character_unit::oco_extra() const noexcept { return oco_extra_; }
-std::unordered_map<std::string, std::pair<bool, double>> character_unit::mc_extras() const noexcept { return mc_extras_; }
+const std::pair<std::string, std::pair<bool, double>>& character_unit::oco_extra() const noexcept {
+    return oco_extra_;
+}
+const std::unordered_map<std::string, std::pair<bool, double>>& character_unit::mc_extras() const noexcept {
+    return mc_extras_;
+}
 
 const std::tuple<
     mount,
@@ -351,11 +359,11 @@ const std::tuple<
     std::unordered_map<std::string, double>
 >& character_unit::mnt() const noexcept { return mount_; }
 
-std::pair<std::string, std::pair<ItemClass, double>> character_unit::magic_banner() const noexcept {
+const std::pair<std::string, std::pair<ItemClass, double>>& character_unit::magic_banner() const noexcept {
     return banner;
 }
 
-std::string character_unit::pick_weapon(ItemClass item_type, std::string name) {
+std::string character_unit::pick_weapon(ItemClass item_type, const std::string& name) {
     std::string removed;
     switch (item_type) {
     case ItemClass::MUNDANE:
@@ -383,7 +391,7 @@ std::string character_unit::pick_weapon(ItemClass item_type, std::string name) {
     return removed;
 }
 
-std::string character_unit::pick_armour(ItemClass item_type, std::string name) {
+std::string character_unit::pick_armour(ItemClass item_type, const std::string& name) {
     std::string removed;
     switch (item_type) {
     case ItemClass::MUNDANE:
@@ -411,7 +419,7 @@ std::string character_unit::pick_armour(ItemClass item_type, std::string name) {
     return removed;
 }
 
-std::string character_unit::pick_talisman(ItemClass item_class, std::string name) {
+std::string character_unit::pick_talisman(ItemClass item_class, const std::string& name) {
     std::string removed;
     switch (item_class) {
     case ItemClass::MAGIC:
@@ -443,7 +451,7 @@ std::string character_unit::remove_talisman() {
     return removed;
 }
 
-std::string character_unit::pick_enchanted_item(ItemClass item_class, std::string name) {
+std::string character_unit::pick_enchanted_item(ItemClass item_class, const std::string& name) {
     std::string removed;
     switch (item_class) {
     case ItemClass::MAGIC:
@@ -475,7 +483,7 @@ std::string character_unit::remove_enchanted_item() {
     return removed;
 }
 
-std::string character_unit::pick_other(ItemClass item_class, std::string name) {
+std::string character_unit::pick_other(ItemClass item_class, const std::string& name) {
     std::string removed;
     switch (item_class) {
     case ItemClass::MAGIC:
@@ -488,7 +496,7 @@ std::string character_unit::pick_other(ItemClass item_class, std::string name) {
     return removed;
 }
 
-std::string character_unit::remove_other(std::string name) {
+std::string character_unit::remove_other(const std::string& name) {
     auto search = item_extras_.find(name);
     if (search == item_extras_.end())
         throw std::invalid_argument("Unit does not have this item!");
@@ -508,7 +516,7 @@ std::string character_unit::remove_other(std::string name) {
     return name;
 }
 
-std::string character_unit::pick_oco_extra(std::string name) {
+std::string character_unit::pick_oco_extra(const std::string& name) {
     std::string removed;
     auto search = handle_->opt().oco_extras().find(name);
     if (search == handle_->opt().oco_extras().end())
@@ -546,7 +554,7 @@ std::string character_unit::pick_oco_extra(std::string name) {
     return removed;
 }
 
-std::string character_unit::pick_mc_extra(std::string name) {
+std::string character_unit::pick_mc_extra(const std::string& name) {
     auto search = handle_->opt().mc_extras().find(name);
     if (search == handle_->opt().mc_extras().end())
         throw std::invalid_argument("Item not found!");
@@ -633,7 +641,7 @@ std::string character_unit::remove_oco_extra() {
     return removed;
 }
 
-std::string character_unit::remove_mc_extra(std::string name) {
+std::string character_unit::remove_mc_extra(const std::string& name) {
     auto search = mc_extras_.find(name);
     if (search != mc_extras_.end()) {
         points_ -= search->second.second;
@@ -642,7 +650,7 @@ std::string character_unit::remove_mc_extra(std::string name) {
     return name;
 }
 
-void character_unit::pick_mount(std::string name) {
+void character_unit::pick_mount(const std::string& name) {
     if (std::get<0>(mount_).name() == name) return;
     auto opt_search = handle_->opt().mounts().find(name);
     auto mnt_search = handle_->mounts_handle()->find(name);
@@ -694,7 +702,7 @@ void character_unit::remove_mount_option(const std::string& name, bool oco) {
     }
 }
 
-std::string character_unit::pick_banner(ItemClass item_class, std::string name) {
+std::string character_unit::pick_banner(ItemClass item_class, const std::string& name) {
     if (!is_bsb())
         throw std::runtime_error("Only the Battle Standard Bearer may take a Magic Standard!");
     if (is_bsb() && (!talisman_.first.empty() || !enchanted_item_.first.empty() ||

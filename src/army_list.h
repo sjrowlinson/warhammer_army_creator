@@ -43,7 +43,7 @@ private:
     void determine_limits();
     std::string html_table(UnitType ut) const;
 public:
-    army_list(double points);
+    explicit army_list(double points);
     ~army_list();
     double current_points() const noexcept;
     double point_limit() const noexcept;

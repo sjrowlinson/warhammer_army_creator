@@ -78,7 +78,7 @@ private:
     void parse_item_files(const std::pair<QString, QString>& ifile_str);
     std::vector<std::shared_ptr<base_unit>> all_of(UnitType ut) const noexcept;
 public:
-    selection_tree(Faction faction, army_list& list);
+    explicit selection_tree(Faction faction, army_list& list);
     ~selection_tree() = default;
     void add_unit_to_army_list(int id);
     void change_selection(const std::string& name);

@@ -11,7 +11,7 @@ void MagicItemBox::clear() {
     current.reset();
 }
 
-void MagicItemBox::reset(std::shared_ptr<unit> current_, InTree in_tree_) {
+void MagicItemBox::reset(const std::shared_ptr<unit>& current_, InTree in_tree_) {
     current = current_;
     in_tree = in_tree_;
 }

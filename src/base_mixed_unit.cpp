@@ -1,7 +1,7 @@
 #include "base_mixed_unit.h"
 
 base_mixed_unit::base_mixed_unit(
-    std::string name,
+    const std::string& name,
     base_normal_unit&& master,
     base_normal_unit&& slave
 ) : base_unit(

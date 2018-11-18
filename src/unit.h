@@ -28,7 +28,7 @@ protected:
         const std::unordered_map<RestrictionField, std::vector<std::string>>& restrictions
     ) const = 0;
 public:
-    explicit unit(std::shared_ptr<base_unit> base);
+    explicit unit(const std::shared_ptr<base_unit>& base);
     unit(const unit& other);
     virtual ~unit() = default;
 
@@ -51,25 +51,25 @@ public:
 
     // pure virtual properties
     virtual
-    std::unordered_map<
+    const std::unordered_map<
         WeaponType,
         std::tuple<ItemClass, std::string, double>
-    > weapons() const noexcept = 0;
+    >& weapons() const noexcept = 0;
     virtual
-    std::unordered_map<
+    const std::unordered_map<
         ArmourType,
         std::tuple<ItemClass, std::string, double>
-    > armour() const noexcept = 0;
+    >& armour() const noexcept = 0;
     virtual
-    std::pair<
+    const std::pair<
         std::string,
         std::pair<bool, double>
-    > oco_extra() const noexcept = 0;
+    >& oco_extra() const noexcept = 0;
     virtual
-    std::unordered_map<
+    const std::unordered_map<
         std::string,
         std::pair<bool, double>
-    > mc_extras() const noexcept = 0;
+    >& mc_extras() const noexcept = 0;
     virtual const std::tuple<
         mount,
         double,
@@ -77,12 +77,12 @@ public:
         std::unordered_map<std::string, double>
     >& mnt() const noexcept = 0;
 
-    virtual std::pair<std::string, std::pair<ItemClass, double>> magic_banner() const noexcept = 0;
+    virtual const std::pair<std::string, std::pair<ItemClass, double>>& magic_banner() const noexcept = 0;
 
     // basic properties
     const std::shared_ptr<base_unit>& base() const noexcept;
     BaseUnitType base_unit_type() const noexcept;
-    std::string name() const noexcept;
+    const std::string& name() const noexcept;
     std::size_t min_size() const noexcept;
     std::size_t max_size() const noexcept;
     Faction faction() const noexcept;
@@ -90,21 +90,17 @@ public:
     UnitClass unit_class() const noexcept;
 
     // item selectors
-    // TODO: change all of these to return value of remove_weapon - i.e.
-    // return a string encoding the item removed (so the item being replaced
-    // for pick methods and the item being directly removed for remove
-    // methods) => may not need this signature for mounts though, only items
-    virtual std::string pick_weapon(ItemClass item_type, std::string name) = 0;
+    virtual std::string pick_weapon(ItemClass item_type, const std::string& name) = 0;
     virtual std::string remove_weapon(WeaponType wt, bool replacing=false) = 0;
-    virtual std::string pick_armour(ItemClass item_type, std::string name) = 0;
+    virtual std::string pick_armour(ItemClass item_type, const std::string& name) = 0;
     virtual std::string remove_armour(ArmourType at, bool replacing=false) = 0;
-    virtual std::string pick_oco_extra(std::string name) = 0;
+    virtual std::string pick_oco_extra(const std::string& name) = 0;
     virtual std::string remove_oco_extra() = 0;
-    virtual std::string pick_mc_extra(std::string name) = 0;
-    virtual std::string remove_mc_extra(std::string name) = 0;
-    virtual void pick_mount(std::string name) = 0;
+    virtual std::string pick_mc_extra(const std::string& name) = 0;
+    virtual std::string remove_mc_extra(const std::string& name) = 0;
+    virtual void pick_mount(const std::string& name) = 0;
     virtual void remove_mount() = 0;
-    virtual std::string pick_banner(ItemClass item_class, std::string name) = 0;
+    virtual std::string pick_banner(ItemClass item_class, const std::string& name) = 0;
     virtual std::string remove_banner() = 0;
 
     virtual void pick_mount_option(const std::string& name, bool oco);

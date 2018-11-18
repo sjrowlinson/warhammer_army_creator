@@ -4,7 +4,7 @@ base_mage_character_unit::base_mage_character_unit(
     Faction faction,
     UnitType ut,
     UnitClass uc,
-    std::string name,
+    const std::string& name,
     double pts,
     std::vector<std::string>&& stats,
     std::vector<std::string>&& sr,

@@ -40,11 +40,11 @@ private:
     // mount name if the unit is cavalry
     std::string mount_name_;
 public:
-    base_normal_unit(
+    explicit base_normal_unit(
         Faction faction,
         UnitType ut,
         UnitClass uc,
-        std::string name,
+        const std::string& name,
         std::size_t min_size,
         std::size_t max_size,
         double pts_per_model,
@@ -87,7 +87,7 @@ public:
     >& optional_command() const noexcept;
     double magic_banner_budget() const noexcept;
 
-    std::string mount_name() const noexcept;
+    const std::string& mount_name() const noexcept;
 };
 
 #endif // !BASE_NORMAL_UNIT_H

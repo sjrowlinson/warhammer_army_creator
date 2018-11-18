@@ -1,6 +1,6 @@
 #include "normal_unit.h"
 #include <iostream>
-normal_unit::normal_unit(std::shared_ptr<base_unit> base)
+normal_unit::normal_unit(const std::shared_ptr<base_unit>& base)
     : unit(base),
       handle(std::dynamic_pointer_cast<base_normal_unit>(base)) {
     points_ = handle->min_size() * handle->points_per_model();
@@ -102,10 +102,10 @@ bool normal_unit::switch_model_select(ModelSelect ms) {
 
 std::size_t normal_unit::size() const noexcept { return size_; }
 
-std::unordered_map<
+const std::unordered_map<
     WeaponType,
     std::tuple<ItemClass, std::string, double>
-> normal_unit::weapons() const noexcept {
+>& normal_unit::weapons() const noexcept {
     switch (model_select_) {
     case ModelSelect::DEFAULT:
         return weapons_;
@@ -136,10 +136,10 @@ std::tuple<ItemClass, std::string, double> normal_unit::champion_ranged_weapon()
     return {ItemClass::MUNDANE, "", 0.0};
 }
 
-std::unordered_map<
+const std::unordered_map<
     ArmourType,
     std::tuple<ItemClass, std::string, double>
-> normal_unit::armour() const noexcept {
+>& normal_unit::armour() const noexcept {
     switch (model_select_) {
     case ModelSelect::DEFAULT:
         return armours_;
@@ -149,56 +149,57 @@ std::unordered_map<
     return armours_;
 }
 
-std::unordered_map<
+const std::unordered_map<
     ArmourType,
     std::tuple<ItemClass, std::string, double>
-> normal_unit::champion_armour() const noexcept {
+>& normal_unit::champion_armour() const noexcept {
     return champ_armours_;
 }
 
-std::pair<
+const std::pair<
     std::string,
     std::pair<bool, double>
-> normal_unit::oco_extra() const noexcept {
+>& normal_unit::oco_extra() const noexcept {
     switch (model_select_) {
     case ModelSelect::DEFAULT:
         return oco_extra_;
     case ModelSelect::CHAMPION:
-        return {champ_oco_extra_.first, {true, champ_oco_extra_.second}};
+        return champ_oco_extra_;
     }
     return oco_extra_;
  }
 
-std::unordered_map<
+const std::unordered_map<
     std::string,
     std::pair<bool, double>
-> normal_unit::mc_extras() const noexcept {
+>& normal_unit::mc_extras() const noexcept {
     switch (model_select_) {
     case ModelSelect::DEFAULT:
         return mc_extras_;
     case ModelSelect::CHAMPION:
     {
-        std::unordered_map<
+        return champ_mc_extras_;
+        /*std::unordered_map<
             std::string,
             std::pair<bool, double>
         > tmp;
         for (const auto& x : champ_mc_extras_)
             tmp[x.first] = {true, x.second};
-        return tmp;
+        return tmp;*/
     }
     }
     return mc_extras_;
  }
 
-std::pair<
+const std::pair<
     std::string,
-    double
-> normal_unit::champion_oco_extra() const noexcept { return champ_oco_extra_; }
+    std::pair<bool, double>
+>& normal_unit::champion_oco_extra() const noexcept { return champ_oco_extra_; }
 
-std::unordered_map<
+const std::unordered_map<
     std::string,
-    double
-> normal_unit::champion_mc_extras() const noexcept { return champ_mc_extras_; }
+    std::pair<bool, double>
+>& normal_unit::champion_mc_extras() const noexcept { return champ_mc_extras_; }
 
 const std::tuple<
     mount,
@@ -207,19 +208,19 @@ const std::tuple<
     std::unordered_map<std::string, double>
 >& normal_unit::mnt() const noexcept { return mount_; }
 
-std::unordered_map<
+const std::unordered_map<
     CommandGroup, std::pair<std::string, double>
-> normal_unit::command() const noexcept {
+>& normal_unit::command() const noexcept {
     return command_group;
 }
 
-std::pair<std::string, std::pair<ItemClass, double>> normal_unit::magic_banner() const noexcept {
+const std::pair<std::string, std::pair<ItemClass, double>>& normal_unit::magic_banner() const noexcept {
     return banner;
 }
 
 // current property modifiers
 
-std::string normal_unit::pick_weapon(ItemClass item_type, std::string name) {
+std::string normal_unit::pick_weapon(ItemClass item_type, const std::string& name) {
     switch(model_select_) {
     case ModelSelect::DEFAULT:
         return pick_default_weapon(item_type, name);
@@ -229,7 +230,7 @@ std::string normal_unit::pick_weapon(ItemClass item_type, std::string name) {
     return pick_default_weapon(item_type, name);
 }
 
-std::string normal_unit::pick_default_weapon(ItemClass item_type, std::string name) {
+std::string normal_unit::pick_default_weapon(ItemClass item_type, const std::string& name) {
     std::string removed;
     switch (item_type) {
     case ItemClass::MUNDANE:
@@ -258,7 +259,7 @@ std::string normal_unit::pick_default_weapon(ItemClass item_type, std::string na
     return removed;
 }
 
-std::string normal_unit::pick_champion_weapon(ItemClass item_type, std::string name) {
+std::string normal_unit::pick_champion_weapon(ItemClass item_type, const std::string& name) {
     if (!(command_group.count(CommandGroup::CHAMPION)))
         throw std::runtime_error("No champion present in the unit!");
     std::string removed;
@@ -326,7 +327,7 @@ std::string normal_unit::pick_champion_weapon(ItemClass item_type, std::string n
     return removed;
 }
 
-std::string normal_unit::pick_armour(ItemClass item_type, std::string name) {
+std::string normal_unit::pick_armour(ItemClass item_type, const std::string& name) {
     switch (model_select_) {
     case ModelSelect::DEFAULT:
         return pick_default_armour(item_type, name);
@@ -336,7 +337,7 @@ std::string normal_unit::pick_armour(ItemClass item_type, std::string name) {
     return pick_default_armour(item_type, name);
 }
 
-std::string normal_unit::pick_default_armour(ItemClass item_type, std::string name) {
+std::string normal_unit::pick_default_armour(ItemClass item_type, const std::string& name) {
     std::string removed;
     switch (item_type) {
     case ItemClass::MUNDANE:
@@ -364,7 +365,7 @@ std::string normal_unit::pick_default_armour(ItemClass item_type, std::string na
     return removed;
 }
 
-std::string normal_unit::pick_champion_armour(ItemClass item_type, std::string name) {
+std::string normal_unit::pick_champion_armour(ItemClass item_type, const std::string& name) {
     if (!(command_group.count(CommandGroup::CHAMPION)))
         throw std::runtime_error("No champion present in the unit!");
     std::string removed;
@@ -584,7 +585,7 @@ void normal_unit::remove_command_member(CommandGroup member) {
     }
 }
 
-std::string normal_unit::pick_banner(ItemClass item_type, std::string name) {
+std::string normal_unit::pick_banner(ItemClass item_type, const std::string& name) {
     if (!(command_group.count(CommandGroup::STANDARD_BEARER)))
         throw std::runtime_error("Unit contains no standard bearer!");
     std::string removed;
@@ -637,7 +638,7 @@ std::string normal_unit::remove_banner() {
     return removed;
 }
 
-std::string normal_unit::pick_oco_extra(std::string name) {
+std::string normal_unit::pick_oco_extra(const std::string& name) {
     switch (model_select_) {
     case ModelSelect::DEFAULT:
         return pick_default_oco_extra(name);
@@ -647,7 +648,7 @@ std::string normal_unit::pick_oco_extra(std::string name) {
     return pick_default_oco_extra(name);
 }
 
-std::string normal_unit::pick_default_oco_extra(std::string name) {
+std::string normal_unit::pick_default_oco_extra(const std::string& name) {
     auto search = handle->opt().oco_extras().find(name);
     if (search == handle->opt().oco_extras().end())
         throw std::invalid_argument("Item not found!");
@@ -663,7 +664,7 @@ std::string normal_unit::pick_default_oco_extra(std::string name) {
     return removed;
 }
 
-std::string normal_unit::pick_champion_oco_extra(std::string name) {
+std::string normal_unit::pick_champion_oco_extra(const std::string& name) {
     if (!(command_group.count(CommandGroup::CHAMPION)))
         throw std::runtime_error("No champion present in the unit!");
     auto search = handle->champion_opt().oco_extras().find(name);
@@ -672,14 +673,14 @@ std::string normal_unit::pick_champion_oco_extra(std::string name) {
     std::string removed;
     if (champ_oco_extra_.first == name) return std::string();
     removed = champ_oco_extra_.first;
-    points_ -= champ_oco_extra_.second;
+    points_ -= champ_oco_extra_.second.second;
     champ_oco_extra_.first = name;
-    champ_oco_extra_.second = search->second.second;
+    champ_oco_extra_.second = search->second;
     points_ += search->second.second;
     return removed;
 }
 
-std::string normal_unit::pick_mc_extra(std::string name) {
+std::string normal_unit::pick_mc_extra(const std::string& name) {
     switch (model_select_) {
     case ModelSelect::DEFAULT:
         return pick_default_mc_extra(name);
@@ -689,7 +690,7 @@ std::string normal_unit::pick_mc_extra(std::string name) {
     return pick_default_mc_extra(name);
 }
 
-std::string normal_unit::pick_default_mc_extra(std::string name) {
+std::string normal_unit::pick_default_mc_extra(const std::string& name) {
     auto search = handle->opt().mc_extras().find(name);
     if (search == handle->opt().mc_extras().end())
         throw std::invalid_argument("Item not found!");
@@ -700,14 +701,14 @@ std::string normal_unit::pick_default_mc_extra(std::string name) {
     return std::string();
 }
 
-std::string normal_unit::pick_champion_mc_extra(std::string name) {
+std::string normal_unit::pick_champion_mc_extra(const std::string& name) {
     if (!(command_group.count(CommandGroup::CHAMPION)))
         throw std::runtime_error("No champion present in the unit!");
     auto search = handle->champion_opt().mc_extras().find(name);
     if (search == handle->champion_opt().mc_extras().end())
         throw std::invalid_argument("Item not found!");
     if (champ_mc_extras_.count(name)) return std::string();
-    champ_mc_extras_[name] = search->second.second;
+    champ_mc_extras_[name] = search->second;
     points_ += search->second.second;
     return std::string();
 }
@@ -732,13 +733,13 @@ std::string normal_unit::remove_default_oco_extra() {
 
 std::string normal_unit::remove_champion_oco_extra() {
     std::string removed = champ_oco_extra_.first;
-    points_ -= champ_oco_extra_.second;
+    points_ -= champ_oco_extra_.second.second;
     champ_oco_extra_.first = "";
-    champ_oco_extra_.second = 0.0;
+    champ_oco_extra_.second = {true, 0.0};
     return removed;
 }
 
-std::string normal_unit::remove_mc_extra(std::string name) {
+std::string normal_unit::remove_mc_extra(const std::string& name) {
     switch (model_select_) {
     case ModelSelect::DEFAULT:
         return remove_default_mc_extra(name);
@@ -748,7 +749,7 @@ std::string normal_unit::remove_mc_extra(std::string name) {
     return remove_default_mc_extra(name);
 }
 
-std::string normal_unit::remove_default_mc_extra(std::string name) {
+std::string normal_unit::remove_default_mc_extra(const std::string& name) {
     auto search = mc_extras_.find(name);
     if (search != mc_extras_.end()) {
         const double pts = search->second.second;
@@ -758,16 +759,16 @@ std::string normal_unit::remove_default_mc_extra(std::string name) {
     return std::string();
 }
 
-std::string normal_unit::remove_champion_mc_extra(std::string name) {
+std::string normal_unit::remove_champion_mc_extra(const std::string& name) {
     auto search = champ_mc_extras_.find(name);
     if (search != champ_mc_extras_.end()) {
-        points_ -= search->second;
+        points_ -= search->second.second;
         champ_mc_extras_.erase(name);
     }
     return std::string();
 }
 
-void normal_unit::pick_mount(std::string name) {
+void normal_unit::pick_mount(const std::string& name) {
     if (std::get<0>(mount_).name() == name) return;
     auto opt_search = handle->opt().mounts().find(name);
     auto mnt_search = handle->mounts_handle()->find(name);
@@ -801,8 +802,8 @@ void normal_unit::change_size(std::size_t n) {
         points_ += (e.second.first) ? e.second.second : n * e.second.second;
     for (const auto& cw : champ_weapons_) points_ += std::get<2>(cw.second);
     for (const auto& ca : champ_armours_) points_ += std::get<2>(ca.second);
-    points_ += champ_oco_extra_.second;
-    for (const auto& ce : champ_mc_extras_) points_ += ce.second;
+    points_ += champ_oco_extra_.second.second;
+    for (const auto& ce : champ_mc_extras_) points_ += ce.second.second;
     points_ += n * std::get<1>(mount_);
     for (const auto& m : command_group) points_ += m.second.second;
     points_ += banner.second.second;

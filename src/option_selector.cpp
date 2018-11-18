@@ -1,11 +1,11 @@
 #include "option_selector.h"
 
 option_selector::option_selector(
-    std::shared_ptr<selection_tree> st_,
-    std::shared_ptr<army_list> army_
+    const std::shared_ptr<selection_tree>& st_,
+    const std::shared_ptr<army_list>& army_
 ) : st(st_), army(army_), in_tree(InTree::NEITHER), current() {}
 
-void option_selector::reset(std::shared_ptr<unit> current_, InTree in_tree_) {
+void option_selector::reset(const std::shared_ptr<unit>& current_, InTree in_tree_) {
     current = current_;
     in_tree = in_tree_;
 }

@@ -56,7 +56,7 @@ public:
         Faction faction,
         UnitType ut,
         UnitClass uc,
-        std::string name,
+        const std::string& name,
         std::size_t min_size,
         std::size_t max_size = std::numeric_limits<std::size_t>::max()
     );
@@ -68,7 +68,7 @@ public:
     UnitType unit_type() const noexcept;
     UnitClass unit_class() const noexcept;
 
-    std::string name() const noexcept;
+    const std::string& name() const noexcept;
     std::size_t min_size() const noexcept;
     std::size_t max_size() const noexcept;
 
