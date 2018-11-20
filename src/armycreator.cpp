@@ -168,13 +168,17 @@ void ArmyCreator::populate_roster_tree() {
 // ui element clearers
 
 void ArmyCreator::clear_roster_tree() {
-    for (int i = 0; i < 5; ++i)
-        ui->roster_tree->topLevelItem(i)->takeChildren();
+    for (int i = 0; i < 5; ++i) {
+        auto children = ui->roster_tree->topLevelItem(i)->takeChildren();
+        for (auto& x : children) delete x;
+    }
 }
 
 void ArmyCreator::clear_army_tree() {
-    for (int i = 0; i < 5; ++i)
-        ui->army_tree->topLevelItem(i)->takeChildren();
+    for (int i = 0; i < 5; ++i) {
+        auto children = ui->army_tree->topLevelItem(i)->takeChildren();
+        for (auto& x : children) delete x;
+    }
 }
 
 void ArmyCreator::clear_unit_info_box() {
