@@ -96,7 +96,16 @@ QScrollArea* MagicItemBox::make_weapons_tab(const std::vector<std::pair<std::str
         case BaseUnitType::MELEE_CHARACTER:
         {
             auto p = std::dynamic_pointer_cast<character_unit>(current);
-            if (w.second.points > p->handle_->magic_item_budget()) continue;
+            switch (ic_selected) { // don't display weapon if it's beyond the relevant budget
+            case ItemClass::COMMON:
+            case ItemClass::MAGIC:
+                if (w.second.points > p->handle_->magic_item_budget()) continue;
+                break;
+            case ItemClass::FACTION:
+                if (w.second.points > p->handle_->faction_item_budget()) continue;
+                break;
+            default: break;
+            }
             break;
         }
         default: break;
@@ -197,7 +206,16 @@ QScrollArea* MagicItemBox::make_armour_tab(const std::vector<std::pair<std::stri
         case BaseUnitType::MELEE_CHARACTER:
         {
             auto p = std::dynamic_pointer_cast<character_unit>(current);
-            if (a.second.points > p->handle_->magic_item_budget()) continue;
+            switch (ic_selected) { // don't display armour if it's beyond the relevant budget
+            case ItemClass::COMMON:
+            case ItemClass::MAGIC:
+                if (a.second.points > p->handle_->magic_item_budget()) continue;
+                break;
+            case ItemClass::FACTION:
+                if (a.second.points > p->handle_->faction_item_budget()) continue;
+                break;
+            default: break;
+            }
             break;
         }
         default: break;
@@ -304,7 +322,16 @@ QScrollArea* MagicItemBox::make_talismans_tab(const std::vector<std::pair<std::s
         case BaseUnitType::MELEE_CHARACTER:
         {
             auto p = std::dynamic_pointer_cast<character_unit>(current);
-            if (t.second.points > p->handle_->magic_item_budget()) continue;
+            switch (ic_selected) { // don't display talisman if it's beyond the relevant budget
+            case ItemClass::COMMON:
+            case ItemClass::MAGIC:
+                if (t.second.points > p->handle_->magic_item_budget()) continue;
+                break;
+            case ItemClass::FACTION:
+                if (t.second.points > p->handle_->faction_item_budget()) continue;
+                break;
+            default: break;
+            }
             break;
         }
         default: break;
@@ -378,7 +405,16 @@ QScrollArea* MagicItemBox::make_enchanted_tab(const std::vector<std::pair<std::s
         case BaseUnitType::MELEE_CHARACTER:
         {
             auto p = std::dynamic_pointer_cast<character_unit>(current);
-            if (t.second.points > p->handle_->magic_item_budget()) continue;
+            switch (ic_selected) { // don't display enchanted item if it's beyond the relevant budget
+            case ItemClass::COMMON:
+            case ItemClass::MAGIC:
+                if (t.second.points > p->handle_->magic_item_budget()) continue;
+                break;
+            case ItemClass::FACTION:
+                if (t.second.points > p->handle_->faction_item_budget()) continue;
+                break;
+            default: break;
+            }
             break;
         }
         default: break;
@@ -450,7 +486,16 @@ QScrollArea* MagicItemBox::make_arcane_tab(const std::vector<std::pair<std::stri
         case BaseUnitType::MAGE_CHARACTER:
         {
             auto p = std::dynamic_pointer_cast<mage_character_unit>(current);
-            if (t.second.points > p->handle->magic_item_budget()) continue;
+            switch (ic_selected) { // don't display arcane item if it's beyond the relevant budget
+            case ItemClass::COMMON:
+            case ItemClass::MAGIC:
+                if (t.second.points > p->handle_->magic_item_budget()) continue;
+                break;
+            case ItemClass::FACTION:
+                if (t.second.points > p->handle_->faction_item_budget()) continue;
+                break;
+            default: break;
+            }
             break;
         }
         default: break;
@@ -595,7 +640,16 @@ QScrollArea* MagicItemBox::make_other_tab(const std::vector<std::pair<std::strin
         case BaseUnitType::MELEE_CHARACTER:
         {
             auto p = std::dynamic_pointer_cast<character_unit>(current);
-            if (t.second.points > p->handle_->magic_item_budget()) continue;
+            switch (ic_selected) { // don't display item if it's beyond the relevant budget
+            case ItemClass::COMMON:
+            case ItemClass::MAGIC:
+                if (t.second.points > p->handle_->magic_item_budget()) continue;
+                break;
+            case ItemClass::FACTION:
+                if (t.second.points > p->handle_->faction_item_budget()) continue;
+                break;
+            default: break;
+            }
             break;
         }
         default: break;
@@ -662,13 +716,11 @@ bool MagicItemBox::reinitialise(ItemType focus) {
     auto other_tab = make_items_tab(mih->second, ItemType::OTHER);
     if (other_tab != nullptr) box->addTab(other_tab, creator->tr("Other"));
     // arcane items
-    //QGroupBox* arcane_tab = nullptr;
     QScrollArea* arcane_tab = nullptr;
     if (current->is_mage()) {
         arcane_tab = make_items_tab(mih->second, ItemType::ARCANE);
         if (arcane_tab != nullptr) box->addTab(arcane_tab, creator->tr("Arcane Items"));
     }
-    //QGroupBox* banner_tab = nullptr;
     QScrollArea* banner_tab = nullptr;
     switch (current->base_unit_type()) {
     case BaseUnitType::MAGE_CHARACTER:

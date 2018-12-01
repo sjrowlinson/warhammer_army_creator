@@ -356,3 +356,7 @@ std::string mixed_unit::html_table_row() const {
     row += "</tr>\n";
     return row;
 }
+
+std::string mixed_unit::save() const {
+    return "";
+}

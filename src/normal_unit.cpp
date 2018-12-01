@@ -900,3 +900,7 @@ std::string normal_unit::html_table_row() const {
     row += "</tr>\n";
     return row;
 }
+
+std::string normal_unit::save() const {
+    return "";
+}

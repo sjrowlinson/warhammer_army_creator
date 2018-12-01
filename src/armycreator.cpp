@@ -43,6 +43,7 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
     ui->opt_box_scrollarea->setWidgetResizable(true);
     ui->magic_item_box_scrollarea->setWidgetResizable(true);
     setup_export_directories();
+    ui->army_name_textedit->appendPlainText(QString::fromStdString(tools::points_str(army->point_limit()) + "pts_list"));
 }
 
 ArmyCreator::~ArmyCreator() {
@@ -720,6 +721,8 @@ void ArmyCreator::on_magic_items_combobox_currentTextChanged(const QString& ic_s
 void ArmyCreator::on_pts_limit_spinbox_valueChanged(double pts) {
     army->change_points_limit(pts);
     update_validity_label();
+    ui->army_name_textedit->clear();
+    ui->army_name_textedit->appendPlainText(QString::fromStdString(tools::points_str(army->point_limit()) + "pts_list"));
 }
 
 // tree item changed or activated slots
@@ -1361,7 +1364,13 @@ void ArmyCreator::on_export_button_clicked() {
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setPaperSize(QPrinter::A4);
     printer.setPageOrientation(QPageLayout::Landscape);
-    QString file_name = QString::fromStdString(tools::points_str(army->point_limit()) + "pts_list.pdf");
+    //QString file_name = QString::fromStdString(tools::points_str(army->point_limit()) + "pts_list.pdf");
+    if (ui->army_name_textedit->toPlainText().isEmpty() || !ui->army_name_textedit->toPlainText().isSimpleText()) {
+        QMessageBox error_box;
+        error_box.critical(nullptr, tr("Error"), tr("Invalid army name for PDF export."));
+        error_box.setFixedSize(500, 200);
+    }
+    QString file_name = ui->army_name_textedit->toPlainText() + ".pdf";
     printer.setOutputFileName(documents_dir + '/' + army_list_dir + '/'
                               + ui->faction_combobox->currentText() + "/" + file_name);
     document->setPageSize(printer.pageRect().size());

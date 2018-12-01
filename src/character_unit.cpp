@@ -841,3 +841,7 @@ std::string character_unit::html_table_row_both(short mlevel, std::string arcane
 std::string character_unit::html_table_row() const {
     return html_table_row_both(-1, std::string());
 }
+
+std::string character_unit::save() const {
+    return "";
+}

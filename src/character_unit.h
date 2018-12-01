@@ -124,6 +124,8 @@ public:
     void remove_mount_option(const std::string& name, bool oco) override;
 
     virtual std::string html_table_row() const override;
+
+    virtual std::string save() const override;
 };
 
 #endif // !CHARACTER_UNIT_H

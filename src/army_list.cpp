@@ -235,6 +235,10 @@ std::shared_ptr<unit> army_list::get_unit(int id) {
     return army[id];
 }
 
+std::shared_ptr<const unit> army_list::get_unit(int id) const {
+    return army.at(id);
+}
+
 void army_list::take_snapshot_of(int id) {
     snap_unit_pts = army[id]->points();
 }
@@ -400,4 +404,8 @@ std::string army_list::html_special_table() const {
 
 std::string army_list::html_rare_table() const {
     return html_table(UnitType::RARE);
+}
+
+void army_list::save(const QString& filename) const {
+
 }

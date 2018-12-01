@@ -10,6 +10,7 @@
 #include "enums.h"
 
 #include <memory>
+#include <string>
 #include <tuple>
 #include <unordered_map>
 
@@ -107,6 +108,8 @@ public:
     virtual void remove_mount_option(const std::string& name, bool oco);
 
     virtual std::string html_table_row() const = 0;
+
+    virtual std::string save() const = 0;
 };
 
 #endif // !UNIT_H

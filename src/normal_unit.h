@@ -165,6 +165,8 @@ public:
     void change_size(std::size_t n);
 
     std::string html_table_row() const override;
+
+    virtual std::string save() const override;
 };
 
 #endif // !_UNIT_H

@@ -18,6 +18,10 @@ struct item {
     double points;
     unsigned int limit;
     std::unordered_set<std::string> allowed_units;
+    // TODO: change to std::unordered_multimap where duplicate keys
+    // indicate OR options - e.g. the Third Eye of Tzeentch WoC
+    // faction item requires either the Mark of Khorne or Daemon
+    // of Khorne {oco_extra}
     std::unordered_map<
         RestrictionField,
         std::vector<std::string>

@@ -17,6 +17,9 @@
 #include <unordered_map>
 #include <vector>
 
+#include <QFile>
+#include <QString>
+
 class army_list {
 private:
     double points;
@@ -76,6 +79,7 @@ public:
     const std::set<InvalidListReason>& invalid_reasons() const noexcept;
 
     std::shared_ptr<unit> get_unit(int id);
+    std::shared_ptr<const unit> get_unit(int id) const;
     void take_snapshot_of(int id);
     void update_on(int id);
     // list property modification
@@ -84,6 +88,8 @@ public:
     void clear();
     // other
     bool is_valid() const noexcept;
+
+    void save(const QString& filename) const;
 
     std::string html_lords_table() const;
     std::string html_heroes_table() const;
