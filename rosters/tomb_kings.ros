@@ -16,6 +16,7 @@ Tomb King
     100
     0
     100
+    Non-Unique
 
 Liche High Priest
     Lord, Mage
@@ -36,6 +37,7 @@ Liche High Priest
     100
     0
     100
+    Non-Unique
 
 # Heroes
 
@@ -55,6 +57,7 @@ Tomb Prince
     50
     0
     50
+    Non-Unique
 
 Tomb Herald
     Hero, Melee
@@ -72,6 +75,7 @@ Tomb Herald
     50
     0
     50
+    Non-Unique
 
 Liche Priest
     Hero, Mage
@@ -92,6 +96,7 @@ Liche Priest
     50
     0
     50
+    Non-Unique
 
 Nectrotect
     Hero, Melee
@@ -109,6 +114,7 @@ Nectrotect
     50
     0
     50
+    Non-Unique
 
 # Core
 

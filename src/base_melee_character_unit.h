@@ -20,7 +20,7 @@ public:
         double mi_budget,
         double fi_budget,
         double ti_budget,
-        bool is_bsb,
+        bool is_unique,
         std::string mount_name=""
     );
     ~base_melee_character_unit() = default;

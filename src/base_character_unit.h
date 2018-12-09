@@ -24,7 +24,7 @@ private:
     // std::tuple<double, std::size_t, ItemClass, ItemType> faction_item_budget_;
     double total_item_budget_;
     // std::pair<double, std::size_t> total_item_budget_;
-    bool is_bsb_;
+    bool is_unique;
 
     std::string mount_name_;
 public:
@@ -41,7 +41,7 @@ public:
         double mi_budget,
         double fi_budget,
         double ti_budget,
-        bool is_bsb,
+        bool is_unique,
         std::string mount_name=""
     );
     virtual ~base_character_unit() = default;
@@ -54,7 +54,7 @@ public:
     double magic_item_budget() const noexcept;
     double faction_item_budget() const noexcept;
     double total_item_budget() const noexcept;
-    bool bsb() const noexcept;
+    bool unique() const noexcept;
     const std::string& mount_name() const noexcept;
 };
 

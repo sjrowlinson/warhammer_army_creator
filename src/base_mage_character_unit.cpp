@@ -13,7 +13,7 @@ base_mage_character_unit::base_mage_character_unit(
     double mi_budget,
     double fi_budget,
     double ti_budget,
-    bool is_bsb,
+    bool is_unique,
     short mage_level,
     std::unordered_map<short, double>&& level_upgrades,
     std::vector<std::string>&& lores,
@@ -31,7 +31,7 @@ base_mage_character_unit::base_mage_character_unit(
     mi_budget,
     fi_budget,
     ti_budget,
-    is_bsb,
+    is_unique,
     mount_name
 ), mage_level_(mage_level), level_upgrades_(std::move(level_upgrades)),
    lores_(std::move(lores)) { but = BaseUnitType::MAGE_CHARACTER; }

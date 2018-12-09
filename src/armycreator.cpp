@@ -803,7 +803,13 @@ void ArmyCreator::on_army_tree_currentItemChanged(QTreeWidgetItem *current, QTre
 // army_tree modifying button slots
 
 void ArmyCreator::on_add_button_clicked() {
-    st->add_unit_to_army_list(id_counter++);
+    try { st->add_unit_to_army_list(id_counter++);}
+    catch (const std::invalid_argument& e) {
+        QMessageBox message_box;
+        message_box.critical(nullptr, tr("Error"), tr(e.what()));
+        message_box.setFixedSize(500, 200);
+        return;
+    }
     ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
     QTreeWidgetItem* item = new QTreeWidgetItem();
     std::shared_ptr<unit> u = st->selected();
@@ -838,6 +844,12 @@ void ArmyCreator::on_duplicate_button_clicked() {
         return;
     }
     if (u->is_character()) {
+        if (std::dynamic_pointer_cast<base_character_unit>(u->base())->unique()) {
+            QMessageBox message_box;
+            message_box.critical(nullptr, tr("Error"), tr("Cannot duplicate a special character!"));
+            message_box.setFixedSize(500, 200);
+            return;
+        }
         if (std::dynamic_pointer_cast<character_unit>(u)->is_bsb()) {
             QMessageBox message_box;
             message_box.critical(nullptr, tr("Error"), tr("Cannot duplicate the Battle Standard Bearer!"));

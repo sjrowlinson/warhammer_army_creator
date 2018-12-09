@@ -16,6 +16,7 @@ Lord
     125
     125
     125
+    Non-Unique
 
 Runelord
     Lord, Melee
@@ -33,6 +34,7 @@ Runelord
     150
     150
     150
+    Non-Unique
 
 Daemon Slayer
     Lord, Melee
@@ -50,6 +52,7 @@ Daemon Slayer
     0
     100
     100
+    Non-Unique
 
 # Heroes
 
@@ -69,6 +72,7 @@ Thane
     75
     75
     75
+    Non-Unique
 
 Runesmith
     Hero, Melee
@@ -86,6 +90,7 @@ Runesmith
     75
     75
     75
+    Non-Unique
 
 Master Engineer
     Hero, Melee
@@ -103,6 +108,7 @@ Master Engineer
     0
     50
     50
+    Non-Unique
 
 Dragon Slayer
     Lord, Melee
@@ -120,6 +126,7 @@ Dragon Slayer
     0
     75
     75
+    Non-Unique
 
 # Core
 

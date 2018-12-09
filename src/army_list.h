@@ -15,6 +15,7 @@
 #include <set>
 #include <stdexcept>
 #include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
 #include <QFile>
@@ -33,6 +34,7 @@ private:
         int,
         std::shared_ptr<unit>
     > army;
+    std::unordered_set<std::string> unique_units;
     std::unordered_map<std::string, unsigned int> item_tracker;
     double lord_pts;
     double hero_pts;

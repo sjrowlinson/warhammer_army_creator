@@ -13,7 +13,7 @@ base_melee_character_unit::base_melee_character_unit(
     double mi_budget,
     double fi_budget,
     double ti_budget,
-    bool is_bsb,
+    bool is_unique,
     std::string mount_name
 ) : base_character_unit(
     faction,
@@ -28,6 +28,6 @@ base_melee_character_unit::base_melee_character_unit(
     mi_budget,
     fi_budget,
     ti_budget,
-    is_bsb,
+    is_unique,
     mount_name
 ) { but = BaseUnitType::MELEE_CHARACTER; }

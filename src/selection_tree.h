@@ -22,6 +22,7 @@
 
 #include <cmath>
 #include <memory>
+#include <stdexcept>
 #include <string>
 #include <tuple>
 #include <unordered_map>

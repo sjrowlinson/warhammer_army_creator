@@ -16,6 +16,7 @@ General of The Empire
     100
     0
     100
+    Non-Unique
 
 Battle Wizard Lord
     Lord, Mage
@@ -36,6 +37,7 @@ Battle Wizard Lord
     100
     0
     100
+    Non-Unique
 
 Arch Lector
     Lord, Melee
@@ -53,6 +55,7 @@ Arch Lector
     100
     0
     100
+    Non-Unique
 
 Grand Master
     Lord, Melee
@@ -70,6 +73,7 @@ Grand Master
     100
     0
     100
+    Non-Unique
 
 # Heroes
 
@@ -89,6 +93,7 @@ Captain of The Empire
     50
     0
     50
+    Non-Unique
 
 Battle Wizard
     Hero, Mage
@@ -109,6 +114,7 @@ Battle Wizard
     50
     0
     50
+    Non-Unique
 
 Warrior Priest
     Hero, Melee
@@ -126,6 +132,7 @@ Warrior Priest
     50
     0
     50
+    Non-Unique
 
 Master Engineer
     Hero, Melee
@@ -143,6 +150,7 @@ Master Engineer
     50
     0
     50
+    Non-Unique
 
 Witch Hunter
     Hero, Melee
@@ -160,6 +168,7 @@ Witch Hunter
     50
     0
     50
+    Non-Unique
 
 # Core
 

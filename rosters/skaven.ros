@@ -1,5 +1,104 @@
 # Lords
 
+Lord Skrolk
+    Lord, Mage
+    3
+    None
+    Plague
+    Infantry
+    470
+    1, 1
+    5 6 4 4 5 3 6 4 7
+    Scurry Away!, Strength in Numbers, Aura of Pestilence, Frenzy, Terror
+    Weapon: Rod of Corruption {Magic} [Melee], Arcane: The Liber Bubonicus
+    None
+    None
+    None
+    None
+    None
+    0
+    0
+    0
+    Unique
+
+Thanquol & Boneripper
+    Lord, Mage
+    4
+    None
+    Ruin, Plague
+    Infantry
+    450
+    1, 1
+    5 3 3 3 4 3 6 1 7
+    Scurry Away!, Strength in Numbers, Verminous Valour, Blessing of the Horned Rat, Warpstone Addiction
+    Talisman: Warp-amulet, Arcane: Staff of the Horned One
+    None
+    None
+    None
+    None
+    None
+    0
+    0
+    0
+    Unique
+
+Ikit Claw
+    Lord, Mage
+    3
+    None
+    Ruin
+    Infantry
+    395
+    1, 1
+    5 5 3 5 4 3 3 2 7
+    Scurry Away!, Strength in Numbers, Verminous Valour
+    Weapon: Storm Daemon {Magic} [Melee], Weapon: Warplock Pistol {Mundane} [Ballistic], Armour: Iron Frame {Magic} [Armour]
+    None
+    None
+    None
+    None
+    None
+    0
+    0
+    0
+    Unique
+
+Throt the Unclean
+    Lord, Melee
+    Infantry
+    225
+    1, 1
+    6 6 3 4 4 3 6 4 7
+    Scurry Away!, Strength in Numbers, Fear, Master Controller, Ravening Hunger, Regeneration
+    Armour: Light armour {Mundane} [Armour], Weapon: Creature-killer & Whip of Domination {Magic} [Melee]
+    None
+    None
+    None
+    None
+    None
+    0
+    0
+    0
+    Unique
+
+Queek Headtaker
+    Lord, Melee
+    Infantry
+    215
+    1, 1
+    5 7 4 4 4 3 7 6 8
+    Scurry Away!, Strength in Numbers, Extreme Distrust, Hates Dwarfs/Orcs & Goblins, Tropy Heads
+    Weapon: Dwarf Gouger & additional hand weapon {Magic} [Melee], Armour: Warp-shard armour {Magic} [Armour]
+    None
+    None
+    None
+    None
+    None
+    0
+    0
+    0
+    Unique
+
 Warlord
     Lord, Melee
     Infantry
@@ -16,6 +115,7 @@ Warlord
     100
     100
     100
+    Non-Unique
 
 Vermin Lord
     Lord, Mage
@@ -36,6 +136,7 @@ Vermin Lord
     0
     0
     0
+    Non-Unique
 
 Grey Seer
     Lord, Mage
@@ -56,8 +157,45 @@ Grey Seer
     100
     100
     100
+    Non-Unique
 
 # Heroes
+
+Deathmaster Snikch
+    Hero, Melee
+    Infantry
+    270
+    1, 1
+    6 8 6 4 4 2 10 6 8
+    Scurry Away!, Sneaky Infiltrator, Verminous Valour, A Killer Not a Leader, Always Strikes First, Dodge (4+), Hidden, Scouts
+    Weapon: Throwing stars {Mundane} [Ballistic], Weapon: Whirl of Weeping Blades {Magic} [Melee], Enchanted: The Cloak of Shadows
+    None
+    None
+    None
+    None
+    None
+    0
+    0
+    0
+    Unique
+
+Tretch Craventail
+    Hero, Melee
+    Infantry
+    145
+    1, 1
+    5 5 4 4 4 2 6 3 6
+    Scurry Away!, Strength in Numbers, Verminous Valour, Stay Here I'll Get Help!, Tretch's Raiders
+    Weapon: Two hand weapons {Mundane} [Melee], Armour: Heavy armour {Mundane} [Armour], Enchanted: Lucky Skullhelm
+    None
+    None
+    None
+    None
+    None
+    0
+    0
+    0
+    Unique
 
 Assassin
     Hero, Melee
@@ -75,6 +213,7 @@ Assassin
     50
     50
     50
+    Non-Unique
 
 Warlock Engineer
     Hero, Mage
@@ -95,6 +234,7 @@ Warlock Engineer
     50
     50
     50
+    Non-Unique
 
 Chieftain
     Hero, Melee
@@ -112,6 +252,7 @@ Chieftain
     50
     50
     50
+    Non-Unique
 
 Plague Priest
     Hero, Mage
@@ -132,6 +273,7 @@ Plague Priest
     50
     50
     50
+    Non-Unique
 
 # Core
 

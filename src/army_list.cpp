@@ -3,7 +3,7 @@
 army_list::army_list(double points) :
     points(points), curr_pts(0.0), lord_lim(0.0),
     hero_lim(0.0), core_min(0.0), spec_lim(0.0),
-    rare_lim(0.0), army(), item_tracker(), lord_pts(0.0), hero_pts(0.0),
+    rare_lim(0.0), army(), unique_units(), item_tracker(), lord_pts(0.0), hero_pts(0.0),
     core_pts(0.0), spec_pts(0.0), rare_pts(0.0),
     invalidities{InvalidListReason::CORE_MINIMUM}, snap_unit_pts(0.0) {
     determine_limits();
@@ -12,6 +12,11 @@ army_list::army_list(double points) :
 army_list::~army_list() {}
 
 void army_list::add_unit(std::shared_ptr<unit> u) {
+    if (u->is_character() && std::dynamic_pointer_cast<base_character_unit>(u->base())->unique()) {
+        if (unique_units.count(u->name()))
+            throw std::invalid_argument("Army already contains " + u->name());
+        unique_units.insert(u->name());
+    }
     auto pts = u->points();
     // too many points
     if (curr_pts + pts > points)
@@ -52,6 +57,9 @@ void army_list::add_unit(std::shared_ptr<unit> u) {
 
 void army_list::remove_unit(int id) {
     auto pts = army[id]->points();
+    if (army[id]->is_character() &&
+            std::dynamic_pointer_cast<base_character_unit>(army[id]->base())->unique())
+        unique_units.erase(army[id]->name());
     UnitType unit_type = army[id]->unit_type();
     army.erase(id);
     curr_pts -= pts;
@@ -275,6 +283,7 @@ void army_list::change_points_limit(double pts) {
 
 void army_list::clear() {
     army.clear();
+    unique_units.clear();
     item_tracker.clear();
     invalidities.clear();
     invalidities.insert(InvalidListReason::CORE_MINIMUM);

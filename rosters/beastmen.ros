@@ -16,6 +16,7 @@ Beastlord
     100
     100
     100
+    Non-Unique
 
 Doombull
     Lord, Melee
@@ -33,6 +34,7 @@ Doombull
     100
     100
     100
+    Non-Unique
 
 Great Bray-Shaman
     Lord, Mage
@@ -53,6 +55,7 @@ Great Bray-Shaman
     100
     100
     100
+    Non-Unique
 
 # Heroes
 
@@ -72,6 +75,7 @@ Wargor
     50
     50
     50
+    Non-Unique
 
 Gorebull
     Hero, Melee
@@ -89,6 +93,7 @@ Gorebull
     50
     50
     50
+    Non-Unique
 
 Bray-Shaman
     Hero, Mage
@@ -109,6 +114,7 @@ Bray-Shaman
     50
     50
     50
+    Non-Unique
 
 # Core
 

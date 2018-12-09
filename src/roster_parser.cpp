@@ -336,6 +336,7 @@ namespace tools {
         double mi_budget = std::stod(read_line(blocks[n] + 13));
         double fi_budget = std::stod(read_line(blocks[n] + 14));
         double ti_budget = std::stod(read_line(blocks[n] + 15));
+        bool is_unique = read_line(blocks[n] + 16) == "Unique";
         base_melee_character_unit tmp(
             faction,
             ut,
@@ -349,7 +350,7 @@ namespace tools {
             mi_budget,
             fi_budget,
             ti_budget,
-            false // TODO: add is_bsb line to character block in roster file
+            is_unique
         );
         return tmp;
     }
@@ -379,6 +380,7 @@ namespace tools {
         double mi_budget = std::stod(read_line(blocks[n] + 16));
         double fi_budget = std::stod(read_line(blocks[n] + 17));
         double ti_budget = std::stod(read_line(blocks[n] + 18));
+        bool is_unique = read_line(blocks[n] + 19) == "Unique";
         base_mage_character_unit tmp(
             faction,
             ut,
@@ -392,7 +394,7 @@ namespace tools {
             mi_budget,
             fi_budget,
             ti_budget,
-            false,
+            is_unique,
             level,
             std::move(level_upgrades),
             std::move(lores)

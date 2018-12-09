@@ -16,6 +16,7 @@ Dreadlord
     100
     0
     100
+    Non-Unique
 
 Supreme Sorceress
     Lord, Mage
@@ -36,6 +37,7 @@ Supreme Sorceress
     100
     0
     100
+    Non-Unique
 
 # TODO: handle Sea Dragon cloak in equipment
 High Beastmaster
@@ -54,6 +56,7 @@ High Beastmaster
     100
     0
     100
+    Non-Unique
 
 # TODO: handle Sea Dragon cloak in equipment
 Black Ark Fleetmaster
@@ -72,6 +75,7 @@ Black Ark Fleetmaster
     50
     0
     50
+    Non-Unique
 
 # Heroes
 
@@ -94,6 +98,7 @@ Sorceress
     50
     0
     50
+    Non-Unique
 
 Master
     Hero, Melee
@@ -111,6 +116,7 @@ Master
     100
     0
     100
+    Non-Unique
 
 # TODO: 50 point magic item budget only for a single magic weapon
 Death Hag
@@ -129,6 +135,7 @@ Death Hag
     50
     0
     50
+    Non-Unique
 
 Khainite Assassin
     Hero, Melee
@@ -146,6 +153,7 @@ Khainite Assassin
     50
     0
     50
+    Non-Unique
 
 # Core
 

@@ -23,7 +23,7 @@ public:
         double mi_budget,
         double fi_budget,
         double ti_budget,
-        bool is_bsb,
+        bool is_unique,
         short mage_level,
         std::unordered_map<short, double>&& level_upgrades,
         std::vector<std::string>&& lores,

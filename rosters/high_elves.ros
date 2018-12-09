@@ -16,6 +16,7 @@ Prince
     100
     0
     100
+    Non-Unique
 
 Archmage
     Lord, Mage
@@ -36,6 +37,7 @@ Archmage
     100
     0
     100
+    Non-Unique
 
 Anointed of Asuryan
     Lord, Melee
@@ -53,6 +55,7 @@ Anointed of Asuryan
     100
     0
     100
+    Non-Unique
 
 Loremaster of Hoeth
     Lord, Mage
@@ -73,6 +76,7 @@ Loremaster of Hoeth
     100
     0
     100
+    Non-Unique
 
 # Heroes
 
@@ -92,6 +96,7 @@ Noble
     50
     0
     50
+    Non-Unique
 
 Mage
     Hero, Mage
@@ -112,6 +117,7 @@ Mage
     50
     0
     50
+    Non-Unique
 
 Dragon Mage of Caledor
     Hero, Mage
@@ -132,6 +138,7 @@ Dragon Mage of Caledor
     50
     0
     50
+    Non-Unique
 
 Lothern Sea Helm
     Hero, Melee
@@ -149,6 +156,7 @@ Lothern Sea Helm
     50
     0
     50
+    Non-Unique
 
 Handmaiden of the Everqueen
     Hero, Melee
@@ -166,6 +174,7 @@ Handmaiden of the Everqueen
     50
     0
     50
+    Non-Unique
 
 # Core
 

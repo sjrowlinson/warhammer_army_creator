@@ -16,6 +16,7 @@ Chaos Lord
     100
     50
     150
+    Non-Unique
 
 Chaos Sorcerer Lord
     Lord, Mage
@@ -36,6 +37,7 @@ Chaos Sorcerer Lord
     100
     50
     150
+    Non-Unique
 
 Daemon Prince
     Lord, Mage
@@ -56,6 +58,7 @@ Daemon Prince
     25
     100
     125
+    Non-Unique
 
 # Heroes
 
@@ -75,6 +78,7 @@ Exalted Hero
     50
     25
     75
+    Non-Unique
 
 Chaos Sorcerer
     Hero, Mage
@@ -95,6 +99,7 @@ Chaos Sorcerer
     50
     25
     75
+    Non-Unique
 
 # Core
 

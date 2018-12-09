@@ -16,6 +16,7 @@ Glade Lord
     100
     0
     100
+    Non-Unique
 
 Spellweaver
     Lord, Mage
@@ -36,6 +37,7 @@ Spellweaver
     100
     0
     100
+    Non-Unique
 
 Treeman Ancient
     Lord, Mage
@@ -56,6 +58,7 @@ Treeman Ancient
     0
     0
     0
+    Non-Unique
 
 # Heroes
 
@@ -75,6 +78,7 @@ Glade Captain
     50
     0
     50
+    Non-Unique
 
 Spellsinger
     Hero, Mage
@@ -95,6 +99,7 @@ Spellsinger
     50
     0
     50
+    Non-Unique
 
 Shadowdancer
     Hero, Mage
@@ -115,6 +120,7 @@ Shadowdancer
     25
     0
     25
+    Non-Unique
 
 Waystalker
     Hero, Melee
@@ -132,6 +138,7 @@ Waystalker
     25
     0
     25
+    Non-Unique
 
 Branchwraith
     Hero, Mage
@@ -152,6 +159,7 @@ Branchwraith
     0
     0
     0
+    Non-Unique
 
 # Core
 

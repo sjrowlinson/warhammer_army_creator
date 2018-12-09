@@ -144,7 +144,8 @@ std::shared_ptr<unit> selection_tree::selected() {
 void selection_tree::add_unit_to_army_list(int id) {
     current_selection->set_id(id);
     if (current_selection->name().empty()) return;
-    army.get().add_unit(current_selection);
+    try { army.get().add_unit(current_selection); }
+    catch (const std::invalid_argument&) { throw; }
 }
 
 void selection_tree::parse_roster_file(const QString &rfile_str) {
