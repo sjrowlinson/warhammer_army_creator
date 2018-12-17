@@ -301,6 +301,14 @@ Clanrats
     0
     0
 
+# TODO: add optional extra to Stormvermin unit for Queek Headtaker's upgrade
+#       -> will require changes to (e.g.) mc extra parsing and storing as I
+#          should then have another parameter for restrictions e.g:
+#    Upgrade to +1 WS and +1 S, Requires Queek Headtaker {False} [4] (army_contains : Queek Headtaker, num : 1)
+#        => this translates to a generic of:
+#    <name of extra> {<is_singular>} [<pts>] (<restrictions>)
+#        where <restrictions> could be RestrictionField enum constants (expanded to
+#        include ARMY_CONTAINS and COUNT, and maybe some other fields)
 Stormvermin
     Core, Infantry, Normal
     7

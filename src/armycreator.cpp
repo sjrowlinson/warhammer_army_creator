@@ -1340,6 +1340,7 @@ void ArmyCreator::setup_export_directories() {
 void ArmyCreator::on_export_button_clicked() {
     QString str_stream;
     QTextStream out(&str_stream);
+    // TODO: print title in red with [INVALID] if army list is invalid
     out <<  "<html>\n"
             "<head>\n"
             "<meta Content=\"Text/html; charset=Windows-1251\">\n"
@@ -1376,7 +1377,6 @@ void ArmyCreator::on_export_button_clicked() {
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setPaperSize(QPrinter::A4);
     printer.setPageOrientation(QPageLayout::Landscape);
-    //QString file_name = QString::fromStdString(tools::points_str(army->point_limit()) + "pts_list.pdf");
     if (ui->army_name_textedit->toPlainText().isEmpty() || !ui->army_name_textedit->toPlainText().isSimpleText()) {
         QMessageBox error_box;
         error_box.critical(nullptr, tr("Error"), tr("Invalid army name for PDF export."));
