@@ -39,22 +39,22 @@ namespace tools {
             std::vector<std::string> champ_characteristics;
             std::vector<std::string> special_rules;
             std::vector<std::string> champ_special_rules;
-            equipment eq;
-            equipment champ_eq;
-            options opt;
-            options champ_opt;
+            tmp_parse_equipment eq;
+            tmp_parse_equipment champ_eq;
+            tmp_parse_options opt;
+            tmp_parse_options champ_opt;
             std::unordered_map<
                 CommandGroup,
                 std::pair<std::string, double>
             > command;
-            double mb_budget;
-            double mi_budget;
-            double champ_mi_budget;
-            double fi_budget;
-            double champ_fi_budget;
-            double ti_budget;
-            double champ_ti_budget;
-            bool unique;
+            double mb_budget = 0.0;
+            double mi_budget = 0.0;
+            double champ_mi_budget = 0.0;
+            double fi_budget = 0.0;
+            double champ_fi_budget = 0.0;
+            double ti_budget = 0.0;
+            double champ_ti_budget = 0.0;
+            bool unique = false;
         };
 
     private:
@@ -64,8 +64,6 @@ namespace tools {
             std::string,
             std::function<void(const std::string&, bool, bool)>
         > parsing_functions;
-
-        // TESTING
 
         void register_bindings();
 
@@ -78,6 +76,7 @@ namespace tools {
         void parse_unit_size(const std::string& s, bool champion, bool master);
         void parse_unit_mage_level(const std::string& s, bool champion, bool master);
         void parse_unit_mage_upgrades(const std::string& s, bool champion, bool master);
+        void parse_unit_mage_lores(const std::string& s, bool champion, bool master);
         void parse_unit_characteristics(const std::string& s, bool champion, bool master);
         void parse_unit_special_rules(const std::string& s, bool champion, bool master);
         void parse_unit_equipment(const std::string& s, bool champion, bool master);
@@ -93,73 +92,17 @@ namespace tools {
         void parse_unit_ti_budget(const std::string& s, bool champion, bool master);
         void parse_unit_uniqueness(const std::string& s, bool champion, bool master);
 
-        // common parsing
-        std::pair<std::size_t, std::size_t> parse_minmax_size(std::string s);
-        std::unordered_map<
-            CommandGroup,
-            std::pair<std::string, double>
-        > parse_command(std::string s);
-        std::unordered_map<
-            short,
-            double
-        > parse_mage_upgrades(std::string s);
-        equipment parse_equipment(std::string s);
-        std::unordered_map<
-            std::string,
-            std::tuple<WeaponType, ItemClass, double, std::vector<std::string>>
-        > parse_optional_weapons(std::string s);
-        std::unordered_map<
-            std::string,
-            std::tuple<ArmourType, ItemClass, double, std::vector<std::string>>
-        > parse_optional_armour(std::string s);
-        std::unordered_map<
-            std::string,
-            double
-        > parse_optional_mounts(std::string s);
-        std::unordered_map<
-            std::string,
-            std::pair<bool, double>
-        > parse_optional_extras(std::string s);
-        std::tuple<
+        /*std::tuple<
             double,
             std::size_t,
             ItemClass,
             ItemType
-        > parse_item_budget(const std::string& s);
-
-        // specialised parsing
-        base_melee_character_unit parse_melee_character(std::size_t n, UnitType ut);
-        base_mage_character_unit parse_mage_character(std::size_t n, UnitType ut);
-        base_normal_unit parse_normal_unit(
-                            std::size_t n,
-                            UnitType ut,
-                            UnitClass category,
-                            std::string name_="",
-                            std::size_t offset=0
-                         );
-        base_normal_unit parse_minimal_normal_unit(
-                            std::size_t n,
-                            UnitType ut,
-                            UnitClass category
-                         );
-        base_normal_unit parse_warmachine(
-                            std::size_t n,
-                            UnitType ut,
-                            UnitClass category
-                         );
-        base_mixed_unit parse_mixed_unit(std::size_t n, UnitType ut, UnitClass category);
-        // unique parsing
-        base_normal_unit parse_gyro_unit(
-            std::size_t n,
-            UnitType ut,
-            UnitClass category
-        );
+        > parse_item_budget(const std::string& s);*/
     public:
         explicit roster_parser(const QString& rfile, Faction faction);
         ~roster_parser() = default;
 
         std::vector<std::shared_ptr<base_unit>> parse();
-        std::vector<std::shared_ptr<base_unit>> parse_();
     };
 
 }

@@ -24,6 +24,14 @@ equipment::equipment(
     enchanted_(std::move(_enchanteds)),
     banners_(std::move(_banners)) {}
 
+equipment::equipment(tmp_parse_equipment&& tpe)
+    : weapons_(std::move(tpe.weapons)),
+      armour_(std::move(tpe.armour)),
+      talismans_(std::move(tpe.talismans)),
+      arcane_(std::move(tpe.arcane)),
+      enchanted_(std::move(tpe.enchanted)),
+      banners_(std::move(tpe.banners)) {}
+
 const std::unordered_map<
     WeaponType,
     std::pair<ItemClass, std::string>

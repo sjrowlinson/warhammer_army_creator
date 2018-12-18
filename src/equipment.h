@@ -8,6 +8,21 @@
 #include <utility>
 #include <vector>
 
+struct tmp_parse_equipment {
+    std::unordered_map<
+        WeaponType,
+        std::pair<ItemClass, std::string>
+    > weapons;
+    std::unordered_map<
+        ArmourType,
+        std::pair<ItemClass, std::string>
+    > armour;
+    std::vector<std::string> talismans;
+    std::vector<std::string> arcane;
+    std::vector<std::string> enchanted;
+    std::vector<std::string> banners;
+};
+
 class equipment {
 private:
     std::unordered_map<
@@ -38,6 +53,7 @@ public:
         std::vector<std::string>&& _enchanteds,
         std::vector<std::string>&& _banners
     );
+    explicit equipment(tmp_parse_equipment&& tpe);
     ~equipment() = default;
 
     const std::unordered_map<

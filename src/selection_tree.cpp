@@ -7,7 +7,8 @@ selection_tree::selection_tree(Faction faction, army_list& list) : race(faction)
     auto items = ip.parse();
     common_items.first = ip.name();
     for (auto&& item : items) common_items.second[item.name] = item;
-    reset(faction, list);
+    try { reset(faction, list); }
+    catch (const std::runtime_error&) { throw; }
 }
 
 std::tuple<std::string, std::string, std::string, std::string> selection_tree::filenames() const noexcept {
@@ -128,7 +129,8 @@ void selection_tree::reset(Faction faction, army_list &list) {
     race = faction;
     auto files = filenames();
     QString rfile(std::get<0>(files).data());
-    parse_roster_file(rfile);
+    try { parse_roster_file(rfile); }
+    catch (const std::runtime_error&) { throw; }
     QString mfile(std::get<1>(files).data());
     parse_mount_file(mfile);
     QString mifile(std::get<2>(files).data());
@@ -150,19 +152,21 @@ void selection_tree::add_unit_to_army_list(int id) {
 
 void selection_tree::parse_roster_file(const QString &rfile_str) {
     tools::roster_parser rp(rfile_str, race);
-    auto units = rp.parse();
-    for (auto&& x : units) roster[x->name()] = x;
-    std::shared_ptr<
-        std::pair<
-            std::string,
-            std::unordered_map<std::string, item>
-        >
-    > sp_common = std::make_shared<
-                      std::pair<
-                          std::string,
-                          std::unordered_map<std::string, item>
-                  >>(common_items);
-    for (auto& entry : roster) entry.second->set_common_item_handle(sp_common);
+    try {
+        auto units = rp.parse_();
+        for (auto&& x : units) roster[x->name()] = x;
+        std::shared_ptr<
+            std::pair<
+                std::string,
+                std::unordered_map<std::string, item>
+            >
+        > sp_common = std::make_shared<
+                          std::pair<
+                              std::string,
+                              std::unordered_map<std::string, item>
+                      >>(common_items);
+        for (auto& entry : roster) entry.second->set_common_item_handle(sp_common);
+    } catch (const std::runtime_error&) { throw; }
 }
 
 void selection_tree::parse_mount_file(const QString& mfile_str) {

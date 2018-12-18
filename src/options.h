@@ -9,6 +9,29 @@
 #include <utility>
 #include <vector>
 
+struct tmp_parse_options {
+    std::unordered_map<
+        std::string,
+        std::tuple<WeaponType, ItemClass, double, std::vector<std::string>>
+    > weapons;
+    std::unordered_map<
+        std::string,
+        std::tuple<ArmourType, ItemClass, double, std::vector<std::string>>
+    > armour;
+    std::unordered_map<
+        std::string,
+        double
+    > mounts;
+    std::unordered_map<
+        std::string,
+        std::pair<bool, double>
+    > oco_extras;
+    std::unordered_map<
+        std::string,
+        std::pair<bool, double>
+    > mc_extras;
+};
+
 class options {
 private:
     std::unordered_map<
@@ -55,7 +78,7 @@ public:
             std::pair<bool, double>
         >&& _mc_extras
     );
-    options(
+    explicit options(
         std::unordered_map<
             std::string,
             std::pair<bool, double>
@@ -65,6 +88,7 @@ public:
             std::pair<bool, double>
         >&& _mc_extras
     );
+    explicit options(tmp_parse_options&& tpo);
     ~options() = default;
 
     const std::unordered_map<

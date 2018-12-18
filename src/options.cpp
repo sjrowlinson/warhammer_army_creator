@@ -43,6 +43,13 @@ options::options(
     oco_extras_(std::move(_oco_extras)),
     mc_extras_(std::move(_mc_extras)) {}
 
+options::options(tmp_parse_options&& tpo)
+    : weapons_(std::move(tpo.weapons)),
+      armour_(std::move(tpo.armour)),
+      mounts_(std::move(tpo.mounts)),
+      oco_extras_(std::move(tpo.oco_extras)),
+      mc_extras_(std::move(tpo.mc_extras)) {}
+
 const std::unordered_map<
     std::string,
     std::tuple<WeaponType, ItemClass, double, std::vector<std::string>>

@@ -23,7 +23,12 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
         ui->faction_combobox->currentText().toStdString()
     );
     army = std::make_shared<army_list>(ui->pts_limit_spinbox->value());
-    st = std::make_shared<selection_tree>(race, *army);
+    try { st = std::make_shared<selection_tree>(race, *army); }
+    catch (const std::runtime_error e) {
+        QMessageBox message_box;
+        message_box.critical(nullptr, tr("Error"), tr(e.what()));
+        message_box.setFixedSize(500, 200);
+    }
     current = nullptr;
     opt_sel = std::make_shared<option_selector>(st, army);
     ob = std::make_shared<OptionBox>(this, ui->options_group_box);
@@ -686,27 +691,34 @@ void ArmyCreator::on_faction_combobox_currentTextChanged(const QString& faction)
     ui->current_pts_label->setText(QString("%1").arg(static_cast<double>(0.0)));
     for (int i = 0; i < 5; ++i)
         ui->army_tree->topLevelItem(i)->setText(6, QString("%1").arg(static_cast<double>(0.0)));
-    st->reset(race, *army);
-    current = nullptr;
-    id_counter = 0;
-    clear_roster_tree();
-    clear_army_tree();
-    clear_unit_info_box();
-    ob->clear();
-    mib->clear();
-    ui->item_descr_gb->setTitle(tr("Item Description"));
-    ui->item_descr_label->setText(tr(""));
-    // set us to NEITHER tree to avoid attempting to get the current
-    // selected unitt of this->st when roster_tree->currentItem will
-    // no longer point to a valid unit type
-    in_tree = InTree::NEITHER;
-    ui->magic_items_combobox->clear();
-    populate_roster_tree();
-    ui->magic_items_combobox->addItem(QString("Common"), QVariant(3));
-    if (!st->magic_items_name().empty())
-        ui->magic_items_combobox->addItem(QString(st->magic_items_name().data()), QVariant(1));
-    if (!st->faction_items_name().empty())
-        ui->magic_items_combobox->addItem(QString(st->faction_items_name().data()), QVariant(2));
+    try {
+        st->reset(race, *army);
+        current = nullptr;
+        id_counter = 0;
+        clear_roster_tree();
+        clear_army_tree();
+        clear_unit_info_box();
+        ob->clear();
+        mib->clear();
+        ui->item_descr_gb->setTitle(tr("Item Description"));
+        ui->item_descr_label->setText(tr(""));
+        // set us to NEITHER tree to avoid attempting to get the current
+        // selected unitt of this->st when roster_tree->currentItem will
+        // no longer point to a valid unit type
+        in_tree = InTree::NEITHER;
+        ui->magic_items_combobox->clear();
+        populate_roster_tree();
+        ui->magic_items_combobox->addItem(QString("Common"), QVariant(3));
+        if (!st->magic_items_name().empty())
+            ui->magic_items_combobox->addItem(QString(st->magic_items_name().data()), QVariant(1));
+        if (!st->faction_items_name().empty())
+            ui->magic_items_combobox->addItem(QString(st->faction_items_name().data()), QVariant(2));
+    }
+    catch (const std::runtime_error& e) {
+        QMessageBox message_box;
+        message_box.critical(nullptr, tr("Error"), tr(e.what()));
+        message_box.setFixedSize(500, 200);
+    }
 }
 
 void ArmyCreator::on_magic_items_combobox_currentTextChanged(const QString& ic_select) {
