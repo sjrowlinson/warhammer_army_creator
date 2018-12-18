@@ -8,6 +8,7 @@ namespace tools {
         std::string content = in.readAll().toStdString();
         ss = std::stringstream(content);
         cache();
+        filename = rfile.toStdString();
     }
 
     file_parser::~file_parser() { f.close(); }

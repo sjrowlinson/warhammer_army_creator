@@ -1,5 +1,6 @@
 
 <Name>
+    base type =
     type =
     category =
     mount =
@@ -27,6 +28,7 @@
 
 
 Chaos Lord
+    base type = Melee Character
     type = Lord
     category = Infantry
     points = 210

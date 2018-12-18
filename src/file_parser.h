@@ -22,6 +22,7 @@ namespace tools {
 
         void cache();
     protected:
+        std::string filename;
         std::vector<std::size_t> blocks;
 
         virtual void find_blocks(std::size_t start = 0U) final;

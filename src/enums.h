@@ -246,6 +246,15 @@ namespace enum_convert {
     };
 
     const std::unordered_map<
+        std::string, BaseUnitType
+    > STRING_TO_BASE_UNIT_TYPE = {
+        {"Melee Character", BaseUnitType::MELEE_CHARACTER},
+        {"Mage Character", BaseUnitType::MAGE_CHARACTER},
+        {"Normal", BaseUnitType::NORMAL},
+        {"Mixed", BaseUnitType::MIXED}
+    };
+
+    const std::unordered_map<
         std::string, RestrictionField
     > STRING_TO_RESTRICTION = {
         {"Weapon", RestrictionField::WEAPON},
