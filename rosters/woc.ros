@@ -299,7 +299,7 @@ Dragon Ogre Shaggoth
     POINTS = 215
     CHARACTERISTICS = 7 6 3 6 5 6 4 5 9
     SPECIAL_RULES = Immune to Psychology, Large Target, Scaly Skin (5+), Storm Rage, Terror
-    OPTIONAL_WEAPONS = Additional hand weapon {Mundane} [Melee] [5], Great weapon {Mundane} [Melee] [12]
+    OPTIONAL_WEAPONS = Additional hand weapon {Mundane} [Melee] (5), Great weapon {Mundane} [Melee] (12)
 
 Chaos Giant
     BASE_TYPE = Normal

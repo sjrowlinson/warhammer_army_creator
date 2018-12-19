@@ -184,7 +184,7 @@ namespace tools {
     }
     void roster_parser::parse_unit_category(const std::string& s, bool champion, bool master) {
         (void)champion; (void)master;
-        auto search = enum_convert::STRING_TO_RESTRICTION.find(s);
+        auto search = enum_convert::STRING_TO_UNIT_CLASS.find(s);
         if (search == std::end(enum_convert::STRING_TO_UNIT_CLASS)) {
             std::string msg = "Error parsing + " + enum_convert::FACTION_TO_STRING.at(faction)
                     + " roster - unit: " + read_line(blocks[curr_block])
@@ -240,7 +240,14 @@ namespace tools {
         std::vector<std::string> all = tools::split(s, ',');
         for (const auto& x : all) {
             std::vector<std::string> v = tools::split(x, ':');
-            switch (enum_convert::STRING_TO_ITEM_TYPE.at(v[0])) {
+            auto search_item_type = enum_convert::STRING_TO_ITEM_TYPE.find(v[0]);
+            if (search_item_type == std::end(enum_convert::STRING_TO_ITEM_TYPE)) {
+                std::string msg = "Error parsing + " + enum_convert::FACTION_TO_STRING.at(faction)
+                        + " roster - unit: " + read_line(blocks[curr_block])
+                        + " has an invalid argument EQUIPMENT: " + s;
+                throw std::runtime_error(msg);
+            }
+            switch (search_item_type->second) {
             case ItemType::WEAPON:
             {
                 auto item_bs = tools::parse_item_bs(v[1]);

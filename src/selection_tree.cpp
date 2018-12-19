@@ -153,7 +153,7 @@ void selection_tree::add_unit_to_army_list(int id) {
 void selection_tree::parse_roster_file(const QString &rfile_str) {
     tools::roster_parser rp(rfile_str, race);
     try {
-        auto units = rp.parse_();
+        auto units = rp.parse();
         for (auto&& x : units) roster[x->name()] = x;
         std::shared_ptr<
             std::pair<

@@ -289,7 +289,7 @@ Huntsmen
     CHARACTERISTICS = 4 3 3 3 3 1 3 1 7
     CHAMPION_CHARACTERISTICS = 4 3 4 3 3 1 3 1 7
     SPECIAL_RULES = Scouts, Skirmishers
-    EQUIPMENT = Bow {Mundane} [Ballistic]
+    EQUIPMENT = Weapon: Bow {Mundane} [Ballistic]
     OPTIONAL_MC_EXTRAS = Detachment {True} [0]
     OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Tracker [10]
 
@@ -348,7 +348,7 @@ Flagellants
     CHARACTERISTICS = 4 3 3 3 3 1 3 1 7
     CHAMPION_CHARACTERISTICS = 4 3 3 3 3 1 3 2 7
     SPECIAL_RULES = The End is Nigh!, Frenzy, Unbreakable
-    EQUIPMENT = Flail {Mundane} [Melee]
+    EQUIPMENT = Weapon: Flail {Mundane} [Melee]
     OPTIONAL_COMMAND = Champion: Prophet of Doom [10]
 
 # Rare

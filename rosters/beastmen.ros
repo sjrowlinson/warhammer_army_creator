@@ -161,6 +161,7 @@ Minotaurs
     SPECIAL_RULES = Bloodgreed, Fear, Impact Hits (1)
     EQUIPMENT = Armour: Light armour {Mundane} [Armour]
     OPTIONAL_WEAPONS = Additional hand weapons {Mundane} [Melee] (4); Shield, Great weapons {Mundane} [Melee] (8); Shield
+    OPTIONAL_ARMOUR = Shields {Mundane} [Shield] (4); Melee
     OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [20], Champion: Bloodkine [20]
     MAGIC_ITEM_BUDGET = 25
     TOTAL_ITEM_BUDGET = 25
