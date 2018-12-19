@@ -3,7 +3,7 @@
 namespace tools {
 
     roster_parser::roster_parser(const QString& rfile, Faction _faction)
-        : file_parser(rfile), faction(_faction), tpo() {
+        : file_parser(rfile), faction(_faction), tpo(), curr_block(0U) {
         find_blocks();
         register_bindings();
     }
@@ -93,11 +93,12 @@ namespace tools {
     }
 
     std::unique_ptr<base_unit> roster_parser::parse_unit(std::size_t block_pos, BaseUnitType but) {
+        curr_block = block_pos;
         std::string name = read_line(blocks[block_pos]);
         tpo = tmp_parse_obj();
         std::size_t i = 1U;
         std::string arg = read_line(blocks[block_pos] + i);
-        while (!arg.empty()) {
+        while (!arg.empty()) { // iterate over all args in the unit block
             auto line = tools::split(arg, '=');
             if (line[0] == "BASE_TYPE") {
                 ++i;
@@ -112,7 +113,8 @@ namespace tools {
                 throw std::runtime_error(msg);
             }
             // call the relevant parsing function
-            search_parse_fn->second(tools::trim(line[1]), false, true);
+            try { search_parse_fn->second(tools::trim(line[1]), false, true); }
+            catch (const std::runtime_error&) { throw; }
             ++i;
             arg = read_line(blocks[block_pos] + i);
         }
@@ -171,11 +173,25 @@ namespace tools {
 
     void roster_parser::parse_unit_type(const std::string& s, bool champion, bool master) {
         (void)champion; (void)master;
-        tpo.unit_type = enum_convert::STRING_TO_UNIT_TYPE.at(s);
+        auto search = enum_convert::STRING_TO_UNIT_TYPE.find(s);
+        if (search == std::end(enum_convert::STRING_TO_UNIT_TYPE)) {
+            std::string msg = "Error parsing + " + enum_convert::FACTION_TO_STRING.at(faction)
+                    + " roster - unit: " + read_line(blocks[curr_block])
+                    + " has an invalid argument TYPE: " + s;
+            throw std::runtime_error(msg);
+        }
+        tpo.unit_type = search->second;
     }
     void roster_parser::parse_unit_category(const std::string& s, bool champion, bool master) {
         (void)champion; (void)master;
-        tpo.unit_class = enum_convert::STRING_TO_UNIT_CLASS.at(s);
+        auto search = enum_convert::STRING_TO_RESTRICTION.find(s);
+        if (search == std::end(enum_convert::STRING_TO_UNIT_CLASS)) {
+            std::string msg = "Error parsing + " + enum_convert::FACTION_TO_STRING.at(faction)
+                    + " roster - unit: " + read_line(blocks[curr_block])
+                    + " has an invalid argument CATEGORY: " + s;
+            throw std::runtime_error(msg);
+        }
+        tpo.unit_class = search->second;
     }
     void roster_parser::parse_unit_mount(const std::string& s, bool champion, bool master) {
         (void)champion; (void)master;

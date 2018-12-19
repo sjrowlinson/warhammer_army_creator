@@ -64,6 +64,7 @@ namespace tools {
             std::string,
             std::function<void(const std::string&, bool, bool)>
         > parsing_functions;
+        std::size_t curr_block;
 
         void register_bindings();
 

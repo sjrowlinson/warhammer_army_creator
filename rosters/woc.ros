@@ -1,504 +1,352 @@
 # Lords
 
 Chaos Lord
-    Lord, Melee
-    Infantry
-    210
-    1, 1
-    4 8 3 5 5 3 7 5 9
-    Eye of the Gods
-    Armour: Chaos armour {Mundane} [Armour]
-    Additional hand weapon {Mundane} [Melee] (6), Great weapon {Mundane} [Melee] (8), Flail {Mundane} [Melee] (6), Halberd {Mundane} [Melee] (8), Lance {Mundane} [Melee] (8)
-    Shield {Mundane} [Shield] (5)
-    Barded Chaos Steed {Warbeast} [24], Steed of Slaanesh {Warbeast} [25], Disc of Tzeentch {Warbeast} [30], Daemonic Mount {Monstrous Beast} [35], Palanquin of Nurgle {Monstrous Beast} [40], Juggernaught of Khorne {Monstrous Beast} [55], Chaos Chariot {Chariot} [110], Chaos Warshrine {Chariot} [125], Gorebeast Chariot {Chariot} [130], Manticore {Monster} [150], Chaos Dragon {Monster} [330]
-    Mark of Khorne {True} [10], Mark of Tzeentch {True} [10], Mark of Nurgle {True} [10], Mark of Slaanesh {True} [5]
-    None
-    100
-    50
-    150
-    Non-Unique
+    BASE_TYPE = Melee
+    TYPE = Lord
+    CATEGORY = Infantry
+    POINTS = 210
+    CHARACTERISTICS = 4 8 3 5 5 3 7 5 9
+    SPECIAL_RULES = Eye of the Gods
+    EQUIPMENT = Armour: Chaos armour {Mundane} [Armour]
+    OPTIONAL_WEAPONS = Additional hand weapon {Mundane} [Melee] (6), Great weapon {Mundane} [Melee] (8), Flail {Mundane} [Melee] (6), Halberd {Mundane} [Melee] (8), Lance {Mundane} [Melee] (8)
+    OPTIONAL_ARMOUR = Shield {Mundane} [Shield] (5)
+    OPTIONAL_MOUNTS = Barded Chaos Steed [24], Steed of Slaanesh [25], Disc of Tzeentch [30], Daemonic Mount [35], Palanquin of Nurgle [40], Juggernaught of Khorne [55], Chaos Chariot [110], Chaos Warshrine [125], Gorebeast Chariot [130], Manticore [150], Chaos Dragon [330]
+    OPTIONAL_OCO_EXTRAS = Mark of Khorne {True} [10], Mark of Tzeentch {True} [10], Mark of Nurgle {True} [10], Mark of Slaanesh {True} [5]
+    MAGIC_ITEM_BUDGET = 100
+    FACTION_ITEM_BUDGET = 50
+    TOTAL_ITEM_BUDGET = 150
 
 Chaos Sorcerer Lord
-    Lord, Mage
-    3
-    4 [35]
-    Death, Fire, Metal, Shadow, Tzeentch, Nurgle, Slaanesh
-    Infantry
-    235
-    1, 1
-    4 5 3 4 4 3 5 3 8
-    Eye of the Gods
-    Armour: Chaos armour {Mundane} [Armour]
-    None
-    None
-    Barded Chaos Steed {Warbeast} [24], Steed of Slaanesh {Warbeast} [25], Disc of Tzeentch {Warbeast} [30], Daemonic Mount {Monstrous Beast} [35], Palanquin of Nurgle {Monstrous Beast} [40], Juggernaught of Khorne {Monstrous Beast} [55], Chaos Chariot {Chariot} [110], Chaos Warshrine {Chariot} [125], Gorebeast Chariot {Chariot} [130], Manticore {Monster} [150], Chaos Dragon {Monster} [330]
-    Mark of Tzeentch {True} [10], Mark of Nurgle {True} [10], Mark of Slaanesh {True} [5]
-    None
-    100
-    50
-    150
-    Non-Unique
+    BASE_TYPE = Mage
+    TYPE = Lord
+    CATEGORY = Infantry
+    POINTS = 235
+    CHARACTERISTICS = 4 5 3 4 4 3 5 3 8
+    SPECIAL_RULES = Eye of the Gods
+    EQUIPMENT = Armour: Chaos armour {Mundane} [Armour]
+    OPTIONAL_MOUNTS = Barded Chaos Steed [24], Steed of Slaanesh [25], Disc of Tzeentch [30], Daemonic Mount [35], Palanquin of Nurgle [40], Chaos Chariot [110], Chaos Warshrine [125], Gorebeast Chariot [130], Manticore [150], Chaos Dragon [330]
+    OPTIONAL_OCO_EXTRAS = Mark of Tzeentch {True} [10], Mark of Nurgle {True} [10], Mark of Slaanesh {True} [5]
+    MAGIC_ITEM_BUDGET = 100
+    FACTION_ITEM_BUDGET = 50
+    TOTAL_ITEM_BUDGET = 150
+    MAGE_LEVEL = 3
+    MAGE_UPGRADES = 4 [35]
+    MAGE_LORES = Death, Fire, Metal, Shadow, Tzeentch, Nurgle, Slaanesh
 
 Daemon Prince
-    Lord, Mage
-    0
-    1 [35], 2 [70], 3 [105], 4 [140]
-    Metal, Death, Shadow, Tzeentch, Nurgle, Slaanesh
-    Monster
-    235
-    1, 1
-    8 9 5 6 5 4 8 5 9
-    Daemonic Attacks, Daemonic Invulnerability, Terror, Unbreakable
-    None
-    None
-    Chaos armour {Mundane} [Armour] (20)
-    None
-    Daemon of Khorne {True} [10], Daemon of Tzeentch {True} [15], Daemon of Nurgle {True} [10], Daemon of Slaanesh {True} [5]
-    Daemonic Flight {True} [40]
-    25
-    100
-    125
-    Non-Unique
+    BASE_TYPE = Mage
+    TYPE = Lord
+    CATEGORY = Monster
+    POINTS = 235
+    CHARACTERISTICS = 8 9 5 6 5 4 8 5 9
+    SPECIAL_RULES = Daemonic Attacks, Daemonic Invulnerability, Terror, Unbreakable
+    OPTIONAL_ARMOUR = Chaos armour {Mundane} [Armour] (20)
+    OPTIONAL_OCO_EXTRAS = Daemon of Khorne {True} [10], Daemon of Tzeentch {True} [15], Daemon of Nurgle {True} [10], Daemon of Slaanesh {True} [5]
+    OPTIONAL_MC_EXTRAS = Daemonic Flight {True} [40]
+    MAGIC_ITEM_BUDGET = 25
+    FACTION_ITEM_BUDGET = 100
+    TOTAL_ITEM_BUDGET = 125
+    MAGE_LEVEL = 0
+    MAGE_UPGRADES = 1 [35], 2 [70], 3 [105], 4 [140]
+    MAGE_LORES = Death, Fire, Metal, Shadow, Tzeentch, Nurgle, Slaanesh
 
 # Heroes
 
 Exalted Hero
-    Hero, Melee
-    Infantry
-    110
-    1, 1
-    4 7 3 5 5 2 6 4 8
-    Eye of the Gods
-    Armour: Chaos armour {Mundane} [Armour]
-    Additional hand weapon {Mundane} [Melee] (3), Great weapon {Mundane} [Melee] (6), Flail {Mundane} [Melee] (5), Halberd {Mundane} [Melee] (6)
-    Shield {Mundane} [Shield] (3)
-    Barded Chaos Steed {Warbeast} [16], Steed of Slaanesh {Warbeast} [25], Disc of Tzeentch {Warbeast} [30], Daemonic Mount {Monstrous Beast} [35], Palanquin of Nurgle {Monstrous Beast} [40], Juggernaught of Khorne {Monstrous Beast} [55], Chaos Chariot {Chariot} [110], Chaos Warshrine {Chariot} [125], Gorebeast Chariot {Chariot} [130]
-    Mark of Khorne {True} [10], Mark of Tzeentch {True} [10], Mark of Nurgle {True} [10], Mark of Slaanesh {True} [5]
-    Battle Standard Bearer {True} [25]
-    50
-    25
-    75
-    Non-Unique
+    BASE_TYPE = Melee
+    TYPE = Hero
+    CATEGORY = Infantry
+    POINTS = 110
+    CHARACTERISTICS = 4 7 3 5 5 2 6 4 8
+    SPECIAL_RULES = Eye of the Gods
+    EQUIPMENT = Armour: Chaos armour {Mundane} [Armour]
+    OPTIONAL_WEAPONS = Additional hand weapon {Mundane} [Melee] (3), Great weapon {Mundane} [Melee] (6), Flail {Mundane} [Melee] (5), Halberd {Mundane} [Melee] (6)
+    OPTIONAL_ARMOUR = Shield {Mundane} [Shield] (3)
+    OPTIONAL_MOUNTS = Barded Chaos Steed [16], Steed of Slaanesh [25], Disc of Tzeentch [30], Daemonic Mount [35], Palanquin of Nurgle [40], Juggernaught of Khorne [55], Chaos Chariot [110], Chaos Warshrine [125], Gorebeast Chariot [130]
+    OPTIONAL_OCO_EXTRAS = Mark of Khorne {True} [10], Mark of Tzeentch {True} [10], Mark of Nurgle {True} [10], Mark of Slaanesh {True} [5]
+    OPTIONAL_MC_EXTRAS = Battle Standard Bearer {True} [25]
+    MAGIC_ITEM_BUDGET = 50
+    FACTION_ITEM_BUDGET = 25
+    TOTAL_ITEM_BUDGET = 75
 
 Chaos Sorcerer
-    Hero, Mage
-    1
-    2 [35]
-    Death, Fire, Metal, Shadow, Tzeentch, Nurgle, Slaanesh
-    Infantry
-    110
-    1, 1
-    4 5 3 4 4 2 5 2 8
-    Eye of the Gods
-    Armour: Chaos armour {Mundane} [Armour]
-    None
-    None
-    Barded Chaos Steed {Warbeast} [16], Steed of Slaanesh {Warbeast} [25], Disc of Tzeentch {Warbeast} [30], Daemonic Mount {Monstrous Beast} [35], Palanquin of Nurgle {Monstrous Beast} [40], Juggernaught of Khorne {Monstrous Beast} [55], Chaos Chariot {Chariot} [110], Chaos Warshrine {Chariot} [125], Gorebeast Chariot {Chariot} [130]
-    Mark of Tzeentch {True} [10], Mark of Nurgle {True} [10], Mark of Slaanesh {True} [5]
-    None
-    50
-    25
-    75
-    Non-Unique
+    BASE_TYPE = Mage
+    TYPE = Hero
+    CATEGORY = Infantry
+    POINTS = 110
+    CHARACTERISTICS = 4 5 3 4 4 2 5 2 8
+    SPECIAL_RULES = Eye of the Gods
+    EQUIPMENT = Armour: Chaos armour {Mundane} [Armour]
+    OPTIONAL_MOUNTS = Barded Chaos Steed [16], Steed of Slaanesh [25], Disc of Tzeentch [30], Daemonic Mount [35], Palanquin of Nurgle [40], Chaos Chariot [110], Chaos Warshrine [125], Gorebeast Chariot [130]
+    OPTIONAL_OCO_EXTRAS = Mark of Tzeentch {True} [10], Mark of Nurgle {True} [10], Mark of Slaanesh {True} [5]
+    MAGIC_ITEM_BUDGET = 50
+    FACTION_ITEM_BUDGET = 25
+    TOTAL_ITEM_BUDGET = 75
+    MAGE_LEVEL = 1
+    MAGE_UPGRADES = 2 [35]
+    MAGE_LORES = Death, Fire, Metal, Shadow, Tzeentch, Nurgle, Slaanesh
 
 # Core
 
 Chaos Warriors
-    Core, Infantry, Normal
-    14
-    10, None
-    4 5 3 4 4 1 5 2 8
-    4 5 3 4 4 1 5 3 8
-    None
-    Eye of the Gods
-    Armour: Chaos armour {Mundane} [Armour]
-    None
-    Additional hand weapons {Mundane} [Melee] (2), Great weapons {Mundane} [Melee] (3), Halberds {Mundane} [Melee] (3)
-    None
-    Shields {Mundane} [Shield] (1)
-    None
-    Mark of Khorne {False} [2], Mark of Tzeentch {False} [2], Mark of Nurgle {False} [2], Mark of Slaanesh {False} [1]
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Aspiring Champion [10]
-    0
-    0
-    0
-    25
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Infantry
+    POINTS = 14
+    SIZE = 10, inf
+    CHARACTERISTICS = 4 5 3 4 4 1 5 2 8
+    CHAMPION_CHARACTERISTICS = 4 5 3 4 4 1 5 3 8
+    CHAMPION_SPECIAL_RULES = Eye of the Gods
+    EQUIPMENT = Armour: Chaos armour {Mundane} [Armour]
+    OPTIONAL_WEAPONS = Additional hand weapons {Mundane} [Melee] (2), Great weapons {Mundane} [Melee] (3), Halberds {Mundane} [Melee] (3)
+    OPTIONAL_ARMOUR = Shields {Mundane} [Shield] (1)
+    OPTIONAL_OCO_EXTRAS = Mark of Khorne {False} [2], Mark of Tzeentch {False} [2], Mark of Nurgle {False} [2], Mark of Slaanesh {False} [1]
+    OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Aspiring Champion [10]
+    BANNER_BUDGET = 25
 
 Chaos Marauders
-    Core, Infantry, Normal
-    6
-    10, None
-    4 4 3 3 3 1 4 1 7
-    4 4 3 3 3 1 4 2 7
-    None
-    Eye of the Gods
-    None
-    None
-    Great weapons {Mundane} [Melee] (3), Flails {Mundane} [Melee] (2)
-    None
-    Light armour {Mundane} [Armour] (1), Shields {Mundane} [Shield] (1)
-    None
-    Mark of Khorne {False} [2], Mark of Tzeentch {False} [2], Mark of Nurgle {False} [2], Mark of Slaanesh {False} [1]
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Marauder Chieftain [10]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Infantry
+    POINTS = 6
+    SIZE = 10, inf
+    CHARACTERISTICS = 4 4 3 3 3 1 4 1 7
+    CHAMPION_CHARACTERISTICS = 4 4 3 3 3 1 4 2 7
+    CHAMPION_SPECIAL_RULES = Eye of the Gods
+    OPTIONAL_WEAPONS = Great weapons {Mundane} [Melee] (3), Flails {Mundane} [Melee] (2)
+    OPTIONAL_ARMOUR = Light armour {Mundane} [Armour] (1), Shields {Mundane} [Shield] (1)
+    OPTIONAL_OCO_EXTRAS = Mark of Khorne {False} [2], Mark of Tzeentch {False} [2], Mark of Nurgle {False} [2], Mark of Slaanesh {False} [1]
+    OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Marauder Chieftain [10]
 
 Forsaken
-    Core, Infantry, Normal
-    19
-    5, None
-    6 4 0 4 4 1 4 D3 8
-    6 4 0 4 4 1 4 D3 8
-    Freakish Mutations, Frenzy, Immune to Psychology, Random Attacks (D3)
-    None
-    Armour: Chaos armour {Mundane} [Armour]
-    None
-    None
-    None
-    None
-    None
-    Forsaken of Khorne {False} [2], Forsaken of Tzeentch {False} [1], Forsaken of Nurgle {False} [2], Forsaken of Slaanesh {False} [2]
-    None
-    None
-    None
-    None
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Infantry
+    POINTS = 19
+    SIZE = 5, inf
+    CHARACTERISTICS = 6 4 0 4 4 1 4 D3 8
+    SPECIAL_RULES = Freakish Mutations, Frenzy, Immune to Psychology, Random Attacks (D3)
+    EQUIPMENT = Armour: Chaos armour {Mundane} [Armour]
+    OPTIONAL_OCO_EXTRAS = Forsaken of Khorne {False} [2], Forsaken of Tzeentch {False} [1], Forsaken of Nurgle {False} [2], Forsaken of Slaanesh {False} [2]
 
 Chaos Warhounds
-    Core, Warbeast, Normal
-    6
-    5, None
-    7 4 0 3 3 1 3 1 5
-    7 4 0 3 3 1 3 1 5
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Scaly Hide {False} [1], Mutant Poisons {False} [1]
-    None
-    None
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Warbeast
+    POINTS = 6
+    SIZE = 5, inf
+    CHARACTERISTICS = 7 4 0 3 3 1 3 1 5
+    OPTIONAL_MC_EXTRAS = Scaly Hide {False} [1], Mutant Poisons {False} [1]
 
 Chaos Chariot
-    Core, Chariot, Normal
-    110
-    1, 1
-    - 5 3 4 - - 5 2 8
-    - - - 5 5 4 - - -
-    Armour Save (3+), Scythes, Halberds (Chaos Charioteers only)
-    Mark of Khorne {False} [10], Mark of Tzeentch {False} [10], Mark of Nurgle {False} [15], Mark of Slaanesh {False} [5]
-    None
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Chariot
+    POINTS = 110
+    CHARACTERISTICS = - - - 5 5 4 - - -
+    CHAMPION_CHARACTERISTICS = - 5 3 4 - - 5 2 8
+    SPECIAL_RULES = Armour Save (3+), Scythes, Halberds (Chaos Charioteers only)
+    OPTIONAL_OCO_EXTRAS = Mark of Khorne {False} [10], Mark of Tzeentch {False} [10], Mark of Nurgle {False} [15], Mark of Slaanesh {False} [5]
 
 Marauder Horsemen
-    Core, Cavalry, Normal
-    14
-    5, None
-    4 4 3 3 3 1 4 1 7
-    4 4 3 3 3 1 4 2 7
-    Fast Cavalry
-    Eye of the Gods, Fast Cavalry
-    None
-    None
-    Throwing axes {Mundane} [Ballistic] (2), Javelins {Mundane} [Ballistic] (1), Spears {Mundane} [Melee] (1), Flails {Mundane} [Melee] (2)
-    None
-    Light armour {Mundane} [Armour] (1), Shields {Mundane} [Shield] (1)
-    None
-    Mark of Khorne {False} [2], Mark of Tzeentch {False} [2], Mark of Nurgle {False} [2], Mark of Slaanesh {False} [1]
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Marauder Horsemaster [10]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Cavalry
+    MOUNT = Chaos Steed
+    POINTS = 14
+    SIZE = 5, inf
+    CHARACTERISTICS = 4 4 3 3 3 1 4 1 7
+    CHAMPION_CHARACTERISTICS = 4 4 3 3 3 1 4 2 7
+    SPECIAL_RULES = Fast Cavalry
+    CHAMPION_SPECIAL_RULES = Eye of the Gods
+    OPTIONAL_WEAPONS = Throwing axes {Mundane} [Ballistic] (2), Javelins {Mundane} [Ballistic] (1), Spears {Mundane} [Melee] (1), Flails {Mundane} [Melee] (2)
+    OPTIONAL_ARMOUR = Light armour {Mundane} [Armour] (1), Shields {Mundane} [Shield] (1)
+    OPTIONAL_OCO_EXTRAS = Mark of Khorne {False} [2], Mark of Tzeentch {False} [2], Mark of Nurgle {False} [2], Mark of Slaanesh {False} [1]
+    OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Marauder Horsemaster [10]
 
 # Special
 
 Hellstriders of Slaanesh
-    Special, Cavalry, Normal
-    19
-    5, None
-    4 4 3 3 3 1 5 1 7
-    4 4 3 3 3 1 5 2 7
-    Fast Cavalry, Fear, Mark of Slaanesh, Soul Hunters
-    Eye of the Gods, Fast Cavalry, Fear, Mark of Slaanesh, Soul Hunters
-    Armour: Shield {Mundane} [Shield], Weapon: Spear {Mundane} [Melee]
-    None
-    Hellscourges {Mundane} [Melee] (1)
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Hellreaver [10]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Cavalry
+    MOUNT = Steed of Slaanesh
+    POINTS = 19
+    SIZE = 5, inf
+    CHARACTERISTICS = 4 4 3 3 3 1 5 1 7
+    CHAMPION_CHARACTERISTICS = 4 4 3 3 3 1 5 2 7
+    SPECIAL_RULES = Fast Cavalry, Fear, Mark of Slaanesh, Soul Hunters
+    CHAMPION_SPECIAL_RULES = Eye of the Gods
+    EQUIPMENT = Armour: Shield {Mundane} [Shield], Weapon: Spear {Mundane} [Melee]
+    OPTIONAL_WEAPONS = Hellscourges {Mundane} [Melee] (1)
+    OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Hellreaver [10]
 
 Chosen
-    Special, Infantry, Normal
-    18
-    5, None
-    4 6 3 4 4 1 5 2 8
-    4 6 3 4 4 1 5 3 8
-    The Rewards of Chaos
-    Eye of the Gods, The Rewards of Chaos
-    Armour: Chaos armour {Mundane} [Armour]
-    None
-    Additional hand weapons {Mundane} [Melee] (2), Great weapons {Mundane} [Melee] (3), Halberds {Mundane} [Melee] (3)
-    None
-    Shields {Mundane} [Shield] (2)
-    None
-    Mark of Khorne {False} [2], Mark of Tzeentch {False} [2], Mark of Nurgle {False} [2], Mark of Slaanesh {False} [1]
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Chosen Champion [10]
-    0
-    0
-    0
-    50
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Infantry
+    POINTS = 18
+    SIZE = 5, inf
+    CHARACTERISTICS = 4 6 3 4 4 1 5 2 8
+    CHAMPION_CHARACTERISTICS = 4 6 3 4 4 1 5 3 8
+    SPECIAL_RULES = The Rewards of Chaos
+    CHAMPION_SPECIAL_RULES = Eye of the Gods
+    EQUIPMENT = Armour: Chaos armour {Mundane} [Armour]
+    OPTIONAL_WEAPONS = Additional hand weapons {Mundane} [Melee] (2), Great weapons {Mundane} [Melee] (3), Halberds {Mundane} [Melee] (3)
+    OPTIONAL_ARMOUR = Shields {Mundane} [Shield] (2)
+    OPTIONAL_OCO_EXTRAS = Mark of Khorne {False} [2], Mark of Tzeentch {False} [2], Mark of Nurgle {False} [2], Mark of Slaanesh {False} [1]
+    OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Chosen Champion [10]
+    BANNER_BUDGET = 50
 
 Chaos Knights
-    Special, Cavalry, Normal
-    40
-    5, None
-    4 5 3 4 4 1 5 2 8
-    4 5 3 4 4 1 5 3 8
-    Fear
-    Eye of the Gods, Fear
-    Armour: Chaos armour {Mundane} [Armour], Armour: Shield {Mundane} [Shield]
-    None
-    Lances {Mundane} [Melee] (2), Ensorcelled weapons {Mundane} [Melee] (3)
-    None
-    None
-    None
-    Mark of Khorne {False} [2], Mark of Tzeentch {False} [2], Mark of Nurgle {False} [2], Mark of Slaanesh {False} [1]
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Doom Knight [10]
-    0
-    0
-    0
-    50
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Cavalry
+    MOUNT = Barded Chaos Steed
+    POINTS = 40
+    SIZE = 5, inf
+    CHARACTERISTICS = 4 5 3 4 4 1 5 2 8
+    CHAMPION_CHARACTERISTICS = 4 5 3 4 4 1 5 3 8
+    SPECIAL_RULES = FEAR
+    CHAMPION_SPECIAL_RULES = Eye of the Gods
+    EQUIPMENT = Armour: Chaos armour {Mundane} [Armour], Armour: Shield {Mundane} [Shield]
+    OPTIONAL_WEAPONS = Lances {Mundane} [Melee] (2), Ensorcelled weapons {Mundane} [Melee] (3)
+    OPTIONAL_OCO_EXTRAS = Mark of Khorne {False} [2], Mark of Tzeentch {False} [2], Mark of Nurgle {False} [2], Mark of Slaanesh {False} [1]
+    OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Doom Knight [10]
+    BANNER_BUDGET = 50
 
 Chaos Ogres
-    Special, Monstrous Infantry, Normal
-    33
-    3, None
-    6 3 2 4 4 3 2 3 7
-    6 3 2 4 4 3 2 4 7
-    Fear, Ogre Charge
-    Eye of the Gods, Fear, Ogre Charge
-    Armour: Heavy armour {Mundane} [Armour]
-    None
-    Additional hand weapons {Mundane} [Melee] (3), Great weapons {Mundane} [Melee] (8)
-    None
-    None
-    None
-    Mark of Khorne {False} [4], Mark of Tzeentch {False} [4], Mark of Nurgle {False} [4], Mark of Slaanesh {False} [2]
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Ogre Mutant [10]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Monstrous Infantry
+    POINTS = 33
+    SIZE = 3, inf
+    CHARACTERISTICS = 6 3 2 4 4 3 2 3 7
+    CHAMPION_CHARACTERISTICS = 6 3 2 4 4 3 2 4 7
+    SPECIAL_RULES = Fear, Ogre Charge
+    CHAMPION_SPECIAL_RULES = Eye of the Gods
+    EQUIPMENT = Armour: Heavy armour {Mundane} [Armour]
+    OPTIONAL_WEAPONS = Additional hand weapons {Mundane} [Melee] (3), Great weapons {Mundane} [Melee] (8)
+    OPTIONAL_OCO_EXTRAS = Mark of Khorne {False} [4], Mark of Tzeentch {False} [4], Mark of Nurgle {False} [4], Mark of Slaanesh {False} [2]
+    OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Ogre Mutant [10]
 
 Dragon Ogres
-    Special, Monstrous Beast, Normal
-    60
-    3, None
-    7 4 2 5 4 4 2 3 8
-    7 4 2 5 4 4 2 4 8
-    Fear, Scaly Skin (5+), Storm Rage
-    Fear, Scaly Skin (5+), Storm Rage
-    Armour: Light armour {Mundane} [Armour]
-    None
-    Additional hand weapons {Mundane} [Melee] (3), Halberds {Mundane} [Melee] (8), Great weapons {Mundane} [Melee] (8)
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Champion: Dragon Ogre Shartak [10]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Monstrous Beast
+    POINTS = 60
+    SIZE = 3, inf
+    CHARACTERISTICS = 7 4 2 5 4 4 2 3 8
+    CHAMPION_CHARACTERISTICS = 7 4 2 5 4 4 2 4 8
+    SPECIAL_RULES = Fear, Scaly Skin (5+), Storm Rage
+    EQUIPMENT = Armour: Light armour {Mundane} [Armour]
+    OPTIONAL_WEAPONS = Additional hand weapons {Mundane} [Melee] (3), Halberds {Mundane} [Melee] (8), Great weapons {Mundane} [Melee] (8)
+    OPTIONAL_COMMAND = Champion: Dragon Ogre Shartak [10]
 
 Chaos Trolls
-    Special, Monstrous Infantry, Normal
-    35
-    3, None
-    6 3 1 5 4 3 1 3 4
-    6 3 1 5 4 3 1 3 4
-    Fear, Regeneration, Stupidity, Troll Vomit
-    None
-    None
-    None
-    Additional hand weapons {Mundane} [Melee] (3)
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Monstrous Infantry
+    POINTS = 35
+    SIZE = 3, inf
+    CHARACTERISTICS = 6 3 1 5 4 3 1 3 4
+    SPECIAL_RULES = Fear, Regeneration, Stupidity, Troll Vomit
+    OPTIONAL_WEAPONS = Additional hand weapons {Mundane} [Melee] (3)
 
 Chimera
-    Special, Monster, Normal
-    230
-    1, 1
-    6 4 0 6 5 4 2 6 5
-    Fiend Tail, Fly, Large Target, Scaly Skin (4+), Terror
-    None
-    Flaming Breath {True} [30], Regenerating Flesh {True} [15], Venomous Ooze {True} [15]
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Monster
+    POINTS = 230
+    CHARACTERISTICS = 6 4 0 6 5 4 2 6 5
+    SPECIAL_RULES = Fiend Tail, Fly, Large Target, Scaly Skin (4+), Terror
+    OPTIONAL_MC_EXTRAS = Flaming Breath {True} [30], Regenerating Flesh {True} [15], Venomous Ooze {True} [15]
 
 Gorebeast Chariot
-    Special, Chariot, Normal
-    130
-    1, 1
-    - 5 3 4 - - 5 2 8
-    - - - 5 6 5 - - -
-    Fear, Gorebeast Charge, Armour Save (3+), Scythes, Halberds (Chaos Charioteers only)
-    Mark of Khorne {False} [10], Mark of Tzeentch {False} [10], Mark of Nurgle {False} [10], Mark of Slaanesh {False} [5]
-    None
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Chariot
+    POINTS = 130
+    CHARACTERISTICS = - - - 5 6 5 - - -
+    CHAMPION_CHARACTERISTICS = - 5 3 4 - - 5 2 8
+    SPECIAL_RULES = Fear, Gorebeast Charge, Armour Save (3+), Scythes, Halberds (Chaos Charioteers only)
+    OPTIONAL_OCO_EXTRAS = Mark of Khorne {False} [10], Mark of Tzeentch {False} [10], Mark of Nurgle {False} [10], Mark of Slaanesh {False} [5]
 
 Chaos Warshrine
-    Special, Chariot, Normal
-    125
-    1, 1
-    - 5 3 4 - - 5 2 8
-    - - - - 5 5 - - -
-    Favour of the Ruinous Powers, Fear, Giver of Glory, Protection of the Dark Gods, Random Attacks (D6+2, Chaos Shrine Bearers only), War Platform
-    Mark of Khorne {False} [10], Mark of Tzeentch {False} [10], Mark of Nurgle {False} [10], Mark of Slaanesh {False} [5]
-    None
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Chariot
+    POINTS = 125
+    CHARACTERISTICS = - - - - 5 5 - - -
+    CHAMPION_CHARACTERISTICS = - 5 3 4 - - 5 2 8
+    SPECIAL_RULES = Favour of the Ruinous Powers, Fear, Giver of Glory, Protection of the Dark Gods, Random Attacks (D6+2, Chaos Shrine Bearers only), War Platform
+    OPTIONAL_OCO_EXTRAS = Mark of Khorne {False} [10], Mark of Tzeentch {False} [10], Mark of Nurgle {False} [10], Mark of Slaanesh {False} [5]
 
 # Rare
 
 Hellcannon
-    Rare, Monster, Normal
-    210
-    1, 1
-    3 4 3 5 6 5 1 5 4
-    Caged Fury, Daemonic Attacks (Hellcannon only), Daemonic Construction, Doomfire, Large Target, Monster and Handles, Terror, Unbreakable
-    None
-    None
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Monster
+    POINTS = 210
+    CHARACTERISTICS = 3 4 3 5 6 5 1 5 4
+    SPECIAL_RULES = Caged Fury, Daemonic Attacks (Hellcannon only), Daemonic Construction, Doomfire, Large Target, Monster and Handles, Terror, Unbreakable
 
 Dragon Ogre Shaggoth
-    Rare, Monster, Normal
-    215
-    1, 1
-    7 6 3 6 5 6 4 5 9
-    Immune to Psychology, Large Target, Scaly Skin (5+), Storm Rage, Terror
-    Additional hand weapon {True} [5], Great weapon {True} [12]
-    None
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Monster
+    POINTS = 215
+    CHARACTERISTICS = 7 6 3 6 5 6 4 5 9
+    SPECIAL_RULES = Immune to Psychology, Large Target, Scaly Skin (5+), Storm Rage, Terror
+    OPTIONAL_WEAPONS = Additional hand weapon {Mundane} [Melee] [5], Great weapon {Mundane} [Melee] [12]
 
 Chaos Giant
-    Rare, Monster, Normal
-    200
-    1, 1
-    6 3 3 6 5 6 3 * 10
-    Fall Over, Giant Special Attacks, Large Target, Stubborn, Terror
-    Giant of Khorne {False} [10], Giant of Tzeentch {False} [15], Giant of Nurgle {False} [15], Giant of Slaanesh {False} [5]
-    None
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Monster
+    POINTS = 200
+    CHARACTERISTICS = 6 3 3 6 5 6 3 * 10
+    SPECIAL_RULES = Fall Over, Giant Special Attacks, Large Target, Stubborn, Terror
+    OPTIONAL_OCO_EXTRAS = Giant of Khorne {False} [10], Giant of Tzeentch {False} [15], Giant of Nurgle {False} [15], Giant of Slaanesh {False} [5]
 
 Chaos Spawn
-    Rare, Monstrous Beast, Normal
-    50
-    1, 1
-    2D6 3 0 4 5 3 2 D6+1 10
-    2D6 3 0 4 5 3 2 D6+1 10
-    Fear, Random Attacks (D6+1), Random Movement (2D6), Unbreakable
-    Fear, Random Attacks (D6+1), Random Movement (2D6), Unbreakable
-    None
-    None
-    None
-    None
-    None
-    None
-    Spawn of Khorne {False} [5], Spawn of Tzeentch {False} [20], Spawn of Nurgle {False} [10], Spawn of Slaanesh {False} [10]
-    None
-    None
-    None
-    None
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Monstrous Beast
+    POINTS = 50
+    CHARACTERISTICS = 2D6 3 0 4 5 3 2 D6+1 10
+    SPECIAL_RULES = Fear, Random Attacks (D6+1), Random Movement (2D6), Unbreakable
+    OPTIONAL_OCO_EXTRAS = Spawn of Khorne {False} [5], Spawn of Tzeentch {False} [20], Spawn of Nurgle {False} [10], Spawn of Slaanesh {False} [10]
 
 Skullcrushers of Khorne
-    Rare, Monstrous Cavalry, Normal
-    75
-    3, None
-    4 5 3 4 4 1 5 2 8
-    4 5 3 4 4 1 5 3 8
-    Brass Behemoth, Fear, Mark of Khorne
-    Eye of the Gods, Brass Behemoth, Fear, Mark of Khorne
-    Armour: Chaos armour {Mundane} [Armour], Armour: Shield {Mundane} [Shield]
-    None
-    Lances {Mundane} [Melee] (2), Ensorcelled weapons {Mundane} [Melee] (3)
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Skullhunter [10]
-    0
-    0
-    0
-    50
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Monstrous Cavalry
+    POINTS = 75
+    SIZE = 3, inf
+    CHARACTERISTICS = 4 5 3 4 4 1 5 2 8
+    CHAMPION_CHARACTERISTICS = 4 5 3 4 4 1 5 3 8
+    SPECIAL_RULES = Brass Behemoth, Fear, Mark of Khorne
+    CHAMPION_SPECIAL_RULES = Eye of the Gods
+    EQUIPMENT = Armour: Chaos armour {Mundane} [Armour], Armour: Shield {Mundane} [Shield]
+    OPTIONAL_WEAPONS = Lances {Mundane} [Melee] (2), Ensorcelled weapons {Mundane} [Melee] (3)
+    OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Skullhunter [10]
+    BANNER_BUDGET = 50
 
 Slaughterbrute
-    Rare, Monster, Normal
-    205
-    1, 1
-    6 3 0 7 5 5 3 4 5
-    Large Target, Runes of Binding, Scaly Skin (4+), Terror, Unbound
-    None
-    Extra Claws {True} [20]
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Monster
+    POINTS = 205
+    CHARACTERISTICS = 6 3 0 7 5 5 3 4 5
+    SPECIAL_RULES = Large Target, Runes of Binding, Scaly Skin (4+), Terror, Unbound
+    OPTIONAL_MC_EXTRAS = Extra Claws {True} [20]
 
 Mutalith Vortex Beast
-    Rare, Monster, Normal
-    240
-    1, 1
-    6 3 0 5 5 5 3 -1 8
-    Aura of Mutation, Large Target, Random Attacks (D6+2), Regeneration (5+), Scaly Skin (4+), Terror
-    None
-    None
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Monster
+    POINTS = 240
+    CHARACTERISTICS = 6 3 0 5 5 5 3 -1 8
+    SPECIAL_RULES = Aura of Mutation, Large Target, Random Attacks (D6+2), Regeneration (5+), Scaly Skin (4+), Terror

@@ -236,244 +236,165 @@ Knightly Orders
     OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Preceptor [10]
     BANNER_BUDGET = 50
 
-## Special
-#
-#Greatswords
-#    Special, Infantry, Normal
-#    11
-#    10, None
-#    4 4 3 3 3 1 3 1 8
-#    4 4 3 3 3 1 3 2 8
-#    Regimental Unit, Stubborn
-#    Regimental Unit, Stubborn
-#    Weapon: Great weapon {Mundane} [Melee], Armour: Full plate armour {Mundane} [Armour]
-#    None
-#    None
-#    None
-#    None
-#    None
-#    None
-#    None
-#    None
-#    None
-#    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Count's Champion [10]
-#    0
-#    0
-#    0
-#    50
-#
-#Demigryph Knights
-#    Special, Monstrous Cavalry, Normal
-#    58
-#    3, None
-#    4 4 3 4 3 1 3 1 8
-#    4 4 3 4 3 1 3 2 8
-#    Fear, Barding
-#    Fear, Barding
-#    Weapon: Lance {Mundane} [Melee], Armour: Full plate armour {Mundane} [Armour], Armour: Shield {Mundane} [Shield]
-#    None
-#    Halberds {Mundane} [Melee] (0)
-#    None
-#    None
-#    None
-#    None
-#    None
-#    None
-#    None
-#    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Inner Circle Preceptor [10]
-#    0
-#    0
-#    0
-#    50
-#
-#Reiksguard Knights
-#    Special, Cavalry, Normal
-#    27
-#    5, None
-#    4 4 3 4 3 1 3 1 8
-#    4 4 3 4 3 1 3 2 8
-#    Stubborn, Barding
-#    Stubborn, Barding
-#    Weapon: Lance {Mundane} [Melee], Armour: Full plate armour {Mundane} [Armour], Armour: Shield {Mundane} [Shield]
-#    None
-#    None
-#    None
-#    None
-#    None
-#    None
-#    None
-#    None
-#    None
-#    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Reikscaptain [10]
-#    0
-#    0
-#    0
-#    50
-#
-#Huntsmen
-#    Special, Infantry, Normal
-#    8
-#    10, None
-#    4 3 3 3 3 1 3 1 7
-#    4 3 4 3 3 1 3 1 7
-#    Scouts, Skirmishers
-#    Scouts, Skirmishers
-#    Weapon: Bow {Mundane} [Ballistic]
-#    None
-#    None
-#    None
-#    None
-#    None
-#    None
-#    None
-#    Detachment {True} [0]
-#    None
-#    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Tracker [10]
-#    0
-#    0
-#    0
-#    0
-#
-#Pistoliers
-#    Special, Cavalry, Normal
-#    18
-#    5, None
-#    4 3 3 3 3 1 3 1 7
-#    4 3 4 3 3 1 3 1 7
-#    Fast Cavalry
-#    Fast Cavalry
-#    Weapon: Brace of pistols {Mundane} [Ballistic], Armour: Light armour {Mundane} [Armour]
-#    None
-#    None
-#    Brace of pistols including a repeater pistol {Mundane} [Ballistic] (10), Repeater Handgun {Mundane} [Ballistic] (10)
-#    None
-#    None
-#    None
-#    None
-#    None
-#    None
-#    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Outrider [10]
-#    0
-#    0
-#    0
-#    0
-#
-#Outriders
-#    Special, Cavalry, Normal
-#    21
-#    5, None
-#    4 3 4 3 3 1 3 1 7
-#    4 3 5 3 3 1 3 1 7
-#    Fast Cavalry
-#    Fast Cavalry
-#    Weapon: Repeater handgun {Mundane} [Ballistic], Armour: Light armour {Mundane} [Armour]
-#    None
-#    None
-#    Brace of pistols including a repeater pistol {Mundane} [Ballistic] (10), Grenade launching blunderbuss {Mundane} [Ballistic] (10)
-#    None
-#    None
-#    None
-#    None
-#    Barding {False} [1]
-#    None
-#    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Sharpshooter [10]
-#    0
-#    0
-#    0
-#    0
-#
-#Great Cannon
-#    Special, Warmachine, Normal
-#    120
-#    1, 1
-#    - - - - 7 3 - - -
-#    4 3 3 3 3 1 3 1 7
-#    None
-#    None
-#    None
-#
-#Mortar
-#    Special, Warmachine, Normal
-#    100
-#    1, 1
-#    - - - - 7 3 - - -
-#    4 3 3 3 3 1 3 1 7
-#    Mortar Shells
-#    None
-#    None
-#
-#Flagellants
-#    Special, Infantry, Normal
-#    12
-#    10, None
-#    4 3 3 3 3 1 3 1 7
-#    4 3 3 3 3 1 3 2 7
-#    The End is Nigh!, Frenzy, Unbreakable
-#    The End is Nigh!, Frenzy, Unbreakable
-#    Weapon: Flail {Mundane} [Melee]
-#    None
-#    None
-#    None
-#    None
-#    None
-#    None
-#    None
-#    None
-#    None
-#    Champion: Prophet of Doom [10]
-#    0
-#    0
-#    0
-#    0
-#
-## Rare
-#
-#Helblaster Volley Gun
-#    Rare, Warmachine, Normal
-#    120
-#    1, 1
-#    - - - - 7 3 - - -
-#    4 3 3 3 3 1 3 1 7
-#    Volley Gun
-#    None
-#    None
-#
-#Helstorm Rocket Battery
-#    Rare, Warmachine, Normal
-#    120
-#    1, 1
-#    - - - - 7 3 - - -
-#    4 3 3 3 3 1 3 1 7
-#    Helstorm Rockets
-#    None
-#    None
-#
-#Steam Tank
-#    Rare, Chariot, Normal
-#    250
-#    1, 1
-#    - 3 4 3 - - 3 1 7
-#    0/Var - - 6 6 10 - - -
-#    Large Target, Random Movement (variable), Steam Points, Steel Behemoth, Terror, Unbreakable, Armour Save (1+)
-#    None
-#    Hochland long rifle {True} [20]
-#
-#Celestial Hurricanum
-#    Rare, Chariot, Normal
-#    130
-#    1, 1
-#    - 3 3 3 - - 3 1 7
-#    - - - 5 5 5 - - -
-#    Large Target, Locus of Azyr, Portents of Battle, Storm of Shemtek, Armour Save (5+)
-#    None
-#    None
-#
-#Luminark of Hysh
-#    Rare, Chariot, Normal
-#    120
-#    1, 1
-#    - 3 3 3 - - 3 1 7
-#    - - - 5 5 5 - - -
-#    Aura of Protection, Large Target, Locus of Hysh, Solheim's Bolt of Illumination, Armour Save (5+)
-#    None
-#    None
+# Special
+
+Greatswords
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Infantry
+    POINTS = 11
+    SIZE = 10, inf
+    CHARACTERISTICS = 4 4 3 3 3 1 3 1 8
+    CHAMPION_CHARACTERISTICS = 4 4 3 3 3 1 3 2 8
+    SPECIAL_RULES = Regimental Unit, Stubborn
+    EQUIPMENT = Weapon: Great weapon {Mundane} [Melee], Armour: Full plate armour {Mundane} [Armour]
+    OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Count's Champion [10]
+    BANNER_BUDGET = 50
+
+Demigryph Knights
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Monstrous Cavalry
+    MOUNT = Demigryph
+    POINTS = 58
+    SIZE = 3, inf
+    CHARACTERISTICS = 4 4 3 4 3 1 3 1 8
+    CHAMPION_CHARACTERISTICS = 4 4 3 4 3 1 3 2 8
+    SPECIAL_RULES = Fear
+    EQUIPMENT = Weapon: Lance {Mundane} [Melee], Armour: Full plate armour {Mundane} [Armour], Armour: Shield {Mundane} [Shield]
+    OPTIONAL_WEAPONS = Halberds {Mundane} [Melee] (0)
+    OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Inner Circle Preceptor [10]
+    BANNER_BUDGET = 50
+
+Reiksguard Knights
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Cavalry
+    MOUNT = Warhorse
+    POINTS = 27
+    SIZE = 5, inf
+    CHARACTERISTICS = 4 4 3 4 3 1 3 1 8
+    CHAMPION_CHARACTERISTICS = 4 4 3 4 3 1 3 2 8
+    SPECIAL_RULES = Stubborn
+    EQUIPMENT = Weapon: Lance {Mundane} [Melee], Armour: Full plate armour {Mundane} [Armour], Armour: Shield {Mundane} [Shield]
+    OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Reikscaptain [10]
+    BANNER_BUDGET = 50
+
+Huntsmen
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Infantry
+    POINTS = 8
+    SIZE = 10, inf
+    CHARACTERISTICS = 4 3 3 3 3 1 3 1 7
+    CHAMPION_CHARACTERISTICS = 4 3 4 3 3 1 3 1 7
+    SPECIAL_RULES = Scouts, Skirmishers
+    EQUIPMENT = Bow {Mundane} [Ballistic]
+    OPTIONAL_MC_EXTRAS = Detachment {True} [0]
+    OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Tracker [10]
+
+Pistoliers
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Infantry
+    MOUNT = Warhorse
+    POINTS = 18
+    SIZE = 5, inf
+    CHARACTERISTICS = 4 3 3 3 3 1 3 1 7
+    CHAMPION_CHARACTERISTICS = 4 3 4 3 3 1 3 1 7
+    SPECIAL_RULES = Fast Cavalry
+    EQUIPMENT = Weapon: Brace of pistols {Mundane} [Ballistic], Armour: Light armour {Mundane} [Armour]
+    CHAMPION_OPTIONAL_WEAPONS = Brace of pistols including a repeater pistol {Mundane} [Ballistic] (10), Repeater Handgun {Mundane} [Ballistic] (10)
+    OPTIONAL_COMMAND = Musician: Musician [10], Champion: Outrider [10]
+
+Outriders
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Infantry
+    MOUNT = Warhorse
+    POINTS = 21
+    SIZE = 5, inf
+    CHARACTERISTICS = 4 3 4 3 3 1 3 1 7
+    CHAMPION_CHARACTERISTICS = 4 3 5 3 3 1 3 1 7
+    SPECIAL_RULES = Fast Cavalry
+    EQUIPMENT = Weapon: Repeater handgun {Mundane} [Ballistic], Armour: Light armour {Mundane} [Armour]
+    CHAMPION_OPTIONAL_WEAPONS = Brace of pistols including a repeater pistol {Mundane} [Ballistic] (10), Grenade launching blunderbuss {Mundane} [Ballistic] (10)
+    OPTIONAL_MC_EXTRAS = Barding {False} [1]
+    OPTIONAL_COMMAND = Musician: Musician [10], Champion: Sharpshooter [10]
+
+Great Cannon
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Warmachine
+    POINTS = 120
+    CHARACTERISTICS = - - - - 7 3 - - -
+    CHAMPION_CHARACTERISTICS = 4 3 3 3 3 1 3 1 7
+
+Mortar
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Warmachine
+    POINTS = 100
+    CHARACTERISTICS = - - - - 7 3 - - -
+    CHAMPION_CHARACTERISTICS = 4 3 3 3 3 1 3 1 7
+    SPECIAL_RULES = Mortar Shells
+
+Flagellants
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Infantry
+    POINTS = 12
+    SIZE = 10, inf
+    CHARACTERISTICS = 4 3 3 3 3 1 3 1 7
+    CHAMPION_CHARACTERISTICS = 4 3 3 3 3 1 3 2 7
+    SPECIAL_RULES = The End is Nigh!, Frenzy, Unbreakable
+    EQUIPMENT = Flail {Mundane} [Melee]
+    OPTIONAL_COMMAND = Champion: Prophet of Doom [10]
+
+# Rare
+
+Helblaster Volley Gun
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Warmachine
+    POINTS = 120
+    CHARACTERISTICS = - - - - 7 3 - - -
+    CHAMPION_CHARACTERISTICS = 4 3 3 3 3 1 3 1 7
+    SPECIAL_RULES = Volley Gun
+
+Helstorm Rocket Battery
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Warmachine
+    POINTS = 120
+    CHARACTERISTICS = - - - - 7 3 - - -
+    CHAMPION_CHARACTERISTICS = 4 3 3 3 3 1 3 1 7
+    SPECIAL_RULES = Helstorm Rockets
+
+Steam Tank
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Chariot
+    POINTS = 250
+    CHARACTERISTICS = 0/Var - - 6 6 10 - - -
+    CHAMPION_CHARACTERISTICS = - 3 4 3 - - 3 1 7
+    SPECIAL_RULES = Large Target, Random Movement (variable), Steam Points, Steel Behemoth, Terror, Unbreakable, Armour Save (1+)
+    OPTIONAL_MC_EXTRAS = Engineer Commander - Hochland long rifle {True} [20]
+
+Celestial Hurricanum
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Chariot
+    POINTS = 130
+    CHARACTERISTICS = - - - 5 5 5 - - -
+    CHAMPION_CHARACTERISTICS = - 3 3 3 - - 3 1 7
+    SPECIAL_RULES = Large Target, Locus of Azyr, Portents of Battle, Storm of Shemtek, Armour Save (5+)
+
+Luminark of Hysh
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Chariot
+    POINTS = 120
+    CHARACTERISTICS = - - - 5 5 5 - - -
+    CHAMPION_CHARACTERISTICS = - 3 3 3 - - 3 1 7
+    SPECIAL_RULES = Aura of Protection, Large Target, Locus of Hysh, Solheim's Bolt of Illumination, Armour Save (5+)

@@ -1,419 +1,265 @@
 # Lords
 
 Beastlord
-    Lord, Melee
-    Infantry
-    145
-    1, 1
-    5 6 3 5 5 3 5 4 9
-    Primal Fury, Man-bane
-    None
-    Great weapon {Mundane} [Melee] (12), Additional hand weapon {Mundane} [Melee] (8)
-    Light armour {Mundane} [Armour] (3), Heavy armour {Mundane} [Armour] (6), Shield {Mundane} [Shield] (3)
-    Tuskgor Chariot {Chariot} [80], Razorgor Chariot {Chariot} [145]
-    None
-    None
-    100
-    100
-    100
-    Non-Unique
+    BASE_TYPE = Melee
+    TYPE = Lord
+    CATEGORY = Infantry
+    POINTS = 145
+    CHARACTERISTICS = 5 6 3 5 5 3 5 4 9
+    SPECIAL_RULES = Primal Fury, Man-bane
+    OPTIONAL_WEAPONS = Great weapon {Mundane} [Melee] (12), Additional hand weapon {Mundane} [Melee] (8)
+    OPTIONAL_ARMOUR = Light armour {Mundane} [Armour] (3), Heavy armour {Mundane} [Armour] (6), Shield {Mundane} [Shield] (3)
+    OPTIONAL_MOUNTS = Tuskgor Chariot [80], Razorgor Chariot [145]
+    MAGIC_ITEM_BUDGET = 100
+    FACTION_ITEM_BUDGET = 100
+    TOTAL_ITEM_BUDGET = 100
 
 Doombull
-    Lord, Melee
-    Monstrous Infantry
-    235
-    1, 1
-    6 6 3 6 5 5 5 5 8
-    Bloodgreed, Fear, Frenzy, Impact Hits (D3), Slaughterer's Call
-    None
-    Great weapon {Mundane} [Melee] (15), Additional hand weapon {Mundane} [Melee] (8)
-    Light armour {Mundane} [Armour] (6), Heavy armour {Mundane} [Armour] (12), Shield {Mundane} [Shield] (6)
-    None
-    None
-    None
-    100
-    100
-    100
-    Non-Unique
+    BASE_TYPE = Melee
+    TYPE = Lord
+    CATEGORY = Monstrous Infantry
+    POINTS = 235
+    CHARACTERISTICS = 6 6 3 6 5 5 5 5 8
+    SPECIAL_RULES = Bloodgreed, Fear, Frenzy, Impact Hits (D3), Slaughterer's Call
+    OPTIONAL_WEAPONS = Great weapon {Mundane} [Melee] (15), Additional hand weapon {Mundane} [Melee] (8)
+    OPTIONAL_ARMOUR = Light armour {Mundane} [Armour] (6), Heavy armour {Mundane} [Armour] (12), Shield {Mundane} [Shield] (6)
+    MAGIC_ITEM_BUDGET = 100
+    FACTION_ITEM_BUDGET = 100
+    TOTAL_ITEM_BUDGET = 100
 
 Great Bray-Shaman
-    Lord, Mage
-    3
-    4 [35]
-    Wild, Beasts, Death, Shadow
-    Infantry
-    200
-    1, 1
-    5 5 3 4 5 3 4 2 8
-    Primal Fury
-    None
-    Additional hand weapon {Mundane} [Melee] (4)
-    None
-    Tuskgor Chariot {Chariot} [80], Razorgor Chariot {Chariot} [145]
-    None
-    None
-    100
-    100
-    100
-    Non-Unique
+    BASE_TYPE = Mage
+    TYPE = Lord
+    CATEGORY = Infantry
+    POINTS = 200
+    CHARACTERISTICS = 5 5 3 4 5 3 4 2 8
+    SPECIAL_RULES = Primal Fury
+    OPTIONAL_WEAPONS = Additional hand weapon {Mundane} [Melee] (4)
+    OPTIONAL_MOUNTS = Tuskgor Chariot [80], Razorgor Chariot [145]
+    MAGIC_ITEM_BUDGET = 100
+    FACTION_ITEM_BUDGET = 100
+    TOTAL_ITEM_BUDGET = 100
+    MAGE_LEVEL = 3
+    MAGE_UPGRADES = 4 [35]
+    MAGE_LORES = Wild, Beasts, Death, Shadow
 
 # Heroes
 
 Wargor
-    Hero, Melee
-    Infantry
-    85
-    1, 1
-    5 5 3 4 5 2 4 3 8
-    Primal Fury, Man-bane
-    None
-    Great weapon {Mundane} [Melee] (4), Additional hand weapon {Mundane} [Melee] (4)
-    Light armour {Mundane} [Armour] (2), Heavy armour {Mundane} [Armour] (4), Shield {Mundane} [Shield] (2)
-    Tuskgor Chariot {Chariot} [80], Razorgor Chariot {Chariot} [145]
-    None
-    Battle Standard Bearer {True} [25]
-    50
-    50
-    50
-    Non-Unique
+    BASE_TYPE = Melee
+    TYPE = Hero
+    CATEGORY = Infantry
+    POINTS = 85
+    CHARACTERISTICS = 5 5 3 4 5 2 4 3 8
+    SPECIAL_RULES = Primal Fury, Man-bane
+    OPTIONAL_WEAPONS = Great weapon {Mundane} [Melee] (4), Additional hand weapon {Mundane} [Melee] (4)
+    OPTIONAL_ARMOUR = Light armour {Mundane} [Armour] (2), Heavy armour {Mundane} [Armour] (4), Shield {Mundane} [Shield] (2)
+    OPTIONAL_MOUNTS = Tuskgor Chariot [80], Razorgor Chariot [145]
+    OPTIONAL_MC_EXTRAS = Battle Standard Bearer {True} [25]
+    MAGIC_ITEM_BUDGET = 50
+    FACTION_ITEM_BUDGET = 50
+    TOTAL_ITEM_BUDGET = 50
 
 Gorebull
-    Hero, Melee
-    Monstrous Infantry
-    160
-    1, 1
-    6 5 3 5 5 4 4 4 7
-    Bloodgreed, Fear, Frenzy, Impact Hits (D3), Slaughterer's Call
-    None
-    Great weapon {Mundane} [Melee] (10), Additional hand weapon {Mundane} [Melee] (5)
-    Light armour {Mundane} [Armour] (4), Heavy armour {Mundane} [Armour] (8), Shield {Mundane} [Shield] (4)
-    None
-    None
-    Battle Standard Bearer {True} [25]
-    50
-    50
-    50
-    Non-Unique
+    BASE_TYPE = Melee
+    TYPE = Hero
+    CATEGORY = Monstrous Infantry
+    POINTS = 160
+    CHARACTERISTICS = 6 5 3 5 5 4 4 4 7
+    SPECIAL_RULES = Bloodgreed, Fear, Frenzy, Impact Hits (D3), Slaughterer's Call
+    OPTIONAL_WEAPONS = Great weapon {Mundane} [Melee] (10), Additional hand weapon {Mundane} [Melee] (5)
+    OPTIONAL_ARMOUR = Light armour {Mundane} [Armour] (4), Heavy armour {Mundane} [Armour] (8), Shield {Mundane} [Shield] (4)
+    OPTIONAL_MC_EXTRAS = Battle Standard Bearer {True} [25]
+    MAGIC_ITEM_BUDGET = 50
+    FACTION_ITEM_BUDGET = 50
+    TOTAL_ITEM_BUDGET = 50
 
 Bray-Shaman
-    Hero, Mage
-    1
-    2 [35]
-    Wild, Beasts, Death, Shadow
-    Infantry
-    200
-    1, 1
-    5 5 3 4 5 3 4 2 8
-    Primal Fury
-    None
-    Additional hand weapon {Mundane} [Melee] (2)
-    None
-    Tuskgor Chariot {Chariot} [80], Razorgor Chariot {Chariot} [145]
-    None
-    None
-    50
-    50
-    50
-    Non-Unique
+    BASE_TYPE = Mage
+    TYPE = Hero
+    CATEGORY = Infantry
+    POINTS = 75
+    CHARACTERISTICS = 5 4 3 3 4 2 3 1 7
+    SPECIAL_RULES = Primal Fury
+    OPTIONAL_WEAPONS = Additional hand weapon {Mundane} [Melee] (2)
+    OPTIONAL_MOUNTS = Tuskgor Chariot [80], Razorgor Chariot [145]
+    MAGIC_ITEM_BUDGET = 50
+    FACTION_ITEM_BUDGET = 50
+    TOTAL_ITEM_BUDGET = 50
+    MAGE_LEVEL = 1
+    MAGE_UPGRADES = 2 [35]
+    MAGE_LORES = Wild, Beasts, Death, Shadow
 
 # Core
 
 Gor Herd
-    Core, Infantry, Normal
-    7
-    10, None
-    5 4 3 3 4 1 3 1 7
-    5 4 3 3 4 1 3 2 7
-    Primal Fury, Beastman Ambush
-    Primal Fury, Beastman Ambush
-    None
-    None
-    Additional hand weapons {Mundane} [Melee] (1); Shield
-    None
-    Shields {Mundane} [Shield] (1); Melee
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [5], Standard Bearer: Standard Bearer [10], Champion: Foe-render [10]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Infantry
+    POINTS = 7
+    SIZE = 10, inf
+    CHARACTERISTICS = 5 4 3 3 4 1 3 1 7
+    CHAMPION_CHARACTERISTICS = 5 4 3 3 4 1 3 2 7
+    SPECIAL_RULES = Primal Fury, Beastman Ambush
+    OPTIONAL_WEAPONS = Additional hand weapons {Mundane} [Melee] (1); Shield
+    OPTIONAL_ARMOUR = Shields {Mundane} [Shield] (1); Melee
+    OPTIONAL_COMMAND = Musician: Musician [5], Standard Bearer: Standard Bearer [10], Champion: Foe-render [10]
 
 Ungor Herd
-    Core, Infantry, Normal
-    5
-    10, None
-    5 3 3 3 3 1 3 1 6
-    5 3 3 3 3 1 3 2 6
-    Primal Fury, Beastman Ambush
-    Primal Fury, Beastman Ambush
-    Armour: Shield {Mundane} [Shield]
-    None
-    Spears {Mundane} [Melee] (1)
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [3], Standard Bearer: Standard Bearer [6], Champion: Halfhorn [6]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Infantry
+    POINTS = 5
+    SIZE = 10, inf
+    CHARACTERISTICS = 5 3 3 3 3 1 3 1 6
+    CHAMPION_CHARACTERISTICS = 5 3 3 3 3 1 3 2 6
+    SPECIAL_RULES = Primal Fury, Beastman Ambush
+    EQUIPMENT = Armour: Shield {Mundane} [Shield]
+    OPTIONAL_WEAPONS = Spears {Mundane} [Melee] (1)
+    OPTIONAL_COMMAND = Musician: Musician [3], Standard Bearer: Standard Bearer [6], Champion: Halfhorn [6]
 
 Ungor Raiders
-    Core, Infantry, Normal
-    5
-    5, 10
-    5 3 3 3 3 1 3 1 6
-    5 3 4 3 3 1 3 1 6
-    Primal Fury, Beastman Ambush, Skirmishers
-    Primal Fury, Beastman Ambush, Skirmishers
-    Weapon: Short bow {Mundane} [Ballistic]
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [3], Champion: Halfhorn [6]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Infantry
+    POINTS = 5
+    SIZE = 5, 10
+    CHARACTERISTICS = 5 3 3 3 3 1 3 1 6
+    CHAMPION_CHARACTERISTICS = 5 3 4 3 3 1 3 1 6
+    SPECIAL_RULES = Primal Fury, Beastman Ambush, Skirmishers
+    EQUIPMENT = Weapon: Short bow {Mundane} [Ballistic]
+    OPTIONAL_COMMAND = Musician: Musician [3], Champion: Halfhorn [6]
 
 Tuskgor Chariot
-    Core, Chariot, Normal
-    80
-    1, 1
-    - 4 3 4 - - 3 1 7
-    - - - 5 4 4 - - -
-    Armour Save (4+), Great weapon (Bestigor only), Spear (Gor only), Primal Fury
-    None
-    None
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Chariot
+    POINTS = 80
+    CHARACTERISTICS = - - - 5 4 4 - - -
+    CHAMPION_CHARACTERISTICS = - 4 3 4 - - 3 1 7
+    SPECIAL_RULES = Armour Save (4+), Great weapon (Bestigor only), Spear (Gor only), Primal Fury
 
 Chaos Warhounds
-    Core, Warbeast, Normal
-    6
-    5, None
-    7 4 0 3 3 1 3 1 5
-    7 4 0 3 3 1 3 1 5
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Scaly Skin (6+) {False} [1], Poisoned Attacks {False} [3]
-    None
-    None
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Warbeast
+    POINTS = 6
+    SIZE = 5, inf
+    CHARACTERISTICS = 7 4 0 3 3 1 3 1 5
+    OPTIONAL_MC_EXTRAS = Scaly Skin (6+) {False} [1], Poisoned Attacks {False} [3]
 
 # Specials
 
 Minotaurs
-    Special, Monstrous Infantry, Normal
-    55
-    3, None
-    6 4 3 5 4 3 3 3 7
-    6 4 3 5 4 3 3 4 7
-    Bloodgreed, Fear, Impact Hits (1)
-    Bloodgreed, Fear, Impact Hits (1)
-    Armour: Light armour {Mundane} [Armour]
-    None
-    Additional hand weapons {Mundane} [Melee] (4); Shield, Great weapons {Mundane} [Melee] (8); Shield
-    None
-    Shields {Mundane} [Shield] (4); Melee
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [20], Champion: Bloodkine [20]
-    25
-    0
-    25
-    0
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Monstrous Infantry
+    POINTS = 55
+    SIZE = 3, inf
+    CHARACTERISTICS = 6 4 3 5 4 3 3 3 7
+    CHAMPION_CHARACTERISTICS = 6 4 3 5 4 3 3 4 7
+    SPECIAL_RULES = Bloodgreed, Fear, Impact Hits (1)
+    EQUIPMENT = Armour: Light armour {Mundane} [Armour]
+    OPTIONAL_WEAPONS = Additional hand weapons {Mundane} [Melee] (4); Shield, Great weapons {Mundane} [Melee] (8); Shield
+    OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [20], Champion: Bloodkine [20]
+    MAGIC_ITEM_BUDGET = 25
+    TOTAL_ITEM_BUDGET = 25
 
 Centigors
-    Special, Cavalry, Normal
-    25
-    5, None
-    8 4 3 4 4 1 2 2 7
-    8 4 3 4 4 1 2 3 7
-    Primal Fury, Drunken
-    Primal Fury, Drunken
-    Armour: Light armour {Mundane} [Armour], Armour: Shield {Mundane} [Shield], Weapon: Spear {Mundane} [Melee]
-    None
-    Great weapons {Mundane} [Melee] (3); Shields, Throwing axes {Mundane} [Ballistic] (2)
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [7], Standard Bearer: Standard Bearer [14], Champion: Gorehoof [14]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Cavalry
+    POINTS = 25
+    SIZE = 5, inf
+    CHARACTERISTICS = 8 4 3 4 4 1 2 2 7
+    CHAMPION_CHARACTERISTICS = 8 4 3 4 4 1 2 3 7
+    SPECIAL_RULES = Primal Fury, Drunken
+    EQUIPMENT = Armour: Light armour {Mundane} [Armour], Armour: Shield {Mundane} [Shield], Weapon: Spear {Mundane} [Melee]
+    OPTIONAL_WEAPONS = Great weapons {Mundane} [Melee] (3); Shields, Throwing axes {Mundane} [Ballistic] (2)
+    OPTIONAL_COMMAND = Musician: Musician [7], Standard Bearer: Standard Bearer [14], Champion: Gorehoof [14]
 
 Harpies
-    Special, Infantry, Normal
-    11
-    5, 10
-    5 3 0 3 3 1 5 2 6
-    5 3 0 3 3 1 5 2 6
-    Fly
-    Fly
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Scouts {False} [3]
-    None
-    None
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Infantry
+    POINTS = 11
+    SIZE = 5, 10
+    CHARACTERISTICS = 5 3 0 3 3 1 5 2 6
+    SPECIAL_RULES = Fly
+    OPTIONAL_MC_EXTRAS = Scouts {False} [3]
 
 Bestigor Herd
-    Special, Infantry, Normal
-    12
-    10, None
-    5 4 3 3 4 1 3 1 7
-    5 4 3 3 4 1 3 2 7
-    Primal Fury, Despoilers
-    Primal Fury, Despoilers
-    Weapon: Great weapon {Mundane} [Melee], Armour: Heavy armour {Mundane} [Armour]
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [6], Standard Bearer: Standard Bearer [12], Champion: Gouge-horn [12]
-    0
-    25
-    25
-    50
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Infantry
+    POINTS = 12
+    SIZE = 10, inf
+    CHARACTERISTICS = 5 4 3 4 4 1 3 1 7
+    CHAMPION_CHARACTERISTICS = 5 4 3 4 4 1 3 2 7
+    SPECIAL_RULES = Primal Fury, Despoilers
+    EQUIPMENT = Weapon: Great weapon {Mundane} [Melee], Armour: Heavy armour {Mundane} [Armour]
+    OPTIONAL_COMMAND = Musician: Musician [6], Standard Bearer: Standard Bearer [12], Champion: Gouge-horn [12]
+    FACTION_ITEM_BUDGET = 25
+    TOTAL_ITEM_BUDGET = 25
+    BANNER_BUDGET = 50
 
 Razorgor Chariot
-    Special, Chariot, Normal
-    145
-    1, 1
-    - 4 3 4 - - 3 1 7
-    - - - 5 5 5 - - -
-    Armour Save (4+), Great weapon (Bestigor only), Spear (Gor only), Primal Fury, Fear, Thunderous Charge
-    None
-    None
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Chariot
+    POINTS = 145
+    CHARACTERISTICS = - - - 5 5 5 - - -
+    CHAMPION_CHARACTERISTICS = - 4 3 4 - - 3 1 7
+    SPECIAL_RULES = Armour Save (4+), Great weapon (Bestigor only), Spear (Gor only), Primal Fury, Fear, Thunderous Charge
 
 Razorgor Herd
-    Special, Monstrous Beast, Normal
-    55
-    1, None
-    7 3 0 5 5 3 2 4 6
-    7 3 0 5 5 3 2 4 6
-    Fear, Thunderous Charge
-    Fear, Thunderous Charge
-    Weapon: Tusks hooves and a bad attitude {Mundane} [Melee]
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Monstrous Beast
+    POINTS = 55
+    SIZE = 1, inf
+    CHARACTERISTICS = 7 3 0 5 5 3 2 4 6
+    SPECIAL_RULES = Fear, Thunderous Charge
+    EQUIPMENT = Weapon: Tusks hooves and a bad attitude {Mundane} [Melee]
 
 # Rare
 
 Cygor
-    Rare, Monster, Normal
-    275
-    1, 1
-    7 2 1 6 5 5 3 5 8
-    Ghostsight, Hurl Attack, Immune to Psychology, Large Target, Magic Resistance (2), Soul-eater, Stubborn, Terror
-    None
-    None
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Monster
+    POINTS = 275
+    CHARACTERISTICS = 7 2 1 6 5 5 3 5 8
+    SPECIAL_RULES = Ghostsight, Hurl Attack, Immune to Psychology, Large Target, Magic Resistance (2), Soul-eater, Stubborn, Terror
 
 Ghorgon
-    Rare, Monster, Normal
-    275
-    1, 1
-    7 4 0 6 6 6 3 6 10
-    Bloodgreed, Frenzy, Immune to Psychology, Large Target, Strength from Flesh, Stubborn, Swallow Whole, Terror
-    None
-    None
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Monster
+    POINTS = 275
+    CHARACTERISTICS = 7 4 0 6 6 6 3 6 10
+    SPECIAL_RULES = Bloodgreed, Frenzy, Immune to Psychology, Large Target, Strength from Flesh, Stubborn, Swallow Whole, Terror
 
 Chaos Spawn
-    Rare, Monstrous Beast, Normal
-    55
-    1, 1
-    2D6 3 0 4 5 3 2 D6+1 10
-    2D6 3 0 4 5 3 2 D6+1 10
-    Fear, Flailing Appendages, Lurching Horror, Unbreakable
-    Fear, Flailing Appendages, Lurching Horror, Unbreakable
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Monstrous Beast
+    POINTS = 55
+    CHARACTERISTICS = 2D6 3 0 4 5 3 2 D6+1 10
+    SPECIAL_RULES = Fear, Flailing Appendages, Lurching Horror, Unbreakable
 
 Giant
-    Rare, Monster, Normal
-    225
-    1, 1
-    6 3 3 6 5 6 3 * 10
-    Fall Over, Giant Special Attacks, Large Target, Stubborn, Terror, Immune to Psychology, Longshanks
-    None
-    None
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Monster
+    POINTS = 225
+    CHARACTERISTICS = 6 3 3 6 5 6 3 * 10
+    SPECIAL_RULES = Fall Over, Giant Special Attacks, Large Target, Stubborn, Terror, Immune to Psychology, Longshanks
 
 Jabberslythe
-    Rare, Monster, Normal
-    275
-    1, 1
-    8 4 4 5 5 5 3 5 9
-    Aura of Madness, Fly, Immune to Psychology, Large Target, Poisoned Attacks, Slythey Tongue, Spurting Bile-blood, Terror
-    None
-    None
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Monster
+    POINTS = 275
+    CHARACTERISTICS = 8 4 4 5 5 5 3 5 9
+    SPECIAL_RULES = Aura of Madness, Fly, Immune to Psychology, Large Target, Poisoned Attacks, Slythey Tongue, Spurting Bile-blood, Terror
