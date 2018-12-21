@@ -77,6 +77,10 @@ namespace tools {
 		if (s.empty()) return false;
 		return *s.cbegin() == c;
 	}
+    bool ends_with(const std::string& s, char c) {
+        if (s.empty()) return false;
+        return *(--s.cend()) == c;
+    }
 	bool starts_with(const std::string& s, std::string match) {
 		if (s.empty() && match.empty()) return true;
 		if (s.empty()) return false;

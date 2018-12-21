@@ -65,6 +65,8 @@ namespace tools {
             std::function<void(const std::string&, bool, bool)>
         > parsing_functions;
         std::size_t curr_block;
+        std::size_t curr_line;
+        bool in_multiline_state;
 
         void register_bindings();
 
@@ -92,6 +94,8 @@ namespace tools {
         void parse_unit_fi_budget(const std::string& s, bool champion, bool master);
         void parse_unit_ti_budget(const std::string& s, bool champion, bool master);
         void parse_unit_uniqueness(const std::string& s, bool champion, bool master);
+
+        std::pair<std::string, std::size_t> multiline_state_handler(const std::string& s);
 
         /*std::tuple<
             double,

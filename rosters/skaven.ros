@@ -1,305 +1,198 @@
 # Lords
 
 Lord Skrolk
-    Lord, Mage
-    3
-    None
-    Plague
-    Infantry
-    470
-    1, 1
-    5 6 4 4 5 3 6 4 7
-    Scurry Away!, Strength in Numbers, Aura of Pestilence, Frenzy, Terror
-    Weapon: Rod of Corruption {Magic} [Melee], Arcane: The Liber Bubonicus
-    None
-    None
-    None
-    None
-    None
-    0
-    0
-    0
-    Unique
+    BASE_TYPE = Mage
+    TYPE = Lord
+    CATEGORY = Infantry
+    POINTS = 470
+    CHARACTERISTICS = 5 6 4 4 5 3 6 4 7
+    SPECIAL_RULES = Scurry Away!, Strength in Numbers, Aura of Pestilence, Frenzy, Terror
+    EQUIPMENT = Weapon: Rod of Corruption {Magic} [Melee], Arcane: The Liber Bubonicus
+    UNIQUENESS = true
+    MAGE_LEVEL = 3
+    MAGE_LORES = Plague
 
 Thanquol & Boneripper
-    Lord, Mage
-    4
-    None
-    Ruin, Plague
-    Infantry
-    450
-    1, 1
-    5 3 3 3 4 3 6 1 7
-    Scurry Away!, Strength in Numbers, Verminous Valour, Blessing of the Horned Rat, Warpstone Addiction
-    Talisman: Warp-amulet, Arcane: Staff of the Horned One
-    None
-    None
-    None
-    None
-    None
-    0
-    0
-    0
-    Unique
+    BASE_TYPE = Mage
+    TYPE = Lord
+    CATEGORY = Infantry
+    POINTS = 235
+    CHARACTERISTICS = 5 3 3 3 4 3 6 1 7
+    SPECIAL_RULES = Scurry Away!, Strength in Numbers, Verminous Valour, Blessing of the Horned Rat, Warpstone Addiction
+    EQUIPMENT = Talisman: Warp-amulet, Arcane: Staff of the Horned One
+    UNIQUENESS = true
+    MAGE_LEVEL = 4
+    MAGE_LORES = Plague, Ruin
 
 Ikit Claw
-    Lord, Mage
-    3
-    None
-    Ruin
-    Infantry
-    395
-    1, 1
-    5 5 3 5 4 3 3 2 7
-    Scurry Away!, Strength in Numbers, Verminous Valour
-    Weapon: Storm Daemon {Magic} [Melee], Weapon: Warplock Pistol {Mundane} [Ballistic], Armour: Iron Frame {Magic} [Armour]
-    None
-    None
-    None
-    None
-    None
-    0
-    0
-    0
-    Unique
+    BASE_TYPE = Mage
+    TYPE = Lord
+    CATEGORY = Infantry
+    POINTS = 395
+    CHARACTERISTICS = 5 5 3 5 4 3 3 2 7
+    SPECIAL_RULES = Scurry Away!, Strength in Numbers, Verminous Valour
+    EQUIPMENT = Weapon: Storm Daemon {Magic} [Melee], Weapon: Warplock Pistol {Mundane} [Ballistic], Armour: Iron Frame {Magic} [Armour]
+    UNIQUENESS = true
+    MAGE_LEVEL = 3
+    MAGE_LORES = Ruin
 
 Throt the Unclean
-    Lord, Melee
-    Infantry
-    225
-    1, 1
-    6 6 3 4 4 3 6 4 7
-    Scurry Away!, Strength in Numbers, Fear, Master Controller, Ravening Hunger, Regeneration
-    Armour: Light armour {Mundane} [Armour], Weapon: Creature-killer & Whip of Domination {Magic} [Melee]
-    None
-    None
-    None
-    None
-    None
-    0
-    0
-    0
-    Unique
+    BASE_TYPE = Melee
+    TYPE = Lord
+    CATEGORY = Infantry
+    POINTS = 225
+    CHARACTERISTICS = 6 6 3 4 4 3 6 4 7
+    SPECIAL_RULES = Scurry Away!, Strength in Numbers, Fear, Master Controller, Ravening Hunger, Regeneration
+    EQUIPMENT = Armour: Light armour {Mundane} [Armour], Weapon: Creature-killer & Whip of Domination {Magic} [Melee]
+    UNIQUENESS = true
 
 Queek Headtaker
-    Lord, Melee
-    Infantry
-    215
-    1, 1
-    5 7 4 4 4 3 7 6 8
-    Scurry Away!, Strength in Numbers, Extreme Distrust, Hates Dwarfs/Orcs & Goblins, Tropy Heads
-    Weapon: Dwarf Gouger & additional hand weapon {Magic} [Melee], Armour: Warp-shard armour {Magic} [Armour]
-    None
-    None
-    None
-    None
-    None
-    0
-    0
-    0
-    Unique
+    BASE_TYPE = Melee
+    TYPE = Lord
+    CATEGORY = Infantry
+    POINTS = 215
+    CHARACTERISTICS = 5 7 4 4 4 3 7 6 8
+    SPECIAL_RULES = Scurry Away!, Strength in Numbers, Extreme Distrust, Hates Dwarfs/Orcs & Goblins, Tropy Heads
+    EQUIPMENT = Weapon: Dwarf Gouger & additional hand weapon {Magic} [Melee], Armour: Warp-shard armour {Magic} [Armour]
+    UNIQUENESS = true
 
 Warlord
-    Lord, Melee
-    Infantry
-    90
-    1, 1
-    5 6 4 4 4 3 7 4 7
-    Scurry Away!, Strength in Numbers, Verminous Valour
-    Armour: Heavy armour {Mundane} [Armour]
-    Great weapon {Mundane} [Melee] (6), Additional hand weapon {Mundane} [Melee] (3), Halberd {Mundane} [Melee] (3)
-    Shield {Mundane} [Shield] (3)
-    Rat Ogre Bonebreaker {Monster} [65], War-litter {Unique} [35], Great Pox Rat {Monstrous Cavalry} [30]
-    None
-    None
-    100
-    100
-    100
-    Non-Unique
+    BASE_TYPE = Melee
+    TYPE = Lord
+    CATEGORY = Infantry
+    POINTS = 90
+    CHARACTERISTICS = 5 6 4 4 4 3 7 4 7
+    SPECIAL_RULES = Scurry Away!, Strength in Numbers, Verminous Valour
+    EQUIPMENT = Armour: Heavy armour {Mundane} [Armour]
+    OPTIONAL_WEAPONS = Great weapon {Mundane} [Melee] (6), Additional hand weapon {Mundane} [Melee] (3), Halberd {Mundane} [Melee] (3)
+    OPTIONAL_ARMOUR = Shield {Mundane} [Shield] (3)
+    OPTIONAL_MOUNTS = Rat Ogre Bonebreaker [65], War-litter [35], Great Pox Rat [30]
+    MAGIC_ITEM_BUDGET = 100
+    FACTION_ITEM_BUDGET = 100
+    TOTAL_ITEM_BUDGET = 100
 
 Vermin Lord
-    Lord, Mage
-    4
-    None
-    Ruin, Plague
-    Monster
-    500
-    1, 1
-    8 8 4 6 5 5 10 5 8
-    Scurry Away!, Immune to Psychology, Large Target, Rat Daemon, Terror, Ward save (5+)
-    Weapon: Doom Glaive {Magic} [Melee]
-    None
-    None
-    None
-    None
-    None
-    0
-    0
-    0
-    Non-Unique
+    BASE_TYPE = Mage
+    TYPE = Lord
+    CATEGORY = Infantry
+    POINTS = 500
+    CHARACTERISTICS = 8 8 4 6 5 5 10 5 8
+    SPECIAL_RULES = Scurry Away!, Immune to Psychology, Large Target, Rat Daemon, Terror, Ward save (5+)
+    EQUIPMENT = Weapon: Doom Glaive {Magic} [Melee]
+    MAGE_LEVEL = 4
+    MAGE_LORES = Plague, Ruin
 
 Grey Seer
-    Lord, Mage
-    4
-    None
-    Ruin, Plague
-    Infantry
-    240
-    1, 1
-    5 3 3 3 4 3 5 1 7
-    Scurry Away!, Strength in Numbers, Verminous Valour
-    Enchanted: D3 Warpstone Tokens
-    None
-    None
-    Screaming Bell {Unique} [200]
-    One Warpstone Token {True} [15], Two Warpstone Tokens {True} [30], Three Warpstone Tokens {True} [45], Four Warpstone Tokens {True} [60], Five Warpstone Tokens {True} [75], Six Warpstone Tokens {True} [90]
-    None
-    100
-    100
-    100
-    Non-Unique
+    BASE_TYPE = Mage
+    TYPE = Lord
+    CATEGORY = Infantry
+    POINTS = 240
+    CHARACTERISTICS = 5 3 3 3 4 3 5 1 7
+    SPECIAL_RULES = Scurry Away!, Strength in Numbers, Verminous Valour
+    EQUIPMENT = Enchanted: D3 Warpstone Tokens
+    OPTIONAL_MOUNTS = Screaming Bell [200]
+    OPTIONAL_OCO_EXTRAS = One Warpstone Token {True} [15], Two Warpstone Tokens {True} [30], Three Warpstone Tokens {True} [45], Four Warpstone Tokens {True} [60], Five Warpstone Tokens {True} [75], Six Warpstone Tokens {True} [90]
+    MAGIC_ITEM_BUDGET = 100
+    FACTION_ITEM_BUDGET = 100
+    TOTAL_ITEM_BUDGET = 100
 
 # Heroes
 
 Deathmaster Snikch
-    Hero, Melee
-    Infantry
-    270
-    1, 1
-    6 8 6 4 4 2 10 6 8
-    Scurry Away!, Sneaky Infiltrator, Verminous Valour, A Killer Not a Leader, Always Strikes First, Dodge (4+), Hidden, Scouts
-    Weapon: Throwing stars {Mundane} [Ballistic], Weapon: Whirl of Weeping Blades {Magic} [Melee], Enchanted: The Cloak of Shadows
-    None
-    None
-    None
-    None
-    None
-    0
-    0
-    0
-    Unique
+    BASE_TYPE = Melee
+    TYPE = Hero
+    CATEGORY = Infantry
+    POINTS = 270
+    CHARACTERISTICS = 6 8 6 4 4 2 10 6 8
+    SPECIAL_RULES = Scurry Away!, Sneaky Infiltrator, Verminous Valour, A Killer Not a Leader, Always Strikes First, Dodge (4+), Hidden, Scouts
+    EQUIPMENT = Weapon: Throwing stars {Mundane} [Ballistic], Weapon: Whirl of Weeping Blades {Magic} [Melee], Enchanted: The Cloak of Shadows
+    UNIQUENESS = true
 
 Tretch Craventail
-    Hero, Melee
-    Infantry
-    145
-    1, 1
-    5 5 4 4 4 2 6 3 6
-    Scurry Away!, Strength in Numbers, Verminous Valour, Stay Here I'll Get Help!, Tretch's Raiders
-    Weapon: Two hand weapons {Mundane} [Melee], Armour: Heavy armour {Mundane} [Armour], Enchanted: Lucky Skullhelm
-    None
-    None
-    None
-    None
-    None
-    0
-    0
-    0
-    Unique
+    BASE_TYPE = Melee
+    TYPE = Hero
+    CATEGORY = Infantry
+    POINTS = 145
+    CHARACTERISTICS = 5 5 4 4 4 2 6 3 6
+    SPECIAL_RULES = Scurry Away!, Strength in Numbers, Verminous Valour, Stay Here I'll Get Help!, Tretch's Raiders
+    EQUIPMENT = Weapon: Two hand weapons {Mundane} [Melee], Armour: Heavy armour {Mundane} [Armour], Enchanted: Lucky Skullhelm
+    UNIQUENESS = true
 
 Assassin
-    Hero, Melee
-    Infantry
-    120
-    1, 1
-    6 6 5 4 4 2 8 3 7
-    Scurry Away!, Sneaky Infiltrators, Verminous Valour, A Killer Not A Leader, Always Strike First, Dodge (4+), Hidden, Poisoned Attacks, Scouts
-    Weapon: Two hand weapons {Mundane} [Melee], Weapon: Throwing stars {Mundane} [Ballistic]
-    None
-    None
-    None
-    None
-    None
-    50
-    50
-    50
-    Non-Unique
+    BASE_TYPE = Melee
+    TYPE = Hero
+    CATEGORY = Infantry
+    POINTS = 120
+    CHARACTERISTICS = 6 6 5 4 4 2 8 3 7
+    SPECIAL_RULES = Scurry Away!, Sneaky Infiltrators, Verminous Valour, A Killer Not A Leader, Always Strike First, Dodge (4+), Hidden, Poisoned Attacks, Scouts
+    EQUIPMENT = Weapon: Two hand weapons {Mundane} [Melee], Weapon: Throwing stars {Mundane} [Ballistic]
+    MAGIC_ITEM_BUDGET = 50
+    FACTION_ITEM_BUDGET = 50
+    TOTAL_ITEM_BUDGET = 50
 
 Warlock Engineer
-    Hero, Mage
-    0
-    1 [50], 2 [85]
-    Ruin
-    Infantry
-    15
-    1, 1
-    5 3 3 3 3 2 4 1 5
-    Scurry Away!, Strength in Numbers, Verminous Valour
-    None
-    Warlock-Augmented Weapon {Mundane} [Melee] (45), Warplock Pistol {Mundane} [Ballistic] (8), Warpmusket {Mundane} [Ballistic] (15)
-    None
-    None
-    One Warpstone Token {True} [15], Two Warpstone Tokens {True} [30], Three Warpstone Tokens {True} [45]
-    None
-    50
-    50
-    50
-    Non-Unique
+    BASE_TYPE = Melee
+    TYPE = Hero
+    CATEGORY = Infantry
+    POINTS = 15
+    CHARACTERISTICS = 5 3 3 3 3 2 4 1 5
+    SPECIAL_RULES = Scurry Away!, Strength in Numbers, Verminous Valour
+    OPTIONAL_WEAPONS = Warlock-Augmented Weapon {Mundane} [Melee] (45), Warplock Pistol {Mundane} [Ballistic] (8), Warpmusket {Mundane} [Ballistic] (15)
+    OPTIONAL_OCO_EXTRAS = One Warpstone Token {True} [15], Two Warpstone Tokens {True} [30], Three Warpstone Tokens {True} [45]
+    MAGIC_ITEM_BUDGET = 50
+    FACTION_ITEM_BUDGET = 50
+    TOTAL_ITEM_BUDGET = 50
+    MAGE_LEVEL = 0
+    MAGE_UPGRADES = 1 [50], 2 [85]
+    MAGE_LORES = Ruin
 
 Chieftain
-    Hero, Melee
-    Infantry
-    45
-    1, 1
-    5 5 4 4 4 2 6 3 6
-    Scurry Away!, Strength in Numbers, Verminous Valour
-    Armour: Heavy armour {Mundane} [Armour]
-    Great weapon {Mundane} [Melee] (4), Additional hand weapon {Mundane} [Melee] (2), Halberd {Mundane} [Melee] (2)
-    Shield {Mundane} [Shield] (2)
-    None
-    None
-    Battle Standard Bearer {True} [25]
-    50
-    50
-    50
-    Non-Unique
+    BASE_TYPE = Melee
+    TYPE = Hero
+    CATEGORY = Infantry
+    POINTS = 45
+    CHARACTERISTICS = 5 5 4 4 4 2 6 3 6
+    SPECIAL_RULES = Scurry Away!, Strength in Numbers, Verminous Valour
+    EQUIPMENT = Armour: Heavy armour {Mundane} [Armour]
+    OPTIONAL_WEAPONS = Great weapon {Mundane} [Melee] (4), Additional hand weapon {Mundane} [Melee] (2), Halberd {Mundane} [Melee] (2)
+    OPTIONAL_ARMOUR = Shield {Mundane} [Shield] (2)
+    OPTIONAL_MC_EXTRAS = Battle Standard Bearer {True} [25]
+    MAGIC_ITEM_BUDGET = 50
+    FACTION_ITEM_BUDGET = 50
+    TOTAL_ITEM_BUDGET = 50
 
 Plague Priest
-    Hero, Mage
-    1
-    2 [35]
-    Plague
-    Infantry
-    100
-    1, 1
-    5 5 3 4 5 2 5 3 6
-    Scurry Away!, Strength in Numbers, Frenzy
-    None
-    Plague Censer {Mundane} [Melee] (16), Flail {Mundane} [Melee] (4), Additional hand weapon {Mundane} [Melee] (2)
-    None
-    Great Pox Rat {Monstrous Cavalry} [30], Plague Furnace {Unique} [150]
-    None
-    None
-    50
-    50
-    50
-    Non-Unique
+    BASE_TYPE = Mage
+    TYPE = Hero
+    CATEGORY = Infantry
+    POINTS = 100
+    CHARACTERISTICS = 5 5 3 4 5 2 5 3 6
+    SPECIAL_RULES = Scurry Away!, Strength in Numbers, Frenzy
+    OPTIONAL_WEAPONS = Plague Censer {Mundane} [Melee] (16), Flail {Mundane} [Melee] (4), Additional hand weapon {Mundane} [Melee] (2)
+    OPTIONAL_MOUNTS = Great Pox Rat [30], Plague Furnace [150]
+    MAGIC_ITEM_BUDGET = 50
+    FACTION_ITEM_BUDGET = 50
+    TOTAL_ITEM_BUDGET = 50
+    MAGE_LEVEL = 1
+    MAGE_UPGRADES = 2 [35]
+    MAGE_LORES = Plague
 
 # Core
 
 Clanrats
-    Core, Infantry, Normal
-    4
-    20, None
-    5 3 3 3 3 1 4 1 5
-    5 3 3 3 3 1 4 2 5
-    Scurry Away!, Strength in Numbers
-    Scurry Away!, Strength in Numbers
-    Armour: Light armour {Mundane} [Armour]
-    None
-    Spears {Mundane} [Melee] (0.5)
-    None
-    Shields {Mundane} [Shield] (0.5)
-    None
-    Poisoned Wind Mortar {True} [65], Warpfire Thrower {True} [70], Ratling Gun {True} [55], Doom-flayer {True} [55]
-    None
-    None
-    None
-    Musician: Musician [4], Standard Bearer: Standard Bearer [8], Champion: Clawleader [8]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Infantry
+    POINTS = 4
+    SIZE = 20, inf
+    CHARACTERISTICS = 5 3 3 3 3 1 4 1 5
+    CHAMPION_CHARACTERISTICS = 5 3 3 3 3 1 4 2 5
+    SPECIAL_RULES = Scurry Away!, Strength in Numbers
+    EQUIPMENT = Armour: Light armour {Mundane} [Armour]
+    OPTIONAL_WEAPONS = Spears {Mundane} [Melee] (0.5)
+    OPTIONAL_ARMOUR = Shields {Mundane} [Shield] (0.5)
+    OPTIONAL_OCO_EXTRAS = Poisoned Wind Mortar {True} [65], Warpfire Thrower {True} [70], Ratling Gun {True} [55], Doom-flayer {True} [55]
+    OPTIONAL_COMMAND = Musician: Musician [4], Standard Bearer: Standard Bearer [8], Champion: Clawleader [8]
 
 # TODO: add optional extra to Stormvermin unit for Queek Headtaker's upgrade
 #       -> will require changes to (e.g.) mc extra parsing and storing as I
@@ -310,338 +203,261 @@ Clanrats
 #        where <restrictions> could be RestrictionField enum constants (expanded to
 #        include ARMY_CONTAINS and COUNT, and maybe some other fields)
 Stormvermin
-    Core, Infantry, Normal
-    7
-    10, None
-    5 4 3 3 3 1 5 1 5
-    5 4 3 3 3 1 5 2 5
-    Scurry Away!, Strength in Numbers
-    Scurry Away!, Strength in Numbers
-    Weapon: Halberd {Mundane} [Melee], Armour: Heavy armour {Mundane} [Armour]
-    None
-    None
-    None
-    Shields {Mundane} [Shield] (1)
-    None
-    Poisoned Wind Mortar {True} [65], Warpfire Thrower {True} [70], Ratling Gun {True} [55], Doom-flayer {True} [55]
-    None
-    None
-    None
-    Musician: Musician [5], Standard Bearer: Standard Bearer [10], Champion: Fangleader [10]
-    0
-    15
-    15
-    50
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Infantry
+    POINTS = 7
+    SIZE = 10, inf
+    CHARACTERISTICS = 5 4 3 3 3 1 5 1 5
+    CHAMPION_CHARACTERISTICS = 5 4 3 3 3 1 5 2 5
+    SPECIAL_RULES = Scurry Away!, Strength in Numbers
+    EQUIPMENT = Armour: Heavy armour {Mundane} [Armour]
+    OPTIONAL_ARMOUR = Shields {Mundane} [Shield] (1)
+    OPTIONAL_OCO_EXTRAS = Poisoned Wind Mortar {True} [65], Warpfire Thrower {True} [70], Ratling Gun {True} [55], Doom-flayer {True} [55]
+    OPTIONAL_COMMAND = Musician: Musician [5], Standard Bearer: Standard Bearer [10], Champion: Fangleader [10]
+    FACTION_ITEM_BUDGET = 15
+    TOTAL_ITEM_BUDGET = 15
+    BANNER_BUDGET = 50
+
+# possible new optional extra syntax:
+# OPTIONAL_OCO_EXTRAS = Name : <Name>, points : <points>, is_singular : <is_singular>, restrictions : <restrictions> ; ...
+# e.g: [where is_singular == true by default]
+# OPTIONAL_OCO_EXTRAS = Name : Poisoned Wind Mortar, points : 65; Name : Warpfire Thrower, points : 65
+
 # TODO: change faction item budget line to below to indicate that a Fangleader may only
 #       choose a single piece of equipment worth up to 15 pts from the Scavenge-Pile
 #   15 ; num : 1
 
 Skavenslaves
-    Core, Infantry, Normal
-    2
-    20, None
-    5 2 2 3 3 1 4 1 2
-    5 2 2 3 3 1 4 2 2
-    Scurry Away!, Strength in Numbers, Expendable, Cornered Rats
-    Scurry Away!, Strength in Numbers, Expendable, Cornered Rats
-    None
-    None
-    Spears {Mundane} [Melee] (0.5), Slings {Mundane} [Ballistic] (0.5)
-    None
-    Shields {Mundane} [Shield] (0.5)
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [2], Champion: Pawleader [4]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Infantry
+    POINTS = 2
+    SIZE = 20, inf
+    CHARACTERISTICS = 5 2 2 3 3 1 4 1 2
+    CHAMPION_CHARACTERISTICS = 5 2 2 3 3 1 4 2 2
+    SPECIAL_RULES = Scurry Away!, Strength in Numbers
+    OPTIONAL_WEAPONS = Spears {Mundane} [Melee] (0.5), Slings {Mundane} [Ballistic] (0.5)
+    OPTIONAL_ARMOUR = Shields {Mundane} [Shield] (0.5)
+    OPTIONAL_COMMAND = Musician: Musician [2], Champion: Pawleader [4]
 
 Night Runners
-    Core, Infantry, Normal
-    7
-    10, None
-    6 3 3 3 3 1 5 1 6
-    6 3 4 3 3 1 5 1 6
-    Scurry Away!, Strength in Numbers, Slinking Advance
-    Scurry Away!, Strength in Numbers, Slinking Advance, Dodge (6+)
-    Weapon: Two hand weapons {Mundane} [Melee], Weapon: Throwing stars {Mundane} [Ballistic]
-    None
-    Slings {Mundane} [Ballistic] (1)
-    None
-    None
-    None
-    Warp-grinder {True} [60]
-    None
-    None
-    None
-    Champion: Nightleader [8]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Infantry
+    POINTS = 7
+    SIZE = 10, inf
+    CHARACTERISTICS = 6 3 3 3 3 1 5 1 6
+    CHAMPION_CHARACTERISTICS = 6 3 4 3 3 1 5 1 6
+    SPECIAL_RULES = Scurry Away!, Strength in Numbers, Slinking Advance
+    CHAMPION_SPECIAL_RULES = Dodge (6+)
+    OPTIONAL_WEAPONS = Slings {Mundane} [Ballistic] (1)
+    OPTIONAL_OCO_EXTRAS = Warp-grinder {True} [60]
+    OPTIONAL_COMMAND = Champion: Nightleader [8]
 
-Giant Rats
-    Core, Warbeast, Mixed
-    3
-    5, None
-    6 3 1 3 3 1 4 1 3
-    6 3 1 3 3 1 4 1 3
-    Scurry Away!, Strength in Numbers, Mixed Unit, Rat Pack, Wave of Rats
-    Scurry Away!, Strength in Numbers, Mixed Unit, Rat Pack, Wave of Rats
-    Weapon: Sharp teeth/claws {Mundane} [Melee]
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    0
-    0
-    0
-    0
-    8
-    1, None
-    6 3 3 3 3 1 4 1 5
-    6 5 3 4 4 2 5 2 6
-    Scurry Away!, Strength in Numbers, Mixed Unit, Running with the Pack
-    Scurry Away!, Strength in Numbers, Mixed Unit, Running with the Pack, Verminous Valour
-    Armour: Light armour {Mundane} [Armour], Weapon: Whip {Mundane} [Melee]
-    None
-    None
-    Great weapon {Mundane} [Melee] (4), Things-catcher {Mundane} [Melee] (20)
-    None
-    None
-    None
-    None
-    None
-    None
-    Champion: Master Moulder [25]
-    30
-    30
-    30
-    0
+#Giant Rats
+#    Core, Warbeast, Mixed
+#    3
+#    5, None
+#    6 3 1 3 3 1 4 1 3
+#    6 3 1 3 3 1 4 1 3
+#    Scurry Away!, Strength in Numbers, Mixed Unit, Rat Pack, Wave of Rats
+#    Scurry Away!, Strength in Numbers, Mixed Unit, Rat Pack, Wave of Rats
+#    Weapon: Sharp teeth/claws {Mundane} [Melee]
+#    None
+#    None
+#    None
+#    None
+#    None
+#    None
+#    None
+#    None
+#    None
+#    None
+#    0
+#    0
+#    0
+#    0
+#    8
+#    1, None
+#    6 3 3 3 3 1 4 1 5
+#    6 5 3 4 4 2 5 2 6
+#    Scurry Away!, Strength in Numbers, Mixed Unit, Running with the Pack
+#    Scurry Away!, Strength in Numbers, Mixed Unit, Running with the Pack, Verminous Valour
+#    Armour: Light armour {Mundane} [Armour], Weapon: Whip {Mundane} [Melee]
+#    None
+#    None
+#    Great weapon {Mundane} [Melee] (4), Things-catcher {Mundane} [Melee] (20)
+#    None
+#    None
+#    None
+#    None
+#    None
+#    None
+#    Champion: Master Moulder [25]
+#    30
+#    30
+#    30
+#    0
 
 Rat Swarm
-    Core, Swarm, Normal
-    25
-    2, 10
-    6 3 0 2 2 5 4 5 10
-    Unbreakable (Swarm), Small
-    None
-    None
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Swarm
+    POINTS = 25
+    SIZE = 2, 10
+    CHARACTERISTICS = 6 3 0 2 2 5 4 5 10
+    SPECIAL_RULES = Unbreakable (Swarm), Small
 
 # Special
 
 Gutter Runners
-    Special, Infantry, Normal
-    12
-    5, 15
-    6 4 4 3 3 1 5 1 7
-    6 4 4 3 3 1 5 2 7
-    Scurry Away!, Scouts, Skirmish, Sneaky Infiltrators, Dodge (6+)
-    Scurry Away!, Scouts, Skirmish, Sneaky Infiltrators, Dodge (6+), Dodge (5+)
-    Weapon: Two hand weapons {Mundane} [Melee], Weapon: Throwing stars {Mundane} [Ballistic]
-    None
-    Snare-net {Mundane} [Melee] (0), Slings {Mundane} [Ballistic] (1)
-    Weeping blade {Mundane} [Melee] (30)
-    None
-    None
-    Warp-grinder {True} [60]
-    None
-    Poisoned Attacks {False} [5]
-    Smoke bombs {True} [10]
-    Champion: Deathrunner [12]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Infantry
+    POINTS = 12
+    SIZE = 5, 15
+    CHARACTERISTICS = 6 4 4 3 3 1 5 1 7
+    CHAMPION_CHARACTERISTICS = 6 4 4 3 3 1 5 2 7
+    SPECIAL_RULES = Scurry Away!, Scouts, Skirmish, Sneaky Infiltrators, Dodge (6+)
+    CHAMPION_SPECIAL_RULES = Dodge (5+)
+    OPTIONAL_WEAPONS = Slings {Mundane} [Ballistic] (1), Snare-net {Mundane} [Melee] (0)
+    CHAMPION_OPTIONAL_WEAPONS = Weeping blade {Mundane} [Melee] (30)
+    OPTIONAL_OCO_EXTRAS = Warp-grinder {True} [60]
+    OPTIONAL_MC_EXTRAS = Poisoned Attacks {False} [5]
+    CHAMPION_OPTIONAL_MC_EXTRAS = Smoke bombs {True} [10]
+    OPTIONAL_COMMAND = Champion: Deathrunner [12]
 
-Rat Ogres
-    Special, Monstrous Infantry, Mixed
-    40
-    2, None
-    6 3 1 5 4 3 4 3 5
-    6 4 1 5 4 3 5 4 5
-    Scurry Away!, Strength in Numbers, Mixed Unit, Beast Pack, Fear, Frenzy
-    Scurry Away!, Strength in Numbers, Mixed Unit, Beast Pack, Fear, Frenzy
-    Weapon: Claws and savagery {Mundane} [Melee]
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Champion: Master-bred Rat Ogre [15]
-    0
-    0
-    0
-    0
-    8
-    1, None
-    6 3 3 3 3 1 4 1 5
-    6 5 3 4 4 2 5 2 6
-    Scurry Away!, Strength in Numbers, Mixed Unit, Running with the Pack
-    Scurry Away!, Strength in Numbers, Mixed Unit, Running with the Pack, Verminous Valour
-    Armour: Light armour {Mundane} [Armour], Weapon: Whip {Mundane} [Melee]
-    None
-    None
-    Great weapon {Mundane} [Melee] (4), Things-catcher {Mundane} [Melee] (20)
-    None
-    None
-    None
-    None
-    None
-    None
-    Champion: Master Moulder [25]
-    30
-    30
-    30
-    0
+#Rat Ogres
+#    Special, Monstrous Infantry, Mixed
+#    40
+#    2, None
+#    6 3 1 5 4 3 4 3 5
+#    6 4 1 5 4 3 5 4 5
+#    Scurry Away!, Strength in Numbers, Mixed Unit, Beast Pack, Fear, Frenzy
+#    Scurry Away!, Strength in Numbers, Mixed Unit, Beast Pack, Fear, Frenzy
+#    Weapon: Claws and savagery {Mundane} [Melee]
+#    None
+#    None
+#    None
+#    None
+#    None
+#    None
+#    None
+#    None
+#    None
+#    Champion: Master-bred Rat Ogre [15]
+#    0
+#    0
+#    0
+#    0
+#    8
+#    1, None
+#    6 3 3 3 3 1 4 1 5
+#    6 5 3 4 4 2 5 2 6
+#    Scurry Away!, Strength in Numbers, Mixed Unit, Running with the Pack
+#    Scurry Away!, Strength in Numbers, Mixed Unit, Running with the Pack, Verminous Valour
+#    Armour: Light armour {Mundane} [Armour], Weapon: Whip {Mundane} [Melee]
+#    None
+#    None
+#    Great weapon {Mundane} [Melee] (4), Things-catcher {Mundane} [Melee] (20)
+#    None
+#    None
+#    None
+#    None
+#    None
+#    None
+#    Champion: Master Moulder [25]
+#    30
+#    30
+#    30
+#    0
 
 Plague Monks
-    Special, Infantry, Normal
-    7
-    10, None
-    5 3 3 3 4 1 3 1 5
-    5 3 3 3 4 1 3 2 5
-    Scurry Away!, Strength in Numbers, Frenzy
-    Scurry Away!, Strength in Numbers, Frenzy
-    Weapon: Two hand weapons {Mundane} [Melee]
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [5], Standard Bearer: Standard Bearer [10], Champion: Bringer-of-the-Word [10]
-    0
-    0
-    0
-    50
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Infantry
+    POINTS = 7
+    SIZE = 10, inf
+    CHARACTERISTICS = 5 3 3 3 4 1 3 1 5
+    CHAMPION_CHARACTERISTICS = 5 3 3 3 4 1 3 2 5
+    SPECIAL_RULES = Scurry Away!, Strength in Numbers, Frenzy
+    EQUIPMENT = Weapon: Two hand weapons {Mundane} [Melee]
+    OPTIONAL_COMMAND = Musician: Musician [5], Standard Bearer: Standard Bearer [10], Champion: Bringer-of-the-Word [10]
+    BANNER_BUDGET = 50
 
 Plague Censer Bearers
-    Special, Infantry, Normal
-    16
-    5, None
-    5 3 3 3 4 1 3 2 5
-    5 3 3 3 4 1 3 3 5
-    Scurry Away!, Strength in Numbers, Frenzy, Hatred, Plague Disciples, Skirmish
-    Scurry Away!, Strength in Numbers, Frenzy, Hatred, Plague Disciples, Skirmish
-    Weapon: Plague Censer {Mundane} [Melee]
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Champion: Plague Chanter [13]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Infantry
+    POINTS = 16
+    SIZE = 5, inf
+    CHARACTERISTICS = 5 3 3 3 4 1 3 2 5
+    CHAMPION_CHARACTERISTICS = 5 3 3 3 4 1 3 3 5
+    SPECIAL_RULES = Scurry Away!, Strength in Numbers, Frenzy, Hatred, Plague Disciples, Skirmish
+    EQUIPMENT = Weapon: Plague Censer {Mundane} [Melee]
+    OPTIONAL_COMMAND = Champion: Plague Chanter [13]
 
 Warplock Jezzails
-    Special, Infantry, Normal
-    20
-    3, None
-    5 3 3 3 3 1 3 2 5
-    5 3 4 3 3 1 3 2 5
-    Scurry Away!
-    Scurry Away!
-    Weapon: Jezzail {Mundane} [Ballistic], Armour: Pavise {Mundane} [Shield]
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Champion: Sharpshooter Team [10]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Infantry
+    POINTS = 20
+    SIZE = 3, inf
+    CHARACTERISTICS = 5 3 3 3 3 1 3 2 5
+    CHAMPION_CHARACTERISTICS = 5 3 4 3 3 1 3 2 5
+    SPECIAL_RULES = Scurry Away!
+    EQUIPMENT = Weapon: Jezzail {Mundane} [Ballistic], Armour: Pavise {Mundane} [Shield]
+    OPTIONAL_COMMAND = Champion: Sharpshooter Team [10]
 
 Poisoned Wind Globadiers
-    Special, Infantry, Normal
-    10
-    5, 15
-    5 3 3 3 3 1 4 1 5
-    5 3 4 3 3 1 4 1 5
-    Scurry Away!, Life is Cheap, Skirmish, Volley from the Back
-    Scurry Away!, Life is Cheap, Skirmish, Volley from the Back
-    Weapon: Poisoned wind globes {Mundane} [Ballistic], Armour: Heavy armour {Mundane} [Armour]
-    None
-    None
-    Death Globe {Mundane} [Ballistic] (25)
-    None
-    None
-    Poisoned Wind Mortar {True} [65]
-    None
-    None
-    None
-    Champion: Bombardier [5]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Infantry
+    POINTS = 10
+    SIZE = 5, 15
+    CHARACTERISTICS = 5 3 3 3 3 1 4 1 5
+    CHAMPION_CHARACTERISTICS = 5 3 4 3 3 1 4 1 5
+    SPECIAL_RULES = Scurry Away!, Life is Cheap, Skirmish, Volley from the Back
+    EQUIPMENT = Weapon: Poisoned wind globes {Mundane} [Ballistic], Armour: Heavy armour {Mundane} [Armour]
+    OPTIONAL_WEAPONS = Death Globe {Mundane} [Ballistic] (25)
+    OPTIONAL_MC_EXTRAS = Poisoned Wind Mortar {True} [65]
+    OPTIONAL_COMMAND = Champion: Bombardier [5]
 
 # Rare
 
 Hell Pit Abomination
-    Rare, Monster, Normal
-    235
-    1, 1
-    3D6 3 1 6 5 6 4 * 8
-    Impact Hits (D6), Large Target, Regenerate, Shambling Horror, Special Close Combat Attacks, Stubborn, Terror, Too Horrible to Die
-    Warpstone Spikes {True} [15]
-    None
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Monster
+    POINTS = 235
+    CHARACTERISTICS = 3D6 3 1 6 5 6 4 * 8
+    SPECIAL_RULES = Impact Hits (D6), Large Target, Regenerate, Shambling Horror, Special Close Combat Attacks, Stubborn, Terror, Too Horrible to Die
+    OPTIONAL_MC_EXTRAS = Warpstone Spikes {True} [15]
 
 Doomwheel
-    Rare, Warmachine, Normal
-    150
-    1, 1
-    3D6 - - 6 6 5 - * -
-    - 3 3 2 - - 4 2D6 7
-    Armour save (4+), Grinding Down the Foe, Immune to Psychology, Impact Hits (D6+1), Large Target, Rolling Doom, Terror, Zzzzap!
-    None
-    None
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Warmachine
+    POINTS = 150
+    CHARACTERISTICS = 3D6 - - 6 6 5 - * -
+    CHAMPION_CHARACTERISTICS = - 3 3 2 - - 4 2D6 7
+    SPECIAL_RULES = Armour save (4+), Grinding Down the Foe, Immune to Psychology, Impact Hits (D6+1), Large Target, Rolling Doom, Terror, Zzzzap!
 
 Warp Lightning Cannon
-    Rare, Warmachine, Normal
-    90
-    1, 1
-    - - - - 6 4 - - -
-    5 3 3 3 3 - 3 3 7
-    Ponderous War Machine
-    None
-    None
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Warmachine
+    POINTS = 90
+    CHARACTERISTICS = - - - - 6 4 - - -
+    CHAMPION_CHARACTERISTICS = 5 3 3 3 3 - 3 3 7
+    SPECIAL_RULES = Ponderous War Machine
 
 Plagueclaw Catapult
-    Rare, Warmachine, Normal
-    100
-    1, 1
-    - - - - 6 4 - - -
-    5 3 3 3 4 - 3 D6 7
-    Fume-addled Crew, Ponderous War Machine
-    None
-    None
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Warmachine
+    POINTS = 100
+    CHARACTERISTICS = - - - - 6 4 - - -
+    CHAMPION_CHARACTERISTICS = 5 3 3 3 4 - 3 D6 7
+    SPECIAL_RULES = Fume-addled Crew, Ponderous War Machine

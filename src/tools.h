@@ -3,6 +3,7 @@
 #include "base_unit.h"
 #include "magic_item.h"
 
+#include <algorithm>
 #include <cctype>
 #include <sstream>
 #include <string>
@@ -26,6 +27,7 @@ namespace tools {
     std::string trim(const std::string& s);
 
 	bool starts_with(const std::string& s, char c);
+    bool ends_with(const std::string& s, char c);
 	bool starts_with(const std::string& s, std::string match);
 
     std::pair<std::string, double> parse_item_points(std::string s);
@@ -40,6 +42,15 @@ namespace tools {
             ItemType item_type
     );
 
+    template<template<class...> class Ty, class Inner = std::string>
+    constexpr Ty<std::pair<Inner, Inner>> zip_args_to_names_values(const Ty<Inner>& container) {
+        Ty<std::pair<Inner, Inner>> zipped(container.size());
+        std::generate(std::begin(zipped), std::end(zipped), [it=std::begin(container)]() mutable {
+            auto s = split(*(it++), ':');
+            return std::make_pair<Inner, Inner>(s[0], s[1]);
+        });
+        return zipped;
+    }
 
     template<class TyF, class TyS>
     constexpr std::vector<std::pair<TyF, TyS>> umap_to_vector(const std::unordered_map<TyF, TyS>& umap) {

@@ -37,7 +37,7 @@ namespace tools {
         for (std::size_t i = start; i < streampos.size(); ++i) {
             auto line = read_line(i, false);
             if (line.empty() || tools::starts_with(line, '#')) continue;
-            if (!(tools::starts_with(line, "    ") || tools::starts_with(line, '\t')))
+            if (!(tools::starts_with(line, ' ') || tools::starts_with(line, '\t')))
                 blocks.push_back(i);
         }
     }

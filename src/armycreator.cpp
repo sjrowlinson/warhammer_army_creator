@@ -40,11 +40,7 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
     update_validity_label();
     ui->validity_reasons_label->setWordWrap(true);
     // initialise magic items combobox
-    ui->magic_items_combobox->addItem(QString("Common"), QVariant(3));
-    if (!st->magic_items_name().empty())
-        ui->magic_items_combobox->addItem(QString(st->magic_items_name().data()), QVariant(1));
-    if (!st->faction_items_name().empty())
-        ui->magic_items_combobox->addItem(QString(st->faction_items_name().data()), QVariant(2));
+    setup_magic_items_combobox();
     ui->opt_box_scrollarea->setWidgetResizable(true);
     ui->magic_item_box_scrollarea->setWidgetResizable(true);
     setup_export_directories();
@@ -141,31 +137,31 @@ void ArmyCreator::populate_roster_tree() {
     );
     for (const auto& l : lords) {
         QTreeWidgetItem* lord_item = new QTreeWidgetItem();
-        lord_item->setText(0, QString(l->name().data()));
+        lord_item->setText(static_cast<int>(ArmyTreeColumn::NAME), QString(l->name().data()));
         ui->roster_tree->topLevelItem(0)->addChild(lord_item);
         ui->roster_tree->topLevelItem(0)->setExpanded(true);
     }
     for (const auto& h : heroes) {
         QTreeWidgetItem* hero_item = new QTreeWidgetItem();
-        hero_item->setText(0, QString(h->name().data()));
+        hero_item->setText(static_cast<int>(ArmyTreeColumn::NAME), QString(h->name().data()));
         ui->roster_tree->topLevelItem(1)->addChild(hero_item);
         ui->roster_tree->topLevelItem(1)->setExpanded(true);
     }
     for (const auto& c : cores) {
         QTreeWidgetItem* core_item = new QTreeWidgetItem();
-        core_item->setText(0, QString(c->name().data()));
+        core_item->setText(static_cast<int>(ArmyTreeColumn::NAME), QString(c->name().data()));
         ui->roster_tree->topLevelItem(2)->addChild(core_item);
         ui->roster_tree->topLevelItem(2)->setExpanded(true);
     }
     for (const auto& s : specials) {
         QTreeWidgetItem* spec_item = new QTreeWidgetItem();
-        spec_item->setText(0, QString(s->name().data()));
+        spec_item->setText(static_cast<int>(ArmyTreeColumn::NAME), QString(s->name().data()));
         ui->roster_tree->topLevelItem(3)->addChild(spec_item);
         ui->roster_tree->topLevelItem(3)->setExpanded(true);
     }
     for (const auto& r : rares) {
         QTreeWidgetItem* rare_item = new QTreeWidgetItem();
-        rare_item->setText(0, QString(r->name().data()));
+        rare_item->setText(static_cast<int>(ArmyTreeColumn::NAME), QString(r->name().data()));
         ui->roster_tree->topLevelItem(4)->addChild(rare_item);
         ui->roster_tree->topLevelItem(4)->setExpanded(true);
     }
@@ -685,40 +681,63 @@ void ArmyCreator::initialise_unit_info_box() {
     ui->unit_info_box->setLayout(vbox);
 }
 
-void ArmyCreator::on_faction_combobox_currentTextChanged(const QString& faction) {
-    race = enum_convert::STRING_TO_FACTION.at(faction.toStdString());
+void ArmyCreator::clear() {
     army->clear();
+    clear_points_displays();
+    current.reset();
+    id_counter = 0;
+    clear_roster_tree();
+    clear_army_tree();
+    clear_unit_info_box();
+    ob->clear();
+    mib->clear();
+    ui->item_descr_gb->setTitle(tr("Item Description"));
+    ui->item_descr_label->setText(tr(""));
+    in_tree = InTree::NEITHER;
+    ui->magic_items_combobox->clear();
+    update_validity_label();
+}
+
+void ArmyCreator::clear_points_displays() {
     ui->current_pts_label->setText(QString("%1").arg(static_cast<double>(0.0)));
-    for (int i = 0; i < 5; ++i)
-        ui->army_tree->topLevelItem(i)->setText(6, QString("%1").arg(static_cast<double>(0.0)));
+    for (auto i = 0; i < 5; ++i)
+        ui->army_tree->topLevelItem(i)->setText(
+            static_cast<int>(ArmyTreeColumn::POINTS),
+            QString("%1").arg(static_cast<double>(0.0))
+        );
+}
+
+void ArmyCreator::setup_magic_items_combobox() {
+    ui->magic_items_combobox->addItem(QString("Common"), QVariant(static_cast<int>(ItemClass::COMMON)));
+    if (!st->magic_items_name().empty())
+        ui->magic_items_combobox->addItem(
+            QString(st->magic_items_name().data()), QVariant(static_cast<int>(ItemClass::MAGIC))
+        );
+    if (!st->faction_items_name().empty())
+        ui->magic_items_combobox->addItem(
+            QString(st->faction_items_name().data()), QVariant(static_cast<int>(ItemClass::FACTION))
+        );
+}
+
+void ArmyCreator::change_faction(Faction faction) {
+    if (faction == race) return;
     try {
-        st->reset(race, *army);
-        current = nullptr;
-        id_counter = 0;
-        clear_roster_tree();
-        clear_army_tree();
-        clear_unit_info_box();
-        ob->clear();
-        mib->clear();
-        ui->item_descr_gb->setTitle(tr("Item Description"));
-        ui->item_descr_label->setText(tr(""));
-        // set us to NEITHER tree to avoid attempting to get the current
-        // selected unitt of this->st when roster_tree->currentItem will
-        // no longer point to a valid unit type
-        in_tree = InTree::NEITHER;
-        ui->magic_items_combobox->clear();
+        st->reset(faction, *army);
+        clear();
         populate_roster_tree();
-        ui->magic_items_combobox->addItem(QString("Common"), QVariant(3));
-        if (!st->magic_items_name().empty())
-            ui->magic_items_combobox->addItem(QString(st->magic_items_name().data()), QVariant(1));
-        if (!st->faction_items_name().empty())
-            ui->magic_items_combobox->addItem(QString(st->faction_items_name().data()), QVariant(2));
+        setup_magic_items_combobox();
+        race = faction;
     }
     catch (const std::runtime_error& e) {
+        ui->faction_combobox->setCurrentText(QString::fromStdString(enum_convert::FACTION_TO_STRING.at(race)));
         QMessageBox message_box;
         message_box.critical(nullptr, tr("Error"), tr(e.what()));
         message_box.setFixedSize(500, 200);
     }
+}
+
+void ArmyCreator::on_faction_combobox_currentTextChanged(const QString& faction) {
+    change_faction(enum_convert::STRING_TO_FACTION.at(faction.toStdString()));
 }
 
 void ArmyCreator::on_magic_items_combobox_currentTextChanged(const QString& ic_select) {
@@ -943,13 +962,14 @@ void ArmyCreator::on_remove_button_clicked() {
 
 void ArmyCreator::on_clear_button_clicked() {
     army->clear();
-    ui->current_pts_label->setText(QString("%1").arg(static_cast<double>(0.0)));
-    for (int i = 0; i < 5; ++i)
-        ui->army_tree->topLevelItem(i)->setText(6, QString("%1").arg(static_cast<double>(0.0)));
+    clear_points_displays();
     clear_army_tree();
     ob->clear();
     mib->clear();
+    clear_unit_info_box();
     update_validity_label();
+    ui->item_descr_gb->setTitle(tr("Item Description"));
+    ui->item_descr_label->setText(tr(""));
 }
 
 void ArmyCreator::update_unit_display(

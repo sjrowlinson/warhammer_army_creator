@@ -1,5 +1,13 @@
 # Lords
 
+# OPTIONAL_WEAPONS = [Name : Additional hand weapon, Category : Mundane, Type : Melee, Points : 3
+#                     Name : Great weapon, Category : Mundane, Type : Melee, Points : 6
+#                     Name : Lance, Category : Mundane, Type : Melee, Points : 7
+#                     Name : Handgun, Category : Mundane, Type : Ballistic, Points : 5
+#                     Name : Pistol, Category : Mundane, Type : Ballistic, Points : 5]
+#
+#
+#
 General of The Empire
     BASE_TYPE = Melee
     TYPE = Lord

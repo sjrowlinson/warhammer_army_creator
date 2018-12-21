@@ -77,7 +77,9 @@ enum class RestrictionField {
     MOUNT,
     OCO_EXTRA,
     MC_EXTRA,
-    OTHER
+    OTHER,
+    ARMY_CONTAINS,
+    COUNT
 };
 
 enum class ModelSelect {

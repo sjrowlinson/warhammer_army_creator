@@ -113,7 +113,11 @@ private:
     void clear_unit_info_box();
     void initialise_unit_info_box();
 
+    void clear();
+    void clear_points_displays();
+    void change_faction(Faction faction);
 
+    void setup_magic_items_combobox();
     void setup_export_directories();
 
     void update_unit_command_display_helper(
