@@ -47,7 +47,7 @@ namespace tools {
         Ty<std::pair<Inner, Inner>> zipped(container.size());
         std::generate(std::begin(zipped), std::end(zipped), [it=std::begin(container)]() mutable {
             auto s = split(*(it++), ':');
-            return std::make_pair<Inner, Inner>(s[0], s[1]);
+            return std::make_pair(s[0], s[1]);
         });
         return zipped;
     }

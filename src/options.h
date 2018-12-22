@@ -11,11 +11,8 @@
 
 // TODO: will revisit these significant changes after new parsing
 //       system is suitably stable
-/*struct weapon_option {
-    // TODO: if we store the weapon name here too then options (and
-    // tmp_parse_options) can store std::unordered_set<weapon_option>
-    // with a hasher based on weapon_option::name
-    // std::string name;
+struct weapon_option {
+    std::string name;
     WeaponType type;
     ItemClass category;
     double points;
@@ -27,10 +24,7 @@
 };
 
 struct armour_option {
-    // TODO: if we store the armour name here too then options (and
-    // tmp_parse_options) can store std::unordered_set<armour_option>
-    // with a hasher based on armour_option::name
-    // std::string name;
+    std::string name;
     ArmourType type;
     ItemClass category;
     double points;
@@ -39,7 +33,18 @@ struct armour_option {
         RestrictionField,
         std::vector<std::string>
     > restrictions;
-};*/
+};
+
+struct extra_option {
+    std::string name;
+    double points;
+    bool is_singular;
+    std::vector<std::string> replacements;
+    std::unordered_map<
+        RestrictionField,
+        std::vector<std::string>
+    > restrictions;
+};
 
 struct tmp_parse_options {
     std::unordered_map<

@@ -62,7 +62,7 @@ namespace tools {
         tmp_parse_obj tpo;
         std::unordered_map<
             std::string,
-            std::function<void(const std::string&, bool, bool)>
+            std::function<std::size_t(const std::string&, bool, bool)>
         > parsing_functions;
         std::size_t curr_block;
         std::size_t curr_line;
@@ -72,28 +72,30 @@ namespace tools {
 
         std::unique_ptr<base_unit> parse_unit(std::size_t block_pos, BaseUnitType but);
 
-        void parse_unit_type(const std::string& s, bool champion, bool master);
-        void parse_unit_category(const std::string& s, bool champion, bool master);
-        void parse_unit_mount(const std::string& s, bool champion, bool master);
-        void parse_unit_points(const std::string& s, bool champion, bool master);
-        void parse_unit_size(const std::string& s, bool champion, bool master);
-        void parse_unit_mage_level(const std::string& s, bool champion, bool master);
-        void parse_unit_mage_upgrades(const std::string& s, bool champion, bool master);
-        void parse_unit_mage_lores(const std::string& s, bool champion, bool master);
-        void parse_unit_characteristics(const std::string& s, bool champion, bool master);
-        void parse_unit_special_rules(const std::string& s, bool champion, bool master);
-        void parse_unit_equipment(const std::string& s, bool champion, bool master);
-        void parse_unit_optional_weapons(const std::string& s, bool champion, bool master);
-        void parse_unit_optional_armour(const std::string& s, bool champion, bool master);
-        void parse_unit_optional_mounts(const std::string& s, bool champion, bool master);
-        void parse_unit_optional_oco_extras(const std::string& s, bool champion, bool master);
-        void parse_unit_optional_mc_extras(const std::string& s, bool champion, bool master);
-        void parse_unit_optional_command(const std::string& s, bool champion, bool master);
-        void parse_unit_banner_budget(const std::string& s, bool champion, bool master);
-        void parse_unit_mi_budget(const std::string& s, bool champion, bool master);
-        void parse_unit_fi_budget(const std::string& s, bool champion, bool master);
-        void parse_unit_ti_budget(const std::string& s, bool champion, bool master);
-        void parse_unit_uniqueness(const std::string& s, bool champion, bool master);
+        std::size_t parse_unit_type(const std::string& s, bool champion, bool master);
+        std::size_t parse_unit_category(const std::string& s, bool champion, bool master);
+        std::size_t parse_unit_mount(const std::string& s, bool champion, bool master);
+        std::size_t parse_unit_points(const std::string& s, bool champion, bool master);
+        std::size_t parse_unit_size(const std::string& s, bool champion, bool master);
+        std::size_t parse_unit_mage_level(const std::string& s, bool champion, bool master);
+        std::size_t parse_unit_mage_upgrades(const std::string& s, bool champion, bool master);
+        std::size_t parse_unit_mage_lores(const std::string& s, bool champion, bool master);
+        std::size_t parse_unit_characteristics(const std::string& s, bool champion, bool master);
+        std::size_t parse_unit_special_rules(const std::string& s, bool champion, bool master);
+        std::size_t parse_unit_equipment(const std::string& s, bool champion, bool master);
+        std::size_t parse_unit_optional_weapons(const std::string& s, bool champion, bool master);
+        std::size_t parse_unit_optional_armour(const std::string& s, bool champion, bool master);
+        std::size_t parse_unit_optional_mounts(const std::string& s, bool champion, bool master);
+        std::size_t parse_unit_optional_oco_extras(const std::string& s, bool champion, bool master);
+        std::size_t parse_unit_optional_mc_extras(const std::string& s, bool champion, bool master);
+        std::size_t parse_unit_optional_command(const std::string& s, bool champion, bool master);
+        std::size_t parse_unit_banner_budget(const std::string& s, bool champion, bool master);
+        std::size_t parse_unit_mi_budget(const std::string& s, bool champion, bool master);
+        std::size_t parse_unit_fi_budget(const std::string& s, bool champion, bool master);
+        std::size_t parse_unit_ti_budget(const std::string& s, bool champion, bool master);
+        std::size_t parse_unit_uniqueness(const std::string& s, bool champion, bool master);
+
+        std::size_t parse_unit_extras(const std::string& s, bool champion, bool master, bool oco);
 
         std::pair<std::string, std::size_t> multiline_state_handler(const std::string& s);
 

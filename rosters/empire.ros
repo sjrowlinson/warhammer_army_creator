@@ -1,13 +1,5 @@
 # Lords
 
-# OPTIONAL_WEAPONS = [Name : Additional hand weapon, Category : Mundane, Type : Melee, Points : 3
-#                     Name : Great weapon, Category : Mundane, Type : Melee, Points : 6
-#                     Name : Lance, Category : Mundane, Type : Melee, Points : 7
-#                     Name : Handgun, Category : Mundane, Type : Ballistic, Points : 5
-#                     Name : Pistol, Category : Mundane, Type : Ballistic, Points : 5]
-#
-#
-#
 General of The Empire
     BASE_TYPE = Melee
     TYPE = Lord
@@ -15,10 +7,16 @@ General of The Empire
     POINTS = 95
     CHARACTERISTICS = 4 5 5 4 4 3 5 3 9
     SPECIAL_RULES = Hold the Line!
-    EQUIPMENT = Armour: Light armour {Mundane} [Armour]
-    OPTIONAL_WEAPONS = Additional hand weapon {Mundane} [Melee] (3), Great weapon {Mundane} [Melee] (6), Lance {Mundane} [Melee] (7), Handgun {Mundane} [Ballistic] (6), Longbow {Mundane} [Ballistic] (5), Pistol {Mundane} [Ballistic] (5)
-    OPTIONAL_ARMOUR = Full plate armour {Mundane} [Armour] (9), Heavy armour {Mundane} [Armour] (4), Shield {Mundane} [Shield] (3)
-    OPTIONAL_MOUNTS = Imperial Griffon [170], Imperial Pegasus [45], Warhorse [18]
+    EQUIPMENT = Armour - Name: Light armour, Category : Mundane, Type: Armour
+    OPTIONAL_WEAPONS = [Name : Additional hand weapon, Category : Mundane, Type : Melee, Points : 3
+                        Name : Great weapon, Category : Mundane, Type : Melee, Points : 6
+                        Name : Lance, Category : Mundane, Type : Melee, Points : 7
+                        Name : Handgun, Category : Mundane, Type : Ballistic, Points : 5
+                        Name : Pistol, Category : Mundane, Type : Ballistic, Points : 5]
+    OPTIONAL_ARMOUR = [Name : Full plate armour, Category : Mundane, Type : Armour, Points : 9
+                       Name : Heavy armour, Category : Mundane, Type: Armour, Points : 4,
+                       Name : Shield, Category : Mundane, Type : Shield, Points : 3]
+    OPTIONAL_MOUNTS = Name : Imperial Griffon, Points : 170 ; Name : Imperial Pegasus, Points : 45 ; Name : Warhorse, Points : 18
     MAGIC_ITEM_BUDGET = 100
     TOTAL_ITEM_BUDGET = 100
 
@@ -159,10 +157,10 @@ Spearmen
     CHARACTERISTICS = 4 3 3 3 3 1 3 1 7
     CHAMPION_CHARACTERISTICS = 4 3 3 3 3 1 3 2 7
     SPECIAL_RULES = Detachment, Regimental Unit
-    EQUIPMENT = Weapon: Spear {Mundane} [Melee], Armour: Light armour {Mundane} [Armour]
-    OPTIONAL_ARMOUR = Shields {Mundane} [Shield] (1)
-    OPTIONAL_MC_EXTRAS = Detachment {True} [0]
-    OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Sergeant [10]
+    EQUIPMENT = Weapon - Name: Spear, Category: Mundane, Type: Melee ; Armour - Name: Light armour, Category: Mundane, Type: Armour
+    OPTIONAL_ARMOUR = Name: Shields, Category: Mundane, Type: Shield, Points: 1
+    OPTIONAL_MC_EXTRAS = Name: Detachment, Singular: True, Points: 0
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Sergeant, Points: 10
 
 Swordsmen
     BASE_TYPE = Normal
