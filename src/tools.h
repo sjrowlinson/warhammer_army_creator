@@ -52,14 +52,7 @@ namespace tools {
         return zipped;
     }
 
-    template<template<class...> class Ty, class Inner = std::string>
-    constexpr bool in_names_values(const Ty<std::pair<Inner, Inner>>& names_values, std::string s) {
-        return std::count_if(
-                   std::begin(names_values),
-                   std::end(names_values),
-                   [&s](const auto& nv) { return nv.first == s; }
-               );
-    }
+    bool in_names_values(const std::vector<std::pair<std::string, std::string>>& names_values, std::string s);
 
     template<class TyF, class TyS>
     constexpr std::vector<std::pair<TyF, TyS>> umap_to_vector(const std::unordered_map<TyF, TyS>& umap) {

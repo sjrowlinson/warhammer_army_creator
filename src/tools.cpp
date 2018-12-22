@@ -151,4 +151,13 @@ namespace tools {
         return vec;
     }
 
+    bool in_names_values(const std::vector<std::pair<std::string, std::string>>& names_values, std::string s) {
+        return std::count_if(
+            std::begin(names_values),
+            std::end(names_values),
+            [&s](const auto& nv) { return nv.first == s; }
+        );
+    }
+
+
 }

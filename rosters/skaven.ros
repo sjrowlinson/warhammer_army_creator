@@ -104,6 +104,8 @@ Grey Seer
     MAGIC_ITEM_BUDGET = 100
     FACTION_ITEM_BUDGET = 100
     TOTAL_ITEM_BUDGET = 100
+    MAGE_LEVEL = 4
+    MAGE_LORES = Plague, Ruin
 
 # Heroes
 
@@ -145,7 +147,7 @@ Assassin
     TOTAL_ITEM_BUDGET = 50
 
 Warlock Engineer
-    BASE_TYPE = Melee
+    BASE_TYPE = Mage
     TYPE = Hero
     CATEGORY = Infantry
     POINTS = 15
