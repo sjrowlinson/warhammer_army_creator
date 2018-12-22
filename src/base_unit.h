@@ -20,7 +20,7 @@ private:
     // enums
     Faction faction_;
     UnitType ut_;
-    UnitClass uc_;
+    UnitCategory uc_;
     // basic
     std::string name_;
     std::size_t min_size_;
@@ -55,7 +55,7 @@ public:
     explicit base_unit(
         Faction faction,
         UnitType ut,
-        UnitClass uc,
+        UnitCategory uc,
         const std::string& name,
         std::size_t min_size,
         std::size_t max_size = std::numeric_limits<std::size_t>::max()
@@ -66,7 +66,7 @@ public:
 
     Faction faction() const noexcept;
     UnitType unit_type() const noexcept;
-    UnitClass unit_class() const noexcept;
+    UnitCategory unit_class() const noexcept;
 
     const std::string& name() const noexcept;
     std::size_t min_size() const noexcept;

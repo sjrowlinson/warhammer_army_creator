@@ -96,7 +96,7 @@ bool OptionBox::reinitialise() {
 QGroupBox* OptionBox::make_size_command_box() {
     switch (current->base_unit_type()) {
     case BaseUnitType::NORMAL:
-        if (current->unit_class() == UnitClass::MONSTER) return nullptr;
+        if (current->unit_class() == UnitCategory::MONSTER) return nullptr;
         break;
     case BaseUnitType::MIXED:
         break;
@@ -273,14 +273,14 @@ QGroupBox* OptionBox::make_weapons_subbox(WeaponType wt, bool champion) {
         std::string,
         std::tuple<
             WeaponType,
-            ItemClass,
+            ItemCategory,
             double,
             std::vector<std::string>
         >
     > opt_weapons;
     std::unordered_map<
         WeaponType,
-        std::tuple<ItemClass, std::string, double>
+        std::tuple<ItemCategory, std::string, double>
     > curr_weapons;
     switch (current->base_unit_type()) {
     case BaseUnitType::MAGE_CHARACTER:
@@ -426,14 +426,14 @@ QGroupBox* OptionBox::make_armour_subbox(ArmourType at, bool champion) {
         std::string,
         std::tuple<
             ArmourType,
-            ItemClass,
+            ItemCategory,
             double,
             std::vector<std::string>
         >
     > opt_armour;
     std::unordered_map<
         ArmourType,
-        std::tuple<ItemClass, std::string, double>
+        std::tuple<ItemCategory, std::string, double>
     > curr_armour;
     switch (current->base_unit_type()) {
     case BaseUnitType::MAGE_CHARACTER:

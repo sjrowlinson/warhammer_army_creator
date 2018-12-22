@@ -236,7 +236,7 @@ Stormvermin
                            Name : Warpfire Thrower, Singular : true, Points : 70
                            Name : Ratling Gun, Singular : true, Points : 55
                            Name : Doom-flayer, Singular : true, Points : 55]
-    OPTIONAL_MC_EXTRAS = Name : Upgrade to +1 WS and +1 S (Requires Queek Headtaker), Points : 4, Restrictions : army_contains - Queek Headtaker / num - 1
+    OPTIONAL_MC_EXTRAS = Name : Upgrade to +1 WS and +1 S (Requires Queek Headtaker), Points : 4, Restrictions : ArmyContains - Queek Headtaker / Limit - 1
     OPTIONAL_COMMAND = Musician - Name : Musician, Points : 5 ; Standard Bearer - Name : Standard Bearer, Points : 10 ; Champion - Name : Fangleader, Points : 10
     FACTION_ITEM_BUDGET = 15
     TOTAL_ITEM_BUDGET = 15
@@ -244,7 +244,8 @@ Stormvermin
 
 # TODO: change faction item budget line to below to indicate that a Fangleader may only
 #       choose a single piece of equipment worth up to 15 pts from the Scavenge-Pile
-#   15 ; num : 1
+#   FACTION_ITEM_BUDGET = Points : 15; Restrictions : Limit - 1
+#   TOTAL_ITEM_BUDGET = copy FACTION_ITEM_BUDGET
 
 Skavenslaves
     BASE_TYPE = Normal
@@ -341,7 +342,7 @@ Gutter Runners
     CHAMPION_SPECIAL_RULES = Dodge (5+)
     OPTIONAL_WEAPONS = Name: Slings, Category: Mundane, Type: Ballistic, Points: 1 ; Name: Snare-net, Category: Mundane, Type: Melee, Points: 0
     CHAMPION_OPTIONAL_WEAPONS = Name: Weeping blade, Category: Mundane, Type: Melee, Points: 30
-    OPTIONAL_MC_EXTRAS = Name: Poisoned Attacks, Singular: true, Points: 5 ; Name : Warp-grinder, Singular : true, Points: 60
+    OPTIONAL_MC_EXTRAS = Name: Poisoned Attacks, Points: 5 ; Name : Warp-grinder, Singular : true, Points: 60
     CHAMPION_OPTIONAL_MC_EXTRAS = Name: Smoke bombs, Singular: true, Points: 10
     OPTIONAL_COMMAND = Champion - Name: Deathrunner, Points: 12
 

@@ -9,7 +9,7 @@
 #include <vector>
 
 struct item {
-    ItemClass item_class;
+    ItemCategory item_class;
     ItemType item_type;
     ArmourType armour_type;
     WeaponType weapon_type;

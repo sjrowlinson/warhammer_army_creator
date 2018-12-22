@@ -104,7 +104,7 @@ std::size_t normal_unit::size() const noexcept { return size_; }
 
 const std::unordered_map<
     WeaponType,
-    std::tuple<ItemClass, std::string, double>
+    std::tuple<ItemCategory, std::string, double>
 >& normal_unit::weapons() const noexcept {
     switch (model_select_) {
     case ModelSelect::DEFAULT:
@@ -115,30 +115,30 @@ const std::unordered_map<
     return weapons_;
  }
 
-std::tuple<ItemClass, std::string, double> normal_unit::melee_weapon() const {
+std::tuple<ItemCategory, std::string, double> normal_unit::melee_weapon() const {
     auto search = weapons_.find(WeaponType::MELEE);
     if (search != weapons_.end()) return (*search).second;
-    return {ItemClass::MUNDANE, "", 0.0};
+    return {ItemCategory::MUNDANE, "", 0.0};
 }
-std::tuple<ItemClass, std::string, double> normal_unit::ranged_weapon() const {
+std::tuple<ItemCategory, std::string, double> normal_unit::ranged_weapon() const {
     auto search = weapons_.find(WeaponType::BALLISTIC);
     if (search != weapons_.end()) return (*search).second;
-    return {ItemClass::MUNDANE, "", 0.0};
+    return {ItemCategory::MUNDANE, "", 0.0};
 }
-std::tuple<ItemClass, std::string, double> normal_unit::champion_melee_weapon() const {
+std::tuple<ItemCategory, std::string, double> normal_unit::champion_melee_weapon() const {
     auto search = champ_weapons_.find(WeaponType::MELEE);
     if (search != champ_weapons_.end()) return (*search).second;
-    return {ItemClass::MUNDANE, "", 0.0};
+    return {ItemCategory::MUNDANE, "", 0.0};
 }
-std::tuple<ItemClass, std::string, double> normal_unit::champion_ranged_weapon() const {
+std::tuple<ItemCategory, std::string, double> normal_unit::champion_ranged_weapon() const {
     auto search = champ_weapons_.find(WeaponType::BALLISTIC);
     if (search != champ_weapons_.end()) return (*search).second;
-    return {ItemClass::MUNDANE, "", 0.0};
+    return {ItemCategory::MUNDANE, "", 0.0};
 }
 
 const std::unordered_map<
     ArmourType,
-    std::tuple<ItemClass, std::string, double>
+    std::tuple<ItemCategory, std::string, double>
 >& normal_unit::armour() const noexcept {
     switch (model_select_) {
     case ModelSelect::DEFAULT:
@@ -151,7 +151,7 @@ const std::unordered_map<
 
 const std::unordered_map<
     ArmourType,
-    std::tuple<ItemClass, std::string, double>
+    std::tuple<ItemCategory, std::string, double>
 >& normal_unit::champion_armour() const noexcept {
     return champ_armours_;
 }
@@ -214,13 +214,13 @@ const std::unordered_map<
     return command_group;
 }
 
-const std::pair<std::string, std::pair<ItemClass, double>>& normal_unit::magic_banner() const noexcept {
+const std::pair<std::string, std::pair<ItemCategory, double>>& normal_unit::magic_banner() const noexcept {
     return banner;
 }
 
 // current property modifiers
 
-std::string normal_unit::pick_weapon(ItemClass item_type, const std::string& name) {
+std::string normal_unit::pick_weapon(ItemCategory item_type, const std::string& name) {
     switch(model_select_) {
     case ModelSelect::DEFAULT:
         return pick_default_weapon(item_type, name);
@@ -230,10 +230,10 @@ std::string normal_unit::pick_weapon(ItemClass item_type, const std::string& nam
     return pick_default_weapon(item_type, name);
 }
 
-std::string normal_unit::pick_default_weapon(ItemClass item_type, const std::string& name) {
+std::string normal_unit::pick_default_weapon(ItemCategory item_type, const std::string& name) {
     std::string removed;
     switch (item_type) {
-    case ItemClass::MUNDANE:
+    case ItemCategory::MUNDANE:
     {
         auto search = handle->opt().weapons().find(name);
         if (search == handle->opt().weapons().cend()) {
@@ -249,22 +249,22 @@ std::string normal_unit::pick_default_weapon(ItemClass item_type, const std::str
         points_ += size_ * std::get<2>(search->second);
         break;
     }
-    case ItemClass::MAGIC:
-    case ItemClass::COMMON:
+    case ItemCategory::MAGIC:
+    case ItemCategory::COMMON:
         throw std::invalid_argument("Cannot give magic weapons to this unit!");
-    case ItemClass::FACTION:
+    case ItemCategory::FACTION:
         throw std::invalid_argument("Cannot give faction weapons to this unit!");
     default: break;
     }
     return removed;
 }
 
-std::string normal_unit::pick_champion_weapon(ItemClass item_type, const std::string& name) {
+std::string normal_unit::pick_champion_weapon(ItemCategory item_type, const std::string& name) {
     if (!(command_group.count(CommandGroup::CHAMPION)))
         throw std::runtime_error("No champion present in the unit!");
     std::string removed;
     switch (item_type) {
-    case ItemClass::MUNDANE:
+    case ItemCategory::MUNDANE:
     {
         auto search = handle->champion_opt().weapons().find(name);
         if (search == handle->champion_opt().weapons().cend())
@@ -279,7 +279,7 @@ std::string normal_unit::pick_champion_weapon(ItemClass item_type, const std::st
         points_ += std::get<2>(search->second);
         break;
     }
-    case ItemClass::MAGIC:
+    case ItemCategory::MAGIC:
     {
         auto search = handle->magic_items_handle()->second.find(name);
         if (search == handle->magic_items_handle()->second.end())
@@ -310,16 +310,16 @@ std::string normal_unit::pick_champion_weapon(ItemClass item_type, const std::st
         champ_faction_item_points += search->second.points;
         break;
     }
-    case ItemClass::FACTION:
+    case ItemCategory::FACTION:
     {
         // TODO: implement once we have a faction_items structure
-        // => implementation should be very similar to ItemClass::MAGIC case
+        // => implementation should be very similar to ItemCategory::MAGIC case
         break;
     }
-    case ItemClass::COMMON:
+    case ItemCategory::COMMON:
     {
         // TODO: implement once we have a common_items structure
-        // => implementation should be very similar to ItemClass::MAGIC case
+        // => implementation should be very similar to ItemCategory::MAGIC case
         break;
     }
     default: break;
@@ -327,7 +327,7 @@ std::string normal_unit::pick_champion_weapon(ItemClass item_type, const std::st
     return removed;
 }
 
-std::string normal_unit::pick_armour(ItemClass item_type, const std::string& name) {
+std::string normal_unit::pick_armour(ItemCategory item_type, const std::string& name) {
     switch (model_select_) {
     case ModelSelect::DEFAULT:
         return pick_default_armour(item_type, name);
@@ -337,10 +337,10 @@ std::string normal_unit::pick_armour(ItemClass item_type, const std::string& nam
     return pick_default_armour(item_type, name);
 }
 
-std::string normal_unit::pick_default_armour(ItemClass item_type, const std::string& name) {
+std::string normal_unit::pick_default_armour(ItemCategory item_type, const std::string& name) {
     std::string removed;
     switch (item_type) {
-    case ItemClass::MUNDANE:
+    case ItemCategory::MUNDANE:
     {
         auto search = handle->opt().armour().find(name);
         if (search == handle->opt().armour().end())
@@ -355,22 +355,22 @@ std::string normal_unit::pick_default_armour(ItemClass item_type, const std::str
         points_ += size_ * std::get<2>(search->second);
         break;
     }
-    case ItemClass::MAGIC:
-    case ItemClass::COMMON:
+    case ItemCategory::MAGIC:
+    case ItemCategory::COMMON:
         throw std::invalid_argument("Cannot give magic armour to this unit!");
-    case ItemClass::FACTION:
+    case ItemCategory::FACTION:
         throw std::invalid_argument("Cannot give faction armour to this unit!");
     default: break;
     }
     return removed;
 }
 
-std::string normal_unit::pick_champion_armour(ItemClass item_type, const std::string& name) {
+std::string normal_unit::pick_champion_armour(ItemCategory item_type, const std::string& name) {
     if (!(command_group.count(CommandGroup::CHAMPION)))
         throw std::runtime_error("No champion present in the unit!");
     std::string removed;
     switch (item_type) {
-    case ItemClass::MUNDANE:
+    case ItemCategory::MUNDANE:
     {
         auto search = handle->champion_opt().armour().find(name);
         if (search == handle->champion_opt().armour().end())
@@ -385,7 +385,7 @@ std::string normal_unit::pick_champion_armour(ItemClass item_type, const std::st
         points_ += std::get<2>(search->second);
         break;
     }
-    case ItemClass::MAGIC:
+    case ItemCategory::MAGIC:
     {
         auto search = handle->magic_items_handle()->second.find(name);
         if (search == handle->magic_items_handle()->second.end())
@@ -416,16 +416,16 @@ std::string normal_unit::pick_champion_armour(ItemClass item_type, const std::st
         champ_faction_item_points += search->second.points;
         break;
     }
-    case ItemClass::FACTION:
+    case ItemCategory::FACTION:
     {
         // TODO: implement once we have a faction_items structure
-        // => implementation should be very similar to ItemClass::MAGIC case
+        // => implementation should be very similar to ItemCategory::MAGIC case
         break;
     }
-    case ItemClass::COMMON:
+    case ItemCategory::COMMON:
     {
         // TODO: implement once we have a common_items structure
-        // => implementation should be very similar to ItemClass::MAGIC case
+        // => implementation should be very similar to ItemCategory::MAGIC case
         break;
     }
     default: break;
@@ -451,7 +451,7 @@ std::string normal_unit::remove_default_weapon(WeaponType wt, bool replacing) {
         if (replacing) {
             weapons_.erase(wt);
             if (wt == WeaponType::MELEE)
-                weapons_[wt] = {ItemClass::MUNDANE, "Hand weapon", 0.0};
+                weapons_[wt] = {ItemCategory::MUNDANE, "Hand weapon", 0.0};
         } else {
             if (search->second.second == std::get<1>(weapon)) return std::string();
             weapons_[wt] = {search->second.first, search->second.second, 0.0};
@@ -470,7 +470,7 @@ std::string normal_unit::remove_champion_weapon(WeaponType wt, bool replacing) {
         if (replacing) {
             champ_weapons_.erase(wt);
             if (wt == WeaponType::MELEE)
-                champ_weapons_[wt] = {ItemClass::MUNDANE, "Hand weapon", 0.0};
+                champ_weapons_[wt] = {ItemCategory::MUNDANE, "Hand weapon", 0.0};
         } else {
             if (def_w->second.second == std::get<1>(weapon)) return std::string();
             champ_weapons_[wt] = {def_w->second.first, def_w->second.second, 0.0};
@@ -479,15 +479,15 @@ std::string normal_unit::remove_champion_weapon(WeaponType wt, bool replacing) {
     else champ_weapons_.erase(wt);
     const double pts = std::get<2>(weapon);
     switch (std::get<0>(weapon)) {
-    case ItemClass::MUNDANE:
-    case ItemClass::NONE:
+    case ItemCategory::MUNDANE:
+    case ItemCategory::NONE:
         break;
-    case ItemClass::MAGIC:
-    case ItemClass::COMMON:
+    case ItemCategory::MAGIC:
+    case ItemCategory::COMMON:
         champ_magic_item_points -= pts;
         champ_total_item_points -= pts;
         break;
-    case ItemClass::FACTION:
+    case ItemCategory::FACTION:
         champ_faction_item_points -= pts;
         champ_total_item_points -= pts;
         break;
@@ -536,15 +536,15 @@ std::string normal_unit::remove_champion_armour(ArmourType at, bool replacing) {
     else champ_armours_.erase(at);
     const double pts = std::get<2>(armour);
     switch (std::get<0>(armour)) {
-    case ItemClass::MUNDANE:
-    case ItemClass::NONE:
+    case ItemCategory::MUNDANE:
+    case ItemCategory::NONE:
         break;
-    case ItemClass::MAGIC:
-    case ItemClass::COMMON:
+    case ItemCategory::MAGIC:
+    case ItemCategory::COMMON:
         champ_magic_item_points -= pts;
         champ_total_item_points -= pts;
         break;
-    case ItemClass::FACTION:
+    case ItemCategory::FACTION:
         champ_faction_item_points -= pts;
         champ_total_item_points -= pts;
         break;
@@ -585,16 +585,16 @@ void normal_unit::remove_command_member(CommandGroup member) {
     }
 }
 
-std::string normal_unit::pick_banner(ItemClass item_type, const std::string& name) {
+std::string normal_unit::pick_banner(ItemCategory item_type, const std::string& name) {
     if (!(command_group.count(CommandGroup::STANDARD_BEARER)))
         throw std::runtime_error("Unit contains no standard bearer!");
     std::string removed;
     switch (item_type) {
-    case ItemClass::MAGIC:
-    case ItemClass::COMMON:
+    case ItemCategory::MAGIC:
+    case ItemCategory::COMMON:
     {
         std::unordered_map<std::string, item>::const_iterator search;
-        if (item_type == ItemClass::MAGIC) {
+        if (item_type == ItemCategory::MAGIC) {
             search = handle->magic_items_handle()->second.find(name);
             if (search == handle->magic_items_handle()->second.end())
                 throw std::invalid_argument("Magic banner not found!");
@@ -621,7 +621,7 @@ std::string normal_unit::pick_banner(ItemClass item_type, const std::string& nam
         points_ += search->second.points;
         break;
     }
-    case ItemClass::FACTION:
+    case ItemCategory::FACTION:
         // TODO: implement once we have a faction_items handle
         break;
     default: break;

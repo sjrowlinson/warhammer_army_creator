@@ -35,7 +35,7 @@ enum class UnitType {
     NONE
 };
 
-enum class UnitClass {
+enum class UnitCategory {
     INFANTRY,
     CAVALRY,
     MONSTROUS_INFANTRY,
@@ -79,7 +79,9 @@ enum class RestrictionField {
     MC_EXTRA,
     OTHER,
     ARMY_CONTAINS,
-    COUNT
+    LIMIT,
+    ITEMTYPE, // -> for budget restrictions
+    SUBITEMTYPE
 };
 
 enum class ModelSelect {
@@ -94,7 +96,7 @@ enum class MixedSelect {
 
 // item types
 
-enum class ItemClass {
+enum class ItemCategory {
     MUNDANE,
     MAGIC,
     FACTION,
@@ -124,6 +126,12 @@ enum class ArmourType {
     SHIELD,
     HELMET,
     NONE
+};
+
+enum class BudgetType {
+    MAGIC,
+    FACTION,
+    TOTAL
 };
 
 // army list invalidity reasons
@@ -217,34 +225,34 @@ namespace enum_convert {
     };
 
     const std::unordered_map<
-        std::string, UnitClass
+        std::string, UnitCategory
     > STRING_TO_UNIT_CLASS = {
-        {"Infantry", UnitClass::INFANTRY},
-        {"Cavalry", UnitClass::CAVALRY},
-        {"Monstrous Infantry", UnitClass::MONSTROUS_INFANTRY},
-        {"Monstrous Cavalry", UnitClass::MONSTROUS_CAVALRY},
-        {"Monstrous Beast", UnitClass::MONSTROUS_BEAST},
-        {"Warbeast", UnitClass::WARBEASTS},
-        {"Chariot", UnitClass::CHARIOT},
-        {"Monster", UnitClass::MONSTER},
-        {"Swarm", UnitClass::SWARM},
-        {"Warmachine", UnitClass::WARMACHINE},
-        {"Unique", UnitClass::UNIQUE}
+        {"Infantry", UnitCategory::INFANTRY},
+        {"Cavalry", UnitCategory::CAVALRY},
+        {"Monstrous Infantry", UnitCategory::MONSTROUS_INFANTRY},
+        {"Monstrous Cavalry", UnitCategory::MONSTROUS_CAVALRY},
+        {"Monstrous Beast", UnitCategory::MONSTROUS_BEAST},
+        {"Warbeast", UnitCategory::WARBEASTS},
+        {"Chariot", UnitCategory::CHARIOT},
+        {"Monster", UnitCategory::MONSTER},
+        {"Swarm", UnitCategory::SWARM},
+        {"Warmachine", UnitCategory::WARMACHINE},
+        {"Unique", UnitCategory::UNIQUE}
     };
     const std::unordered_map<
-        UnitClass, std::string
+        UnitCategory, std::string
     > UNIT_CLASS_TO_STRING = {
-        {UnitClass::INFANTRY, "Infantry"},
-        {UnitClass::CAVALRY, "Cavalry"},
-        {UnitClass::MONSTROUS_INFANTRY, "Monstrous Infantry"},
-        {UnitClass::MONSTROUS_CAVALRY, "Monstrous Cavalry"},
-        {UnitClass::MONSTROUS_BEAST, "Monstrous Beast"},
-        {UnitClass::WARBEASTS, "Warbeast"},
-        {UnitClass::CHARIOT, "Chariot"},
-        {UnitClass::MONSTER, "Monster"},
-        {UnitClass::SWARM, "Swarm"},
-        {UnitClass::WARMACHINE, "Warmachine"},
-        {UnitClass::UNIQUE, "Unique"}
+        {UnitCategory::INFANTRY, "Infantry"},
+        {UnitCategory::CAVALRY, "Cavalry"},
+        {UnitCategory::MONSTROUS_INFANTRY, "Monstrous Infantry"},
+        {UnitCategory::MONSTROUS_CAVALRY, "Monstrous Cavalry"},
+        {UnitCategory::MONSTROUS_BEAST, "Monstrous Beast"},
+        {UnitCategory::WARBEASTS, "Warbeast"},
+        {UnitCategory::CHARIOT, "Chariot"},
+        {UnitCategory::MONSTER, "Monster"},
+        {UnitCategory::SWARM, "Swarm"},
+        {UnitCategory::WARMACHINE, "Warmachine"},
+        {UnitCategory::UNIQUE, "Unique"}
     };
 
     const std::unordered_map<
@@ -301,20 +309,20 @@ namespace enum_convert {
     };
 
     const std::unordered_map<
-        std::string, ItemClass
+        std::string, ItemCategory
     > STRING_TO_ITEM_CLASS = {
-        {"Mundane", ItemClass::MUNDANE},
-        {"Magic", ItemClass::MAGIC},
-        {"Faction", ItemClass::FACTION},
-        {"Common", ItemClass::COMMON}
+        {"Mundane", ItemCategory::MUNDANE},
+        {"Magic", ItemCategory::MAGIC},
+        {"Faction", ItemCategory::FACTION},
+        {"Common", ItemCategory::COMMON}
     };
     const std::unordered_map<
-        ItemClass, std::string
+        ItemCategory, std::string
     > ITEM_CLASS_TO_STRING = {
-        {ItemClass::MUNDANE, "Mundane"},
-        {ItemClass::MAGIC, "Magic"},
-        {ItemClass::FACTION, "Faction"},
-        {ItemClass::COMMON, "Common"}
+        {ItemCategory::MUNDANE, "Mundane"},
+        {ItemCategory::MAGIC, "Magic"},
+        {ItemCategory::FACTION, "Faction"},
+        {ItemCategory::COMMON, "Common"}
     };
 
     const std::unordered_map<

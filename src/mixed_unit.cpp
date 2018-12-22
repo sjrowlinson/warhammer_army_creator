@@ -48,7 +48,7 @@ double mixed_unit::points() const noexcept {
 
 const std::unordered_map<
     WeaponType,
-    std::tuple<ItemClass, std::string, double>
+    std::tuple<ItemCategory, std::string, double>
 >& mixed_unit::weapons() const noexcept {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
@@ -61,7 +61,7 @@ const std::unordered_map<
 
 const std::unordered_map<
     ArmourType,
-    std::tuple<ItemClass, std::string, double>
+    std::tuple<ItemCategory, std::string, double>
 >& mixed_unit::armour() const noexcept {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
@@ -113,7 +113,7 @@ const std::tuple<
     return master_.mnt();
 }
 
-const std::pair<std::string, std::pair<ItemClass, double>>& mixed_unit::magic_banner() const noexcept {
+const std::pair<std::string, std::pair<ItemCategory, double>>& mixed_unit::magic_banner() const noexcept {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
         return master_.magic_banner();
@@ -123,7 +123,7 @@ const std::pair<std::string, std::pair<ItemClass, double>>& mixed_unit::magic_ba
     return master_.magic_banner();
 }
 
-std::string mixed_unit::pick_weapon(ItemClass item_type, const std::string& name) {
+std::string mixed_unit::pick_weapon(ItemCategory item_type, const std::string& name) {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
         return master_.pick_weapon(item_type, name);
@@ -143,7 +143,7 @@ std::string mixed_unit::remove_weapon(WeaponType wt, bool replacing) {
     return master_.remove_weapon(wt, replacing);
 }
 
-std::string mixed_unit::pick_armour(ItemClass item_type, const std::string& name) {
+std::string mixed_unit::pick_armour(ItemCategory item_type, const std::string& name) {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
         return master_.pick_armour(item_type, name);
@@ -225,7 +225,7 @@ void mixed_unit::remove_mount() {
     }
 }
 
-std::string mixed_unit::pick_banner(ItemClass item_class, const std::string& name) {
+std::string mixed_unit::pick_banner(ItemCategory item_class, const std::string& name) {
     switch (mixed_select_) {
     case MixedSelect::MASTER:
         return master_.pick_banner(item_class, name);

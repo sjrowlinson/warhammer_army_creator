@@ -3,7 +3,7 @@
 base_normal_unit::base_normal_unit(
     Faction faction,
     UnitType ut,
-    UnitClass uc,
+    UnitCategory uc,
     const std::string& name,
     std::size_t min_size,
     std::size_t max_size,

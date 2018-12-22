@@ -334,10 +334,11 @@ White Lions of Chrace
     0
     25
     50
+
 # TODO: change magic item budget line to below to indicate that a Guardian may only
 #       choose a single magic weapon up to 25 pts with this budget
-#   25 ; num : 1, type: Weapon
-
+#   MAGIC_ITEM_BUDGET = Points : 25; Restrictions : Limit - 1, Type - Weapon, SubType - Melee
+#   TOTAL_ITEM_BUDGET = copy MAGIC_ITEM_BUDGET
 
 Swordmasters of Hoeth
     Special, Infantry, Normal

@@ -46,11 +46,11 @@ public:
 
     const std::unordered_map<
         WeaponType,
-        std::tuple<ItemClass, std::string, double>
+        std::tuple<ItemCategory, std::string, double>
     >& weapons() const noexcept override;
     const std::unordered_map<
         ArmourType,
-        std::tuple<ItemClass, std::string, double>
+        std::tuple<ItemCategory, std::string, double>
     >& armour() const noexcept override;
     const std::pair<
         std::string,
@@ -67,11 +67,11 @@ public:
         std::unordered_map<std::string, double>
     >& mnt() const noexcept override;
 
-    const std::pair<std::string, std::pair<ItemClass, double>>& magic_banner() const noexcept override;
+    const std::pair<std::string, std::pair<ItemCategory, double>>& magic_banner() const noexcept override;
 
-    std::string pick_weapon(ItemClass item_type, const std::string& name) override;
+    std::string pick_weapon(ItemCategory item_type, const std::string& name) override;
     std::string remove_weapon(WeaponType wt, bool replacing=false) override;
-    std::string pick_armour(ItemClass item_type, const std::string& name) override;
+    std::string pick_armour(ItemCategory item_type, const std::string& name) override;
     std::string remove_armour(ArmourType at, bool replacing=false) override;
     std::string pick_oco_extra(const std::string& name) override;
     std::string remove_oco_extra() override;
@@ -79,7 +79,7 @@ public:
     std::string remove_mc_extra(const std::string& name) override;
     void pick_mount(const std::string& name) override;
     void remove_mount() override;
-    std::string pick_banner(ItemClass item_class, const std::string& name) override;
+    std::string pick_banner(ItemCategory item_class, const std::string& name) override;
     std::string remove_banner() override;
 
     void change_size(std::size_t n);

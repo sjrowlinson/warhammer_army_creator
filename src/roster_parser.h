@@ -28,11 +28,11 @@ namespace tools {
     class roster_parser : public file_parser {
         struct tmp_parse_obj {
             UnitType unit_type;
-            UnitClass unit_class;
+            UnitCategory unit_class;
             std::string mount;
-            double points;
-            std::pair<std::size_t, std::size_t> size;
-            short mage_level;
+            double points = 0.0;
+            std::pair<std::size_t, std::size_t> size = {1U, 1U};
+            short mage_level = 0;
             std::unordered_map<short, double> mage_upgrades;
             std::vector<std::string> mage_lores;
             std::vector<std::string> characteristics;
@@ -102,7 +102,7 @@ namespace tools {
         /*std::tuple<
             double,
             std::size_t,
-            ItemClass,
+            ItemCategory,
             ItemType
         > parse_item_budget(const std::string& s);*/
     public:

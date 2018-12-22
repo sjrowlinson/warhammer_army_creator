@@ -19,9 +19,9 @@ private:
     equipment eq_;
     options opt_;
     double magic_item_budget_;
-    // std::tuple<double, std::size_t, ItemClass, ItemType> magic_item_budget_;
+    // std::tuple<double, std::size_t, ItemCategory, ItemType> magic_item_budget_;
     double faction_item_budget_;
-    // std::tuple<double, std::size_t, ItemClass, ItemType> faction_item_budget_;
+    // std::tuple<double, std::size_t, ItemCategory, ItemType> faction_item_budget_;
     double total_item_budget_;
     // std::pair<double, std::size_t> total_item_budget_;
     bool is_unique;
@@ -31,7 +31,7 @@ public:
     explicit base_character_unit(
         Faction faction,
         UnitType ut,
-        UnitClass uc,
+        UnitCategory uc,
         const std::string& name,
         double pts,
         std::vector<std::string>&& stats,

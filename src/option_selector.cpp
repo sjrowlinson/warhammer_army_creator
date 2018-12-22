@@ -12,17 +12,17 @@ void option_selector::reset(const std::shared_ptr<unit>& current_, InTree in_tre
 
 // selectors
 
-void option_selector::item_limit_check(bool is_magic, ItemClass ic, const std::string& s) const {
+void option_selector::item_limit_check(bool is_magic, ItemCategory ic, const std::string& s) const {
     if (!is_magic) return;
     std::unordered_map<std::string, item>::const_iterator item_it;
     switch (ic) {
-    case ItemClass::COMMON:
+    case ItemCategory::COMMON:
         item_it = current->base()->common_items_handle()->second.find(s);
         break;
-    case ItemClass::MAGIC:
+    case ItemCategory::MAGIC:
         item_it = current->base()->magic_items_handle()->second.find(s);
         break;
-    case ItemClass::FACTION:
+    case ItemCategory::FACTION:
         item_it = current->base()->faction_items_handle()->second.find(s);
         break;
     default: break;
@@ -78,7 +78,7 @@ bool option_selector::select_weapon(const std::string& s) {
     }
     else {
         const bool is_magical = is_selection_magical(weapon);
-        ItemClass ic = static_cast<ItemClass>(std::stoi(split[2]));
+        ItemCategory ic = static_cast<ItemCategory>(std::stoi(split[2]));
         try { item_limit_check(is_magical, ic, weapon); }
         catch (const std::runtime_error&) { throw; }
         switch (in_tree) {
@@ -157,7 +157,7 @@ bool option_selector::select_armour(const std::string& s) {
     }
     else {
         const bool is_magical = is_selection_magical(armour);
-        ItemClass ic = static_cast<ItemClass>(std::stoi(split[2]));
+        ItemCategory ic = static_cast<ItemCategory>(std::stoi(split[2]));
         try { item_limit_check(is_magical, ic, armour); }
         catch (const std::runtime_error&) { throw; }
         switch (in_tree) {
@@ -222,7 +222,7 @@ bool option_selector::select_talisman(const std::string& s) {
     }
     else {
         const bool is_magical = is_selection_magical(talisman);
-        ItemClass ic = static_cast<ItemClass>(std::stoi(split[1]));
+        ItemCategory ic = static_cast<ItemCategory>(std::stoi(split[1]));
         try { item_limit_check(is_magical, ic, talisman); }
         catch (const std::runtime_error& ) { throw; }
         switch (in_tree) {
@@ -263,7 +263,7 @@ bool option_selector::select_enchanted_item(const std::string& s) {
     }
     else {
         const bool is_magical = is_selection_magical(enchanted);
-        ItemClass ic = static_cast<ItemClass>(std::stoi(split[1]));
+        ItemCategory ic = static_cast<ItemCategory>(std::stoi(split[1]));
         try { item_limit_check(is_magical, ic, enchanted); }
         catch (const std::runtime_error& ) { throw; }
         switch (in_tree) {
@@ -303,7 +303,7 @@ bool option_selector::select_other_item(const std::string& s, bool is_checked) {
         }
     } else {
         const bool is_magical = is_selection_magical(other);
-        ItemClass ic = static_cast<ItemClass>(std::stoi(split[1]));
+        ItemCategory ic = static_cast<ItemCategory>(std::stoi(split[1]));
         try { item_limit_check(is_magical, ic, other); }
         catch (const std::runtime_error& ) { throw; }
         switch (in_tree) {
@@ -342,7 +342,7 @@ bool option_selector::select_banner(const std::string& s) {
         }
     } else {
         const bool is_magical = is_selection_magical(banner);
-        ItemClass ic = static_cast<ItemClass>(std::stoi(split[1]));
+        ItemCategory ic = static_cast<ItemCategory>(std::stoi(split[1]));
         try { item_limit_check(is_magical, ic, banner); }
         catch (const std::runtime_error& ) { throw; }
         switch (in_tree) {
@@ -383,7 +383,7 @@ bool option_selector::select_arcane_item(const std::string& s) {
     }
     else {
         const bool is_magical = is_selection_magical(arcane);
-        ItemClass ic = static_cast<ItemClass>(std::stoi(split[1]));
+        ItemCategory ic = static_cast<ItemCategory>(std::stoi(split[1]));
         try { item_limit_check(is_magical, ic, arcane); }
         catch (const std::runtime_error& ) { throw; }
         switch (in_tree) {

@@ -15,7 +15,7 @@ private:
     InTree in_tree;
     std::shared_ptr<unit> current;
 
-    void item_limit_check(bool is_magic, ItemClass ic, const std::string& s) const;
+    void item_limit_check(bool is_magic, ItemCategory ic, const std::string& s) const;
     bool is_selection_magical(const std::string& selection) const;
 public:
     explicit option_selector(

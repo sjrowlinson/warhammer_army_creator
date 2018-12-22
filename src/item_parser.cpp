@@ -2,7 +2,7 @@
 
 namespace tools {
 
-    item_parser::item_parser(const QString& ifile_str, ItemClass ic)
+    item_parser::item_parser(const QString& ifile_str, ItemCategory ic)
         : file_parser(ifile_str), item_class(ic) {
         find_blocks(1U);
     }

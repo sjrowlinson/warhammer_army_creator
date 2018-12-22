@@ -708,14 +708,14 @@ void ArmyCreator::clear_points_displays() {
 }
 
 void ArmyCreator::setup_magic_items_combobox() {
-    ui->magic_items_combobox->addItem(QString("Common"), QVariant(static_cast<int>(ItemClass::COMMON)));
+    ui->magic_items_combobox->addItem(QString("Common"), QVariant(static_cast<int>(ItemCategory::COMMON)));
     if (!st->magic_items_name().empty())
         ui->magic_items_combobox->addItem(
-            QString(st->magic_items_name().data()), QVariant(static_cast<int>(ItemClass::MAGIC))
+            QString(st->magic_items_name().data()), QVariant(static_cast<int>(ItemCategory::MAGIC))
         );
     if (!st->faction_items_name().empty())
         ui->magic_items_combobox->addItem(
-            QString(st->faction_items_name().data()), QVariant(static_cast<int>(ItemClass::FACTION))
+            QString(st->faction_items_name().data()), QVariant(static_cast<int>(ItemCategory::FACTION))
         );
 }
 
@@ -745,7 +745,7 @@ void ArmyCreator::on_magic_items_combobox_currentTextChanged(const QString& ic_s
     auto v = ui->magic_items_combobox->currentData().toInt();
     mib->clear();
     mib->reset(current, in_tree);
-    mib->reset_category(static_cast<ItemClass>(v));
+    mib->reset_category(static_cast<ItemCategory>(v));
     mib->reinitialise(ItemType::WEAPON);
 }
 
@@ -1031,14 +1031,12 @@ void ArmyCreator::update_unit_display(
         auto melee_weapon = weapons.find(WeaponType::MELEE);
         auto ranged_weapon = weapons.find(WeaponType::BALLISTIC);
         if (melee_weapon != weapons.end() && !(std::get<1>(melee_weapon->second).empty()))
-            weapons_str += QString("%1 [%2]").arg(
-                               std::get<1>(melee_weapon->second).data(),
-                               QString("%1").arg(std::get<2>(melee_weapon->second))
+            weapons_str += QString("%1").arg(
+                               std::get<1>(melee_weapon->second).data()
                            );
         if (ranged_weapon != weapons.end() && !(std::get<1>(ranged_weapon->second).empty()))
-            weapons_str += QString("\n") + QString("%1 [%2]").arg(
-                               std::get<1>(ranged_weapon->second).data(),
-                               QString("%1").arg(std::get<2>(ranged_weapon->second))
+            weapons_str += QString("\n") + QString("%1").arg(
+                               std::get<1>(ranged_weapon->second).data()
                            );
         if (u->switch_model_select(ModelSelect::CHAMPION)) {
             auto champ_weapons = u->weapons();
@@ -1047,14 +1045,12 @@ void ArmyCreator::update_unit_display(
             if (champ_melee_weapon != champ_weapons.end() &&
                     !(std::get<1>(champ_melee_weapon->second).empty() ||
                       std::get<1>(champ_melee_weapon->second) == "Hand weapon"))
-                weapons_str += QString("\n%1 [%2]").arg(
-                                   (std::get<1>(champ_melee_weapon->second) + " (Champion)").data(),
-                                   QString("%1").arg(std::get<2>(champ_melee_weapon->second))
+                weapons_str += QString("\n%1").arg(
+                                   (std::get<1>(champ_melee_weapon->second) + " (Champion)").data()
                                );
             if (champ_ranged_weapon != champ_weapons.end() && !(std::get<1>(champ_ranged_weapon->second).empty()))
-                weapons_str += QString("\n") + QString("%1 [%2]").arg(
-                                   (std::get<1>(champ_ranged_weapon->second) + " (Champion)").data(),
-                                   QString("%1").arg(std::get<2>(champ_ranged_weapon->second))
+                weapons_str += QString("\n") + QString("%1").arg(
+                                   (std::get<1>(champ_ranged_weapon->second) + " (Champion)").data()
                                );
         }
         u->switch_model_select(ModelSelect::DEFAULT);
@@ -1070,21 +1066,18 @@ void ArmyCreator::update_unit_display(
         auto shield = all_armour.find(ArmourType::SHIELD);
         auto helmet = all_armour.find(ArmourType::HELMET);
         if (armour != all_armour.end() && !(std::get<1>(armour->second).empty()))
-            armour_str += QString("%1 [%2]").arg(
-                            std::get<1>(armour->second).data(),
-                            QString("%1").arg(std::get<2>(armour->second))
+            armour_str += QString("%1").arg(
+                            std::get<1>(armour->second).data()
                         );
         if (shield != all_armour.end() && !(std::get<1>(shield->second).empty())) {
             if (!armour_str.isEmpty()) armour_str += QString("\n");
-            armour_str += QString("%1 [%2]").arg(
-                            std::get<1>(shield->second).data(),
-                            QString("%1").arg(std::get<2>(shield->second))
+            armour_str += QString("%1").arg(
+                            std::get<1>(shield->second).data()
                         );
         }
         if (helmet != all_armour.end() && !(std::get<1>(helmet->second).empty()))
-            armour_str += QString("%1 [%2]").arg(
-                            std::get<1>(helmet->second).data(),
-                            QString("%1").arg(std::get<2>(helmet->second))
+            armour_str += QString("%1").arg(
+                            std::get<1>(helmet->second).data()
                         );
         if (u->switch_model_select(ModelSelect::CHAMPION)) {
             auto champ_all_armour = u->armour();
@@ -1092,19 +1085,16 @@ void ArmyCreator::update_unit_display(
             auto champ_shield = champ_all_armour.find(ArmourType::SHIELD);
             auto champ_helmet = champ_all_armour.find(ArmourType::HELMET);
             if (champ_armour != champ_all_armour.end() && !(std::get<1>(champ_armour->second).empty()))
-                armour_str += QString("\n%1 [%2]").arg(
-                                (std::get<1>(champ_armour->second) + " (Champion)").data(),
-                                QString("%1").arg(std::get<2>(champ_armour->second))
+                armour_str += QString("\n%1").arg(
+                                (std::get<1>(champ_armour->second) + " (Champion)").data()
                             );
             if (champ_shield != champ_all_armour.end() && !(std::get<1>(champ_shield->second).empty()))
-                armour_str += QString("%1 [%2]").arg(
-                                (std::get<1>(champ_shield->second) + " (Champion)").data(),
-                                QString("%1").arg(std::get<2>(champ_shield->second))
+                armour_str += QString("%1").arg(
+                                (std::get<1>(champ_shield->second) + " (Champion)").data()
                             );
             if (champ_helmet != champ_all_armour.end() && !(std::get<1>(champ_helmet->second).empty()))
-                armour_str += QString("%1 [%2]").arg(
-                                (std::get<1>(champ_helmet->second) + " (Champion)").data(),
-                                QString("%1").arg(std::get<2>(champ_helmet->second))
+                armour_str += QString("%1").arg(
+                                (std::get<1>(champ_helmet->second) + " (Champion)").data()
                             );
         }
         u->switch_model_select(ModelSelect::DEFAULT);
@@ -1145,9 +1135,8 @@ void ArmyCreator::update_unit_display(
         QString extras_str;
         auto oco_extra = u->oco_extra();
         if (!(oco_extra.first.empty()))
-            extras_str += QString("%1 [%2]").arg(
-                              oco_extra.first.data(),
-                              QString("%1").arg(oco_extra.second.second)
+            extras_str += QString("%1").arg(
+                              oco_extra.first.data()
                           );
         auto mc_extras = u->mc_extras();
         if (!mc_extras.empty() && !oco_extra.first.empty()) extras_str += QString("\n");
@@ -1155,9 +1144,8 @@ void ArmyCreator::update_unit_display(
             for (auto it = std::begin(mc_extras),
                  it_next = std::next(std::begin(mc_extras)); it != std::end(mc_extras); ++it) {
 
-                extras_str += QString("%1 [%2]").arg(
-                                          it->first.data(),
-                                          QString("%1").arg(it->second.second)
+                extras_str += QString("%1").arg(
+                                          it->first.data()
                                       );
                 if (it_next != std::end(mc_extras)) {
                     extras_str += QString("\n");
@@ -1168,18 +1156,16 @@ void ArmyCreator::update_unit_display(
         if (u->switch_model_select(ModelSelect::CHAMPION)) {
             auto champ_oco_extra = u->oco_extra();
             if (!(champ_oco_extra.first.empty()))
-                extras_str += QString("\n%1 [%2]").arg(
-                                  (champ_oco_extra.first + " (Champion)").data(),
-                                  QString("%1").arg(champ_oco_extra.second.second)
+                extras_str += QString("\n%1").arg(
+                                  (champ_oco_extra.first + " (Champion)").data()
                               );
             auto champ_mc_extras = u->mc_extras();
             if (!champ_mc_extras.empty() && !champ_oco_extra.first.empty()) extras_str += QString("\n");
             if (!champ_mc_extras.empty()) {
                 for (auto it = std::begin(champ_mc_extras),
                      it_next = std::next(std::begin(champ_mc_extras)); it != std::end(champ_mc_extras); ++it) {
-                    extras_str += QString("%1 [%2]").arg(
-                                              (it->first + " (Champion)").data(),
-                                              QString("%1").arg(it->second.second)
+                    extras_str += QString("%1").arg(
+                                              (it->first + " (Champion)").data()
                                           );
                     if (it_next != std::end(champ_mc_extras)) {
                         extras_str += QString("\n");
@@ -1193,16 +1179,14 @@ void ArmyCreator::update_unit_display(
             auto p = std::dynamic_pointer_cast<character_unit>(u);
             if (!p->talisman().first.empty()) {
                 if (!extras_str.isEmpty()) extras_str += QString("\n");
-                extras_str += QString("%1 [%2]").arg(
-                    p->talisman().first.data(),
-                    QString("%1").arg(p->talisman().second.second)
+                extras_str += QString("%1").arg(
+                    p->talisman().first.data()
                 );
             }
             if (!p->enchanted_item().first.empty()) {
                 if (!extras_str.isEmpty()) extras_str += QString("\n");
-                extras_str += QString("%1 [%2]").arg(
-                    p->enchanted_item().first.data(),
-                    QString("%1").arg(p->enchanted_item().second.second)
+                extras_str += QString("%1").arg(
+                    p->enchanted_item().first.data()
                 );
             }
             if (!p->item_extras().empty()) {
@@ -1210,9 +1194,8 @@ void ArmyCreator::update_unit_display(
                 auto count = 0;
                 for (const auto& e : p->item_extras()) {
                     if (count) extras_str += QString("\n");
-                    extras_str += QString("%1 [%2]").arg(
-                        e.first.data(),
-                        QString("%1").arg(e.second.second)
+                    extras_str += QString("%1").arg(
+                        e.first.data()
                     );
                     ++count;
                 }
@@ -1221,9 +1204,8 @@ void ArmyCreator::update_unit_display(
                 auto p_ = std::dynamic_pointer_cast<mage_character_unit>(u);
                 if (!p_->arcane_item().first.empty()) {
                     if (!extras_str.isEmpty()) extras_str += QString("\n");
-                    extras_str += QString("%1 [%2]").arg(
-                        p_->arcane_item().first.data(),
-                        QString("%1").arg(p_->arcane_item().second.second)
+                    extras_str += QString("%1").arg(
+                        p_->arcane_item().first.data()
                     );
                 }
             }
@@ -1231,9 +1213,8 @@ void ArmyCreator::update_unit_display(
         auto banner = u->magic_banner();
         if (!(banner.first.empty())) {
             if (!extras_str.isEmpty()) extras_str += QString("\n");
-            extras_str += QString("%1 [%2]").arg(
-                              banner.first.data(),
-                              QString("%1").arg(banner.second.second)
+            extras_str += QString("%1").arg(
+                              banner.first.data()
                           );
         }
         item->setText(static_cast<int>(column), extras_str);
@@ -1322,23 +1303,20 @@ void ArmyCreator::update_unit_command_display_helper(
     auto sb_it = command.find(CommandGroup::STANDARD_BEARER);
     auto champion_it = command.find(CommandGroup::CHAMPION);
     if (musician_it != command.end()) {
-        command_str += QString("%1 [%2]").arg(
-                          std::get<0>(musician_it->second).data(),
-                          QString("%1").arg(std::get<1>(musician_it->second))
+        command_str += QString("%1").arg(
+                          std::get<0>(musician_it->second).data()
                        );
     }
     if (sb_it != command.end()) {
         if (!command_str.isEmpty()) command_str += QString("\n");
-        command_str += QString("%1 [%2]").arg(
-                          std::get<0>(sb_it->second).data(),
-                          QString("%1").arg(std::get<1>(sb_it->second))
+        command_str += QString("%1").arg(
+                          std::get<0>(sb_it->second).data()
                        );
     }
     if (champion_it != command.end()) {
         if (!command_str.isEmpty()) command_str += QString("\n");
-        command_str += QString("%1 [%2]").arg(
-                          std::get<0>(champion_it->second).data(),
-                          QString("%1").arg(std::get<1>(champion_it->second))
+        command_str += QString("%1").arg(
+                          std::get<0>(champion_it->second).data()
                        );
     }
 }

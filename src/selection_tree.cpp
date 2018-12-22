@@ -3,7 +3,7 @@
 selection_tree::selection_tree(Faction faction, army_list& list) : race(faction), army(list) {
     auto files = filenames();
     QString common_item_filename(":/magic_items/common.mag");
-    tools::item_parser ip(common_item_filename, ItemClass::COMMON);
+    tools::item_parser ip(common_item_filename, ItemCategory::COMMON);
     auto items = ip.parse();
     common_items.first = ip.name();
     for (auto&& item : items) common_items.second[item.name] = item;
@@ -187,7 +187,7 @@ void selection_tree::parse_mount_file(const QString& mfile_str) {
 
 void selection_tree::parse_item_files(const std::pair<QString, QString>& ifile_str) {
     // parse magic items file first
-    tools::item_parser magic_items_parser(ifile_str.first, ItemClass::MAGIC);
+    tools::item_parser magic_items_parser(ifile_str.first, ItemCategory::MAGIC);
     auto mag_items = magic_items_parser.parse();
     magic_items.first = magic_items_parser.name();
     for (auto&& item : mag_items) magic_items.second[item.name] = item;
@@ -204,7 +204,7 @@ void selection_tree::parse_item_files(const std::pair<QString, QString>& ifile_s
     for (auto& x : roster) x.second->set_magic_item_handle(sp_items);
     // then faction items file if it exists
     if (tools::split(ifile_str.second.toStdString(), '.').size() < 2U) return;
-    tools::item_parser faction_items_parser(ifile_str.second, ItemClass::FACTION);
+    tools::item_parser faction_items_parser(ifile_str.second, ItemCategory::FACTION);
     auto fac_items = faction_items_parser.parse();
     faction_items.first = faction_items_parser.name();
     for (auto&& item : fac_items) faction_items.second[item.name] = item;

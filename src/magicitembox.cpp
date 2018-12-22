@@ -3,7 +3,7 @@
 
 MagicItemBox::MagicItemBox(ArmyCreator* creator_, QTabWidget* box_, QGroupBox* descr_box_, QLabel* descr_label_) :
     creator(creator_), box(box_), descr_box(descr_box_), descr_label(descr_label_),
-    in_tree(InTree::NEITHER), ic_selected(ItemClass::COMMON) {}
+    in_tree(InTree::NEITHER), ic_selected(ItemCategory::COMMON) {}
 
 void MagicItemBox::clear() {
     for (auto i = 0; i < box->count(); ++i) {
@@ -20,7 +20,7 @@ void MagicItemBox::reset(const std::shared_ptr<unit>& current_, InTree in_tree_)
     in_tree = in_tree_;
 }
 
-void MagicItemBox::reset_category(ItemClass ic_selected_) {
+void MagicItemBox::reset_category(ItemCategory ic_selected_) {
     ic_selected = ic_selected_;
 }
 
@@ -57,7 +57,7 @@ QScrollArea* MagicItemBox::make_items_tab(const std::unordered_map<std::string, 
 }
 
 QScrollArea* MagicItemBox::make_weapons_tab(const std::vector<std::pair<std::string, item>>& opt_weapons) {
-    std::unordered_map<WeaponType, std::tuple<ItemClass, std::string, double>> weapons;
+    std::unordered_map<WeaponType, std::tuple<ItemCategory, std::string, double>> weapons;
     switch (current->base_unit_type()) {
     case BaseUnitType::MAGE_CHARACTER:
     case BaseUnitType::MELEE_CHARACTER:
@@ -97,11 +97,11 @@ QScrollArea* MagicItemBox::make_weapons_tab(const std::vector<std::pair<std::str
         {
             auto p = std::dynamic_pointer_cast<character_unit>(current);
             switch (ic_selected) { // don't display weapon if it's beyond the relevant budget
-            case ItemClass::COMMON:
-            case ItemClass::MAGIC:
+            case ItemCategory::COMMON:
+            case ItemCategory::MAGIC:
                 if (w.second.points > p->handle_->magic_item_budget()) continue;
                 break;
-            case ItemClass::FACTION:
+            case ItemCategory::FACTION:
                 if (w.second.points > p->handle_->faction_item_budget()) continue;
                 break;
             default: break;
@@ -169,7 +169,7 @@ QScrollArea* MagicItemBox::make_weapons_tab(const std::vector<std::pair<std::str
 }
 
 QScrollArea* MagicItemBox::make_armour_tab(const std::vector<std::pair<std::string, item>>& opt_armour) {
-    std::unordered_map<ArmourType, std::tuple<ItemClass, std::string, double>> armour;
+    std::unordered_map<ArmourType, std::tuple<ItemCategory, std::string, double>> armour;
     switch (current->base_unit_type()) {
     case BaseUnitType::MAGE_CHARACTER:
     case BaseUnitType::MELEE_CHARACTER:
@@ -207,11 +207,11 @@ QScrollArea* MagicItemBox::make_armour_tab(const std::vector<std::pair<std::stri
         {
             auto p = std::dynamic_pointer_cast<character_unit>(current);
             switch (ic_selected) { // don't display armour if it's beyond the relevant budget
-            case ItemClass::COMMON:
-            case ItemClass::MAGIC:
+            case ItemCategory::COMMON:
+            case ItemCategory::MAGIC:
                 if (a.second.points > p->handle_->magic_item_budget()) continue;
                 break;
-            case ItemClass::FACTION:
+            case ItemCategory::FACTION:
                 if (a.second.points > p->handle_->faction_item_budget()) continue;
                 break;
             default: break;
@@ -292,7 +292,7 @@ QScrollArea* MagicItemBox::make_armour_tab(const std::vector<std::pair<std::stri
 }
 
 QScrollArea* MagicItemBox::make_talismans_tab(const std::vector<std::pair<std::string, item>>& opt_talismans) {
-    std::pair<std::string, std::pair<ItemClass, double>> talisman;
+    std::pair<std::string, std::pair<ItemCategory, double>> talisman;
     switch (current->base_unit_type()) {
     case BaseUnitType::MAGE_CHARACTER:
     case BaseUnitType::MELEE_CHARACTER:
@@ -323,11 +323,11 @@ QScrollArea* MagicItemBox::make_talismans_tab(const std::vector<std::pair<std::s
         {
             auto p = std::dynamic_pointer_cast<character_unit>(current);
             switch (ic_selected) { // don't display talisman if it's beyond the relevant budget
-            case ItemClass::COMMON:
-            case ItemClass::MAGIC:
+            case ItemCategory::COMMON:
+            case ItemCategory::MAGIC:
                 if (t.second.points > p->handle_->magic_item_budget()) continue;
                 break;
-            case ItemClass::FACTION:
+            case ItemCategory::FACTION:
                 if (t.second.points > p->handle_->faction_item_budget()) continue;
                 break;
             default: break;
@@ -375,7 +375,7 @@ QScrollArea* MagicItemBox::make_talismans_tab(const std::vector<std::pair<std::s
 }
 
 QScrollArea* MagicItemBox::make_enchanted_tab(const std::vector<std::pair<std::string, item>>& opt_enchanted) {
-    std::pair<std::string, std::pair<ItemClass, double>> enchanted;
+    std::pair<std::string, std::pair<ItemCategory, double>> enchanted;
     switch (current->base_unit_type()) {
     case BaseUnitType::MAGE_CHARACTER:
     case BaseUnitType::MELEE_CHARACTER:
@@ -406,11 +406,11 @@ QScrollArea* MagicItemBox::make_enchanted_tab(const std::vector<std::pair<std::s
         {
             auto p = std::dynamic_pointer_cast<character_unit>(current);
             switch (ic_selected) { // don't display enchanted item if it's beyond the relevant budget
-            case ItemClass::COMMON:
-            case ItemClass::MAGIC:
+            case ItemCategory::COMMON:
+            case ItemCategory::MAGIC:
                 if (t.second.points > p->handle_->magic_item_budget()) continue;
                 break;
-            case ItemClass::FACTION:
+            case ItemCategory::FACTION:
                 if (t.second.points > p->handle_->faction_item_budget()) continue;
                 break;
             default: break;
@@ -458,7 +458,7 @@ QScrollArea* MagicItemBox::make_enchanted_tab(const std::vector<std::pair<std::s
 }
 
 QScrollArea* MagicItemBox::make_arcane_tab(const std::vector<std::pair<std::string, item>>& opt_arcane) {
-    std::pair<std::string, std::pair<ItemClass, double>> arcane;
+    std::pair<std::string, std::pair<ItemCategory, double>> arcane;
     switch (current->base_unit_type()) {
     case BaseUnitType::MAGE_CHARACTER:
     {
@@ -487,11 +487,11 @@ QScrollArea* MagicItemBox::make_arcane_tab(const std::vector<std::pair<std::stri
         {
             auto p = std::dynamic_pointer_cast<mage_character_unit>(current);
             switch (ic_selected) { // don't display arcane item if it's beyond the relevant budget
-            case ItemClass::COMMON:
-            case ItemClass::MAGIC:
+            case ItemCategory::COMMON:
+            case ItemCategory::MAGIC:
                 if (t.second.points > p->handle_->magic_item_budget()) continue;
                 break;
-            case ItemClass::FACTION:
+            case ItemCategory::FACTION:
                 if (t.second.points > p->handle_->faction_item_budget()) continue;
                 break;
             default: break;
@@ -539,7 +539,7 @@ QScrollArea* MagicItemBox::make_arcane_tab(const std::vector<std::pair<std::stri
 }
 
 QScrollArea* MagicItemBox::make_banners_tab(const std::vector<std::pair<std::string, item>>& opt_banners) {
-    std::pair<std::string, std::pair<ItemClass, double>> banner;
+    std::pair<std::string, std::pair<ItemCategory, double>> banner;
     switch (current->base_unit_type()) {
     case BaseUnitType::MAGE_CHARACTER:
     case BaseUnitType::MELEE_CHARACTER:
@@ -611,7 +611,7 @@ QScrollArea* MagicItemBox::make_banners_tab(const std::vector<std::pair<std::str
 }
 
 QScrollArea* MagicItemBox::make_other_tab(const std::vector<std::pair<std::string, item>>& opt_other) {
-    std::unordered_map<std::string, std::pair<ItemClass, double>> others;
+    std::unordered_map<std::string, std::pair<ItemCategory, double>> others;
     switch (current->base_unit_type()) {
     case BaseUnitType::MAGE_CHARACTER:
     case BaseUnitType::MELEE_CHARACTER:
@@ -641,11 +641,11 @@ QScrollArea* MagicItemBox::make_other_tab(const std::vector<std::pair<std::strin
         {
             auto p = std::dynamic_pointer_cast<character_unit>(current);
             switch (ic_selected) { // don't display item if it's beyond the relevant budget
-            case ItemClass::COMMON:
-            case ItemClass::MAGIC:
+            case ItemCategory::COMMON:
+            case ItemCategory::MAGIC:
                 if (t.second.points > p->handle_->magic_item_budget()) continue;
                 break;
-            case ItemClass::FACTION:
+            case ItemCategory::FACTION:
                 if (t.second.points > p->handle_->faction_item_budget()) continue;
                 break;
             default: break;
@@ -690,13 +690,13 @@ bool MagicItemBox::reinitialise(ItemType focus) {
     > mih;
     if (current == nullptr) return false;
     switch (ic_selected) {
-    case ItemClass::COMMON:
+    case ItemCategory::COMMON:
         mih = current->base()->common_items_handle();
         break;
-    case ItemClass::MAGIC:
+    case ItemCategory::MAGIC:
         mih = current->base()->magic_items_handle();
         break;
-    case ItemClass::FACTION:
+    case ItemCategory::FACTION:
         mih = current->base()->faction_items_handle();
         break;
     default: return false;

@@ -9,12 +9,10 @@
 #include <utility>
 #include <vector>
 
-// TODO: will revisit these significant changes after new parsing
-//       system is suitably stable
 struct weapon_option {
     std::string name;
     WeaponType type;
-    ItemClass category;
+    ItemCategory category;
     double points;
     std::vector<std::string> replacements;
     std::unordered_map<
@@ -26,7 +24,7 @@ struct weapon_option {
 struct armour_option {
     std::string name;
     ArmourType type;
-    ItemClass category;
+    ItemCategory category;
     double points;
     std::vector<std::string> replacements;
     std::unordered_map<
@@ -46,14 +44,23 @@ struct extra_option {
     > restrictions;
 };
 
+struct budget {
+    BudgetType type;
+    double points;
+    std::unordered_map<
+        RestrictionField,
+        std::vector<std::string>
+    > restrictions;
+};
+
 struct tmp_parse_options {
     std::unordered_map<
         std::string,
-        std::tuple<WeaponType, ItemClass, double, std::vector<std::string>>
+        std::tuple<WeaponType, ItemCategory, double, std::vector<std::string>>
     > weapons;
     std::unordered_map<
         std::string,
-        std::tuple<ArmourType, ItemClass, double, std::vector<std::string>>
+        std::tuple<ArmourType, ItemCategory, double, std::vector<std::string>>
     > armour;
     std::unordered_map<
         std::string,
@@ -73,11 +80,11 @@ class options {
 private:
     std::unordered_map<
         std::string,
-        std::tuple<WeaponType, ItemClass, double, std::vector<std::string>>
+        std::tuple<WeaponType, ItemCategory, double, std::vector<std::string>>
     > weapons_;
     std::unordered_map<
         std::string,
-        std::tuple<ArmourType, ItemClass, double, std::vector<std::string>>
+        std::tuple<ArmourType, ItemCategory, double, std::vector<std::string>>
     > armour_;
     std::unordered_map<
         std::string,
@@ -96,11 +103,11 @@ public:
     explicit options(
         std::unordered_map<
             std::string,
-            std::tuple<WeaponType, ItemClass, double, std::vector<std::string>>
+            std::tuple<WeaponType, ItemCategory, double, std::vector<std::string>>
         >&& _weapons,
         std::unordered_map<
             std::string,
-            std::tuple<ArmourType, ItemClass, double, std::vector<std::string>>
+            std::tuple<ArmourType, ItemCategory, double, std::vector<std::string>>
         >&& _armours,
         std::unordered_map<
             std::string,
@@ -130,11 +137,11 @@ public:
 
     const std::unordered_map<
         std::string,
-        std::tuple<WeaponType, ItemClass, double, std::vector<std::string>>
+        std::tuple<WeaponType, ItemCategory, double, std::vector<std::string>>
     >& weapons() const noexcept;
     const std::unordered_map<
         std::string,
-        std::tuple<ArmourType, ItemClass, double, std::vector<std::string>>
+        std::tuple<ArmourType, ItemCategory, double, std::vector<std::string>>
     >& armour() const noexcept;
     const std::unordered_map<
         std::string,

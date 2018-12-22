@@ -32,7 +32,7 @@ private:
     QLabel* descr_label;
     std::shared_ptr<unit> current;
     InTree in_tree;
-    ItemClass ic_selected;
+    ItemCategory ic_selected;
 
     // generic method to do some common checks and book-keeping before
     // calling specific function according to item_type value
@@ -50,7 +50,7 @@ public:
     ~MagicItemBox() = default;
 
     void reset(const std::shared_ptr<unit>& current_, InTree in_tree_);
-    void reset_category(ItemClass ic_selected_);
+    void reset_category(ItemCategory ic_selected_);
 
     bool reinitialise(ItemType focus);
     void clear();

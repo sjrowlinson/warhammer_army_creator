@@ -13,7 +13,7 @@ public:
     explicit base_mage_character_unit(
         Faction faction,
         UnitType ut,
-        UnitClass uc,
+        UnitCategory uc,
         const std::string& name,
         double pts,
         std::vector<std::string>&& stats,

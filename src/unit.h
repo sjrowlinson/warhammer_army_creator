@@ -54,12 +54,12 @@ public:
     virtual
     const std::unordered_map<
         WeaponType,
-        std::tuple<ItemClass, std::string, double>
+        std::tuple<ItemCategory, std::string, double>
     >& weapons() const noexcept = 0;
     virtual
     const std::unordered_map<
         ArmourType,
-        std::tuple<ItemClass, std::string, double>
+        std::tuple<ItemCategory, std::string, double>
     >& armour() const noexcept = 0;
     virtual
     const std::pair<
@@ -78,7 +78,7 @@ public:
         std::unordered_map<std::string, double>
     >& mnt() const noexcept = 0;
 
-    virtual const std::pair<std::string, std::pair<ItemClass, double>>& magic_banner() const noexcept = 0;
+    virtual const std::pair<std::string, std::pair<ItemCategory, double>>& magic_banner() const noexcept = 0;
 
     // basic properties
     const std::shared_ptr<base_unit>& base() const noexcept;
@@ -88,12 +88,12 @@ public:
     std::size_t max_size() const noexcept;
     Faction faction() const noexcept;
     UnitType unit_type() const noexcept;
-    UnitClass unit_class() const noexcept;
+    UnitCategory unit_class() const noexcept;
 
     // item selectors
-    virtual std::string pick_weapon(ItemClass item_type, const std::string& name) = 0;
+    virtual std::string pick_weapon(ItemCategory item_type, const std::string& name) = 0;
     virtual std::string remove_weapon(WeaponType wt, bool replacing=false) = 0;
-    virtual std::string pick_armour(ItemClass item_type, const std::string& name) = 0;
+    virtual std::string pick_armour(ItemCategory item_type, const std::string& name) = 0;
     virtual std::string remove_armour(ArmourType at, bool replacing=false) = 0;
     virtual std::string pick_oco_extra(const std::string& name) = 0;
     virtual std::string remove_oco_extra() = 0;
@@ -101,7 +101,7 @@ public:
     virtual std::string remove_mc_extra(const std::string& name) = 0;
     virtual void pick_mount(const std::string& name) = 0;
     virtual void remove_mount() = 0;
-    virtual std::string pick_banner(ItemClass item_class, const std::string& name) = 0;
+    virtual std::string pick_banner(ItemCategory item_class, const std::string& name) = 0;
     virtual std::string remove_banner() = 0;
 
     virtual void pick_mount_option(const std::string& name, bool oco);

@@ -40,21 +40,21 @@ bool character_unit::has_non_duplicable_items() const noexcept {
         std::begin(weapons_),
         std::end(weapons_),
         [](const auto& w) {
-            return std::get<0>(w.second) != ItemClass::MUNDANE;
+            return std::get<0>(w.second) != ItemCategory::MUNDANE;
         }
     ) ||
     std::count_if(
         std::begin(armours_),
         std::end(armours_),
         [](const auto& a) {
-            return std::get<0>(a.second) != ItemClass::MUNDANE;
+            return std::get<0>(a.second) != ItemCategory::MUNDANE;
         }
     ) || !talisman_.first.empty() || !enchanted_item_.first.empty() ||
     std::count_if(
         std::begin(item_extras_),
         std::end(item_extras_),
         [](const auto& e) {
-            return std::get<0>(e.second) != ItemClass::MUNDANE;
+            return std::get<0>(e.second) != ItemCategory::MUNDANE;
         }
     ) || !banner.first.empty();
 }
@@ -159,21 +159,21 @@ std::pair<bool, std::string> character_unit::restriction_check(
     return p;
 }
 
-std::string character_unit::pick_magic_item(ItemType item_type, ItemClass item_class, const std::string& name) {
+std::string character_unit::pick_magic_item(ItemType item_type, ItemCategory item_class, const std::string& name) {
     if (item_type != ItemType::BANNER && !banner.first.empty())
         throw std::runtime_error("BSBs equipped with a Magic Standard cannot take Magic Items!");
     std::string removed = "";
     switch (item_class) {
-    case ItemClass::MAGIC:
-    case ItemClass::COMMON:
-    case ItemClass::FACTION:
+    case ItemCategory::MAGIC:
+    case ItemCategory::COMMON:
+    case ItemCategory::FACTION:
     {
         std::unordered_map<std::string, item>::const_iterator search;
-        if (item_class == ItemClass::MAGIC) {
+        if (item_class == ItemCategory::MAGIC) {
             search = handle_->magic_items_handle()->second.find(name);
             if (search == handle_->magic_items_handle()->second.end())
                 throw std::invalid_argument("Item not found!");
-        } else if (item_class == ItemClass::COMMON) {
+        } else if (item_class == ItemCategory::COMMON) {
             search = handle_->common_items_handle()->second.find(name);
             if (search == handle_->common_items_handle()->second.end())
                 throw std::invalid_argument("Item not found!");
@@ -183,10 +183,10 @@ std::string character_unit::pick_magic_item(ItemType item_type, ItemClass item_c
                 throw std::invalid_argument("Item not found!");
         }
         const double mi_budget =
-            (item_class == ItemClass::FACTION) ? handle_->faction_item_budget() : handle_->magic_item_budget();
+            (item_class == ItemCategory::FACTION) ? handle_->faction_item_budget() : handle_->magic_item_budget();
         const double ti_budget = handle_->total_item_budget();
         double adj_mip =
-            (item_class == ItemClass::FACTION) ? faction_item_points_ : magic_item_points_;
+            (item_class == ItemCategory::FACTION) ? faction_item_points_ : magic_item_points_;
         double adj_tip = total_item_points_;
         switch (item_type) {
         case ItemType::WEAPON:
@@ -204,13 +204,13 @@ std::string character_unit::pick_magic_item(ItemType item_type, ItemClass item_c
             // protect against cases where user tries to pick another piece of
             // magic armour not in the category being changed
             auto at = search->second.armour_type;
-            if (item_class == ItemClass::COMMON || item_class == ItemClass::MAGIC) {
+            if (item_class == ItemCategory::COMMON || item_class == ItemCategory::MAGIC) {
                 if(std::count_if(
                     std::begin(armours_),
                     std::end(armours_),
                     [at](const auto& a) {
-                        return (std::get<0>(a.second) == ItemClass::COMMON ||
-                                std::get<0>(a.second) == ItemClass::MAGIC) &&
+                        return (std::get<0>(a.second) == ItemCategory::COMMON ||
+                                std::get<0>(a.second) == ItemCategory::MAGIC) &&
                                 a.first != at;
                     }
                 )) throw std::invalid_argument("Cannot choose multiple pieces of magic armour!");
@@ -308,14 +308,14 @@ std::string character_unit::pick_magic_item(ItemType item_type, ItemClass item_c
         }
         points_ += search->second.points;
         if (item_type != ItemType::BANNER) {
-            if (item_class == ItemClass::FACTION) faction_item_points_ += search->second.points;
+            if (item_class == ItemCategory::FACTION) faction_item_points_ += search->second.points;
             else magic_item_points_ += search->second.points;
             total_item_points_ += search->second.points;
         }
         break;
     }
-    case ItemClass::MUNDANE:
-    case ItemClass::NONE:
+    case ItemCategory::MUNDANE:
+    case ItemCategory::NONE:
         break;
     }
     return removed;
@@ -325,23 +325,23 @@ std::size_t character_unit::size() const noexcept { return 1U; }
 
 const std::unordered_map<
     WeaponType,
-    std::tuple<ItemClass, std::string, double>
+    std::tuple<ItemCategory, std::string, double>
 >& character_unit::weapons() const noexcept { return weapons_; }
 
 const std::unordered_map<
     ArmourType,
-    std::tuple<ItemClass, std::string, double>
+    std::tuple<ItemCategory, std::string, double>
 >& character_unit::armour() const noexcept { return armours_; }
 
-const std::pair<std::string, std::pair<ItemClass, double>>& character_unit::talisman() const noexcept {
+const std::pair<std::string, std::pair<ItemCategory, double>>& character_unit::talisman() const noexcept {
     return talisman_;
 }
 
-const std::pair<std::string, std::pair<ItemClass, double>>& character_unit::enchanted_item() const noexcept {
+const std::pair<std::string, std::pair<ItemCategory, double>>& character_unit::enchanted_item() const noexcept {
     return enchanted_item_;
 }
 
-const std::unordered_map<std::string, std::pair<ItemClass, double>>& character_unit::item_extras() const noexcept {
+const std::unordered_map<std::string, std::pair<ItemCategory, double>>& character_unit::item_extras() const noexcept {
     return item_extras_;
 }
 
@@ -359,14 +359,14 @@ const std::tuple<
     std::unordered_map<std::string, double>
 >& character_unit::mnt() const noexcept { return mount_; }
 
-const std::pair<std::string, std::pair<ItemClass, double>>& character_unit::magic_banner() const noexcept {
+const std::pair<std::string, std::pair<ItemCategory, double>>& character_unit::magic_banner() const noexcept {
     return banner;
 }
 
-std::string character_unit::pick_weapon(ItemClass item_type, const std::string& name) {
+std::string character_unit::pick_weapon(ItemCategory item_type, const std::string& name) {
     std::string removed;
     switch (item_type) {
-    case ItemClass::MUNDANE:
+    case ItemCategory::MUNDANE:
     {
         auto search = handle_->opt().weapons().find(name);
         if (search == handle_->opt().weapons().cend())
@@ -381,9 +381,9 @@ std::string character_unit::pick_weapon(ItemClass item_type, const std::string& 
         points_ += std::get<2>(search->second);
         break;
     }
-    case ItemClass::MAGIC:
-    case ItemClass::COMMON:
-    case ItemClass::FACTION:
+    case ItemCategory::MAGIC:
+    case ItemCategory::COMMON:
+    case ItemCategory::FACTION:
         removed = pick_magic_item(ItemType::WEAPON, item_type, name);
         break;
     default: break;
@@ -391,10 +391,10 @@ std::string character_unit::pick_weapon(ItemClass item_type, const std::string& 
     return removed;
 }
 
-std::string character_unit::pick_armour(ItemClass item_type, const std::string& name) {
+std::string character_unit::pick_armour(ItemCategory item_type, const std::string& name) {
     std::string removed;
     switch (item_type) {
-    case ItemClass::MUNDANE:
+    case ItemCategory::MUNDANE:
     {
         auto search = handle_->opt().armour().find(name);
         if (search == handle_->opt().armour().cend())
@@ -409,9 +409,9 @@ std::string character_unit::pick_armour(ItemClass item_type, const std::string& 
         points_ += std::get<2>(search->second);
         break;
     }
-    case ItemClass::MAGIC:
-    case ItemClass::COMMON:
-    case ItemClass::FACTION:
+    case ItemCategory::MAGIC:
+    case ItemCategory::COMMON:
+    case ItemCategory::FACTION:
         removed = pick_magic_item(ItemType::ARMOUR, item_type, name);
         break;
     default: break;
@@ -419,12 +419,12 @@ std::string character_unit::pick_armour(ItemClass item_type, const std::string& 
     return removed;
 }
 
-std::string character_unit::pick_talisman(ItemClass item_class, const std::string& name) {
+std::string character_unit::pick_talisman(ItemCategory item_class, const std::string& name) {
     std::string removed;
     switch (item_class) {
-    case ItemClass::MAGIC:
-    case ItemClass::COMMON:
-    case ItemClass::FACTION:
+    case ItemCategory::MAGIC:
+    case ItemCategory::COMMON:
+    case ItemCategory::FACTION:
         removed = pick_magic_item(ItemType::TALISMAN, item_class, name);
         break;
     default: break;
@@ -436,11 +436,11 @@ std::string character_unit::remove_talisman() {
     std::string removed = talisman_.first;
     points_ -= talisman_.second.second;
     switch (talisman_.second.first) {
-    case ItemClass::MAGIC:
-    case ItemClass::COMMON:
+    case ItemCategory::MAGIC:
+    case ItemCategory::COMMON:
         magic_item_points_ -= talisman_.second.second;
         break;
-    case ItemClass::FACTION:
+    case ItemCategory::FACTION:
         faction_item_points_ -= talisman_.second.second;
         break;
     default: break;
@@ -451,12 +451,12 @@ std::string character_unit::remove_talisman() {
     return removed;
 }
 
-std::string character_unit::pick_enchanted_item(ItemClass item_class, const std::string& name) {
+std::string character_unit::pick_enchanted_item(ItemCategory item_class, const std::string& name) {
     std::string removed;
     switch (item_class) {
-    case ItemClass::MAGIC:
-    case ItemClass::COMMON:
-    case ItemClass::FACTION:
+    case ItemCategory::MAGIC:
+    case ItemCategory::COMMON:
+    case ItemCategory::FACTION:
         removed = pick_magic_item(ItemType::ENCHANTED, item_class, name);
         break;
     default: break;
@@ -468,11 +468,11 @@ std::string character_unit::remove_enchanted_item() {
     std::string removed = enchanted_item_.first;
     points_ -= enchanted_item_.second.second;
     switch (enchanted_item_.second.first) {
-    case ItemClass::MAGIC:
-    case ItemClass::COMMON:
+    case ItemCategory::MAGIC:
+    case ItemCategory::COMMON:
         magic_item_points_ -= enchanted_item_.second.second;
         break;
-    case ItemClass::FACTION:
+    case ItemCategory::FACTION:
         faction_item_points_ -= enchanted_item_.second.second;
         break;
     default: break;
@@ -483,12 +483,12 @@ std::string character_unit::remove_enchanted_item() {
     return removed;
 }
 
-std::string character_unit::pick_other(ItemClass item_class, const std::string& name) {
+std::string character_unit::pick_other(ItemCategory item_class, const std::string& name) {
     std::string removed;
     switch (item_class) {
-    case ItemClass::MAGIC:
-    case ItemClass::COMMON:
-    case ItemClass::FACTION:
+    case ItemCategory::MAGIC:
+    case ItemCategory::COMMON:
+    case ItemCategory::FACTION:
         removed = pick_magic_item(ItemType::OTHER, item_class, name);
         break;
     default: break;
@@ -502,11 +502,11 @@ std::string character_unit::remove_other(const std::string& name) {
         throw std::invalid_argument("Unit does not have this item!");
     points_ -= search->second.second;
     switch (search->second.first) {
-    case ItemClass::MAGIC:
-    case ItemClass::COMMON:
+    case ItemCategory::MAGIC:
+    case ItemCategory::COMMON:
         magic_item_points_ -= search->second.second;
         break;
-    case ItemClass::FACTION:
+    case ItemCategory::FACTION:
         faction_item_points_ -= search->second.second;
         break;
     default: break;
@@ -572,7 +572,7 @@ std::string character_unit::remove_weapon(WeaponType wt, bool replacing) {
         if (replacing) {
             weapons_.erase(wt);
             if (wt == WeaponType::MELEE)
-                weapons_[wt] = {ItemClass::MUNDANE, "Hand weapon", 0.0};
+                weapons_[wt] = {ItemCategory::MUNDANE, "Hand weapon", 0.0};
         }
         else {
             if (search->second.second == std::get<1>(weapon)) return std::string();
@@ -583,15 +583,15 @@ std::string character_unit::remove_weapon(WeaponType wt, bool replacing) {
     // remove points value of weapon
     const double pts = std::get<2>(weapon);
     switch (std::get<0>(weapon)) {
-    case ItemClass::MUNDANE:
-    case ItemClass::NONE:
+    case ItemCategory::MUNDANE:
+    case ItemCategory::NONE:
         break;
-    case ItemClass::MAGIC:
-    case ItemClass::COMMON:
+    case ItemCategory::MAGIC:
+    case ItemCategory::COMMON:
         magic_item_points_ -= pts;
         total_item_points_ -= pts;
         break;
-    case ItemClass::FACTION:
+    case ItemCategory::FACTION:
         faction_item_points_ -= pts;
         total_item_points_ -= pts;
         break;
@@ -616,15 +616,15 @@ std::string character_unit::remove_armour(ArmourType at, bool replacing) {
     // remove points value of armour
     const double pts = std::get<2>(armour);
     switch (std::get<0>(armour)) {
-    case ItemClass::MUNDANE:
-    case ItemClass::NONE:
+    case ItemCategory::MUNDANE:
+    case ItemCategory::NONE:
         break;
-    case ItemClass::MAGIC:
-    case ItemClass::COMMON:
+    case ItemCategory::MAGIC:
+    case ItemCategory::COMMON:
         magic_item_points_ -= pts;
         total_item_points_ -= pts;
         break;
-    case ItemClass::FACTION:
+    case ItemCategory::FACTION:
         faction_item_points_ -= pts;
         total_item_points_ -= pts;
         break;
@@ -702,7 +702,7 @@ void character_unit::remove_mount_option(const std::string& name, bool oco) {
     }
 }
 
-std::string character_unit::pick_banner(ItemClass item_class, const std::string& name) {
+std::string character_unit::pick_banner(ItemCategory item_class, const std::string& name) {
     if (!is_bsb())
         throw std::runtime_error("Only the Battle Standard Bearer may take a Magic Standard!");
     if (is_bsb() && (!talisman_.first.empty() || !enchanted_item_.first.empty() ||
@@ -710,23 +710,23 @@ std::string character_unit::pick_banner(ItemClass item_class, const std::string&
                      std::count_if(
                         std::begin(weapons_), std::end(weapons_),
                         [](const auto& w) {
-                            return (std::get<0>(w.second) == ItemClass::COMMON ||
-                                    std::get<0>(w.second) == ItemClass::MAGIC);
+                            return (std::get<0>(w.second) == ItemCategory::COMMON ||
+                                    std::get<0>(w.second) == ItemCategory::MAGIC);
                         }
                      ) ||
                      std::count_if(
                         std::begin(armours_), std::end(armours_),
                         [](const auto& a) {
-                            return (std::get<0>(a.second) == ItemClass::COMMON ||
-                                    std::get<0>(a.second) == ItemClass::MAGIC);
+                            return (std::get<0>(a.second) == ItemCategory::COMMON ||
+                                    std::get<0>(a.second) == ItemCategory::MAGIC);
                         }
                      ))
        ) throw std::runtime_error("BSBs equipped with Magic Equipment cannot take Magic Standards!");
     std::string removed;
     switch (item_class) {
-    case ItemClass::MAGIC:
-    case ItemClass::COMMON:
-    case ItemClass::FACTION:
+    case ItemCategory::MAGIC:
+    case ItemCategory::COMMON:
+    case ItemCategory::FACTION:
         removed = pick_magic_item(ItemType::BANNER, item_class, name);
         break;
     default: break;
@@ -738,11 +738,11 @@ std::string character_unit::remove_banner() {
     std::string removed = banner.first;
     points_ -= banner.second.second;
     switch (banner.second.first) {
-    case ItemClass::MAGIC:
-    case ItemClass::COMMON:
+    case ItemCategory::MAGIC:
+    case ItemCategory::COMMON:
         magic_item_points_ -= banner.second.second;
         break;
-    case ItemClass::FACTION:
+    case ItemCategory::FACTION:
         faction_item_points_ -= banner.second.second;
         break;
     default: break;

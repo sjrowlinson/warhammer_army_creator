@@ -29,24 +29,24 @@ void mage_character_unit::reset_level() {
     level_ = {handle->mage_level(), 0.0};
 }
 
-const std::pair<std::string, std::pair<ItemClass, double>>& mage_character_unit::arcane_item() const noexcept {
+const std::pair<std::string, std::pair<ItemCategory, double>>& mage_character_unit::arcane_item() const noexcept {
     return arcane_item_;
 }
 
-std::string mage_character_unit::pick_arcane_item(ItemClass item_class, const std::string& name) {
+std::string mage_character_unit::pick_arcane_item(ItemCategory item_class, const std::string& name) {
     std::string removed;
     switch (item_class) {
-    case ItemClass::MAGIC:
-    case ItemClass::COMMON:
+    case ItemCategory::MAGIC:
+    case ItemCategory::COMMON:
     {
         std::unordered_map<std::string, item>::const_iterator search;
         switch (item_class) {
-        case ItemClass::MAGIC:
+        case ItemCategory::MAGIC:
             search = handle_->magic_items_handle()->second.find(name);
             if (search == handle_->magic_items_handle()->second.end())
                 throw std::invalid_argument("Arcane item not found!");
             break;
-        case ItemClass::COMMON:
+        case ItemCategory::COMMON:
             search = handle_->common_items_handle()->second.find(name);
             if (search == handle_->common_items_handle()->second.end())
                 throw std::invalid_argument("Arcane item not found!");
@@ -83,7 +83,7 @@ std::string mage_character_unit::pick_arcane_item(ItemClass item_class, const st
         total_item_points_ += search->second.points;
         break;
     }
-    case ItemClass::FACTION:
+    case ItemCategory::FACTION:
     {
         auto search = handle_->faction_items_handle()->second.find(name);
         if (search == handle_->faction_items_handle()->second.end())
@@ -127,11 +127,11 @@ std::string mage_character_unit::remove_arcane_item() {
     std::string removed = arcane_item_.first;
     points_ -= arcane_item_.second.second;
     switch (arcane_item_.second.first) {
-    case ItemClass::MAGIC:
-    case ItemClass::COMMON:
+    case ItemCategory::MAGIC:
+    case ItemCategory::COMMON:
         magic_item_points_ -= arcane_item_.second.second;
         break;
-    case ItemClass::FACTION:
+    case ItemCategory::FACTION:
         faction_item_points_ -= arcane_item_.second.second;
         break;
     default: break;

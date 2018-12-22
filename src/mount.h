@@ -10,7 +10,7 @@
 class mount {
 private:
     std::string name_;
-    UnitClass unit_class_;
+    UnitCategory unit_class_;
     std::vector<std::string> statistics_;
     std::vector<std::string> special_rules_;
     // one-choice-only extra
@@ -31,7 +31,7 @@ public:
     mount();
     explicit mount(
         std::string&& _name,
-        UnitClass _uc,
+        UnitCategory _uc,
         std::vector<std::string>&& _stats,
         std::vector<std::string>&& _sr,
         std::unordered_map<std::string, double>&& _oco_extras,
@@ -41,7 +41,7 @@ public:
     ~mount() = default;
 
     const std::string& name() const noexcept;
-    UnitClass unit_class() const noexcept;
+    UnitCategory unit_class() const noexcept;
     const std::vector<std::string>& statistics() const noexcept;
     const std::vector<std::string>& special_rules() const noexcept;
     const std::unordered_map<std::string, double>& oco_extras() const noexcept;

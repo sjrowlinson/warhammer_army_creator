@@ -1,12 +1,12 @@
 #include "mount.h"
 
 mount::mount()
-    : name_(), unit_class_(UnitClass::INFANTRY), statistics_(),
+    : name_(), unit_class_(UnitCategory::INFANTRY), statistics_(),
       special_rules_(), oco_extras_(), mc_extras_(), restrictions_() {}
 
 mount::mount(
     std::string&& _name,
-    UnitClass _uc,
+    UnitCategory _uc,
     std::vector<std::string>&& _stats,
     std::vector<std::string>&& _sr,
     std::unordered_map<std::string, double>&& _oco_extras,
@@ -23,7 +23,7 @@ mount::mount(
 const std::string& mount::name() const noexcept {
     return name_;
 }
-UnitClass mount::unit_class() const noexcept {
+UnitCategory mount::unit_class() const noexcept {
     return unit_class_;
 }
 const std::vector<std::string>& mount::statistics() const noexcept {

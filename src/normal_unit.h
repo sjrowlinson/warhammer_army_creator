@@ -22,11 +22,11 @@ private:
     // non-champion
     std::unordered_map<
         WeaponType,
-        std::tuple<ItemClass, std::string, double>
+        std::tuple<ItemCategory, std::string, double>
     > weapons_;
     std::unordered_map<
         ArmourType,
-        std::tuple<ItemClass, std::string, double>
+        std::tuple<ItemCategory, std::string, double>
     > armours_;
     std::pair<std::string, std::pair<bool, double>> oco_extra_;
     std::unordered_map<std::string, std::pair<bool, double>> mc_extras_;
@@ -34,11 +34,11 @@ private:
     // champion
     std::unordered_map<
         WeaponType,
-        std::tuple<ItemClass, std::string, double>
+        std::tuple<ItemCategory, std::string, double>
     > champ_weapons_;
     std::unordered_map<
         ArmourType,
-        std::tuple<ItemClass, std::string, double>
+        std::tuple<ItemCategory, std::string, double>
     > champ_armours_;
     std::pair<std::string, std::pair<bool, double>> champ_oco_extra_;
     std::unordered_map<std::string, std::pair<bool, double>> champ_mc_extras_;
@@ -58,7 +58,7 @@ private:
     std::unordered_map<
         CommandGroup, std::pair<std::string, double>
     > command_group;
-    std::pair<std::string, std::pair<ItemClass, double>> banner;
+    std::pair<std::string, std::pair<ItemCategory, double>> banner;
 public:
     // handle
     const std::shared_ptr<base_normal_unit> handle;
@@ -82,20 +82,20 @@ public:
     std::size_t size() const noexcept;
     const std::unordered_map<
         WeaponType,
-        std::tuple<ItemClass, std::string, double>
+        std::tuple<ItemCategory, std::string, double>
     >& weapons() const noexcept override;
-    std::tuple<ItemClass, std::string, double> melee_weapon() const;
-    std::tuple<ItemClass, std::string, double> ranged_weapon() const;
-    std::tuple<ItemClass, std::string, double> champion_melee_weapon() const;
-    std::tuple<ItemClass, std::string, double> champion_ranged_weapon() const;
+    std::tuple<ItemCategory, std::string, double> melee_weapon() const;
+    std::tuple<ItemCategory, std::string, double> ranged_weapon() const;
+    std::tuple<ItemCategory, std::string, double> champion_melee_weapon() const;
+    std::tuple<ItemCategory, std::string, double> champion_ranged_weapon() const;
 
     const std::unordered_map<
         ArmourType,
-        std::tuple<ItemClass, std::string, double>
+        std::tuple<ItemCategory, std::string, double>
     >& armour() const noexcept override;
     const std::unordered_map<
         ArmourType,
-        std::tuple<ItemClass, std::string, double>
+        std::tuple<ItemCategory, std::string, double>
     >& champion_armour() const noexcept;
 
     const std::pair<std::string, std::pair<bool, double>>& oco_extra() const noexcept override;
@@ -119,16 +119,16 @@ public:
     const std::unordered_map<
         CommandGroup, std::pair<std::string, double>
     >& command() const noexcept;
-    const std::pair<std::string, std::pair<ItemClass, double>>& magic_banner() const noexcept override;
+    const std::pair<std::string, std::pair<ItemCategory, double>>& magic_banner() const noexcept override;
 
     // current property modifiers
-    std::string pick_weapon(ItemClass item_type, const std::string& name) override;
-    std::string pick_armour(ItemClass item_type, const std::string& name) override;
+    std::string pick_weapon(ItemCategory item_type, const std::string& name) override;
+    std::string pick_armour(ItemCategory item_type, const std::string& name) override;
 
-    std::string pick_default_weapon(ItemClass item_type, const std::string& name);
-    std::string pick_default_armour(ItemClass item_type, const std::string& name);
-    std::string pick_champion_weapon(ItemClass item_type, const std::string& name);
-    std::string pick_champion_armour(ItemClass item_type, const std::string& name);
+    std::string pick_default_weapon(ItemCategory item_type, const std::string& name);
+    std::string pick_default_armour(ItemCategory item_type, const std::string& name);
+    std::string pick_champion_weapon(ItemCategory item_type, const std::string& name);
+    std::string pick_champion_armour(ItemCategory item_type, const std::string& name);
 
     std::string remove_weapon(WeaponType wt, bool replacing=false) override;
     std::string remove_armour(ArmourType at, bool replacing=false) override;
@@ -140,7 +140,7 @@ public:
 
     void add_command_member(CommandGroup member);
     void remove_command_member(CommandGroup member);
-    std::string pick_banner(ItemClass item_type, const std::string& name) override;
+    std::string pick_banner(ItemCategory item_type, const std::string& name) override;
     std::string remove_banner() override;
 
     std::string pick_oco_extra(const std::string& name) override;

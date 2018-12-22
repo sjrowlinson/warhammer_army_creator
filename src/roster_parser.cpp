@@ -269,7 +269,7 @@ namespace tools {
             auto args = tools::split(v[1], ',');
             auto names_values = tools::zip_args_to_names_values(args);
             std::string name;
-            ItemClass ic = ItemClass::NONE;
+            ItemCategory ic = ItemCategory::NONE;
             WeaponType wt = WeaponType::NONE;
             ArmourType at = ArmourType::NONE;
             for (const auto& y : names_values) {
@@ -611,13 +611,13 @@ namespace tools {
         return {_s, j};
     }
 
-    /*std::tuple<double, std::size_t, ItemClass, ItemType> roster_parser::parse_item_budget(const std::string& s) {
-        if (s == "None" || s.empty()) return {0.0, 1U, ItemClass::NONE, ItemType::NONE};
+    /*std::tuple<double, std::size_t, ItemCategory, ItemType> roster_parser::parse_item_budget(const std::string& s) {
+        if (s == "None" || s.empty()) return {0.0, 1U, ItemCategory::NONE, ItemType::NONE};
         std::vector<std::string> points_w_opts = tools::split(s, ';');
         if (points_w_opts.size() == 1)
-            return {std::stod(points_w_opts[0]), 1U, ItemClass::NONE, ItemType::NONE};
+            return {std::stod(points_w_opts[0]), 1U, ItemCategory::NONE, ItemType::NONE};
         double pts = std::stod(points_w_opts[0]);
-        ItemClass ic = ItemClass::NONE;
+        ItemCategory ic = ItemCategory::NONE;
         std::size_t num = 1U;
         ItemType it = ItemType::NONE;
         std::vector<std::string> opts = tools::split(points_w_opts[1], ',');

@@ -3,7 +3,7 @@
 base_unit::base_unit(
     Faction faction,
     UnitType ut,
-    UnitClass uc,
+    UnitCategory uc,
     const std::string& name,
     std::size_t min_size,
     std::size_t max_size
@@ -14,7 +14,7 @@ BaseUnitType base_unit::base_unit_type() const noexcept { return but; }
 
 Faction base_unit::faction() const noexcept { return faction_; }
 UnitType base_unit::unit_type() const noexcept { return ut_; }
-UnitClass base_unit::unit_class() const noexcept { return uc_; }
+UnitCategory base_unit::unit_class() const noexcept { return uc_; }
 
 const std::string& base_unit::name() const noexcept { return name_; }
 std::size_t base_unit::min_size() const noexcept { return min_size_; }

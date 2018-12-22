@@ -7,11 +7,11 @@ equipment::equipment()
 equipment::equipment(
     std::unordered_map<
         WeaponType,
-        std::pair<ItemClass, std::string>
+        std::pair<ItemCategory, std::string>
     >&& _weapons,
     std::unordered_map<
         ArmourType,
-        std::pair<ItemClass, std::string>
+        std::pair<ItemCategory, std::string>
     >&& _armours,
     std::vector<std::string>&& _talismans,
     std::vector<std::string>&& _arcanes,
@@ -34,13 +34,13 @@ equipment::equipment(tmp_parse_equipment&& tpe)
 
 const std::unordered_map<
     WeaponType,
-    std::pair<ItemClass, std::string>
+    std::pair<ItemCategory, std::string>
 >& equipment::weapons() const noexcept {
     return weapons_;
 }
 const std::unordered_map<
     ArmourType,
-    std::pair<ItemClass, std::string>
+    std::pair<ItemCategory, std::string>
 >& equipment::armours() const noexcept {
     return armour_;
 }

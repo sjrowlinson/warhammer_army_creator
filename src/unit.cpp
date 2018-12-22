@@ -70,7 +70,7 @@ UnitType unit::unit_type() const noexcept {
     return base_->unit_type();
 }
 
-UnitClass unit::unit_class() const noexcept {
+UnitCategory unit::unit_class() const noexcept {
     return base_->unit_class();
 }
 

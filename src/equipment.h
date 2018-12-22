@@ -11,11 +11,11 @@
 struct tmp_parse_equipment {
     std::unordered_map<
         WeaponType,
-        std::pair<ItemClass, std::string>
+        std::pair<ItemCategory, std::string>
     > weapons;
     std::unordered_map<
         ArmourType,
-        std::pair<ItemClass, std::string>
+        std::pair<ItemCategory, std::string>
     > armour;
     std::vector<std::string> talismans;
     std::vector<std::string> arcane;
@@ -27,11 +27,11 @@ class equipment {
 private:
     std::unordered_map<
         WeaponType,
-        std::pair<ItemClass, std::string>
+        std::pair<ItemCategory, std::string>
     > weapons_;
     std::unordered_map<
         ArmourType,
-        std::pair<ItemClass, std::string>
+        std::pair<ItemCategory, std::string>
     > armour_;
     std::vector<std::string> talismans_;
     std::vector<std::string> arcane_;
@@ -42,11 +42,11 @@ public:
     explicit equipment(
         std::unordered_map<
             WeaponType,
-            std::pair<ItemClass, std::string>
+            std::pair<ItemCategory, std::string>
         >&& _weapons,
         std::unordered_map<
             ArmourType,
-            std::pair<ItemClass, std::string>
+            std::pair<ItemCategory, std::string>
         >&& _armours,
         std::vector<std::string>&& _talismans,
         std::vector<std::string>&& _arcanes,
@@ -58,11 +58,11 @@ public:
 
     const std::unordered_map<
         WeaponType,
-        std::pair<ItemClass, std::string>
+        std::pair<ItemCategory, std::string>
     >& weapons() const noexcept;
     const std::unordered_map<
         ArmourType,
-        std::pair<ItemClass, std::string>
+        std::pair<ItemCategory, std::string>
     >& armours() const noexcept;
     const std::vector<std::string>& talismans() const noexcept;
     const std::vector<std::string>& arcane_items() const noexcept;

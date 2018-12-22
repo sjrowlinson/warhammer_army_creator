@@ -6,11 +6,11 @@ options::options()
 options::options(
     std::unordered_map<
         std::string,
-        std::tuple<WeaponType, ItemClass, double, std::vector<std::string>>
+        std::tuple<WeaponType, ItemCategory, double, std::vector<std::string>>
     >&& _weapons,
     std::unordered_map<
         std::string,
-        std::tuple<ArmourType, ItemClass, double, std::vector<std::string>>
+        std::tuple<ArmourType, ItemCategory, double, std::vector<std::string>>
     >&& _armours,
     std::unordered_map<
         std::string,
@@ -52,13 +52,13 @@ options::options(tmp_parse_options&& tpo)
 
 const std::unordered_map<
     std::string,
-    std::tuple<WeaponType, ItemClass, double, std::vector<std::string>>
+    std::tuple<WeaponType, ItemCategory, double, std::vector<std::string>>
 >& options::weapons() const noexcept {
     return weapons_;
 }
 const std::unordered_map<
     std::string,
-    std::tuple<ArmourType, ItemClass, double, std::vector<std::string>>
+    std::tuple<ArmourType, ItemCategory, double, std::vector<std::string>>
 >& options::armour() const noexcept {
     return armour_;
 }
