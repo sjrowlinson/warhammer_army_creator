@@ -26,7 +26,11 @@ Battle Wizard Lord
     CATEGORY = Infantry
     POINTS = 165
     CHARACTERISTICS = 4 3 3 3 4 3 3 1 8
-    OPTIONAL_MOUNTS = Imperial Griffon [170], Imperial Pegasus [45], Warhorse [18], Celestial Hurricanum [125], Luminark of Hysh [120]
+    OPTIONAL_MOUNTS = [Name : Imperial Griffon, Points : 170
+                       Name : Imperial Pegasus, Points : 45
+                       Name : Warhorse, Points : 18
+                       Name : Celestial Hurricanum, Points : 125
+                       Name : Luminark of Hysh, Points : 120]
     MAGIC_ITEM_BUDGET = 100
     TOTAL_ITEM_BUDGET = 100
     MAGE_LEVEL = 3
@@ -40,10 +44,12 @@ Arch Lector
     POINTS = 100
     CHARACTERISTICS = 4 4 4 4 4 3 4 2 9
     SPECIAL_RULES = Battle Prayers, Divine Power, Righteous Fury
-    EQUIPMENT = Armour: Light armour {Mundane} [Armour]
-    OPTIONAL_WEAPONS = Additional hand weapon {Mundane} [Melee] (2), Great weapon {Mundane} [Melee] (5)
-    OPTIONAL_ARMOUR = Heavy armour {Mundane} [Armour] (4), Shield {Mundane} [Shield] (4)
-    OPTIONAL_MOUNTS = The War Altar of Sigmar [150], Warhorse [18]
+    EQUIPMENT = Armour - Name: Light armour, Category : Mundane, Type: Armour
+    OPTIONAL_WEAPONS = [Name : Additional hand weapon, Category : Mundane, Type : Melee, Points : 2
+                        Name : Great weapon, Category : Mundane, Type : Melee, Points : 5]
+    OPTIONAL_ARMOUR = [Name : Heavy armour, Category : Mundane, Type: Armour, Points : 4
+                       Name : Shield, Category : Mundane, Type : Shield, Points : 4]
+    OPTIONAL_MOUNTS = Name : The War Altar of Sigmar, Points : 150 ; Name : Warhorse, Points : 18
     MAGIC_ITEM_BUDGET = 100
     TOTAL_ITEM_BUDGET = 100
 
@@ -55,9 +61,10 @@ Grand Master
     POINTS = 155
     CHARACTERISTICS = 4 6 6 4 4 3 6 4 9
     SPECIAL_RULES = Immune to Psychology, Master of Battle
-    EQUIPMENT = Armour: Full plate armour {Mundane} [Armour]
-    OPTIONAL_WEAPONS = Great weapon {Mundane} [Melee] (6), Lance {Mundane} [Melee] (7)
-    OPTIONAL_ARMOUR = Shield {Mundane} [Shield] (4)
+    EQUIPMENT = Armour - Name: Full plate armour, Category : Mundane, Type: Armour
+    OPTIONAL_WEAPONS = [Name : Great weapon, Category : Mundane, Type : Melee, Points : 6
+                        Name : Lance, Category : Mundane, Type : Melee, Points : 7]
+    OPTIONAL_ARMOUR = Name : Shield, Category : Mundane, Type : Shield, Points : 4
     MAGIC_ITEM_BUDGET = 100
     TOTAL_ITEM_BUDGET = 100
 
@@ -70,11 +77,17 @@ Captain of The Empire
     POINTS = 60
     CHARACTERISTICS = 4 5 5 4 4 2 5 3 8
     SPECIAL_RULES = Hold the Line!
-    EQUIPMENT = Armour: Light armour {Mundane} [Armour]
-    OPTIONAL_WEAPONS = Additional hand weapon {Mundane} [Melee] (3), Great weapon {Mundane} [Melee] (6), Lance {Mundane} [Melee] (7), Handgun {Mundane} [Ballistic] (6), Longbow {Mundane} [Ballistic] (5), Pistol {Mundane} [Ballistic] (5)
-    OPTIONAL_ARMOUR = Full plate armour {Mundane} [Armour] (6), Heavy armour {Mundane} [Armour] (2), Shield {Mundane} [Shield] (2)
-    OPTIONAL_MOUNTS = Imperial Pegasus [45], Warhorse [12]
-    OPTIONAL_MC_EXTRAS = Battle Standard Bearer {True} [25]
+    EQUIPMENT = Armour - Name: Light armour, Category : Mundane, Type: Armour
+    OPTIONAL_WEAPONS = [Name : Additional hand weapon, Category : Mundane, Type : Melee, Points : 3
+                        Name : Great weapon, Category : Mundane, Type : Melee, Points : 6
+                        Name : Lance, Category : Mundane, Type : Melee, Points : 7
+                        Name : Handgun, Category : Mundane, Type : Ballistic, Points : 5
+                        Name : Pistol, Category : Mundane, Type : Ballistic, Points : 5]
+    OPTIONAL_ARMOUR = [Name : Full plate armour, Category : Mundane, Type : Armour, Points : 6
+                       Name : Heavy armour, Category : Mundane, Type: Armour, Points : 2
+                       Name : Shield, Category : Mundane, Type : Shield, Points : 2]
+    OPTIONAL_MOUNTS = Name : Imperial Pegasus, Points : 45 ; Name : Warhorse, Points : 12
+    OPTIONAL_MC_EXTRAS = Name : Battle Standard Bearer, Singular : true, Points : 25
     MAGIC_ITEM_BUDGET = 50
     TOTAL_ITEM_BUDGET = 50
 
@@ -84,7 +97,7 @@ Battle Wizard
     CATEGORY = Infantry
     POINTS = 65
     CHARACTERISTICS = 4 3 3 3 3 2 3 1 7
-    OPTIONAL_MOUNTS = Warhorse [12]
+    OPTIONAL_MOUNTS = Name : Warhorse, Points : 12
     MAGIC_ITEM_BUDGET = 50
     TOTAL_ITEM_BUDGET = 50
     MAGE_LEVEL = 1
@@ -98,10 +111,12 @@ Warrior Priest
     POINTS = 65
     CHARACTERISTICS = 4 4 4 4 4 2 4 2 8
     SPECIAL_RULES = Battle Prayers, Divine Power, Righteous Fury
-    EQUIPMENT = Armour: Light armour {Mundane} [Armour]
-    OPTIONAL_WEAPONS = Additional hand weapon {Mundane} [Melee] (2), Great weapon {Mundane} [Melee] (5)
-    OPTIONAL_ARMOUR = Heavy armour {Mundane} [Armour] (2), Shield {Mundane} [Shield] (2)
-    OPTIONAL_MOUNTS = Warhorse {Cavalry} [12]
+    EQUIPMENT = Armour - Name: Light armour, Category : Mundane, Type: Armour
+    OPTIONAL_WEAPONS = [Name : Additional hand weapon, Category : Mundane, Type : Melee, Points : 2
+                        Name : Great weapon, Category : Mundane, Type : Melee, Points : 5]
+    OPTIONAL_ARMOUR = [Name : Heavy armour, Category : Mundane, Type: Armour, Points : 2
+                       Name : Shield, Category : Mundane, Type : Shield, Points : 2]
+    OPTIONAL_MOUNTS = Name : Warhorse, Points : 12
     MAGIC_ITEM_BUDGET = 50
     TOTAL_ITEM_BUDGET = 50
 
@@ -112,9 +127,13 @@ Master Engineer
     POINTS = 65
     CHARACTERISTICS = 4 3 4 3 3 2 3 1 7
     SPECIAL_RULES = Master of Ballistics, 'Stand back, Sir!'
-    OPTIONAL_WEAPONS = Grenade launching blunderbuss {Mundane} [Ballistic] (10), Hochland long rifle {Mundane} [Ballistic] (20), Pigeon bombs {Mundane} [Ballistic] (20), Repeater handgun {Mundane} [Ballistic] (10), Repeater pistol {Mundane} [Ballistic] (10)
-    OPTIONAL_ARMOUR = Light armour {Mundane} [Armour] (1)
-    OPTIONAL_MOUNTS = Mechanical Steed [25], Warhorse [12]
+    OPTIONAL_WEAPONS = [Name : Grenade launching blunderbuss, Category : Mundane, Type : Ballistic, Points : 10
+                        Name : Hochland long rifle Category : Mundane, Type : Ballistic, Points : 20
+                        Name : Pigeon bombs Category : Mundane, Type : Ballistic, Points : 20
+                        Name : Repeater handgun Category : Mundane, Type : Ballistic, Points : 10
+                        Name : Repeater pistol Category : Mundane, Type : Ballistic, Points : 10]
+    OPTIONAL_ARMOUR = Name : Light armour Category : Mundane, Type: Armour, Points : 1
+    OPTIONAL_MOUNTS = Name : Mechanical Steed, Points : 25 ; Name : Warhorse, Points : 12
     MAGIC_ITEM_BUDGET = 50
     TOTAL_ITEM_BUDGET = 50
 
@@ -125,8 +144,9 @@ Witch Hunter
     POINTS = 50
     CHARACTERISTICS = 4 4 4 4 4 2 4 2 8
     SPECIAL_RULES = Accusation, Grim Resolve, Magic Resistance (2), Tools of Judgement
-    EQUIPMENT = Weapon: Pistol {Mundane} [Ballistic], Armour: Light armour {Mundane} [Armour]
-    OPTIONAL_WEAPONS = Brace of pistols {Mundane} [Ballistic] (5), Great weapon {Mundane} [Melee] (5)
+    EQUIPMENT = Weapon - Name : Pistol, Category : Mundane, Type : Ballistic ; Armour - Name: Light armour, Category : Mundane, Type: Armour
+    OPTIONAL_WEAPONS = [Name : Brace of pistols, Category : Mundane, Type : Ballistic, Points : 5
+                        Name : Great weapon, Category : Mundane, Type : Melee, Points : 5]
     MAGIC_ITEM_BUDGET = 50
     TOTAL_ITEM_BUDGET = 50
 
@@ -143,10 +163,10 @@ Halberdiers
     CHARACTERISTICS = 4 3 3 3 3 1 3 1 7
     CHAMPION_CHARACTERISTICS = 4 3 3 3 3 1 3 2 7
     SPECIAL_RULES = Detachment, Regimental Unit
-    EQUIPMENT = Weapon: Halberd {Mundane} [Melee], Armour: Light armour {Mundane} [Armour]
-    OPTIONAL_ARMOUR = Shields {Mundane} [Shield] (1)
-    OPTIONAL_MC_EXTRAS = Detachment {True} [0]
-    OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Sergeant [10]
+    EQUIPMENT = Weapon - Name: Halberd, Category: Mundane, Type: Melee ; Armour - Name: Light armour, Category: Mundane, Type: Armour
+    OPTIONAL_ARMOUR = Name: Shields, Category: Mundane, Type: Shield, Points: 1
+    OPTIONAL_MC_EXTRAS = Name: Detachment, Singular: true, Points: 0
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Sergeant, Points: 10
 
 Spearmen
     BASE_TYPE = Normal
@@ -159,7 +179,7 @@ Spearmen
     SPECIAL_RULES = Detachment, Regimental Unit
     EQUIPMENT = Weapon - Name: Spear, Category: Mundane, Type: Melee ; Armour - Name: Light armour, Category: Mundane, Type: Armour
     OPTIONAL_ARMOUR = Name: Shields, Category: Mundane, Type: Shield, Points: 1
-    OPTIONAL_MC_EXTRAS = Name: Detachment, Singular: True, Points: 0
+    OPTIONAL_MC_EXTRAS = Name: Detachment, Singular: true, Points: 0
     OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Sergeant, Points: 10
 
 Swordsmen
@@ -171,9 +191,9 @@ Swordsmen
     CHARACTERISTICS = 4 4 3 3 3 1 3 1 7
     CHAMPION_CHARACTERISTICS = 4 4 3 3 3 1 3 2 7
     SPECIAL_RULES = Detachment, Regimental Unit
-    EQUIPMENT = Armour: Light armour {Mundane} [Armour], Armour: Shield {Mundane} [Shield]
-    OPTIONAL_MC_EXTRAS = Detachment {True} [0]
-    OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Sergeant [10]
+    EQUIPMENT = Armour - Name: Light armour, Category: Mundane, Type: Armour ; Armour - Name: Shields, Category: Mundane, Type: Shield
+    OPTIONAL_MC_EXTRAS = Name: Detachment, Singular: true, Points: 0
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Sergeant, Points: 10
 
 Crossbowmen
     BASE_TYPE = Normal
@@ -184,9 +204,9 @@ Crossbowmen
     CHARACTERISTICS = 4 3 3 3 3 1 3 1 7
     CHAMPION_CHARACTERISTICS = 4 3 4 3 3 1 3 1 7
     SPECIAL_RULES = Detachment, Regimental Unit
-    EQUIPMENT = Weapon: Crossbow {Mundane} [Ballistic]
-    OPTIONAL_MC_EXTRAS = Detachment {True} [0]
-    OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Marksman [10]
+    EQUIPMENT = Weapon - Name: Crossbow, Category: Mundane, Type: Ballistic
+    OPTIONAL_MC_EXTRAS = Name: Detachment, Singular: true, Points: 0
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Marksman, Points: 10
 
 Handgunners
     BASE_TYPE = Normal
@@ -197,10 +217,12 @@ Handgunners
     CHARACTERISTICS = 4 3 3 3 3 1 3 1 7
     CHAMPION_CHARACTERISTICS = 4 3 4 3 3 1 3 1 7
     SPECIAL_RULES = Detachment, Regimental Unit
-    EQUIPMENT = Weapon: Handgun {Mundane} [Ballistic]
-    CHAMPION_OPTIONAL_WEAPONS = Brace of pistols {Mundane} [Ballistic] (5), Hochland long rifle {Mundane} [Ballistic] (20), Repeater handgun {Mundane} [Ballistic] (10)
-    OPTIONAL_MC_EXTRAS = Detachment {True} [0]
-    OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Marksman [10]
+    EQUIPMENT = Weapon - Name: Handgun, Category: Mundane, Type: Ballistic
+    CHAMPION_OPTIONAL_WEAPONS = [Name : Brace of pistols, Category : Mundane, Type: Ballistic, Points: 5
+                                 Name : Hochland long rifle, Category : Mundane, Type: Ballistic, Points: 20
+                                 Name : Repeater handgun, Category : Mundane, Type: Ballistic, Points: 10]
+    OPTIONAL_MC_EXTRAS = Name: Detachment, Singular: true, Points: 0
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Marksman, Points: 10
 
 Archers
     BASE_TYPE = Normal
@@ -211,9 +233,9 @@ Archers
     CHARACTERISTICS = 4 3 3 3 3 1 3 1 7
     CHAMPION_CHARACTERISTICS = 4 3 4 3 3 1 3 1 7
     SPECIAL_RULES = Detachment, Regimental Unit, Skirmishers
-    EQUIPMENT = Weapon: Bow {Mundane} [Ballistic]
-    OPTIONAL_MC_EXTRAS = Detachment {True} [0]
-    OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Marksman [10]
+    EQUIPMENT = Weapon - Name: Bow, Category: Mundane, Type: Ballistic
+    OPTIONAL_MC_EXTRAS = Name: Detachment, Singular: true, Points: 0
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Marksman, Points: 10
 
 Free Company Militia
     BASE_TYPE = Normal
@@ -224,8 +246,8 @@ Free Company Militia
     CHARACTERISTICS = 4 3 3 3 3 1 3 1 7
     CHAMPION_CHARACTERISTICS = 4 3 3 3 3 1 3 2 7
     SPECIAL_RULES = Detachment
-    EQUIPMENT = Weapon: Two hand weapons {Mundane} [Melee]
-    OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Militia Leader [10]
+    EQUIPMENT = Weapon - Name: Two hand weapons, Category: Mundane, Type: Melee
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Militia leader, Points: 10
 
 Knightly Orders
     BASE_TYPE = Normal
@@ -236,10 +258,12 @@ Knightly Orders
     SIZE = 5, inf
     CHARACTERISTICS = 4 4 3 3 3 1 4 1 7
     CHAMPION_CHARACTERISTICS = 4 4 3 3 3 1 4 2 7
-    EQUIPMENT = Weapon: Lance {Mundane} [Melee], Armour: Full plate armour {Mundane} [Armour], Armour: Shield {Mundane} [Shield]
-    OPTIONAL_WEAPONS = Great weapons {Mundane} [Melee] (0)
-    OPTIONAL_MC_EXTRAS = Inner Circle Knights {False} [3]
-    OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Preceptor [10]
+    EQUIPMENT = [Weapon - Name: Lance, Category: Mundane, Type: Melee
+                 Armour - Name: Full plate armour, Category: Mundane, Type: Armour
+                 Armour - Name: Shield, Category: Mundane, Type: Shield]
+    OPTIONAL_WEAPONS = Name : Great weapon, Category : Mundane, Type : Melee, Points : 0
+    OPTIONAL_MC_EXTRAS = Name : Inner Circle Knights, Points : 3
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Preceptor, Points: 10
     BANNER_BUDGET = 50
 
 # Special
@@ -253,8 +277,9 @@ Greatswords
     CHARACTERISTICS = 4 4 3 3 3 1 3 1 8
     CHAMPION_CHARACTERISTICS = 4 4 3 3 3 1 3 2 8
     SPECIAL_RULES = Regimental Unit, Stubborn
-    EQUIPMENT = Weapon: Great weapon {Mundane} [Melee], Armour: Full plate armour {Mundane} [Armour]
-    OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Count's Champion [10]
+    EQUIPMENT = [Weapon - Name: Great weapon, Category: Mundane, Type: Melee
+                 Armour - Name: Full plate armour, Category: Mundane, Type: Armour]
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Count's Champion, Points: 10
     BANNER_BUDGET = 50
 
 Demigryph Knights
@@ -267,9 +292,11 @@ Demigryph Knights
     CHARACTERISTICS = 4 4 3 4 3 1 3 1 8
     CHAMPION_CHARACTERISTICS = 4 4 3 4 3 1 3 2 8
     SPECIAL_RULES = Fear
-    EQUIPMENT = Weapon: Lance {Mundane} [Melee], Armour: Full plate armour {Mundane} [Armour], Armour: Shield {Mundane} [Shield]
-    OPTIONAL_WEAPONS = Halberds {Mundane} [Melee] (0)
-    OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Inner Circle Preceptor [10]
+    EQUIPMENT = [Weapon - Name: Lance, Category: Mundane, Type: Melee
+                 Armour - Name: Full plate armour, Category: Mundane, Type: Armour
+                 Armour - Name: Shield, Category: Mundane, Type: Shield]
+    OPTIONAL_WEAPONS = Name : Halberds, Category : Mundane, Type : Melee, Points : 0
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Inner Circle Preceptor, Points: 10
     BANNER_BUDGET = 50
 
 Reiksguard Knights
@@ -282,8 +309,10 @@ Reiksguard Knights
     CHARACTERISTICS = 4 4 3 4 3 1 3 1 8
     CHAMPION_CHARACTERISTICS = 4 4 3 4 3 1 3 2 8
     SPECIAL_RULES = Stubborn
-    EQUIPMENT = Weapon: Lance {Mundane} [Melee], Armour: Full plate armour {Mundane} [Armour], Armour: Shield {Mundane} [Shield]
-    OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Reikscaptain [10]
+    EQUIPMENT = [Weapon - Name: Lance, Category: Mundane, Type: Melee
+                 Armour - Name: Full plate armour, Category: Mundane, Type: Armour
+                 Armour - Name: Shield, Category: Mundane, Type: Shield]
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Reikscaptain, Points: 10
     BANNER_BUDGET = 50
 
 Huntsmen
@@ -295,9 +324,9 @@ Huntsmen
     CHARACTERISTICS = 4 3 3 3 3 1 3 1 7
     CHAMPION_CHARACTERISTICS = 4 3 4 3 3 1 3 1 7
     SPECIAL_RULES = Scouts, Skirmishers
-    EQUIPMENT = Weapon: Bow {Mundane} [Ballistic]
-    OPTIONAL_MC_EXTRAS = Detachment {True} [0]
-    OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Tracker [10]
+    EQUIPMENT = Weapon - Name: Bow, Category: Mundane, Type: Ballistic
+    OPTIONAL_MC_EXTRAS = Name: Detachment, Singular: true, Points: 0
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Tracker, Points: 10
 
 Pistoliers
     BASE_TYPE = Normal
@@ -309,9 +338,10 @@ Pistoliers
     CHARACTERISTICS = 4 3 3 3 3 1 3 1 7
     CHAMPION_CHARACTERISTICS = 4 3 4 3 3 1 3 1 7
     SPECIAL_RULES = Fast Cavalry
-    EQUIPMENT = Weapon: Brace of pistols {Mundane} [Ballistic], Armour: Light armour {Mundane} [Armour]
-    CHAMPION_OPTIONAL_WEAPONS = Brace of pistols including a repeater pistol {Mundane} [Ballistic] (10), Repeater Handgun {Mundane} [Ballistic] (10)
-    OPTIONAL_COMMAND = Musician: Musician [10], Champion: Outrider [10]
+    EQUIPMENT = Weapon - Name : Brace of Pistols, Category : Mundane, Type : Ballistic ; Armour - Name: Light armour, Category : Mundane, Type: Armour
+    CHAMPION_OPTIONAL_WEAPONS = [Name : Brace of pistols including a repeater pistol, Category : Mundane, Type : Ballistic, Points : 10
+                                 Name : Repeater Handgun, Category : Mundane, Type : Ballistic, Points : 10]
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Champion - Name: Outrider, Points: 10
 
 Outriders
     BASE_TYPE = Normal
@@ -323,10 +353,11 @@ Outriders
     CHARACTERISTICS = 4 3 4 3 3 1 3 1 7
     CHAMPION_CHARACTERISTICS = 4 3 5 3 3 1 3 1 7
     SPECIAL_RULES = Fast Cavalry
-    EQUIPMENT = Weapon: Repeater handgun {Mundane} [Ballistic], Armour: Light armour {Mundane} [Armour]
-    CHAMPION_OPTIONAL_WEAPONS = Brace of pistols including a repeater pistol {Mundane} [Ballistic] (10), Grenade launching blunderbuss {Mundane} [Ballistic] (10)
-    OPTIONAL_MC_EXTRAS = Barding {False} [1]
-    OPTIONAL_COMMAND = Musician: Musician [10], Champion: Sharpshooter [10]
+    EQUIPMENT = Weapon - Name : Repeater handgun, Category : Mundane, Type : Ballistic ; Armour - Name: Light armour, Category : Mundane, Type: Armour
+    CHAMPION_OPTIONAL_WEAPONS = [Name : Brace of pistols including a repeater pistol, Category : Mundane, Type : Ballistic, Points : 10
+                                 Name : Grenade launching blunderbuss, Category : Mundane, Type : Ballistic, Points : 10]
+    OPTIONAL_MC_EXTRAS = Name : Barding, Points : 1
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Champion - Name: Sharpshooter, Points: 10
 
 Great Cannon
     BASE_TYPE = Normal
@@ -354,8 +385,8 @@ Flagellants
     CHARACTERISTICS = 4 3 3 3 3 1 3 1 7
     CHAMPION_CHARACTERISTICS = 4 3 3 3 3 1 3 2 7
     SPECIAL_RULES = The End is Nigh!, Frenzy, Unbreakable
-    EQUIPMENT = Weapon: Flail {Mundane} [Melee]
-    OPTIONAL_COMMAND = Champion: Prophet of Doom [10]
+    EQUIPMENT = Weapon - Name: Flail, Category : Mundane, Type : Melee
+    OPTIONAL_COMMAND = Champion - Name: Prophet of Doom, Points: 10
 
 # Rare
 
@@ -385,7 +416,7 @@ Steam Tank
     CHARACTERISTICS = 0/Var - - 6 6 10 - - -
     CHAMPION_CHARACTERISTICS = - 3 4 3 - - 3 1 7
     SPECIAL_RULES = Large Target, Random Movement (variable), Steam Points, Steel Behemoth, Terror, Unbreakable, Armour Save (1+)
-    OPTIONAL_MC_EXTRAS = Engineer Commander - Hochland long rifle {True} [20]
+    OPTIONAL_MC_EXTRAS = Name : Engineer Commander - Hochland long rifle, Singular : true, Points : 20
 
 Celestial Hurricanum
     BASE_TYPE = Normal

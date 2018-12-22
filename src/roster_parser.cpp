@@ -354,10 +354,7 @@ namespace tools {
         for (const auto& x : all) {
             auto args = tools::split(x, ',');
             auto names_values = tools::zip_args_to_names_values(args);
-            if (!std::count_if(
-                std::begin(names_values),
-                std::end(names_values),
-                [](const auto& nv) { return nv.first == "Name"; })) {
+            if (!tools::in_names_values(names_values, "Name")) {
                 std::string msg = "Error parsing + " + enum_convert::FACTION_TO_STRING.at(faction)
                         + " roster - unit: " + read_line(blocks[curr_block])
                         + " has an invalid argument OPTIONAL_WEAPONS where an item"
@@ -414,10 +411,7 @@ namespace tools {
         for (const auto& x : all) {
             auto args = tools::split(x, ',');
             auto names_values = tools::zip_args_to_names_values(args);
-            if (!std::count_if(
-                std::begin(names_values),
-                std::end(names_values),
-                [](const auto& nv) { return nv.first == "Name"; })) {
+            if (!tools::in_names_values(names_values, "Name")) {
                 std::string msg = "Error parsing + " + enum_convert::FACTION_TO_STRING.at(faction)
                         + " roster - unit: " + read_line(blocks[curr_block])
                         + " has an invalid argument OPTIONAL_ARMOUR where an item"
@@ -474,10 +468,7 @@ namespace tools {
         for (const auto& x : all) {
             auto args = tools::split(x, ',');
             auto names_values = tools::zip_args_to_names_values(args);
-            if (!std::count_if(
-                std::begin(names_values),
-                std::end(names_values),
-                [](const auto& nv) { return nv.first == "Name"; })) {
+            if (!tools::in_names_values(names_values, "Name")) {
                 std::string msg = "Error parsing + " + enum_convert::FACTION_TO_STRING.at(faction)
                         + " roster - unit: " + read_line(blocks[curr_block])
                         + " has an invalid argument OPTIONAL_WEAPONS where an item"
@@ -512,10 +503,7 @@ namespace tools {
         for (const auto& x : all) {
             auto args = tools::split(x, ',');
             auto names_values = tools::zip_args_to_names_values(args);
-            if (!std::count_if(
-                std::begin(names_values),
-                std::end(names_values),
-                [](const auto& nv) { return nv.first == "Name"; })) {
+            if (!tools::in_names_values(names_values, "Name")) {
                 std::string msg = "Error parsing + " + enum_convert::FACTION_TO_STRING.at(faction)
                         + " roster - unit: " + read_line(blocks[curr_block])
                         + " has an invalid argument OPTIONAL_OCO_EXTRAS where an item"

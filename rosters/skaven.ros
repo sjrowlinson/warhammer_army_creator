@@ -7,7 +7,7 @@ Lord Skrolk
     POINTS = 470
     CHARACTERISTICS = 5 6 4 4 5 3 6 4 7
     SPECIAL_RULES = Scurry Away!, Strength in Numbers, Aura of Pestilence, Frenzy, Terror
-    EQUIPMENT = Weapon: Rod of Corruption {Magic} [Melee], Arcane: The Liber Bubonicus
+    EQUIPMENT = Weapon - Name: Rod of Corruption, Category: Magic, Type: Melee ; Arcane - Name: The Liber Bubonicus
     UNIQUENESS = true
     MAGE_LEVEL = 3
     MAGE_LORES = Plague
@@ -19,7 +19,7 @@ Thanquol & Boneripper
     POINTS = 235
     CHARACTERISTICS = 5 3 3 3 4 3 6 1 7
     SPECIAL_RULES = Scurry Away!, Strength in Numbers, Verminous Valour, Blessing of the Horned Rat, Warpstone Addiction
-    EQUIPMENT = Talisman: Warp-amulet, Arcane: Staff of the Horned One
+    EQUIPMENT = Talisman - Name: Warp-amulet ; Arcane - Name: Staff of the Horned One
     UNIQUENESS = true
     MAGE_LEVEL = 4
     MAGE_LORES = Plague, Ruin
@@ -31,7 +31,9 @@ Ikit Claw
     POINTS = 395
     CHARACTERISTICS = 5 5 3 5 4 3 3 2 7
     SPECIAL_RULES = Scurry Away!, Strength in Numbers, Verminous Valour
-    EQUIPMENT = Weapon: Storm Daemon {Magic} [Melee], Weapon: Warplock Pistol {Mundane} [Ballistic], Armour: Iron Frame {Magic} [Armour]
+    EQUIPMENT = [Weapon - Name: Storm Daemon, Category: Magic, Type: Melee
+                 Weapon - Name: Warplock Pistol, Category: Mundane, Type: Ballistic
+                 Armour - Name: Iron Frame, Category: Magic, Type: Armour]
     UNIQUENESS = true
     MAGE_LEVEL = 3
     MAGE_LORES = Ruin
@@ -43,7 +45,7 @@ Throt the Unclean
     POINTS = 225
     CHARACTERISTICS = 6 6 3 4 4 3 6 4 7
     SPECIAL_RULES = Scurry Away!, Strength in Numbers, Fear, Master Controller, Ravening Hunger, Regeneration
-    EQUIPMENT = Armour: Light armour {Mundane} [Armour], Weapon: Creature-killer & Whip of Domination {Magic} [Melee]
+    EQUIPMENT = Armour - Name: Light armour, Category: Mundane, Type: Armour ; Weapon - Name: Creature-killer & Whip of Domination, Category: Magic, Type: Melee
     UNIQUENESS = true
 
 Queek Headtaker
@@ -53,7 +55,7 @@ Queek Headtaker
     POINTS = 215
     CHARACTERISTICS = 5 7 4 4 4 3 7 6 8
     SPECIAL_RULES = Scurry Away!, Strength in Numbers, Extreme Distrust, Hates Dwarfs/Orcs & Goblins, Tropy Heads
-    EQUIPMENT = Weapon: Dwarf Gouger & additional hand weapon {Magic} [Melee], Armour: Warp-shard armour {Magic} [Armour]
+    EQUIPMENT = Weapon - Name: Dwarf Gouger & additional hand weapon, Category: Magic, Type: Melee ; Armour - Name: Warp-shard armour, Category: Magic, Type: Armour
     UNIQUENESS = true
 
 Warlord
@@ -63,10 +65,12 @@ Warlord
     POINTS = 90
     CHARACTERISTICS = 5 6 4 4 4 3 7 4 7
     SPECIAL_RULES = Scurry Away!, Strength in Numbers, Verminous Valour
-    EQUIPMENT = Armour: Heavy armour {Mundane} [Armour]
-    OPTIONAL_WEAPONS = Great weapon {Mundane} [Melee] (6), Additional hand weapon {Mundane} [Melee] (3), Halberd {Mundane} [Melee] (3)
-    OPTIONAL_ARMOUR = Shield {Mundane} [Shield] (3)
-    OPTIONAL_MOUNTS = Rat Ogre Bonebreaker [65], War-litter [35], Great Pox Rat [30]
+    EQUIPMENT = Armour - Name : Heavy armour, Category : Mundane, Type : Armour
+    OPTIONAL_WEAPONS = [Name: Great weapon, Category: Mundane, Type: Melee, Points: 6
+                        Name: Additional hand weapon, Category: Mundane, Type: Melee, Points: 3
+                        Name: Halberd, Category: Mundane, Type: Melee, Points: 3]
+    OPTIONAL_ARMOUR = Name: Shield, Category: Mundane, Type: Shield, Points: 3
+    OPTIONAL_MOUNTS = Name: Rat Ogre Bonebreaker, Points: 65 ; Name: War-litter, Points: 35 ; Name: Great Pox Rat, Points: 30
     MAGIC_ITEM_BUDGET = 100
     FACTION_ITEM_BUDGET = 100
     TOTAL_ITEM_BUDGET = 100
@@ -78,7 +82,7 @@ Vermin Lord
     POINTS = 500
     CHARACTERISTICS = 8 8 4 6 5 5 10 5 8
     SPECIAL_RULES = Scurry Away!, Immune to Psychology, Large Target, Rat Daemon, Terror, Ward save (5+)
-    EQUIPMENT = Weapon: Doom Glaive {Magic} [Melee]
+    EQUIPMENT = Weapon - Name: Doom Glaive, Category: Magic, Type: Melee
     MAGE_LEVEL = 4
     MAGE_LORES = Plague, Ruin
 
@@ -89,9 +93,14 @@ Grey Seer
     POINTS = 240
     CHARACTERISTICS = 5 3 3 3 4 3 5 1 7
     SPECIAL_RULES = Scurry Away!, Strength in Numbers, Verminous Valour
-    EQUIPMENT = Enchanted: D3 Warpstone Tokens
-    OPTIONAL_MOUNTS = Screaming Bell [200]
-    OPTIONAL_OCO_EXTRAS = One Warpstone Token {True} [15], Two Warpstone Tokens {True} [30], Three Warpstone Tokens {True} [45], Four Warpstone Tokens {True} [60], Five Warpstone Tokens {True} [75], Six Warpstone Tokens {True} [90]
+    EQUIPMENT = Enchanted - Name: D3 Warpstone Tokens
+    OPTIONAL_MOUNTS = Name: Screaming Bell, Points: 200
+    OPTIONAL_OCO_EXTRAS = [Name: One Warpstone Token, Singular: True, Points: 15
+                           Name: Two Warpstone Tokens, Singular: True, Points: 30
+                           Name: Three Warpstone Tokens, Singular: True, Points: 45
+                           Name: Four Warpstone Tokens, Singular: True, Points: 60
+                           Name: Five Warpstone Tokens, Singular: True, Points: 75
+                           Name: Six Warpstone Tokens, Singular: True, Points: 90]
     MAGIC_ITEM_BUDGET = 100
     FACTION_ITEM_BUDGET = 100
     TOTAL_ITEM_BUDGET = 100
@@ -105,7 +114,9 @@ Deathmaster Snikch
     POINTS = 270
     CHARACTERISTICS = 6 8 6 4 4 2 10 6 8
     SPECIAL_RULES = Scurry Away!, Sneaky Infiltrator, Verminous Valour, A Killer Not a Leader, Always Strikes First, Dodge (4+), Hidden, Scouts
-    EQUIPMENT = Weapon: Throwing stars {Mundane} [Ballistic], Weapon: Whirl of Weeping Blades {Magic} [Melee], Enchanted: The Cloak of Shadows
+    EQUIPMENT = [Weapon - Name: Throwing stars, Category: Mundane, Type: Ballistic
+                 Weapon - Name: Whirl of Weeping Blades, Category: Magic, Type: Melee
+                 Enchanted - Name: The Cloak of Shadows]
     UNIQUENESS = true
 
 Tretch Craventail
@@ -115,7 +126,9 @@ Tretch Craventail
     POINTS = 145
     CHARACTERISTICS = 5 5 4 4 4 2 6 3 6
     SPECIAL_RULES = Scurry Away!, Strength in Numbers, Verminous Valour, Stay Here I'll Get Help!, Tretch's Raiders
-    EQUIPMENT = Weapon: Two hand weapons {Mundane} [Melee], Armour: Heavy armour {Mundane} [Armour], Enchanted: Lucky Skullhelm
+    EQUIPMENT = [Weapon - Name: Two hand weapons, Category: Mundane, Type: Melee
+                 Armour - Name: Heavy armour, Category: Mundane, Type: Armour
+                 Enchanted - Name: Lucky Skullhelm]
     UNIQUENESS = true
 
 Assassin
@@ -125,7 +138,8 @@ Assassin
     POINTS = 120
     CHARACTERISTICS = 6 6 5 4 4 2 8 3 7
     SPECIAL_RULES = Scurry Away!, Sneaky Infiltrators, Verminous Valour, A Killer Not A Leader, Always Strike First, Dodge (4+), Hidden, Poisoned Attacks, Scouts
-    EQUIPMENT = Weapon: Two hand weapons {Mundane} [Melee], Weapon: Throwing stars {Mundane} [Ballistic]
+    EQUIPMENT = [Weapon - Name: Throwing stars, Category: Mundane, Type: Ballistic
+                 Weapon - Name: Two hand weapons, Category: Mundane, Type: Melee]
     MAGIC_ITEM_BUDGET = 50
     FACTION_ITEM_BUDGET = 50
     TOTAL_ITEM_BUDGET = 50
@@ -137,8 +151,12 @@ Warlock Engineer
     POINTS = 15
     CHARACTERISTICS = 5 3 3 3 3 2 4 1 5
     SPECIAL_RULES = Scurry Away!, Strength in Numbers, Verminous Valour
-    OPTIONAL_WEAPONS = Warlock-Augmented Weapon {Mundane} [Melee] (45), Warplock Pistol {Mundane} [Ballistic] (8), Warpmusket {Mundane} [Ballistic] (15)
-    OPTIONAL_OCO_EXTRAS = One Warpstone Token {True} [15], Two Warpstone Tokens {True} [30], Three Warpstone Tokens {True} [45]
+    OPTIONAL_WEAPONS = [Name: Warlock-Augmented Weapon, Category: Mundane, Type: Melee, Points: 45
+                        Name: Warplock Pistol, Category: Mundane, Type: Ballistic, Points: 8
+                        Name: Warpmusket, Category: Mundane, Type: Ballistic, Points: 15]
+    OPTIONAL_OCO_EXTRAS = [Name: One Warpstone Token, Singular: True, Points: 15
+                           Name: Two Warpstone Tokens, Singular: True, Points: 30
+                           Name: Three Warpstone Tokens, Singular: True, Points: 45]
     MAGIC_ITEM_BUDGET = 50
     FACTION_ITEM_BUDGET = 50
     TOTAL_ITEM_BUDGET = 50
@@ -153,10 +171,12 @@ Chieftain
     POINTS = 45
     CHARACTERISTICS = 5 5 4 4 4 2 6 3 6
     SPECIAL_RULES = Scurry Away!, Strength in Numbers, Verminous Valour
-    EQUIPMENT = Armour: Heavy armour {Mundane} [Armour]
-    OPTIONAL_WEAPONS = Great weapon {Mundane} [Melee] (4), Additional hand weapon {Mundane} [Melee] (2), Halberd {Mundane} [Melee] (2)
-    OPTIONAL_ARMOUR = Shield {Mundane} [Shield] (2)
-    OPTIONAL_MC_EXTRAS = Battle Standard Bearer {True} [25]
+    EQUIPMENT = Armour - Name : Heavy armour, Category : Mundane, Type : Armour
+    OPTIONAL_WEAPONS = [Name: Great weapon, Category: Mundane, Type: Melee, Points: 4
+                        Name: Additional hand weapon, Category: Mundane, Type: Melee, Points: 2
+                        Name: Halberd, Category: Mundane, Type: Melee, Points: 2]
+    OPTIONAL_ARMOUR = Name: Shield, Category: Mundane, Type: Shield, Points: 2
+    OPTIONAL_MC_EXTRAS = Name: Battle Standard Bearer, Singular: True, Points: 25
     MAGIC_ITEM_BUDGET = 50
     FACTION_ITEM_BUDGET = 50
     TOTAL_ITEM_BUDGET = 50
@@ -168,8 +188,10 @@ Plague Priest
     POINTS = 100
     CHARACTERISTICS = 5 5 3 4 5 2 5 3 6
     SPECIAL_RULES = Scurry Away!, Strength in Numbers, Frenzy
-    OPTIONAL_WEAPONS = Plague Censer {Mundane} [Melee] (16), Flail {Mundane} [Melee] (4), Additional hand weapon {Mundane} [Melee] (2)
-    OPTIONAL_MOUNTS = Great Pox Rat [30], Plague Furnace [150]
+    OPTIONAL_WEAPONS = [Name: Plague Censer, Category: Mundane, Type: Melee, Points: 16
+                        Name: Flail, Category: Mundane, Type: Melee, Points: 4
+                        Name: Additional hand weapon, Category: Mundane, Type: Melee, Points: 2]
+    OPTIONAL_MOUNTS = Name: Great Pox Rat, Points: 30 ; Name: Plague Furnace, Points : 150
     MAGIC_ITEM_BUDGET = 50
     FACTION_ITEM_BUDGET = 50
     TOTAL_ITEM_BUDGET = 50
@@ -188,20 +210,15 @@ Clanrats
     CHARACTERISTICS = 5 3 3 3 3 1 4 1 5
     CHAMPION_CHARACTERISTICS = 5 3 3 3 3 1 4 2 5
     SPECIAL_RULES = Scurry Away!, Strength in Numbers
-    EQUIPMENT = Armour: Light armour {Mundane} [Armour]
-    OPTIONAL_WEAPONS = Spears {Mundane} [Melee] (0.5)
-    OPTIONAL_ARMOUR = Shields {Mundane} [Shield] (0.5)
-    OPTIONAL_OCO_EXTRAS = Poisoned Wind Mortar {True} [65], Warpfire Thrower {True} [70], Ratling Gun {True} [55], Doom-flayer {True} [55]
-    OPTIONAL_COMMAND = Musician: Musician [4], Standard Bearer: Standard Bearer [8], Champion: Clawleader [8]
+    EQUIPMENT = Armour - Name : Light armour, Category : Mundane, Type : Armour
+    OPTIONAL_WEAPONS = Name: Spears, Category: Mundane, Type: Melee, Points: 0.5
+    OPTIONAL_ARMOUR = Name: Shields, Category: Mundane, Type: Shield, Points: 0.5
+    OPTIONAL_OCO_EXTRAS = [Name : Poisoned Wind Mortar, Singular : true, Points : 65
+                           Name : Warpfire Thrower, Singular : true, Points : 70
+                           Name : Ratling Gun, Singular : true, Points : 55
+                           Name : Doom-flayer, Singular : true, Points : 55]
+    OPTIONAL_COMMAND = Musician - Name : Musician, Points : 4 ; Standard Bearer - Name : Standard Bearer, Points : 8 ; Champion - Name : Clawleader, Points : 8
 
-# TODO: add optional extra to Stormvermin unit for Queek Headtaker's upgrade
-#       -> will require changes to (e.g.) mc extra parsing and storing as I
-#          should then have another parameter for restrictions e.g:
-#    Upgrade to +1 WS and +1 S, Requires Queek Headtaker {False} [4] (army_contains : Queek Headtaker, num : 1)
-#        => this translates to a generic of:
-#    <name of extra> {<is_singular>} [<pts>] (<restrictions>)
-#        where <restrictions> could be RestrictionField enum constants (expanded to
-#        include ARMY_CONTAINS and COUNT, and maybe some other fields)
 Stormvermin
     BASE_TYPE = Normal
     TYPE = Core
@@ -211,18 +228,17 @@ Stormvermin
     CHARACTERISTICS = 5 4 3 3 3 1 5 1 5
     CHAMPION_CHARACTERISTICS = 5 4 3 3 3 1 5 2 5
     SPECIAL_RULES = Scurry Away!, Strength in Numbers
-    EQUIPMENT = Armour: Heavy armour {Mundane} [Armour]
-    OPTIONAL_ARMOUR = Shields {Mundane} [Shield] (1)
-    OPTIONAL_OCO_EXTRAS = Poisoned Wind Mortar {True} [65], Warpfire Thrower {True} [70], Ratling Gun {True} [55], Doom-flayer {True} [55]
-    OPTIONAL_COMMAND = Musician: Musician [5], Standard Bearer: Standard Bearer [10], Champion: Fangleader [10]
+    EQUIPMENT = Armour - Name : Heavy armour, Category : Mundane, Type : Armour
+    OPTIONAL_ARMOUR = Name : Shields, Category : Mundane, Type : Shield, Points : 1
+    OPTIONAL_OCO_EXTRAS = [Name : Poisoned Wind Mortar, Singular : true, Points : 65
+                           Name : Warpfire Thrower, Singular : true, Points : 70
+                           Name : Ratling Gun, Singular : true, Points : 55
+                           Name : Doom-flayer, Singular : true, Points : 55]
+    OPTIONAL_MC_EXTRAS = Name : Upgrade to +1 WS and +1 S (Requires Queek Headtaker), Points : 4, Restrictions : army_contains - Queek Headtaker / num - 1
+    OPTIONAL_COMMAND = Musician - Name : Musician, Points : 5 ; Standard Bearer - Name : Standard Bearer, Points : 10 ; Champion - Name : Fangleader, Points : 10
     FACTION_ITEM_BUDGET = 15
     TOTAL_ITEM_BUDGET = 15
     BANNER_BUDGET = 50
-
-# possible new optional extra syntax:
-# OPTIONAL_OCO_EXTRAS = Name : <Name>, points : <points>, is_singular : <is_singular>, restrictions : <restrictions> ; ...
-# e.g: [where is_singular == true by default]
-# OPTIONAL_OCO_EXTRAS = Name : Poisoned Wind Mortar, points : 65; Name : Warpfire Thrower, points : 65
 
 # TODO: change faction item budget line to below to indicate that a Fangleader may only
 #       choose a single piece of equipment worth up to 15 pts from the Scavenge-Pile
@@ -237,9 +253,9 @@ Skavenslaves
     CHARACTERISTICS = 5 2 2 3 3 1 4 1 2
     CHAMPION_CHARACTERISTICS = 5 2 2 3 3 1 4 2 2
     SPECIAL_RULES = Scurry Away!, Strength in Numbers
-    OPTIONAL_WEAPONS = Spears {Mundane} [Melee] (0.5), Slings {Mundane} [Ballistic] (0.5)
-    OPTIONAL_ARMOUR = Shields {Mundane} [Shield] (0.5)
-    OPTIONAL_COMMAND = Musician: Musician [2], Champion: Pawleader [4]
+    OPTIONAL_WEAPONS = Name: Spears, Category: Mundane, Type: Melee, Points: 0.5 ; Name: Slings, Category: Mundane, Type: Ballistic, Points: 0.5
+    OPTIONAL_ARMOUR = Name: Shields, Category: Mundane, Type: Shield, Points: 0.5
+    OPTIONAL_COMMAND = Musician - Name : Musician, Points : 2 ; Champion - Name : Fangleader, Points : 4
 
 Night Runners
     BASE_TYPE = Normal
@@ -251,9 +267,9 @@ Night Runners
     CHAMPION_CHARACTERISTICS = 6 3 4 3 3 1 5 1 6
     SPECIAL_RULES = Scurry Away!, Strength in Numbers, Slinking Advance
     CHAMPION_SPECIAL_RULES = Dodge (6+)
-    OPTIONAL_WEAPONS = Slings {Mundane} [Ballistic] (1)
-    OPTIONAL_OCO_EXTRAS = Warp-grinder {True} [60]
-    OPTIONAL_COMMAND = Champion: Nightleader [8]
+    OPTIONAL_WEAPONS = Name: Slings, Category: Mundane, Type: Ballistic, Points: 1
+    OPTIONAL_OCO_EXTRAS = Name : Warp-grinder, Singular : true, Points: 60
+    OPTIONAL_COMMAND = Champion - Name: Nightleader, Points: 8
 
 #Giant Rats
 #    Core, Warbeast, Mixed
@@ -321,12 +337,11 @@ Gutter Runners
     CHAMPION_CHARACTERISTICS = 6 4 4 3 3 1 5 2 7
     SPECIAL_RULES = Scurry Away!, Scouts, Skirmish, Sneaky Infiltrators, Dodge (6+)
     CHAMPION_SPECIAL_RULES = Dodge (5+)
-    OPTIONAL_WEAPONS = Slings {Mundane} [Ballistic] (1), Snare-net {Mundane} [Melee] (0)
-    CHAMPION_OPTIONAL_WEAPONS = Weeping blade {Mundane} [Melee] (30)
-    OPTIONAL_OCO_EXTRAS = Warp-grinder {True} [60]
-    OPTIONAL_MC_EXTRAS = Poisoned Attacks {False} [5]
-    CHAMPION_OPTIONAL_MC_EXTRAS = Smoke bombs {True} [10]
-    OPTIONAL_COMMAND = Champion: Deathrunner [12]
+    OPTIONAL_WEAPONS = Name: Slings, Category: Mundane, Type: Ballistic, Points: 1 ; Name: Snare-net, Category: Mundane, Type: Melee, Points: 0
+    CHAMPION_OPTIONAL_WEAPONS = Name: Weeping blade, Category: Mundane, Type: Melee, Points: 30
+    OPTIONAL_MC_EXTRAS = Name: Poisoned Attacks, Singular: true, Points: 5 ; Name : Warp-grinder, Singular : true, Points: 60
+    CHAMPION_OPTIONAL_MC_EXTRAS = Name: Smoke bombs, Singular: true, Points: 10
+    OPTIONAL_COMMAND = Champion - Name: Deathrunner, Points: 12
 
 #Rat Ogres
 #    Special, Monstrous Infantry, Mixed
@@ -382,8 +397,8 @@ Plague Monks
     CHARACTERISTICS = 5 3 3 3 4 1 3 1 5
     CHAMPION_CHARACTERISTICS = 5 3 3 3 4 1 3 2 5
     SPECIAL_RULES = Scurry Away!, Strength in Numbers, Frenzy
-    EQUIPMENT = Weapon: Two hand weapons {Mundane} [Melee]
-    OPTIONAL_COMMAND = Musician: Musician [5], Standard Bearer: Standard Bearer [10], Champion: Bringer-of-the-Word [10]
+    EQUIPMENT = Weapon - Name: Two hand weapons, Category: Mundane, Type: Melee
+    OPTIONAL_COMMAND = Musician - Name : Musician, Points : 5 ; Standard Bearer - Name : Standard Bearer, Points : 10 ; Champion - Name : Bringer of the word, Points : 10
     BANNER_BUDGET = 50
 
 Plague Censer Bearers
@@ -395,8 +410,8 @@ Plague Censer Bearers
     CHARACTERISTICS = 5 3 3 3 4 1 3 2 5
     CHAMPION_CHARACTERISTICS = 5 3 3 3 4 1 3 3 5
     SPECIAL_RULES = Scurry Away!, Strength in Numbers, Frenzy, Hatred, Plague Disciples, Skirmish
-    EQUIPMENT = Weapon: Plague Censer {Mundane} [Melee]
-    OPTIONAL_COMMAND = Champion: Plague Chanter [13]
+    EQUIPMENT = Weapon - Name: Plague Censer, Category: Mundane, Type: Melee
+    OPTIONAL_COMMAND = Champion - Name: Plague Chanter, Points: 13
 
 Warplock Jezzails
     BASE_TYPE = Normal
@@ -407,8 +422,8 @@ Warplock Jezzails
     CHARACTERISTICS = 5 3 3 3 3 1 3 2 5
     CHAMPION_CHARACTERISTICS = 5 3 4 3 3 1 3 2 5
     SPECIAL_RULES = Scurry Away!
-    EQUIPMENT = Weapon: Jezzail {Mundane} [Ballistic], Armour: Pavise {Mundane} [Shield]
-    OPTIONAL_COMMAND = Champion: Sharpshooter Team [10]
+    EQUIPMENT = Weapon - Name: Jezzail, Category: Mundane, Type: Ballistic ; Armour - Name: Pavise, Category: Mundane, Type: Shield
+    OPTIONAL_COMMAND = Champion - Name: Sharpshooter Team, Points: 10
 
 Poisoned Wind Globadiers
     BASE_TYPE = Normal
@@ -419,10 +434,10 @@ Poisoned Wind Globadiers
     CHARACTERISTICS = 5 3 3 3 3 1 4 1 5
     CHAMPION_CHARACTERISTICS = 5 3 4 3 3 1 4 1 5
     SPECIAL_RULES = Scurry Away!, Life is Cheap, Skirmish, Volley from the Back
-    EQUIPMENT = Weapon: Poisoned wind globes {Mundane} [Ballistic], Armour: Heavy armour {Mundane} [Armour]
-    OPTIONAL_WEAPONS = Death Globe {Mundane} [Ballistic] (25)
-    OPTIONAL_MC_EXTRAS = Poisoned Wind Mortar {True} [65]
-    OPTIONAL_COMMAND = Champion: Bombardier [5]
+    EQUIPMENT = Weapon - Name: Poisoned wind globes, Category: Mundane, Type: Ballistic ; Armour - Name: Heavy armour, Category: Mundane, Type: Armour
+    OPTIONAL_WEAPONS = Name: Death Globe, Category: Mundane, Type: Ballistic, Points: 25
+    OPTIONAL_MC_EXTRAS = Name: Poisoned Wind Mortar, Singular: true, Points: 65
+    OPTIONAL_COMMAND = Champion - Name: Bombardier, Points: 5
 
 # Rare
 
@@ -433,7 +448,7 @@ Hell Pit Abomination
     POINTS = 235
     CHARACTERISTICS = 3D6 3 1 6 5 6 4 * 8
     SPECIAL_RULES = Impact Hits (D6), Large Target, Regenerate, Shambling Horror, Special Close Combat Attacks, Stubborn, Terror, Too Horrible to Die
-    OPTIONAL_MC_EXTRAS = Warpstone Spikes {True} [15]
+    OPTIONAL_MC_EXTRAS = Name: Warpstone Spikes, Singular: true, Points: 15
 
 Doomwheel
     BASE_TYPE = Normal
