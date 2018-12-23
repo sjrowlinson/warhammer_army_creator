@@ -142,6 +142,14 @@ std::string mage_character_unit::remove_arcane_item() {
     return removed;
 }
 
+std::vector<std::string> mage_character_unit::clear() {
+    auto removed = character_unit::clear();
+    // remove arcane item
+    auto arcane_rmvd = remove_arcane_item();
+    if (!arcane_rmvd.empty()) removed.push_back(arcane_rmvd);
+    return removed;
+}
+
 std::string mage_character_unit::html_table_row() const {
     return html_table_row_both(level_.first, arcane_item_.first);
 }

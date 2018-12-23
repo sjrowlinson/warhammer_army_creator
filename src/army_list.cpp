@@ -61,6 +61,8 @@ void army_list::remove_unit(int id) {
             std::dynamic_pointer_cast<base_character_unit>(army[id]->base())->unique())
         unique_units.erase(army[id]->name());
     UnitType unit_type = army[id]->unit_type();
+    auto items_to_decrement = army[id]->clear();
+    for (const auto& item : items_to_decrement) decr_item_tracker(item);
     army.erase(id);
     curr_pts -= pts;
     switch (unit_type) {

@@ -392,12 +392,12 @@ namespace tools {
                     // TOOD: parse restrictions
                 }
             }
-            if (champion)
+            /*if (champion)
                 tpo.champ_opt.weapons[wo.name] = std::make_tuple(wo.type, wo.category, wo.points, wo.replacements);
             else
-                tpo.opt.weapons[wo.name] = std::make_tuple(wo.type, wo.category, wo.points, wo.replacements);
-            // TODO: change above to
-            // tpo.opt_weapons[wo.name] = wo;
+                tpo.opt.weapons[wo.name] = std::make_tuple(wo.type, wo.category, wo.points, wo.replacements);*/
+            if (champion) tpo.champ_opt.weapons[wo.name] = wo;
+            else tpo.opt.weapons[wo.name] = wo;
         }
         return ml_pair.second;
     }
@@ -449,12 +449,12 @@ namespace tools {
                     // TOOD: parse restrictions
                 }
             }
-            if (champion)
+            /*if (champion)
                 tpo.champ_opt.armour[ao.name] = std::make_tuple(ao.type, ao.category, ao.points, ao.replacements);
             else
-                tpo.opt.armour[ao.name] = std::make_tuple(ao.type, ao.category, ao.points, ao.replacements);
-            // TODO: change above to
-            // tpo.opt_weapons[ao.name] = ao;
+                tpo.opt.armour[ao.name] = std::make_tuple(ao.type, ao.category, ao.points, ao.replacements);*/
+            if (champion) tpo.champ_opt.armour[ao.name] = ao;
+            else tpo.opt.armour[ao.name] = ao;
         }
         return ml_pair.second;
     }
@@ -523,11 +523,15 @@ namespace tools {
                 }
             }
             if (oco) {
-                if (champion) tpo.champ_opt.oco_extras[eo.name] = std::make_pair(eo.is_singular, eo.points);
-                else tpo.opt.oco_extras[eo.name] = std::make_pair(eo.is_singular, eo.points);
+                /*if (champion) tpo.champ_opt.oco_extras[eo.name] = std::make_pair(eo.is_singular, eo.points);
+                else tpo.opt.oco_extras[eo.name] = std::make_pair(eo.is_singular, eo.points);*/
+                if (champion) tpo.champ_opt.oco_extras[eo.name] = eo;
+                else tpo.opt.oco_extras[eo.name] = eo;
             } else {
-                if (champion) tpo.champ_opt.mc_extras[eo.name] = std::make_pair(eo.is_singular, eo.points);
-                else tpo.opt.mc_extras[eo.name] = std::make_pair(eo.is_singular, eo.points);
+                /*if (champion) tpo.champ_opt.mc_extras[eo.name] = std::make_pair(eo.is_singular, eo.points);
+                else tpo.opt.mc_extras[eo.name] = std::make_pair(eo.is_singular, eo.points);*/
+                if (champion) tpo.champ_opt.mc_extras[eo.name] = eo;
+                else tpo.opt.mc_extras[eo.name] = eo;
             }
         }
         return ml_pair.second;

@@ -107,8 +107,11 @@ public:
     virtual void pick_mount_option(const std::string& name, bool oco);
     virtual void remove_mount_option(const std::string& name, bool oco);
 
-    virtual std::string html_table_row() const = 0;
+    // other modifiers
+    virtual std::vector<std::string> clear();
 
+    // serialisation and exporting
+    virtual std::string html_table_row() const = 0;
     virtual std::string save() const = 0;
 };
 

@@ -31,6 +31,8 @@ public:
     std::string pick_arcane_item(ItemCategory item_class, const std::string& name);
     std::string remove_arcane_item();
 
+    virtual std::vector<std::string> clear() override;
+
     std::string html_table_row() const override;
 };
 

@@ -271,12 +271,7 @@ std::pair<QGroupBox*, QGroupBox*> OptionBox::make_weapons_boxes() {
 QGroupBox* OptionBox::make_weapons_subbox(WeaponType wt, bool champion) {
     std::unordered_map<
         std::string,
-        std::tuple<
-            WeaponType,
-            ItemCategory,
-            double,
-            std::vector<std::string>
-        >
+        weapon_option
     > opt_weapons;
     std::unordered_map<
         WeaponType,
@@ -312,7 +307,7 @@ QGroupBox* OptionBox::make_weapons_subbox(WeaponType wt, bool champion) {
     auto opt_weapon_vec = tools::find_all_if(
         std::begin(opt_weapons),
         std::end(opt_weapons),
-        [wt] (const auto& x) { return std::get<0>(x.second) == wt; }
+        [wt] (const auto& x) { return x.second.type == wt; }
     );
     if (opt_weapon_vec.empty()) return nullptr;
     std::string subbox_label = "";
@@ -330,17 +325,17 @@ QGroupBox* OptionBox::make_weapons_subbox(WeaponType wt, bool champion) {
     bool has_weapon = false;
     for (const auto& w : opt_weapon_vec) {
         BaseUnitType but = current->base_unit_type();
-        std::string pts_str = tools::points_str(std::get<2>(w->second), but);
+        std::string pts_str = tools::points_str(w->second.points, but);
         std::string button_label = w->first + " (" + pts_str + ")";
         std::string button_name = w->first + "_" +
-                std::to_string(static_cast<int>(std::get<0>(w->second))) + "_" +
-                std::to_string(static_cast<int>(std::get<1>(w->second))) + "_" +
+                std::to_string(static_cast<int>(w->second.type)) + "_" +
+                std::to_string(static_cast<int>(w->second.category)) + "_" +
                 ((champion) ? "champion" : "default") + "_radiobutton";
         QRadioButton* rb = new QRadioButton(creator->tr(button_label.data()));
         rb->setObjectName(QString(button_name.data()));
         // check if current unit weapon map contains this weapon
-        if (curr_weapons.count(std::get<0>(w->second))) {
-            if (std::get<1>(curr_weapons.at(std::get<0>(w->second))) == w->first) {
+        if (curr_weapons.count(w->second.type)) {
+            if (std::get<1>(curr_weapons.at(w->second.type)) == w->first) {
                 rb->setChecked(true);
                 has_weapon = true;
             }
@@ -424,12 +419,7 @@ std::pair<QGroupBox*, QGroupBox*> OptionBox::make_armour_boxes() {
 QGroupBox* OptionBox::make_armour_subbox(ArmourType at, bool champion) {
     std::unordered_map<
         std::string,
-        std::tuple<
-            ArmourType,
-            ItemCategory,
-            double,
-            std::vector<std::string>
-        >
+        armour_option
     > opt_armour;
     std::unordered_map<
         ArmourType,
@@ -465,7 +455,7 @@ QGroupBox* OptionBox::make_armour_subbox(ArmourType at, bool champion) {
     auto opt_armour_vec = tools::find_all_if(
         std::begin(opt_armour),
         std::end(opt_armour),
-        [at] (const auto& x) { return std::get<0>(x.second) == at; }
+        [at] (const auto& x) { return x.second.type == at; }
     );
     if (opt_armour_vec.empty()) return nullptr;
     std::string subbox_label = "";
@@ -486,17 +476,17 @@ QGroupBox* OptionBox::make_armour_subbox(ArmourType at, bool champion) {
     bool has_armour = false;
     for (const auto& a : opt_armour_vec) {
         BaseUnitType but = current->base_unit_type();
-        std::string pts_str = tools::points_str(std::get<2>(a->second), but);
+        std::string pts_str = tools::points_str(a->second.points, but);
         std::string button_label = a->first + " (" + pts_str + ")";
         std::string button_name = a->first + "_" +
-                std::to_string(static_cast<int>(std::get<0>(a->second))) + "_" +
-                std::to_string(static_cast<int>(std::get<1>(a->second))) + "_" +
+                std::to_string(static_cast<int>(a->second.type)) + "_" +
+                std::to_string(static_cast<int>(a->second.category)) + "_" +
                 ((champion) ? "champion" : "default") + "_radiobutton";
         QRadioButton* rb = new QRadioButton(creator->tr(button_label.data()));
         rb->setObjectName(QString(button_name.data()));
         // check if current unit armour map contains this piece of armour
-        if (curr_armour.count(std::get<0>(a->second))) {
-               if (std::get<1>(curr_armour.at(std::get<0>(a->second))) == a->first) {
+        if (curr_armour.count(a->second.type)) {
+               if (std::get<1>(curr_armour.at(a->second.type)) == a->first) {
                    rb->setChecked(true);
                    has_armour = true;
                }
@@ -732,7 +722,7 @@ std::pair<QGroupBox*, QGroupBox*> OptionBox::make_extras_boxes() {
 }
 
 QGroupBox* OptionBox::make_oco_extras_subbox(bool champion) {
-    std::unordered_map<std::string, std::pair<bool, double>> opt_oco_extras;
+    std::unordered_map<std::string, extra_option> opt_oco_extras;
     std::pair<std::string, std::pair<bool, double>> curr_oco_extra;
     switch (current->base_unit_type()) {
     case BaseUnitType::MAGE_CHARACTER:
@@ -765,9 +755,9 @@ QGroupBox* OptionBox::make_oco_extras_subbox(bool champion) {
     QVBoxLayout* oco_box_layout = new QVBoxLayout;
     bool has_extra = false;
     for (const auto& e : opt_oco_extras) {
-        std::string pts_str = tools::points_str(e.second.second);
+        std::string pts_str = tools::points_str(e.second.points);
         std::string permodel = (current->base_unit_type() == BaseUnitType::NORMAL &&
-                                    !(e.second.first)) ? "/model" : "";
+                                    !(e.second.is_singular)) ? "/model" : "";
         std::string label = e.first + " (" + pts_str + " pts" + permodel + ")";
         std::string name = e.first + "_" + ((champion) ? "champion" : "default") + "_radiobutton";
         QRadioButton* rb = new QRadioButton(creator->tr(label.data()));
@@ -791,7 +781,7 @@ QGroupBox* OptionBox::make_oco_extras_subbox(bool champion) {
 }
 
 QGroupBox* OptionBox::make_mc_extras_subbox(bool champion) {
-    std::unordered_map<std::string, std::pair<bool, double>> opt_mc_extras;
+    std::unordered_map<std::string, extra_option> opt_mc_extras;
     std::unordered_map<std::string, std::pair<bool, double>> curr_mc_extras;
     switch (current->base_unit_type()) {
     case BaseUnitType::MAGE_CHARACTER:
@@ -823,9 +813,9 @@ QGroupBox* OptionBox::make_mc_extras_subbox(bool champion) {
     QGroupBox* mc_box = new QGroupBox();
     QVBoxLayout* mc_box_layout = new QVBoxLayout;
     for (const auto& e : opt_mc_extras) {
-        std::string pts_str = tools::points_str(e.second.second);
+        std::string pts_str = tools::points_str(e.second.points);
         std::string permodel = (current->base_unit_type() == BaseUnitType::NORMAL &&
-                                    !(e.second.first)) ? "/model" : "";
+                                    !(e.second.is_singular)) ? "/model" : "";
         std::string label = e.first + " (" + pts_str + " pts" + permodel + ")";
         std::string name = e.first + "_" + ((champion) ? "champion" : "default") + "_checkbox";
         QCheckBox* cb = new QCheckBox(creator->tr(label.data()));

@@ -85,3 +85,40 @@ void unit::remove_mount_option(const std::string& name, bool oco) {
     return;
 }
 
+std::vector<std::string> unit::clear() {
+    std::vector<std::string> removed;
+    // remove weapons
+    auto melee_rmvd = remove_weapon(WeaponType::MELEE);
+    if (!melee_rmvd.empty()) removed.push_back(melee_rmvd);
+    auto ballistic_rmvd = remove_weapon(WeaponType::BALLISTIC);
+    if (!ballistic_rmvd.empty()) removed.push_back(ballistic_rmvd);
+    // remove armour
+    auto body_rmvd = remove_armour(ArmourType::ARMOUR);
+    if (!body_rmvd.empty()) removed.push_back(body_rmvd);
+    auto shield_rmvd = remove_armour(ArmourType::SHIELD);
+    if (!shield_rmvd.empty()) removed.push_back(shield_rmvd);
+    auto helmet_rmvd = remove_armour(ArmourType::HELMET);
+    if (!helmet_rmvd.empty()) removed.push_back(helmet_rmvd);
+    // remove oco extra
+    auto oco_rmvd = remove_oco_extra();
+    if (!oco_rmvd.empty()) removed.push_back(oco_rmvd);
+    // remove mc extras
+    if (!mc_extras().empty()) {
+        std::vector<std::string> mc_extra_names(mc_extras().size());
+        std::generate(
+            std::begin(mc_extra_names), std::end(mc_extra_names),
+            [it=std::cbegin(mc_extras())]() mutable { return (it++)->first; }
+        );
+        for (const auto& name : mc_extra_names) {
+            auto mc_rmvd = remove_mc_extra(name);
+            if (!mc_rmvd.empty()) removed.push_back(mc_rmvd);
+        }
+    }
+    // remove banner
+    auto banner_rmvd = remove_banner();
+    if (!banner_rmvd.empty()) removed.push_back(banner_rmvd);
+    // remove mount
+    remove_mount();
+    return removed;
+}
+

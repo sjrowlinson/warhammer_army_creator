@@ -239,14 +239,10 @@ std::string normal_unit::pick_default_weapon(ItemCategory item_type, const std::
         if (search == handle->opt().weapons().cend()) {
             throw std::invalid_argument("Weapon not found!");
         }
-        removed = remove_weapon(std::get<0>(search->second));
-        do_replacements(std::get<3>(search->second));
-        weapons_[std::get<0>(search->second)] = {
-            std::get<1>(search->second),
-            search->first,
-            std::get<2>(search->second)
-        };
-        points_ += size_ * std::get<2>(search->second);
+        removed = remove_weapon(search->second.type);
+        do_replacements(search->second.replacements);
+        weapons_[search->second.type] = {search->second.category, search->first, search->second.points};
+        points_ += size_ * search->second.points;
         break;
     }
     case ItemCategory::MAGIC:
@@ -269,14 +265,10 @@ std::string normal_unit::pick_champion_weapon(ItemCategory item_type, const std:
         auto search = handle->champion_opt().weapons().find(name);
         if (search == handle->champion_opt().weapons().cend())
             throw std::invalid_argument("Weapon not found!");
-        removed = remove_champion_weapon(std::get<0>(search->second));
-        do_replacements(std::get<3>(search->second), true);
-        champ_weapons_[std::get<0>(search->second)] = {
-            std::get<1>(search->second),
-            search->first,
-            std::get<2>(search->second)
-        };
-        points_ += std::get<2>(search->second);
+        removed = remove_champion_weapon(search->second.type);
+        do_replacements(search->second.replacements, true);
+        champ_weapons_[search->second.type] = {search->second.category, search->first, search->second.points};
+        points_ += search->second.points;
         break;
     }
     case ItemCategory::MAGIC:
@@ -345,14 +337,10 @@ std::string normal_unit::pick_default_armour(ItemCategory item_type, const std::
         auto search = handle->opt().armour().find(name);
         if (search == handle->opt().armour().end())
             throw std::invalid_argument("Armour not found!");
-        removed = remove_armour(std::get<0>(search->second));
-        do_replacements(std::get<3>(search->second));
-        armours_[std::get<0>(search->second)] = {
-            std::get<1>(search->second),
-            search->first,
-            std::get<2>(search->second)
-        };
-        points_ += size_ * std::get<2>(search->second);
+        removed = remove_armour(search->second.type);
+        do_replacements(search->second.replacements);
+        armours_[search->second.type] = {search->second.category, search->first, search->second.points};
+        points_ += size_ * search->second.points;
         break;
     }
     case ItemCategory::MAGIC:
@@ -375,14 +363,10 @@ std::string normal_unit::pick_champion_armour(ItemCategory item_type, const std:
         auto search = handle->champion_opt().armour().find(name);
         if (search == handle->champion_opt().armour().end())
             throw std::invalid_argument("Armour not found!");
-        removed = remove_champion_armour(std::get<0>(search->second));
-        do_replacements(std::get<3>(search->second), true);
-        champ_armours_[std::get<0>(search->second)] = {
-            std::get<1>(search->second),
-            search->first,
-            std::get<2>(search->second)
-        };
-        points_ += std::get<2>(search->second);
+        removed = remove_champion_armour(search->second.type);
+        do_replacements(search->second.replacements, true);
+        champ_armours_[search->second.type] = {search->second.category, search->first, search->second.points};
+        points_ += search->second.points;
         break;
     }
     case ItemCategory::MAGIC:
@@ -658,9 +642,9 @@ std::string normal_unit::pick_default_oco_extra(const std::string& name) {
     const double prev_pts = oco_extra_.second.second;
     points_ -= (oco_extra_.second.first) ? prev_pts : size_ * prev_pts;
     oco_extra_.first = name;
-    oco_extra_.second = search->second;
-    const double new_pts = search->second.second;
-    points_ += (search->second.first) ? new_pts : size_ * new_pts;
+    oco_extra_.second = {search->second.is_singular, search->second.points};
+    const double new_pts = search->second.points;
+    points_ += (search->second.is_singular) ? new_pts : size_ * new_pts;
     return removed;
 }
 
@@ -675,8 +659,8 @@ std::string normal_unit::pick_champion_oco_extra(const std::string& name) {
     removed = champ_oco_extra_.first;
     points_ -= champ_oco_extra_.second.second;
     champ_oco_extra_.first = name;
-    champ_oco_extra_.second = search->second;
-    points_ += search->second.second;
+    champ_oco_extra_.second = {search->second.is_singular, search->second.points};
+    points_ += search->second.points;
     return removed;
 }
 
@@ -695,9 +679,9 @@ std::string normal_unit::pick_default_mc_extra(const std::string& name) {
     if (search == handle->opt().mc_extras().end())
         throw std::invalid_argument("Item not found!");
     if (mc_extras_.count(name)) return std::string();
-    mc_extras_[name] = search->second;
-    const double pts = search->second.second;
-    points_ += (search->second.first) ? pts : size_ * pts;
+    mc_extras_[name] = {search->second.is_singular, search->second.points};
+    const double pts = search->second.points;
+    points_ += (search->second.is_singular) ? pts : size_ * pts;
     return std::string();
 }
 
@@ -708,8 +692,8 @@ std::string normal_unit::pick_champion_mc_extra(const std::string& name) {
     if (search == handle->champion_opt().mc_extras().end())
         throw std::invalid_argument("Item not found!");
     if (champ_mc_extras_.count(name)) return std::string();
-    champ_mc_extras_[name] = search->second;
-    points_ += search->second.second;
+    champ_mc_extras_[name] = {search->second.is_singular, search->second.points};
+    points_ += search->second.points;
     return std::string();
 }
 

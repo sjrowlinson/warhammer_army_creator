@@ -123,8 +123,9 @@ public:
     void pick_mount_option(const std::string& name, bool oco) override;
     void remove_mount_option(const std::string& name, bool oco) override;
 
-    virtual std::string html_table_row() const override;
+    virtual std::vector<std::string> clear() override;
 
+    virtual std::string html_table_row() const override;
     virtual std::string save() const override;
 };
 

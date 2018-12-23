@@ -371,14 +371,10 @@ std::string character_unit::pick_weapon(ItemCategory item_type, const std::strin
         auto search = handle_->opt().weapons().find(name);
         if (search == handle_->opt().weapons().cend())
             throw std::invalid_argument("Weapon not found!");
-        removed = remove_weapon(std::get<0>(search->second));
-        do_replacements(std::get<3>(search->second));
-        weapons_[std::get<0>(search->second)] = {
-            std::get<1>(search->second),
-            search->first,
-            std::get<2>(search->second)
-        };
-        points_ += std::get<2>(search->second);
+        removed = remove_weapon(search->second.type);
+        do_replacements(search->second.replacements);
+        weapons_[search->second.type] = {search->second.category, search->first, search->second.points};
+        points_ += search->second.points;
         break;
     }
     case ItemCategory::MAGIC:
@@ -399,14 +395,10 @@ std::string character_unit::pick_armour(ItemCategory item_type, const std::strin
         auto search = handle_->opt().armour().find(name);
         if (search == handle_->opt().armour().cend())
             throw std::invalid_argument("Armour not found!");
-        removed = remove_armour(std::get<0>(search->second));
-        do_replacements(std::get<3>(search->second));
-        armours_[std::get<0>(search->second)] = {
-            std::get<1>(search->second),
-            search->first,
-            std::get<2>(search->second)
-        };
-        points_ += std::get<2>(search->second);
+        removed = remove_armour(search->second.type);
+        do_replacements(search->second.replacements);
+        armours_[search->second.type] = {search->second.category, search->first, search->second.points};
+        points_ += search->second.points;
         break;
     }
     case ItemCategory::MAGIC:
@@ -523,6 +515,8 @@ std::string character_unit::pick_oco_extra(const std::string& name) {
         throw std::invalid_argument("Item not found!");
     if (oco_extra_.first == name) return removed;
     removed = oco_extra_.first;
+    // we need to handle warpstone tokens specifically as they count as arcane
+    // items however can be bought in conjunction with other arcane items
     if (handle_->faction() == Faction::SKAVEN) {
         if (name.find("Warpstone Tokens")) {
             const double mi_budget = handle_->magic_item_budget();
@@ -533,11 +527,11 @@ std::string character_unit::pick_oco_extra(const std::string& name) {
                 adj_mip -= oco_extra_.second.second;
                 adj_tip -= oco_extra_.second.second;
             }
-            if (search->second.second + adj_mip > mi_budget ||
-                    search->second.second + adj_tip > ti_budget)
+            if (search->second.points + adj_mip > mi_budget ||
+                    search->second.points + adj_tip > ti_budget)
                 throw std::runtime_error("Item budget exceeded!");
-            magic_item_points_ += search->second.second;
-            total_item_points_ += search->second.second;
+            magic_item_points_ += search->second.points;
+            total_item_points_ += search->second.points;
             if (oco_extra_.first.find("Warpstone Tokens")) {
                 magic_item_points_ -= oco_extra_.second.second;
                 total_item_points_ -= oco_extra_.second.second;
@@ -549,8 +543,8 @@ std::string character_unit::pick_oco_extra(const std::string& name) {
     }
     points_ -= oco_extra_.second.second;
     oco_extra_.first = name;
-    oco_extra_.second = search->second;
-    points_ += search->second.second;
+    oco_extra_.second = {search->second.is_singular, search->second.points};
+    points_ += search->second.points;
     return removed;
 }
 
@@ -559,8 +553,8 @@ std::string character_unit::pick_mc_extra(const std::string& name) {
     if (search == handle_->opt().mc_extras().end())
         throw std::invalid_argument("Item not found!");
     if (mc_extras_.count(name)) return std::string();
-    mc_extras_[name] = search->second;
-    points_ += search->second.second;
+    mc_extras_[name] = {search->second.is_singular, search->second.points};
+    points_ += search->second.points;
     return std::string();
 }
 
@@ -635,6 +629,12 @@ std::string character_unit::remove_armour(ArmourType at, bool replacing) {
 
 std::string character_unit::remove_oco_extra() {
     std::string removed = oco_extra_.first;
+    if (handle_->faction() == Faction::SKAVEN) {
+        if (removed.find("Warpstone Tokens")) {
+            magic_item_points_ -= oco_extra_.second.second;
+            total_item_points_ -= oco_extra_.second.second;
+        }
+    }
     points_ -= oco_extra_.second.second;
     oco_extra_.first = "";
     oco_extra_.second.second = 0.0;
@@ -750,6 +750,29 @@ std::string character_unit::remove_banner() {
     total_item_points_ -= banner.second.second;
     banner.first.clear();
     banner.second.second = 0.0;
+    return removed;
+}
+
+std::vector<std::string> character_unit::clear() {
+    auto removed = unit::clear();
+    // remove talisman
+    auto talisman_rmvd = remove_talisman();
+    if (!talisman_rmvd.empty()) removed.push_back(talisman_rmvd);
+    // remove enchanted item
+    auto ei_rmvd = remove_enchanted_item();
+    if (!ei_rmvd.empty()) removed.push_back(ei_rmvd);
+    // remove others
+    if (!item_extras().empty()) {
+        std::vector<std::string> other_names(item_extras().size());
+        std::generate(
+            std::begin(other_names), std::end(other_names),
+            [it=std::cbegin(item_extras())]() mutable { return (it++)->first; }
+        );
+        for (const auto& name : other_names) {
+            auto other_rmvd = remove_other(name);
+            if (!other_rmvd.empty()) removed.push_back(other_rmvd);
+        }
+    }
     return removed;
 }
 
