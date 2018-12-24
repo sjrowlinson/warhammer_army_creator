@@ -369,7 +369,7 @@ namespace tools {
                     if (search_category == std::end(enum_convert::STRING_TO_ITEM_CLASS)) {
                         std::string msg = "Error parsing + " + enum_convert::FACTION_TO_STRING.at(faction)
                                 + " roster - unit: " + read_line(blocks[curr_block])
-                                + " has an invalid argument EQUIPMENT with CATEGORY: " + y.second;
+                                + " has an invalid argument OPTIONAL_WEAPONS with Category: " + y.second;
                         throw std::runtime_error(msg);
                     }
                     wo.category = search_category->second;
@@ -379,23 +379,19 @@ namespace tools {
                     if (search_weapon_type == std::end(enum_convert::STRING_TO_WEAPON_TYPE)) {
                         std::string msg = "Error parsing + " + enum_convert::FACTION_TO_STRING.at(faction)
                                 + " roster - unit: " + read_line(blocks[curr_block])
-                                + " has an invalid argument EQUIPMENT with Weapon - Type: " + y.second;
+                                + " has an invalid argument OPTIONAL_WEAPONS with Type: " + y.second;
                         throw std::runtime_error(msg);
                     }
                     wo.type = search_weapon_type->second;
                 }
                 else if (y.first == "Points") wo.points = std::stod(y.second);
                 else if (y.first == "Replacements") {
-                    // TODO: parse replacements
+                    auto repl = tools::split(y.second, '/');
+                    for (auto&& r : repl) wo.replacements.push_back(std::move(r));
                 }
-                else if (y.first == "Restrictions") {
-                    // TOOD: parse restrictions
-                }
+                else if (y.first == "Restrictions")
+                    wo.restrictions = parse_restrictions(y.second, "OPTIONAL_WEAPONS");
             }
-            /*if (champion)
-                tpo.champ_opt.weapons[wo.name] = std::make_tuple(wo.type, wo.category, wo.points, wo.replacements);
-            else
-                tpo.opt.weapons[wo.name] = std::make_tuple(wo.type, wo.category, wo.points, wo.replacements);*/
             if (champion) tpo.champ_opt.weapons[wo.name] = wo;
             else tpo.opt.weapons[wo.name] = wo;
         }
@@ -426,7 +422,7 @@ namespace tools {
                     if (search_category == std::end(enum_convert::STRING_TO_ITEM_CLASS)) {
                         std::string msg = "Error parsing + " + enum_convert::FACTION_TO_STRING.at(faction)
                                 + " roster - unit: " + read_line(blocks[curr_block])
-                                + " has an invalid argument EQUIPMENT with CATEGORY: " + y.second;
+                                + " has an invalid argument OPTIONAL_ARMOUR with Category: " + y.second;
                         throw std::runtime_error(msg);
                     }
                     ao.category = search_category->second;
@@ -436,23 +432,19 @@ namespace tools {
                     if (search_armour_type == std::end(enum_convert::STRING_TO_ARMOUR_TYPE)) {
                         std::string msg = "Error parsing + " + enum_convert::FACTION_TO_STRING.at(faction)
                                 + " roster - unit: " + read_line(blocks[curr_block])
-                                + " has an invalid argument EQUIPMENT with Armour - Type: " + y.second;
+                                + " has an invalid argument OPTIONAL_ARMOUR with Armour - Type: " + y.second;
                         throw std::runtime_error(msg);
                     }
                     ao.type = search_armour_type->second;
                 }
                 else if (y.first == "Points") ao.points = std::stod(y.second);
                 else if (y.first == "Replacements") {
-                    // TODO: parse replacements
+                    auto repl = tools::split(y.second, '/');
+                    for (auto&& r : repl) ao.replacements.push_back(std::move(r));
                 }
-                else if (y.first == "Restrictions") {
-                    // TOOD: parse restrictions
-                }
+                else if (y.first == "Restrictions")
+                    ao.restrictions = parse_restrictions(y.second, "OPTIONAL_ARMOUR");
             }
-            /*if (champion)
-                tpo.champ_opt.armour[ao.name] = std::make_tuple(ao.type, ao.category, ao.points, ao.replacements);
-            else
-                tpo.opt.armour[ao.name] = std::make_tuple(ao.type, ao.category, ao.points, ao.replacements);*/
             if (champion) tpo.champ_opt.armour[ao.name] = ao;
             else tpo.opt.armour[ao.name] = ao;
         }
@@ -506,7 +498,8 @@ namespace tools {
             if (!tools::in_names_values(names_values, "Name")) {
                 std::string msg = "Error parsing + " + enum_convert::FACTION_TO_STRING.at(faction)
                         + " roster - unit: " + read_line(blocks[curr_block])
-                        + " has an invalid argument OPTIONAL_OCO_EXTRAS where an item"
+                        + " has an invalid argument " + std::string(oco ? "OPTIONAL_OCO_EXTRAS" : "OPTIONAL_MC_EXTRAS")
+                        + " OPTIONAL_OCO_EXTRAS where an item"
                         + " has been specified without a Name argument.";
                 throw std::runtime_error(msg);
             }
@@ -516,20 +509,17 @@ namespace tools {
                 else if (y.first == "Points") eo.points = std::stod(y.second);
                 else if (y.first == "Singular") eo.is_singular = y.second == "true";
                 else if (y.second == "Replacements") {
-                    // TODO: parse replacements
+                    auto repl = tools::split(y.second, '/');
+                    for (auto&& r : repl) eo.replacements.push_back(std::move(r));
                 }
                 else if (y.first == "Restrictions") {
-                    // TODO: parse restrictions
+                    eo.restrictions = parse_restrictions(y.second, oco ? "OPTIONAL_OCO_EXTRAS" : "OPTIONAL_MC_EXTRAS");
                 }
             }
             if (oco) {
-                /*if (champion) tpo.champ_opt.oco_extras[eo.name] = std::make_pair(eo.is_singular, eo.points);
-                else tpo.opt.oco_extras[eo.name] = std::make_pair(eo.is_singular, eo.points);*/
                 if (champion) tpo.champ_opt.oco_extras[eo.name] = eo;
                 else tpo.opt.oco_extras[eo.name] = eo;
             } else {
-                /*if (champion) tpo.champ_opt.mc_extras[eo.name] = std::make_pair(eo.is_singular, eo.points);
-                else tpo.opt.mc_extras[eo.name] = std::make_pair(eo.is_singular, eo.points);*/
                 if (champion) tpo.champ_opt.mc_extras[eo.name] = eo;
                 else tpo.opt.mc_extras[eo.name] = eo;
             }
@@ -601,6 +591,29 @@ namespace tools {
         (void)champion; (void)master;
         tpo.unique = s == "true";
         return 0U;
+    }
+
+    std::unordered_map<
+        RestrictionField,
+        std::vector<std::string>
+    > roster_parser::parse_restrictions(const std::string& s, std::string from) {
+        std::unordered_map<
+            RestrictionField,
+            std::vector<std::string>
+        > restrictions;
+        auto restr = tools::split(s, '/');
+        for (const auto& r : restr) {
+            auto field_value = tools::split(r, '-');
+            auto search_restr_field = enum_convert::STRING_TO_RESTRICTION.find(field_value[0]);
+            if (search_restr_field == std::end(enum_convert::STRING_TO_RESTRICTION)) {
+                std::string msg = "Error parsing + " + enum_convert::FACTION_TO_STRING.at(faction)
+                        + " roster - unit: " + read_line(blocks[curr_block])
+                        + " has an invalid argument " + from + " with Restrictions: " + field_value[0];
+                throw std::runtime_error(msg);
+            }
+            restrictions[search_restr_field->second].push_back(field_value[1]);
+        }
+        return restrictions;
     }
 
     std::pair<std::string, std::size_t> roster_parser::multiline_state_handler(const std::string& s) {

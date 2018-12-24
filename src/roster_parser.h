@@ -97,6 +97,11 @@ namespace tools {
 
         std::size_t parse_unit_extras(const std::string& s, bool champion, bool master, bool oco);
 
+        std::unordered_map<
+            RestrictionField,
+            std::vector<std::string>
+        > parse_restrictions(const std::string& s, std::string from);
+
         std::pair<std::string, std::size_t> multiline_state_handler(const std::string& s);
 
         /*std::tuple<

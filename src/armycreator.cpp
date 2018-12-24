@@ -1357,12 +1357,12 @@ void ArmyCreator::on_export_button_clicked() {
             <<  QString("<title>%1</title>\n").arg("Title")
             <<  "</head>\n"
                 "<style>"
-                    "body {font-family: Verdana; background-color: #FFFFFF;}\n"
-                    << QString("thead {font-size: %1px;}\n").arg(
-                           army->point_limit() > 2000.0 ? "8" : "10"
+                    "body {font-family: \"Moria Citadel\"; background-color: #FFFFFF;}\n"
+                    << QString("thead {font-family: \"Constantia\"; font-size: %1px;}\n").arg(
+                           army->point_limit() > 2000.0 ? "10" : "12"
                        )
-                    << QString("td {font-size: %1px;}\n").arg(
-                           army->point_limit() > 2000.0 ? "6" : "8"
+                    << QString("td {font-family: \"Constantia\"; font-size: %1px;}\n").arg(
+                           army->point_limit() > 2000.0 ? "8" : "10"
                        )
                 << "</style>\n"
             "<body>\n"
@@ -1384,6 +1384,7 @@ void ArmyCreator::on_export_button_clicked() {
     QTextDocument* document = new QTextDocument();
     document->setHtml(str_stream);
     QPrinter printer;
+    printer.setResolution(96);
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setPaperSize(QPrinter::A4);
     printer.setPageOrientation(QPageLayout::Landscape);

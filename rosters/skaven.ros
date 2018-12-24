@@ -55,7 +55,7 @@ Queek Headtaker
     POINTS = 215
     CHARACTERISTICS = 5 7 4 4 4 3 7 6 8
     SPECIAL_RULES = Scurry Away!, Strength in Numbers, Extreme Distrust, Hates Dwarfs/Orcs & Goblins, Tropy Heads
-    EQUIPMENT = Weapon - Name: Dwarf Gouger & additional hand weapon, Category: Magic, Type: Melee ; Armour - Name: Warp-shard armour, Category: Magic, Type: Armour
+    EQUIPMENT = Weapon - Name: Dwarf Gouger & additional hand weapon, Category: Magic, Type: Melee ; Armour - Name: Warp shard armour, Category: Magic, Type: Armour
     UNIQUENESS = true
 
 Warlord

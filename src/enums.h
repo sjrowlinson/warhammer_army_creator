@@ -276,7 +276,11 @@ namespace enum_convert {
         {"Mount", RestrictionField::MOUNT},
         {"oco_extra", RestrictionField::OCO_EXTRA},
         {"mc_extra", RestrictionField::MC_EXTRA},
-        {"other", RestrictionField::OTHER}
+        {"other", RestrictionField::OTHER},
+        {"ArmyContains", RestrictionField::ARMY_CONTAINS},
+        {"Limit", RestrictionField::LIMIT},
+        {"ItemType", RestrictionField::ITEMTYPE},
+        {"SubItemType", RestrictionField::SUBITEMTYPE}
     };
     const std::unordered_map<
         RestrictionField, std::string
@@ -291,6 +295,10 @@ namespace enum_convert {
         {RestrictionField::OCO_EXTRA, "oco_extra"},
         {RestrictionField::MC_EXTRA, "mc_extra"},
         {RestrictionField::OTHER, "other"},
+        {RestrictionField::ARMY_CONTAINS, "ArmyContains"},
+        {RestrictionField::LIMIT, "Limit"},
+        {RestrictionField::ITEMTYPE, "ItemType"},
+        {RestrictionField::SUBITEMTYPE, "SubItemType"}
     };
 
     const std::unordered_map<

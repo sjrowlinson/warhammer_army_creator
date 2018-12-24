@@ -7,11 +7,28 @@ Chaos Lord
     POINTS = 210
     CHARACTERISTICS = 4 8 3 5 5 3 7 5 9
     SPECIAL_RULES = Eye of the Gods
-    EQUIPMENT = Armour: Chaos armour {Mundane} [Armour]
-    OPTIONAL_WEAPONS = Additional hand weapon {Mundane} [Melee] (6), Great weapon {Mundane} [Melee] (8), Flail {Mundane} [Melee] (6), Halberd {Mundane} [Melee] (8), Lance {Mundane} [Melee] (8)
-    OPTIONAL_ARMOUR = Shield {Mundane} [Shield] (5)
-    OPTIONAL_MOUNTS = Barded Chaos Steed [24], Steed of Slaanesh [25], Disc of Tzeentch [30], Daemonic Mount [35], Palanquin of Nurgle [40], Juggernaught of Khorne [55], Chaos Chariot [110], Chaos Warshrine [125], Gorebeast Chariot [130], Manticore [150], Chaos Dragon [330]
-    OPTIONAL_OCO_EXTRAS = Mark of Khorne {True} [10], Mark of Tzeentch {True} [10], Mark of Nurgle {True} [10], Mark of Slaanesh {True} [5]
+    EQUIPMENT = Armour - Name: Chaos armour, Category: Mundane, Type: Armour
+    OPTIONAL_WEAPONS = [Name: Additional hand weapon, Category: Mundane, Type: Melee, Points: 6
+                        Name: Great weapon, Category: Mundane, Type: Melee, Points: 8
+                        Name: Flail, Category: Mundane, Type: Melee, Points: 6
+                        Name: Halberd, Category: Mundane, Type: Melee, Points: 8
+                        Name: Lance, Category: Mundane, Type: Melee, Points: 8]
+    OPTIONAL_ARMOUR = Name: Shield, Category: Mundane, Type: Shield, Points: 5
+    OPTIONAL_MOUNTS = [Name: Barded Chaos Steed, Points: 24
+                       Name: Steed of Slaanesh, Points: 25
+                       Name: Disc of Tzeentch, Points: 30
+                       Name: Daemonic Mount, Points: 35
+                       Name: Palanquin of Nurgle, Points: 40
+                       Name: Juggernaught of Khorne, Points: 55
+                       Name: Chaos Chariot, Points: 110
+                       Name: Chaos Warshrine, Points: 125
+                       Name: Gorebeast Chariot, Points: 130
+                       Name: Manticore, Points: 150
+                       Name: Chaos Dragon, Points: 330]
+    OPTIONAL_OCO_EXTRAS = [Name: Mark of Khorne, Points: 10
+                           Name: Mark of Tzeentch, Points: 10
+                           Name: Mark of Nurgle, Points: 10
+                           Name: Mark of Slaanesh, Points: 5]
     MAGIC_ITEM_BUDGET = 100
     FACTION_ITEM_BUDGET = 50
     TOTAL_ITEM_BUDGET = 150
@@ -23,9 +40,20 @@ Chaos Sorcerer Lord
     POINTS = 235
     CHARACTERISTICS = 4 5 3 4 4 3 5 3 8
     SPECIAL_RULES = Eye of the Gods
-    EQUIPMENT = Armour: Chaos armour {Mundane} [Armour]
-    OPTIONAL_MOUNTS = Barded Chaos Steed [24], Steed of Slaanesh [25], Disc of Tzeentch [30], Daemonic Mount [35], Palanquin of Nurgle [40], Chaos Chariot [110], Chaos Warshrine [125], Gorebeast Chariot [130], Manticore [150], Chaos Dragon [330]
-    OPTIONAL_OCO_EXTRAS = Mark of Tzeentch {True} [10], Mark of Nurgle {True} [10], Mark of Slaanesh {True} [5]
+    EQUIPMENT = Armour - Name: Chaos armour, Category: Mundane, Type: Armour
+    OPTIONAL_MOUNTS = [Name: Barded Chaos Steed, Points: 24
+                       Name: Steed of Slaanesh, Points: 25
+                       Name: Disc of Tzeentch, Points: 30
+                       Name: Daemonic Mount, Points: 35
+                       Name: Palanquin of Nurgle, Points: 40
+                       Name: Chaos Chariot, Points: 110
+                       Name: Chaos Warshrine, Points: 125
+                       Name: Gorebeast Chariot, Points: 130
+                       Name: Manticore, Points: 150
+                       Name: Chaos Dragon, Points: 330]
+    OPTIONAL_OCO_EXTRAS = [Name: Mark of Tzeentch, Points: 10
+                           Name: Mark of Nurgle, Points: 10
+                           Name: Mark of Slaanesh, Points: 5]
     MAGIC_ITEM_BUDGET = 100
     FACTION_ITEM_BUDGET = 50
     TOTAL_ITEM_BUDGET = 150
@@ -40,9 +68,12 @@ Daemon Prince
     POINTS = 235
     CHARACTERISTICS = 8 9 5 6 5 4 8 5 9
     SPECIAL_RULES = Daemonic Attacks, Daemonic Invulnerability, Terror, Unbreakable
-    OPTIONAL_ARMOUR = Chaos armour {Mundane} [Armour] (20)
-    OPTIONAL_OCO_EXTRAS = Daemon of Khorne {True} [10], Daemon of Tzeentch {True} [15], Daemon of Nurgle {True} [10], Daemon of Slaanesh {True} [5]
-    OPTIONAL_MC_EXTRAS = Daemonic Flight {True} [40]
+    OPTIONAL_ARMOUR = Name: Chaos armour, Category: Mundane, Type: Armour, Points: 20
+    OPTIONAL_OCO_EXTRAS = [Name: Mark of Khorne, Points: 10
+                           Name: Mark of Tzeentch, Points: 15
+                           Name: Mark of Nurgle, Points: 10
+                           Name: Mark of Slaanesh, Points: 5]
+    OPTIONAL_MC_EXTRAS = Name: Daemonic Flight, Points: 40
     MAGIC_ITEM_BUDGET = 25
     FACTION_ITEM_BUDGET = 100
     TOTAL_ITEM_BUDGET = 125
@@ -59,12 +90,28 @@ Exalted Hero
     POINTS = 110
     CHARACTERISTICS = 4 7 3 5 5 2 6 4 8
     SPECIAL_RULES = Eye of the Gods
-    EQUIPMENT = Armour: Chaos armour {Mundane} [Armour]
-    OPTIONAL_WEAPONS = Additional hand weapon {Mundane} [Melee] (3), Great weapon {Mundane} [Melee] (6), Flail {Mundane} [Melee] (5), Halberd {Mundane} [Melee] (6)
-    OPTIONAL_ARMOUR = Shield {Mundane} [Shield] (3)
-    OPTIONAL_MOUNTS = Barded Chaos Steed [16], Steed of Slaanesh [25], Disc of Tzeentch [30], Daemonic Mount [35], Palanquin of Nurgle [40], Juggernaught of Khorne [55], Chaos Chariot [110], Chaos Warshrine [125], Gorebeast Chariot [130]
-    OPTIONAL_OCO_EXTRAS = Mark of Khorne {True} [10], Mark of Tzeentch {True} [10], Mark of Nurgle {True} [10], Mark of Slaanesh {True} [5]
-    OPTIONAL_MC_EXTRAS = Battle Standard Bearer {True} [25]
+    EQUIPMENT = Armour - Name: Chaos armour, Category: Mundane, Type: Armour
+    OPTIONAL_WEAPONS = [Name: Additional hand weapon, Category: Mundane, Type: Melee, Points: 3
+                        Name: Great weapon, Category: Mundane, Type: Melee, Points: 6
+                        Name: Flail, Category: Mundane, Type: Melee, Points: 5
+                        Name: Halberd, Category: Mundane, Type: Melee, Points: 6]
+    OPTIONAL_ARMOUR = Name: Shield, Category: Mundane, Type: Shield, Points: 3
+    OPTIONAL_MOUNTS = [Name: Barded Chaos Steed, Points: 16
+                       Name: Steed of Slaanesh, Points: 25
+                       Name: Disc of Tzeentch, Points: 30
+                       Name: Daemonic Mount, Points: 35
+                       Name: Palanquin of Nurgle, Points: 40
+                       Name: Juggernaught of Khorne, Points: 55
+                       Name: Chaos Chariot, Points: 110
+                       Name: Chaos Warshrine, Points: 125
+                       Name: Gorebeast Chariot, Points: 130
+                       Name: Manticore, Points: 150
+                       Name: Chaos Dragon, Points: 330]
+    OPTIONAL_OCO_EXTRAS = [Name: Mark of Khorne, Points: 10
+                           Name: Mark of Tzeentch, Points: 10
+                           Name: Mark of Nurgle, Points: 10
+                           Name: Mark of Slaanesh, Points: 5]
+    OPTIONAL_MC_EXTRAS = Name: Battle Standard Bearer, Points: 25
     MAGIC_ITEM_BUDGET = 50
     FACTION_ITEM_BUDGET = 25
     TOTAL_ITEM_BUDGET = 75
@@ -76,9 +123,20 @@ Chaos Sorcerer
     POINTS = 110
     CHARACTERISTICS = 4 5 3 4 4 2 5 2 8
     SPECIAL_RULES = Eye of the Gods
-    EQUIPMENT = Armour: Chaos armour {Mundane} [Armour]
-    OPTIONAL_MOUNTS = Barded Chaos Steed [16], Steed of Slaanesh [25], Disc of Tzeentch [30], Daemonic Mount [35], Palanquin of Nurgle [40], Chaos Chariot [110], Chaos Warshrine [125], Gorebeast Chariot [130]
-    OPTIONAL_OCO_EXTRAS = Mark of Tzeentch {True} [10], Mark of Nurgle {True} [10], Mark of Slaanesh {True} [5]
+    EQUIPMENT = Armour - Name: Chaos armour, Category: Mundane, Type: Armour
+    OPTIONAL_MOUNTS = [Name: Barded Chaos Steed, Points: 16
+                       Name: Steed of Slaanesh, Points: 25
+                       Name: Disc of Tzeentch, Points: 30
+                       Name: Daemonic Mount, Points: 35
+                       Name: Palanquin of Nurgle, Points: 40
+                       Name: Chaos Chariot, Points: 110
+                       Name: Chaos Warshrine, Points: 125
+                       Name: Gorebeast Chariot, Points: 130
+                       Name: Manticore, Points: 150
+                       Name: Chaos Dragon, Points: 330]
+    OPTIONAL_OCO_EXTRAS = [Name: Mark of Tzeentch, Points: 10
+                           Name: Mark of Nurgle, Points: 10
+                           Name: Mark of Slaanesh, Points: 5]
     MAGIC_ITEM_BUDGET = 50
     FACTION_ITEM_BUDGET = 25
     TOTAL_ITEM_BUDGET = 75
@@ -97,11 +155,16 @@ Chaos Warriors
     CHARACTERISTICS = 4 5 3 4 4 1 5 2 8
     CHAMPION_CHARACTERISTICS = 4 5 3 4 4 1 5 3 8
     CHAMPION_SPECIAL_RULES = Eye of the Gods
-    EQUIPMENT = Armour: Chaos armour {Mundane} [Armour]
-    OPTIONAL_WEAPONS = Additional hand weapons {Mundane} [Melee] (2), Great weapons {Mundane} [Melee] (3), Halberds {Mundane} [Melee] (3)
-    OPTIONAL_ARMOUR = Shields {Mundane} [Shield] (1)
-    OPTIONAL_OCO_EXTRAS = Mark of Khorne {False} [2], Mark of Tzeentch {False} [2], Mark of Nurgle {False} [2], Mark of Slaanesh {False} [1]
-    OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Aspiring Champion [10]
+    EQUIPMENT = Armour - Name: Chaos armour, Category: Mundane, Type: Armour
+    OPTIONAL_WEAPONS = [Name: Additional hand weapons, Category: Mundane, Type: Melee, Points: 2
+                        Name: Great weapons, Category: Mundane, Type: Melee, Points: 3
+                        Name: Halberds, Category: Mundane, Type: Melee, Points: 3]
+    OPTIONAL_ARMOUR = Name: Shields, Category: Mundane, Type: Shield, Points: 1
+    OPTIONAL_OCO_EXTRAS = [Name: Mark of Khorne, Points: 2
+                           Name: Mark of Tzeentch, Points: 2
+                           Name: Mark of Nurgle, Points: 2
+                           Name: Mark of Slaanesh, Points: 1]
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Aspiring Champion, Points: 10
     BANNER_BUDGET = 25
 
 Chaos Marauders
@@ -113,10 +176,15 @@ Chaos Marauders
     CHARACTERISTICS = 4 4 3 3 3 1 4 1 7
     CHAMPION_CHARACTERISTICS = 4 4 3 3 3 1 4 2 7
     CHAMPION_SPECIAL_RULES = Eye of the Gods
-    OPTIONAL_WEAPONS = Great weapons {Mundane} [Melee] (3), Flails {Mundane} [Melee] (2)
-    OPTIONAL_ARMOUR = Light armour {Mundane} [Armour] (1), Shields {Mundane} [Shield] (1)
-    OPTIONAL_OCO_EXTRAS = Mark of Khorne {False} [2], Mark of Tzeentch {False} [2], Mark of Nurgle {False} [2], Mark of Slaanesh {False} [1]
-    OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Marauder Chieftain [10]
+    OPTIONAL_WEAPONS = [Name: Great weapons, Category: Mundane, Type: Melee, Points: 3
+                        Name: Flails, Category: Mundane, Type: Melee, Points: 2]
+    OPTIONAL_ARMOUR = [Name: Light armour, Category: Mundane, Type: Armour, Points: 1
+                       Name: Shields, Category: Mundane, Type: Shield, Points: 1]
+    OPTIONAL_OCO_EXTRAS = [Name: Mark of Khorne, Points: 2
+                           Name: Mark of Tzeentch, Points: 2
+                           Name: Mark of Nurgle, Points: 2
+                           Name: Mark of Slaanesh, Points: 1]
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Marauder Chieftain, Points: 10
 
 Forsaken
     BASE_TYPE = Normal
@@ -126,8 +194,11 @@ Forsaken
     SIZE = 5, inf
     CHARACTERISTICS = 6 4 0 4 4 1 4 D3 8
     SPECIAL_RULES = Freakish Mutations, Frenzy, Immune to Psychology, Random Attacks (D3)
-    EQUIPMENT = Armour: Chaos armour {Mundane} [Armour]
-    OPTIONAL_OCO_EXTRAS = Forsaken of Khorne {False} [2], Forsaken of Tzeentch {False} [1], Forsaken of Nurgle {False} [2], Forsaken of Slaanesh {False} [2]
+    EQUIPMENT = Armour - Name: Chaos armour, Category: Mundane, Type: Armour
+    OPTIONAL_OCO_EXTRAS = [Name: Forsaken of Khorne, Points: 2
+                           Name: Forsaken of Tzeentch, Points: 1
+                           Name: Forsaken of Nurgle, Points: 2
+                           Name: Forsaken of Slaanesh, Points: 2]
 
 Chaos Warhounds
     BASE_TYPE = Normal
@@ -136,7 +207,7 @@ Chaos Warhounds
     POINTS = 6
     SIZE = 5, inf
     CHARACTERISTICS = 7 4 0 3 3 1 3 1 5
-    OPTIONAL_MC_EXTRAS = Scaly Hide {False} [1], Mutant Poisons {False} [1]
+    OPTIONAL_MC_EXTRAS = Name: Scaly Hide, Points: 1 ; Name: Mutant Poisons, Points: 1
 
 Chaos Chariot
     BASE_TYPE = Normal
@@ -146,7 +217,10 @@ Chaos Chariot
     CHARACTERISTICS = - - - 5 5 4 - - -
     CHAMPION_CHARACTERISTICS = - 5 3 4 - - 5 2 8
     SPECIAL_RULES = Armour Save (3+), Scythes, Halberds (Chaos Charioteers only)
-    OPTIONAL_OCO_EXTRAS = Mark of Khorne {False} [10], Mark of Tzeentch {False} [10], Mark of Nurgle {False} [15], Mark of Slaanesh {False} [5]
+    OPTIONAL_OCO_EXTRAS = [Name: Mark of Khorne, Points: 10
+                           Name: Mark of Tzeentch, Points: 10
+                           Name: Mark of Nurgle, Points: 15
+                           Name: Mark of Slaanesh, Points: 5]
 
 Marauder Horsemen
     BASE_TYPE = Normal
@@ -159,10 +233,17 @@ Marauder Horsemen
     CHAMPION_CHARACTERISTICS = 4 4 3 3 3 1 4 2 7
     SPECIAL_RULES = Fast Cavalry
     CHAMPION_SPECIAL_RULES = Eye of the Gods
-    OPTIONAL_WEAPONS = Throwing axes {Mundane} [Ballistic] (2), Javelins {Mundane} [Ballistic] (1), Spears {Mundane} [Melee] (1), Flails {Mundane} [Melee] (2)
-    OPTIONAL_ARMOUR = Light armour {Mundane} [Armour] (1), Shields {Mundane} [Shield] (1)
-    OPTIONAL_OCO_EXTRAS = Mark of Khorne {False} [2], Mark of Tzeentch {False} [2], Mark of Nurgle {False} [2], Mark of Slaanesh {False} [1]
-    OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Marauder Horsemaster [10]
+    OPTIONAL_WEAPONS = [Name: Throwing axes, Category: Mundane, Type: Ballistic, Points: 2
+                        Name: Javelins, Category: Mundane, Type: Ballistic, Points: 1
+                        Name: Spears, Category: Mundane, Type: Melee, Points: 1
+                        Name: Flails, Category: Mundane, Type: Melee, Points: 2]
+    OPTIONAL_ARMOUR = [Name: Light armour, Category: Mundane, Type: Armour, Points: 1
+                       Name: Shields, Category: Mundane, Type: Shield, Points: 1]
+    OPTIONAL_OCO_EXTRAS = [Name: Mark of Khorne, Points: 2
+                           Name: Mark of Tzeentch, Points: 2
+                           Name: Mark of Nurgle, Points: 2
+                           Name: Mark of Slaanesh, Points: 1]
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Marauder Horsemaster, Points: 10
 
 # Special
 
@@ -177,9 +258,9 @@ Hellstriders of Slaanesh
     CHAMPION_CHARACTERISTICS = 4 4 3 3 3 1 5 2 7
     SPECIAL_RULES = Fast Cavalry, Fear, Mark of Slaanesh, Soul Hunters
     CHAMPION_SPECIAL_RULES = Eye of the Gods
-    EQUIPMENT = Armour: Shield {Mundane} [Shield], Weapon: Spear {Mundane} [Melee]
-    OPTIONAL_WEAPONS = Hellscourges {Mundane} [Melee] (1)
-    OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Hellreaver [10]
+    EQUIPMENT = Armour - Name: Shield, Category: Mundane, Type: Shield ; Weapon - Name: Spear, Category: Mundane, Type: Melee
+    OPTIONAL_WEAPONS = Name: Hellscourges, Category: Mundane, Type: Melee, Points: 1
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Hellreaver, Points: 10
 
 Chosen
     BASE_TYPE = Normal
@@ -191,11 +272,16 @@ Chosen
     CHAMPION_CHARACTERISTICS = 4 6 3 4 4 1 5 3 8
     SPECIAL_RULES = The Rewards of Chaos
     CHAMPION_SPECIAL_RULES = Eye of the Gods
-    EQUIPMENT = Armour: Chaos armour {Mundane} [Armour]
-    OPTIONAL_WEAPONS = Additional hand weapons {Mundane} [Melee] (2), Great weapons {Mundane} [Melee] (3), Halberds {Mundane} [Melee] (3)
-    OPTIONAL_ARMOUR = Shields {Mundane} [Shield] (2)
-    OPTIONAL_OCO_EXTRAS = Mark of Khorne {False} [2], Mark of Tzeentch {False} [2], Mark of Nurgle {False} [2], Mark of Slaanesh {False} [1]
-    OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Chosen Champion [10]
+    EQUIPMENT = Armour - Name: Chaos armour, Category: Mundane, Type: Armour
+    OPTIONAL_WEAPONS = [Name: Additional hand weapons, Category: Mundane, Type: Melee, Points: 2
+                        Name: Great weapons, Category: Mundane, Type: Melee, Points: 3
+                        Name: Halberds, Category: Mundane, Type: Melee, Points: 3]
+    OPTIONAL_ARMOUR = [Name: Shields, Category: Mundane, Type: Shield, Points: 2]
+    OPTIONAL_OCO_EXTRAS = [Name: Mark of Khorne, Points: 2
+                           Name: Mark of Tzeentch, Points: 2
+                           Name: Mark of Nurgle, Points: 2
+                           Name: Mark of Slaanesh, Points: 1]
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Chosen Champion, Points: 10
     BANNER_BUDGET = 50
 
 Chaos Knights
@@ -209,10 +295,14 @@ Chaos Knights
     CHAMPION_CHARACTERISTICS = 4 5 3 4 4 1 5 3 8
     SPECIAL_RULES = FEAR
     CHAMPION_SPECIAL_RULES = Eye of the Gods
-    EQUIPMENT = Armour: Chaos armour {Mundane} [Armour], Armour: Shield {Mundane} [Shield]
-    OPTIONAL_WEAPONS = Lances {Mundane} [Melee] (2), Ensorcelled weapons {Mundane} [Melee] (3)
-    OPTIONAL_OCO_EXTRAS = Mark of Khorne {False} [2], Mark of Tzeentch {False} [2], Mark of Nurgle {False} [2], Mark of Slaanesh {False} [1]
-    OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Doom Knight [10]
+    EQUIPMENT = Armour - Name: Chaos armour, Category: Mundane, Type: Armour ; Armour - Name: Shield, Category: Mundane, Type: Shield
+    OPTIONAL_WEAPONS = [Name: Lances, Category: Mundane, Type: Melee, Points: 2
+                        Name: Ensorcelled weapons, Category: Mundane, Type: Melee, Points: 3]
+    OPTIONAL_OCO_EXTRAS = [Name: Mark of Khorne, Points: 2
+                           Name: Mark of Tzeentch, Points: 2
+                           Name: Mark of Nurgle, Points: 2
+                           Name: Mark of Slaanesh, Points: 1]
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Doom Knight, Points: 10
     BANNER_BUDGET = 50
 
 Chaos Ogres
@@ -225,10 +315,14 @@ Chaos Ogres
     CHAMPION_CHARACTERISTICS = 6 3 2 4 4 3 2 4 7
     SPECIAL_RULES = Fear, Ogre Charge
     CHAMPION_SPECIAL_RULES = Eye of the Gods
-    EQUIPMENT = Armour: Heavy armour {Mundane} [Armour]
-    OPTIONAL_WEAPONS = Additional hand weapons {Mundane} [Melee] (3), Great weapons {Mundane} [Melee] (8)
-    OPTIONAL_OCO_EXTRAS = Mark of Khorne {False} [4], Mark of Tzeentch {False} [4], Mark of Nurgle {False} [4], Mark of Slaanesh {False} [2]
-    OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Ogre Mutant [10]
+    EQUIPMENT = Armour - Name: Heavy armour, Category: Mundane, Type: Armour
+    OPTIONAL_WEAPONS = [Name: Additional hand weapons, Category: Mundane, Type: Melee, Points: 3
+                        Name: Great weapons, Category: Mundane, Type: Melee, Points: 8]
+    OPTIONAL_OCO_EXTRAS = [Name: Mark of Khorne, Points: 4
+                           Name: Mark of Tzeentch, Points: 4
+                           Name: Mark of Nurgle, Points: 4
+                           Name: Mark of Slaanesh, Points: 2]
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Ogre Mutant, Points: 10
 
 Dragon Ogres
     BASE_TYPE = Normal
@@ -239,9 +333,11 @@ Dragon Ogres
     CHARACTERISTICS = 7 4 2 5 4 4 2 3 8
     CHAMPION_CHARACTERISTICS = 7 4 2 5 4 4 2 4 8
     SPECIAL_RULES = Fear, Scaly Skin (5+), Storm Rage
-    EQUIPMENT = Armour: Light armour {Mundane} [Armour]
-    OPTIONAL_WEAPONS = Additional hand weapons {Mundane} [Melee] (3), Halberds {Mundane} [Melee] (8), Great weapons {Mundane} [Melee] (8)
-    OPTIONAL_COMMAND = Champion: Dragon Ogre Shartak [10]
+    EQUIPMENT = Armour - Name: Light armour, Category: Mundane, Type: Armour
+    OPTIONAL_WEAPONS = [Name: Additional hand weapons, Category: Mundane, Type: Melee, Points: 3
+                        Name: Halberds, Category: Mundane, Type: Melee, Points: 8
+                        Name: Great weapons, Category: Mundane, Type: Melee, Points: 8]
+    OPTIONAL_COMMAND = Champion - Name: Dragon Ogre Shartak, Points: 10
 
 Chaos Trolls
     BASE_TYPE = Normal
@@ -251,7 +347,7 @@ Chaos Trolls
     SIZE = 3, inf
     CHARACTERISTICS = 6 3 1 5 4 3 1 3 4
     SPECIAL_RULES = Fear, Regeneration, Stupidity, Troll Vomit
-    OPTIONAL_WEAPONS = Additional hand weapons {Mundane} [Melee] (3)
+    OPTIONAL_WEAPONS = Name: Additional hand weapons, Category: Mundane, Type: Melee, Points: 3
 
 Chimera
     BASE_TYPE = Normal
@@ -260,7 +356,7 @@ Chimera
     POINTS = 230
     CHARACTERISTICS = 6 4 0 6 5 4 2 6 5
     SPECIAL_RULES = Fiend Tail, Fly, Large Target, Scaly Skin (4+), Terror
-    OPTIONAL_MC_EXTRAS = Flaming Breath {True} [30], Regenerating Flesh {True} [15], Venomous Ooze {True} [15]
+    OPTIONAL_MC_EXTRAS = Name: Flaming Breath, Points: 30 ; Name: Regenerating Flesh, Points: 15 ; Name: Venomous Ooze, Points: 15
 
 Gorebeast Chariot
     BASE_TYPE = Normal
@@ -270,7 +366,10 @@ Gorebeast Chariot
     CHARACTERISTICS = - - - 5 6 5 - - -
     CHAMPION_CHARACTERISTICS = - 5 3 4 - - 5 2 8
     SPECIAL_RULES = Fear, Gorebeast Charge, Armour Save (3+), Scythes, Halberds (Chaos Charioteers only)
-    OPTIONAL_OCO_EXTRAS = Mark of Khorne {False} [10], Mark of Tzeentch {False} [10], Mark of Nurgle {False} [10], Mark of Slaanesh {False} [5]
+    OPTIONAL_OCO_EXTRAS = [Name: Mark of Khorne, Points: 10
+                           Name: Mark of Tzeentch, Points: 10
+                           Name: Mark of Nurgle, Points: 10
+                           Name: Mark of Slaanesh, Points: 5]
 
 Chaos Warshrine
     BASE_TYPE = Normal
@@ -280,7 +379,10 @@ Chaos Warshrine
     CHARACTERISTICS = - - - - 5 5 - - -
     CHAMPION_CHARACTERISTICS = - 5 3 4 - - 5 2 8
     SPECIAL_RULES = Favour of the Ruinous Powers, Fear, Giver of Glory, Protection of the Dark Gods, Random Attacks (D6+2, Chaos Shrine Bearers only), War Platform
-    OPTIONAL_OCO_EXTRAS = Mark of Khorne {False} [10], Mark of Tzeentch {False} [10], Mark of Nurgle {False} [10], Mark of Slaanesh {False} [5]
+    OPTIONAL_OCO_EXTRAS = [Name: Mark of Khorne, Points: 10
+                           Name: Mark of Tzeentch, Points: 10
+                           Name: Mark of Nurgle, Points: 10
+                           Name: Mark of Slaanesh, Points: 5]
 
 # Rare
 
@@ -299,7 +401,8 @@ Dragon Ogre Shaggoth
     POINTS = 215
     CHARACTERISTICS = 7 6 3 6 5 6 4 5 9
     SPECIAL_RULES = Immune to Psychology, Large Target, Scaly Skin (5+), Storm Rage, Terror
-    OPTIONAL_WEAPONS = Additional hand weapon {Mundane} [Melee] (5), Great weapon {Mundane} [Melee] (12)
+    OPTIONAL_WEAPONS = [Name: Additional hand weapon, Category: Mundane, Type: Melee, Points: 5
+                        Name: Great weapon, Category: Mundane, Type: Melee, Points: 12]
 
 Chaos Giant
     BASE_TYPE = Normal
@@ -308,7 +411,10 @@ Chaos Giant
     POINTS = 200
     CHARACTERISTICS = 6 3 3 6 5 6 3 * 10
     SPECIAL_RULES = Fall Over, Giant Special Attacks, Large Target, Stubborn, Terror
-    OPTIONAL_OCO_EXTRAS = Giant of Khorne {False} [10], Giant of Tzeentch {False} [15], Giant of Nurgle {False} [15], Giant of Slaanesh {False} [5]
+    OPTIONAL_OCO_EXTRAS = [Name: Giant of Khorne, Points: 10
+                           Name: Giant of Tzeentch, Points: 15
+                           Name: Giant of Nurgle, Points: 15
+                           Name: Giant of Slaanesh, Points: 5]
 
 Chaos Spawn
     BASE_TYPE = Normal
@@ -317,7 +423,10 @@ Chaos Spawn
     POINTS = 50
     CHARACTERISTICS = 2D6 3 0 4 5 3 2 D6+1 10
     SPECIAL_RULES = Fear, Random Attacks (D6+1), Random Movement (2D6), Unbreakable
-    OPTIONAL_OCO_EXTRAS = Spawn of Khorne {False} [5], Spawn of Tzeentch {False} [20], Spawn of Nurgle {False} [10], Spawn of Slaanesh {False} [10]
+    OPTIONAL_OCO_EXTRAS = [Name: Mark of Khorne, Points: 5
+                           Name: Mark of Tzeentch, Points: 20
+                           Name: Mark of Nurgle, Points: 10
+                           Name: Mark of Slaanesh, Points: 10]
 
 Skullcrushers of Khorne
     BASE_TYPE = Normal
@@ -329,9 +438,10 @@ Skullcrushers of Khorne
     CHAMPION_CHARACTERISTICS = 4 5 3 4 4 1 5 3 8
     SPECIAL_RULES = Brass Behemoth, Fear, Mark of Khorne
     CHAMPION_SPECIAL_RULES = Eye of the Gods
-    EQUIPMENT = Armour: Chaos armour {Mundane} [Armour], Armour: Shield {Mundane} [Shield]
-    OPTIONAL_WEAPONS = Lances {Mundane} [Melee] (2), Ensorcelled weapons {Mundane} [Melee] (3)
-    OPTIONAL_COMMAND = Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Skullhunter [10]
+    EQUIPMENT = Armour - Name: Chaos armour, Category: Mundane, Type: Armour ; Armour - Name: Shield, Category: Mundane, Type: Shield
+    OPTIONAL_WEAPONS = [Name: Lances, Category: Mundane, Type: Melee, Points: 2
+                        Name: Ensorcelled weapons, Category: Mundane, Type: Melee, Points: 3]
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Skullhunter, Points: 10
     BANNER_BUDGET = 50
 
 Slaughterbrute
@@ -341,7 +451,7 @@ Slaughterbrute
     POINTS = 205
     CHARACTERISTICS = 6 3 0 7 5 5 3 4 5
     SPECIAL_RULES = Large Target, Runes of Binding, Scaly Skin (4+), Terror, Unbound
-    OPTIONAL_MC_EXTRAS = Extra Claws {True} [20]
+    OPTIONAL_MC_EXTRAS = Name: Extra Claws, Points: 20
 
 Mutalith Vortex Beast
     BASE_TYPE = Normal
