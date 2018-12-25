@@ -8,19 +8,23 @@
 #include <memory>
 #include <string>
 
+#include <QLabel>
+
 class option_selector {
 private:
     std::shared_ptr<selection_tree> st;
     std::shared_ptr<army_list> army;
     InTree in_tree;
     std::shared_ptr<unit> current;
+    QLabel* budget_label;
 
     void item_limit_check(bool is_magic, ItemCategory ic, const std::string& s) const;
     bool is_selection_magical(const std::string& selection) const;
 public:
     explicit option_selector(
         const std::shared_ptr<selection_tree>& st_,
-        const std::shared_ptr<army_list>& army_
+        const std::shared_ptr<army_list>& army_,
+        QLabel* budget_label
     );
 
     // resets the option_selector instance to point

@@ -30,9 +30,10 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
         message_box.setFixedSize(500, 200);
     }
     current = nullptr;
-    opt_sel = std::make_shared<option_selector>(st, army);
+    opt_sel = std::make_shared<option_selector>(st, army, ui->budget_remaining_label);
     ob = std::make_shared<OptionBox>(this, ui->options_group_box);
-    mib = std::make_shared<MagicItemBox>(this, ui->magic_items_selector, ui->item_descr_gb, ui->item_descr_label);
+    mib = std::make_shared<MagicItemBox>(this, ui->magic_items_selector,
+                                         ui->item_descr_gb, ui->item_descr_label);
     populate_roster_tree();
     id_counter = 0; // unit ID counter
     in_tree = InTree::NEITHER;
@@ -781,6 +782,13 @@ void ArmyCreator::on_roster_tree_currentItemChanged(QTreeWidgetItem *current, QT
         mib->reset(this->current, in_tree);
         mib->reinitialise(ItemType::WEAPON);
         ui->add_button->setEnabled(true);
+        if (this->current->is_character()) {
+            auto p = std::dynamic_pointer_cast<character_unit>(this->current);
+            std::string budget_str = "Magic: " +
+                    tools::points_str(p->handle_->magic_item_budget() - p->magic_item_points());
+            ui->budget_remaining_label->setText(QString::fromStdString(budget_str));
+        }
+        else ui->budget_remaining_label->setText(QString(""));
     }
     else {
         this->current = nullptr;
@@ -823,6 +831,13 @@ void ArmyCreator::on_army_tree_currentItemChanged(QTreeWidgetItem *current, QTre
         mib->reinitialise(ItemType::WEAPON);
         ui->remove_button->setEnabled(true);
         ui->duplicate_button->setEnabled(true);
+        if (this->current->is_character()) {
+            auto p = std::dynamic_pointer_cast<character_unit>(this->current);
+            std::string budget_str = "Magic: " +
+                    tools::points_str(p->handle_->magic_item_budget() - p->magic_item_points());
+            ui->budget_remaining_label->setText(QString::fromStdString(budget_str));
+        }
+        else ui->budget_remaining_label->setText(QString(""));
     }
     else {
         this->current = nullptr;

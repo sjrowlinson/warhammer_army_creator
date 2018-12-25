@@ -363,6 +363,10 @@ const std::pair<std::string, std::pair<ItemCategory, double>>& character_unit::m
     return banner;
 }
 
+double character_unit::magic_item_points() const noexcept {
+    return magic_item_points_;
+}
+
 std::string character_unit::pick_weapon(ItemCategory item_type, const std::string& name) {
     std::string removed;
     switch (item_type) {

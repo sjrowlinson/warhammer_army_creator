@@ -2,8 +2,9 @@
 
 option_selector::option_selector(
     const std::shared_ptr<selection_tree>& st_,
-    const std::shared_ptr<army_list>& army_
-) : st(st_), army(army_), in_tree(InTree::NEITHER), current() {}
+    const std::shared_ptr<army_list>& army_,
+    QLabel* budget_label_
+) : st(st_), army(army_), in_tree(InTree::NEITHER), current(), budget_label(budget_label_) {}
 
 void option_selector::reset(const std::shared_ptr<unit>& current_, InTree in_tree_) {
     current = current_;
@@ -116,7 +117,15 @@ bool option_selector::select_weapon(const std::string& s) {
             break;
         default: throw std::runtime_error("No unit selected!");
         }
-        if (is_magical) army->incr_item_tracker(weapon);
+        if (is_magical) {
+            army->incr_item_tracker(weapon);
+            if (current->is_character()) {
+                auto p = std::dynamic_pointer_cast<character_unit>(current);
+                std::string budget_str = "Magic: " +
+                        tools::points_str(p->handle_->magic_item_budget() - p->magic_item_points());
+                budget_label->setText(QString::fromStdString(budget_str));
+            }
+        }
     }
     if (!removed.empty() && is_selection_magical(removed)) army->decr_item_tracker(removed);
     return in_tree == InTree::ARMY;

@@ -1,7 +1,8 @@
 #include "magicitembox.h"
 #include "armycreator.h"
 
-MagicItemBox::MagicItemBox(ArmyCreator* creator_, QTabWidget* box_, QGroupBox* descr_box_, QLabel* descr_label_) :
+MagicItemBox::MagicItemBox(ArmyCreator* creator_, QTabWidget* box_,
+                           QGroupBox* descr_box_, QLabel* descr_label_) :
     creator(creator_), box(box_), descr_box(descr_box_), descr_label(descr_label_),
     in_tree(InTree::NEITHER), ic_selected(ItemCategory::COMMON) {}
 

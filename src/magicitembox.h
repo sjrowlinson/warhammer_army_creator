@@ -46,7 +46,8 @@ private:
     QScrollArea* make_banners_tab(const std::vector<std::pair<std::string, item>>& opt_banners);
     QScrollArea* make_other_tab(const std::vector<std::pair<std::string, item>>& opt_other);
 public:
-    explicit MagicItemBox(ArmyCreator* creator_, QTabWidget* box_, QGroupBox* descr_box_, QLabel* descr_label_);
+    explicit MagicItemBox(ArmyCreator* creator_, QTabWidget* box_,
+                          QGroupBox* descr_box_, QLabel* descr_label_);
     ~MagicItemBox() = default;
 
     void reset(const std::shared_ptr<unit>& current_, InTree in_tree_);
