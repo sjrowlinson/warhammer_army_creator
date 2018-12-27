@@ -93,6 +93,8 @@ public:
     const std::pair<std::string, std::pair<ItemCategory, double>>& magic_banner() const noexcept override;
 
     double magic_item_points() const noexcept;
+    double faction_item_points() const noexcept;
+    double total_item_points() const noexcept;
 
     // current property modifiers
     std::string pick_weapon(ItemCategory item_type, const std::string& name) override;

@@ -30,7 +30,7 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
         message_box.setFixedSize(500, 200);
     }
     current = nullptr;
-    opt_sel = std::make_shared<option_selector>(st, army, ui->budget_remaining_label);
+    opt_sel = std::make_shared<option_selector>(army, ui->budget_remaining_label);
     ob = std::make_shared<OptionBox>(this, ui->options_group_box);
     mib = std::make_shared<MagicItemBox>(this, ui->magic_items_selector,
                                          ui->item_descr_gb, ui->item_descr_label);
@@ -113,6 +113,21 @@ void ArmyCreator::update_validity_label() {
         }
     }
     ui->validity_reasons_label->setText(tr(vrl_text.data()));
+}
+
+void ArmyCreator::update_budget_label() {
+    if (current->is_character()) {
+        auto p = std::dynamic_pointer_cast<character_unit>(current);
+        std::string budget_str = "Magic: " +
+                tools::points_str(p->handle_->magic_item_budget() - p->magic_item_points());
+        if (p->handle_->faction_items_handle() != nullptr) {
+            budget_str += "  " + p->handle_->faction_items_handle()->first + ": " +
+                tools::points_str(p->handle_->faction_item_budget() - p->faction_item_points()) +
+                "   Total: " + tools::points_str(p->handle_->total_item_budget() - p->total_item_points());
+        }
+        ui->budget_remaining_label->setText(QString::fromStdString(budget_str));
+    }
+    else ui->budget_remaining_label->setText(QString(""));
 }
 
 void ArmyCreator::populate_roster_tree() {
@@ -782,13 +797,7 @@ void ArmyCreator::on_roster_tree_currentItemChanged(QTreeWidgetItem *current, QT
         mib->reset(this->current, in_tree);
         mib->reinitialise(ItemType::WEAPON);
         ui->add_button->setEnabled(true);
-        if (this->current->is_character()) {
-            auto p = std::dynamic_pointer_cast<character_unit>(this->current);
-            std::string budget_str = "Magic: " +
-                    tools::points_str(p->handle_->magic_item_budget() - p->magic_item_points());
-            ui->budget_remaining_label->setText(QString::fromStdString(budget_str));
-        }
-        else ui->budget_remaining_label->setText(QString(""));
+        update_budget_label();
     }
     else {
         this->current = nullptr;
@@ -831,13 +840,7 @@ void ArmyCreator::on_army_tree_currentItemChanged(QTreeWidgetItem *current, QTre
         mib->reinitialise(ItemType::WEAPON);
         ui->remove_button->setEnabled(true);
         ui->duplicate_button->setEnabled(true);
-        if (this->current->is_character()) {
-            auto p = std::dynamic_pointer_cast<character_unit>(this->current);
-            std::string budget_str = "Magic: " +
-                    tools::points_str(p->handle_->magic_item_budget() - p->magic_item_points());
-            ui->budget_remaining_label->setText(QString::fromStdString(budget_str));
-        }
-        else ui->budget_remaining_label->setText(QString(""));
+        update_budget_label();
     }
     else {
         this->current = nullptr;

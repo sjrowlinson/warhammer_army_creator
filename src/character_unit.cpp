@@ -367,6 +367,14 @@ double character_unit::magic_item_points() const noexcept {
     return magic_item_points_;
 }
 
+double character_unit::faction_item_points() const noexcept {
+    return faction_item_points_;
+}
+
+double character_unit::total_item_points() const noexcept {
+    return total_item_points_;
+}
+
 std::string character_unit::pick_weapon(ItemCategory item_type, const std::string& name) {
     std::string removed;
     switch (item_type) {

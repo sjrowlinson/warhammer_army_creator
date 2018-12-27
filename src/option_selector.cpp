@@ -1,17 +1,28 @@
 #include "option_selector.h"
 
 option_selector::option_selector(
-    const std::shared_ptr<selection_tree>& st_,
     const std::shared_ptr<army_list>& army_,
     QLabel* budget_label_
-) : st(st_), army(army_), in_tree(InTree::NEITHER), current(), budget_label(budget_label_) {}
+) : army(army_), in_tree(InTree::NEITHER), current(), budget_label(budget_label_) {}
 
 void option_selector::reset(const std::shared_ptr<unit>& current_, InTree in_tree_) {
     current = current_;
     in_tree = in_tree_;
 }
 
-// selectors
+void option_selector::update_budget_label() {
+    if (current->is_character()) {
+        auto p = std::dynamic_pointer_cast<character_unit>(current);
+        std::string budget_str = "Magic: " +
+                tools::points_str(p->handle_->magic_item_budget() - p->magic_item_points());
+        if (p->handle_->faction_items_handle() != nullptr) {
+            budget_str += "  " + p->handle_->faction_items_handle()->first + ": " +
+                tools::points_str(p->handle_->faction_item_budget() - p->faction_item_points()) +
+                "   Total: " + tools::points_str(p->handle_->total_item_budget() - p->total_item_points());
+        }
+        budget_label->setText(QString::fromStdString(budget_str));
+    }
+}
 
 void option_selector::item_limit_check(bool is_magic, ItemCategory ic, const std::string& s) const {
     if (!is_magic) return;
@@ -44,6 +55,8 @@ bool option_selector::is_selection_magical(const std::string& selection) const {
             (current->base()->faction_items_handle() == nullptr ?
                  false : current->base()->faction_items_handle()->second.count(selection));
 }
+
+// selectors
 
 bool option_selector::select_weapon(const std::string& s) {
     if (current == nullptr) throw std::runtime_error("No unit selected!");
@@ -119,15 +132,13 @@ bool option_selector::select_weapon(const std::string& s) {
         }
         if (is_magical) {
             army->incr_item_tracker(weapon);
-            if (current->is_character()) {
-                auto p = std::dynamic_pointer_cast<character_unit>(current);
-                std::string budget_str = "Magic: " +
-                        tools::points_str(p->handle_->magic_item_budget() - p->magic_item_points());
-                budget_label->setText(QString::fromStdString(budget_str));
-            }
+            update_budget_label();
         }
     }
-    if (!removed.empty() && is_selection_magical(removed)) army->decr_item_tracker(removed);
+    if (!removed.empty() && is_selection_magical(removed)) {
+        army->decr_item_tracker(removed);
+        update_budget_label();
+    }
     return in_tree == InTree::ARMY;
 }
 
@@ -204,9 +215,15 @@ bool option_selector::select_armour(const std::string& s) {
             break;
         default: throw std::runtime_error("No unit selected!");
         }
-        if (is_magical) army->incr_item_tracker(armour);
+        if (is_magical) {
+            army->incr_item_tracker(armour);
+            update_budget_label();
+        }
     }
-    if (!removed.empty() && is_selection_magical(removed)) army->decr_item_tracker(removed);
+    if (!removed.empty() && is_selection_magical(removed)) {
+        army->decr_item_tracker(removed);
+        update_budget_label();
+    }
     return in_tree == InTree::ARMY;
 }
 
@@ -245,9 +262,15 @@ bool option_selector::select_talisman(const std::string& s) {
             break;
         default: throw std::runtime_error("No unit selected!");
         }
-        if (is_magical) army->incr_item_tracker(talisman);
+        if (is_magical) {
+            army->incr_item_tracker(talisman);
+            update_budget_label();
+        }
     }
-    if (!removed.empty() && is_selection_magical(removed)) army->decr_item_tracker(removed);
+    if (!removed.empty() && is_selection_magical(removed)) {
+        army->decr_item_tracker(removed);
+        update_budget_label();
+    }
     return in_tree == InTree::ARMY;
 }
 
@@ -286,9 +309,15 @@ bool option_selector::select_enchanted_item(const std::string& s) {
             break;
         default: throw std::runtime_error("No unit selected!");
         }
-        if (is_magical) army->incr_item_tracker(enchanted);
+        if (is_magical) {
+            army->incr_item_tracker(enchanted);
+            update_budget_label();
+        }
     }
-    if (!removed.empty() && is_selection_magical(removed)) army->decr_item_tracker(removed);
+    if (!removed.empty() && is_selection_magical(removed)) {
+        army->decr_item_tracker(removed);
+        update_budget_label();
+    }
     return in_tree == InTree::ARMY;
 }
 
@@ -326,9 +355,15 @@ bool option_selector::select_other_item(const std::string& s, bool is_checked) {
             break;
         default: throw std::runtime_error("No unit selected!");
         }
-        if (is_magical) army->incr_item_tracker(other);
+        if (is_magical) {
+            army->incr_item_tracker(other);
+            update_budget_label();
+        }
     }
-    if (!removed.empty() && is_selection_magical(removed)) army->decr_item_tracker(removed);
+    if (!removed.empty() && is_selection_magical(removed)) {
+        army->decr_item_tracker(removed);
+        update_budget_label();
+    }
     return in_tree == InTree::ARMY;
 }
 
@@ -365,9 +400,15 @@ bool option_selector::select_banner(const std::string& s) {
             break;
         default: throw std::runtime_error("No unit selected!");
         }
-        if (is_magical) army->incr_item_tracker(banner);
+        if (is_magical) {
+            army->incr_item_tracker(banner);
+            update_budget_label();
+        }
     }
-    if (!removed.empty() && is_selection_magical(removed)) army->decr_item_tracker(removed);
+    if (!removed.empty() && is_selection_magical(removed)) {
+        army->decr_item_tracker(removed);
+        update_budget_label();
+    }
     return in_tree == InTree::ARMY;
 }
 
@@ -406,9 +447,15 @@ bool option_selector::select_arcane_item(const std::string& s) {
             break;
         default: throw std::runtime_error("No unit selected!");
         }
-        if (is_magical) army->incr_item_tracker(arcane);
+        if (is_magical) {
+            army->incr_item_tracker(arcane);
+            update_budget_label();
+        }
     }
-    if (!removed.empty() && is_selection_magical(removed)) army->decr_item_tracker(removed);
+    if (!removed.empty() && is_selection_magical(removed)) {
+        army->decr_item_tracker(removed);
+        update_budget_label();
+    }
     return in_tree == InTree::ARMY;
 }
 

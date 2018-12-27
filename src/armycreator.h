@@ -101,6 +101,7 @@ private:
     QString documents_dir;
 
     void update_validity_label();
+    void update_budget_label();
 
     // roster tree modifying
     void populate_roster_tree();
