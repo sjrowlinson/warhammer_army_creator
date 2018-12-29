@@ -795,7 +795,20 @@ void normal_unit::change_size(std::size_t n) {
 }
 
 std::string normal_unit::html_table_row() const {
-    std::string row = "<tr>";
+    std::string colour;
+    switch (handle->unit_type()) {
+    case UnitType::CORE:
+        colour = "#D4EFDF";
+        break;
+    case UnitType::SPECIAL:
+        colour = "#D6EAF8";
+        break;
+    case UnitType::RARE:
+        colour = "#F2D7D5";
+        break;
+    default: break;
+    }
+    std::string row = "<tr style=\"background-color:" + colour + "\">\n";
     // unit name
     row += "<td>" + name() + "</td>\n";
     // unit size
@@ -803,6 +816,7 @@ std::string normal_unit::html_table_row() const {
     // unit mount
     row += "<td>" + (std::get<0>(mount_).name().empty() ? "&nbsp;" : std::get<0>(mount_).name()) + "</td>\n";
     // weapons
+    if (weapons_.empty()) row += "<td>&nbsp;</td>\n";
     if (weapons_.count(WeaponType::MELEE))
         row += "<td><strong>Melee:</strong> " +
                 std::get<1>(weapons_.at(WeaponType::MELEE)) +
@@ -810,9 +824,8 @@ std::string normal_unit::html_table_row() const {
     if (weapons_.count(WeaponType::BALLISTIC))
         row +=  std::string(weapons_.count(WeaponType::MELEE) ? "" : "<td>") + "<strong>Ranged:</strong> " +
                 std::get<1>(weapons_.at(WeaponType::BALLISTIC)) + "</td>\n";
-    if (!weapons_.count(WeaponType::MELEE) &&
-            !weapons_.count(WeaponType::BALLISTIC)) row += "<td>&nbsp;</td>";
     // armour
+    if (armours_.empty()) row += "<td>&nbsp;</td>\n";
     if (armours_.count(ArmourType::ARMOUR))
         row += "<td><strong>Body:</strong> " +
                 std::get<1>(armours_.at(ArmourType::ARMOUR)) +
@@ -826,9 +839,6 @@ std::string normal_unit::html_table_row() const {
         row +=  std::string((armours_.count(ArmourType::ARMOUR) || armours_.count(ArmourType::SHIELD))
                             ? "" : "<td>") + "<strong>Helmet:</strong> " +
                 std::get<1>(armours_.at(ArmourType::HELMET)) + "</td>\n";
-    if (!armours_.count(ArmourType::ARMOUR) &&
-            !armours_.count(ArmourType::SHIELD) &&
-            !armours_.count(ArmourType::HELMET)) row += "<td>&nbsp;</td>";
     // extras
     row += "<td>";
     if (!oco_extra_.first.empty()) row += oco_extra_.first + (mc_extras().empty() ? "" : "<br/>");

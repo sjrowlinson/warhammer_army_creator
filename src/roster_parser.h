@@ -28,7 +28,7 @@ namespace tools {
     class roster_parser : public file_parser {
         struct tmp_parse_obj {
             UnitType unit_type;
-            UnitCategory unit_class;
+            UnitCategory unit_category;
             std::string mount;
             double points = 0.0;
             std::pair<std::size_t, std::size_t> size = {1U, 1U};

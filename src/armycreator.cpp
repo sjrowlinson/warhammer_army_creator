@@ -18,6 +18,7 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
     ui->army_tree->header()->resizeSection(static_cast<int>(ArmyTreeColumn::POINTS), 60); // points header
     ui->duplicate_button->setEnabled(false);
     ui->remove_button->setEnabled(false);
+    ui->set_general_button->setEnabled(false);
     // core logic initialisation
     race = enum_convert::STRING_TO_FACTION.at(
         ui->faction_combobox->currentText().toStdString()
@@ -805,6 +806,7 @@ void ArmyCreator::on_roster_tree_currentItemChanged(QTreeWidgetItem *current, QT
     }
     ui->duplicate_button->setEnabled(false);
     ui->remove_button->setEnabled(false);
+    ui->set_general_button->setEnabled(false);
 }
 
 void ArmyCreator::on_roster_tree_itemDoubleClicked(QTreeWidgetItem *item, int column) {
@@ -840,12 +842,16 @@ void ArmyCreator::on_army_tree_currentItemChanged(QTreeWidgetItem *current, QTre
         mib->reinitialise(ItemType::WEAPON);
         ui->remove_button->setEnabled(true);
         ui->duplicate_button->setEnabled(true);
+        if (this->current->unit_type() == UnitType::LORD
+                || this->current->unit_type() == UnitType::HERO)
+            ui->set_general_button->setEnabled(true);
         update_budget_label();
     }
     else {
         this->current = nullptr;
         ui->duplicate_button->setEnabled(false);
         ui->remove_button->setEnabled(false);
+        ui->set_general_button->setEnabled(false);
     }
 }
 
@@ -988,6 +994,10 @@ void ArmyCreator::on_clear_button_clicked() {
     update_validity_label();
     ui->item_descr_gb->setTitle(tr("Item Description"));
     ui->item_descr_label->setText(tr(""));
+}
+
+void ArmyCreator::on_set_general_button_clicked() {
+    army->set_as_general(current->id());
 }
 
 void ArmyCreator::update_unit_display(
@@ -1391,12 +1401,9 @@ void ArmyCreator::on_export_button_clicked() {
                     ui->faction_combobox->currentText()
                 )
             << "</header>\n";
-    out << QString(army->html_lords_table().data());
-    out << QString(army->html_heroes_table().data());
+    out << QString::fromStdString(army->html_characters_table());
     out << "\n<br/>\n";
-    out << QString(army->html_core_table().data());
-    out << QString(army->html_special_table().data());
-    out << QString(army->html_rare_table().data());
+    out << QString::fromStdString(army->html_units_table());
     out << "</body>\n"
            "</html>\n";
     QTextDocument* document = new QTextDocument();

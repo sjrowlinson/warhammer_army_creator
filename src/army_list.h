@@ -23,6 +23,15 @@
 
 class army_list {
 private:
+    // unit and item containers
+    std::unordered_map<
+        int,
+        std::shared_ptr<unit>
+    > army;
+    std::unordered_set<std::string> unique_units;
+    std::shared_ptr<unit> general_;
+    std::unordered_map<std::string, unsigned int> item_tracker;
+    // point values / limits
     double points;
     double curr_pts;
     double lord_lim;
@@ -30,23 +39,17 @@ private:
     double core_min;
     double spec_lim;
     double rare_lim;
-    std::unordered_map<
-        int,
-        std::shared_ptr<unit>
-    > army;
-    std::unordered_set<std::string> unique_units;
-    std::unordered_map<std::string, unsigned int> item_tracker;
     double lord_pts;
     double hero_pts;
     double core_pts;
     double spec_pts;
     double rare_pts;
-    std::set<InvalidListReason> invalidities;
     double snap_unit_pts;
+    // other
+    std::set<InvalidListReason> invalidities;
 
     void check_validity();
     void determine_limits();
-    std::string html_table(UnitType ut) const;
 public:
     explicit army_list(double points);
     ~army_list();
@@ -82,6 +85,7 @@ public:
 
     std::shared_ptr<unit> get_unit(int id);
     std::shared_ptr<const unit> get_unit(int id) const;
+    void set_as_general(int id);
     void take_snapshot_of(int id);
     void update_on(int id);
     // list property modification
@@ -93,11 +97,8 @@ public:
 
     void save(const QString& filename) const;
 
-    std::string html_lords_table() const;
-    std::string html_heroes_table() const;
-    std::string html_core_table() const;
-    std::string html_special_table() const;
-    std::string html_rare_table() const;
+    std::string html_characters_table() const;
+    std::string html_units_table() const;
 };
 
 #endif // !ARMY_LIST_H

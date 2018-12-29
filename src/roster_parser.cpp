@@ -1,5 +1,4 @@
 #include "roster_parser.h"
-#include <iostream>
 
 namespace tools {
 
@@ -124,6 +123,21 @@ namespace tools {
             i += 1U + ml_offset;
             arg = read_line(blocks[block_pos] + i);
         }
+        if (!(tpo.unit_category == UnitCategory::CHARIOT || tpo.unit_category == UnitCategory::MONSTER
+              || tpo.unit_category == UnitCategory::UNIQUE || tpo.unit_category == UnitCategory::WARBEASTS
+              || tpo.unit_category == UnitCategory::WARMACHINE)) {
+            if (!tpo.eq.weapons.count(WeaponType::MELEE))
+                tpo.eq.weapons[WeaponType::MELEE] = {ItemCategory::MUNDANE, "Hand weapon"};
+            switch (tpo.unit_type) {
+            case UnitType::CORE:
+            case UnitType::SPECIAL:
+            case UnitType::RARE:
+                if (!tpo.champ_eq.weapons.count(WeaponType::MELEE))
+                    tpo.champ_eq.weapons[WeaponType::MELEE] = {ItemCategory::MUNDANE, "Hand weapon"};
+                break;
+            default: break;
+            }
+        }
         std::unique_ptr<base_unit> bu;
         switch (but) {
         case BaseUnitType::MAGE_CHARACTER:
@@ -131,7 +145,7 @@ namespace tools {
             equipment eq(std::move(tpo.eq));
             options opt(std::move(tpo.opt));
             bu = std::make_unique<base_mage_character_unit>(
-                faction, tpo.unit_type, tpo.unit_class, name, tpo.points,
+                faction, tpo.unit_type, tpo.unit_category, name, tpo.points,
                 std::move(tpo.characteristics), std::move(tpo.special_rules),
                 std::move(eq), std::move(opt), tpo.mi_budget,
                 tpo.fi_budget, tpo.ti_budget, tpo.unique, tpo.mage_level,
@@ -145,7 +159,7 @@ namespace tools {
             equipment eq(std::move(tpo.eq));
             options opt(std::move(tpo.opt));
             bu = std::make_unique<base_melee_character_unit>(
-                faction, tpo.unit_type, tpo.unit_class, name, tpo.points,
+                faction, tpo.unit_type, tpo.unit_category, name, tpo.points,
                 std::move(tpo.characteristics), std::move(tpo.special_rules),
                 std::move(eq), std::move(opt), tpo.mi_budget,
                 tpo.fi_budget, tpo.ti_budget, tpo.unique, tpo.mount
@@ -159,7 +173,7 @@ namespace tools {
             equipment champ_eq(std::move(tpo.champ_eq));
             options champ_opt(std::move(tpo.champ_opt));
             bu = std::make_unique<base_normal_unit>(
-                 faction, tpo.unit_type, tpo.unit_class, name, tpo.size.first,
+                 faction, tpo.unit_type, tpo.unit_category, name, tpo.size.first,
                  tpo.size.second, tpo.points, std::move(tpo.characteristics),
                  std::move(tpo.special_rules), std::move(eq), std::move(opt),
                  std::move(tpo.champ_characteristics), std::move(tpo.champ_special_rules),
@@ -198,7 +212,7 @@ namespace tools {
                     + " has an invalid CATEGORY argument: " + s;
             throw std::runtime_error(msg);
         }
-        tpo.unit_class = search->second;
+        tpo.unit_category = search->second;
         return 0U;
     }
     std::size_t roster_parser::parse_unit_mount(const std::string& s, bool champion, bool master) {
@@ -341,6 +355,15 @@ namespace tools {
                 break;
             default: break;
             }
+        }
+        // add hand weapon as default if no other melee weapon in equipment
+        if (champion) {
+            if (!tpo.champ_eq.weapons.count(WeaponType::MELEE))
+                tpo.champ_eq.weapons[WeaponType::MELEE] = {ItemCategory::MUNDANE, "Hand weapon"};
+        }
+        else {
+            if (!tpo.eq.weapons.count(WeaponType::MELEE))
+                tpo.eq.weapons[WeaponType::MELEE] = {ItemCategory::MUNDANE, "Hand weapon"};
         }
         return ml_pair.second;
     }

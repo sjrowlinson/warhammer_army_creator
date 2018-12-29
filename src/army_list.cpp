@@ -1,11 +1,12 @@
 #include "army_list.h"
 
 army_list::army_list(double points) :
+    army(), unique_units(), general_(), item_tracker(),
     points(points), curr_pts(0.0), lord_lim(0.0),
     hero_lim(0.0), core_min(0.0), spec_lim(0.0),
-    rare_lim(0.0), army(), unique_units(), item_tracker(), lord_pts(0.0), hero_pts(0.0),
-    core_pts(0.0), spec_pts(0.0), rare_pts(0.0),
-    invalidities{InvalidListReason::CORE_MINIMUM}, snap_unit_pts(0.0) {
+    rare_lim(0.0),  lord_pts(0.0), hero_pts(0.0),
+    core_pts(0.0), spec_pts(0.0), rare_pts(0.0), snap_unit_pts(0.0),
+    invalidities{InvalidListReason::CORE_MINIMUM} {
     determine_limits();
 }
 
@@ -249,6 +250,10 @@ std::shared_ptr<const unit> army_list::get_unit(int id) const {
     return army.at(id);
 }
 
+void army_list::set_as_general(int id) {
+    general_ = army[id];
+}
+
 void army_list::take_snapshot_of(int id) {
     snap_unit_pts = army[id]->points();
 }
@@ -329,7 +334,7 @@ void army_list::check_validity() {
 }
 
 void army_list::determine_limits() {
-    double percent_25 = 0.25*points;
+    const double percent_25 = 0.25*points;
     lord_lim = percent_25;
     hero_lim = percent_25;
     core_min = percent_25;
@@ -337,86 +342,76 @@ void army_list::determine_limits() {
     rare_lim = percent_25;
 }
 
-std::string army_list::html_table(UnitType ut) const {
-    std::vector<std::string> headers;
-    switch (ut) {
-    case UnitType::LORD:
-    case UnitType::HERO:
-        headers = {
-            "Unit", "Mount", "Wizard Level", "Weapons", "Armour", "Talisman", "Enchanted Item",
-            "Arcane Item", "Other Magic/Faction Items", "Other Extras", "Banner", "Characteristics",
-            "Points"
-        };
-        break;
-    case UnitType::CORE:
-    case UnitType::SPECIAL:
-    case UnitType::RARE:
-        headers = {
-                "Unit", "Size", "Mount", "Weapons", "Armour", "Extras", "Command",
-                "Banner", "Characteristics", "Points"
-        };
-        break;
-    default: throw std::invalid_argument("Invalid unit type!");
-    }
-    std::string table = "<table border=1 cellspacing=1 cellpadding=2 width=100%>\n";
-    // make unit type header
-    table += "<thead><tr style=\"background-color: #000000\">\n";
-    switch (ut) {
-    case UnitType::LORD:
-        table += "<th colspan=\"13\" style=\"color: #FFFFFF\">";
-        table += "Lords (" + tools::points_str(lord_pts) + "/" + tools::points_str(lord_lim);
-        break;
-    case UnitType::HERO:
-        table += "<th colspan=\"13\" style=\"color: #FFFFFF\">";
-        table += "Heroes (" + tools::points_str(hero_pts) + "/" + tools::points_str(hero_lim);
-        break;
-    case UnitType::CORE:
-        table += "<th colspan=\"10\" style=\"color: #FFFFFF\">";
-        table += "Core Units (" + tools::points_str(core_pts);
-        break;
-    case UnitType::SPECIAL:
-        table += "<th colspan=\"10\" style=\"color: #FFFFFF\">";
-        table += "Special Units (" + tools::points_str(spec_pts) + "/" + tools::points_str(spec_lim);
-        break;
-    case UnitType::RARE:
-        table += "<th colspan=\"10\" style=\"color: #FFFFFF\">";
-        table += "Rare Units (" + tools::points_str(rare_pts) + "/" + tools::points_str(rare_lim);
-        break;
-    default: break;
-    }
-    table += " points)</th></tr></thead>\n";
+std::string army_list::html_characters_table() const {
+    const std::vector<std::string> headers = {
+        "Unit", "Mount", "Wizard Level", "Weapons", "Armour", "Talisman", "Enchanted Item",
+        "Arcane Item", "Other Magic/Faction Items", "Other Extras", "Banner", "Characteristics",
+        "Points"
+    };
+    std::string table = "<table border=1 cellspacing=1 cellpadding=2 width=100%>\n"
+                        "<thead><tr style=\"background-color: #000000\">\n"
+                        "<th colspan=\"13\" style=\"color: #FFFFFF\">";
+    table += "Lords (" + tools::points_str(lord_pts) + '/' + tools::points_str(lord_lim) + " points) & ";
+    table += "Heroes (" + tools::points_str(hero_pts) + '/' + tools::points_str(hero_lim) + " points)";
+    table += "</th></tr></thead>\n";
     // make field headers
     table += "<thead><tr style=\"background-color: #C0C0C0\">";
     for (const auto& h : headers) table += "<th style = \"color: #FFFFFF\">" + h + "</th\n>";
     table += "</tr></thead>\n";
     // fill table
-    for (const auto& x : army) {
-        if (x.second->unit_type() == ut) table += x.second->html_table_row();
+    auto lords = tools::find_all_if(std::begin(army), std::end(army), [](const auto& x) {
+        return x.second->unit_type() == UnitType::LORD;
+    });
+    auto heroes = tools::find_all_if(std::begin(army), std::end(army), [](const auto& x) {
+        return x.second->unit_type() == UnitType::HERO;
+    });
+    for (const auto& x : lords) {
+        auto tr = x->second->html_table_row();
+        if (x->second == general_) {
+            auto search_td = tr.find("td") + 3U;
+            tr.insert(search_td, "<em>");
+            tr.insert(search_td + 4U + x->second->name().size(), "</em>");
+        }
+        table += tr;
     }
+    for (const auto& x : heroes) table += x->second->html_table_row();
     table += "</table>";
     return table;
 }
 
-std::string army_list::html_lords_table() const {
-    return html_table(UnitType::LORD);
-}
-
-std::string army_list::html_heroes_table() const {
-    return html_table(UnitType::HERO);
-}
-
-std::string army_list::html_core_table() const {
-    return html_table(UnitType::CORE);
-}
-
-std::string army_list::html_special_table() const {
-    return html_table(UnitType::SPECIAL);
-}
-
-std::string army_list::html_rare_table() const {
-    return html_table(UnitType::RARE);
+std::string army_list::html_units_table() const {
+    const std::vector<std::string> headers = {
+        "Unit", "Size", "Mount", "Weapons", "Armour", "Extras", "Command",
+        "Banner", "Characteristics", "Points"
+    };
+    std::string table = "<table border=1 cellspacing=1 cellpadding=2 width=100%>\n"
+                        "<thead><tr style=\"background-color: #000000\">\n"
+                        "<th colspan=\"10\" style=\"color: #FFFFFF\">";
+    table += "Core (" + tools::points_str(core_pts) + '/' + tools::points_str(core_min) + " points), ";
+    table += "Special (" + tools::points_str(spec_pts) + '/' + tools::points_str(spec_lim) + " points) & ";
+    table += "Rare (" + tools::points_str(rare_pts) + '/' + tools::points_str(rare_lim) + " points)";
+    table += "</th></tr></thead>\n";
+    // make field headers
+    table += "<thead><tr style=\"background-color: #C0C0C0\">";
+    for (const auto& h : headers) table += "<th style = \"color: #FFFFFF\">" + h + "</th\n>";
+    table += "</tr></thead>\n";
+    // fill table
+    auto core = tools::find_all_if(std::begin(army), std::end(army), [](const auto& x) {
+        return x.second->unit_type() == UnitType::CORE;
+    });
+    auto special = tools::find_all_if(std::begin(army), std::end(army), [](const auto& x) {
+        return x.second->unit_type() == UnitType::SPECIAL;
+    });
+    auto rares = tools::find_all_if(std::begin(army), std::end(army), [](const auto& x) {
+        return x.second->unit_type() == UnitType::RARE;
+    });
+    for (const auto& x : core) table += x->second->html_table_row();
+    for (const auto& x : special) table += x->second->html_table_row();
+    for (const auto& x : rares) table += x->second->html_table_row();
+    table += "</table>";
+    return table;
 }
 
 void army_list::save(const QString& filename) const {
-
+    (void)filename;
 }

@@ -789,7 +789,17 @@ std::vector<std::string> character_unit::clear() {
 }
 
 std::string character_unit::html_table_row_both(short mlevel, std::string arcane) const {
-    std::string row = "<tr>";
+    std::string colour;
+    switch (handle_->unit_type()) {
+    case UnitType::LORD:
+        colour = "#D7BDE2";
+        break;
+    case UnitType::HERO:
+        colour = "#FDEBD0";
+        break;
+    default: break;
+    }
+    std::string row = "<tr style=\"background-color:" + colour + "\">\n";
     // unit name
     row += "<td>" + name() + "</td>\n";
     // unit mount
@@ -798,6 +808,7 @@ std::string character_unit::html_table_row_both(short mlevel, std::string arcane
     if (mlevel == -1) row += "<td>None</td>\n";
     else row += "<td>Level " + std::to_string(mlevel) + "</td>\n";
     // weapons
+    if (weapons_.empty()) row += "<td>&nbsp;</td>\n";
     if (weapons_.count(WeaponType::MELEE))
         row += "<td><strong>Melee:</strong> " +
                 std::get<1>(weapons_.at(WeaponType::MELEE)) +
@@ -806,6 +817,7 @@ std::string character_unit::html_table_row_both(short mlevel, std::string arcane
         row +=  std::string(weapons_.count(WeaponType::MELEE) ? "" : "<td>") + "<strong>Ranged:</strong> " +
                 std::get<1>(weapons_.at(WeaponType::BALLISTIC)) + "</td>\n";
     // armour
+    if (armours_.empty()) row += "<td>&nbsp;</td>\n";
     if (armours_.count(ArmourType::ARMOUR))
         row += "<td><strong>Body:</strong> " +
                 std::get<1>(armours_.at(ArmourType::ARMOUR)) +
@@ -819,9 +831,6 @@ std::string character_unit::html_table_row_both(short mlevel, std::string arcane
         row +=  std::string((armours_.count(ArmourType::ARMOUR) || armours_.count(ArmourType::SHIELD))
                             ? "" : "<td>") + "<strong>Helmet:</strong> " +
                 std::get<1>(armours_.at(ArmourType::HELMET)) + "</td>\n";
-    if (!armours_.count(ArmourType::ARMOUR) &&
-            !armours_.count(ArmourType::SHIELD) &&
-            !armours_.count(ArmourType::HELMET)) row += "<td>&nbsp;</td>";
     // talisman
     row += "<td>";
     if (!talisman_.first.empty()) row += talisman_.first;

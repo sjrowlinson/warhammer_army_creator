@@ -269,6 +269,7 @@ Night Runners
     CHARACTERISTICS = 6 3 3 3 3 1 5 1 6
     CHAMPION_CHARACTERISTICS = 6 3 4 3 3 1 5 1 6
     SPECIAL_RULES = Scurry Away!, Strength in Numbers, Slinking Advance
+    EQUIPMENT = Weapon - Name: Two hand weapons, Category: Mundane, Type: Melee ; Weapon - Name: Throwing stars, Category: Mundane, Type: Ballistic
     CHAMPION_SPECIAL_RULES = Dodge (6+)
     OPTIONAL_WEAPONS = Name: Slings, Category: Mundane, Type: Ballistic, Points: 1
     OPTIONAL_OCO_EXTRAS = Name : Warp-grinder, Singular : true, Points: 60
@@ -339,6 +340,7 @@ Gutter Runners
     CHARACTERISTICS = 6 4 4 3 3 1 5 1 7
     CHAMPION_CHARACTERISTICS = 6 4 4 3 3 1 5 2 7
     SPECIAL_RULES = Scurry Away!, Scouts, Skirmish, Sneaky Infiltrators, Dodge (6+)
+    EQUIPMENT = Weapon - Name: Two hand weapons, Category: Mundane, Type: Melee ; Weapon - Name: Throwing stars, Category: Mundane, Type: Ballistic
     CHAMPION_SPECIAL_RULES = Dodge (5+)
     OPTIONAL_WEAPONS = Name: Slings, Category: Mundane, Type: Ballistic, Points: 1 ; Name: Snare-net, Category: Mundane, Type: Melee, Points: 0
     CHAMPION_OPTIONAL_WEAPONS = Name: Weeping blade, Category: Mundane, Type: Melee, Points: 30
