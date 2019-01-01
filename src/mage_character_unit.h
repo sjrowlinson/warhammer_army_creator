@@ -14,6 +14,11 @@ class mage_character_unit : public character_unit {
 private:
     std::pair<short, double> level_;
     std::pair<std::string, std::pair<ItemCategory, double>> arcane_item_;
+
+    std::string restriction_check(
+        const std::unordered_multimap<RestrictionField, std::any>& restrictions,
+        const std::string& item_name
+    ) const override;
 public:
     const std::shared_ptr<base_mage_character_unit> handle;
 

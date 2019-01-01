@@ -1,12 +1,15 @@
 #ifndef FILE_PARSER_H
 #define FILE_PARSER_H
 
+#include "enums.h"
 #include "tools.h"
 
+#include <any>
 #include <fstream>
 #include <ostream>
 #include <sstream>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 #include <QFile>
@@ -24,10 +27,16 @@ namespace tools {
     protected:
         std::string filename;
         std::vector<std::size_t> blocks;
+        std::size_t curr_block;
 
         virtual void find_blocks(std::size_t start = 0U) final;
         void navigate_to_line(std::size_t n);
         std::string read_line(std::size_t n, bool trim=true);
+
+        std::unordered_multimap<
+            RestrictionField,
+            std::any
+        > parse_restrictions(const std::string& s, std::string from);
     public:
         explicit file_parser(const QString& rfile);
         virtual ~file_parser();

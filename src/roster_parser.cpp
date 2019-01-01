@@ -4,7 +4,7 @@ namespace tools {
 
     roster_parser::roster_parser(const QString& rfile, Faction _faction)
         : file_parser(rfile),
-          faction(_faction), tpo(), curr_block(0U), curr_line(0U), in_multiline_state(false) {
+          faction(_faction), tpo(), curr_line(0U), in_multiline_state(false) {
         find_blocks();
         register_bindings();
     }
@@ -490,20 +490,25 @@ namespace tools {
                         + " has been specified without a Name argument.";
                 throw std::runtime_error(msg);
             }
-            std::string name;
-            double points = 0.0;
+            mount_option mo;
             for (const auto& y : names_values) {
-                if (y.first == "Name") name = y.second;
-                else if (y.first == "Points") points = std::stod(y.second);
+                if (y.first == "Name") mo.name = y.second;
+                else if (y.first == "Points") mo.points = std::stod(y.second);
                 else if (y.first == "Replacements") {
-                    // TODO: parse replacements
+                    auto repl = tools::split(y.second, '/');
+                    for (auto&& r : repl) mo.replacements.push_back(std::move(r));
                 }
-                else if (y.first == "Restrictions") {
-                    // TODO: parse restrictions
+                else if (y.first == "Restrictions")
+                    mo.restrictions = parse_restrictions(y.second, "OPTIONAL_MOUNTS");
+                else if (y.first == "OCO_extras") {
+                    // TODO: implement
+                }
+                else if (y.first == "MC_extras") {
+                    // TODO: implement
                 }
             }
-            if (champion) tpo.champ_opt.mounts[name] = points;
-            else tpo.opt.mounts[name] = points;
+            if (champion) tpo.champ_opt.mounts[mo.name] = mo;
+            else tpo.opt.mounts[mo.name] = mo;
         }
         return ml_pair.second;
     }
@@ -614,29 +619,6 @@ namespace tools {
         (void)champion; (void)master;
         tpo.unique = s == "true";
         return 0U;
-    }
-
-    std::unordered_map<
-        RestrictionField,
-        std::vector<std::string>
-    > roster_parser::parse_restrictions(const std::string& s, std::string from) {
-        std::unordered_map<
-            RestrictionField,
-            std::vector<std::string>
-        > restrictions;
-        auto restr = tools::split(s, '/');
-        for (const auto& r : restr) {
-            auto field_value = tools::split(r, '-');
-            auto search_restr_field = enum_convert::STRING_TO_RESTRICTION.find(field_value[0]);
-            if (search_restr_field == std::end(enum_convert::STRING_TO_RESTRICTION)) {
-                std::string msg = "Error parsing + " + enum_convert::FACTION_TO_STRING.at(faction)
-                        + " roster - unit: " + read_line(blocks[curr_block])
-                        + " has an invalid argument " + from + " with Restrictions: " + field_value[0];
-                throw std::runtime_error(msg);
-            }
-            restrictions[search_restr_field->second].push_back(field_value[1]);
-        }
-        return restrictions;
     }
 
     std::pair<std::string, std::size_t> roster_parser::multiline_state_handler(const std::string& s) {

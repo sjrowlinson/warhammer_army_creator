@@ -18,7 +18,7 @@ const std::unordered_map<std::string, armour_option>& options::armour() const no
    return armour_;
 }
 
-const std::unordered_map<std::string, double>& options::mounts() const noexcept {
+const std::unordered_map<std::string, mount_option>& options::mounts() const noexcept {
     return mounts_;
 }
 

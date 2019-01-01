@@ -1,4 +1,5 @@
 #include "army_list.h"
+#include "unit.h"
 
 army_list::army_list(double points) :
     army(), unique_units(), general_(), item_tracker(),
@@ -9,8 +10,6 @@ army_list::army_list(double points) :
     invalidities{InvalidListReason::CORE_MINIMUM} {
     determine_limits();
 }
-
-army_list::~army_list() {}
 
 void army_list::add_unit(std::shared_ptr<unit> u) {
     if (u->is_character() && std::dynamic_pointer_cast<base_character_unit>(u->base())->unique()) {
@@ -52,6 +51,7 @@ void army_list::add_unit(std::shared_ptr<unit> u) {
         throw std::invalid_argument("unit type not recognised, cannot add unit to army list.");
     }
     army[u->id()] = u;
+    u->army_ = this;
     curr_pts += pts;
     check_validity();
 }
@@ -64,6 +64,7 @@ void army_list::remove_unit(int id) {
     UnitType unit_type = army[id]->unit_type();
     auto items_to_decrement = army[id]->clear();
     for (const auto& item : items_to_decrement) decr_item_tracker(item);
+    army[id]->army_ = nullptr;
     army.erase(id);
     curr_pts -= pts;
     switch (unit_type) {
@@ -236,6 +237,12 @@ bool army_list::has_bsb() const noexcept {
         std::end(army),
         [](const auto& x) { return x.second->mc_extras().count("Battle Standard Bearer"); }
     );
+}
+
+bool army_list::contains(const std::string& name) const noexcept {
+    return std::count_if(std::begin(army), std::end(army), [&name](const auto& x) {
+        return name == x.second->name();
+    });
 }
 
 const std::set<InvalidListReason>& army_list::invalid_reasons() const noexcept {

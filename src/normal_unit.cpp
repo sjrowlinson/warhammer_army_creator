@@ -1,5 +1,6 @@
 #include "normal_unit.h"
-#include <iostream>
+#include "army_list.h"
+
 normal_unit::normal_unit(const std::shared_ptr<base_unit>& base)
     : unit(base),
       handle(std::dynamic_pointer_cast<base_normal_unit>(base)) {
@@ -31,63 +32,6 @@ normal_unit::normal_unit(const normal_unit& other)
       champ_total_item_points(other.champ_total_item_points),
       command_group(other.command_group),
       banner(other.banner), handle(other.handle) {}
-
-std::pair<bool, std::string> normal_unit::restriction_check(
-    RestrictionField picking,
-    const std::unordered_map<RestrictionField, std::vector<std::string>>& restrictions
-) const {
-    std::pair<bool, std::string> p = {false, ""};
-    for (const auto& restr : restrictions) {
-        switch (restr.first) {
-        case RestrictionField::WEAPON:
-            for (const auto& w : restr.second) {
-                if (std::none_of(std::begin(weapons_), std::end(weapons_),
-                                 [&w](const auto& x) { return std::get<1>(x.second) == w; })
-                        ) {
-                    if (p.first) p.second += ", " + w;
-                    else p.second += "Unit requires: " + w;
-                    p.first = true;
-                }
-            }
-            break;
-        case RestrictionField::ARMOUR:
-            for (const auto& a : restr.second) {
-                if (std::none_of(std::begin(armours_), std::end(armours_),
-                                 [&a](const auto& x) { return std::get<1>(x.second) == a; })
-                        ) {
-                    if (p.first) p.second += ", " + a;
-                    else p.second += "Unit requires: " + a;
-                    p.first = true;
-                }
-            }
-            break;
-        case RestrictionField::MOUNT:
-            break;
-        case RestrictionField::OCO_EXTRA:
-            for (const auto& r : restr.second) {
-                if (oco_extra_.first != r) {
-                    if (p.first) p.second += ", " + r;
-                    else p.second += "Unit requires: " + r;
-                    p.first = true;
-                }
-            }
-            break;
-        case RestrictionField::MC_EXTRA:
-            for (const auto& r : restr.second) {
-                if (!mc_extras_.count(r)) {
-                    if (p.first) p.second += ", " + r;
-                    else p.second += "Unit requires: " + r;
-                    p.first = true;
-                }
-            }
-            break;
-        default: break;
-        }
-    }
-    if (p.first)
-        p.second += " to choose this " + enum_convert::RESTRICTION_TO_STRING.at(picking) + "!";
-    return p;
-}
 
 // current property accessors
 
@@ -678,6 +622,8 @@ std::string normal_unit::pick_default_mc_extra(const std::string& name) {
     auto search = handle->opt().mc_extras().find(name);
     if (search == handle->opt().mc_extras().end())
         throw std::invalid_argument("Item not found!");
+    auto restr = restriction_check(search->second.restrictions, name);
+    if (!restr.empty()) throw std::invalid_argument(restr);
     if (mc_extras_.count(name)) return std::string();
     mc_extras_[name] = {search->second.is_singular, search->second.points};
     const double pts = search->second.points;

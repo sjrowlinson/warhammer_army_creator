@@ -1,14 +1,16 @@
 #ifndef UNIT_H
 #define UNIT_H
 
+class army_list;
+
 #include "base_unit.h"
 #include "base_mage_character_unit.h"
 #include "base_melee_character_unit.h"
 #include "base_normal_unit.h"
 #include "base_mixed_unit.h"
-#include "base_unit.h"
 #include "enums.h"
 
+#include <any>
 #include <memory>
 #include <string>
 #include <tuple>
@@ -22,12 +24,15 @@ protected:
     MixedSelect mixed_select_;
     double points_;
     std::shared_ptr<base_unit> base_;
+    army_list* army_;
+
+    friend army_list;
 
     void do_replacements(const std::vector<std::string>& replacements, bool champion=false);
-    virtual std::pair<bool, std::string> restriction_check(
-        RestrictionField picking,
-        const std::unordered_map<RestrictionField, std::vector<std::string>>& restrictions
-    ) const = 0;
+    virtual std::string restriction_check(
+        const std::unordered_multimap<RestrictionField, std::any>& restrictions,
+        const std::string& item_name
+    ) const;
 public:
     explicit unit(const std::shared_ptr<base_unit>& base);
     unit(const unit& other);

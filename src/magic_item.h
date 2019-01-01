@@ -3,6 +3,7 @@
 
 #include "enums.h"
 
+#include <any>
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
@@ -22,10 +23,11 @@ struct item {
     // indicate OR options - e.g. the Third Eye of Tzeentch WoC
     // faction item requires either the Mark of Khorne or Daemon
     // of Khorne {oco_extra}
-    std::unordered_map<
-        RestrictionField,
-        std::vector<std::string>
-    > restrictions;
+    std::unordered_multimap<RestrictionField, std::any> restrictions;
 };
+
+// TODO: change restrictions to a std::unordered_multimap<RestrictionField, std::any>
+//       so that I can do different things based on the field of restriction stored
+//       => e.g: RestrictionField::LIMIT can just be handled with a value_type of int
 
 #endif // !MAGIC_ITEM_H

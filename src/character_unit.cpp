@@ -1,4 +1,5 @@
 #include "character_unit.h"
+#include "army_list.h"
 
 character_unit::character_unit(const std::shared_ptr<base_unit>& base)
     : unit(base),
@@ -59,104 +60,40 @@ bool character_unit::has_non_duplicable_items() const noexcept {
     ) || !banner.first.empty();
 }
 
-std::pair<bool, std::string> character_unit::restriction_check(
-    RestrictionField picking,
-    const std::unordered_map<RestrictionField, std::vector<std::string>>& restrictions
+std::string character_unit::restriction_check(
+    const std::unordered_multimap<RestrictionField, std::any>& restrictions,
+    const std::string& item_name
 ) const {
-    std::pair<bool, std::string> p = {false, ""};
-    for (const auto& restr : restrictions) {
-        switch (restr.first) {
-        case RestrictionField::WEAPON:
-            for (const auto& w : restr.second) {
-                if (std::none_of(std::begin(weapons_), std::end(weapons_),
-                                 [&w](const auto& x) { return std::get<1>(x.second) == w; })
-                        ) {
-                    if (p.first) p.second += ", " + w;
-                    else p.second += "Character requires: " + w;
-                    p.first = true;
-                }
-            }
-            break;
-        case RestrictionField::ARMOUR:
-            for (const auto& a : restr.second) {
-                if (std::none_of(std::begin(armours_), std::end(armours_),
-                                 [&a](const auto& x) { return std::get<1>(x.second) == a; })
-                        ) {
-                    if (p.first) p.second += ", " + a;
-                    else p.second += "Character requires: " + a;
-                    p.first = true;
-                }
-            }
-            break;
+    std::string msg = unit::restriction_check(restrictions, item_name);
+    for (const auto& restriction : restrictions) {
+        switch (restriction.first) {
         case RestrictionField::TALISMAN:
-            for (const auto& t : restr.second) {
-                if (talisman_.first != t) {
-                    if (p.first) p.second += ", " + t;
-                    else p.second += "Character requires: " + t;
-                    p.first = true;
-                }
-            }
-            break;
         case RestrictionField::ENCHANTED:
-            for (const auto& e : restr.second) {
-                if (enchanted_item_.first != e) {
-                    if (p.first) p.second += ", " + e;
-                    else p.second += "Character requires: " + e;
-                    p.first = true;
-                }
-            }
-            break;
-        case RestrictionField::BANNER:
-            for (const auto& b : restr.second) {
-                if (banner.first != b) {
-                    if (p.first) p.second += ", " + b;
-                    else p.second += "Character requires: " + b;
-                    p.first = true;
-                }
-            }
-            break;
-        case RestrictionField::MOUNT:
-            for (const auto& m : restr.second) {
-                if (std::get<0>(mount_).name() != m) {
-                    if (p.first) p.second += ", " + m;
-                    else p.second += "Character requires: " + m;
-                    p.first = true;
-                }
-            }
-            break;
-        case RestrictionField::OCO_EXTRA:
-            for (const auto& r : restr.second) {
-                if (oco_extra_.first != r) {
-                    if (p.first) p.second += ", " + r;
-                    else p.second += "Character requires: " + r;
-                    p.first = true;
-                }
-            }
-            break;
-        case RestrictionField::MC_EXTRA:
-            for (const auto& r : restr.second) {
-                if (!mc_extras_.count(r)) {
-                    if (p.first) p.second += ", " + r;
-                    else p.second += "Character requires: " + r;
-                    p.first = true;
-                }
-            }
-            break;
         case RestrictionField::OTHER:
-            for (const auto& o : restr.second) {
-                if (!item_extras_.count(o)) {
-                    if (p.first) p.second += ", " + o;
-                    else p.second += "Character requires: " + o;
-                    p.first = true;
+            for (const auto& x : std::any_cast<std::vector<std::string>>(restriction.second)) {
+                bool restricted = false;
+                switch (restriction.first) {
+                case RestrictionField::TALISMAN:
+                    restricted = talisman().first != x;
+                    break;
+                case RestrictionField::ENCHANTED:
+                    restricted = enchanted_item().first != x;
+                    break;
+                case RestrictionField::OTHER:
+                    restricted = !(item_extras().count(x));
+                    break;
+                default: break;
+                }
+                if (restricted) {
+                    if (msg.empty()) msg += name() + " requires: " + x;
+                    else msg += ", " + x;
                 }
             }
             break;
         default: break;
         }
     }
-    if (p.first)
-        p.second += " to choose this " + enum_convert::RESTRICTION_TO_STRING.at(picking) + "!";
-    return p;
+    return msg;
 }
 
 std::string character_unit::pick_magic_item(ItemType item_type, ItemCategory item_class, const std::string& name) {
@@ -191,8 +128,8 @@ std::string character_unit::pick_magic_item(ItemType item_type, ItemCategory ite
         switch (item_type) {
         case ItemType::WEAPON:
         {
-            auto restr = restriction_check(RestrictionField::WEAPON, search->second.restrictions);
-            if (restr.first) throw std::invalid_argument(restr.second);
+            auto restr = restriction_check(search->second.restrictions, name);
+            if (!restr.empty()) throw std::invalid_argument(restr);
             if (weapons_.find(search->second.weapon_type) != weapons_.end()) {
                 adj_mip -= std::get<2>(weapons_[search->second.weapon_type]);
                 adj_tip -= std::get<2>(weapons_[search->second.weapon_type]);
@@ -215,8 +152,8 @@ std::string character_unit::pick_magic_item(ItemType item_type, ItemCategory ite
                     }
                 )) throw std::invalid_argument("Cannot choose multiple pieces of magic armour!");
             }
-            auto restr = restriction_check(RestrictionField::ARMOUR, search->second.restrictions);
-            if (restr.first) throw std::invalid_argument(restr.second);
+            auto restr = restriction_check(search->second.restrictions, name);
+            if (!restr.empty()) throw std::invalid_argument(restr);
             if (armours_.find(at) != armours_.end()) {
                 adj_mip -= std::get<2>(armours_[at]);
                 adj_tip -= std::get<2>(armours_[at]);
@@ -225,8 +162,8 @@ std::string character_unit::pick_magic_item(ItemType item_type, ItemCategory ite
         }
         case ItemType::TALISMAN:
         {
-            auto restr = restriction_check(RestrictionField::TALISMAN, search->second.restrictions);
-            if (restr.first) throw std::invalid_argument(restr.second);
+            auto restr = restriction_check(search->second.restrictions, name);
+            if (!restr.empty()) throw std::invalid_argument(restr);
             if (!talisman_.first.empty()) {
                 adj_mip -= talisman_.second.second;
                 adj_tip -= talisman_.second.second;
@@ -235,8 +172,8 @@ std::string character_unit::pick_magic_item(ItemType item_type, ItemCategory ite
         }
         case ItemType::ENCHANTED:
         {
-            auto restr = restriction_check(RestrictionField::ENCHANTED, search->second.restrictions);
-            if (restr.first) throw std::invalid_argument(restr.second);
+            auto restr = restriction_check(search->second.restrictions, name);
+            if (!restr.empty()) throw std::invalid_argument(restr);
             if (!enchanted_item_.first.empty()) {
                 adj_mip -= enchanted_item_.second.second;
                 adj_tip -= enchanted_item_.second.second;
@@ -245,14 +182,14 @@ std::string character_unit::pick_magic_item(ItemType item_type, ItemCategory ite
         }
         case ItemType::BANNER:
         {
-            auto restr = restriction_check(RestrictionField::BANNER, search->second.restrictions);
-            if (restr.first) throw std::invalid_argument(restr.second);
+            auto restr = restriction_check(search->second.restrictions, name);
+            if (!restr.empty()) throw std::invalid_argument(restr);
             break;
         }
         case ItemType::OTHER:
         {
-            auto restr = restriction_check(RestrictionField::OTHER, search->second.restrictions);
-            if (restr.first) throw std::invalid_argument(restr.second);
+            auto restr = restriction_check(search->second.restrictions, name);
+            if (!restr.empty()) throw std::invalid_argument(restr);
             break;
         }
         default: break;
@@ -564,6 +501,8 @@ std::string character_unit::pick_mc_extra(const std::string& name) {
     auto search = handle_->opt().mc_extras().find(name);
     if (search == handle_->opt().mc_extras().end())
         throw std::invalid_argument("Item not found!");
+    auto restr = restriction_check(search->second.restrictions, name);
+    if (!restr.empty()) throw std::invalid_argument(restr);
     if (mc_extras_.count(name)) return std::string();
     mc_extras_[name] = {search->second.is_singular, search->second.points};
     points_ += search->second.points;
@@ -669,8 +608,8 @@ void character_unit::pick_mount(const std::string& name) {
     if (opt_search == handle_->opt().mounts().end() ||
             mnt_search == handle_->mounts_handle()->end())
         throw std::invalid_argument("Mount not found!");
-    auto restr = restriction_check(RestrictionField::MOUNT, mnt_search->second.restrictions());
-    if (restr.first) throw std::invalid_argument(restr.second);
+    auto restr = restriction_check(mnt_search->second.restrictions(), name);
+    if (!restr.empty()) throw std::invalid_argument(restr);
     remove_mount();
     mount_ = {mnt_search->second, opt_search->second, {}, {}};
     points_ += opt_search->second;

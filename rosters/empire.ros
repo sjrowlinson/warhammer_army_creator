@@ -16,7 +16,9 @@ General of The Empire
     OPTIONAL_ARMOUR = [Name : Full plate armour, Category : Mundane, Type : Armour, Points : 9
                        Name : Heavy armour, Category : Mundane, Type: Armour, Points : 4,
                        Name : Shield, Category : Mundane, Type : Shield, Points : 3]
-    OPTIONAL_MOUNTS = Name : Imperial Griffon, Points : 170 ; Name : Imperial Pegasus, Points : 45 ; Name : Warhorse, Points : 18
+    OPTIONAL_MOUNTS = [Name : Imperial Griffon, Points : 170
+                       Name : Imperial Pegasus, Points : 45
+                       Name : Warhorse, Points : 18]
     MAGIC_ITEM_BUDGET = 100
     TOTAL_ITEM_BUDGET = 100
 

@@ -64,7 +64,6 @@ namespace tools {
             std::string,
             std::function<std::size_t(const std::string&, bool, bool)>
         > parsing_functions;
-        std::size_t curr_block;
         std::size_t curr_line;
         bool in_multiline_state;
 
@@ -96,11 +95,6 @@ namespace tools {
         std::size_t parse_unit_uniqueness(const std::string& s, bool champion, bool master);
 
         std::size_t parse_unit_extras(const std::string& s, bool champion, bool master, bool oco);
-
-        std::unordered_map<
-            RestrictionField,
-            std::vector<std::string>
-        > parse_restrictions(const std::string& s, std::string from);
 
         std::pair<std::string, std::size_t> multiline_state_handler(const std::string& s);
 

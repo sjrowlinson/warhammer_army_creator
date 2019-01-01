@@ -2,11 +2,8 @@
 #define ARMY_LIST_H
 
 #include "enums.h"
-#include "unit.h"
-#include "mage_character_unit.h"
-#include "melee_character_unit.h"
-#include "mixed_unit.h"
-#include "normal_unit.h"
+#include "tools.h"
+//#include "unit.h"
 
 #include <algorithm>
 #include <cmath>
@@ -20,6 +17,8 @@
 
 #include <QFile>
 #include <QString>
+
+class unit;
 
 class army_list {
 private:
@@ -52,7 +51,7 @@ private:
     void determine_limits();
 public:
     explicit army_list(double points);
-    ~army_list();
+    ~army_list() = default;
     double current_points() const noexcept;
     double point_limit() const noexcept;
     const std::unordered_map<std::string, unsigned int>& item_track_map() const noexcept;
@@ -80,6 +79,8 @@ public:
     double rare_points() const noexcept;
     // bsb flag methods
     bool has_bsb() const noexcept;
+
+    bool contains(const std::string& name) const noexcept;
 
     const std::set<InvalidListReason>& invalid_reasons() const noexcept;
 

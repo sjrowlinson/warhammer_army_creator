@@ -1,7 +1,7 @@
 # Army Creator
 
 An army list creator for Warhammer Fantasy Battles (WHFB) built using [QtCreator](https://www.qt.io/) with the
-core logic programmed in compliance with the C++14 standard. Currently only WHFB 8th Edition is supported but over
+core logic programmed in compliance with the C++17 standard. Currently only WHFB 8th Edition is supported but over
 time it will be changed to include 6th and 7th Edition rules and army books.
 
 This army list creator is designed to be easy to use avoiding the use of any external dependencies, this includes

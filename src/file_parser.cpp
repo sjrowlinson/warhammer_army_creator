@@ -9,6 +9,7 @@ namespace tools {
         ss = std::stringstream(content);
         cache();
         filename = rfile.toStdString();
+        curr_block = 0U;
     }
 
     file_parser::~file_parser() { f.close(); }
@@ -40,6 +41,59 @@ namespace tools {
             if (!(tools::starts_with(line, ' ') || tools::starts_with(line, '\t')))
                 blocks.push_back(i);
         }
+    }
+
+    std::unordered_multimap<
+        RestrictionField,
+        std::any
+    > file_parser::parse_restrictions(const std::string& s, std::string from) {
+        (void)from;
+        std::unordered_multimap<
+            RestrictionField,
+            std::any
+        > restrictions;;
+        auto restr = tools::split(s, '/');
+        for (const auto& r : restr) {
+            auto field_value = tools::split(r, '-');
+            auto search_restr_field = enum_convert::STRING_TO_RESTRICTION.find(field_value[0]);
+            if (search_restr_field == std::end(enum_convert::STRING_TO_RESTRICTION)) {
+                /*std::string msg = "Error parsing + " + enum_convert::FACTION_TO_STRING.at(faction)
+                        + " roster - unit: " + read_line(blocks[curr_block])
+                        + " has an invalid argument " + from + " with Restrictions: " + field_value[0];*/
+                std::string msg = "restriction parsing error";
+                throw std::runtime_error(msg);
+            }
+            switch (search_restr_field->second) {
+            case RestrictionField::WEAPON:
+            case RestrictionField::ARMOUR:
+            case RestrictionField::TALISMAN:
+            case RestrictionField::ENCHANTED:
+            case RestrictionField::ARCANE:
+            case RestrictionField::MC_EXTRA:
+            case RestrictionField::OTHER:
+            case RestrictionField::ARMY_CONTAINS:
+            {
+                auto values = tools::split(field_value[1], '_');
+                restrictions.emplace(std::make_pair(search_restr_field->second, values));
+
+                break;
+            }
+            case RestrictionField::BANNER:
+            case RestrictionField::MOUNT:
+            case RestrictionField::OCO_EXTRA:
+                restrictions.emplace(std::make_pair(search_restr_field->second, field_value[1]));
+                break;
+            case RestrictionField::LIMIT:
+                restrictions.emplace(std::make_pair(search_restr_field->second,
+                                                    static_cast<unsigned int>(std::stoi(field_value[1]))));
+            case RestrictionField::ITEMTYPE:
+            case RestrictionField::SUBITEMTYPE:
+                // TODO: don't know what to do with these yet, need to rewrite
+                // budget and item parsing first
+                break;
+            }
+        }
+        return restrictions;
     }
 
 }

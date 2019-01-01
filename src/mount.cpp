@@ -1,24 +1,17 @@
 #include "mount.h"
 
 mount::mount()
-    : name_(), unit_class_(UnitCategory::INFANTRY), statistics_(),
-      special_rules_(), oco_extras_(), mc_extras_(), restrictions_() {}
+    : name_(), unit_class_(UnitCategory::INFANTRY), statistics_(), special_rules_() {}
 
 mount::mount(
     std::string&& _name,
     UnitCategory _uc,
     std::vector<std::string>&& _stats,
-    std::vector<std::string>&& _sr,
-    std::unordered_map<std::string, double>&& _oco_extras,
-    std::unordered_map<std::string, double>&& _mc_extras,
-    std::unordered_map<RestrictionField, std::vector<std::string>>&& _restrictions
+    std::vector<std::string>&& _sr
 ) : name_(std::move(_name)),
     unit_class_(_uc),
     statistics_(std::move(_stats)),
-    special_rules_(std::move(_sr)),
-    oco_extras_(std::move(_oco_extras)),
-    mc_extras_(std::move(_mc_extras)),
-    restrictions_(std::move(_restrictions)) {}
+    special_rules_(std::move(_sr)) {}
 
 const std::string& mount::name() const noexcept {
     return name_;
@@ -32,19 +25,4 @@ const std::vector<std::string>& mount::statistics() const noexcept {
 const std::vector<std::string>& mount::special_rules() const noexcept {
     return special_rules_;
 }
-const std::unordered_map<std::string, double>& mount::oco_extras() const noexcept {
-    return oco_extras_;
-}
-const std::unordered_map<std::string, double>& mount::mc_extras() const noexcept {
-    return mc_extras_;
-}
-const std::unordered_map<
-    RestrictionField,
-    std::vector<std::string>
->& mount::restrictions() const noexcept {
-    return restrictions_;
-}
 
-bool mount::has_options() const noexcept {
-    return !oco_extras_.empty() || !mc_extras_.empty();
-}

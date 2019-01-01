@@ -47,9 +47,9 @@ protected:
     std::string pick_magic_item(ItemType item_type, ItemCategory item_class, const std::string& name);
     std::string html_table_row_both(short mlevel, std::string arcane) const;
 
-    std::pair<bool, std::string> restriction_check(
-        RestrictionField picking,
-        const std::unordered_map<RestrictionField, std::vector<std::string>>& restrictions
+    virtual std::string restriction_check(
+        const std::unordered_multimap<RestrictionField, std::any>& restrictions,
+        const std::string& item_name
     ) const override;
 public:
     const std::shared_ptr<base_character_unit> handle_;

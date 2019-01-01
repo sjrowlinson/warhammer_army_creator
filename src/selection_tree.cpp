@@ -4,10 +4,12 @@ selection_tree::selection_tree(Faction faction, army_list& list) : race(faction)
     auto files = filenames();
     QString common_item_filename(":/magic_items/common.mag");
     tools::item_parser ip(common_item_filename, ItemCategory::COMMON);
-    auto items = ip.parse();
-    common_items.first = ip.name();
-    for (auto&& item : items) common_items.second[item.name] = item;
-    try { reset(faction, list); }
+    try {
+        auto items = ip.parse();
+        common_items.first = ip.name();
+        for (auto&& item : items) common_items.second[item.name] = item;
+        reset(faction, list);
+    }
     catch (const std::runtime_error&) { throw; }
 }
 
@@ -188,37 +190,41 @@ void selection_tree::parse_mount_file(const QString& mfile_str) {
 void selection_tree::parse_item_files(const std::pair<QString, QString>& ifile_str) {
     // parse magic items file first
     tools::item_parser magic_items_parser(ifile_str.first, ItemCategory::MAGIC);
-    auto mag_items = magic_items_parser.parse();
-    magic_items.first = magic_items_parser.name();
-    for (auto&& item : mag_items) magic_items.second[item.name] = item;
-    std::shared_ptr<
-        std::pair<
-            std::string,
-            std::unordered_map<std::string, item>
-        >
-    > sp_items = std::make_shared<
-                      std::pair<
-                          std::string,
-                          std::unordered_map<std::string, item>
-                  >>(magic_items);
-    for (auto& x : roster) x.second->set_magic_item_handle(sp_items);
+    try {
+        auto mag_items = magic_items_parser.parse();
+        magic_items.first = magic_items_parser.name();
+        for (auto&& item : mag_items) magic_items.second[item.name] = item;
+        std::shared_ptr<
+            std::pair<
+                std::string,
+                std::unordered_map<std::string, item>
+            >
+        > sp_items = std::make_shared<
+                          std::pair<
+                              std::string,
+                              std::unordered_map<std::string, item>
+                      >>(magic_items);
+        for (auto& x : roster) x.second->set_magic_item_handle(sp_items);
+    } catch (const std::runtime_error&) { throw; }
     // then faction items file if it exists
     if (tools::split(ifile_str.second.toStdString(), '.').size() < 2U) return;
     tools::item_parser faction_items_parser(ifile_str.second, ItemCategory::FACTION);
-    auto fac_items = faction_items_parser.parse();
-    faction_items.first = faction_items_parser.name();
-    for (auto&& item : fac_items) faction_items.second[item.name] = item;
-    std::shared_ptr<
-        std::pair<
-            std::string,
-            std::unordered_map<std::string, item>
-        >
-    > sp_fac_items = std::make_shared<
-                      std::pair<
-                          std::string,
-                          std::unordered_map<std::string, item>
-                  >>(faction_items);
-    for (auto& entry : roster) entry.second->set_faction_item_handle(sp_fac_items);
+    try {
+        auto fac_items = faction_items_parser.parse();
+        faction_items.first = faction_items_parser.name();
+        for (auto&& item : fac_items) faction_items.second[item.name] = item;
+        std::shared_ptr<
+            std::pair<
+                std::string,
+                std::unordered_map<std::string, item>
+            >
+        > sp_fac_items = std::make_shared<
+                          std::pair<
+                              std::string,
+                              std::unordered_map<std::string, item>
+                      >>(faction_items);
+        for (auto& entry : roster) entry.second->set_faction_item_handle(sp_fac_items);
+    } catch (const std::runtime_error&) { throw; }
 }
 
 std::string selection_tree::magic_items_name() const noexcept {

@@ -1,4 +1,13 @@
 Warhorse
+    CATEGORY = Warbeast
+    CHARACTERISTICS = 8 3 3 3 3 1 3 1 5
+
+Imperial Pegasus
+    CATEGORY = Monstrous Beast
+    CHARACTERISTICS = 8 3 0 4 4 3 4 2 6
+    SPECIAL_RULES = Fly
+
+Warhorse
     Warbeast
     8 3 3 3 3 1 3 1 5
     None

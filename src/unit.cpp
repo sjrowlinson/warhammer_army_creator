@@ -1,4 +1,5 @@
 #include "unit.h"
+#include "army_list.h"
 
 unit::unit(const std::shared_ptr<base_unit>& base)
     : id_(0), model_select_(ModelSelect::DEFAULT),
@@ -38,6 +39,101 @@ void unit::do_replacements(const std::vector<std::string>& replacements, bool ch
         else if (r == "Helmet") remove_armour(ArmourType::HELMET, true);
     }
     switch_model_select(ModelSelect::DEFAULT);
+}
+
+std::string unit::restriction_check(
+    const std::unordered_multimap<RestrictionField, std::any>& restrictions,
+    const std::string& item_name
+) const {
+    std::string msg = "";
+    /*std::unordered_map<RestrictionField, short> each_restr_count;
+    for (const auto& restriction : restrictions) each_restr_count[restriction.first]++;*/
+    for (const auto& restriction : restrictions) {
+        switch (restriction.first) {
+        case RestrictionField::WEAPON:
+        case RestrictionField::ARMOUR:
+        case RestrictionField::MC_EXTRA:
+        case RestrictionField::ARMY_CONTAINS:
+            for (const auto& x : std::any_cast<std::vector<std::string>>(restriction.second)) {
+                bool restricted = false;
+                switch (restriction.first) {
+                case RestrictionField::WEAPON:
+                    restricted = std::none_of(std::begin(weapons()), std::end(weapons()),
+                                              [&x](const auto& y) { return std::get<1>(y.second) == x; });
+
+                    break;
+                case RestrictionField::ARMOUR:
+                    restricted = std::none_of(std::begin(armour()), std::end(armour()),
+                                              [&x](const auto& y) { return std::get<1>(y.second) == x; });
+                    break;
+                case RestrictionField::MC_EXTRA:
+                    restricted = !(mc_extras().count(x));
+                    break;
+                case RestrictionField::ARMY_CONTAINS:
+                    restricted = !(army_->contains(x));
+                    if (restricted) {
+                        if (msg.empty()) msg += "Army must contain: " + x;
+                        else msg += ", " + x;
+                    }
+                    break;
+                default: break;
+                }
+                if (restricted && restriction.first != RestrictionField::ARMY_CONTAINS) {
+                    if (msg.empty()) msg += name() + " requires: " + x;
+                    else msg += ", " + x;
+                }
+            }
+            break;
+        case RestrictionField::BANNER:
+        {
+            std::string reqd_banner = std::any_cast<std::string>(restriction.second);
+            if (magic_banner().first != reqd_banner) {
+                if (msg.empty()) msg += name() + " requires: " + reqd_banner;
+                else msg += ", " + reqd_banner;
+            }
+            break;
+        }
+        case RestrictionField::MOUNT:
+        {
+            std::string reqd_mount = std::any_cast<std::string>(restriction.second);
+            if (std::get<0>(mnt()).name() != reqd_mount) {
+                if (msg.empty()) msg += name() + " requires: " + reqd_mount;
+                else msg += ", " + reqd_mount;
+            }
+            break;
+        }
+        case RestrictionField::OCO_EXTRA:
+        {
+            std::string reqd_oco = std::any_cast<std::string>(restriction.second);
+            if (oco_extra().first != reqd_oco) {
+                if (msg.empty()) msg += name() + " requires: " + reqd_oco;
+                else msg += ", " + reqd_oco;
+            }
+            break;
+        }
+        case RestrictionField::LIMIT:
+        {
+            unsigned int lim = std::any_cast<unsigned int>(restriction.second);
+            auto search_item_in_tracker = army_->item_track_map().find(item_name);
+            if (search_item_in_tracker != std::end(army_->item_track_map()) &&
+                    search_item_in_tracker->second >= lim) {
+                msg += "Cannot have more than " + std::to_string(lim) + " instances"
+                        "of " + item_name + " in an army!";
+
+            }
+            break;
+        }
+        case RestrictionField::ITEMTYPE:
+        case RestrictionField::SUBITEMTYPE:
+            // TODO: don't know what to do with these yet, need to rewrite
+            // budget and item parsing first
+            break;
+        // everything else handled by restriction_check calls in derived classes
+        default: break;
+        }
+    }
+    if (!msg.empty()) msg += " to choose: " + item_name;
+    return msg;
 }
 
 double unit::points() const noexcept { return points_; }
