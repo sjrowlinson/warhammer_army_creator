@@ -1,8 +1,8 @@
 #include "normal_unit.h"
 #include "army_list.h"
 
-normal_unit::normal_unit(const std::shared_ptr<base_unit>& base)
-    : unit(base),
+normal_unit::normal_unit(const std::shared_ptr<base_unit>& base, army_list* army_handle)
+    : unit(base, army_handle),
       handle(std::dynamic_pointer_cast<base_normal_unit>(base)) {
     points_ = handle->min_size() * handle->points_per_model();
     model_select_ = ModelSelect::DEFAULT;
@@ -146,7 +146,7 @@ const std::unordered_map<
 >& normal_unit::champion_mc_extras() const noexcept { return champ_mc_extras_; }
 
 const std::tuple<
-    mount,
+    std::string,
     double,
     std::pair<std::string, double>,
     std::unordered_map<std::string, double>
@@ -220,8 +220,8 @@ std::string normal_unit::pick_champion_weapon(ItemCategory item_type, const std:
         auto search = handle->magic_items_handle()->second.find(name);
         if (search == handle->magic_items_handle()->second.end())
             throw std::invalid_argument("Weapon not found!");
-        double mi_budget = handle->champion_magic_item_budget();
-        double ti_budget = handle->champion_total_item_budget();
+        double mi_budget = handle->champion_magic_item_budget().points;
+        double ti_budget = handle->champion_total_item_budget().points;
         if ((search->second.points + champ_magic_item_points > mi_budget) ||
                 (search->second.points + champ_total_item_points > ti_budget))
             throw std::runtime_error("Magic item budget exceeded!");
@@ -318,8 +318,8 @@ std::string normal_unit::pick_champion_armour(ItemCategory item_type, const std:
         auto search = handle->magic_items_handle()->second.find(name);
         if (search == handle->magic_items_handle()->second.end())
             throw std::invalid_argument("Armour not found!");
-        double mi_budget = handle->champion_magic_item_budget();
-        double ti_budget = handle->champion_total_item_budget();
+        double mi_budget = handle->champion_magic_item_budget().points;
+        double ti_budget = handle->champion_total_item_budget().points;
         if ((search->second.points + champ_magic_item_points > mi_budget) ||
                 (search->second.points + champ_total_item_points > ti_budget))
             throw std::runtime_error("Magic item budget exceeded!");
@@ -699,22 +699,22 @@ std::string normal_unit::remove_champion_mc_extra(const std::string& name) {
 }
 
 void normal_unit::pick_mount(const std::string& name) {
-    if (std::get<0>(mount_).name() == name) return;
+    if (std::get<0>(mount_) == name) return;
     auto opt_search = handle->opt().mounts().find(name);
-    auto mnt_search = handle->mounts_handle()->find(name);
-    if (opt_search == handle->opt().mounts().end() ||
-            mnt_search == handle->mounts_handle()->end())
-        throw std::invalid_argument("Mount not found!");
+    if (opt_search == std::end(handle->opt().mounts()))
+        throw std::invalid_argument("Mount: " + name + " not found!");
+    auto restr = restriction_check(opt_search->second.restrictions, name);
+    if (!restr.empty()) throw std::invalid_argument(restr);
     remove_mount();
-    mount_ = {mnt_search->second, opt_search->second, {}, {}};
-    points_ += opt_search->second;
+    mount_ = {name, opt_search->second.points, {}, {}};
+    points_ += opt_search->second.points;
 }
 
 void normal_unit::remove_mount() {
     points_ -= std::get<1>(mount_);
     points_ -= std::get<2>(mount_).second;
     for (const auto& x : std::get<3>(mount_)) points_ -= x.second;
-    std::get<0>(mount_) = mount();
+    std::get<0>(mount_).clear();
     std::get<1>(mount_) = 0.0;
     std::get<2>(mount_).first.clear();
     std::get<2>(mount_).second = 0.0;
@@ -760,7 +760,7 @@ std::string normal_unit::html_table_row() const {
     // unit size
     row += "<td>" + std::to_string(size_) + "</td>\n";
     // unit mount
-    row += "<td>" + (std::get<0>(mount_).name().empty() ? "&nbsp;" : std::get<0>(mount_).name()) + "</td>\n";
+    row += "<td>" + (std::get<0>(mount_).empty() ? "&nbsp;" : std::get<0>(mount_)) + "</td>\n";
     // weapons
     if (weapons_.empty()) row += "<td>&nbsp;</td>\n";
     if (weapons_.count(WeaponType::MELEE))

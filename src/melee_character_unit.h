@@ -11,7 +11,7 @@ class melee_character_unit : public character_unit {
 public:
     const std::shared_ptr<base_melee_character_unit> handle;
 
-    explicit melee_character_unit(const std::shared_ptr<base_unit>& base);
+    explicit melee_character_unit(const std::shared_ptr<base_unit>& base, army_list* army_handle);
     melee_character_unit(const melee_character_unit& other);
     ~melee_character_unit() = default;
 };

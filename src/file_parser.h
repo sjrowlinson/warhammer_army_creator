@@ -6,6 +6,7 @@
 
 #include <any>
 #include <fstream>
+#include <ios>
 #include <ostream>
 #include <sstream>
 #include <string>
@@ -21,7 +22,7 @@ namespace tools {
     private:
         QFile f;
         std::stringstream ss;
-        std::vector<std::stringstream::streampos> streampos;
+        std::vector<std::fpos<std::char_traits<char>::state_type>> streampos;
 
         void cache();
     protected:

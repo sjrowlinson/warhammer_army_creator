@@ -1,14 +1,14 @@
 #include "unit.h"
 #include "army_list.h"
 
-unit::unit(const std::shared_ptr<base_unit>& base)
+unit::unit(const std::shared_ptr<base_unit>& base, army_list* army_handle)
     : id_(0), model_select_(ModelSelect::DEFAULT),
-      mixed_select_(MixedSelect::SLAVE), points_(0.0), base_(base) {}
+      mixed_select_(MixedSelect::SLAVE), points_(0.0), base_(base), army_(army_handle) {}
 
 unit::unit(const unit& other)
     : id_(other.id()), model_select_(other.model_select_),
       mixed_select_(other.mixed_select_),
-      points_(other.points_), base_(other.base_) {}
+      points_(other.points_), base_(other.base_), army_(other.army_) {}
 
 int unit::id() const noexcept { return id_; }
 void unit::set_id(int id) { id_ = id; }
@@ -96,7 +96,7 @@ std::string unit::restriction_check(
         case RestrictionField::MOUNT:
         {
             std::string reqd_mount = std::any_cast<std::string>(restriction.second);
-            if (std::get<0>(mnt()).name() != reqd_mount) {
+            if (std::get<0>(mnt()) != reqd_mount) {
                 if (msg.empty()) msg += name() + " requires: " + reqd_mount;
                 else msg += ", " + reqd_mount;
             }
@@ -119,7 +119,7 @@ std::string unit::restriction_check(
                     search_item_in_tracker->second >= lim) {
                 msg += "Cannot have more than " + std::to_string(lim) + " instances"
                         "of " + item_name + " in an army!";
-
+                throw std::runtime_error(msg);
             }
             break;
         }

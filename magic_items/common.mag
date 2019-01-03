@@ -2,676 +2,535 @@ Common
 
 # Magic Weapons
 
-# Name
-#     ItemType, <ItemSubType>
-#     Points
-#     Description
-#     Allowed units ("None" if all allowed)
-#     Limit ("None" if unlimited amount allowed)
-#     Restrictions ("None" if no restrictions)
-
 Giant Blade
-    Weapon, Melee
-    60
-    Close combat attacks made with this sword are resolved at +3 Strength.
-    None
-    1
-    None
+    CATEGORY = Weapon
+    TYPE = Melee
+    POINTS = 60
+    DESCRIPTION = Close combat attacks made with this sword are resolved at +3 Strength.
+    RESTRICTIONS = Limit - 1
 
 Sword of Bloodshed
-    Weapon, Melee
-    60
-    The wielder has +3 Attacks.
-    None
-    1
-    None
+    CATEGORY = Weapon
+    TYPE = Melee
+    POINTS = 60
+    DESCRIPTION = The wielder has +3 Attacks.
+    RESTRICTIONS = Limit - 1
 
 Obsidian Blade
-    Weapon, Melee
-    50
-    Armour saves cannot be taken against wounds caused by the Obsidian Blade.
-    None
-    1
-    None
+    CATEGORY = Weapon
+    TYPE = Melee
+    POINTS = 50
+    DESCRIPTION = Armour saves cannot be taken against wounds caused by the Obsidian Blade.
+    RESTRICTIONS = Limit - 1
 
 Ogre Blade
-    Weapon, Melee
-    40
-    Close combat attacks made with this sword are resolved at +2 Strength.
-    None
-    1
-    None
+    CATEGORY = Weapon
+    TYPE = Melee
+    POINTS = 40
+    DESCRIPTION = Close combat attacks made with this sword are resolved at +2 Strength.
+    RESTRICTIONS = Limit - 1
 
 Sword of Strife
-    Weapon, Melee
-    40
-    The wielder of the Sword of Strife has +2 Attacks.
-    None
-    1
-    None
+    CATEGORY = Weapon
+    TYPE = Melee
+    POINTS = 40
+    DESCRIPTION = The wielder of the Sword of Strife has +2 Attacks.
+    RESTRICTIONS = Limit - 1
 
 Fencer's Blades
-    Weapon, Melee
-    35
-    Paired weapons. The bearer has Weapon Skill 10.
-    None
-    1
-    None
+    CATEGORY = Weapon
+    TYPE = Melee
+    POINTS = 35
+    DESCRIPTION = Paired weapons. The bearer has Weapon Skill 10.
+    RESTRICTIONS = Limit - 1
 
 Sword of Anti-Heroes
-    Weapon, Melee
-    30
-    The bearer has +1 Strength and +1 Attack for every enemy character in base contact with him or his unit. These bonuses are calculated at the start of each round of close combat and last until its end.
-    None
-    1
-    None
+    CATEGORY = Weapon
+    TYPE = Melee
+    POINTS = 30
+    DESCRIPTION = The bearer has +1 Strength and +1 Attack for every enemy character in base contact with him or his unit. These bonuses are calculated at the start of each round of close combat and last until its end.
+    RESTRICTIONS = Limit - 1
 
 Spellthieving Sword
-    Weapon, Melee
-    25
-    A Wizard that suffers unsaved wounds from the Spellthieving Sword loses one of his spells (determined randomly) for each unsaved wound.
-    None
-    1
-    None
+    CATEGORY = Weapon
+    TYPE = Melee
+    POINTS = 25
+    DESCRIPTION = A Wizard that suffers unsaved wounds from the Spellthieving Sword loses one of his spells (determined randomly) for each unsaved wound.
+    RESTRICTIONS = Limit - 1
 
 Sword of Swift Slaying
-    Weapon, Melee
-    25
-    The wielder of the Sword of Swift Slaying has the Always Strike First special rule.
-    None
-    1
-    None
+    CATEGORY = Weapon
+    TYPE = Melee
+    POINTS = 25
+    DESCRIPTION = The wielder of the Sword of Swift Slaying has the Always Strike First special rule.
+    RESTRICTIONS = Limit - 1
 
 Sword of Battle
-    Weapon, Melee
-    20
-    The wielder has +1 Attack.
-    None
-    1
-    None
+    CATEGORY = Weapon
+    TYPE = Melee
+    POINTS = 20
+    DESCRIPTION = The wielder has +1 Attack.
+    RESTRICTIONS = Limit - 1
 
 Berserker Sword
-    Weapon, Melee
-    20
-    The bearer has the Frenzy special rule and can never lose his Frenzy.
-    None
-    1
-    None
+    CATEGORY = Weapon
+    TYPE = Melee
+    POINTS = 20
+    DESCRIPTION = The bearer has the Frenzy special rule and can never lose his Frenzy.
+    RESTRICTIONS = Limit - 1
 
 Sword of Might
-    Weapon, Melee
-    20
-    Close combat attacks made with this sword are resolved at +1 Strength.
-    None
-    1
-    None
+    CATEGORY = Weapon
+    TYPE = Melee
+    POINTS = 20
+    DESCRIPTION = Close combat attacks made with this sword are resolved at +1 Strength.
+    RESTRICTIONS = Limit - 1
 
 Gold Sigil Sword
-    Weapon, Melee
-    15
-    Attacks from the Gold Sigil Sword are made at Initiative 10.
-    None
-    1
-    None
+    CATEGORY = Weapon
+    TYPE = Melee
+    POINTS = 15
+    DESCRIPTION = Attacks from the Gold Sigil Sword are made at Initiative 10.
+    RESTRICTIONS = Limit - 1
 
 Sword of Striking
-    Weapon, Melee
-    15
-    Attacks with the Sword of Striking receive a +1 bonus to hit.
-    None
-    1
-    None
+    CATEGORY = Weapon
+    TYPE = Melee
+    POINTS = 15
+    DESCRIPTION = Attacks with the Sword of Striking receive a +1 bonus to hit.
+    RESTRICTIONS = Limit - 1
 
 Biting Blade
-    Weapon, Melee
-    10
-    Close combat attacks made by the Biting Blade are armour piercing.
-    None
-    1
-    None
+    CATEGORY = Weapon
+    TYPE = Melee
+    POINTS = 10
+    DESCRIPTION = Close combat attacks made by the Biting Blade are armour piercing.
+    RESTRICTIONS = Limit - 1
 
 Relic Sword
-    Weapon, Melee
-    10
-    Attacks made with the Relic Sword will always wound on 5+, unless they would normally need a lower result.
-    None
-    1
-    None
+    CATEGORY = Weapon
+    TYPE = Melee
+    POINTS = 10
+    DESCRIPTION = Attacks made with the Relic Sword will always wound on 5+, unless they would normally need a lower result.
+    RESTRICTIONS = Limit - 1
 
 Shrieking Blade
-    Weapon, Melee
-    10
-    The bearer causes Fear.
-    None
-    1
-    None
+    CATEGORY = Weapon
+    TYPE = Melee
+    POINTS = 10
+    DESCRIPTION = The bearer causes Fear.
+    RESTRICTIONS = Limit - 1
 
 Tormentor Sword
-    Weapon, Melee
-    5
-    A monster or character that suffers an unsaved wound from the Tormentor Sword has the Stupidity special rule for the rest of the game.
-    None
-    1
-    None
+    CATEGORY = Weapon
+    TYPE = Melee
+    POINTS = 5
+    DESCRIPTION = A monster or character that suffers an unsaved wound from the Tormentor Sword has the Stupidity special rule for the rest of the game.
+    RESTRICTIONS = Limit - 1
 
 Warrior Bane
-    Weapon, Melee
-    5
-    A monster or character that suffers unsaved wounds from Warrior Bane permanently loses one Attack for each unsaved wound (to a minimum of Attacks 1).
-    None
-    1
-    None
+    CATEGORY = Weapon
+    TYPE = Melee
+    POINTS = 5
+    DESCRIPTION = A monster or character that suffers unsaved wounds from Warrior Bane permanently loses one Attack for each unsaved wound (to a minimum of Attacks 1).
+    RESTRICTIONS = Limit - 1
 
 # Magic Armour
 
 Armour of Destiny
-    Armour, Armour
-    50
-    Heavy armour. The Armour of Destiny grants the wearer a 4+ ward save.
-    None
-    1
-    None
+    CATEGORY = Armour
+    TYPE = Armour
+    POINTS = 50
+    DESCRIPTION = Heavy armour. The Armour of Destiny grants the wearer a 4+ ward save.
+    RESTRICTIONS = Limit - 1
 
 Trickster's Helm
-    Armour, Helmet
-    50
-    The wearer counts his armour save as being one point higher than normal. Any successful roll to wound made against the wearer of the Trickster's Helm must be re-rolled.
-    None
-    1
-    None
+    CATEGORY = Armour
+    TYPE = Helmet
+    POINTS = 50
+    DESCRIPTION = The wearer counts his armour save as being one point higher than normal. Any successful roll to wound made against the wearer of the Trickster's Helm must be re-rolled.
+    RESTRICTIONS = Limit - 1
 
 Armour of Silvered Steel
-    Armour, Armour
-    45
-    The Armour of Silvered Steel grants its wearer a 2+ armour save that cannot be improved by any means.
-    None
-    1
-    None
+    CATEGORY = Armour
+    TYPE = Armour
+    POINTS = 45
+    DESCRIPTION = The Armour of Silvered Steel grants its wearer a 2+ armour save that cannot be improved by any means.
+    RESTRICTIONS = Limit - 1
 
 Armour of Fortune
-    Armour, Armour
-    35
-    Heavy armour. The Armour of Fortune grants the wearer a 5+ ward save.
-    None
-    1
-    None
+    CATEGORY = Armour
+    TYPE = Armour
+    POINTS = 35
+    DESCRIPTION = Heavy armour. The Armour of Fortune grants the wearer a 5+ ward save.
+    RESTRICTIONS = Limit - 1
 
 Helm of Discord
-    Armour, Helmet
-    30
-    The wearer counts his armour save as being one point higher than normal. In addition, at the start of each Close Combat phase, choose an enemy character in base contact with the bearer or his unit. That character must immediately take a Leadership test. If the test is failed, the character succumbs to the helm's sibilant whispers of malice and jealousy. In this Close Combat phase, the victim cannot make attacks and is hit automatically.
-    None
-    1
-    None
+    CATEGORY = Armour
+    TYPE = Helmet
+    POINTS = 30
+    DESCRIPTION = The wearer counts his armour save as being one point higher than normal. In addition, at the start of each Close Combat phase, choose an enemy character in base contact with the bearer or his unit. That character must immediately take a Leadership test. If the test is failed, the character succumbs to the helm's sibilant whispers of malice and jealousy. In this Close Combat phase, the victim cannot make attacks and is hit automatically.
+    RESTRICTIONS = Limit - 1
 
 Glittering Scales
-    Armour, Armour
-    25
-    Light armour. Enemies suffer a -1 to hit penalty when attempting to strike the wearer in close combat.
-    None
-    1
-    None
+    CATEGORY = Armour
+    TYPE = Armour
+    POINTS = 25
+    DESCRIPTION = Light armour. Enemies suffer a -1 to hit penalty when attempting to strike the wearer in close combat.
+    RESTRICTIONS = Limit - 1
 
 Shield of Ptolos
-    Armour, Shield
-    25
-    Shield. The bearer has a +1 armour save against shooting attacks.
-    None
-    1
-    None
+    CATEGORY = Armour
+    TYPE = Shield
+    POINTS = 25
+    DESCRIPTION = Shield. The bearer has a +1 armour save against shooting attacks.
+    RESTRICTIONS = Limit - 1
 
 Spellshield
-    Armour, Shield
-    20
-    Shield. The bearer gains Magic Resistance (1).
-    None
-    1
-    None
+    CATEGORY = Armour
+    TYPE = Shield
+    POINTS = 20
+    DESCRIPTION = Shield. The bearer gains Magic Resistance (1).
+    RESTRICTIONS = Limit - 1
 
 Gambler's Armour
-    Armour, Armour
-    20
-    Heavy armour. The Gambler's Armour grants the wearer a 6+ ward save.
-    None
-    1
-    None
+    CATEGORY = Armour
+    TYPE = Armour
+    POINTS = 20
+    DESCRIPTION = Heavy armour. The Gambler's Armour grants the wearer a 6+ ward save.
+    RESTRICTIONS = Limit - 1
 
 Dragonhelm
-    Armour, Helmet
-    10
-    The wearer counts his armour save as being one point higher than normal. The wearer has a 2+ ward save against flaming attacks.
-    None
-    1
-    None
+    CATEGORY = Armour
+    TYPE = Helmet
+    POINTS = 10
+    DESCRIPTION = The wearer counts his armour save as being one point higher than normal. The wearer has a 2+ ward save against flaming attacks.
+    RESTRICTIONS = Limit - 1
 
 Enchanted Shield
-    Armour, Shield
-    5
-    Shield. The bearer counts his armour save as being two points higher than normal, rather than the usual one point that a shield would normally grant.
-    None
-    1
-    None
+    CATEGORY = Armour
+    TYPE = Shield
+    POINTS = 5
+    DESCRIPTION = Shield. The bearer counts his armour save as being two points higher than normal, rather than the usual one point that a shield would normally grant.
+    RESTRICTIONS = Limit - 1
 
 Charmed Shield
-    Armour, Shield
-    5
-    Shield. One use only. The first hit suffered by the bearer of the Charmed Shield is discounted on a roll of 2+.
-    None
-    1
-    None
+    CATEGORY = Armour
+    TYPE = Shield
+    POINTS = 5
+    DESCRIPTION = Shield. One use only. The first hit suffered by the bearer of the Charmed Shield is discounted on a roll of 2+.
+    RESTRICTIONS = Limit - 1
 
 # Talismans
 
 Talisman of Preservation
-    Talisman
-    45
-    The Talisman of Preservation grants the bearer a 4+ ward save.
-    None
-    1
-    None
+    CATEGORY = Talisman
+    POINTS = 45
+    DESCRIPTION = The Talisman of Preservation grants the bearer a 4+ ward save.
+    RESTRICTIONS = Limit - 1
 
 Obsidian Lodestone
-    Talisman
-    45
-    The Obsidian Lodestone grants Magic Resistance (3).
-    None
-    1
-    None
+    CATEGORY = Talisman
+    POINTS = 45
+    DESCRIPTION = The Obsidian Lodestone grants Magic Resistance (3).
+    RESTRICTIONS = Limit - 1
 
 Talisman of Endurance
-    Talisman
-    30
-    The Talisman of Endurance grants the bearer a 5+ ward save.
-    None
-    1
-    None
+    CATEGORY = Talisman
+    POINTS = 30
+    DESCRIPTION = The Talisman of Endurance grants the bearer a 5+ ward save.
+    RESTRICTIONS = Limit - 1
 
 Obsidian Amulet
-    Talisman
-    30
-    The Obsidian Amulet grants the bearer Magic Resistance (2).
-    None
-    1
-    None
+    CATEGORY = Talisman
+    POINTS = 30
+    DESCRIPTION = The Obsidian Amulet grants the bearer Magic Resistance (2).
+    RESTRICTIONS = Limit - 1
 
 Dawnstone
-    Talisman
-    25
-    The bearer re-rolls failed armour saves.
-    None
-    1
-    None
+    CATEGORY = Talisman
+    POINTS = 25
+    DESCRIPTION = The bearer re-rolls failed armour saves.
+    RESTRICTIONS = Limit - 1
 
 Opal Amulet
-    Talisman
-    15
-    One use only. The Opal Amulet bestows a 4+ ward save against the first wound suffered by the bearer, after which its power fades and it canned be used again during the game.
-    None
-    1
-    None
+    CATEGORY = Talisman
+    POINTS = 15
+    DESCRIPTION = One use only. The Opal Amulet bestows a 4+ ward save against the first wound suffered by the bearer, after which its power fades and it canned be used again during the game.
+    RESTRICTIONS = Limit - 1
 
 Obsidian Trinket
-    Talisman
-    15
-    The Obsidian Trinket grants Magic Resistance (1).
-    None
-    1
-    None
+    CATEGORY = Talisman
+    POINTS = 15
+    DESCRIPTION = The Obsidian Trinket grants Magic Resistance (1).
+    RESTRICTIONS = Limit - 1
 
 Talisman of Protection
-    Talisman
-    15
-    The Talisman of Protection grants the bearer a 6+ ward save.
-    None
-    1
-    None
+    CATEGORY = Talisman
+    POINTS = 15
+    DESCRIPTION = The Talisman of Protection grants the bearer a 6+ ward save.
+    RESTRICTIONS = Limit - 1
 
 Seed of Rebirth
-    Talisman
-    10
-    The bearer of the Seed of Rebirth has the Regeneration (6+) special rule.
-    None
-    1
-    None
+    CATEGORY = Talisman
+    POINTS = 10
+    DESCRIPTION = The bearer of the Seed of Rebirth has the Regeneration (6+) special rule.
+    RESTRICTIONS = Limit - 1
 
 Dragonbane Gem
-    Talisman
-    5
-    The bearer of the Dragonbane Gem has a 2+ ward save against flaming attacks.
-    None
-    1
-    None
+    CATEGORY = Talisman
+    POINTS = 5
+    DESCRIPTION = The bearer of the Dragonbane Gem has a 2+ ward save against flaming attacks.
+    RESTRICTIONS = Limit - 1
 
 Pigeon Plucker Pendant
-    Talisman
-    5
-    This items grants the bearer a 5+ ward save against wounds caused in close combat by models that have the Fly special rule.
-    None
-    1
-    None
+    CATEGORY = Talisman
+    POINTS = 5
+    DESCRIPTION = This items grants the bearer a 5+ ward save against wounds caused in close combat by models that have the Fly special rule.
+    RESTRICTIONS = Limit - 1
 
 Luckstone
-    Talisman
-    5
-    One use only. The Luckstone allows the bearer to re-rol a single failed armour save.
-    None
-    1
-    None
+    CATEGORY = Talisman
+    POINTS = 5
+    DESCRIPTION = One use only. The Luckstone allows the bearer to re-rol a single failed armour save.
+    RESTRICTIONS = Limit - 1
 
 # Arcane Items
 
 Book of Ashur
-    Arcane
-    70
-    The bearer receives a +1 bonus on attempts to cast and dispel.
-    None
-    1
-    None
+    CATEGORY = Arcane
+    POINTS = 70
+    DESCRIPTION = The bearer receives a +1 bonus on attempts to cast and dispel.
+    RESTRICTIONS = Limit - 1
 
 Feedback Scroll
-    Arcane
-    50
-    One use only. When an enemy spell has been cast, a Wizard who has a Feedback Scroll can read it instead of attempting to dispel the spell. The spell is cast as normal, but, after the spell has been resolved, roll a dice for every dice used to cast the spell. The casting Wizard takes a wound for every result of 5+ rolled, with no armour saves allowed.
-    None
-    1
-    None
+    CATEGORY = Arcane
+    POINTS = 50
+    DESCRIPTION = One use only. When an enemy spell has been cast, a Wizard who has a Feedback Scroll can read it instead of attempting to dispel the spell. The spell is cast as normal, but, after the spell has been resolved, roll a dice for every dice used to cast the spell. The casting Wizard takes a wound for every result of 5+ rolled, with no armour saves allowed.
+    RESTRICTIONS = Limit - 1
 
 Scroll of Leeching
-    Arcane
-    50
-    One use only. When an enemy spell has been cast, a Wizard who has a Scroll of Leeching can read it instead of attempting to dispel the spell. The spell is cast as normal, but, after the spell has been resolved, the bearer of the scroll adds a number of dispel dice to his pool equal to the number of dice used to cast the spell (remember that your dispel pool cannot exceed 12 dice).
-    None
-    1
-    None
+    CATEGORY = Arcane
+    POINTS = 50
+    DESCRIPTION = One use only. When an enemy spell has been cast, a Wizard who has a Scroll of Leeching can read it instead of attempting to dispel the spell. The spell is cast as normal, but, after the spell has been resolved, the bearer of the scroll adds a number of dispel dice to his pool equal to the number of dice used to cast the spell (remember that your dispel pool cannot exceed 12 dice).
+    RESTRICTIONS = Limit - 1
 
 Sivejir's Hex Scroll
-    Arcane
-    50
-    One use only. When an enemy spell has been cast, a Wizard who has a Hex Scroll can read it instead of attempting to dispel the spell. The spell is cast as normal, but a portion of the spell's energy is transformed and redirected at the caster. The enemy wizard can resist the spell's effects by rolling equal to or under his wizard level on a D6. If he fails, an amphibian transformation takes hold and he becomes a small, slimy toad! Whilst transformed, the wizard cannot channel or cast spells, all of his magic items and mundane equipment (armour, weapons, etc.) temporarily stop working and all of his characteristics are reduced to 1 (except for his wounds, which are unaffected). His controlling player can roll a D6 at the start of each of his subsequent magic phases; the spell dissipates on a roll of 4+ and the wizard returns to his normal form (but still attempts to eat flies for several days afterward).
-    None
-    1
-    None
+    CATEGORY = Arcane
+    POINTS = 50
+    DESCRIPTION = One use only. When an enemy spell has been cast, a Wizard who has a Hex Scroll can read it instead of attempting to dispel the spell. The spell is cast as normal, but a portion of the spell's energy is transformed and redirected at the caster. The enemy wizard can resist the spell's effects by rolling equal to or under his wizard level on a D6. If he fails, an amphibian transformation takes hold and he becomes a small, slimy toad! Whilst transformed, the wizard cannot channel or cast spells, all of his magic items and mundane equipment (armour, weapons, etc.) temporarily stop working and all of his characteristics are reduced to 1 (except for his wounds, which are unaffected). His controlling player can roll a D6 at the start of each of his subsequent magic phases; the spell dissipates on a roll of 4+ and the wizard returns to his normal form (but still attempts to eat flies for several days afterward).
+    RESTRICTIONS = Limit - 1
 
 Power Scroll
-    Arcane
-    35
-    One use only. A Power Scroll can be used when the Wizard makes a casting attempt During that casting attempt, any roll of a double will cause irresistible force (and a miscast).
-    None
-    1
-    None
+    CATEGORY = Arcane
+    POINTS = 35
+    DESCRIPTION = One use only. A Power Scroll can be used when the Wizard makes a casting attempt During that casting attempt, any roll of a double will cause irresistible force (and a miscast).
+    RESTRICTIONS = Limit - 1
 
 Wand of Jet
-    Arcane
-    35
-    One use only. The bearer can increase one of his casting results by an additional +D6, after other casting dice have been rolled. This extra power dice can contribute to casting a spell with irresistible force (and a miscast).
-    None
-    1
-    None
+    CATEGORY = Arcane
+    POINTS = 35
+    DESCRIPTION = One use only. The bearer can increase one of his casting results by an additional +D6, after other casting dice have been rolled. This extra power dice can contribute to casting a spell with irresistible force (and a miscast).
+    RESTRICTIONS = Limit - 1
 
 Forbidden Rod
-    Arcane
-    35
-    One use only. The forbidden rod adds +D6 dice to the power pool at the start of the caster's own magic phase, but also inflicts D3 wounds on the bearer (with no armour saves allowed).
-    None
-    1
-    None
+    CATEGORY = Arcane
+    POINTS = 35
+    DESCRIPTION = One use only. The forbidden rod adds +D6 dice to the power pool at the start of the caster's own magic phase, but also inflicts D3 wounds on the bearer (with no armour saves allowed).
+    RESTRICTIONS = Limit - 1
 
 Trickster's Shard
-    Arcane
-    25
-    One use only. Declare you are using this item at the start of one of your magic phases. For the duration of the phase, when one of the bearer's spells is dispelled by an enemy wizard, roll a D6. On a 5+, that wizard suffers a wound with no armour saves allowed.
-    None
-    1
-    None
+    CATEGORY = Arcane
+    POINTS = 25
+    DESCRIPTION = One use only. Declare you are using this item at the start of one of your magic phases. For the duration of the phase, when one of the bearer's spells is dispelled by an enemy wizard, roll a D6. On a 5+, that wizard suffers a wound with no armour saves allowed.
+    RESTRICTIONS = Limit - 1
 
 Earthing Rod
-    Arcane
-    25
-    One use only. If the wizard rolls on the miscast table he can re-roll the result.
-    None
-    1
-    None
+    CATEGORY = Arcane
+    POINTS = 25
+    DESCRIPTION = One use only. If the wizard rolls on the miscast table he can re-roll the result.
+    RESTRICTIONS = Limit - 1
 
 Dispel Scroll
-    Arcane
-    25
-    One use only. When an enemy spell has been cast, a wizard who has a dispel scroll can read it instead of attempting to dispel the spell by using dispel dice. This automatically dispels the enemy spell; no dice roll is required. Note that even a dispel scroll will not help if the spell has been cast with irresistible force. Note also that a dispel scroll cannot be used to dispel spells that remain in play other than at the moment they are cast.
-    None
-    1
-    None
+    CATEGORY = Arcane
+    POINTS = 25
+    DESCRIPTION = One use only. When an enemy spell has been cast, a wizard who has a dispel scroll can read it instead of attempting to dispel the spell by using dispel dice. This automatically dispels the enemy spell; no dice roll is required. Note that even a dispel scroll will not help if the spell has been cast with irresistible force. Note also that a dispel scroll cannot be used to dispel spells that remain in play other than at the moment they are cast.
+    RESTRICTIONS = Limit - 1
 
 Power Stone
-    Arcane
-    20
-    One use only. The Wizard can declare that he is using the power stone immediately before casting a spell If he does so, two extra dice are added to the power dice that he is going to roll (you still need to roll at least one dice from the power pool).
-    None
-    1
-    None
+    CATEGORY = Arcane
+    POINTS = 20
+    DESCRIPTION = One use only. The Wizard can declare that he is using the power stone immediately before casting a spell If he does so, two extra dice are added to the power dice that he is going to roll (you still need to roll at least one dice from the power pool).
+    RESTRICTIONS = Limit - 1
 
 Sceptre of Stability
-    Arcane
-    15
-    One use only. The bearer can choose to increase one of his dispel results by an additional +D6, after his other dispel dice have been rolled. This extra dispel dice can contribute to dispelling with irresistible force.
-    None
-    1
-    None
+    CATEGORY = Arcane
+    POINTS = 15
+    DESCRIPTION = One use only. The bearer can choose to increase one of his dispel results by an additional +D6, after his other dispel dice have been rolled. This extra dispel dice can contribute to dispelling with irresistible force.
+    RESTRICTIONS = Limit - 1
 
 Channelling Staff
-    Arcane
-    15
-    The Wizard adds +1 to all of his channeling attempts.
-    None
-    1
-    None
+    CATEGORY = Arcane
+    POINTS = 15
+    DESCRIPTION = The Wizard adds +1 to all of his channeling attempts.
+    RESTRICTIONS = Limit - 1
 
 Scroll of Shielding
-    Arcane
-    15
-    One use only. When an enemy spell has been cast, a Wizard who has a Scroll of Shielding can read it instead of attempting to dispel the spell. The spell is cast as normal, but the target of the spell is granted a 4+ ward save against any wounds caused by the spell.
-    None
-    1
-    None
+    CATEGORY = Arcane
+    POINTS = 15
+    DESCRIPTION = One use only. When an enemy spell has been cast, a Wizard who has a Scroll of Shielding can read it instead of attempting to dispel the spell. The spell is cast as normal, but the target of the spell is granted a 4+ ward save against any wounds caused by the spell.
+    RESTRICTIONS = Limit - 1
 
 # Enchanted Items
 
 Wizarding Hat
-    Enchanted
-    100
-    The wearer is treated as being a Level 2 Wizard who can use a randomly chosen spell lore. However, he also has the Stupidity special rule.
-    None
-    1
-    None
+    CATEGORY = Enchanted
+    POINTS = 100
+    DESCRIPTION = The wearer is treated as being a Level 2 Wizard who can use a randomly chosen spell lore. However, he also has the Stupidity special rule.
+    RESTRICTIONS = Limit - 1
 
 Fozzrik's Folding Fortress
-    Enchanted
-    100
-    After deployment zones have been agreed, but before the armies have been deployed, place a watchtower building (or scratch-built structure of a similar size) in your deployment zone to represent the Folding Fortress. This is treated as a standard building. If you do not have a suitable building to place, you cannot use Fozzrik's Folding Fortress.
-    None
-    1
-    None
+    CATEGORY = Enchanted
+    POINTS = 100
+    DESCRIPTION = After deployment zones have been agreed, but before the armies have been deployed, place a watchtower building (or scratch-built structure of a similar size) in your deployment zone to represent the Folding Fortress. This is treated as a standard building. If you do not have a suitable building to place, you cannot use Fozzrik's Folding Fortress.
+    RESTRICTIONS = Limit - 1
 
 Arabyan Carpet
-    Enchanted
-    100
-    Infantry or monstrous infantry models on foot only. The owner of this magical carpet has the Fly special rule. However, he cannot join units.
-    None
-    1
-    None
+    CATEGORY = Enchanted
+    POINTS = 100
+    DESCRIPTION = Infantry or monstrous infantry models on foot only. The owner of this magical carpet has the Fly special rule. However, he cannot join units.
+    RESTRICTIONS = Limit - 1
 
 Crown of Command
-    Enchanted
-    35
-    The bearer of the Crown of Command has the Stubborn special rule.
-    None
-    1
-    None
+    CATEGORY = Enchanted
+    POINTS = 35
+    DESCRIPTION = The bearer of the Crown of Command has the Stubborn special rule.
+    RESTRICTIONS = Limit - 1
 
 Healing Potion
-    Enchanted
-    35
-    One use only. The Healing Potion can be drunk at the start of the controlling player's turn. The imbiber immediately recovers D6 Wounds lost in the battle.
-    None
-    1
-    None
+    CATEGORY = Enchanted
+    POINTS = 35
+    DESCRIPTION = One use only. The Healing Potion can be drunk at the start of the controlling player's turn. The imbiber immediately recovers D6 Wounds lost in the battle.
+    RESTRICTIONS = Limit - 1
 
 Feathertoe Torc
-    Enchanted
-    35
-    Flying creatures (and their riders) must re-roll successful rolls to hit against the bearer (and any unit he is with) in close combat.
-    None
-    1
-    None
+    CATEGORY = Enchanted
+    POINTS = 35
+    DESCRIPTION = Flying creatures (and their riders) must re-roll successful rolls to hit against the bearer (and any unit he is with) in close combat.
+    RESTRICTIONS = Limit - 1
 
 Ruby Ring of Ruin
-    Enchanted
-    25
-    Bound spell (power level 3). The Ruby Ring of Ruin contains the Fireball spell (see the Lore of Fire).
-    None
-    1
-    None
+    CATEGORY = Enchanted
+    POINTS = 25
+    DESCRIPTION = Bound spell (power level 3). The Ruby Ring of Ruin contains the Fireball spell (see the Lore of Fire).
+    RESTRICTIONS = Limit - 1
 
 The Terrifying Mask of EEE!
-    Enchanted
-    25
-    The wearer of this mask causes Terror. However, other models can never use his Leadership.
-    None
-    1
-    None
+    CATEGORY = Enchanted
+    POINTS = 25
+    DESCRIPTION = The wearer of this mask causes Terror. However, other models can never use his Leadership.
+    RESTRICTIONS = Limit - 1
 
 Potion of Strength
-    Enchanted
-    20
-    One use only. The Potion of Strength can be drunk at the start of any player's turn. The imbiber has +3 Strength until the end of the turn.
-    None
-    1
-    None
+    CATEGORY = Enchanted
+    POINTS = 20
+    DESCRIPTION = One use only. The Potion of Strength can be drunk at the start of any player's turn. The imbiber has +3 Strength until the end of the turn.
+    RESTRICTIONS = Limit - 1
 
 Potion of Toughness
-    Enchanted
-    20
-    One use only. The Potion of Toughness can be drunk at the start of any player's turn. The imbiber has +3 Toughness until the end of the turn.
-    None
-    1
-    None
+    CATEGORY = Enchanted
+    POINTS = 20
+    DESCRIPTION = One use only. The Potion of Toughness can be drunk at the start of any player's turn. The imbiber has +3 Toughness until the end of the turn.
+    RESTRICTIONS = Limit - 1
 
 The Other Trickster's Shard
-    Enchanted
-    15
-    Models in base contact with the bearer (friends and foes) must re-roll successful ward saves.
-    None
-    1
-    None
+    CATEGORY = Enchanted
+    POINTS = 15
+    DESCRIPTION = Models in base contact with the bearer (friends and foes) must re-roll successful ward saves.
+    RESTRICTIONS = Limit - 1
 
 Ironcurse Icon
-    Enchanted
-    5
-    The character (and any unit he is with) gain a 6+ ward save against war machine weapons.
-    None
-    1
-    None
+    CATEGORY = Enchanted
+    POINTS = 5
+    DESCRIPTION = The character (and any unit he is with) gain a 6+ ward save against war machine weapons.
+    RESTRICTIONS = Limit - 1
 
 Potion of Foolhardiness
-    Enchanted
-    5
-    One use only. The Potion of Foolhardiness can be drunk at the start of any player's turn. The imbiber has the Immune to Psychology and the Devastating Charge special rules until the end of the player turn.
-    None
-    1
-    None
+    CATEGORY = Enchanted
+    POINTS = 5
+    DESCRIPTION = One use only. The Potion of Foolhardiness can be drunk at the start of any player's turn. The imbiber has the Immune to Psychology and the Devastating Charge special rules until the end of the player turn.
+    RESTRICTIONS = Limit - 1
 
 Potion of Speed
-    Enchanted
-    5
-    One use only. The Potion of Speed can be drunk at the start of any player's turn. The imbiber has +3 Initiative until the end of the turn.
-    None
-    1
-    None
+    CATEGORY = Enchanted
+    POINTS = 5
+    DESCRIPTION = One use only. The Potion of Speed can be drunk at the start of any player's turn. The imbiber has +3 Initiative until the end of the turn.
+    RESTRICTIONS = Limit - 1
 
 # Magic Standards
 
 Rampager's Standard
-    Banner
-    55
-    A unit with this magic standard can re-roll its charge distance dice.
-    None
-    1
-    None
+    CATEGORY = Banner
+    POINTS = 55
+    DESCRIPTION = A unit with this magic standard can re-roll its charge distance dice.
+    RESTRICTIONS = Limit - 1
 
 Wailing Banner
-    Banner
-    50
-    A unit with this banner causes Terror in its enemies.
-    None
-    1
-    None
+    CATEGORY = Banner
+    POINTS = 50
+    DESCRIPTION = A unit with this banner causes Terror in its enemies.
+    RESTRICTIONS = Limit - 1
 
 Ranger's Standard
-    Banner
-    50
-    A unit with the Ranger's Standard has the Strider special rule.
-    None
-    1
-    None
+    CATEGORY = Banner
+    POINTS = 50
+    DESCRIPTION = A unit with the Ranger's Standard has the Strider special rule.
+    RESTRICTIONS = Limit - 1
 
 Razor Standard
-    Banner
-    45
-    Models in a unit with the Razor Standard have the Armour Piercing special rule.
-    None
-    1
-    None
+    CATEGORY = Banner
+    POINTS = 45
+    DESCRIPTION = Models in a unit with the Razor Standard have the Armour Piercing special rule.
+    RESTRICTIONS = Limit - 1
 
 War Banner
-    Banner
-    35
-    A unit with this banner adds +1 to combat resolution.
-    None
-    1
-    None
+    CATEGORY = Banner
+    POINTS = 35
+    DESCRIPTION = A unit with this banner adds +1 to combat resolution.
+    RESTRICTIONS = Limit - 1
 
 Banner of Swiftness
-    Banner
-    15
-    Models in a unit with the Banner of Swiftness have +1 to their Movement characteristic.
-    None
-    1
-    None
+    CATEGORY = Banner
+    POINTS = 15
+    DESCRIPTION = Models in a unit with the Banner of Swiftness have +1 to their Movement characteristic.
+    RESTRICTIONS = Limit - 1
 
 Lichebone Pennant
-    Banner
-    15
-    Models in a unit with the Lichebone Pennant have Magic Resistance (1).
-    None
-    1
-    None
+    CATEGORY = Banner
+    POINTS = 15
+    DESCRIPTION = Models in a unit with the Lichebone Pennant have Magic Resistance (1).
+    RESTRICTIONS = Limit - 1
 
 Standard of Discipline
-    Banner
-    15
-    Models in a unit with the Standard of Discipline have +1 Leadership, but cannot use the General's Inspiring Presence special rule.
-    None
-    1
-    None
+    CATEGORY = Banner
+    POINTS = 15
+    DESCRIPTION = Models in a unit with the Standard of Discipline have +1 Leadership, but cannot use the General's Inspiring Presence special rule.
+    RESTRICTIONS = Limit - 1
 
 Banner of Eternal Flame
-    Banner
-    10
-    Models in a unit with the Banner of Eternal Flame have Flaming Attacks.
-    None
-    1
-    None
+    CATEGORY = Banner
+    POINTS = 10
+    DESCRIPTION = Models in a unit with the Banner of Eternal Flame have Flaming Attacks.
+    RESTRICTIONS = Limit - 1
 
 Gleaming Pennant
-    Banner
-    5
-    One use only. A unit with the Gleaming Pennant can re-roll its first failed Leadership test.
-    None
-    1
-    None
+    CATEGORY = Banner
+    POINTS = 5
+    DESCRIPTION = One use only. A unit with the Gleaming Pennant can re-roll its first failed Leadership test.
+    RESTRICTIONS = Limit - 1
 
 Scarecrow Banner
-    Banner
-    5
-    A unit with the Scarecrow Banner causes Fear in models with the Fly special rule.
-    None
-    1
-    None
+    CATEGORY = Banner
+    POINTS = 5
+    DESCRIPTION = A unit with the Scarecrow Banner causes Fear in models with the Fly special rule.
+    RESTRICTIONS = Limit - 1

@@ -18,12 +18,9 @@ private:
     std::vector<std::string> sr_;
     equipment eq_;
     options opt_;
-    double magic_item_budget_;
-    // std::tuple<double, std::size_t, ItemCategory, ItemType> magic_item_budget_;
-    double faction_item_budget_;
-    // std::tuple<double, std::size_t, ItemCategory, ItemType> faction_item_budget_;
-    double total_item_budget_;
-    // std::pair<double, std::size_t> total_item_budget_;
+    budget magic_item_budget_;
+    budget faction_item_budget_;
+    budget total_item_budget_;
     bool is_unique;
 
     std::string mount_name_;
@@ -38,9 +35,9 @@ public:
         std::vector<std::string>&& sr,
         equipment&& eq,
         options&& opt,
-        double mi_budget,
-        double fi_budget,
-        double ti_budget,
+        budget&& mi_budget,
+        budget&& fi_budget,
+        budget&& ti_budget,
         bool is_unique,
         std::string mount_name=""
     );
@@ -51,9 +48,9 @@ public:
     const std::vector<std::string>& special_rules() const noexcept;
     const equipment& eq() const noexcept;
     const options& opt() const noexcept;
-    double magic_item_budget() const noexcept;
-    double faction_item_budget() const noexcept;
-    double total_item_budget() const noexcept;
+    const budget& magic_item_budget() const noexcept;
+    const budget& faction_item_budget() const noexcept;
+    const budget& total_item_budget() const noexcept;
     bool unique() const noexcept;
     const std::string& mount_name() const noexcept;
 };

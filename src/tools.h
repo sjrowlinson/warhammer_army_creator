@@ -30,10 +30,6 @@ namespace tools {
     bool ends_with(const std::string& s, char c);
 	bool starts_with(const std::string& s, std::string match);
 
-    std::pair<std::string, double> parse_item_points(std::string s);
-    std::vector<std::string> parse_item_bs(std::string s);
-    std::vector<std::string> parse_item_bsp(std::string s);
-
     std::unordered_map<std::string, item> magic_items_of(
         const std::unordered_map<std::string, item>& items, ItemType item_type
     );

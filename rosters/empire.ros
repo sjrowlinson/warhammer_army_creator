@@ -19,8 +19,8 @@ General of The Empire
     OPTIONAL_MOUNTS = [Name : Imperial Griffon, Points : 170
                        Name : Imperial Pegasus, Points : 45
                        Name : Warhorse, Points : 18]
-    MAGIC_ITEM_BUDGET = 100
-    TOTAL_ITEM_BUDGET = 100
+    MAGIC_ITEM_BUDGET = Points : 100
+    TOTAL_ITEM_BUDGET = Points : 100
 
 Battle Wizard Lord
     BASE_TYPE = Mage
@@ -33,8 +33,8 @@ Battle Wizard Lord
                        Name : Warhorse, Points : 18
                        Name : Celestial Hurricanum, Points : 125
                        Name : Luminark of Hysh, Points : 120]
-    MAGIC_ITEM_BUDGET = 100
-    TOTAL_ITEM_BUDGET = 100
+    MAGIC_ITEM_BUDGET = Points : 100
+    TOTAL_ITEM_BUDGET = Points : 100
     MAGE_LEVEL = 3
     MAGE_UPGRADES = 4 [35]
     MAGE_LORES = Fire, Beasts, Metal, Light, Life, Heavens, Shadow, Death
@@ -52,8 +52,8 @@ Arch Lector
     OPTIONAL_ARMOUR = [Name : Heavy armour, Category : Mundane, Type: Armour, Points : 4
                        Name : Shield, Category : Mundane, Type : Shield, Points : 4]
     OPTIONAL_MOUNTS = Name : The War Altar of Sigmar, Points : 150 ; Name : Warhorse, Points : 18
-    MAGIC_ITEM_BUDGET = 100
-    TOTAL_ITEM_BUDGET = 100
+    MAGIC_ITEM_BUDGET = Points : 100
+    TOTAL_ITEM_BUDGET = Points : 100
 
 Grand Master
     BASE_TYPE = Melee
@@ -67,8 +67,8 @@ Grand Master
     OPTIONAL_WEAPONS = [Name : Great weapon, Category : Mundane, Type : Melee, Points : 6
                         Name : Lance, Category : Mundane, Type : Melee, Points : 7]
     OPTIONAL_ARMOUR = Name : Shield, Category : Mundane, Type : Shield, Points : 4
-    MAGIC_ITEM_BUDGET = 100
-    TOTAL_ITEM_BUDGET = 100
+    MAGIC_ITEM_BUDGET = Points : 100
+    TOTAL_ITEM_BUDGET = Points : 100
 
 # Heroes
 
@@ -90,8 +90,8 @@ Captain of The Empire
                        Name : Shield, Category : Mundane, Type : Shield, Points : 2]
     OPTIONAL_MOUNTS = Name : Imperial Pegasus, Points : 45 ; Name : Warhorse, Points : 12
     OPTIONAL_MC_EXTRAS = Name : Battle Standard Bearer, Singular : true, Points : 25
-    MAGIC_ITEM_BUDGET = 50
-    TOTAL_ITEM_BUDGET = 50
+    MAGIC_ITEM_BUDGET = Points : 50
+    TOTAL_ITEM_BUDGET = Points : 50
 
 Battle Wizard
     BASE_TYPE = Mage
@@ -100,8 +100,8 @@ Battle Wizard
     POINTS = 65
     CHARACTERISTICS = 4 3 3 3 3 2 3 1 7
     OPTIONAL_MOUNTS = Name : Warhorse, Points : 12
-    MAGIC_ITEM_BUDGET = 50
-    TOTAL_ITEM_BUDGET = 50
+    MAGIC_ITEM_BUDGET = Points : 50
+    TOTAL_ITEM_BUDGET = Points : 50
     MAGE_LEVEL = 1
     MAGE_UPGRADES = 2 [35]
     MAGE_LORES = Fire, Beasts, Metal, Light, Life, Heavens, Shadow, Death
@@ -119,8 +119,8 @@ Warrior Priest
     OPTIONAL_ARMOUR = [Name : Heavy armour, Category : Mundane, Type: Armour, Points : 2
                        Name : Shield, Category : Mundane, Type : Shield, Points : 2]
     OPTIONAL_MOUNTS = Name : Warhorse, Points : 12
-    MAGIC_ITEM_BUDGET = 50
-    TOTAL_ITEM_BUDGET = 50
+    MAGIC_ITEM_BUDGET = Points : 50
+    TOTAL_ITEM_BUDGET = Points : 50
 
 Master Engineer
     BASE_TYPE = Melee
@@ -136,8 +136,8 @@ Master Engineer
                         Name : Repeater pistol Category : Mundane, Type : Ballistic, Points : 10]
     OPTIONAL_ARMOUR = Name : Light armour Category : Mundane, Type: Armour, Points : 1
     OPTIONAL_MOUNTS = Name : Mechanical Steed, Points : 25 ; Name : Warhorse, Points : 12
-    MAGIC_ITEM_BUDGET = 50
-    TOTAL_ITEM_BUDGET = 50
+    MAGIC_ITEM_BUDGET = Points : 50
+    TOTAL_ITEM_BUDGET = Points : 50
 
 Witch Hunter
     BASE_TYPE = Melee
@@ -149,8 +149,8 @@ Witch Hunter
     EQUIPMENT = Weapon - Name : Pistol, Category : Mundane, Type : Ballistic ; Armour - Name: Light armour, Category : Mundane, Type: Armour
     OPTIONAL_WEAPONS = [Name : Brace of pistols, Category : Mundane, Type : Ballistic, Points : 5
                         Name : Great weapon, Category : Mundane, Type : Melee, Points : 5]
-    MAGIC_ITEM_BUDGET = 50
-    TOTAL_ITEM_BUDGET = 50
+    MAGIC_ITEM_BUDGET = Points : 50
+    TOTAL_ITEM_BUDGET = Points : 50
 
 # Core
 

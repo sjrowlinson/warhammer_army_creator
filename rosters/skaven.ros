@@ -71,9 +71,9 @@ Warlord
                         Name: Halberd, Category: Mundane, Type: Melee, Points: 3]
     OPTIONAL_ARMOUR = Name: Shield, Category: Mundane, Type: Shield, Points: 3
     OPTIONAL_MOUNTS = Name: Rat Ogre Bonebreaker, Points: 65 ; Name: War-litter, Points: 35 ; Name: Great Pox Rat, Points: 30
-    MAGIC_ITEM_BUDGET = 100
-    FACTION_ITEM_BUDGET = 100
-    TOTAL_ITEM_BUDGET = 100
+    MAGIC_ITEM_BUDGET = Points : 100
+    FACTION_ITEM_BUDGET = Points : 100
+    TOTAL_ITEM_BUDGET = Points : 100
 
 Vermin Lord
     BASE_TYPE = Mage
@@ -101,9 +101,9 @@ Grey Seer
                            Name: Four Warpstone Tokens, Singular: True, Points: 60
                            Name: Five Warpstone Tokens, Singular: True, Points: 75
                            Name: Six Warpstone Tokens, Singular: True, Points: 90]
-    MAGIC_ITEM_BUDGET = 100
-    FACTION_ITEM_BUDGET = 100
-    TOTAL_ITEM_BUDGET = 100
+    MAGIC_ITEM_BUDGET = Points : 100
+    FACTION_ITEM_BUDGET = Points : 100
+    TOTAL_ITEM_BUDGET = Points : 100
     MAGE_LEVEL = 4
     MAGE_LORES = Plague, Ruin
 
@@ -142,9 +142,9 @@ Assassin
     SPECIAL_RULES = Scurry Away!, Sneaky Infiltrators, Verminous Valour, A Killer Not A Leader, Always Strike First, Dodge (4+), Hidden, Poisoned Attacks, Scouts
     EQUIPMENT = [Weapon - Name: Throwing stars, Category: Mundane, Type: Ballistic
                  Weapon - Name: Two hand weapons, Category: Mundane, Type: Melee]
-    MAGIC_ITEM_BUDGET = 50
-    FACTION_ITEM_BUDGET = 50
-    TOTAL_ITEM_BUDGET = 50
+    MAGIC_ITEM_BUDGET = Points : 50
+    FACTION_ITEM_BUDGET = Points : 50
+    TOTAL_ITEM_BUDGET = Points : 50
 
 Warlock Engineer
     BASE_TYPE = Mage
@@ -159,9 +159,9 @@ Warlock Engineer
     OPTIONAL_OCO_EXTRAS = [Name: One Warpstone Token, Singular: True, Points: 15
                            Name: Two Warpstone Tokens, Singular: True, Points: 30
                            Name: Three Warpstone Tokens, Singular: True, Points: 45]
-    MAGIC_ITEM_BUDGET = 50
-    FACTION_ITEM_BUDGET = 50
-    TOTAL_ITEM_BUDGET = 50
+    MAGIC_ITEM_BUDGET = Points : 50
+    FACTION_ITEM_BUDGET = Points : 50
+    TOTAL_ITEM_BUDGET = Points : 50
     MAGE_LEVEL = 0
     MAGE_UPGRADES = 1 [50], 2 [85]
     MAGE_LORES = Ruin
@@ -179,9 +179,9 @@ Chieftain
                         Name: Halberd, Category: Mundane, Type: Melee, Points: 2]
     OPTIONAL_ARMOUR = Name: Shield, Category: Mundane, Type: Shield, Points: 2
     OPTIONAL_MC_EXTRAS = Name: Battle Standard Bearer, Singular: True, Points: 25
-    MAGIC_ITEM_BUDGET = 50
-    FACTION_ITEM_BUDGET = 50
-    TOTAL_ITEM_BUDGET = 50
+    MAGIC_ITEM_BUDGET = Points : 50
+    FACTION_ITEM_BUDGET = Points : 50
+    TOTAL_ITEM_BUDGET = Points : 50
 
 Plague Priest
     BASE_TYPE = Mage
@@ -194,9 +194,9 @@ Plague Priest
                         Name: Flail, Category: Mundane, Type: Melee, Points: 4
                         Name: Additional hand weapon, Category: Mundane, Type: Melee, Points: 2]
     OPTIONAL_MOUNTS = Name: Great Pox Rat, Points: 30 ; Name: Plague Furnace, Points : 150
-    MAGIC_ITEM_BUDGET = 50
-    FACTION_ITEM_BUDGET = 50
-    TOTAL_ITEM_BUDGET = 50
+    MAGIC_ITEM_BUDGET = Points : 50
+    FACTION_ITEM_BUDGET = Points : 50
+    TOTAL_ITEM_BUDGET = Points : 50
     MAGE_LEVEL = 1
     MAGE_UPGRADES = 2 [35]
     MAGE_LORES = Plague
@@ -238,14 +238,9 @@ Stormvermin
                            Name : Doom-flayer, Singular : true, Points : 55]
     OPTIONAL_MC_EXTRAS = Name : Upgrade to +1 WS and +1 S (Requires Queek Headtaker), Points : 4, Restrictions : ArmyContains - Queek Headtaker / Limit - 1
     OPTIONAL_COMMAND = Musician - Name : Musician, Points : 5 ; Standard Bearer - Name : Standard Bearer, Points : 10 ; Champion - Name : Fangleader, Points : 10
-    FACTION_ITEM_BUDGET = 15
-    TOTAL_ITEM_BUDGET = 15
+    FACTION_ITEM_BUDGET = Points : 15; Restrictions : Limit - 1
+    TOTAL_ITEM_BUDGET = copy FACTION_ITEM_BUDGET
     BANNER_BUDGET = 50
-
-# TODO: change faction item budget line to below to indicate that a Fangleader may only
-#       choose a single piece of equipment worth up to 15 pts from the Scavenge-Pile
-#   FACTION_ITEM_BUDGET = Points : 15; Restrictions : Limit - 1
-#   TOTAL_ITEM_BUDGET = copy FACTION_ITEM_BUDGET
 
 Skavenslaves
     BASE_TYPE = Normal

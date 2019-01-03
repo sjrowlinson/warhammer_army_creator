@@ -60,7 +60,7 @@ namespace tools {
                 /*std::string msg = "Error parsing + " + enum_convert::FACTION_TO_STRING.at(faction)
                         + " roster - unit: " + read_line(blocks[curr_block])
                         + " has an invalid argument " + from + " with Restrictions: " + field_value[0];*/
-                std::string msg = "restriction parsing error";
+                std::string msg = "restriction parsing error: " + s;
                 throw std::runtime_error(msg);
             }
             switch (search_restr_field->second) {
@@ -86,6 +86,7 @@ namespace tools {
             case RestrictionField::LIMIT:
                 restrictions.emplace(std::make_pair(search_restr_field->second,
                                                     static_cast<unsigned int>(std::stoi(field_value[1]))));
+                break;
             case RestrictionField::ITEMTYPE:
             case RestrictionField::SUBITEMTYPE:
                 // TODO: don't know what to do with these yet, need to rewrite

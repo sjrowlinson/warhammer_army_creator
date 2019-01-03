@@ -48,12 +48,9 @@ namespace tools {
                 std::pair<std::string, double>
             > command;
             double mb_budget = 0.0;
-            double mi_budget = 0.0;
-            double champ_mi_budget = 0.0;
-            double fi_budget = 0.0;
-            double champ_fi_budget = 0.0;
-            double ti_budget = 0.0;
-            double champ_ti_budget = 0.0;
+            budget mi_budget = budget();
+            budget fi_budget = budget();
+            budget ti_budget = budget();
             bool unique = false;
         };
 
@@ -95,6 +92,7 @@ namespace tools {
         std::size_t parse_unit_uniqueness(const std::string& s, bool champion, bool master);
 
         std::size_t parse_unit_extras(const std::string& s, bool champion, bool master, bool oco);
+        std::size_t parse_unit_budget(const std::string& s, BudgetType bt);
 
         std::pair<std::string, std::size_t> multiline_state_handler(const std::string& s);
 

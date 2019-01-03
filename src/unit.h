@@ -26,15 +26,13 @@ protected:
     std::shared_ptr<base_unit> base_;
     army_list* army_;
 
-    friend army_list;
-
     void do_replacements(const std::vector<std::string>& replacements, bool champion=false);
     virtual std::string restriction_check(
         const std::unordered_multimap<RestrictionField, std::any>& restrictions,
         const std::string& item_name
     ) const;
 public:
-    explicit unit(const std::shared_ptr<base_unit>& base);
+    explicit unit(const std::shared_ptr<base_unit>& base, army_list* army_handle);
     unit(const unit& other);
     virtual ~unit() = default;
 
@@ -77,7 +75,7 @@ public:
         std::pair<bool, double>
     >& mc_extras() const noexcept = 0;
     virtual const std::tuple<
-        mount,
+        std::string,
         double,
         std::pair<std::string, double>,
         std::unordered_map<std::string, double>

@@ -23,7 +23,7 @@ private:
     std::size_t master_size_;
     std::size_t slaves_size_;
 public:
-    explicit mixed_unit(const std::shared_ptr<base_unit>& base);
+    explicit mixed_unit(const std::shared_ptr<base_unit>& base, army_list* army_handle);
     mixed_unit(const mixed_unit& other);
     ~mixed_unit() override = default;
 
@@ -56,7 +56,7 @@ public:
         std::pair<bool, double>
     >& mc_extras() const noexcept override;
     const std::tuple<
-        mount,
+        std::string,
         double,
         std::pair<std::string, double>,
         std::unordered_map<std::string, double>

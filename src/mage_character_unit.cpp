@@ -1,7 +1,7 @@
 #include "mage_character_unit.h"
 
-mage_character_unit::mage_character_unit(const std::shared_ptr<base_unit>& base)
-    : character_unit(base),
+mage_character_unit::mage_character_unit(const std::shared_ptr<base_unit>& base, army_list* army_handle)
+    : character_unit(base, army_handle),
       handle(std::dynamic_pointer_cast<base_mage_character_unit>(base)) {
     level_ = {handle->mage_level(), 0.0};
 }
@@ -81,8 +81,8 @@ std::string mage_character_unit::pick_arcane_item(ItemCategory item_class, const
             break;
         default: break;
         }
-        const double mi_budget = handle->magic_item_budget();
-        const double ti_budget = handle->total_item_budget();
+        const double mi_budget = handle->magic_item_budget().points;
+        const double ti_budget = handle->total_item_budget().points;
         double adj_mip = magic_item_points_;
         double adj_tip = total_item_points_;
         auto restr = restriction_check(search->second.restrictions, name);
@@ -116,8 +116,8 @@ std::string mage_character_unit::pick_arcane_item(ItemCategory item_class, const
         auto search = handle_->faction_items_handle()->second.find(name);
         if (search == handle_->faction_items_handle()->second.end())
             throw std::invalid_argument("Arcane item not found!");
-        const double fi_budget = handle_->faction_item_budget();
-        const double ti_budget = handle_->total_item_budget();
+        const double fi_budget = handle_->faction_item_budget().points;
+        const double ti_budget = handle_->total_item_budget().points;
         double adj_fip = faction_item_points_;
         double adj_tip = total_item_points_;
         auto restr = restriction_check(search->second.restrictions, name);

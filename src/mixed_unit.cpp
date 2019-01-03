@@ -1,10 +1,10 @@
 #include "mixed_unit.h"
 
-mixed_unit::mixed_unit(const std::shared_ptr<base_unit>& base)
-    : unit(base),
+mixed_unit::mixed_unit(const std::shared_ptr<base_unit>& base, army_list* army_handle)
+    : unit(base, army_handle),
       handle(std::dynamic_pointer_cast<base_mixed_unit>(base)),
-      master_(std::make_shared<base_normal_unit>(handle->master())),
-      slave_(std::make_shared<base_normal_unit>(handle->slave())) {
+      master_(std::make_shared<base_normal_unit>(handle->master()), army_handle),
+      slave_(std::make_shared<base_normal_unit>(handle->slave()), army_handle) {
     mixed_select_ = MixedSelect::SLAVE;
 }
 
@@ -86,7 +86,7 @@ const std::unordered_map<
 }
 
 const std::tuple<
-    mount,
+    std::string,
     double,
     std::pair<std::string, double>,
     std::unordered_map<std::string, double>

@@ -1,41 +1,28 @@
 The Scavenge Pile
 
 Warpmusket
-    Weapon, Ballistic
-    15
-    A warpmusket is a move or fire weapon that has a range of 24" and is Strength 5. A warpmusket is Armour Piercing, uses Unstable Ammunition, and is a Warpstone Weapon.
-    None
-    None
-    None
+    CATEGORY = Weapon
+    TYPE = Ballistic
+    POINTS = 15
+    DESCRIPTION = A warpmusket is a move or fire weapon that has a range of 24" and is Strength 5. A warpmusket is Armour Piercing, uses Unstable Ammunition, and is a Warpstone Weapon.
 
 Poisoned Attacks
-    Other
-    15
-    All close combat attacks made by the model count as Poisoned Attacks. This will affect a tail weapon, but not any magic weapons or a Rat Hound Bodyguard.
-    None
-    None
-    None
+    CATEGORY = Other
+    POINTS = 15
+    DESCRIPTION = All close combat attacks made by the model count as Poisoned Attacks. This will affect a tail weapon, but not any magic weapons or a Rat Hound Bodyguard.
 
 Tail Weapon
-    Other
-    8
-    A model with this additional blade, spike or mace can make an additional S3 attack at the user's WS and Initiative. It can be used in addition to other attacks including an additional hand weapon or even a magic weapon, although it gains no magical properties.
-    None
-    None
-    None
+    CATEGORY = Other
+    POINTS = 8
+    DESCRIPTION = A model with this additional blade, spike or mace can make an additional S3 attack at the user's WS and Initiative. It can be used in addition to other attacks including an additional hand weapon or even a magic weapon, although it gains no magical properties.
 
 Warplock Pistol
-    Weapon, Ballistic
-    8
-    A warplock pistol follows the rules for pistols except that it has a range of 10". A warplock pistol is Armour Piercing, uses Unstable Ammunition and is a Warpstone Ammunition.
-    None
-    None
-    None
+    CATEGORY = Weapon
+    TYPE = Ballistic
+    POINTS = 8
+    DESCRIPTION = A warplock pistol follows the rules for pistols except that it has a range of 10". A warplock pistol is Armour Piercing, uses Unstable Ammunition and is a Warpstone Ammunition.
 
 Rat Hound Bodyguard
-    Other
-    5
-    A model with a Rat Hound upgrade can make an additional WS3, S3 attack. This attack is made at the owner's Initiative, however, on a To Hit roll of 1 the rat hound will instead inflict an automatic hit on its owner.
-    None
-    None
-    None
+    CATEGORY = Other
+    POINTS = 5
+    DESCRIPTION = A model with a Rat Hound upgrade can make an additional WS3, S3 attack. This attack is made at the owner's Initiative, however, on a To Hit roll of 1 the rat hound will instead inflict an automatic hit on its owner.

@@ -147,8 +147,8 @@ namespace tools {
             bu = std::make_unique<base_mage_character_unit>(
                 faction, tpo.unit_type, tpo.unit_category, name, tpo.points,
                 std::move(tpo.characteristics), std::move(tpo.special_rules),
-                std::move(eq), std::move(opt), tpo.mi_budget,
-                tpo.fi_budget, tpo.ti_budget, tpo.unique, tpo.mage_level,
+                std::move(eq), std::move(opt), std::move(tpo.mi_budget),
+                std::move(tpo.fi_budget), std::move(tpo.ti_budget), tpo.unique, tpo.mage_level,
                 std::move(tpo.mage_upgrades), std::move(tpo.mage_lores),
                 tpo.mount
             );
@@ -161,8 +161,8 @@ namespace tools {
             bu = std::make_unique<base_melee_character_unit>(
                 faction, tpo.unit_type, tpo.unit_category, name, tpo.points,
                 std::move(tpo.characteristics), std::move(tpo.special_rules),
-                std::move(eq), std::move(opt), tpo.mi_budget,
-                tpo.fi_budget, tpo.ti_budget, tpo.unique, tpo.mount
+                std::move(eq), std::move(opt), std::move(tpo.mi_budget),
+                std::move(tpo.fi_budget), std::move(tpo.ti_budget), tpo.unique, tpo.mount
             );
             break;
         }
@@ -177,16 +177,15 @@ namespace tools {
                  tpo.size.second, tpo.points, std::move(tpo.characteristics),
                  std::move(tpo.special_rules), std::move(eq), std::move(opt),
                  std::move(tpo.champ_characteristics), std::move(tpo.champ_special_rules),
-                 std::move(champ_eq), std::move(champ_opt), tpo.mi_budget,
-                 tpo.fi_budget, tpo.ti_budget, std::move(tpo.command), tpo.mb_budget,
+                 std::move(champ_eq), std::move(champ_opt), std::move(tpo.mi_budget),
+                 std::move(tpo.fi_budget), std::move(tpo.ti_budget), std::move(tpo.command), tpo.mb_budget,
                  tpo.mount
             );
             break;
         }
         case BaseUnitType::MIXED:
             break;
-        default:
-            break;
+        default: break;
         }
         return bu;
     }
@@ -600,20 +599,60 @@ namespace tools {
         tpo.mb_budget = std::stod(s);
         return 0U;
     }
+    std::size_t roster_parser::parse_unit_budget(const std::string& s, BudgetType bt) {
+        auto args = tools::split(s, ',');
+        auto names_values = tools::zip_args_to_names_values(args);
+        if (!tools::in_names_values(names_values, "Points")) {
+            std::string msg = "Error parsing + " + enum_convert::FACTION_TO_STRING.at(faction)
+                    + " roster - unit: " + read_line(blocks[curr_block])
+                    + " has an invalid argument ITEM_BUDGET which"
+                    + " has been specified without a Points argument.";
+            throw std::runtime_error(msg);
+        }
+        budget b;
+        b.type = bt;
+        for (const auto& x : names_values) {
+            if (x.first == "Points") b.points = std::stod(x.second);
+            else if (x.first == "Restrictions") b.restrictions = parse_restrictions(x.second, "ITEM_BUDGET");
+        }
+        switch (bt) {
+        case BudgetType::MAGIC:
+            tpo.mi_budget = b;
+            break;
+        case BudgetType::FACTION:
+            tpo.fi_budget = b;
+            break;
+        case BudgetType::TOTAL:
+            tpo.ti_budget = b;
+            break;
+        default: break;
+        }
+        return 0U;
+    }
     std::size_t roster_parser::parse_unit_mi_budget(const std::string& s, bool champion, bool master) {
         (void)champion; (void)master;
-        tpo.mi_budget = std::stod(s);
-        return 0U;
+        return parse_unit_budget(s, BudgetType::MAGIC);
     }
     std::size_t roster_parser::parse_unit_fi_budget(const std::string& s, bool champion, bool master) {
         (void)champion; (void)master;
-        tpo.fi_budget = std::stod(s);
-        return 0U;
+        return parse_unit_budget(s, BudgetType::FACTION);
     }
     std::size_t roster_parser::parse_unit_ti_budget(const std::string& s, bool champion, bool master) {
         (void)champion; (void)master;
-        tpo.ti_budget = std::stod(s);
-        return 0U;
+        if (tools::starts_with(s, "copy")) {
+            std::string copy_target = tools::split(s, ' ')[1];
+            if (copy_target == "MAGIC_ITEM_BUDGET") tpo.ti_budget = tpo.mi_budget;
+            else if (copy_target == "FACTION_ITEM_BUDGET") tpo.ti_budget = tpo.fi_budget;
+            else {
+                std::string msg = "Error parsing + " + enum_convert::FACTION_TO_STRING.at(faction)
+                        + " roster - unit: " + read_line(blocks[curr_block])
+                        + " has an invalid argument TOTAL_ITEM_BUDGET with a copy target:" + copy_target;
+                throw std::runtime_error(msg);
+            }
+            tpo.ti_budget.type = BudgetType::TOTAL;
+            return 0U;
+        }
+        return parse_unit_budget(s, BudgetType::TOTAL);
     }
     std::size_t roster_parser::parse_unit_uniqueness(const std::string& s, bool champion, bool master) {
         (void)champion; (void)master;

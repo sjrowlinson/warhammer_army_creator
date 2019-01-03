@@ -17,9 +17,9 @@ public:
         std::vector<std::string>&& sr,
         equipment&& eq,
         options&& opt,
-        double mi_budget,
-        double fi_budget,
-        double ti_budget,
+        budget&& mi_budget,
+        budget&& fi_budget,
+        budget&& ti_budget,
         bool is_unique,
         std::string mount_name=""
     );

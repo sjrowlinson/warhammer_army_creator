@@ -48,7 +48,7 @@ private:
 
     // mounts
     std::tuple<
-        mount,
+        std::string,
         double,
         std::pair<std::string, double>,
         std::unordered_map<std::string, double>
@@ -63,7 +63,7 @@ public:
     // handle
     const std::shared_ptr<base_normal_unit> handle;
 
-    explicit normal_unit(const std::shared_ptr<base_unit>& base);
+    explicit normal_unit(const std::shared_ptr<base_unit>& base, army_list* army_handle);
     normal_unit(const normal_unit& other);
     ~normal_unit() override = default;
 
@@ -105,7 +105,7 @@ public:
     >& champion_mc_extras() const noexcept;
 
     const std::tuple<
-        mount,
+        std::string,
         double,
         std::pair<std::string, double>,
         std::unordered_map<std::string, double>

@@ -22,7 +22,7 @@ private:
 public:
     const std::shared_ptr<base_mage_character_unit> handle;
 
-    explicit mage_character_unit(const std::shared_ptr<base_unit>& base);
+    explicit mage_character_unit(const std::shared_ptr<base_unit>& base, army_list* army_handle);
     mage_character_unit(const mage_character_unit& other);
     ~mage_character_unit() override = default;
 

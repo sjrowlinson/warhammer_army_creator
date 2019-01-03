@@ -16,9 +16,9 @@ base_normal_unit::base_normal_unit(
     std::vector<std::string>&& champ_sr,
     equipment&& champ_eq,
     options&& champ_opt,
-    double champ_mi_budget,
-    double champ_fi_budget,
-    double champ_ti_budget,
+    budget&& champ_mi_budget,
+    budget&& champ_fi_budget,
+    budget&& champ_ti_budget,
     std::unordered_map<
         CommandGroup, std::pair<std::string, double>
     >&& opt_command,
@@ -34,8 +34,8 @@ base_normal_unit::base_normal_unit(
 ), pts_per_model_(pts_per_model), stats_(std::move(stats)), sr_(std::move(sr)), eq_(std::move(eq)),
    opt_(std::move(opt)), champ_stats_(std::move(champ_stats)),
    champ_sr_(std::move(champ_sr)), champ_eq_(std::move(champ_eq)),
-   champ_opt_(std::move(champ_opt)), champ_mi_budget_(champ_mi_budget),
-   champ_fi_budget_(champ_fi_budget), champ_ti_budget_(champ_ti_budget),
+   champ_opt_(std::move(champ_opt)), champ_mi_budget_(std::move(champ_mi_budget)),
+   champ_fi_budget_(std::move(champ_fi_budget)), champ_ti_budget_(std::move(champ_ti_budget)),
    opt_command_(std::move(opt_command)), magic_banner_budget_(magic_banner_budget),
    mount_name_(mount_name) { but = BaseUnitType::NORMAL; }
 
@@ -56,13 +56,13 @@ const std::vector<std::string>& base_normal_unit::champion_special_rules() const
 }
 const equipment& base_normal_unit::champion_eq() const noexcept { return champ_eq_; }
 const options& base_normal_unit::champion_opt() const noexcept { return champ_opt_; }
-double base_normal_unit::champion_magic_item_budget() const noexcept {
+const budget& base_normal_unit::champion_magic_item_budget() const noexcept {
     return champ_mi_budget_;
 }
-double base_normal_unit::champion_faction_item_budget() const noexcept {
+const budget& base_normal_unit::champion_faction_item_budget() const noexcept {
     return champ_fi_budget_;
 }
-double base_normal_unit::champion_total_item_budget() const noexcept {
+const budget& base_normal_unit::champion_total_item_budget() const noexcept {
     return champ_ti_budget_;
 }
 

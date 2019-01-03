@@ -120,11 +120,11 @@ void ArmyCreator::update_budget_label() {
     if (current->is_character()) {
         auto p = std::dynamic_pointer_cast<character_unit>(current);
         std::string budget_str = "Magic: " +
-                tools::points_str(p->handle_->magic_item_budget() - p->magic_item_points());
+                tools::points_str(p->handle_->magic_item_budget().points - p->magic_item_points());
         if (p->handle_->faction_items_handle() != nullptr) {
             budget_str += "  " + p->handle_->faction_items_handle()->first + ": " +
-                tools::points_str(p->handle_->faction_item_budget() - p->faction_item_points()) +
-                "   Total: " + tools::points_str(p->handle_->total_item_budget() - p->total_item_points());
+                tools::points_str(p->handle_->faction_item_budget().points - p->faction_item_points()) +
+                "   Total: " + tools::points_str(p->handle_->total_item_budget().points - p->total_item_points());
         }
         ui->budget_remaining_label->setText(QString::fromStdString(budget_str));
     }
@@ -1021,7 +1021,7 @@ void ArmyCreator::update_unit_display(
             mlevel_str = " [Level " + std::to_string(p->level()) + "] ";
         }
         std::string name = u->name() + mlevel_str +
-                ((std::get<0>(u->mnt()).name().empty()) ? "" : "\n(" + std::get<0>(u->mnt()).name() + ")");
+                ((std::get<0>(u->mnt()).empty()) ? "" : "\n(" + std::get<0>(u->mnt()) + ")");
         if (!std::get<2>(u->mnt()).first.empty())
             name += "\n    " + std::get<2>(u->mnt()).first;
         for (const auto& x : std::get<3>(u->mnt()))

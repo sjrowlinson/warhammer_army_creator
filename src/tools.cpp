@@ -76,52 +76,16 @@ namespace tools {
 	bool starts_with(const std::string& s, char c) {
 		if (s.empty()) return false;
 		return *s.cbegin() == c;
-	}
+    }
     bool ends_with(const std::string& s, char c) {
         if (s.empty()) return false;
         return *(--s.cend()) == c;
     }
 	bool starts_with(const std::string& s, std::string match) {
-		if (s.empty() && match.empty()) return true;
-		if (s.empty()) return false;
-		for (std::size_t i = 0U; i < match.size(); ++i) {
-			if (s[i] != match[i]) return false;
-		}
-		return true;
+        return std::equal(
+            std::begin(s), std::begin(s) + static_cast<std::string::difference_type>(match.size()),
+            std::begin(match));
 	}
-
-    std::pair<std::string, double> parse_item_points(std::string s) {
-        auto bstart = tools::split(s, '[');
-        auto bend = tools::split(bstart[1], ']');
-        return {bstart[0], std::stod(bend[0])};
-    }
-
-    std::vector<std::string> parse_item_bs(std::string s) {
-        std::vector<std::string> brace_start = tools::split(s, '{');
-        std::vector<std::string> brace_end = tools::split(brace_start[1], '}');
-        std::vector<std::string> square_start = tools::split(brace_end[1], '[');
-        std::vector<std::string> square_end = tools::split(square_start[1], ']');
-        std::vector<std::string> result;
-        result.push_back(brace_start[0]);
-        result.push_back(brace_end[0]);
-        result.push_back(square_end[0]);
-        return result;
-    }
-
-    std::vector<std::string> parse_item_bsp(std::string s) {
-        std::vector<std::string> brace_start = tools::split(s, '{');
-        std::vector<std::string> brace_end = tools::split(brace_start[1], '}');
-        std::vector<std::string> square_start = tools::split(brace_end[1], '[');
-        std::vector<std::string> square_end = tools::split(square_start[1], ']');
-        std::vector<std::string> paren_start = tools::split(square_end[1], '(');
-        std::vector<std::string> paren_end = tools::split(paren_start[1], ')');
-        std::vector<std::string> result;
-        result.push_back(brace_start[0]);
-        result.push_back(brace_end[0]);
-        result.push_back(square_end[0]);
-        result.push_back(paren_end[0]);
-        return result;
-    }
 
     std::unordered_map<std::string, item> magic_items_of(
         const std::unordered_map<std::string, item> &items,

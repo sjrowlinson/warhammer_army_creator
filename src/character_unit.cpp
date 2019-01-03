@@ -1,8 +1,8 @@
 #include "character_unit.h"
 #include "army_list.h"
 
-character_unit::character_unit(const std::shared_ptr<base_unit>& base)
-    : unit(base),
+character_unit::character_unit(const std::shared_ptr<base_unit>& base, army_list* army_handle)
+    : unit(base, army_handle),
       handle_(std::dynamic_pointer_cast<base_character_unit>(base)) {
     points_ = handle_->points();
     for (const auto& w : handle_->eq().weapons()) {
@@ -119,9 +119,9 @@ std::string character_unit::pick_magic_item(ItemType item_type, ItemCategory ite
             if (search == handle_->faction_items_handle()->second.end())
                 throw std::invalid_argument("Item not found!");
         }
-        const double mi_budget =
-            (item_class == ItemCategory::FACTION) ? handle_->faction_item_budget() : handle_->magic_item_budget();
-        const double ti_budget = handle_->total_item_budget();
+        const double mi_budget = (item_class == ItemCategory::FACTION) ?
+            handle_->faction_item_budget().points : handle_->magic_item_budget().points;
+        const double ti_budget = handle_->total_item_budget().points;
         double adj_mip =
             (item_class == ItemCategory::FACTION) ? faction_item_points_ : magic_item_points_;
         double adj_tip = total_item_points_;
@@ -290,7 +290,7 @@ const std::unordered_map<std::string, std::pair<bool, double>>& character_unit::
 }
 
 const std::tuple<
-    mount,
+    std::string,
     double,
     std::pair<std::string, double>,
     std::unordered_map<std::string, double>
@@ -468,8 +468,8 @@ std::string character_unit::pick_oco_extra(const std::string& name) {
     // items however can be bought in conjunction with other arcane items
     if (handle_->faction() == Faction::SKAVEN) {
         if (name.find("Warpstone Tokens")) {
-            const double mi_budget = handle_->magic_item_budget();
-            const double ti_budget = handle_->total_item_budget();
+            const double mi_budget = handle_->magic_item_budget().points;
+            const double ti_budget = handle_->total_item_budget().points;
             double adj_mip = magic_item_points_;
             double adj_tip = total_item_points_;
             if (oco_extra_.first.find("Warpstone Tokens")) {
@@ -602,40 +602,44 @@ std::string character_unit::remove_mc_extra(const std::string& name) {
 }
 
 void character_unit::pick_mount(const std::string& name) {
-    if (std::get<0>(mount_).name() == name) return;
+    if (std::get<0>(mount_) == name) return;
     auto opt_search = handle_->opt().mounts().find(name);
-    auto mnt_search = handle_->mounts_handle()->find(name);
-    if (opt_search == handle_->opt().mounts().end() ||
-            mnt_search == handle_->mounts_handle()->end())
-        throw std::invalid_argument("Mount not found!");
-    auto restr = restriction_check(mnt_search->second.restrictions(), name);
+    if (opt_search == std::end(handle_->opt().mounts()))
+        throw std::invalid_argument("Mount: " + name + " not found!");
+    auto restr = restriction_check(opt_search->second.restrictions, name);
     if (!restr.empty()) throw std::invalid_argument(restr);
     remove_mount();
-    mount_ = {mnt_search->second, opt_search->second, {}, {}};
-    points_ += opt_search->second;
+    mount_ = {name, opt_search->second.points, {}, {}};
+    points_ += opt_search->second.points;
 }
 
 void character_unit::remove_mount() {
     points_ -= std::get<1>(mount_);
     points_ -= std::get<2>(mount_).second;
     for (const auto& x : std::get<3>(mount_)) points_ -= x.second;
-    std::get<0>(mount_) = mount();
+    std::get<0>(mount_).clear();
     std::get<1>(mount_) = 0.0;
+    // clear mount oco extra
     std::get<2>(mount_).first.clear();
     std::get<2>(mount_).second = 0.0;
+    // clear mount mc extras
     std::get<3>(mount_).clear();
 }
 
 void character_unit::pick_mount_option(const std::string& name, bool oco) {
-    std::unordered_map<std::string, double>::const_iterator search;
+    std::unordered_map<std::string, extra_option>::const_iterator search;
     if (oco) {
-        search = std::get<0>(mount_).oco_extras().find(name);
-        std::get<2>(mount_) = *search;
+        search = handle_->opt().mounts().find(std::get<0>(mount_))->second.oco_extras.find(name);
+        auto restr = restriction_check(search->second.restrictions, name);
+        if (!restr.empty()) throw std::invalid_argument(restr);
+        std::get<2>(mount_) = {search->second.name, search->second.points};
     } else {
-        search = std::get<0>(mount_).mc_extras().find(name);
-        std::get<3>(mount_).insert(*search);
+        search = handle_->opt().mounts().find(std::get<0>(mount_))->second.mc_extras.find(name);
+        auto restr = restriction_check(search->second.restrictions, name);
+        if (!restr.empty()) throw std::invalid_argument(restr);
+        std::get<3>(mount_).insert({search->second.name, search->second.points});
     }
-    points_ += search->second;
+    points_ += search->second.points;
 }
 
 void character_unit::remove_mount_option(const std::string& name, bool oco) {
@@ -742,7 +746,7 @@ std::string character_unit::html_table_row_both(short mlevel, std::string arcane
     // unit name
     row += "<td>" + name() + "</td>\n";
     // unit mount
-    row += "<td>" + (std::get<0>(mount_).name().empty() ? "&nbsp;" : std::get<0>(mount_).name()) + "</td>\n";
+    row += "<td>" + (std::get<0>(mount_).empty() ? "&nbsp;" : std::get<0>(mount_)) + "</td>\n";
     // unit mage level
     if (mlevel == -1) row += "<td>None</td>\n";
     else row += "<td>Level " + std::to_string(mlevel) + "</td>\n";
@@ -808,9 +812,10 @@ std::string character_unit::html_table_row_both(short mlevel, std::string arcane
     row += "<tr>\n";
     for (const auto& x : handle_->statistics()) row += "<td align=\"center\">" + x + "</td>\n";
     row += "</tr>\n";
-    if (!std::get<0>(mount_).name().empty()) {
+    if (!std::get<0>(mount_).empty()) {
         row += "<tr>\n";
-        for (const auto& x : std::get<0>(mount_).statistics()) row += "<td align=\"center\">" + x + "</td>\n";
+        auto mount_characteristics = handle_->mounts_handle()->find(std::get<0>(mount_))->second.statistics();
+        for (const auto& x : mount_characteristics) row += "<td align=\"center\">" + x + "</td>\n";
         row += "</tr>\n";
     }
     row += "</table></td>\n";

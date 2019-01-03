@@ -100,10 +100,10 @@ QScrollArea* MagicItemBox::make_weapons_tab(const std::vector<std::pair<std::str
             switch (ic_selected) { // don't display weapon if it's beyond the relevant budget
             case ItemCategory::COMMON:
             case ItemCategory::MAGIC:
-                if (w.second.points > p->handle_->magic_item_budget()) continue;
+                if (w.second.points > p->handle_->magic_item_budget().points) continue;
                 break;
             case ItemCategory::FACTION:
-                if (w.second.points > p->handle_->faction_item_budget()) continue;
+                if (w.second.points > p->handle_->faction_item_budget().points) continue;
                 break;
             default: break;
             }
@@ -210,10 +210,10 @@ QScrollArea* MagicItemBox::make_armour_tab(const std::vector<std::pair<std::stri
             switch (ic_selected) { // don't display armour if it's beyond the relevant budget
             case ItemCategory::COMMON:
             case ItemCategory::MAGIC:
-                if (a.second.points > p->handle_->magic_item_budget()) continue;
+                if (a.second.points > p->handle_->magic_item_budget().points) continue;
                 break;
             case ItemCategory::FACTION:
-                if (a.second.points > p->handle_->faction_item_budget()) continue;
+                if (a.second.points > p->handle_->faction_item_budget().points) continue;
                 break;
             default: break;
             }
@@ -326,10 +326,10 @@ QScrollArea* MagicItemBox::make_talismans_tab(const std::vector<std::pair<std::s
             switch (ic_selected) { // don't display talisman if it's beyond the relevant budget
             case ItemCategory::COMMON:
             case ItemCategory::MAGIC:
-                if (t.second.points > p->handle_->magic_item_budget()) continue;
+                if (t.second.points > p->handle_->magic_item_budget().points) continue;
                 break;
             case ItemCategory::FACTION:
-                if (t.second.points > p->handle_->faction_item_budget()) continue;
+                if (t.second.points > p->handle_->faction_item_budget().points) continue;
                 break;
             default: break;
             }
@@ -409,10 +409,10 @@ QScrollArea* MagicItemBox::make_enchanted_tab(const std::vector<std::pair<std::s
             switch (ic_selected) { // don't display enchanted item if it's beyond the relevant budget
             case ItemCategory::COMMON:
             case ItemCategory::MAGIC:
-                if (t.second.points > p->handle_->magic_item_budget()) continue;
+                if (t.second.points > p->handle_->magic_item_budget().points) continue;
                 break;
             case ItemCategory::FACTION:
-                if (t.second.points > p->handle_->faction_item_budget()) continue;
+                if (t.second.points > p->handle_->faction_item_budget().points) continue;
                 break;
             default: break;
             }
@@ -490,10 +490,10 @@ QScrollArea* MagicItemBox::make_arcane_tab(const std::vector<std::pair<std::stri
             switch (ic_selected) { // don't display arcane item if it's beyond the relevant budget
             case ItemCategory::COMMON:
             case ItemCategory::MAGIC:
-                if (t.second.points > p->handle_->magic_item_budget()) continue;
+                if (t.second.points > p->handle_->magic_item_budget().points) continue;
                 break;
             case ItemCategory::FACTION:
-                if (t.second.points > p->handle_->faction_item_budget()) continue;
+                if (t.second.points > p->handle_->faction_item_budget().points) continue;
                 break;
             default: break;
             }
@@ -644,10 +644,10 @@ QScrollArea* MagicItemBox::make_other_tab(const std::vector<std::pair<std::strin
             switch (ic_selected) { // don't display item if it's beyond the relevant budget
             case ItemCategory::COMMON:
             case ItemCategory::MAGIC:
-                if (t.second.points > p->handle_->magic_item_budget()) continue;
+                if (t.second.points > p->handle_->magic_item_budget().points) continue;
                 break;
             case ItemCategory::FACTION:
-                if (t.second.points > p->handle_->faction_item_budget()) continue;
+                if (t.second.points > p->handle_->faction_item_budget().points) continue;
                 break;
             default: break;
             }

@@ -1,325 +1,285 @@
 Tools of Supremacy
 
-#The Fellblade
-#    CATEGORY = Weapon
-#    TYPE = Melee
-#    POINTS = 100
-#    DESCRIPTION = This foul sword gives the bearer Strength 10 and successful ward saves must be re-rolled. Any unsaved wounds caused by the Fellblade are multiplied into D6 wounds. Roll a D6 at the end of each of the wielder's turns; on a 3+ there is no effect. On a roll #of 1-2 the wielder suffers 1 wound with no armour save allowed.
-#    ALLOWED_UNITS = Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
-#    RESTRICTIONS = Limit: 1
-
-
 The Fellblade
-    Weapon, Melee
-    100
-    This foul sword gives the bearer Strength 10 and successful ward saves must be re-rolled. Any unsaved wounds caused by the Fellblade are multiplied into D6 wounds. Roll a D6 at the end of each of the wielder's turns; on a 3+ there is no effect. On a roll of 1-2 the wielder suffers 1 wound with no armour save allowed.
-    Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
-    1
-    None
-
+    CATEGORY = Weapon
+    TYPE = Melee
+    POINTS = 100
+    DESCRIPTION = This foul sword gives the bearer Strength 10 and successful ward saves must be re-rolled. Any unsaved wounds caused by the Fellblade are multiplied into D6 wounds. Roll a D6 at the end of each of the wielder's turns; on a 3+ there is no effect. On a roll of 1-2 the wielder suffers 1 wound with no armour save allowed.
+    ALLOWED_UNITS = Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
+    RESTRICTIONS = Limit - 1
 
 Warpforged Blade
-    Weapon, Melee
-    50
-    Armour saves cannot be taken against hits from a Warpforged Blade.
-    Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
-    1
-    None
+    CATEGORY = Weapon
+    TYPE = Melee
+    POINTS = 50
+    DESCRIPTION = Armour saves cannot be taken against hits from a Warpforged Blade.
+    ALLOWED_UNITS = Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
+    RESTRICTIONS = Limit - 1
 
 Warlock-Augmented Weapon
-    Weapon, Melee
-    45
-    A Warlock-Augmented weapon adds +1 Strength and +1 Attack to any model so equipped.
-    Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
-    1
-    None
+    CATEGORY = Weapon
+    TYPE = Melee
+    POINTS = 45
+    DESCRIPTION = A Warlock-Augmented weapon adds +1 Strength and +1 Attack to any model so equipped.
+    ALLOWED_UNITS = Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
+    RESTRICTIONS = Limit - 1
 
 Blade of Corruption
-    Weapon, Melee
-    35
-    The wielder of this sword is granted +1 Strength to all Attacks made in close combat. Any unsaved wound inflicted by the Blade of Corruption is multiplied to 2 wounds. In addition, if the wielder makes a To Hit roll that has two or more rolls of 1, the wielder immediately suffers a wound that is multiplied to 2 wounds. Other Attacks are carried out as normal.
-    Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
-    1
-    None
+    CATEGORY = Weapon
+    TYPE = Melee
+    POINTS = 35
+    DESCRIPTION = The wielder of this sword is granted +1 Strength to all Attacks made in close combat. Any unsaved wound inflicted by the Blade of Corruption is multiplied to 2 wounds. In addition, if the wielder makes a To Hit roll that has two or more rolls of 1, the wielder immediately suffers a wound that is multiplied to 2 wounds. Other Attacks are carried out as normal.
+    ALLOWED_UNITS = Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
+    RESTRICTIONS = Limit - 1
 
 Weeping Blade
-    Weapon, Melee
-    30
-    A Weeping Blade has the Armour Piercing special rule. Each unsaved wound is multiplied to D3 wounds.
-    Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
-    1
-    None
+    CATEGORY = Weapon
+    TYPE = Melee
+    POINTS = 30
+    DESCRIPTION = A Weeping Blade has the Armour Piercing special rule. Each unsaved wound is multiplied to D3 wounds.
+    ALLOWED_UNITS = Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
+    RESTRICTIONS = Limit - 1
 
 Dwarfbane
-    Weapon, Melee
-    25
-    The wielder of this blade is granted +1 Strength to all attacks made in close combat. Additionally against Dwarfs, all hits are Armour Piercing, and the user re-rolls all failed To Wound rolls.
-    Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
-    1
-    None
+    CATEGORY = Weapon
+    TYPE = Melee
+    POINTS = 25
+    DESCRIPTION = The wielder of this blade is granted +1 Strength to all attacks made in close combat. Additionally against Dwarfs, all hits are Armour Piercing, and the user re-rolls all failed To Wound rolls.
+    ALLOWED_UNITS = Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
+    RESTRICTIONS = Limit - 1
 
 Blade of Nurglitch
-    Weapon, Melee
-    10
-    Enemy models lose 1 point of Toughness from their profile for each unsaved wound they suffer from this blade. Any model reduced to Toughness 0 is removed as a casualty.
-    Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
-    1
-    None
+    CATEGORY = Weapon
+    TYPE = Melee
+    POINTS = 10
+    DESCRIPTION = Enemy models lose 1 point of Toughness from their profile for each unsaved wound they suffer from this blade. Any model reduced to Toughness 0 is removed as a casualty.
+    ALLOWED_UNITS = Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
+    RESTRICTIONS = Limit - 1
 
 
 Warpstone Armour
-    Armour, Armour
-    30
-    Warpstone Armour gives its wearer a 4+ armour save. For each successful armour save made by the bearer in close combat, the armour immediately inflicats a Strength 4 hit against the model that struck the blow. Any casualties caused will count towards combat resolution. Warpstone Armour can be worn by Clan Skryre Warlock Engineers.
-    Warlord, Assassin, Warlock Engineer, Chieftain
-    1
-    None
+    CATEGORY = Armour
+    TYPE = Armour
+    POINTS = 30
+    DESCRIPTION = Warpstone Armour gives its wearer a 4+ armour save. For each successful armour save made by the bearer in close combat, the armour immediately inflicats a Strength 4 hit against the model that struck the blow. Any casualties caused will count towards combat resolution. Warpstone Armour can be worn by Clan Skryre Warlock Engineers.
+    ALLOWED_UNITS = Warlord, Assassin, Warlock Engineer, Chieftain
+    RESTRICTIONS = Limit - 1
 
 World's Edge Armour
-    Armour, Armour
-    25
-    The armour gives its wearer a 4+ armour save. The first time the wearer is wounded by a Strength high enough to completely cancel his armour save, or is not permitted an armour save for any reason, the wound is discounted, but the armour is completely destroyed.
-    Warlord, Assassin, Chieftain
-    1
-    None
+    CATEGORY = Armour
+    TYPE = Armour
+    POINTS = 25
+    DESCRIPTION = The armour gives its wearer a 4+ armour save. The first time the wearer is wounded by a Strength high enough to completely cancel his armour save, or is not permitted an armour save for any reason, the wound is discounted, but the armour is completely destroyed.
+    ALLOWED_UNITS = Warlord, Assassin, Chieftain
+    RESTRICTIONS = Limit - 1
 
 Shield of Distraction
-    Armour, Shield
-    15
-    Any models in base contact wishing to strike the bearer of this shield suffer -1 Attack, to a minimum of 1.
-    Warlord, Assassin, Chieftain
-    1
-    None
+    CATEGORY = Armour
+    TYPE = Shield
+    POINTS = 15
+    DESCRIPTION = Any models in base contact wishing to strike the bearer of this shield suffer -1 Attack, to a minimum of 1.
+    ALLOWED_UNITS = Warlord, Assassin, Chieftain
+    RESTRICTIONS = Limit - 1
 
 
 Foul Pendant
-    Talisman
-    30
-    This wicked token of the Horned Rat's power confers a 5+ ward save upon the bearer.
-    Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
-    1
-    None
+    CATEGORY = Talisman
+    POINTS = 30
+    DESCRIPTION = This wicked token of the Horned Rat's power confers a 5+ ward save upon the bearer.
+    ALLOWED_UNITS = Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
+    RESTRICTIONS = Limit - 1
 
 Shadow Magnet Trinket
-    Talisman
-    30
-    Shooting attacks at the bearer of a Shadow Magnet Trinket and any unit he has joined suffer a -1 To Hit penalty in addition to any normal modifiers due to the cloying presence of unnatural darkness.
-    Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
-    1
-    None
+    CATEGORY = Talisman
+    POINTS = 30
+    DESCRIPTION = Shooting attacks at the bearer of a Shadow Magnet Trinket and any unit he has joined suffer a -1 To Hit penalty in addition to any normal modifiers due to the cloying presence of unnatural darkness.
+    ALLOWED_UNITS = Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
+    RESTRICTIONS = Limit - 1
 
 Rival Hide Talisman
-    Talisman
-    15
-    One use only. A Skaven model wearing a Rival Hide Talisman can make a single enemy model in base contact re-roll all its successful To Hit dice rolls.
-    Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
-    1
-    None
+    CATEGORY = Talisman
+    POINTS = 15
+    DESCRIPTION = One use only. A Skaven model wearing a Rival Hide Talisman can make a single enemy model in base contact re-roll all its successful To Hit dice rolls.
+    ALLOWED_UNITS = Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
+    RESTRICTIONS = Limit - 1
 
 
 Warpstorm Scroll
-    Arcane
-    50
-    Bound Spell (Power Level 5). One use only. When this scroll is read all flying units within 24" of the caster suffer D6 Strength 6 hits, distributed as per shooting.
-    Grey Seer, Plague Priest, Warlock Engineer
-    1
-    None
+    CATEGORY = Arcane
+    POINTS = 50
+    DESCRIPTION = Bound Spell (Power Level 5). One use only. When this scroll is read all flying units within 24" of the caster suffer D6 Strength 6 hits, distributed as per shooting.
+    ALLOWED_UNITS = Grey Seer, Plague Priest, Warlock Engineer
+    RESTRICTIONS = Limit - 1
 
 Warp-Energy Condenser
-    Arcane
-    20
-    During each friendly Magic phase a Grey Seer or Warlock Engineer with a Warp-Energy Condenser can, on a D6 roll of 5+, generate and extra power dice. Additionally, the device is particularly adept at aiding a sorcerer in casting Warp Lightning. While wearing a Warp-Energy Condenser a caster does not D6 but D6 + 2 hits when casting Warp Lightning. Rolls of 1, however, do not gain the +2 bonus.
-    Grey Seer, Warlock Engineer
-    1
-    None
+    CATEGORY = Arcane
+    POINTS = 20
+    DESCRIPTION = During each friendly Magic phase a Grey Seer or Warlock Engineer with a Warp-Energy Condenser can, on a D6 roll of 5+, generate and extra power dice. Additionally, the device is particularly adept at aiding a sorcerer in casting Warp Lightning. While wearing a Warp-Energy Condenser a caster does not D6 but D6 + 2 hits when casting Warp Lightning. Rolls of 1, however, do not gain the +2 bonus.
+    ALLOWED_UNITS = Grey Seer, Warlock Engineer
+    RESTRICTIONS = Limit - 1
 
 Scrying Stone
-    Arcane
-    15
-    One use only. The bearer of this mystical ball gains a 3+ ward save against the first wound suffered. If the wound is saved because of the ward save of the Scrying Ball, the bearer will be subject to Stupidity in the following friendly turn as he awaits further helpful instructions from the mysterious globe.
-    Grey Seer, Plague Priest, Warlock Engineer
-    1
-    None
+    CATEGORY = Arcane
+    POINTS = 15
+    DESCRIPTION = One use only. The bearer of this mystical ball gains a 3+ ward save against the first wound suffered. If the wound is saved because of the ward save of the Scrying Ball, the bearer will be subject to Stupidity in the following friendly turn as he awaits further helpful instructions from the mysterious globe.
+    ALLOWED_UNITS = Grey Seer, Plague Priest, Warlock Engineer
+    RESTRICTIONS = Limit - 1
 
 
 Skavenbrew
-    Enchanted
-    50
-    One use only. A character carring Skavenbrew can force any unit of Clanrats or Stormvermin in base contact to guzzle the vile liquid. Champions are affected but no character models would be so unwise as to drink the potion.\nRoll a D6 after the brew is consumed.\n1 - Gone Bad. The unit takes D6 Strength 3 automatics hits with no armour save. The Skavenbrew has no additional effect.\n2-3 - Inspired Hatred. The unit now has hatred of all enemies.\n4-5 - Frenzied. The unit is now subject to Frenzy.\n6 - Rabid. The unit's metabolism is driven hyper-active, ramping up to a feverish pitch. The unit is subject to Frenzy, but instead of adding +1 Attacks, add +2 Attacks. In each following friendly Compulsory Move phase the unit will take D6 automatic wounds as some of the ratmen collapse, hearts or brains bursting with fury.
-    Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
-    1
-    None
+    CATEGORY = Enchanted
+    POINTS = 50
+    DESCRIPTION = One use only. A character carring Skavenbrew can force any unit of Clanrats or Stormvermin in base contact to guzzle the vile liquid. Champions are affected but no character models would be so unwise as to drink the potion.\nRoll a D6 after the brew is consumed.\n1 - Gone Bad. The unit takes D6 Strength 3 automatics hits with no armour save. The Skavenbrew has no additional effect.\n2-3 - Inspired Hatred. The unit now has hatred of all enemies.\n4-5 - Frenzied. The unit is now subject to Frenzy.\n6 - Rabid. The unit's metabolism is driven hyper-active, ramping up to a feverish pitch. The unit is subject to Frenzy, but instead of adding +1 Attacks, add +2 Attacks. In each following friendly Compulsory Move phase the unit will take D6 automatic wounds as some of the ratmen collapse, hearts or brains bursting with fury.
+    ALLOWED_UNITS = Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
+    RESTRICTIONS = Limit - 1
 
 Skalm
-    Enchanted
-    30
-    One use only. At the beginning of any phase (friend or foe's) announce you are using Skalm. The bearer is instantly cured of any wounds suffered so far. Skalm is of no use to models that are already dead. Skalm can only be used by the bearer, sharing such a precious thing is not something a Skaven would contemplate.
-    Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
-    1
-    None
+    CATEGORY = Enchanted
+    POINTS = 30
+    DESCRIPTION = One use only. At the beginning of any phase (friend or foe's) announce you are using Skalm. The bearer is instantly cured of any wounds suffered so far. Skalm is of no use to models that are already dead. Skalm can only be used by the bearer, sharing such a precious thing is not something a Skaven would contemplate.
+    ALLOWED_UNITS = Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
+    RESTRICTIONS = Limit - 1
 
 Pipes of Piebald
-    Enchanted
-    25
-    In order to charge the bearer or any unit he has joined, an enemy unit must first pass a Ld test. If the Ld test is failed, treat the unit as if they had failed a charge.
-    Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
-    1
-    None
+    CATEGORY = Enchanted
+    POINTS = 25
+    DESCRIPTION = In order to charge the bearer or any unit he has joined, an enemy unit must first pass a Ld test. If the Ld test is failed, treat the unit as if they had failed a charge.
+    ALLOWED_UNITS = Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
+    RESTRICTIONS = Limit - 1
 
 Portents of Verminous Doom
-    Enchanted
-    20
-    Any enemy unit in base contact with the model bearing Portents of Verminous Doom suffers a -1 penalty to its Leadership for as long as they remain in contact.
-    Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
-    1
-    None
+    CATEGORY = Enchanted
+    POINTS = 20
+    DESCRIPTION = Any enemy unit in base contact with the model bearing Portents of Verminous Doom suffers a -1 penalty to its Leadership for as long as they remain in contact.
+    ALLOWED_UNITS = Warlord, Grey Seer, Assassin, Warlock Engineer, Chieftain, Plague Priest
+    RESTRICTIONS = Limit - 1
 
 
 Warpstone Stars
-    Weapon, Ballistic
-    50
-    Warpstone Stars are a thrown weapon with the 3x Multiple Shots rule. Warpstone stars are Strength 5 and each unsaved wound multiplies into D3 wounds.
-    Assassin
-    1
-    None
+    CATEGORY = Weapon
+    TYPE = Ballistic
+    POINTS = 50
+    DESCRIPTION = Warpstone Stars are a thrown weapon with the 3x Multiple Shots rule. Warpstone stars are Strength 5 and each unsaved wound multiplies into D3 wounds.
+    ALLOWED_UNITS = Assassin
+    RESTRICTIONS = Limit - 1
 
 Infernal Bomb
-    Enchanted
-    30
-    D
-    Assassin
-    1
-    None
+    CATEGORY = Enchanted
+    POINTS = 30
+    DESCRIPTION = D
+    ALLOWED_UNITS = Assassin
+    RESTRICTIONS = Limit - 1
 
 
 Smoke Bombs
-    Enchanted
-    10
-    One use only. If a character equipped with Smoke Bombs is forced to flee he can choose to smash the bombs underfoot to slow the victors as they pursue. Before any dice are rolled announce the Smoke Bombs are being detonated. All pursuing units in the combat must roll 1D6 less than normal.
-    Assassin
-    1
-    None
+    CATEGORY = Enchanted
+    POINTS = 10
+    DESCRIPTION = One use only. If a character equipped with Smoke Bombs is forced to flee he can choose to smash the bombs underfoot to slow the victors as they pursue. Before any dice are rolled announce the Smoke Bombs are being detonated. All pursuing units in the combat must roll 1D6 less than normal.
+    ALLOWED_UNITS = Assassin
+    RESTRICTIONS = Limit - 1
 
 
 Brass Orb
-    Enchanted
-    50
-    One use only. In the Shooting phase, the user can throw the orb. Place the small round template with its centre anywhere within 8" of the character. Scatter the template as you would for a stone thrower shot. Models touched by the template must take an Initiative test or be destroyed, with no saves of any kind allowed. Remember that a 6 is always a failure. "Look Out Sir!" works as normal. If a misfire is rolled, centre the template on the model throwing the globe.
-    Warlock Engineer
-    1
-    None
+    CATEGORY = Enchanted
+    POINTS = 50
+    DESCRIPTION = One use only. In the Shooting phase, the user can throw the orb. Place the small round template with its centre anywhere within 8" of the character. Scatter the template as you would for a stone thrower shot. Models touched by the template must take an Initiative test or be destroyed, with no saves of any kind allowed. Remember that a 6 is always a failure. "Look Out Sir!" works as normal. If a misfire is rolled, centre the template on the model throwing the globe.
+    ALLOWED_UNITS = Warlock Engineer
+    RESTRICTIONS = Limit - 1
 
 Doomrocket
-    Weapon, Ballistic
-    30
-    One use only. To fire the Doomrocket the owning player must nominate a direction and the number of dice he intends to roll for range. He can choose between 4 and 10 dice. The tocket will travel a number of inches equal to the total of the dice rolled and this determines where the large round template is placed. Any model touched by the template suffers a Strength 5 hit from the resulting explosion. If three or more rolls of 1 occur during the firing, the rocket has gone off course.
-    Warlock Engineer
-    1
-    None
+    CATEGORY = Weapon
+    TYPE = Ballistic
+    POINTS = 30
+    DESCRIPTION = One use only. To fire the Doomrocket the owning player must nominate a direction and the number of dice he intends to roll for range. He can choose between 4 and 10 dice. The tocket will travel a number of inches equal to the total of the dice rolled and this determines where the large round template is placed. Any model touched by the template suffers a Strength 5 hit from the resulting explosion. If three or more rolls of 1 occur during the firing, the rocket has gone off course.
+    ALLOWED_UNITS = Warlock Engineer
+    RESTRICTIONS = Limit - 1
 
 Death Globe
-    Weapon, Ballistic
-    25
-    One use only. A character equipped with such a weapon can throw it in any Shooting phase. The Death Globe is thrown just as the Brass Orb. All models touched by the template suffer a wound on the result of a 4+, with no armour save allowed.
-    Warlock Engineer
-    1
-    None
+    CATEGORY = Weapon
+    TYPE = Ballistic
+    POINTS = 25
+    DESCRIPTION = One use only. A character equipped with such a weapon can throw it in any Shooting phase. The Death Globe is thrown just as the Brass Orb. All models touched by the template suffer a wound on the result of a 4+, with no armour save allowed.
+    ALLOWED_UNITS = Warlock Engineer
+    RESTRICTIONS = Limit - 1
 
 Warlock Optics
-    Enchanted
-    20
-    A Warlock Engineer equipped with Warlock Optics adds +1 to his Ballistic Skill. Additionally, a model so equipped can see partially through objects and so suffers no penalty for shooting at targets in cover.
-    Warlock Engineer
-    1
-    None
+    CATEGORY = Enchanted
+    POINTS = 20
+    DESCRIPTION = A Warlock Engineer equipped with Warlock Optics adds +1 to his Ballistic Skill. Additionally, a model so equipped can see partially through objects and so suffers no penalty for shooting at targets in cover.
+    ALLOWED_UNITS = Warlock Engineer
+    RESTRICTIONS = Limit - 1
 
 
 Warp Scroll
-    Arcane
-    35
-    One use only. Bound Spell (Power level 5). The spell has a range of 24" and can be cast on any unit visible to the bearer. The spell inflicts one Strength 2 hit on every model in the unit, with no armour saves allowed.
-    Plague Priest
-    1
-    None
+    CATEGORY = Arcane
+    POINTS = 35
+    DESCRIPTION =  One use only. Bound Spell (Power level 5). The spell has a range of 24" and can be cast on any unit visible to the bearer. The spell inflicts one Strength 2 hit on every model in the unit, with no armour saves allowed.
+    ALLOWED_UNITS = Plague Priest
+    RESTRICTIONS = Limit - 1
 
 Plague Banner
-    Banner
-    30
-    One use only. Once per game in any Close Combat phase the Plague Banner may be activated. For the remainder of the phase all Plague Monk models in the unit may re-roll failed To Hit rolls and failed To Wound rolls.
-    Plague Priest, Plague Monks
-    1
-    None
+    CATEGORY = Banner
+    POINTS = 30
+    DESCRIPTION = One use only. Once per game in any Close Combat phase the Plague Banner may be activated. For the remainder of the phase all Plague Monk models in the unit may re-roll failed To Hit rolls and failed To Wound rolls.
+    ALLOWED_UNITS = Plague Priest, Plague Monks
+    RESTRICTIONS = Limit - 1
 
 
 Shock-Prod
-    Weapon, Melee
-    25
-    This weapon required two hands to wield and ignores armour saves.
-    Master Moulder
-    1
-    None
+    CATEGORY = Weapon
+    TYPE = Melee
+    POINTS = 25
+    DESCRIPTION = This weapon required two hands to wield and ignores armour saves.
+    ALLOWED_UNITS = Master Moulder
+    RESTRICTIONS = Limit - 1
 
 Electro-Whip
-    Weapon, Melee
-    15
-    This weapon follows the rules for whips but confers D3 Attacks instead of the normal 1 when in base contact and from the rear ranks. Roll to determine the number of Attacks each combat.
-    Master Moulder
-    1
-    None
+    CATEGORY = Weapon
+    TYPE = Melee
+    POINTS = 15
+    DESCRIPTION = This weapon follows the rules for whips but confers D3 Attacks instead of the normal 1 when in base contact and from the rear ranks. Roll to determine the number of Attacks each combat.
+    ALLOWED_UNITS = Master Moulder
+    RESTRICTIONS = Limit - 1
 
 
 Sacred Banner of the Horned Rat
-    Banner
-    70
-    All enemy units within 12" of this banner suffer a -1 penalty to their leadership and the owning player can make enemy units in base contact with the bearer of this banner re-roll any successful Leadership tests.
-    None
-    1
-    None
+    CATEGORY = Banner
+    POINTS = 70
+    DESCRIPTION = All enemy units within 12" of this banner suffer a -1 penalty to their leadership and the owning player can make enemy units in base contact with the bearer of this banner re-roll any successful Leadership tests.
+    RESTRICTIONS = Limit - 1
 
 Storm Banner
-    Banner
-    50
-    The banner can be activated at the beginning of any player's turn. No flying movement is allowed across the entire battlefield and missile fire is at -2 to hit. All non-magical missile attacks that don't use BS to hit their targer need to roll a 4+ on a D6 before they can fire. Roll a D6 at the beginning of each following player turn - the effects of the banner will end on a D6 roll of 4+.
-    None
-    1
-    None
+    CATEGORY = Banner
+    POINTS = 50
+    DESCRIPTION = The banner can be activated at the beginning of any player's turn. No flying movement is allowed across the entire battlefield and missile fire is at -2 to hit. All non-magical missile attacks that don't use BS to hit their targer need to roll a 4+ on a D6 before they can fire. Roll a D6 at the beginning of each following player turn - the effects of the banner will end on a D6 roll of 4+.
+    RESTRICTIONS = Limit - 1
 
 Grand Banner of Clan Superiority
-    Banner
-    30
-    In any combat in which a unit bearing a Grand Banner of Clan Superiority has more ranks than its opponents, the banner will add not 1 as per a normal banner, but instead a total of D3 to its bearer's combat resolution. Roll at the end of each combat.
-    None
-    1
-    None
+    CATEGORY = Banner
+    POINTS = 30
+    DESCRIPTION = In any combat in which a unit bearing a Grand Banner of Clan Superiority has more ranks than its opponents, the banner will add not 1 as per a normal banner, but instead a total of D3 to its bearer's combat resolution. Roll at the end of each combat.
+    RESTRICTIONS = Limit - 1
 
 Shroud of Dripping Death
-    Banner
-    30
-    All enemy models in base contact with the bearer of this banner take a single Strength 3 hit with no armour save at the start of each and every close combat phase. Additionally, should the unit bearing the Shroud of Dripping Death break from combat, any unit that dares to pursue it will immediately suffer D6+2 Strength 3 hits with no armour saves.
-    None
-    1
-    None
+    CATEGORY = Banner
+    POINTS = 30
+    DESCRIPTION = All enemy models in base contact with the bearer of this banner take a single Strength 3 hit with no armour save at the start of each and every close combat phase. Additionally, should the unit bearing the Shroud of Dripping Death break from combat, any unit that dares to pursue it will immediately suffer D6+2 Strength 3 hits with no armour saves.
+    RESTRICTIONS = Limit - 1
 
 Banner of the Under-Empire
-    Banner
-    25
-    All units in base contact with the unit bearing this banner suffer 2D6 Strength 2 automatic hits at the start of each and every Close Combat phase. All hits are distributed as per Shooting.
-    None
-    1
-    None
+    CATEGORY = Banner
+    POINTS = 25
+    DESCRIPTION = All units in base contact with the unit bearing this banner suffer 2D6 Strength 2 automatic hits at the start of each and every Close Combat phase. All hits are distributed as per Shooting.
+    RESTRICTIONS = Limit - 1
 
 Dwarf-Hide Banner
-    Banner
-    15
-    The unit carrying this banner gains Hatred of Dwarfs and likewise will be subject to all Dwarfs gaining Hatred against them.
-    None
-    1
-    None
+    CATEGORY = Banner
+    POINTS = 15
+    DESCRIPTION = The unit carrying this banner gains Hatred of Dwarfs and likewise will be subject to all Dwarfs gaining Hatred against them.
+    RESTRICTIONS = Limit - 1
 
 Banner of Verminous Scurrying
-    Banner
-    10
-    Once per battle, at the start of any friendly turn except the first, the banner can be activated. If the unit carrying the banner can march, they can so at triple speed. Such a rapid expenditure of energy has a cost, as after marching the unit suffers 2D6 Strength 3 hits (no armour saves allowed), distributed as per shooting.
-    None
-    1
-    None
+    CATEGORY = Banner
+    POINTS = 10
+    DESCRIPTION = Once per battle, at the start of any friendly turn except the first, the banner can be activated. If the unit carrying the banner can march, they can so at triple speed. Such a rapid expenditure of energy has a cost, as after marching the unit suffers 2D6 Strength 3 hits (no armour saves allowed), distributed as per shooting.
+    RESTRICTIONS = Limit - 1

@@ -14,11 +14,11 @@ void option_selector::update_budget_label() {
     if (current->is_character()) {
         auto p = std::dynamic_pointer_cast<character_unit>(current);
         std::string budget_str = "Magic: " +
-                tools::points_str(p->handle_->magic_item_budget() - p->magic_item_points());
+                tools::points_str(p->handle_->magic_item_budget().points - p->magic_item_points());
         if (p->handle_->faction_items_handle() != nullptr) {
             budget_str += "  " + p->handle_->faction_items_handle()->first + ": " +
-                tools::points_str(p->handle_->faction_item_budget() - p->faction_item_points()) +
-                "   Total: " + tools::points_str(p->handle_->total_item_budget() - p->total_item_points());
+                tools::points_str(p->handle_->faction_item_budget().points - p->faction_item_points()) +
+                "   Total: " + tools::points_str(p->handle_->total_item_budget().points - p->total_item_points());
         }
         budget_label->setText(QString::fromStdString(budget_str));
     }

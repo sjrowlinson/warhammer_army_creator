@@ -102,16 +102,16 @@ std::tuple<std::string, std::string, std::string, std::string> selection_tree::f
 void selection_tree::change_selection(const std::string& name) {
     switch (roster[name]->base_unit_type()) {
     case BaseUnitType::MELEE_CHARACTER:
-        current_selection = std::make_shared<melee_character_unit>(melee_character_unit(roster[name]));
+        current_selection = std::make_shared<melee_character_unit>(melee_character_unit(roster[name], &army.get()));
         break;
     case BaseUnitType::MAGE_CHARACTER:
-        current_selection = std::make_shared<mage_character_unit>(mage_character_unit(roster[name]));
+        current_selection = std::make_shared<mage_character_unit>(mage_character_unit(roster[name], &army.get()));
         break;
     case BaseUnitType::MIXED:
-        current_selection = std::make_shared<mixed_unit>(mixed_unit(roster[name]));
+        current_selection = std::make_shared<mixed_unit>(mixed_unit(roster[name], &army.get()));
         break;
     case BaseUnitType::NORMAL:
-        current_selection = std::make_shared<normal_unit>(normal_unit(roster[name]));
+        current_selection = std::make_shared<normal_unit>(normal_unit(roster[name], &army.get()));
         break;
     default: break;
     }

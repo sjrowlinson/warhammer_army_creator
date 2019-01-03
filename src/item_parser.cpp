@@ -5,6 +5,7 @@ namespace tools {
     item_parser::item_parser(const QString& ifile_str, ItemCategory ic)
         : file_parser(ifile_str), item_class(ic), tpi(), parsing_functions() {
         find_blocks(1U);
+        register_bindings();
     }
 
     void item_parser::register_bindings() {
@@ -14,7 +15,7 @@ namespace tools {
         parsing_functions["POINTS"] = std::bind(&item_parser::parse_item_points, this, _1);
         parsing_functions["DESCRIPTION"] = std::bind(&item_parser::parse_item_description, this, _1);
         parsing_functions["ALLOWED_UNITS"] = std::bind(&item_parser::parse_item_allowed_units, this, _1);
-        parsing_functions["RESTRICTIONS"] = std::bind(&item_parser::parse_item_category, this, _1);
+        parsing_functions["RESTRICTIONS"] = std::bind(&item_parser::parse_item_restrictions, this, _1);
     }
 
     std::string item_parser::name() {
@@ -117,6 +118,7 @@ namespace tools {
     }
     std::size_t item_parser::parse_item_restrictions(const std::string& s) {
         tpi.restrictions = parse_restrictions(s, "");
+        return 0U;
     }
 
 }

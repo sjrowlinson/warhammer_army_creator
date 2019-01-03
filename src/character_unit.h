@@ -32,7 +32,7 @@ protected:
     std::unordered_map<std::string, std::pair<bool, double>> mc_extras_;
     std::unordered_map<std::string, std::pair<ItemCategory, double>> item_extras_;
     std::tuple<
-        mount,
+        std::string,
         double,
         std::pair<std::string, double>,
         std::unordered_map<std::string, double>
@@ -54,7 +54,7 @@ protected:
 public:
     const std::shared_ptr<base_character_unit> handle_;
 
-    explicit character_unit(const std::shared_ptr<base_unit>& base);
+    explicit character_unit(const std::shared_ptr<base_unit>& base, army_list* army_handle);
     character_unit(const character_unit& other);
     virtual ~character_unit() override = default;
 
@@ -84,7 +84,7 @@ public:
     const std::unordered_map<std::string, std::pair<bool, double>>& mc_extras() const noexcept override;
 
     const std::tuple<
-        mount,
+        std::string,
         double,
         std::pair<std::string, double>,
         std::unordered_map<std::string, double>

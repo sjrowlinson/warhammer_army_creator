@@ -131,7 +131,8 @@ enum class ArmourType {
 enum class BudgetType {
     MAGIC,
     FACTION,
-    TOTAL
+    TOTAL,
+    NONE
 };
 
 // army list invalidity reasons

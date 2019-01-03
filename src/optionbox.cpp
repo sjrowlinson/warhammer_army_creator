@@ -551,9 +551,9 @@ QGroupBox* OptionBox::make_mage_levels_box() {
 }
 
 QGroupBox* OptionBox::make_mounts_boxes() {
-    std::unordered_map<std::string, double> opt_mounts;
+    std::unordered_map<std::string, mount_option> opt_mounts;
     std::tuple<
-        mount,
+        std::string,
         double,
         std::pair<std::string, double>,
         std::unordered_map<std::string, double>
@@ -581,14 +581,14 @@ QGroupBox* OptionBox::make_mounts_boxes() {
     QVBoxLayout* vbox_mounts = new QVBoxLayout;
     bool has_mount = false;
     for (const auto& m : opt_mounts) {
-        auto tmp = tools::split(std::to_string(m.second), '.');
+        auto tmp = tools::split(std::to_string(m.second.points), '.');
         for (auto& s : tmp) tools::remove_leading_whitespaces(s);
         std::string pts_str = (tools::starts_with(tmp[1], '0')) ? tmp[0] : tmp[0] + "." + tmp[1].substr(0, 1);
         std::string permodel = (current->base_unit_type() == BaseUnitType::NORMAL) ? "/model" : "";
         std::string name = m.first + " (" + pts_str + " pts" + permodel + ")";
         QRadioButton* b = new QRadioButton(creator->tr(name.data()));
         b->setObjectName(QString((m.first + "_radiobutton").data()));
-        if (std::get<0>(mount_).name() == m.first) {
+        if (std::get<0>(mount_) == m.first) {
             b->setChecked(true);
             has_mount = true;
         }
@@ -596,21 +596,20 @@ QGroupBox* OptionBox::make_mounts_boxes() {
         vbox_mounts->addWidget(b);
         // spawn another group box containing mount options
         if (current->base()->mounts_handle() == nullptr) continue;
-        auto mount_meta = current->base()->mounts_handle()->find(m.first);
-        if (mount_meta != current->base()->mounts_handle()->end() &&
-                mount_meta->second.has_options() &&
-                std::get<0>(mount_).name() == m.first) { // only show the options if the associated mount is selected
+        //auto mount_meta = current->base()->mounts_handle()->find(m.first);
+        if (!(m.second.oco_extras.empty() && m.second.mc_extras.empty()) &&
+                std::get<0>(mount_) == m.first) { // only show the options if the associated mount is selected
             QFrame* f = new QFrame();
             QHBoxLayout* frame_layout = new QHBoxLayout;
-            QGroupBox* mount_oco_options_box = (mount_meta->second.oco_extras().empty()) ?
+            QGroupBox* mount_oco_options_box = (m.second.oco_extras.empty()) ?
                         nullptr : new QGroupBox(creator->tr("Options (single)"));
-            QGroupBox* mount_mc_options_box = (mount_meta->second.mc_extras().empty()) ?
+            QGroupBox* mount_mc_options_box = (m.second.mc_extras.empty()) ?
                         nullptr : new QGroupBox(creator->tr("Options (multiple)"));
             if (mount_oco_options_box != nullptr) {
                 QVBoxLayout* mntopt_layout = new QVBoxLayout;
                 bool has_option = false;
-                for (const auto& mo : mount_meta->second.oco_extras()) {
-                    std::string mo_name = mo.first + " (" + tools::points_str(mo.second) + " pts)";
+                for (const auto& mo : m.second.oco_extras) {
+                    std::string mo_name = mo.first + " (" + tools::points_str(mo.second.points) + " pts)";
                     QRadioButton* rb = new QRadioButton(creator->tr(mo_name.data()));
                     rb->setObjectName(QString::fromStdString(mo.first + "_radiobutton"));
                     if (std::get<2>(mount_).first == mo.first) {
@@ -631,8 +630,8 @@ QGroupBox* OptionBox::make_mounts_boxes() {
             }
             if (mount_mc_options_box != nullptr) {
                 QVBoxLayout* mntopt_layout = new QVBoxLayout;
-                for (const auto& mo : mount_meta->second.mc_extras()) {
-                    std::string mo_name = mo.first + " (" + tools::points_str(mo.second) + " pts)";
+                for (const auto& mo : m.second.mc_extras) {
+                    std::string mo_name = mo.first + " (" + tools::points_str(mo.second.points) + " pts)";
                     QCheckBox* cb = new QCheckBox(creator->tr(mo_name.data()));
                     cb->setObjectName(QString::fromStdString(mo.first + "_checkbox"));
                     if (std::get<3>(mount_).count(mo.first)) cb->setChecked(true);

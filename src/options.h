@@ -48,8 +48,8 @@ struct extra_option {
 struct mount_option {
     std::string name;
     double points;
-    extra_option oco_extras;
-    extra_option mc_extras;
+    std::unordered_map<std::string, extra_option> oco_extras;
+    std::unordered_map<std::string, extra_option> mc_extras;
     std::vector<std::string> replacements;
     std::unordered_multimap<
         RestrictionField,
@@ -64,6 +64,8 @@ struct budget {
         RestrictionField,
         std::any
     > restrictions;
+
+    budget() : type(BudgetType::NONE), points(0.0), restrictions() {}
 };
 
 struct tmp_parse_options {

@@ -4,7 +4,7 @@ mount::mount()
     : name_(), unit_class_(UnitCategory::INFANTRY), statistics_(), special_rules_() {}
 
 mount::mount(
-    std::string&& _name,
+    std::string _name,
     UnitCategory _uc,
     std::vector<std::string>&& _stats,
     std::vector<std::string>&& _sr
