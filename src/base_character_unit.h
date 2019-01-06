@@ -18,9 +18,6 @@ private:
     std::vector<std::string> sr_;
     equipment eq_;
     options opt_;
-    budget magic_item_budget_;
-    budget faction_item_budget_;
-    budget total_item_budget_;
     bool is_unique;
 
     std::string mount_name_;
@@ -35,9 +32,9 @@ public:
         std::vector<std::string>&& sr,
         equipment&& eq,
         options&& opt,
-        budget&& mi_budget,
-        budget&& fi_budget,
-        budget&& ti_budget,
+        const budget& mi_budget,
+        const budget& fi_budget,
+        const budget& ti_budget,
         bool is_unique,
         std::string mount_name=""
     );
@@ -48,9 +45,6 @@ public:
     const std::vector<std::string>& special_rules() const noexcept;
     const equipment& eq() const noexcept;
     const options& opt() const noexcept;
-    const budget& magic_item_budget() const noexcept;
-    const budget& faction_item_budget() const noexcept;
-    const budget& total_item_budget() const noexcept;
     bool unique() const noexcept;
     const std::string& mount_name() const noexcept;
 };

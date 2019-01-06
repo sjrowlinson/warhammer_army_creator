@@ -3,12 +3,14 @@
 
 unit::unit(const std::shared_ptr<base_unit>& base, army_list* army_handle)
     : id_(0), model_select_(ModelSelect::DEFAULT),
-      mixed_select_(MixedSelect::SLAVE), points_(0.0), base_(base), army_(army_handle) {}
+      mixed_select_(MixedSelect::SLAVE), points_(0.0), n_magic_items(0U),
+      base_(base), army_(army_handle) {}
 
 unit::unit(const unit& other)
     : id_(other.id()), model_select_(other.model_select_),
       mixed_select_(other.mixed_select_),
-      points_(other.points_), base_(other.base_), army_(other.army_) {}
+      points_(other.points_), n_magic_items(other.n_magic_items),
+      base_(other.base_), army_(other.army_) {}
 
 int unit::id() const noexcept { return id_; }
 void unit::set_id(int id) { id_ = id; }
@@ -116,11 +118,9 @@ std::string unit::restriction_check(
             unsigned int lim = std::any_cast<unsigned int>(restriction.second);
             auto search_item_in_tracker = army_->item_track_map().find(item_name);
             if (search_item_in_tracker != std::end(army_->item_track_map()) &&
-                    search_item_in_tracker->second >= lim) {
+                    search_item_in_tracker->second >= lim)
                 msg += "Cannot have more than " + std::to_string(lim) + " instances"
                         "of " + item_name + " in an army!";
-                throw std::runtime_error(msg);
-            }
             break;
         }
         case RestrictionField::ITEMTYPE:
@@ -133,6 +133,26 @@ std::string unit::restriction_check(
         }
     }
     if (!msg.empty()) msg += " to choose: " + item_name;
+    return msg;
+}
+
+std::string unit::budget_restriction_check(
+    const std::unordered_multimap<RestrictionField, std::any>& restrictions
+) const {
+    std::string msg = "";
+    for (const auto& restriction : restrictions) {
+        switch (restriction.first) {
+        case RestrictionField::LIMIT:
+        {
+            unsigned int lim = std::any_cast<unsigned int>(restriction.second);
+            if (!(n_magic_items < lim))
+                msg += name() + " can only have " + std::to_string(lim) + " magic item"
+                       + (lim > 1 ? "s!" : "!");
+            break;
+        }
+        default: break;
+        }
+    }
     return msg;
 }
 

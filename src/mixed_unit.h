@@ -64,6 +64,10 @@ public:
 
     const std::pair<std::string, std::pair<ItemCategory, double>>& magic_banner() const noexcept override;
 
+    double magic_item_points() const noexcept override;
+    double faction_item_points() const noexcept override;
+    double total_item_points() const noexcept override;
+
     std::string pick_weapon(ItemCategory item_type, const std::string& name) override;
     std::string remove_weapon(WeaponType wt, bool replacing=false) override;
     std::string pick_armour(ItemCategory item_type, const std::string& name) override;

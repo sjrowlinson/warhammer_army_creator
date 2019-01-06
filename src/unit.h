@@ -23,6 +23,7 @@ protected:
     ModelSelect model_select_;
     MixedSelect mixed_select_;
     double points_;
+    unsigned int n_magic_items;
     std::shared_ptr<base_unit> base_;
     army_list* army_;
 
@@ -30,6 +31,9 @@ protected:
     virtual std::string restriction_check(
         const std::unordered_multimap<RestrictionField, std::any>& restrictions,
         const std::string& item_name
+    ) const;
+    virtual std::string budget_restriction_check(
+        const std::unordered_multimap<RestrictionField, std::any>& restrictions
     ) const;
 public:
     explicit unit(const std::shared_ptr<base_unit>& base, army_list* army_handle);
@@ -80,6 +84,10 @@ public:
         std::pair<std::string, double>,
         std::unordered_map<std::string, double>
     >& mnt() const noexcept = 0;
+
+    virtual double magic_item_points() const noexcept = 0;
+    virtual double faction_item_points() const noexcept = 0;
+    virtual double total_item_points() const noexcept = 0;
 
     virtual const std::pair<std::string, std::pair<ItemCategory, double>>& magic_banner() const noexcept = 0;
 

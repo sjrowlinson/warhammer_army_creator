@@ -119,17 +119,28 @@ std::string character_unit::pick_magic_item(ItemType item_type, ItemCategory ite
             if (search == handle_->faction_items_handle()->second.end())
                 throw std::invalid_argument("Item not found!");
         }
+        // do budget restriction checks
         const double mi_budget = (item_class == ItemCategory::FACTION) ?
             handle_->faction_item_budget().points : handle_->magic_item_budget().points;
         const double ti_budget = handle_->total_item_budget().points;
         double adj_mip =
             (item_class == ItemCategory::FACTION) ? faction_item_points_ : magic_item_points_;
         double adj_tip = total_item_points_;
-        switch (item_type) {
+        if (item_class == ItemCategory::MAGIC || item_class == ItemCategory::COMMON) {
+            auto b_restr = budget_restriction_check(base()->magic_item_budget().restrictions);
+            if (!b_restr.empty()) throw std::invalid_argument(b_restr);
+        } else if (item_class == ItemCategory::FACTION) {
+            auto b_restr = budget_restriction_check(base()->faction_item_budget().restrictions);
+            if (!b_restr.empty()) throw std::invalid_argument(b_restr);
+        }
+        auto b_restr = budget_restriction_check(base()->total_item_budget().restrictions);
+        if (!b_restr.empty()) throw std::invalid_argument(b_restr);
+        // do item restriction checks
+        auto restr = restriction_check(search->second.restrictions, name);
+        if (!restr.empty()) throw std::invalid_argument(restr);
+        switch (item_type) { // take away current matching magic item points if applicable
         case ItemType::WEAPON:
         {
-            auto restr = restriction_check(search->second.restrictions, name);
-            if (!restr.empty()) throw std::invalid_argument(restr);
             if (weapons_.find(search->second.weapon_type) != weapons_.end()) {
                 adj_mip -= std::get<2>(weapons_[search->second.weapon_type]);
                 adj_tip -= std::get<2>(weapons_[search->second.weapon_type]);
@@ -142,7 +153,7 @@ std::string character_unit::pick_magic_item(ItemType item_type, ItemCategory ite
             // magic armour not in the category being changed
             auto at = search->second.armour_type;
             if (item_class == ItemCategory::COMMON || item_class == ItemCategory::MAGIC) {
-                if(std::count_if(
+                if (std::count_if(
                     std::begin(armours_),
                     std::end(armours_),
                     [at](const auto& a) {
@@ -152,8 +163,6 @@ std::string character_unit::pick_magic_item(ItemType item_type, ItemCategory ite
                     }
                 )) throw std::invalid_argument("Cannot choose multiple pieces of magic armour!");
             }
-            auto restr = restriction_check(search->second.restrictions, name);
-            if (!restr.empty()) throw std::invalid_argument(restr);
             if (armours_.find(at) != armours_.end()) {
                 adj_mip -= std::get<2>(armours_[at]);
                 adj_tip -= std::get<2>(armours_[at]);
@@ -161,37 +170,17 @@ std::string character_unit::pick_magic_item(ItemType item_type, ItemCategory ite
             break;
         }
         case ItemType::TALISMAN:
-        {
-            auto restr = restriction_check(search->second.restrictions, name);
-            if (!restr.empty()) throw std::invalid_argument(restr);
-            if (!talisman_.first.empty()) {
-                adj_mip -= talisman_.second.second;
-                adj_tip -= talisman_.second.second;
-            }
-            break;
+        if (!talisman_.first.empty()) {
+            adj_mip -= talisman_.second.second;
+            adj_tip -= talisman_.second.second;
         }
+        break;
         case ItemType::ENCHANTED:
-        {
-            auto restr = restriction_check(search->second.restrictions, name);
-            if (!restr.empty()) throw std::invalid_argument(restr);
-            if (!enchanted_item_.first.empty()) {
-                adj_mip -= enchanted_item_.second.second;
-                adj_tip -= enchanted_item_.second.second;
-            }
-            break;
+        if (!enchanted_item_.first.empty()) {
+            adj_mip -= enchanted_item_.second.second;
+            adj_tip -= enchanted_item_.second.second;
         }
-        case ItemType::BANNER:
-        {
-            auto restr = restriction_check(search->second.restrictions, name);
-            if (!restr.empty()) throw std::invalid_argument(restr);
-            break;
-        }
-        case ItemType::OTHER:
-        {
-            auto restr = restriction_check(search->second.restrictions, name);
-            if (!restr.empty()) throw std::invalid_argument(restr);
-            break;
-        }
+        break;
         default: break;
         }
         if (item_type != ItemType::BANNER) {
@@ -202,7 +191,6 @@ std::string character_unit::pick_magic_item(ItemType item_type, ItemCategory ite
         // check if the item has specific allowed units
         if (!(search->second.allowed_units.empty())) {
             std::string unit_name = this->name();
-            // check that this unit is within the items; allowed units container
             if (!std::count_if(
                     std::begin(search->second.allowed_units),
                     std::end(search->second.allowed_units),
@@ -244,6 +232,7 @@ std::string character_unit::pick_magic_item(ItemType item_type, ItemCategory ite
         default: break;
         }
         points_ += search->second.points;
+        ++n_magic_items;
         if (item_type != ItemType::BANNER) {
             if (item_class == ItemCategory::FACTION) faction_item_points_ += search->second.points;
             else magic_item_points_ += search->second.points;
@@ -630,6 +619,7 @@ void character_unit::pick_mount_option(const std::string& name, bool oco) {
     std::unordered_map<std::string, extra_option>::const_iterator search;
     if (oco) {
         search = handle_->opt().mounts().find(std::get<0>(mount_))->second.oco_extras.find(name);
+        auto tmp = search->second.restrictions;
         auto restr = restriction_check(search->second.restrictions, name);
         if (!restr.empty()) throw std::invalid_argument(restr);
         std::get<2>(mount_) = {search->second.name, search->second.points};

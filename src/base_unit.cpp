@@ -1,14 +1,17 @@
 #include "base_unit.h"
 
-base_unit::base_unit(
-    Faction faction,
+base_unit::base_unit(Faction faction,
     UnitType ut,
     UnitCategory uc,
     const std::string& name,
+    const budget &mi_budget,
+    const budget &fi_budget,
+    const budget &ti_budget,
     std::size_t min_size,
     std::size_t max_size
 ) : but(BaseUnitType::BASE), faction_(faction), ut_(ut), uc_(uc), name_(name),
-    min_size_(min_size), max_size_(max_size) {}
+    magic_item_budget_(mi_budget), faction_item_budget_(fi_budget),
+    total_item_budget_(ti_budget), min_size_(min_size), max_size_(max_size) {}
 
 BaseUnitType base_unit::base_unit_type() const noexcept { return but; }
 
@@ -19,6 +22,10 @@ UnitCategory base_unit::unit_class() const noexcept { return uc_; }
 const std::string& base_unit::name() const noexcept { return name_; }
 std::size_t base_unit::min_size() const noexcept { return min_size_; }
 std::size_t base_unit::max_size() const noexcept { return max_size_; }
+
+const budget& base_unit::magic_item_budget() const noexcept { return magic_item_budget_; }
+const budget& base_unit::faction_item_budget() const noexcept { return faction_item_budget_; }
+const budget& base_unit::total_item_budget() const noexcept { return total_item_budget_; }
 
 const std::shared_ptr<
     std::unordered_map<

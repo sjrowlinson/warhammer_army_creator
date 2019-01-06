@@ -39,10 +39,10 @@ namespace tools {
     );
 
     template<template<class...> class Ty, class Inner = std::string>
-    constexpr Ty<std::pair<Inner, Inner>> zip_args_to_names_values(const Ty<Inner>& container) {
+    constexpr Ty<std::pair<Inner, Inner>> zip_args_to_names_values(const Ty<Inner>& container, char delim=':') {
         Ty<std::pair<Inner, Inner>> zipped(container.size());
-        std::generate(std::begin(zipped), std::end(zipped), [it=std::begin(container)]() mutable {
-            auto s = split(*(it++), ':');
+        std::generate(std::begin(zipped), std::end(zipped), [delim, it=std::begin(container)]() mutable {
+            auto s = split(*(it++), delim);
             return std::make_pair(s[0], s[1]);
         });
         return zipped;

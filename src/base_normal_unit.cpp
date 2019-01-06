@@ -1,7 +1,6 @@
 #include "base_normal_unit.h"
 
-base_normal_unit::base_normal_unit(
-    Faction faction,
+base_normal_unit::base_normal_unit(Faction faction,
     UnitType ut,
     UnitCategory uc,
     const std::string& name,
@@ -16,9 +15,9 @@ base_normal_unit::base_normal_unit(
     std::vector<std::string>&& champ_sr,
     equipment&& champ_eq,
     options&& champ_opt,
-    budget&& champ_mi_budget,
-    budget&& champ_fi_budget,
-    budget&& champ_ti_budget,
+    const budget &champ_mi_budget,
+    const budget &champ_fi_budget,
+    const budget &champ_ti_budget,
     std::unordered_map<
         CommandGroup, std::pair<std::string, double>
     >&& opt_command,
@@ -29,13 +28,15 @@ base_normal_unit::base_normal_unit(
     ut,
     uc,
     name,
+    champ_mi_budget,
+    champ_fi_budget,
+    champ_ti_budget,
     min_size,
     max_size
 ), pts_per_model_(pts_per_model), stats_(std::move(stats)), sr_(std::move(sr)), eq_(std::move(eq)),
    opt_(std::move(opt)), champ_stats_(std::move(champ_stats)),
    champ_sr_(std::move(champ_sr)), champ_eq_(std::move(champ_eq)),
-   champ_opt_(std::move(champ_opt)), champ_mi_budget_(std::move(champ_mi_budget)),
-   champ_fi_budget_(std::move(champ_fi_budget)), champ_ti_budget_(std::move(champ_ti_budget)),
+   champ_opt_(std::move(champ_opt)),
    opt_command_(std::move(opt_command)), magic_banner_budget_(magic_banner_budget),
    mount_name_(mount_name) { but = BaseUnitType::NORMAL; }
 
@@ -56,15 +57,6 @@ const std::vector<std::string>& base_normal_unit::champion_special_rules() const
 }
 const equipment& base_normal_unit::champion_eq() const noexcept { return champ_eq_; }
 const options& base_normal_unit::champion_opt() const noexcept { return champ_opt_; }
-const budget& base_normal_unit::champion_magic_item_budget() const noexcept {
-    return champ_mi_budget_;
-}
-const budget& base_normal_unit::champion_faction_item_budget() const noexcept {
-    return champ_fi_budget_;
-}
-const budget& base_normal_unit::champion_total_item_budget() const noexcept {
-    return champ_ti_budget_;
-}
 
 const std::unordered_map<
     CommandGroup, std::pair<std::string, double>

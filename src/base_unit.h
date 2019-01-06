@@ -4,6 +4,7 @@
 #include "enums.h"
 #include "magic_item.h"
 #include "mount.h"
+#include "options.h"
 
 #include <algorithm>
 #include <limits>
@@ -13,6 +14,8 @@
 #include <utility>
 #include <vector>
 
+// TODO: move magic_item_budget_ etc. fields to base_unit classes from derived
+//       => then base_normal_unit budgets will be assumed to reference the champion
 class base_unit {
 protected:
     BaseUnitType but;
@@ -23,9 +26,13 @@ private:
     UnitCategory uc_;
     // basic
     std::string name_;
+    // budgets
+    budget magic_item_budget_;
+    budget faction_item_budget_;
+    budget total_item_budget_;
+    // other
     std::size_t min_size_;
     std::size_t max_size_;
-
     // handle to mounts
     std::shared_ptr<
         std::unordered_map<
@@ -57,6 +64,9 @@ public:
         UnitType ut,
         UnitCategory uc,
         const std::string& name,
+        const budget& mi_budget,
+        const budget& fi_budget,
+        const budget& ti_budget,
         std::size_t min_size,
         std::size_t max_size = std::numeric_limits<std::size_t>::max()
     );
@@ -71,6 +81,10 @@ public:
     const std::string& name() const noexcept;
     std::size_t min_size() const noexcept;
     std::size_t max_size() const noexcept;
+
+    const budget& magic_item_budget() const noexcept;
+    const budget& faction_item_budget() const noexcept;
+    const budget& total_item_budget() const noexcept;
 
     const std::shared_ptr<
         std::unordered_map<

@@ -37,7 +37,8 @@ namespace tools {
         std::unordered_multimap<
             RestrictionField,
             std::any
-        > parse_restrictions(const std::string& s, std::string from);
+        > parse_restrictions(const std::string& s, std::string from,
+                             std::vector<char> delim_seq = {'/', '-', '|'});
     public:
         explicit file_parser(const QString& rfile);
         virtual ~file_parser();

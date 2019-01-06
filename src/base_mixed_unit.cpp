@@ -9,6 +9,9 @@ base_mixed_unit::base_mixed_unit(
     slave.unit_type(),
     slave.unit_class(),
     name,
+    master.magic_item_budget(),
+    master.faction_item_budget(),
+    master.total_item_budget(),
     slave.min_size(),
     slave.max_size()
 ), ms_ratio_limit_(static_cast<double>(master.min_size())/slave.min_size()),

@@ -499,17 +499,42 @@ namespace tools {
                 }
                 else if (y.first == "Restrictions")
                     mo.restrictions = parse_restrictions(y.second, "OPTIONAL_MOUNTS");
-                else if (y.first == "OCO_extras") {
-                    // TODO: implement
-                }
-                else if (y.first == "MC_extras") {
-                    // TODO: implement
-                }
+                else if (y.first == "OCO_extras")
+                    mo.oco_extras = parse_unit_mount_options(y.second, true);
+                else if (y.first == "MC_extras")
+                    mo.mc_extras = parse_unit_mount_options(y.second, false);
             }
             if (champion) tpo.champ_opt.mounts[mo.name] = mo;
             else tpo.opt.mounts[mo.name] = mo;
         }
         return ml_pair.second;
+    }
+
+    std::unordered_map<std::string, extra_option> roster_parser::parse_unit_mount_options(const std::string& s, bool oco) {
+        std::vector<std::string> all = tools::split(s, '/');
+        std::unordered_map<std::string, extra_option> opts;
+        for (const auto& x : all) {
+            auto args = tools::split(x, '|');
+            auto names_values = tools::zip_args_to_names_values(args, '-');
+            if (!tools::in_names_values(names_values, "Name")) {
+                std::string msg = "Error parsing + " + enum_convert::FACTION_TO_STRING.at(faction)
+                        + " roster - unit: " + read_line(blocks[curr_block])
+                        + " has an invalid argument OPTIONAL_MOUNTS where a mount " +
+                        std::string(oco ? "OCO_extra" : "MC_extra") + " has been specified without"
+                        " a Name argument";
+                throw std::runtime_error(msg);
+            }
+            extra_option eo; eo.is_singular = false;
+            for (const auto& y : names_values) {
+                if (y.first == "Name") eo.name = y.second;
+                else if (y.first == "Points") eo.points = std::stod(y.second);
+                else if (y.first == "Singular") eo.is_singular = y.second == "true";
+                else if (y.first == "Restrictions")
+                    eo.restrictions = parse_restrictions(y.second, "OPTIONAL_MOUNTS options", {'~', '?', '.'});
+            }
+            opts[eo.name] = eo;
+        }
+        return opts;
     }
 
     std::size_t roster_parser::parse_unit_extras(const std::string& s, bool champion, bool master, bool oco) {
@@ -671,26 +696,4 @@ namespace tools {
         _s.erase(--std::end(_s)); // remove ']' at end of block
         return {_s, j};
     }
-
-    /*std::tuple<double, std::size_t, ItemCategory, ItemType> roster_parser::parse_item_budget(const std::string& s) {
-        if (s == "None" || s.empty()) return {0.0, 1U, ItemCategory::NONE, ItemType::NONE};
-        std::vector<std::string> points_w_opts = tools::split(s, ';');
-        if (points_w_opts.size() == 1)
-            return {std::stod(points_w_opts[0]), 1U, ItemCategory::NONE, ItemType::NONE};
-        double pts = std::stod(points_w_opts[0]);
-        ItemCategory ic = ItemCategory::NONE;
-        std::size_t num = 1U;
-        ItemType it = ItemType::NONE;
-        std::vector<std::string> opts = tools::split(points_w_opts[1], ',');
-        for (const auto& x : opts) {
-            std::vector<std::string> y = tools::split(x, ':');
-            if (y[0] == "itemclass")
-                ic = enum_convert::STRING_TO_ITEM_CLASS.at(y[1]);
-            else if (y[0] == "num")
-                num = static_cast<std::size_t>(std::stoul(y[1]));
-            else if (y[0] == "type")
-                it = enum_convert::STRING_TO_ITEM_TYPE.at(y[1]);
-        }
-        return {pts, num, ic, it};
-    }*/
 }

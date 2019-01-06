@@ -17,21 +17,21 @@ Chaos Lord
     OPTIONAL_MOUNTS = [Name: Barded Chaos Steed, Points: 24
                        Name: Steed of Slaanesh, Points: 25, Restrictions: oco_extra - Mark of Slaanesh
                        Name: Disc of Tzeentch, Points: 30, Restrictions: oco_extra - Mark of Tzeentch
-                       Name: Daemonic Mount, Points: 35, MC_extras: Name - Barding _ Points - 15
+                       Name: Daemonic Mount, Points: 35, MC_extras: Name - Barding | Points - 15
                        Name: Palanquin of Nurgle, Points: 40, Restrictions: oco_extra - Mark of Nurgle
                        Name: Juggernaught of Khorne, Points: 55, Restrictions: oco_extra - Mark of Khorne
-                       Name: Chaos Chariot, Points: 110, OCO_extras: Name - Mark of Khorne _ Points - 10 _ Restrictions - oco_extra: Mark of Khorne / Name - Mark of Tzeentch _ Points - 10 _ Restrictions - oco_extra: Mark of Tzeentch / Name - Mark of Nurgle _ Points - 15 _ Restrictions - oco_extra: Mark of Nurgle / Name - Mark of Slaanesh _ Points - 5 _ Restrictions - oco_extra: Mark of Slaanesh
-                       Name: Chaos Warshrine, Points: 125, OCO_extras: Name - Mark of Khorne _ Points - 10 _ Restrictions - oco_extra: Mark of Khorne / Name - Mark of Tzeentch _ Points - 10 _ Restrictions - oco_extra: Mark of Tzeentch / Name - Mark of Nurgle _ Points - 15 _ Restrictions - oco_extra: Mark of Nurgle / Name - Mark of Slaanesh _ Points - 5 _ Restrictions - oco_extra: Mark of Slaanesh
-                       Name: Gorebeast Chariot, Points: 130, OCO_extras: Name - Mark of Khorne _ Points - 10 _ Restrictions - oco_extra: Mark of Khorne / Name - Mark of Tzeentch _ Points - 10 _ Restrictions - oco_extra: Mark of Tzeentch / Name - Mark of Nurgle _ Points - 15 _ Restrictions - oco_extra: Mark of Nurgle / Name - Mark of Slaanesh _ Points - 5 _ Restrictions - oco_extra: Mark of Slaanesh
-                       Name: Manticore, Points: 150, MC_extras: Name - Iron Hard Skin _ Points - 25 / Name - Venom Tail _ Points - 10
+                       Name: Chaos Chariot, Points: 110, OCO_extras: Name - Mark of Khorne | Points - 10 | Restrictions - oco_extra? Mark of Khorne / Name - Mark of Tzeentch | Points - 10 | Restrictions - oco_extra? Mark of Tzeentch / Name - Mark of Nurgle | Points - 15 | Restrictions - oco_extra? Mark of Nurgle / Name - Mark of Slaanesh | Points - 5 | Restrictions - oco_extra? Mark of Slaanesh
+                       Name: Chaos Warshrine, Points: 125, OCO_extras: Name - Mark of Khorne | Points - 10 | Restrictions - oco_extra? Mark of Khorne / Name - Mark of Tzeentch | Points - 10 | Restrictions - oco_extra? Mark of Tzeentch / Name - Mark of Nurgle | Points - 15 | Restrictions - oco_extra? Mark of Nurgle / Name - Mark of Slaanesh | Points - 5 | Restrictions - oco_extra? Mark of Slaanesh
+                       Name: Gorebeast Chariot, Points: 130, OCO_extras: Name - Mark of Khorne | Points - 10 | Restrictions - oco_extra? Mark of Khorne / Name - Mark of Tzeentch | Points - 10 | Restrictions - oco_extra? Mark of Tzeentch / Name - Mark of Nurgle | Points - 15 | Restrictions - oco_extra? Mark of Nurgle / Name - Mark of Slaanesh | Points - 5 | Restrictions - oco_extra? Mark of Slaanesh
+                       Name: Manticore, Points: 150, MC_extras: Name - Iron Hard Skin | Points - 25 / Name - Venom Tail | Points - 10
                        Name: Chaos Dragon, Points: 330]
     OPTIONAL_OCO_EXTRAS = [Name: Mark of Khorne, Points: 10
                            Name: Mark of Tzeentch, Points: 10
                            Name: Mark of Nurgle, Points: 10
                            Name: Mark of Slaanesh, Points: 5]
-    MAGIC_ITEM_BUDGET = 100
-    FACTION_ITEM_BUDGET = 50
-    TOTAL_ITEM_BUDGET = 150
+    MAGIC_ITEM_BUDGET = Points : 100
+    FACTION_ITEM_BUDGET = Points : 50
+    TOTAL_ITEM_BUDGET = Points : 150
 
 Chaos Sorcerer Lord
     BASE_TYPE = Mage
@@ -42,21 +42,21 @@ Chaos Sorcerer Lord
     SPECIAL_RULES = Eye of the Gods
     EQUIPMENT = Armour - Name: Chaos armour, Category: Mundane, Type: Armour
     OPTIONAL_MOUNTS = [Name: Barded Chaos Steed, Points: 24
-                       Name: Steed of Slaanesh, Points: 25
-                       Name: Disc of Tzeentch, Points: 30
-                       Name: Daemonic Mount, Points: 35
-                       Name: Palanquin of Nurgle, Points: 40
-                       Name: Chaos Chariot, Points: 110
-                       Name: Chaos Warshrine, Points: 125
-                       Name: Gorebeast Chariot, Points: 130
-                       Name: Manticore, Points: 150
+                       Name: Steed of Slaanesh, Points: 25, Restrictions: oco_extra - Mark of Slaanesh
+                       Name: Disc of Tzeentch, Points: 30, Restrictions: oco_extra - Mark of Tzeentch
+                       Name: Daemonic Mount, Points: 35, MC_extras: Name - Barding | Points - 15
+                       Name: Palanquin of Nurgle, Points: 40, Restrictions: oco_extra - Mark of Nurgle
+                       Name: Chaos Chariot, Points: 110, OCO_extras: Name - Mark of Khorne | Points - 10 | Restrictions - oco_extra? Mark of Khorne / Name - Mark of Tzeentch | Points - 10 | Restrictions - oco_extra? Mark of Tzeentch / Name - Mark of Nurgle | Points - 15 | Restrictions - oco_extra? Mark of Nurgle / Name - Mark of Slaanesh | Points - 5 | Restrictions - oco_extra? Mark of Slaanesh
+                       Name: Chaos Warshrine, Points: 125, OCO_extras: Name - Mark of Khorne | Points - 10 | Restrictions - oco_extra? Mark of Khorne / Name - Mark of Tzeentch | Points - 10 | Restrictions - oco_extra? Mark of Tzeentch / Name - Mark of Nurgle | Points - 15 | Restrictions - oco_extra? Mark of Nurgle / Name - Mark of Slaanesh | Points - 5 | Restrictions - oco_extra? Mark of Slaanesh
+                       Name: Gorebeast Chariot, Points: 130, OCO_extras: Name - Mark of Khorne | Points - 10 | Restrictions - oco_extra? Mark of Khorne / Name - Mark of Tzeentch | Points - 10 | Restrictions - oco_extra? Mark of Tzeentch / Name - Mark of Nurgle | Points - 15 | Restrictions - oco_extra? Mark of Nurgle / Name - Mark of Slaanesh | Points - 5 | Restrictions - oco_extra? Mark of Slaanesh
+                       Name: Manticore, Points: 150, MC_extras: Name - Iron Hard Skin | Points - 25 / Name - Venom Tail | Points - 10
                        Name: Chaos Dragon, Points: 330]
     OPTIONAL_OCO_EXTRAS = [Name: Mark of Tzeentch, Points: 10
                            Name: Mark of Nurgle, Points: 10
                            Name: Mark of Slaanesh, Points: 5]
-    MAGIC_ITEM_BUDGET = 100
-    FACTION_ITEM_BUDGET = 50
-    TOTAL_ITEM_BUDGET = 150
+    MAGIC_ITEM_BUDGET = Points : 100
+    FACTION_ITEM_BUDGET = Points : 50
+    TOTAL_ITEM_BUDGET = Points : 150
     MAGE_LEVEL = 3
     MAGE_UPGRADES = 4 [35]
     MAGE_LORES = Death, Fire, Metal, Shadow, Tzeentch, Nurgle, Slaanesh
@@ -74,9 +74,9 @@ Daemon Prince
                            Name: Mark of Nurgle, Points: 10
                            Name: Mark of Slaanesh, Points: 5]
     OPTIONAL_MC_EXTRAS = Name: Daemonic Flight, Points: 40
-    MAGIC_ITEM_BUDGET = 25
-    FACTION_ITEM_BUDGET = 100
-    TOTAL_ITEM_BUDGET = 125
+    MAGIC_ITEM_BUDGET = Points : 25
+    FACTION_ITEM_BUDGET = Points : 100
+    TOTAL_ITEM_BUDGET = Points : 125
     MAGE_LEVEL = 0
     MAGE_UPGRADES = 1 [35], 2 [70], 3 [105], 4 [140]
     MAGE_LORES = Death, Fire, Metal, Shadow, Tzeentch, Nurgle, Slaanesh
@@ -97,24 +97,22 @@ Exalted Hero
                         Name: Halberd, Category: Mundane, Type: Melee, Points: 6]
     OPTIONAL_ARMOUR = Name: Shield, Category: Mundane, Type: Shield, Points: 3
     OPTIONAL_MOUNTS = [Name: Barded Chaos Steed, Points: 16
-                       Name: Steed of Slaanesh, Points: 25
-                       Name: Disc of Tzeentch, Points: 30
-                       Name: Daemonic Mount, Points: 35
-                       Name: Palanquin of Nurgle, Points: 40
-                       Name: Juggernaught of Khorne, Points: 55
-                       Name: Chaos Chariot, Points: 110
-                       Name: Chaos Warshrine, Points: 125
-                       Name: Gorebeast Chariot, Points: 130
-                       Name: Manticore, Points: 150
-                       Name: Chaos Dragon, Points: 330]
+                       Name: Steed of Slaanesh, Points: 25, Restrictions: oco_extra - Mark of Slaanesh
+                       Name: Disc of Tzeentch, Points: 30, Restrictions: oco_extra - Mark of Tzeentch
+                       Name: Daemonic Mount, Points: 35, MC_extras: Name - Barding | Points - 15
+                       Name: Palanquin of Nurgle, Points: 40, Restrictions: oco_extra - Mark of Nurgle
+                       Name: Juggernaught of Khorne, Points: 55, Restrictions: oco_extra - Mark of Khorne
+                       Name: Chaos Chariot, Points: 110, OCO_extras: Name - Mark of Khorne | Points - 10 | Restrictions - oco_extra? Mark of Khorne / Name - Mark of Tzeentch | Points - 10 | Restrictions - oco_extra? Mark of Tzeentch / Name - Mark of Nurgle | Points - 15 | Restrictions - oco_extra? Mark of Nurgle / Name - Mark of Slaanesh | Points - 5 | Restrictions - oco_extra? Mark of Slaanesh
+                       Name: Chaos Warshrine, Points: 125, OCO_extras: Name - Mark of Khorne | Points - 10 | Restrictions - oco_extra? Mark of Khorne / Name - Mark of Tzeentch | Points - 10 | Restrictions - oco_extra? Mark of Tzeentch / Name - Mark of Nurgle | Points - 15 | Restrictions - oco_extra? Mark of Nurgle / Name - Mark of Slaanesh | Points - 5 | Restrictions - oco_extra? Mark of Slaanesh
+                       Name: Gorebeast Chariot, Points: 130, OCO_extras: Name - Mark of Khorne | Points - 10 | Restrictions - oco_extra? Mark of Khorne / Name - Mark of Tzeentch | Points - 10 | Restrictions - oco_extra? Mark of Tzeentch / Name - Mark of Nurgle | Points - 15 | Restrictions - oco_extra? Mark of Nurgle / Name - Mark of Slaanesh | Points - 5 | Restrictions - oco_extra? Mark of Slaanesh]
     OPTIONAL_OCO_EXTRAS = [Name: Mark of Khorne, Points: 10
                            Name: Mark of Tzeentch, Points: 10
                            Name: Mark of Nurgle, Points: 10
                            Name: Mark of Slaanesh, Points: 5]
     OPTIONAL_MC_EXTRAS = Name: Battle Standard Bearer, Points: 25
-    MAGIC_ITEM_BUDGET = 50
-    FACTION_ITEM_BUDGET = 25
-    TOTAL_ITEM_BUDGET = 75
+    MAGIC_ITEM_BUDGET = Points : 50
+    FACTION_ITEM_BUDGET = Points : 25
+    TOTAL_ITEM_BUDGET = Points : 75
 
 Chaos Sorcerer
     BASE_TYPE = Mage
@@ -125,21 +123,19 @@ Chaos Sorcerer
     SPECIAL_RULES = Eye of the Gods
     EQUIPMENT = Armour - Name: Chaos armour, Category: Mundane, Type: Armour
     OPTIONAL_MOUNTS = [Name: Barded Chaos Steed, Points: 16
-                       Name: Steed of Slaanesh, Points: 25
-                       Name: Disc of Tzeentch, Points: 30
-                       Name: Daemonic Mount, Points: 35
-                       Name: Palanquin of Nurgle, Points: 40
-                       Name: Chaos Chariot, Points: 110
-                       Name: Chaos Warshrine, Points: 125
-                       Name: Gorebeast Chariot, Points: 130
-                       Name: Manticore, Points: 150
-                       Name: Chaos Dragon, Points: 330]
+                       Name: Steed of Slaanesh, Points: 25, Restrictions: oco_extra - Mark of Slaanesh
+                       Name: Disc of Tzeentch, Points: 30, Restrictions: oco_extra - Mark of Tzeentch
+                       Name: Daemonic Mount, Points: 35, MC_extras: Name - Barding | Points - 15
+                       Name: Palanquin of Nurgle, Points: 40, Restrictions: oco_extra - Mark of Nurgle
+                       Name: Chaos Chariot, Points: 110, OCO_extras: Name - Mark of Khorne | Points - 10 | Restrictions - oco_extra? Mark of Khorne / Name - Mark of Tzeentch | Points - 10 | Restrictions - oco_extra? Mark of Tzeentch / Name - Mark of Nurgle | Points - 15 | Restrictions - oco_extra? Mark of Nurgle / Name - Mark of Slaanesh | Points - 5 | Restrictions - oco_extra? Mark of Slaanesh
+                       Name: Chaos Warshrine, Points: 125, OCO_extras: Name - Mark of Khorne | Points - 10 | Restrictions - oco_extra? Mark of Khorne / Name - Mark of Tzeentch | Points - 10 | Restrictions - oco_extra? Mark of Tzeentch / Name - Mark of Nurgle | Points - 15 | Restrictions - oco_extra? Mark of Nurgle / Name - Mark of Slaanesh | Points - 5 | Restrictions - oco_extra? Mark of Slaanesh
+                       Name: Gorebeast Chariot, Points: 130, OCO_extras: Name - Mark of Khorne | Points - 10 | Restrictions - oco_extra? Mark of Khorne / Name - Mark of Tzeentch | Points - 10 | Restrictions - oco_extra? Mark of Tzeentch / Name - Mark of Nurgle | Points - 15 | Restrictions - oco_extra? Mark of Nurgle / Name - Mark of Slaanesh | Points - 5 | Restrictions - oco_extra? Mark of Slaanesh]
     OPTIONAL_OCO_EXTRAS = [Name: Mark of Tzeentch, Points: 10
                            Name: Mark of Nurgle, Points: 10
                            Name: Mark of Slaanesh, Points: 5]
-    MAGIC_ITEM_BUDGET = 50
-    FACTION_ITEM_BUDGET = 25
-    TOTAL_ITEM_BUDGET = 75
+    MAGIC_ITEM_BUDGET = Points : 50
+    FACTION_ITEM_BUDGET = Points : 25
+    TOTAL_ITEM_BUDGET = Points : 75
     MAGE_LEVEL = 1
     MAGE_UPGRADES = 2 [35]
     MAGE_LORES = Death, Fire, Metal, Shadow, Tzeentch, Nurgle, Slaanesh
@@ -207,7 +203,7 @@ Chaos Warhounds
     POINTS = 6
     SIZE = 5, inf
     CHARACTERISTICS = 7 4 0 3 3 1 3 1 5
-    OPTIONAL_MC_EXTRAS = Name: Scaly Hide, Points: 1 ; Name: Mutant Poisons, Points: 1
+    OPTIONAL_MC_EXTRAS = Name: Scaly Hide, Points: 1 ; Name: Mutant Poisons, Points: 1 ; Name: Vanguard, Points: 2
 
 Chaos Chariot
     BASE_TYPE = Normal

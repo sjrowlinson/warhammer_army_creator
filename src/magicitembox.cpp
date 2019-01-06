@@ -25,9 +25,47 @@ void MagicItemBox::reset_category(ItemCategory ic_selected_) {
     ic_selected = ic_selected_;
 }
 
+bool MagicItemBox::check_itemtype_allowance(ItemType it) const {
+    switch (ic_selected) {
+    case ItemCategory::COMMON:
+    case ItemCategory::MAGIC:
+    {
+        auto search_it = current->base()->magic_item_budget().restrictions.find(RestrictionField::ITEMTYPE);
+        if (search_it != std::end(current->base()->magic_item_budget().restrictions)) {
+            std::vector<ItemType> item_types = std::any_cast<std::vector<ItemType>>(search_it->second);
+            if (!std::count_if(std::begin(item_types), std::end(item_types), [it](const auto& x) {
+                    return x == it;
+                })) return false;
+        }
+        break;
+    }
+    case ItemCategory::FACTION:
+    {
+        auto search_it = current->base()->faction_item_budget().restrictions.find(RestrictionField::ITEMTYPE);
+        if (search_it != std::end(current->base()->faction_item_budget().restrictions)) {
+            std::vector<ItemType> item_types = std::any_cast<std::vector<ItemType>>(search_it->second);
+            if (!std::count_if(std::begin(item_types), std::end(item_types), [it](const auto& x) {
+                    return x == it;
+                })) return false;
+        }
+        break;
+    }
+    default: break;
+    }
+    auto search_it = current->base()->total_item_budget().restrictions.find(RestrictionField::ITEMTYPE);
+    if (search_it != std::end(current->base()->total_item_budget().restrictions)) {
+        std::vector<ItemType> item_types = std::any_cast<std::vector<ItemType>>(search_it->second);
+        if (!std::count_if(std::begin(item_types), std::end(item_types), [it](const auto& x) {
+                return x == it;
+            })) return false;
+    }
+    return true;
+}
+
 QScrollArea* MagicItemBox::make_items_tab(const std::unordered_map<std::string, item>& items,
-                                        ItemType item_type) {
+                                          ItemType item_type) {
     if (items.empty()) return nullptr;
+    if (!check_itemtype_allowance(item_type)) return nullptr;
     auto opt_items = tools::magic_items_vec_of(items, item_type);
     if (opt_items.empty() || !std::count_if(
         std::begin(opt_items), std::end(opt_items), [current=this->current](const auto& x) {

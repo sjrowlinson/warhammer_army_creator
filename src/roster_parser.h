@@ -94,14 +94,9 @@ namespace tools {
         std::size_t parse_unit_extras(const std::string& s, bool champion, bool master, bool oco);
         std::size_t parse_unit_budget(const std::string& s, BudgetType bt);
 
-        std::pair<std::string, std::size_t> multiline_state_handler(const std::string& s);
+        std::unordered_map<std::string, extra_option> parse_unit_mount_options(const std::string& s, bool oco);
 
-        /*std::tuple<
-            double,
-            std::size_t,
-            ItemCategory,
-            ItemType
-        > parse_item_budget(const std::string& s);*/
+        std::pair<std::string, std::size_t> multiline_state_handler(const std::string& s);
     public:
         explicit roster_parser(const QString& rfile, Faction faction);
         ~roster_parser() = default;

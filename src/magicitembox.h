@@ -45,6 +45,8 @@ private:
     QScrollArea* make_arcane_tab(const std::vector<std::pair<std::string, item>>& opt_arcane);
     QScrollArea* make_banners_tab(const std::vector<std::pair<std::string, item>>& opt_banners);
     QScrollArea* make_other_tab(const std::vector<std::pair<std::string, item>>& opt_other);
+
+    bool check_itemtype_allowance(ItemType it) const;
 public:
     explicit MagicItemBox(ArmyCreator* creator_, QTabWidget* box_,
                           QGroupBox* descr_box_, QLabel* descr_label_);

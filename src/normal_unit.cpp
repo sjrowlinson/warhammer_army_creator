@@ -162,6 +162,18 @@ const std::pair<std::string, std::pair<ItemCategory, double>>& normal_unit::magi
     return banner;
 }
 
+double normal_unit::magic_item_points() const noexcept {
+    return champ_magic_item_points;
+}
+
+double normal_unit::faction_item_points() const noexcept {
+    return champ_faction_item_points;
+}
+
+double normal_unit::total_item_points() const noexcept {
+    return champ_total_item_points;
+}
+
 // current property modifiers
 
 std::string normal_unit::pick_weapon(ItemCategory item_type, const std::string& name) {
@@ -220,8 +232,8 @@ std::string normal_unit::pick_champion_weapon(ItemCategory item_type, const std:
         auto search = handle->magic_items_handle()->second.find(name);
         if (search == handle->magic_items_handle()->second.end())
             throw std::invalid_argument("Weapon not found!");
-        double mi_budget = handle->champion_magic_item_budget().points;
-        double ti_budget = handle->champion_total_item_budget().points;
+        double mi_budget = handle->magic_item_budget().points;
+        double ti_budget = handle->total_item_budget().points;
         if ((search->second.points + champ_magic_item_points > mi_budget) ||
                 (search->second.points + champ_total_item_points > ti_budget))
             throw std::runtime_error("Magic item budget exceeded!");
@@ -318,8 +330,8 @@ std::string normal_unit::pick_champion_armour(ItemCategory item_type, const std:
         auto search = handle->magic_items_handle()->second.find(name);
         if (search == handle->magic_items_handle()->second.end())
             throw std::invalid_argument("Armour not found!");
-        double mi_budget = handle->champion_magic_item_budget().points;
-        double ti_budget = handle->champion_total_item_budget().points;
+        double mi_budget = handle->magic_item_budget().points;
+        double ti_budget = handle->total_item_budget().points;
         if ((search->second.points + champ_magic_item_points > mi_budget) ||
                 (search->second.points + champ_total_item_points > ti_budget))
             throw std::runtime_error("Magic item budget exceeded!");

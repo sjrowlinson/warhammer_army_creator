@@ -46,15 +46,17 @@ namespace tools {
     std::unordered_multimap<
         RestrictionField,
         std::any
-    > file_parser::parse_restrictions(const std::string& s, std::string from) {
+    > file_parser::parse_restrictions(const std::string& s, std::string from, std::vector<char> delim_seq) {
         (void)from;
+        if (delim_seq.size() != 3)
+            throw std::runtime_error("Deliminator sequence for restriction parsing must be size 3.");
         std::unordered_multimap<
             RestrictionField,
             std::any
-        > restrictions;;
-        auto restr = tools::split(s, '/');
+        > restrictions;
+        auto restr = tools::split(s, delim_seq[0]);
         for (const auto& r : restr) {
-            auto field_value = tools::split(r, '-');
+            auto field_value = tools::split(r, delim_seq[1]);
             auto search_restr_field = enum_convert::STRING_TO_RESTRICTION.find(field_value[0]);
             if (search_restr_field == std::end(enum_convert::STRING_TO_RESTRICTION)) {
                 /*std::string msg = "Error parsing + " + enum_convert::FACTION_TO_STRING.at(faction)
@@ -73,9 +75,8 @@ namespace tools {
             case RestrictionField::OTHER:
             case RestrictionField::ARMY_CONTAINS:
             {
-                auto values = tools::split(field_value[1], '_');
+                auto values = tools::split(field_value[1], delim_seq[2]);
                 restrictions.emplace(std::make_pair(search_restr_field->second, values));
-
                 break;
             }
             case RestrictionField::BANNER:
@@ -88,10 +89,56 @@ namespace tools {
                                                     static_cast<unsigned int>(std::stoi(field_value[1]))));
                 break;
             case RestrictionField::ITEMTYPE:
-            case RestrictionField::SUBITEMTYPE:
-                // TODO: don't know what to do with these yet, need to rewrite
-                // budget and item parsing first
+            {
+                auto values = tools::split(field_value[1], delim_seq[2]);
+                std::vector<ItemType> item_types;
+                for (auto v : values) {
+                    auto search_it = enum_convert::STRING_TO_ITEM_TYPE.find(v);
+                    if (search_it == std::end(enum_convert::STRING_TO_ITEM_TYPE)) {
+                        std::string msg = "restriction parsing error: " + v;
+                        throw std::runtime_error(msg);
+                    }
+                    item_types.push_back(search_it->second);
+                }
+                restrictions.emplace(std::make_pair(search_restr_field->second, item_types));
                 break;
+            }
+            case RestrictionField::SUBITEMTYPE:
+            {
+                if (!restrictions.count(RestrictionField::ITEMTYPE)) {
+                    std::string msg = "restriction parsing error - must contain ItemType"
+                                      " for SubItemType to be used.";
+                    throw std::runtime_error(msg);
+                }
+                if (restrictions.count(RestrictionField::ITEMTYPE) > 1) {
+                    std::string msg = "restriction parsing error - must contain only 1 ItemType argument"
+                                      " for SubItemType to be used.";
+                    throw std::runtime_error(msg);
+                }
+                switch (std::any_cast<std::vector<ItemType>>(restrictions.find(RestrictionField::ITEMTYPE)->second)[0]) {
+                case ItemType::WEAPON:
+                {
+                    auto search_wt = enum_convert::STRING_TO_WEAPON_TYPE.find(field_value[1]);
+                    if (search_wt == std::end(enum_convert::STRING_TO_WEAPON_TYPE)) {
+                        std::string msg = "restriction parsing error: " + s;
+                        throw std::runtime_error(msg);
+                    }
+                    restrictions.emplace(std::make_pair(search_restr_field->second, search_wt->second));
+                    break;
+                }
+                case ItemType::ARMOUR:
+                {
+                    auto search_at = enum_convert::STRING_TO_ARMOUR_TYPE.find(field_value[1]);
+                    if (search_at == std::end(enum_convert::STRING_TO_ARMOUR_TYPE)) {
+                        std::string msg = "restriction parsing error: " + s;
+                        throw std::runtime_error(msg);
+                    }
+                    restrictions.emplace(std::make_pair(search_restr_field->second, search_at->second));
+                    break;
+                }
+                default: break;
+                }
+            }
             }
         }
         return restrictions;

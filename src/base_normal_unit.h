@@ -24,9 +24,6 @@ private:
     std::vector<std::string> champ_sr_; // champion special rules
     equipment champ_eq_;
     options champ_opt_;
-    budget champ_mi_budget_;
-    budget champ_fi_budget_;
-    budget champ_ti_budget_;
 
     // command group
     std::unordered_map<
@@ -52,9 +49,9 @@ public:
         std::vector<std::string>&& champ_sr,
         equipment&& champ_eq,
         options&& champ_opt,
-        budget&& champ_mi_budget,
-        budget&& champ_fi_budget,
-        budget&& champ_ti_budget,
+        const budget& champ_mi_budget,
+        const budget& champ_fi_budget,
+        const budget& champ_ti_budget,
         std::unordered_map<
             CommandGroup, std::pair<std::string, double>
         >&& opt_command,
@@ -74,9 +71,6 @@ public:
     const std::vector<std::string>& champion_special_rules() const noexcept;
     const equipment& champion_eq() const noexcept;
     const options& champion_opt() const noexcept;
-    const budget& champion_magic_item_budget() const noexcept;
-    const budget& champion_faction_item_budget() const noexcept;
-    const budget& champion_total_item_budget() const noexcept;
 
     const std::unordered_map<
         CommandGroup, std::pair<std::string, double>

@@ -1351,15 +1351,19 @@ void ArmyCreator::update_unit_command_display_helper(
 
 void ArmyCreator::setup_export_directories() {
     documents_dir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-    //auto faction_str = ui->faction_combobox->currentText();
+    if (documents_dir.isEmpty()) {
+        QMessageBox error_box;
+        error_box.critical(nullptr, tr("Error"), tr("Could not find Documents directory... disabling army exporting!"));
+        error_box.setFixedSize(500, 200);
+        ui->export_button->setEnabled(false);
+    }
     if (QStandardPaths::locate(
-                QStandardPaths::DocumentsLocation,
-                army_list_dir,
-                QStandardPaths::LocateOption::LocateDirectory
-            ).isEmpty()
-    ) {
+                    QStandardPaths::DocumentsLocation,
+                    army_list_dir,
+                    QStandardPaths::LocateOption::LocateDirectory
+                ).isEmpty()) {
         QDir docs(documents_dir);
-        docs.mkdir(QString("WHFB_ArmyLists"));
+        docs.mkdir(army_list_dir);
     }
     for (const auto& x : enum_convert::STRING_TO_FACTION) {
         auto faction_str = QString::fromStdString(x.first);
@@ -1367,8 +1371,7 @@ void ArmyCreator::setup_export_directories() {
                     QStandardPaths::DocumentsLocation,
                     army_list_dir + '/' + faction_str,
                     QStandardPaths::LocateOption::LocateDirectory
-                ).isEmpty()
-                ) {
+                ).isEmpty()) {
             QDir faction_dir(documents_dir + QString("/WHFB_ArmyLists"));
             faction_dir.mkdir(faction_str);
         }
@@ -1417,6 +1420,7 @@ void ArmyCreator::on_export_button_clicked() {
         QMessageBox error_box;
         error_box.critical(nullptr, tr("Error"), tr("Invalid army name for PDF export."));
         error_box.setFixedSize(500, 200);
+        return;
     }
     QString file_name = ui->army_name_textedit->toPlainText() + ".pdf";
     printer.setOutputFileName(documents_dir + '/' + army_list_dir + '/'

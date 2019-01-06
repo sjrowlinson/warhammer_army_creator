@@ -110,6 +110,18 @@ const std::pair<std::string, std::pair<ItemCategory, double>>& mixed_unit::magic
     return master_.magic_banner();
 }
 
+double mixed_unit::magic_item_points() const noexcept {
+    return master_.magic_item_points();
+}
+
+double mixed_unit::faction_item_points() const noexcept {
+    return master_.faction_item_points();
+}
+
+double mixed_unit::total_item_points() const noexcept {
+    return master_.total_item_points();
+}
+
 std::string mixed_unit::pick_weapon(ItemCategory item_type, const std::string& name) {
     switch (mixed_select_) {
     case MixedSelect::MASTER:

@@ -1,113 +1,86 @@
 Chaos Mutations & Powers
 
 Daemonblade
-    Weapon, Melee
-    50
-    The wielder of a Daemonblade has the Random Attacks (D6+3) special rule. However, every To Hit roll of a 1 made by this character in close combat is resolved against himself; the character can never re-roll a To Hit roll of a 1.
-    None
-    1
-    None
+    CATEGORY = Weapon
+    TYPE = Melee
+    POINTS = 50
+    DESCRIPTION = The wielder of a Daemonblade has the Random Attacks (D6+3) special rule. However, every To Hit roll of a 1 made by this character in close combat is resolved against himself; the character can never re-roll a To Hit roll of a 1.
+    RESTRICTIONS = Limit - 1
 
 Collar of Khorne
-    Talisman
-    45
-    The character has the Magic Resistance (3) special rule.
-    None
-    1
-    oco_extra: Mark of Khorne
+    CATEGORY = Talisman
+    POINTS = 45
+    DESCRIPTION = The character has the Magic Resistance (3) special rule.
+    RESTRICTIONS = Limit - 1 / oco_extra - Mark of Khorne
 
 Unholy Strike
-    Talisman
-    35
-    Instead of striking normally, the character can choose to make a single special Attack. If he does so, and the Attack hits, the hit is resolved at double the character’s Strength and has the Multiple Wounds (D3) special rule.
-    None
-    1
-    None
+    CATEGORY = Talisman
+    POINTS = 35
+    DESCRIPTION = Instead of striking normally, the character can choose to make a single special Attack. If he does so, and the Attack hits, the hit is resolved at double the character’s Strength and has the Multiple Wounds (D3) special rule.
+    RESTRICTIONS = Limit - 1
 
 Flaming Breath
-    Other
-    30
-    The character has a Strength 4 Breath Weapon that has the Flaming Attacks special rule.
-    None
-    1
-    None
+    CATEGORY = Other
+    POINTS = 30
+    DESCRIPTION = The character has a Strength 4 Breath Weapon that has the Flaming Attacks special rule.
+    RESTRICTIONS = Limit - 1
 
 Chaos Familiar
-    Arcane
-    25
-    The character adds +1 to all of his channelling attempts and knows one extra spell than normal for his level.
-    None
-    1
-    None
+    CATEGORY = Arcane
+    POINTS = 25
+    DESCRIPTION = The character adds +1 to all of his channelling attempts and knows one extra spell than normal for his level.
+    RESTRICTIONS = Limit - 1
 
 Scaled Skin
-    Other
-    20
-    The character has the Scaly Skin (5+) special rule.
-    None
-    1
-    None
+    CATEGORY = Other
+    POINTS = 20
+    DESCRIPTION = The character has the Scaly Skin (5+) special rule.
+    RESTRICTIONS = Limit - 1
 
 Allure of Slaanesh
-    Other
-    15
-    Any opponent wishing to strike the character in close combat must first pass a Leadership test (test immediately before the model rolls To Hit). If the test is failed, that model cannot make any close combat attacks that phase. This does not affect Attacks that do not roll To Hit.
-    None
-    1
-    oco_extra: Mark of Slaanesh
+    CATEGORY = Other
+    POINTS = 15
+    DESCRIPTION = Any opponent wishing to strike the character in close combat must first pass a Leadership test (test immediately before the model rolls To Hit). If the test is failed, that model cannot make any close combat attacks that phase. This does not affect Attacks that do not roll To Hit.
+    RESTRICTIONS = Limit - 1 / oco_extra - Mark of Slaanesh
 
 Poisonous Slime
-    Other
-    15
-    The character has the Poisoned Attacks special rule and a 5+ ward save against Poisoned Attacks.
-    None
-    1
-    None
+    CATEGORY = Other
+    POINTS = 15
+    DESCRIPTION = The character has the Poisoned Attacks special rule and a 5+ ward save against Poisoned Attacks.
+    RESTRICTIONS = Limit - 1
 
 Acid Ichor
-    Other
-    10
-    Whenever this character suffers an unsaved Wound in close combat, the model that inflicted that hit must pass an Initiative test or suffer a Strength 4 hit. Wounds inflicted by Acid Ichor count towards the combat result.
-    None
-    1
-    None
+    CATEGORY = Other
+    POINTS = 10
+    DESCRIPTION = Whenever this character suffers an unsaved Wound in close combat, the model that inflicted that hit must pass an Initiative test or suffer a Strength 4 hit. Wounds inflicted by Acid Ichor count towards the combat result.
+    RESTRICTIONS = Limit - 1
 
 Burning Body
-    Other
-    10
-    The character has the Flaming Attacks special rule and a 5+ ward save against Flaming Attacks.
-    None
-    1
-    None
+    CATEGORY = Other
+    POINTS = 10
+    DESCRIPTION = The character has the Flaming Attacks special rule and a 5+ ward save against Flaming Attacks.
+    RESTRICTIONS = Limit - 1
 
 Soul Feeder
-    Other
-    10
-    Roll a D6 for every unsaved Wound inflicted by the character in close combat. For each result of a 6 rolled, he immediately regains a single lost Wound.
-    None
-    1
-    None
+    CATEGORY = Other
+    POINTS = 10
+    DESCRIPTION = Roll a D6 for every unsaved Wound inflicted by the character in close combat. For each result of a 6 rolled, he immediately regains a single lost Wound.
+    RESTRICTIONS = Limit - 1
 
 Third Eye of Tzeentch
-    Other
-    10
-    The character re-rolls ward save results of 1.
-    None
-    1
-    oco_extra: Mark of Tzeentch
+    CATEGORY = Other
+    POINTS = 10
+    DESCRIPTION = The character re-rolls ward save results of 1.
+    RESTRICTIONS = Limit - 1 / oco_extra - Mark of Tzeentch
 
 Nurgle's Rot
-    Other
-    10
-    At the start of every Magic phase, every enemy model in base contact with the character suffers a single Strength 1 hit, with no armour saves allowed.
-    None
-    1
-    oco_extra: Mark of Nurgle
+    CATEGORY = Other
+    POINTS = 10
+    DESCRIPTION = At the start of every Magic phase, every enemy model in base contact with the character suffers a single Strength 1 hit, with no armour saves allowed.
+    RESTRICTIONS = Limit - 1 / oco_extra - Mark of Nurgle
 
 Hideous Visage
-    Other
-    5
-    The character has the Fear special rule. However, other models can never use this character's Leadership.
-    None
-    1
-    None
+    CATEGORY = Other
+    POINTS = 5
+    DESCRIPTION = The character has the Fear special rule. However, other models can never use this character's Leadership.
+    RESTRICTIONS = Limit - 1

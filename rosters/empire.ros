@@ -16,11 +16,13 @@ General of The Empire
     OPTIONAL_ARMOUR = [Name : Full plate armour, Category : Mundane, Type : Armour, Points : 9
                        Name : Heavy armour, Category : Mundane, Type: Armour, Points : 4,
                        Name : Shield, Category : Mundane, Type : Shield, Points : 3]
-    OPTIONAL_MOUNTS = [Name : Imperial Griffon, Points : 170
-                       Name : Imperial Pegasus, Points : 45
-                       Name : Warhorse, Points : 18]
+    OPTIONAL_MOUNTS = [Name : Imperial Griffon, Points : 170, MC_extras: Name - Bloodroar | Points - 25 / Name - Two Heads | Points - 30
+                       Name : Imperial Pegasus, Points : 45, MC_extras: Name - Iron hard Hooves | Points - 5 / Name - Swift as the Wind | Points - 10
+                       Name : Warhorse, Points : 18, MC_extras: Name - Barding | Points - 6]
     MAGIC_ITEM_BUDGET = Points : 100
-    TOTAL_ITEM_BUDGET = Points : 100
+    TOTAL_ITEM_BUDGET = copy MAGIC_ITEM_BUDGET
+
+# add restrictions to Griffon, Hurricanum and Luminark mounts based on the required Lore of magic taken by the Battle Wizard Lord
 
 Battle Wizard Lord
     BASE_TYPE = Mage
@@ -28,9 +30,9 @@ Battle Wizard Lord
     CATEGORY = Infantry
     POINTS = 165
     CHARACTERISTICS = 4 3 3 3 4 3 3 1 8
-    OPTIONAL_MOUNTS = [Name : Imperial Griffon, Points : 170
-                       Name : Imperial Pegasus, Points : 45
-                       Name : Warhorse, Points : 18
+    OPTIONAL_MOUNTS = [Name : Imperial Griffon, Points : 170, MC_extras: Name - Bloodroar | Points - 25 / Name - Two Heads | Points - 30
+                       Name : Imperial Pegasus, Points : 45, MC_extras: Name - Iron hard Hooves | Points - 5 / Name - Swift as the Wind | Points - 10
+                       Name : Warhorse, Points : 18, MC_extras: Name - Barding | Points - 6
                        Name : Celestial Hurricanum, Points : 125
                        Name : Luminark of Hysh, Points : 120]
     MAGIC_ITEM_BUDGET = Points : 100
@@ -51,7 +53,7 @@ Arch Lector
                         Name : Great weapon, Category : Mundane, Type : Melee, Points : 5]
     OPTIONAL_ARMOUR = [Name : Heavy armour, Category : Mundane, Type: Armour, Points : 4
                        Name : Shield, Category : Mundane, Type : Shield, Points : 4]
-    OPTIONAL_MOUNTS = Name : The War Altar of Sigmar, Points : 150 ; Name : Warhorse, Points : 18
+    OPTIONAL_MOUNTS = Name : The War Altar of Sigmar, Points : 150, MC_extras: Name - Horn of Sigismund | Points - 10 ; Name : Warhorse, Points : 18, MC_extras: Name - Barding | Points - 6
     MAGIC_ITEM_BUDGET = Points : 100
     TOTAL_ITEM_BUDGET = Points : 100
 
@@ -88,7 +90,8 @@ Captain of The Empire
     OPTIONAL_ARMOUR = [Name : Full plate armour, Category : Mundane, Type : Armour, Points : 6
                        Name : Heavy armour, Category : Mundane, Type: Armour, Points : 2
                        Name : Shield, Category : Mundane, Type : Shield, Points : 2]
-    OPTIONAL_MOUNTS = Name : Imperial Pegasus, Points : 45 ; Name : Warhorse, Points : 12
+    OPTIONAL_MOUNTS = [Name : Imperial Pegasus, Points : 45, MC_extras: Name - Iron hard Hooves | Points - 5 / Name - Swift as the Wind | Points - 10
+                       Name : Warhorse, Points : 12, MC_extras: Name - Barding | Points - 4]
     OPTIONAL_MC_EXTRAS = Name : Battle Standard Bearer, Singular : true, Points : 25
     MAGIC_ITEM_BUDGET = Points : 50
     TOTAL_ITEM_BUDGET = Points : 50
@@ -99,7 +102,7 @@ Battle Wizard
     CATEGORY = Infantry
     POINTS = 65
     CHARACTERISTICS = 4 3 3 3 3 2 3 1 7
-    OPTIONAL_MOUNTS = Name : Warhorse, Points : 12
+    OPTIONAL_MOUNTS = Name : Warhorse, Points : 12, MC_extras: Name - Barding | Points - 4
     MAGIC_ITEM_BUDGET = Points : 50
     TOTAL_ITEM_BUDGET = Points : 50
     MAGE_LEVEL = 1
@@ -118,7 +121,7 @@ Warrior Priest
                         Name : Great weapon, Category : Mundane, Type : Melee, Points : 5]
     OPTIONAL_ARMOUR = [Name : Heavy armour, Category : Mundane, Type: Armour, Points : 2
                        Name : Shield, Category : Mundane, Type : Shield, Points : 2]
-    OPTIONAL_MOUNTS = Name : Warhorse, Points : 12
+    OPTIONAL_MOUNTS = Name : Warhorse, Points : 12, MC_extras: Name - Barding | Points - 4
     MAGIC_ITEM_BUDGET = Points : 50
     TOTAL_ITEM_BUDGET = Points : 50
 
@@ -135,7 +138,7 @@ Master Engineer
                         Name : Repeater handgun Category : Mundane, Type : Ballistic, Points : 10
                         Name : Repeater pistol Category : Mundane, Type : Ballistic, Points : 10]
     OPTIONAL_ARMOUR = Name : Light armour Category : Mundane, Type: Armour, Points : 1
-    OPTIONAL_MOUNTS = Name : Mechanical Steed, Points : 25 ; Name : Warhorse, Points : 12
+    OPTIONAL_MOUNTS = Name : Mechanical Steed, Points : 25 ; Name : Warhorse, Points : 12, MC_extras: Name - Barding | Points - 4
     MAGIC_ITEM_BUDGET = Points : 50
     TOTAL_ITEM_BUDGET = Points : 50
 
