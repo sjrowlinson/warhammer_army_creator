@@ -17,6 +17,7 @@
 
 #include <QFile>
 #include <QString>
+#include <QTextStream>
 
 class unit;
 

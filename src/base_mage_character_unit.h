@@ -8,7 +8,7 @@ class base_mage_character_unit : public base_character_unit {
 private:
     short mage_level_;
     std::unordered_map<short, double> level_upgrades_;
-    std::vector<std::string> lores_;
+    std::vector<lore_option> lores_;
 public:
     explicit base_mage_character_unit(
         Faction faction,
@@ -26,14 +26,14 @@ public:
         bool is_unique,
         short mage_level,
         std::unordered_map<short, double>&& level_upgrades,
-        std::vector<std::string>&& lores,
+        std::vector<lore_option>&& lores,
         std::string mount_name=""
     );
     ~base_mage_character_unit() = default;
 
     short mage_level() const noexcept;
     const std::unordered_map<short, double>& level_upgrades() const noexcept;
-    const std::vector<std::string>& lores() const noexcept;
+    const std::vector<lore_option>& lores() const noexcept;
 };
 
 #endif // !BASE_MAGE_CHARACTER_UNIT_H

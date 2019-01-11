@@ -1,7 +1,6 @@
 #include "base_mage_character_unit.h"
 
-base_mage_character_unit::base_mage_character_unit(
-    Faction faction,
+base_mage_character_unit::base_mage_character_unit(Faction faction,
     UnitType ut,
     UnitCategory uc,
     const std::string& name,
@@ -16,7 +15,7 @@ base_mage_character_unit::base_mage_character_unit(
     bool is_unique,
     short mage_level,
     std::unordered_map<short, double>&& level_upgrades,
-    std::vector<std::string>&& lores,
+    std::vector<lore_option> &&lores,
     std::string mount_name
 ) : base_character_unit(
     faction,
@@ -40,6 +39,6 @@ short base_mage_character_unit::mage_level() const noexcept { return mage_level_
 const std::unordered_map<short, double>& base_mage_character_unit::level_upgrades() const noexcept {
     return level_upgrades_;
 }
-const std::vector<std::string>& base_mage_character_unit::lores() const noexcept {
+const std::vector<lore_option> &base_mage_character_unit::lores() const noexcept {
     return lores_;
 }

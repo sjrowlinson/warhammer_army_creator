@@ -49,8 +49,8 @@ private:
     QGroupBox* make_armour_subbox(ArmourType at, bool champion);
     // mount options boxes
     QGroupBox* make_mounts_boxes();
-    // mage levels box
-    QGroupBox* make_mage_levels_box();
+    // mage options box
+    std::pair<QGroupBox*, QGroupBox*> make_mage_options_boxes();
     // extras boxes
     std::pair<QGroupBox*, QGroupBox*> make_extras_boxes();
     QGroupBox* make_oco_extras_subbox(bool champion);

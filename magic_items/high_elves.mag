@@ -1,105 +1,89 @@
 Vaul's Forge
 
 The Blade of Leaping Gold
-    Weapon, Melee
-    70
-    The Blade of Leaping Gold grants the wielder +3 Attacks. In addition, any roll of 6 To Wound made with The Blade of Leaping Gold ignores armour saves.
-    None
-    1
-    None
+    CATEGORY = Weapon
+    TYPE = Melee
+    POINTS = 70
+    DESCRIPTION = The Blade of Leaping Gold grants the wielder +3 Attacks. In addition, any roll of 6 To Wound made with The Blade of Leaping Gold ignores armour saves.
+    RESTRICTIONS = Limit - 1
 
 Star Lance
-    Weapon, Melee
-    30
-    Mounted character only. The Star Lance can only be used in a turn in which the bearer makes a successful charge. Attacks with the Star Lance are resolved at +3 Strength, and armour saves cannot be taken against Wounds caused by the Star Lance. If the bearer did not make a successful charge this turn, or if his mount has been slain, he must instead fight using another weapon.
-    None
-    1
-    None
+    CATEGORY = Weapon
+    TYPE = Melee
+    POINTS = 30
+    DESCRIPTION = Mounted character only. The Star Lance can only be used in a turn in which the bearer makes a successful charge. Attacks with the Star Lance are resolved at +3 Strength, and armour saves cannot be taken against Wounds caused by the Star Lance. If the bearer did not make a successful charge this turn, or if his mount has been slain, he must instead fight using another weapon.
+    RESTRICTIONS = Limit - 1
 
 The Reaver Bow
-    Weapon, Melee
-    25
-    Range: 30". Strength: +1. Special Rules: Volley Fire, Multiple Shots (3).
-    None
-    1
-    None
+    CATEGORY = Weapon
+    TYPE = Ballistic
+    POINTS = 25
+    DESCRIPTION = Range: 30". Strength: +1. Special Rules: Volley Fire, Multiple Shots (3).
+    RESTRICTIONS = Limit - 1
 
 Armour of Caledor
-    Armour, Armour
-    50
-    The Armour of Caledor grants the wearer a 2+ armour save that cannot be improved by any means. In addition, the Armour of Caledor grants the bearer a 6+ ward save and the Fireborn special rule.
-    Prince, Anointed of Asuryan, Noble, Dragon Mage of Caledor, Lothern Sea Helm, Handmaiden of the Everqueen
-    1
-    None
+    CATEGORY = Armour
+    TYPE = Armour
+    POINTS = 50
+    DESCRIPTION = The Armour of Caledor grants the wearer a 2+ armour save that cannot be improved by any means. In addition, the Armour of Caledor grants the bearer a 6+ ward save and the Fireborn special rule.
+    ALLOWED_UNITS = Prince, Anointed of Asuryan, Noble, Dragon Mage of Caledor, Lothern Sea Helm, Handmaiden of the Everqueen
+    RESTRICTIONS = Limit - 1
 
 Shadow Armour
-    Armour, Armour
-    25
-    Model on foot only. The wearer of the Shadow Armour has a 5+ armour save. In addition, the wearer has both the Scouts and Strider special rules.
-    Prince, Anointed of Asuryan, Noble, Lothern Sea Helm, Handmaiden of the Everqueen
-    1
-    None
+    CATEGORY = Armour
+    TYPE = Armour
+    POINTS = 25
+    DESCRIPTION = Model on foot only. The wearer of the Shadow Armour has a 5+ armour save. In addition, the wearer has both the Scouts and Strider special rules.
+    ALLOWED_UNITS = Prince, Anointed of Asuryan, Noble, Lothern Sea Helm, Handmaiden of the Everqueen
+    RESTRICTIONS = Limit - 1
 
 Shield of the Merwyrm
-    Armour, Shield
-    15
-    Shield. Unless he is fighting with a weapon that has the Requires Two Hands special rule, the bearer of the Shield of the Merwyrm has a parry save of 4+ (even if he's fighting with a magic weapon).
-    Prince, Anointed of Asuryan, Noble, Lothern Sea Helm, Handmaiden of the Everqueen
-    1
-    None
+    CATEGORY = Armour
+    TYPE = Shield
+    POINTS = 15
+    DESCRIPTION = Shield. Unless he is fighting with a weapon that has the Requires Two Hands special rule, the bearer of the Shield of the Merwyrm has a parry save of 4+ (even if he's fighting with a magic weapon).
+    ALLOWED_UNITS = Prince, Anointed of Asuryan, Noble, Lothern Sea Helm, Handmaiden of the Everqueen
+    RESTRICTIONS = Limit - 1
 
 Golden Crown of Atrazar
-    Talisman
-    10
-    One use only. The Golden Crown of Atrazar bestows a 2+ ward save against the first wounding hit suffered by the wearer (which cancels out not only the Wound, but also any Killing Blow or Multiple Wounds special rules the attack has) after which its power fades and it cannot be used again during the game.
-    None
-    1
-    None
+    CATEGORY = Talisman
+    POINTS = 10
+    DESCRIPTION = One use only. The Golden Crown of Atrazar bestows a 2+ ward save against the first wounding hit suffered by the wearer (which cancels out not only the Wound, but also any Killing Blow or Multiple Wounds special rules the attack has) after which its power fades and it cannot be used again during the game.
+    RESTRICTIONS = Limit - 1
 
 Moranion's Wayshard
-    Enchanted
-    50
-    Model on foot only. The bearer of Moranion's Wayshard has the Ambushers special rule. He can also give the Ambushers special rule to a friendly Archers or Spearmen unit, up to 30 models in size and chosen from Warhammer: High Elves, immediately before deployment. If he does so, he immediately joins the unit and cannot leave it until the turn after the one in which the combined unit has deployed.
-    None
-    1
-    None
+    CATEGORY = Enchanted
+    POINTS = 50
+    DESCRIPTION = Model on foot only. The bearer of Moranion's Wayshard has the Ambushers special rule. He can also give the Ambushers special rule to a friendly Archers or Spearmen unit, up to 30 models in size and chosen from Warhammer: High Elves, immediately before deployment. If he does so, he immediately joins the unit and cannot leave it until the turn after the one in which the combined unit has deployed.
+    RESTRICTIONS = Limit - 1
 
 Khaines' Ring of Fury
-    Enchanted
-    25
-    Bound spell (power level 3). Khaine's Ring of Fury contains the Soul Quench spell.
-    None
-    1
-    None
+    CATEGORY = Enchanted
+    POINTS = 25
+    DESCRIPTION = Bound spell (power level 3). Khaine's Ring of Fury contains the Soul Quench spell.
+    RESTRICTIONS = Limit - 1
 
 Gem of Sunfire
-    Enchanted
-    20
-    One use only. During the turn in which the Gem of Sunfire is used, all of the bearer's spells, shooting attacks and close combat attacks (and his mount's, if he has one) have a +1 bonus To Wound (rolls of 1 still fail) provided that they also have the Flaming Attacks special rule.
-    None
-    1
-    None
+    CATEGORY = Enchanted
+    POINTS = 20
+    DESCRIPTION = One use only. During the turn in which the Gem of Sunfire is used, all of the bearer's spells, shooting attacks and close combat attacks (and his mount's, if he has one) have a +1 bonus To Wound (rolls of 1 still fail) provided that they also have the Flaming Attacks special rule.
+    RESTRICTIONS = Limit - 1
 
 Cloak of Beards
-    Enchanted
-    10
-    D
-    None
-    1
-    None
+    CATEGORY = Enchanted
+    POINTS = 10
+    DESCRIPTION = D
+    RESTRICTIONS = Limit - 1
 
 Book of Hoeth
-    Arcane
-    55
-    The Book of Hoeth allows the bearer to re-roll a single dice from each of his casting or dispel attempts. Results of 6 cannot be re-rolled.
-    Archmage, Loremaster of Hoeth
-    1
-    None
+    CATEGORY = Arcane
+    POINTS = 55
+    DESCRIPTION = The Book of Hoeth allows the bearer to re-roll a single dice from each of his casting or dispel attempts. Results of 6 cannot be re-rolled.
+    ALLOWED_UNITS = Archmage, Loremaster of Hoeth
+    RESTRICTIONS = Limit - 1
 
 Banner of the World Dragon
-    Banner
-    50
-    All models in a unit that carries the Banner of the World Dragon have a 2+ ward save against all Wounds caused by spells, magic weapons and magical attacks. Furthermore, all Dragons (friend or foe) within 12" of the Banner of the World Dragon have the Stubborn special rule.
-    None
-    1
-    None
+    CATEGORY = Banner
+    POINTS = 50
+    DESCRIPTION = All models in a unit that carries the Banner of the World Dragon have a 2+ ward save against all Wounds caused by spells, magic weapons and magical attacks. Furthermore, all Dragons (friend or foe) within 12" of the Banner of the World Dragon have the Stubborn special rule.
+    RESTRICTIONS = Limit - 1

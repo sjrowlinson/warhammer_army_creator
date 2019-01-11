@@ -491,6 +491,17 @@ bool option_selector::select_mage_level(const std::string& s) {
     }
 }
 
+bool option_selector::select_mage_lore(const std::string& s) {
+    auto lore = tools::split(s, '_')[1];
+    std::shared_ptr<mage_character_unit> p = std::dynamic_pointer_cast<mage_character_unit>(current);
+    p->pick_lore(lore);
+    switch (in_tree) {
+    case InTree::ARMY:
+        return true;
+    default: return false;
+    }
+}
+
 bool option_selector::select_mount(const std::string& s) {
     auto split = tools::split(s, '_');
     auto mount = split[0];

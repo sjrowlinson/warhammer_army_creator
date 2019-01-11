@@ -40,6 +40,7 @@ public:
     bool select_other_item(const std::string& s, bool is_checked);
     bool select_banner(const std::string& s);
     bool select_mage_level(const std::string& s);
+    bool select_mage_lore(const std::string& s);
     bool select_mount(const std::string& s);
     bool select_mount_oco_extra(const std::string& s);
     bool select_mount_mc_extra(const std::string& s, bool is_checked);

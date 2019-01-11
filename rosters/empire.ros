@@ -22,24 +22,29 @@ General of The Empire
     MAGIC_ITEM_BUDGET = Points : 100
     TOTAL_ITEM_BUDGET = copy MAGIC_ITEM_BUDGET
 
-# add restrictions to Griffon, Hurricanum and Luminark mounts based on the required Lore of magic taken by the Battle Wizard Lord
-
 Battle Wizard Lord
     BASE_TYPE = Mage
     TYPE = Lord
     CATEGORY = Infantry
     POINTS = 165
     CHARACTERISTICS = 4 3 3 3 4 3 3 1 8
-    OPTIONAL_MOUNTS = [Name : Imperial Griffon, Points : 170, MC_extras: Name - Bloodroar | Points - 25 / Name - Two Heads | Points - 30
+    OPTIONAL_MOUNTS = [Name : Imperial Griffon, Points : 170, Restrictions : Lore - Beasts, MC_extras: Name - Bloodroar | Points - 25 / Name - Two Heads | Points - 30
                        Name : Imperial Pegasus, Points : 45, MC_extras: Name - Iron hard Hooves | Points - 5 / Name - Swift as the Wind | Points - 10
                        Name : Warhorse, Points : 18, MC_extras: Name - Barding | Points - 6
-                       Name : Celestial Hurricanum, Points : 125
-                       Name : Luminark of Hysh, Points : 120]
+                       Name : Celestial Hurricanum, Restrictions : Lore - Heavens, Points : 125
+                       Name : Luminark of Hysh, Restrictions : Lore - Light, Points : 120]
     MAGIC_ITEM_BUDGET = Points : 100
     TOTAL_ITEM_BUDGET = Points : 100
     MAGE_LEVEL = 3
     MAGE_UPGRADES = 4 [35]
-    MAGE_LORES = Fire, Beasts, Metal, Light, Life, Heavens, Shadow, Death
+    MAGE_LORES = [Name: Fire
+                  Name: Beasts
+                  Name: Metal
+                  Name: Light
+                  Name: Life
+                  Name: Heavens
+                  Name: Shadow
+                  Name: Death]
 
 Arch Lector
     BASE_TYPE = Melee
@@ -107,7 +112,14 @@ Battle Wizard
     TOTAL_ITEM_BUDGET = Points : 50
     MAGE_LEVEL = 1
     MAGE_UPGRADES = 2 [35]
-    MAGE_LORES = Fire, Beasts, Metal, Light, Life, Heavens, Shadow, Death
+    MAGE_LORES = [Name: Fire
+                  Name: Beasts
+                  Name: Metal
+                  Name: Light
+                  Name: Life
+                  Name: Heavens
+                  Name: Shadow
+                  Name: Death]
 
 Warrior Priest
     BASE_TYPE = Melee

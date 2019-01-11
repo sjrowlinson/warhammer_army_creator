@@ -74,6 +74,7 @@ namespace tools {
             case RestrictionField::MC_EXTRA:
             case RestrictionField::OTHER:
             case RestrictionField::ARMY_CONTAINS:
+            case RestrictionField::LORE:
             {
                 auto values = tools::split(field_value[1], delim_seq[2]);
                 restrictions.emplace(std::make_pair(search_restr_field->second, values));
@@ -138,6 +139,7 @@ namespace tools {
                 }
                 default: break;
                 }
+                break;
             }
             }
         }

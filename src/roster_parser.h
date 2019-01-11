@@ -34,7 +34,7 @@ namespace tools {
             std::pair<std::size_t, std::size_t> size = {1U, 1U};
             short mage_level = 0;
             std::unordered_map<short, double> mage_upgrades;
-            std::vector<std::string> mage_lores;
+            std::vector<lore_option> mage_lores;
             std::vector<std::string> characteristics;
             std::vector<std::string> champ_characteristics;
             std::vector<std::string> special_rules;

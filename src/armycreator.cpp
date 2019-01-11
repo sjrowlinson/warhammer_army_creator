@@ -442,6 +442,22 @@ void ArmyCreator::optional_level_selected() {
     }
 }
 
+void ArmyCreator::optional_lore_selected() {
+    QRadioButton* rb = qobject_cast<QRadioButton*>(QObject::sender());
+    std::string rb_name = rb->objectName().toStdString();
+    try {
+        if (opt_sel->select_mage_lore(rb_name))
+            update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::NAME);
+    } catch (const std::exception& e) {
+        QMessageBox message_box;
+        message_box.critical(nullptr, tr("Error"), tr(e.what()));
+        message_box.setFixedSize(500, 200);
+        ob->clear();
+        ob->reset(current, in_tree);
+        ob->reinitialise();
+    }
+}
+
 void ArmyCreator::optional_mount_selected() {
     QRadioButton* rb = qobject_cast<QRadioButton*>(QObject::sender());
     std::string rb_name = rb->objectName().toStdString();

@@ -10,7 +10,7 @@ Lord Skrolk
     EQUIPMENT = Weapon - Name: Rod of Corruption, Category: Magic, Type: Melee ; Arcane - Name: The Liber Bubonicus
     UNIQUENESS = true
     MAGE_LEVEL = 3
-    MAGE_LORES = Plague
+    MAGE_LORES = Name: Plague
 
 Thanquol & Boneripper
     BASE_TYPE = Mage
@@ -22,7 +22,7 @@ Thanquol & Boneripper
     EQUIPMENT = Talisman - Name: Warp-amulet ; Arcane - Name: Staff of the Horned One
     UNIQUENESS = true
     MAGE_LEVEL = 4
-    MAGE_LORES = Plague, Ruin
+    MAGE_LORES = Name: Plague; Name: Ruin
 
 Ikit Claw
     BASE_TYPE = Mage
@@ -36,7 +36,7 @@ Ikit Claw
                  Armour - Name: Iron Frame, Category: Magic, Type: Armour]
     UNIQUENESS = true
     MAGE_LEVEL = 3
-    MAGE_LORES = Ruin
+    MAGE_LORES = Name: Ruin
 
 Throt the Unclean
     BASE_TYPE = Melee
@@ -84,7 +84,7 @@ Vermin Lord
     SPECIAL_RULES = Scurry Away!, Immune to Psychology, Large Target, Rat Daemon, Terror, Ward save (5+)
     EQUIPMENT = Weapon - Name: Doom Glaive, Category: Magic, Type: Melee
     MAGE_LEVEL = 4
-    MAGE_LORES = Plague, Ruin
+    MAGE_LORES = Name: Plague; Name: Ruin
 
 Grey Seer
     BASE_TYPE = Mage
@@ -105,7 +105,7 @@ Grey Seer
     FACTION_ITEM_BUDGET = Points : 100
     TOTAL_ITEM_BUDGET = Points : 100
     MAGE_LEVEL = 4
-    MAGE_LORES = Plague, Ruin
+    MAGE_LORES = Name: Plague; Name: Ruin
 
 # Heroes
 
@@ -164,7 +164,7 @@ Warlock Engineer
     TOTAL_ITEM_BUDGET = Points : 50
     MAGE_LEVEL = 0
     MAGE_UPGRADES = 1 [50], 2 [85]
-    MAGE_LORES = Ruin
+    MAGE_LORES = Name: Ruin
 
 Chieftain
     BASE_TYPE = Melee
@@ -199,7 +199,7 @@ Plague Priest
     TOTAL_ITEM_BUDGET = Points : 50
     MAGE_LEVEL = 1
     MAGE_UPGRADES = 2 [35]
-    MAGE_LORES = Plague
+    MAGE_LORES = Name: Plague
 
 # Core
 

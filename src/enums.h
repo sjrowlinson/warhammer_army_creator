@@ -81,7 +81,8 @@ enum class RestrictionField {
     ARMY_CONTAINS,
     LIMIT,
     ITEMTYPE, // -> for budget restrictions
-    SUBITEMTYPE
+    SUBITEMTYPE,
+    LORE
 };
 
 enum class ModelSelect {
@@ -281,7 +282,8 @@ namespace enum_convert {
         {"ArmyContains", RestrictionField::ARMY_CONTAINS},
         {"Limit", RestrictionField::LIMIT},
         {"ItemType", RestrictionField::ITEMTYPE},
-        {"SubItemType", RestrictionField::SUBITEMTYPE}
+        {"SubItemType", RestrictionField::SUBITEMTYPE},
+        {"Lore", RestrictionField::LORE}
     };
     const std::unordered_map<
         RestrictionField, std::string
@@ -299,7 +301,8 @@ namespace enum_convert {
         {RestrictionField::ARMY_CONTAINS, "ArmyContains"},
         {RestrictionField::LIMIT, "Limit"},
         {RestrictionField::ITEMTYPE, "ItemType"},
-        {RestrictionField::SUBITEMTYPE, "SubItemType"}
+        {RestrictionField::SUBITEMTYPE, "SubItemType"},
+        {RestrictionField::LORE, "Lore"}
     };
 
     const std::unordered_map<

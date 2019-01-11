@@ -59,7 +59,13 @@ Chaos Sorcerer Lord
     TOTAL_ITEM_BUDGET = Points : 150
     MAGE_LEVEL = 3
     MAGE_UPGRADES = 4 [35]
-    MAGE_LORES = Death, Fire, Metal, Shadow, Tzeentch, Nurgle, Slaanesh
+    MAGE_LORES = [Name: Death
+                  Name: Fire
+                  Name: Metal
+                  Name: Shadow
+                  Name: Tzeentch, Restrictions: oco_extra - Mark of Tzeentch
+                  Name: Nurgle, Restrictions: oco_extra - Mark of Nurgle
+                  Name: Slaanesh, Restrictions: oco_extra - Mark of Slaanesh]
 
 Daemon Prince
     BASE_TYPE = Mage
@@ -79,7 +85,13 @@ Daemon Prince
     TOTAL_ITEM_BUDGET = Points : 125
     MAGE_LEVEL = 0
     MAGE_UPGRADES = 1 [35], 2 [70], 3 [105], 4 [140]
-    MAGE_LORES = Death, Fire, Metal, Shadow, Tzeentch, Nurgle, Slaanesh
+    MAGE_LORES = [Name: Death
+                  Name: Fire
+                  Name: Metal
+                  Name: Shadow
+                  Name: Tzeentch, Restrictions: oco_extra - Mark of Tzeentch
+                  Name: Nurgle, Restrictions: oco_extra - Mark of Nurgle
+                  Name: Slaanesh, Restrictions: oco_extra - Mark of Slaanesh]
 
 # Heroes
 
@@ -138,7 +150,13 @@ Chaos Sorcerer
     TOTAL_ITEM_BUDGET = Points : 75
     MAGE_LEVEL = 1
     MAGE_UPGRADES = 2 [35]
-    MAGE_LORES = Death, Fire, Metal, Shadow, Tzeentch, Nurgle, Slaanesh
+    MAGE_LORES = [Name: Death
+                  Name: Fire
+                  Name: Metal
+                  Name: Shadow
+                  Name: Tzeentch, Restrictions: oco_extra - Mark of Tzeentch
+                  Name: Nurgle, Restrictions: oco_extra - Mark of Nurgle
+                  Name: Slaanesh, Restrictions: oco_extra - Mark of Slaanesh]
 
 # Core
 

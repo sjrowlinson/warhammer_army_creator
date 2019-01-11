@@ -9,11 +9,13 @@
 #include <memory>
 #include <string>
 #include <utility>
+#include <vector>
 
 class mage_character_unit : public character_unit {
 private:
     std::pair<short, double> level_;
     std::pair<std::string, std::pair<ItemCategory, double>> arcane_item_;
+    std::vector<std::string> lores_;
 
     std::string restriction_check(
         const std::unordered_multimap<RestrictionField, std::any>& restrictions,
@@ -35,6 +37,10 @@ public:
     const std::pair<std::string, std::pair<ItemCategory, double>>& arcane_item() const noexcept;
     std::string pick_arcane_item(ItemCategory item_class, const std::string& name);
     std::string remove_arcane_item();
+
+    const std::vector<std::string>& lores() const noexcept;
+    void pick_lore(const std::string& lore);
+    void remove_lore(const std::string& lore);
 
     virtual std::vector<std::string> clear() override;
 

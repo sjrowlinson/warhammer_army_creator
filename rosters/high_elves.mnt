@@ -1,79 +1,48 @@
 Elven Steed
-    Warbeast
-    9 3 0 3 3 1 4 1 5
-    None
-    None
-    Ithilmar barding [7]
-    None
+    CATEGORY = Warbeast
+    CHARACTERISTICS = 9 3 0 3 3 1 4 1 5
 
 Great Eagle
-    Monstrous Beast
-    2 5 0 4 4 3 4 2 8
-    Fly
-    None
-    Swiftsense [10], Shredding Talons [5]
-    None
+    CATEGORY = Monstrous Beast
+    CHARACTERISTICS = 2 5 0 4 4 3 4 2 8
+    SPECIAL_RULES = Fly
 
 Griffon
-    Monster
-    6 5 0 5 5 4 5 4 7
-    Fly, Large Target, Terror
-    None
-    Swooping Strike [25], Swiftsense [20]
-    None
+    CATEGORY = Monster
+    CHARACTERISTICS = 6 5 0 5 5 4 5 4 7
+    SPECIAL_RULES = Fly, Large Target, Terror
 
 Tiranoc Chariot
-    Chariot
-    - - - 5 4 4 - - -
-    Armour Save (5+), Valour of Ages
-    None
-    None
-    None
+    CATEGORY = Chariot
+    CHARACTERISTICS = - - - 5 4 4 - - -
+    SPECIAL_RULES = Armour Save (5+), Valour of Ages
 
 Sun Dragon
-    Monster
-    6 5 0 5 5 5 4 4 7
-    Dragon Fire, Large Target, Fly, Scaly Skin (3+), Terror
-    None
-    None
-    None
+    CATEGORY = Monster
+    CHARACTERISTICS = 6 5 0 5 5 5 4 4 7
+    SPECIAL_RULES = Dragon Fire, Large Target, Fly, Scaly Skin (3+), Terror
 
 Moon Dragon
-    Monster
-    6 6 0 6 6 6 3 5 8
-    Dragon Fire, Large Target, Fly, Scaly Skin (3+), Terror
-    None
-    None
-    None
+    CATEGORY = Monster
+    CHARACTERISTICS = 6 6 0 6 6 6 3 5 8
+    SPECIAL_RULES = Dragon Fire, Large Target, Fly, Scaly Skin (3+), Terror
 
 Star Dragon
-    Monster
-    6 7 0 7 7 7 2 6 9
-    Dragon Fire, Large Target, Fly, Scaly Skin (3+), Terror
-    None
-    None
-    None
+    CATEGORY = Monster
+    CHARACTERISTICS = 6 7 0 7 7 7 2 6 9
+    SPECIAL_RULES = Dragon Fire, Large Target, Fly, Scaly Skin (3+), Terror
 
 Flamespyre Phoenix
-    Monster
-    2 5 0 5 5 5 4 3 8
-    Attuned to Magic, Fireborn, Flaming Attacks, Fly, Large Target, Phoenix Reborn, Terror, Wake of Fire
-    None
-    None
-    None
+    CATEGORY = Monster
+    CHARACTERISTICS = 2 5 0 5 5 5 4 3 8
+    SPECIAL_RULES = Attuned to Magic, Fireborn, Flaming Attacks, Fly, Large Target, Phoenix Reborn, Terror, Wake of Fire
 
 Frostheart Phoenix
-    Monster
-    2 5 0 5 5 5 4 3 8
-    Attuned to Magic, Blizzard Aura, Fly, Large Target, Natural Armour (5+), Terror
-    None
-    None
-    None
+    CATEGORY = Monster
+    CHARACTERISTICS = 2 5 0 5 5 5 4 3 8
+    SPECIAL_RULES = Attuned to Magic, Blizzard Aura, Fly, Large Target, Natural Armour (5+), Terror
 
 Lothern Skycutter
-    Chariot
-    - 4 4 3 - - 5 1 8
-    Armour Save (4+), Fly, Valour of Ages
-    None
-    None
-    None
+    CATEGORY = Chariot
+    CHARACTERISTICS = - 4 4 3 - - 5 1 8
+    SPECIAL_RULES = Armour Save (4+), Fly, Valour of Ages

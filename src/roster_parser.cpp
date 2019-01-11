@@ -123,6 +123,7 @@ namespace tools {
             i += 1U + ml_offset;
             arg = read_line(blocks[block_pos] + i);
         }
+        // give the unit hand weapon by default if it doesn't have a melee weapon and is of suitable type
         if (!(tpo.unit_category == UnitCategory::CHARIOT || tpo.unit_category == UnitCategory::MONSTER
               || tpo.unit_category == UnitCategory::UNIQUE || tpo.unit_category == UnitCategory::WARBEASTS
               || tpo.unit_category == UnitCategory::WARMACHINE)) {
@@ -248,8 +249,31 @@ namespace tools {
     }
     std::size_t roster_parser::parse_unit_mage_lores(const std::string& s, bool champion, bool master) {
         (void)champion; (void)master;
-        tpo.mage_lores = tools::split(s, ',');
-        return 0U;
+        std::pair<std::string, std::size_t> ml_pair = {"", 0U};
+        if (in_multiline_state) ml_pair = multiline_state_handler(s);
+        std::vector<std::string> all = tools::split(
+            in_multiline_state ? ml_pair.first : s, ';'
+        );
+        for (const auto& x : all) {
+            auto args = tools::split(x, ',');
+            auto names_values = tools::zip_args_to_names_values(args);
+            if (!tools::in_names_values(names_values, "Name")) {
+                std::string msg = "Error parsing + " + enum_convert::FACTION_TO_STRING.at(faction)
+                        + " roster - unit: " + read_line(blocks[curr_block])
+                        + " has an invalid argument MAGE_LORES where an item"
+                        + " has been specified without a Name argument.";
+                throw std::runtime_error(msg);
+            }
+            lore_option lo;
+            for (const auto& y : names_values) {
+                if (y.first == "Name") lo.name = y.second;
+                else if (y.first == "Restrictions")
+                        lo.restrictions = parse_restrictions(y.second, "MAGE_LORES");
+
+            }
+            tpo.mage_lores.push_back(lo);
+        }
+        return ml_pair.second;
     }
     std::size_t roster_parser::parse_unit_characteristics(const std::string& s, bool champion, bool master) {
         (void)master;

@@ -57,6 +57,14 @@ struct mount_option {
     > restrictions;
 };
 
+struct lore_option {
+    std::string name;
+    std::unordered_multimap<
+        RestrictionField,
+        std::any
+    > restrictions;
+};
+
 struct budget {
     BudgetType type;
     double points;

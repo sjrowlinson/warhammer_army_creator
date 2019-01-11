@@ -18,11 +18,15 @@ std::string mage_character_unit::restriction_check(
     for (const auto& restriction : restrictions) {
         switch (restriction.first) {
         case RestrictionField::ARCANE:
+        case RestrictionField::LORE:
             for (const auto& x : std::any_cast<std::vector<std::string>>(restriction.second)) {
                 bool restricted = false;
                 switch (restriction.first) {
                 case RestrictionField::ARCANE:
                     restricted = arcane_item().first != x;
+                    break;
+                case RestrictionField::LORE:
+                    restricted = std::none_of(std::begin(lores_), std::end(lores_), [&x](const auto& y) { return y == x; });
                     break;
                 default: break;
                 }
@@ -168,6 +172,23 @@ std::string mage_character_unit::remove_arcane_item() {
     arcane_item_.first.clear();
     arcane_item_.second.second = 0.0;
     return removed;
+}
+
+const std::vector<std::string>& mage_character_unit::lores() const noexcept {
+    return lores_;
+}
+void mage_character_unit::pick_lore(const std::string& lore) {
+    auto search = std::find_if(std::begin(handle->lores()), std::end(handle->lores()), [&lore](const auto& x) {
+        return x.name == lore;
+    });
+    if (search == std::end(handle->lores()))
+        throw std::invalid_argument(name() + " cannot choose this Lore of Magic!");
+    auto restr = restriction_check(search->restrictions, "Lore: " + lore);
+    if (!restr.empty()) throw std::invalid_argument(restr);
+    lores_.push_back(lore);
+}
+void mage_character_unit::remove_lore(const std::string& lore) {
+    lores_.erase(std::remove(std::begin(lores_), std::end(lores_), lore));
 }
 
 std::vector<std::string> mage_character_unit::clear() {

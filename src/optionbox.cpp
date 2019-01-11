@@ -81,8 +81,9 @@ bool OptionBox::reinitialise() {
     if (armour_boxes.first != nullptr) vbox->addWidget(armour_boxes.first);
     if (armour_boxes.second != nullptr) vbox->addWidget(armour_boxes.second);
     if (current->is_mage()) {
-        auto mage_levels_box = make_mage_levels_box();
-        if (mage_levels_box != nullptr) vbox->addWidget(mage_levels_box);
+        auto mage_opt_box = make_mage_options_boxes();
+        if (mage_opt_box.first != nullptr) vbox->addWidget(mage_opt_box.first);
+        if (mage_opt_box.second != nullptr) vbox->addWidget(mage_opt_box.second);
     }
     auto mount_box = make_mounts_boxes();
     if (mount_box != nullptr) vbox->addWidget(mount_box);
@@ -517,37 +518,68 @@ QGroupBox* OptionBox::make_armour_subbox(ArmourType at, bool champion) {
     return armour_subbox;
 }
 
-QGroupBox* OptionBox::make_mage_levels_box() {
+std::pair<QGroupBox*, QGroupBox*> OptionBox::make_mage_options_boxes() {
     auto p = std::dynamic_pointer_cast<mage_character_unit>(current);
-    std::unordered_map<short, double> opt_levels = p->handle->level_upgrades();
-    short level = p->level();
-    if (opt_levels.empty()) return nullptr;
-    QGroupBox* levels_box = new QGroupBox(creator->tr("Mage Levels"));
-    QVBoxLayout* levels_box_layout = new QVBoxLayout;
-    bool has_level = false;
-    std::string none_rb_name = "Level " + std::to_string(p->handle->mage_level()) + " (0 pts)";
-    QRadioButton* none_rb = new QRadioButton(creator->tr(none_rb_name.data()));
-    none_rb->setObjectName(QString("Default_levels_radiobutton"));
-    creator->connect(none_rb, SIGNAL(clicked(bool)), creator, SLOT(optional_level_selected()));
-    levels_box_layout->addWidget(none_rb);
-    for (const auto& l : opt_levels) {
-        auto tmp = tools::split(std::to_string(l.second), '.');
-        for (auto& s : tmp) tools::remove_leading_whitespaces(s);
-        std::string pts_str = (tools::starts_with(tmp[1], '0')) ? tmp[0] : tmp[0] + "." + tmp[1].substr(0, 1);
-        std::string name = "Level " + std::to_string(l.first) + " (" + pts_str + " pts" + ")";
-        QRadioButton* b = new QRadioButton(creator->tr(name.data()));
-        b->setObjectName(QString(("level_" + std::to_string(l.first) + "_radiobutton").data()));
-        if (level == l.first) {
-            b->setChecked(true);
-            has_level = true;
+    std::pair<QGroupBox*, QGroupBox*> boxes = {nullptr, nullptr};
+    // mage levels box
+    auto opt_levels = p->handle->level_upgrades();
+    if (!opt_levels.empty()) {
+        short level = p->level();
+        auto v = tools::umap_to_vector(opt_levels);
+        std::sort(std::begin(v), std::end(v), [](const auto& lhs, const auto& rhs) {
+            return lhs.first < rhs.first;
+        });
+        QGroupBox* levels_box = new QGroupBox(creator->tr("Mage Levels"));
+        QVBoxLayout* levels_box_layout = new QVBoxLayout;
+        bool has_level = false;
+        std::string none_rb_name = "Level " + std::to_string(p->handle->mage_level()) + " (0 pts)";
+        QRadioButton* none_rb = new QRadioButton(creator->tr(none_rb_name.data()));
+        none_rb->setObjectName(QString("Default_levels_radiobutton"));
+        creator->connect(none_rb, SIGNAL(clicked(bool)), creator, SLOT(optional_level_selected()));
+        levels_box_layout->addWidget(none_rb);
+        for (const auto& l : v) {
+            std::string name = "Level " + std::to_string(l.first) + " (" + tools::points_str(l.second) + " pts" + ")";
+            QRadioButton* b = new QRadioButton(creator->tr(name.data()));
+            b->setObjectName(QString(("level_" + std::to_string(l.first) + "_radiobutton").data()));
+            if (level == l.first) {
+                b->setChecked(true);
+                has_level = true;
+            }
+            creator->connect(b, SIGNAL(clicked(bool)), creator, SLOT(optional_level_selected()));
+            levels_box_layout->addWidget(b);
         }
-        creator->connect(b, SIGNAL(clicked(bool)), creator, SLOT(optional_level_selected()));
-        levels_box_layout->addWidget(b);
+        if (!has_level) none_rb->setChecked(true);
+        levels_box_layout->addStretch(1);
+        levels_box->setLayout(levels_box_layout);
+        boxes.first = levels_box;
     }
-    if (!has_level) none_rb->setChecked(true);
-    levels_box_layout->addStretch(1);
-    levels_box->setLayout(levels_box_layout);
-    return levels_box;
+    // mage lores box
+    auto opt_lores = p->handle->lores();
+    if (!opt_lores.empty()) {
+        auto lores = p->lores();
+        QGroupBox* lores_box = new QGroupBox(creator->tr("Lores of Magic"));
+        QVBoxLayout* lores_box_layout = new QVBoxLayout;
+        bool has_lore = false;
+        for (const auto& l : opt_lores) {
+            std::string name = "Lore of " + l.name;
+            QRadioButton* b = new QRadioButton(creator->tr(name.data()));
+            b->setObjectName(QString::fromStdString("lore_" + l.name + "_radiobutton"));
+            if (lores.empty() && !has_lore) {
+                b->setChecked(true);
+                has_lore = true;
+            }
+            else if (std::count_if(std::begin(lores), std::end(lores), [&l](const auto& x) { return x == l.name; } )) {
+                b->setChecked(true);
+                has_lore = true;
+            }
+            creator->connect(b, SIGNAL(clicked(bool)), creator, SLOT(optional_lore_selected()));
+            lores_box_layout->addWidget(b);
+        }
+        lores_box_layout->addStretch(1);
+        lores_box->setLayout(lores_box_layout);
+        boxes.second = lores_box;
+    }
+    return boxes;
 }
 
 QGroupBox* OptionBox::make_mounts_boxes() {
