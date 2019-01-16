@@ -57,7 +57,13 @@ private slots:
     void on_roster_tree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
     void on_roster_tree_itemDoubleClicked(QTreeWidgetItem *item, int column);
 
-    void on_army_tree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+    void on_lord_tree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+    void on_hero_tree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+    void on_core_tree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+    void on_special_tree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+    void on_rare_tree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+
+    //void on_army_tree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
 
     void on_add_button_clicked();
     void on_duplicate_button_clicked();
@@ -92,16 +98,23 @@ private:
     // handles to the army list and roster
     std::shared_ptr<army_list> army;
     std::shared_ptr<selection_tree> st;
-    // handle to currently selected unit (can be in roster or army tree)
+    // handle to currently selected unit
     std::shared_ptr<unit> current;
     int id_counter;
     InTree in_tree;
+    // handle to the object which performs all
+    // selections and removals of options for units
     std::shared_ptr<option_selector> opt_sel;
+    // option boxes
     std::shared_ptr<OptionBox> ob;
     std::shared_ptr<MagicItemBox> mib;
     // directory related fields
     const QString army_list_dir = "WHFB_ArmyLists";
     QString documents_dir;
+
+    QTreeWidgetItem* current_item() const;
+
+    void army_trees_itemchanged(QTreeWidgetItem* curr);
 
     void update_validity_label();
     void update_budget_label();
@@ -128,12 +141,19 @@ private:
         const std::unordered_map<CommandGroup, std::pair<std::string, double>>& command,
         QString& command_str
     );
-    void update_unit_display(
+    void update_character_unit_display(
         QTreeWidgetItem* item,
+        CharacterTreeColumn column,
         bool adding,
-        ArmyTreeColumn column = ArmyTreeColumn::ALL,
-        bool copying = false
+        bool copying
     );
+    void update_noncharacter_unit_display(
+        QTreeWidgetItem* item,
+        UnitTreeColumn column,
+        bool adding,
+        bool copying
+    );
+    void update_unit_display(QTreeWidgetItem* item, ArmyTreeColumn col, bool adding, bool copying);
 
 };
 

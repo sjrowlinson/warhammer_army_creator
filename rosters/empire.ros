@@ -170,6 +170,9 @@ Witch Hunter
 # Core
 
 # TODO: figure out additional parsing and unit arrangements for smart handling of Detachments
+# => could do this via a button on units that can have detachments which then brings up a
+#    selection screen for the detachment unit wanted, this unit is then added to the UI as a
+#    child QTreeWidgetItem of the parent unit
 
 Halberdiers
     BASE_TYPE = Normal

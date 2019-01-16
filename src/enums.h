@@ -152,21 +152,98 @@ enum class InvalidListReason {
 enum class InTree {
     ROSTER,
     ARMY,
+    LORD,
+    HERO,
+    CORE,
+    SPECIAL,
+    RARE,
     NEITHER
 };
 
+// TODO: split into two different - one for characters, other for non-character units
 enum class ArmyTreeColumn {
     NAME,
+    MOUNT,
     SIZE,
+    LEVEL,
+    LORE,
     WEAPONS,
     ARMOUR,
+    TALISMAN,
+    ENCHANTED,
+    ARCANE,
     COMMAND,
+    BANNER,
     EXTRAS,
     POINTS,
     ALL
 };
 
+enum class CharacterTreeColumn {
+    NAME,
+    MOUNT,
+    LEVEL,
+    LORE,
+    WEAPONS,
+    ARMOUR,
+    TALISMAN,
+    ENCHANTED,
+    ARCANE,
+    BANNER,
+    EXTRAS,
+    POINTS,
+    ALL
+};
+
+enum class UnitTreeColumn {
+    NAME,
+    SIZE,
+    MOUNT,
+    WEAPONS,
+    ARMOUR,
+    EXTRAS,
+    COMMAND,
+    BANNER,
+    POINTS,
+    ALL
+};
+
 namespace enum_convert {
+    bool in_army_trees(InTree in_tree);
+
+    const std::unordered_map<
+        ArmyTreeColumn, CharacterTreeColumn
+    > ATC_TO_CTC = {
+        {ArmyTreeColumn::NAME, CharacterTreeColumn::NAME},
+        {ArmyTreeColumn::MOUNT, CharacterTreeColumn::MOUNT},
+        {ArmyTreeColumn::LEVEL, CharacterTreeColumn::LEVEL},
+        {ArmyTreeColumn::LORE, CharacterTreeColumn::LORE},
+        {ArmyTreeColumn::WEAPONS, CharacterTreeColumn::WEAPONS},
+        {ArmyTreeColumn::ARMOUR, CharacterTreeColumn::ARMOUR},
+        {ArmyTreeColumn::TALISMAN, CharacterTreeColumn::TALISMAN},
+        {ArmyTreeColumn::ENCHANTED, CharacterTreeColumn::ENCHANTED},
+        {ArmyTreeColumn::ARCANE, CharacterTreeColumn::ARCANE},
+        {ArmyTreeColumn::BANNER, CharacterTreeColumn::BANNER},
+        {ArmyTreeColumn::EXTRAS, CharacterTreeColumn::EXTRAS},
+        {ArmyTreeColumn::POINTS, CharacterTreeColumn::POINTS},
+        {ArmyTreeColumn::ALL, CharacterTreeColumn::ALL}
+    };
+
+    const std::unordered_map<
+        ArmyTreeColumn, UnitTreeColumn
+    > ATC_TO_UTC = {
+        {ArmyTreeColumn::NAME, UnitTreeColumn::NAME},
+        {ArmyTreeColumn::MOUNT, UnitTreeColumn::MOUNT},
+        {ArmyTreeColumn::SIZE, UnitTreeColumn::SIZE},
+        {ArmyTreeColumn::WEAPONS, UnitTreeColumn::WEAPONS},
+        {ArmyTreeColumn::ARMOUR, UnitTreeColumn::ARMOUR},
+        {ArmyTreeColumn::BANNER, UnitTreeColumn::BANNER},
+        {ArmyTreeColumn::EXTRAS, UnitTreeColumn::EXTRAS},
+        {ArmyTreeColumn::COMMAND, UnitTreeColumn::COMMAND},
+        {ArmyTreeColumn::POINTS, UnitTreeColumn::POINTS},
+        {ArmyTreeColumn::ALL, UnitTreeColumn::ALL}
+    };
+
     const std::unordered_map<
         std::string, Faction
     > STRING_TO_FACTION = {

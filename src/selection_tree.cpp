@@ -1,6 +1,7 @@
 #include "selection_tree.h"
 
-selection_tree::selection_tree(Faction faction, army_list& list) : race(faction), army(list) {
+selection_tree::selection_tree(Faction faction, const std::shared_ptr<army_list>& list)
+    : race(faction), army(list) {
     auto files = filenames();
     QString common_item_filename(":/magic_items/common.mag");
     tools::item_parser ip(common_item_filename, ItemCategory::COMMON);
@@ -8,7 +9,7 @@ selection_tree::selection_tree(Faction faction, army_list& list) : race(faction)
         auto items = ip.parse();
         common_items.first = ip.name();
         for (auto&& item : items) common_items.second[item.name] = item;
-        reset(faction, list);
+        reset(faction);
     }
     catch (const std::runtime_error&) { throw; }
 }
@@ -102,26 +103,22 @@ std::tuple<std::string, std::string, std::string, std::string> selection_tree::f
 void selection_tree::change_selection(const std::string& name) {
     switch (roster[name]->base_unit_type()) {
     case BaseUnitType::MELEE_CHARACTER:
-        current_selection = std::make_shared<melee_character_unit>(melee_character_unit(roster[name], &army.get()));
+        current_selection = std::make_shared<melee_character_unit>(melee_character_unit(roster[name], army.get()));
         break;
     case BaseUnitType::MAGE_CHARACTER:
-        current_selection = std::make_shared<mage_character_unit>(mage_character_unit(roster[name], &army.get()));
+        current_selection = std::make_shared<mage_character_unit>(mage_character_unit(roster[name], army.get()));
         break;
     case BaseUnitType::MIXED:
-        current_selection = std::make_shared<mixed_unit>(mixed_unit(roster[name], &army.get()));
+        current_selection = std::make_shared<mixed_unit>(mixed_unit(roster[name], army.get()));
         break;
     case BaseUnitType::NORMAL:
-        current_selection = std::make_shared<normal_unit>(normal_unit(roster[name], &army.get()));
+        current_selection = std::make_shared<normal_unit>(normal_unit(roster[name], army.get()));
         break;
     default: break;
     }
 }
 
-void selection_tree::reset_army_list(army_list& _army) {
-    army = _army;
-}
-
-void selection_tree::reset(Faction faction, army_list &list) {
+void selection_tree::reset(Faction faction) {
     roster.clear();
     magic_items.first.clear();
     magic_items.second.clear();
@@ -138,7 +135,6 @@ void selection_tree::reset(Faction faction, army_list &list) {
     QString mifile(std::get<2>(files).data());
     QString fifile(std::get<3>(files).data());
     parse_item_files(std::make_pair(mifile, fifile));
-    reset_army_list(list);
 }
 
 std::shared_ptr<unit> selection_tree::selected() {
@@ -148,7 +144,7 @@ std::shared_ptr<unit> selection_tree::selected() {
 void selection_tree::add_unit_to_army_list(int id) {
     current_selection->set_id(id);
     if (current_selection->name().empty()) return;
-    try { army.get().add_unit(current_selection); }
+    try { army.get()->add_unit(current_selection); }
     catch (const std::invalid_argument&) { throw; }
 }
 

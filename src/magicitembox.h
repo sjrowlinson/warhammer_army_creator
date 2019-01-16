@@ -31,7 +31,6 @@ private:
     QGroupBox* descr_box;
     QLabel* descr_label;
     std::shared_ptr<unit> current;
-    InTree in_tree;
     ItemCategory ic_selected;
 
     // generic method to do some common checks and book-keeping before
@@ -52,7 +51,7 @@ public:
                           QGroupBox* descr_box_, QLabel* descr_label_);
     ~MagicItemBox() = default;
 
-    void reset(const std::shared_ptr<unit>& current_, InTree in_tree_);
+    void reset(const std::shared_ptr<unit>& current_);
     void reset_category(ItemCategory ic_selected_);
 
     bool reinitialise(ItemType focus);

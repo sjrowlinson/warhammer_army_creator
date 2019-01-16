@@ -240,9 +240,7 @@ std::string character_unit::pick_magic_item(ItemType item_type, ItemCategory ite
         }
         break;
     }
-    case ItemCategory::MUNDANE:
-    case ItemCategory::NONE:
-        break;
+    default: break;
     }
     return removed;
 }

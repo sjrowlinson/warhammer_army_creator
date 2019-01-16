@@ -32,21 +32,21 @@ public:
 
     // selectors
 
-    bool select_weapon(const std::string& s);
-    bool select_armour(const std::string& s);
-    bool select_talisman(const std::string& s);
-    bool select_enchanted_item(const std::string& s);
-    bool select_arcane_item(const std::string& s);
-    bool select_other_item(const std::string& s, bool is_checked);
-    bool select_banner(const std::string& s);
-    bool select_mage_level(const std::string& s);
-    bool select_mage_lore(const std::string& s);
-    bool select_mount(const std::string& s);
-    bool select_mount_oco_extra(const std::string& s);
-    bool select_mount_mc_extra(const std::string& s, bool is_checked);
-    bool select_command(const std::string& s, bool is_checked);
-    bool select_oco_extra(const std::string& s);
-    bool select_mc_extra(const std::string& s, bool is_checked);
+    void select_weapon(const std::string& s);
+    void select_armour(const std::string& s);
+    void select_talisman(const std::string& s);
+    void select_enchanted_item(const std::string& s);
+    void select_arcane_item(const std::string& s);
+    void select_other_item(const std::string& s, bool is_checked);
+    void select_banner(const std::string& s);
+    void select_mage_level(const std::string& s);
+    void select_mage_lore(const std::string& s);
+    void select_mount(const std::string& s);
+    void select_mount_oco_extra(const std::string& s);
+    void select_mount_mc_extra(const std::string& s, bool is_checked);
+    void select_command(const std::string& s, bool is_checked);
+    void select_oco_extra(const std::string& s);
+    void select_mc_extra(const std::string& s, bool is_checked);
 };
 
 #endif // !OPTION_SELECTOR_H

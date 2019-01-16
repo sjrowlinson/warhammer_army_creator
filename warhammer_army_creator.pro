@@ -32,6 +32,7 @@ SOURCES += \
         src/armycreator.cpp \
         src/army_list.cpp \
         src/equipment.cpp \
+        src/enums.cpp \
         src/options.cpp \
         src/mount.cpp \
         src/file_parser.cpp \

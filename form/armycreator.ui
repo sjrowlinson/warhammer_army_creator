@@ -177,23 +177,33 @@
      <string>Add</string>
     </property>
    </widget>
-   <widget class="QTreeWidget" name="army_tree">
+   <widget class="QTreeWidget" name="lord_tree">
     <property name="geometry">
      <rect>
       <x>250</x>
       <y>50</y>
       <width>1101</width>
-      <height>661</height>
+      <height>101</height>
      </rect>
     </property>
     <column>
      <property name="text">
-      <string>Unit</string>
+      <string>Lord Unit</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>Size</string>
+      <string>Mount</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Wizard Level</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Wizard Lore(s)</string>
      </property>
     </column>
     <column>
@@ -208,7 +218,22 @@
     </column>
     <column>
      <property name="text">
-      <string>Command</string>
+      <string>Talisman</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Enchanted Item</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Arcane Item</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Banner</string>
      </property>
     </column>
     <column>
@@ -221,121 +246,6 @@
       <string>Points</string>
      </property>
     </column>
-    <item>
-     <property name="text">
-      <string>Lords</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Heroes</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Core</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Special</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Rare</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </item>
    </widget>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
@@ -685,6 +595,241 @@
     <property name="text">
      <string>Set as General</string>
     </property>
+   </widget>
+   <widget class="QTreeWidget" name="hero_tree">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>160</y>
+      <width>1101</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <column>
+     <property name="text">
+      <string>Hero Unit</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Mount</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Wizard Level</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Wizard Lore(s)</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Weapons</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Armour</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Talisman</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Enchanted Item</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Arcane Item</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Banner</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Extras</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Points</string>
+     </property>
+    </column>
+   </widget>
+   <widget class="QTreeWidget" name="core_tree">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>310</y>
+      <width>1101</width>
+      <height>181</height>
+     </rect>
+    </property>
+    <column>
+     <property name="text">
+      <string>Core Unit</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Size</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Mount</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Weapons</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Armour</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Extras</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Command</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Banner</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Points</string>
+     </property>
+    </column>
+   </widget>
+   <widget class="QTreeWidget" name="special_tree">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>500</y>
+      <width>1101</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <column>
+     <property name="text">
+      <string>Special Unit</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Size</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Mount</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Weapons</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Armour</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Extras</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Command</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Banner</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Points</string>
+     </property>
+    </column>
+   </widget>
+   <widget class="QTreeWidget" name="rare_tree">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>620</y>
+      <width>1101</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <column>
+     <property name="text">
+      <string>Rare Unit</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Size</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Mount</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Weapons</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Armour</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Extras</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Command</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Banner</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Points</string>
+     </property>
+    </column>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>

@@ -424,7 +424,7 @@ void army_list::save(const QString& filename) const {
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
         throw std::runtime_error("Access error - unable to write to: " + filename.toStdString());
     QTextStream stream(&file);
-    for (const auto& u : army) stream << QString::fromStdString(u.second->save()) << '\n';
+    for (const auto& u : army) stream << "UNIT = " << QString::fromStdString(u.second->save()) << '\n';
     if (general_ != nullptr)
         stream << "GENERAL = " << QString::fromStdString(general_->name())
                << ' ' << QString("%1").arg(general_->id()) << '\n';

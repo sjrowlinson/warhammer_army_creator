@@ -4,7 +4,7 @@
 MagicItemBox::MagicItemBox(ArmyCreator* creator_, QTabWidget* box_,
                            QGroupBox* descr_box_, QLabel* descr_label_) :
     creator(creator_), box(box_), descr_box(descr_box_), descr_label(descr_label_),
-    in_tree(InTree::NEITHER), ic_selected(ItemCategory::COMMON) {}
+    ic_selected(ItemCategory::COMMON) {}
 
 void MagicItemBox::clear() {
     for (auto i = 0; i < box->count(); ++i) {
@@ -16,9 +16,8 @@ void MagicItemBox::clear() {
     current.reset();
 }
 
-void MagicItemBox::reset(const std::shared_ptr<unit>& current_, InTree in_tree_) {
+void MagicItemBox::reset(const std::shared_ptr<unit>& current_) {
     current = current_;
-    in_tree = in_tree_;
 }
 
 void MagicItemBox::reset_category(ItemCategory ic_selected_) {

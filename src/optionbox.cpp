@@ -121,7 +121,7 @@ QGroupBox* OptionBox::make_size_command_box() {
         std::string size_sb_name = p->name() + "_spinbox";
         size_sb->setObjectName(QString(size_sb_name.data()));
         // set value of spinbox to current unit size
-        if (in_tree == InTree::ARMY) size_sb->setValue(static_cast<int>(p->size()));
+        if (enum_convert::in_army_trees(in_tree)) size_sb->setValue(static_cast<int>(p->size()));
         creator->connect(size_sb, SIGNAL(valueChanged(int)), creator, SLOT(change_unit_size()));
         size_box_layout->addWidget(label);
         size_box_layout->addWidget(size_sb);
@@ -144,7 +144,7 @@ QGroupBox* OptionBox::make_size_command_box() {
             (p->slave().max_size() == std::numeric_limits<std::size_t>::max()) ?
                 1000 : static_cast<int>(p->slave().max_size())
         );
-        if (in_tree == InTree::ARMY) {
+        if (enum_convert::in_army_trees(in_tree)) {
             master_size_sb->setValue(static_cast<int>(p->master().size()));
             slave_size_sb->setValue(static_cast<int>(p->slave().size()));
         }
@@ -175,7 +175,7 @@ QGroupBox* OptionBox::make_command_box() {
         auto p = std::dynamic_pointer_cast<normal_unit>(current);
         auto opt_command = p->handle->optional_command();
         std::unordered_map<CommandGroup, std::pair<std::string, double>> command;
-        if (in_tree == InTree::ARMY) command = p->command();
+        if (enum_convert::in_army_trees(in_tree)) command = p->command();
         if (opt_command.empty()) return nullptr;
         QGroupBox* gb = new QGroupBox(creator->tr("Command Group"));
         QVBoxLayout* vbl = new QVBoxLayout;
@@ -192,7 +192,7 @@ QGroupBox* OptionBox::make_command_box() {
         if (opt_master_command.empty() && opt_slave_command.empty()) return nullptr;
         std::unordered_map<CommandGroup, std::pair<std::string, double>> master_command;
         std::unordered_map<CommandGroup, std::pair<std::string, double>> slave_command;
-        if (in_tree == InTree::ARMY) {
+        if (enum_convert::in_army_trees(in_tree)) {
             master_command = p->master().command();
             slave_command = p->slave().command();
         }
@@ -761,7 +761,7 @@ QGroupBox* OptionBox::make_oco_extras_subbox(bool champion) {
     {
         auto p = std::dynamic_pointer_cast<character_unit>(current);
         opt_oco_extras = p->handle_->opt().oco_extras();
-        if (in_tree == InTree::ARMY) curr_oco_extra = p->oco_extra();
+        if (enum_convert::in_army_trees(in_tree)) curr_oco_extra = p->oco_extra();
         break;
     }
     case BaseUnitType::NORMAL:
@@ -770,13 +770,13 @@ QGroupBox* OptionBox::make_oco_extras_subbox(bool champion) {
         if (champion) {
             opt_oco_extras = p->handle->champion_opt().oco_extras();
             p->switch_model_select(ModelSelect::CHAMPION);
-            if (in_tree == InTree::ARMY) curr_oco_extra = p->oco_extra();
+            if (enum_convert::in_army_trees(in_tree)) curr_oco_extra = p->oco_extra();
             p->switch_model_select(ModelSelect::DEFAULT);
         }
         else {
             opt_oco_extras = p->handle->opt().oco_extras();
             p->switch_model_select(ModelSelect::DEFAULT);
-            if (in_tree == InTree::ARMY) curr_oco_extra = p->oco_extra();
+            if (enum_convert::in_army_trees(in_tree)) curr_oco_extra = p->oco_extra();
         }
         break;
     }
@@ -820,7 +820,7 @@ QGroupBox* OptionBox::make_mc_extras_subbox(bool champion) {
     {
         auto p = std::dynamic_pointer_cast<character_unit>(current);
         opt_mc_extras = p->handle_->opt().mc_extras();
-        if (in_tree == InTree::ARMY) curr_mc_extras = p->mc_extras();
+        if (enum_convert::in_army_trees(in_tree)) curr_mc_extras = p->mc_extras();
         break;
     }
     case BaseUnitType::NORMAL:
@@ -829,13 +829,13 @@ QGroupBox* OptionBox::make_mc_extras_subbox(bool champion) {
         if (champion) {
             opt_mc_extras = p->handle->champion_opt().mc_extras();
             p->switch_model_select(ModelSelect::CHAMPION);
-            if (in_tree == InTree::ARMY) curr_mc_extras = p->mc_extras();
+            if (enum_convert::in_army_trees(in_tree)) curr_mc_extras = p->mc_extras();
             p->switch_model_select(ModelSelect::DEFAULT);
         }
         else {
             opt_mc_extras = p->handle->opt().mc_extras();
             p->switch_model_select(ModelSelect::DEFAULT);
-            if (in_tree == InTree::ARMY) curr_mc_extras = p->mc_extras();
+            if (enum_convert::in_army_trees(in_tree)) curr_mc_extras = p->mc_extras();
         }
         break;
     }

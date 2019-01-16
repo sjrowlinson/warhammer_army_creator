@@ -70,8 +70,7 @@ private:
     > faction_items;
 
     std::shared_ptr<unit> current_selection;
-
-    std::reference_wrapper<army_list> army;
+    std::shared_ptr<army_list> army;
 
     std::tuple<std::string, std::string, std::string, std::string> filenames() const noexcept;
     void parse_roster_file(const QString& rfile_str);
@@ -79,12 +78,12 @@ private:
     void parse_item_files(const std::pair<QString, QString>& ifile_str);
     std::vector<std::shared_ptr<base_unit>> all_of(UnitType ut) const noexcept;
 public:
-    explicit selection_tree(Faction faction, army_list& list);
+    explicit selection_tree(Faction faction, const std::shared_ptr<army_list>& list);
     ~selection_tree() = default;
     void add_unit_to_army_list(int id);
     void change_selection(const std::string& name);
-    void reset_army_list(army_list&_army);
-    void reset(Faction faction, army_list& list);
+    void reset_army_list(const std::shared_ptr<army_list>& _army);
+    void reset(Faction faction);
 
     std::shared_ptr<unit> selected();
 
