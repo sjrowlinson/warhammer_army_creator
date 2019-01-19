@@ -1,15 +1,9 @@
 Tuskgor Chariot
-    Chariot
-    - - - 5 5 4 - - -
-    Armour Save (4+), Primal Fury
-    None
-    None
-    None
+    CATEGORY = Chariot
+    CHARACTERISTICS = - - - 5 5 4 - - -
+    SPECIAL_RULES = Armour Save (4+), Primal Fury
 
 Razorgor Chariot
-    Chariot
-    - - - 5 5 4 - - -
-    Armour Save (4+), Primal Fury, Fear, Thunderous Charge
-    None
-    None
-    None
+    CATEGORY = Chariot
+    CHARACTERISTICS = - - - 5 5 4 - - -
+    SPECIAL_RULES = Armour Save (4+), Primal Fury, Fear, Thunderous Charge

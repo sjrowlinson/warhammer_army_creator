@@ -145,11 +145,11 @@ Master Engineer
     CHARACTERISTICS = 4 3 4 3 3 2 3 1 7
     SPECIAL_RULES = Master of Ballistics, 'Stand back, Sir!'
     OPTIONAL_WEAPONS = [Name : Grenade launching blunderbuss, Category : Mundane, Type : Ballistic, Points : 10
-                        Name : Hochland long rifle Category : Mundane, Type : Ballistic, Points : 20
-                        Name : Pigeon bombs Category : Mundane, Type : Ballistic, Points : 20
-                        Name : Repeater handgun Category : Mundane, Type : Ballistic, Points : 10
-                        Name : Repeater pistol Category : Mundane, Type : Ballistic, Points : 10]
-    OPTIONAL_ARMOUR = Name : Light armour Category : Mundane, Type: Armour, Points : 1
+                        Name : Hochland long rifle, Category : Mundane, Type : Ballistic, Points : 20
+                        Name : Pigeon bombs, Category : Mundane, Type : Ballistic, Points : 20
+                        Name : Repeater handgun, Category : Mundane, Type : Ballistic, Points : 10
+                        Name : Repeater pistol, Category : Mundane, Type : Ballistic, Points : 10]
+    OPTIONAL_ARMOUR = Name : Light armour, Category : Mundane, Type: Armour, Points : 1
     OPTIONAL_MOUNTS = Name : Mechanical Steed, Points : 25 ; Name : Warhorse, Points : 12, MC_extras: Name - Barding | Points - 4
     MAGIC_ITEM_BUDGET = Points : 50
     TOTAL_ITEM_BUDGET = Points : 50

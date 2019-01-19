@@ -9,19 +9,8 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
     // core GUI element initialisation and resizing
     ui->setupUi(this);
     setFixedSize(1800, 1050);
-    /*ui->army_tree->header()->resizeSection(static_cast<int>(ArmyTreeColumn::NAME), 250); // unit name header
-    ui->army_tree->header()->resizeSection(static_cast<int>(ArmyTreeColumn::SIZE), 60); // unit size header
-    ui->army_tree->header()->resizeSection(static_cast<int>(ArmyTreeColumn::WEAPONS), 180); // weapons header
-    ui->army_tree->header()->resizeSection(static_cast<int>(ArmyTreeColumn::ARMOUR), 150); // armour header
-    ui->army_tree->header()->resizeSection(static_cast<int>(ArmyTreeColumn::COMMAND), 180); // command group header
-    ui->army_tree->header()->resizeSection(static_cast<int>(ArmyTreeColumn::EXTRAS), 180); // extras header
-    ui->army_tree->header()->resizeSection(static_cast<int>(ArmyTreeColumn::POINTS), 60); // points header*/
-    ui->lord_tree->header()->setStyleSheet("QHeaderView::section { background-color: #d2a19b }");
-    ui->hero_tree->header()->setStyleSheet("QHeaderView::section { background-color: #d2a19b }");
-    ui->core_tree->header()->setStyleSheet("QHeaderView::section { background-color: #d2a19b }");
-    ui->special_tree->header()->setStyleSheet("QHeaderView::section { background-color: #d2a19b }");
-    ui->rare_tree->header()->setStyleSheet("QHeaderView::section { background-color: #d2a19b }");
-    //ui->lord_tree->setStyleSheet("background-color: #edd9d7");
+    initialise_stylesheets();
+    resize_army_trees();
     ui->duplicate_button->setEnabled(false);
     ui->remove_button->setEnabled(false);
     ui->set_general_button->setEnabled(false);
@@ -31,10 +20,11 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
     );
     army = std::make_shared<army_list>(ui->pts_limit_spinbox->value());
     try { st = std::make_shared<selection_tree>(race, army); }
-    catch (const std::runtime_error e) {
+    catch (const std::runtime_error&) {
         QMessageBox message_box;
-        message_box.critical(nullptr, tr("Error"), tr(e.what()));
+        message_box.critical(nullptr, tr("Error"), tr("Fatal error - unable to parse army data. Forcing exit..."));
         message_box.setFixedSize(500, 200);
+        QCoreApplication::quit();
     }
     current = nullptr;
     opt_sel = std::make_shared<option_selector>(army, ui->budget_remaining_label);
@@ -61,6 +51,43 @@ ArmyCreator::~ArmyCreator() {
 
 void ArmyCreator::on_actionExit_triggered() {
     QCoreApplication::quit();
+}
+
+void ArmyCreator::initialise_stylesheets() {
+    const QString tree_header_ss = "QHeaderView::section { background-color: #d2a19b }";
+    auto trees = std::vector<QTreeWidget*>{ui->roster_tree, ui->lord_tree, ui->hero_tree,
+                                           ui->core_tree, ui->special_tree, ui->rare_tree};
+    for (auto tree : trees) tree->header()->setStyleSheet(tree_header_ss);
+    //const QString tree_body_ss = "background-color: #edd9d7";
+    //for (auto tree : trees) tree->setStyleSheet(tree_body_ss);
+}
+
+void ArmyCreator::resize_army_trees() {
+    for (auto tree : std::vector<QTreeWidget*>{ui->lord_tree, ui->hero_tree}) {
+        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::NAME), 150);
+        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::MOUNT), 120);
+        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::LEVEL), 70);
+        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::LORE), 80);
+        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::WEAPONS), 120);
+        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::ARMOUR), 120);
+        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::TALISMAN), 120);
+        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::ENCHANTED), 120);
+        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::ARCANE), 120);
+        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::BANNER), 100);
+        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::EXTRAS), 100);
+        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::POINTS), 50);
+    }
+    for (auto tree : std::vector<QTreeWidget*>{ui->core_tree, ui->special_tree, ui->rare_tree}) {
+        tree->header()->resizeSection(static_cast<int>(UnitTreeColumn::NAME), 180);
+        tree->header()->resizeSection(static_cast<int>(UnitTreeColumn::SIZE), 50);
+        tree->header()->resizeSection(static_cast<int>(UnitTreeColumn::MOUNT), 120);
+        tree->header()->resizeSection(static_cast<int>(UnitTreeColumn::WEAPONS), 130);
+        tree->header()->resizeSection(static_cast<int>(UnitTreeColumn::ARMOUR), 130);
+        tree->header()->resizeSection(static_cast<int>(UnitTreeColumn::EXTRAS), 120);
+        tree->header()->resizeSection(static_cast<int>(UnitTreeColumn::COMMAND), 120);
+        tree->header()->resizeSection(static_cast<int>(UnitTreeColumn::BANNER), 140);
+        tree->header()->resizeSection(static_cast<int>(UnitTreeColumn::POINTS), 50);
+    }
 }
 
 void ArmyCreator::update_validity_label() {
@@ -770,15 +797,11 @@ void ArmyCreator::clear() {
 
 void ArmyCreator::clear_points_displays() {
     ui->current_pts_label->setText(QString("%1").arg(static_cast<double>(0.0)));
-    /*for (auto i = 0; i < 5; ++i)
-        ui->army_tree->topLevelItem(i)->setText(
-            static_cast<int>(ArmyTreeColumn::POINTS),
-            QString("%1").arg(static_cast<double>(0.0))
-        );*/
 }
 
 void ArmyCreator::setup_magic_items_combobox() {
-    ui->magic_items_combobox->addItem(QString("Common"), QVariant(static_cast<int>(ItemCategory::COMMON)));
+    if (race != Faction::DWARFS)
+        ui->magic_items_combobox->addItem(QString("Common"), QVariant(static_cast<int>(ItemCategory::COMMON)));
     if (!st->magic_items_name().empty())
         ui->magic_items_combobox->addItem(
             QString(st->magic_items_name().data()), QVariant(static_cast<int>(ItemCategory::MAGIC))
@@ -795,8 +818,9 @@ void ArmyCreator::change_faction(Faction faction) {
         st->reset(faction);
         clear();
         populate_roster_tree();
-        setup_magic_items_combobox();
         race = faction;
+        setup_magic_items_combobox();
+        mib->reset_category(ItemCategory::NONE);
     }
     catch (const std::runtime_error& e) {
         ui->faction_combobox->setCurrentText(QString::fromStdString(enum_convert::FACTION_TO_STRING.at(race)));
@@ -828,33 +852,40 @@ void ArmyCreator::on_pts_limit_spinbox_valueChanged(double pts) {
 
 // tree item changed or activated slots
 
-void ArmyCreator::on_roster_tree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous) {
+// TODO: fix issues:
+//         1) CTD when changing item in roster tree after failing to switch to another army
+//         2) reset previously highlighted unit if we were already in the roster tree so that
+//            it doesn't think that a magic item has been taken
+void ArmyCreator::on_roster_tree_currentItemChanged(QTreeWidgetItem *curr, QTreeWidgetItem *previous) {
     (void)(previous);
-    //ui->army_tree->setCurrentItem(ui->army_tree->topLevelItem(0));
-    //ui->army_tree->clearSelection();
-    ui->roster_tree->setCurrentItem(current);
+    if (curr == nullptr) return;
+    for (auto tree : std::vector<QTreeWidget*>{ui->lord_tree, ui->hero_tree,
+         ui->core_tree, ui->special_tree, ui->rare_tree}) {
+        tree->clearSelection();
+        tree->setCurrentItem(nullptr, 0, QItemSelectionModel::SelectionFlag::Clear);
+    }
     clear_unit_info_box();
     ob->clear();
     mib->clear();
     ui->item_descr_gb->setTitle(tr("Item Description"));
     ui->item_descr_label->setText(tr(""));
-    std::string name = current->text(0).toStdString();
+    std::string name = curr->text(0).toStdString();
     if (name != "Lords" && name != "Heroes" && name != "Core" &&
             name != "Special" && name != "Rare") {
         st->change_selection(name);
-        this->current = st->selected();
+        current = st->selected();
         in_tree = InTree::ROSTER;
         initialise_unit_info_box();
-        opt_sel->reset(this->current, in_tree);
-        ob->reset(this->current, in_tree);
+        opt_sel->reset(current, in_tree);
+        ob->reset(current, in_tree);
         ob->reinitialise();
-        mib->reset(this->current);
+        mib->reset(current);
         mib->reinitialise(ItemType::WEAPON);
         ui->add_button->setEnabled(true);
         update_budget_label();
     }
     else {
-        this->current = nullptr;
+        current = nullptr;
         ui->add_button->setEnabled(false);
     }
     ui->duplicate_button->setEnabled(false);
@@ -873,9 +904,6 @@ void ArmyCreator::on_roster_tree_itemDoubleClicked(QTreeWidgetItem *item, int co
 
 void ArmyCreator::army_trees_itemchanged(QTreeWidgetItem* curr) {
     if (curr == nullptr) return;
-    // clear displays
-    ui->roster_tree->setCurrentItem(ui->roster_tree->topLevelItem(0));
-    ui->roster_tree->clearSelection();
     clear_unit_info_box();
     ob->clear();
     mib->clear();
@@ -903,68 +931,51 @@ void ArmyCreator::on_lord_tree_currentItemChanged(QTreeWidgetItem *current, QTre
     (void)(previous);
     in_tree = InTree::LORD;
     army_trees_itemchanged(current);
+    for (auto tree : std::vector<QTreeWidget*>{ui->roster_tree, ui->hero_tree, ui->core_tree, ui->special_tree, ui->rare_tree}) {
+        tree->clearSelection();
+        tree->setCurrentItem(nullptr, 0, QItemSelectionModel::SelectionFlag::Clear);
+    }
 }
 
 void ArmyCreator::on_hero_tree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous) {
     (void)(previous);
     in_tree = InTree::HERO;
     army_trees_itemchanged(current);
+    for (auto tree : std::vector<QTreeWidget*>{ui->roster_tree, ui->lord_tree, ui->core_tree, ui->special_tree, ui->rare_tree}) {
+        tree->clearSelection();
+        tree->setCurrentItem(nullptr, 0, QItemSelectionModel::SelectionFlag::Clear);
+    }
 }
 
 void ArmyCreator::on_core_tree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous) {
     (void)(previous);
     in_tree = InTree::CORE;
     army_trees_itemchanged(current);
+    for (auto tree : std::vector<QTreeWidget*>{ui->roster_tree, ui->lord_tree, ui->hero_tree, ui->special_tree, ui->rare_tree}) {
+        tree->clearSelection();
+        tree->setCurrentItem(nullptr, 0, QItemSelectionModel::SelectionFlag::Clear);
+    }
 }
 
 void ArmyCreator::on_special_tree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous) {
     (void)(previous);
     in_tree = InTree::SPECIAL;
     army_trees_itemchanged(current);
+    for (auto tree : std::vector<QTreeWidget*>{ui->roster_tree, ui->lord_tree, ui->hero_tree, ui->core_tree, ui->rare_tree}) {
+        tree->clearSelection();
+        tree->setCurrentItem(nullptr, 0, QItemSelectionModel::SelectionFlag::Clear);
+    }
 }
 
 void ArmyCreator::on_rare_tree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous) {
     (void)(previous);
     in_tree = InTree::RARE;
     army_trees_itemchanged(current);
+    for (auto tree : std::vector<QTreeWidget*>{ui->roster_tree, ui->lord_tree, ui->hero_tree, ui->core_tree, ui->special_tree}) {
+        tree->clearSelection();
+        tree->setCurrentItem(nullptr, 0, QItemSelectionModel::SelectionFlag::Clear);
+    }
 }
-
-/*void ArmyCreator::on_army_tree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous) {
-    (void)(previous);
-    ui->roster_tree->setCurrentItem(ui->roster_tree->topLevelItem(0));
-    ui->roster_tree->clearSelection();
-    //ui->army_tree->setCurrentItem(current);
-    clear_unit_info_box();
-    ob->clear();
-    mib->clear();
-    ui->item_descr_gb->setTitle(tr("Item Description"));
-    ui->item_descr_label->setText(tr(""));
-    std::string name = current->text(0).toStdString();
-    if (name != "Lords" && name != "Heroes" && name != "Core" &&
-            name != "Special" && name != "Rare") {
-        in_tree = InTree::ARMY;
-        int id = current->data(0, Qt::UserRole).toInt();
-        this->current = army->get_unit(id);
-        initialise_unit_info_box();
-        opt_sel->reset(this->current, in_tree);
-        ob->reset(this->current, in_tree);
-        ob->reinitialise();
-        mib->reset(this->current, in_tree);
-        mib->reinitialise(ItemType::WEAPON);
-        ui->remove_button->setEnabled(true);
-        ui->duplicate_button->setEnabled(true);
-        if (this->current->unit_type() == UnitType::LORD
-                || this->current->unit_type() == UnitType::HERO)
-            ui->set_general_button->setEnabled(true);
-        update_budget_label();
-    }
-    else {
-        this->current = nullptr;
-        ui->duplicate_button->setEnabled(false);
-        ui->remove_button->setEnabled(false);
-        ui->set_general_button->setEnabled(false);
-    }
-}*/
 
 // army_tree modifying button slots
 
@@ -1065,6 +1076,7 @@ void ArmyCreator::on_duplicate_button_clicked() {
 
 void ArmyCreator::on_remove_button_clicked() {
     QTreeWidgetItem* item = current_item();
+    if (item == nullptr) return;
     QVariant v = item->data(0, Qt::UserRole);
     int id = v.toInt();
     UnitType unit_type = army->get_unit(id)->unit_type();

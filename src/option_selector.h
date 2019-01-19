@@ -18,7 +18,6 @@ private:
     QLabel* budget_label;
 
     void update_budget_label();
-    void item_limit_check(bool is_magic, ItemCategory ic, const std::string& s) const;
     bool is_selection_magical(const std::string& selection) const;
 public:
     explicit option_selector(

@@ -48,8 +48,8 @@ std::string unit::restriction_check(
     const std::string& item_name
 ) const {
     std::string msg = "";
-    /*std::unordered_map<RestrictionField, short> each_restr_count;
-    for (const auto& restriction : restrictions) each_restr_count[restriction.first]++;*/
+    std::unordered_map<RestrictionField, short> each_restr_count;
+    for (const auto& restriction : restrictions) each_restr_count[restriction.first]++;
     for (const auto& restriction : restrictions) {
         switch (restriction.first) {
         case RestrictionField::WEAPON:
@@ -119,7 +119,7 @@ std::string unit::restriction_check(
             auto search_item_in_tracker = army_->item_track_map().find(item_name);
             if (search_item_in_tracker != std::end(army_->item_track_map()) &&
                     search_item_in_tracker->second >= lim)
-                msg += "Cannot have more than " + std::to_string(lim) + " instances"
+                msg += "Cannot have more than " + std::to_string(lim) + " instances "
                         "of " + item_name + " in an army!";
             break;
         }
@@ -132,7 +132,7 @@ std::string unit::restriction_check(
         default: break;
         }
     }
-    if (!msg.empty()) msg += " to choose: " + item_name;
+    if (!msg.empty() && !each_restr_count[RestrictionField::LIMIT]) msg += " to choose: " + item_name;
     return msg;
 }
 

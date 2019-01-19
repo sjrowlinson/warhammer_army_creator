@@ -19,7 +19,7 @@
      <rect>
       <x>10</x>
       <y>50</y>
-      <width>232</width>
+      <width>221</width>
       <height>661</height>
      </rect>
     </property>
@@ -180,9 +180,9 @@
    <widget class="QTreeWidget" name="lord_tree">
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>240</x>
       <y>50</y>
-      <width>1101</width>
+      <width>1111</width>
       <height>101</height>
      </rect>
     </property>
@@ -198,12 +198,12 @@
     </column>
     <column>
      <property name="text">
-      <string>Wizard Level</string>
+      <string>Mage Level</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>Wizard Lore(s)</string>
+      <string>Mage Lore(s)</string>
      </property>
     </column>
     <column>
@@ -599,9 +599,9 @@
    <widget class="QTreeWidget" name="hero_tree">
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>240</x>
       <y>160</y>
-      <width>1101</width>
+      <width>1111</width>
       <height>141</height>
      </rect>
     </property>
@@ -617,12 +617,12 @@
     </column>
     <column>
      <property name="text">
-      <string>Wizard Level</string>
+      <string>Mage Level</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>Wizard Lore(s)</string>
+      <string>Mage Lore(s)</string>
      </property>
     </column>
     <column>
@@ -669,9 +669,9 @@
    <widget class="QTreeWidget" name="core_tree">
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>240</x>
       <y>310</y>
-      <width>1101</width>
+      <width>1111</width>
       <height>181</height>
      </rect>
     </property>
@@ -724,9 +724,9 @@
    <widget class="QTreeWidget" name="special_tree">
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>240</x>
       <y>500</y>
-      <width>1101</width>
+      <width>1111</width>
       <height>111</height>
      </rect>
     </property>
@@ -779,9 +779,9 @@
    <widget class="QTreeWidget" name="rare_tree">
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>240</x>
       <y>620</y>
-      <width>1101</width>
+      <width>1111</width>
       <height>91</height>
      </rect>
     </property>

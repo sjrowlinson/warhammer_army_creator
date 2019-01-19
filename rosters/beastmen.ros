@@ -13,9 +13,9 @@ Beastlord
                        Name: Heavy armour, Category: Mundane, Type: Armour, Points: 6
                        Name: Shield, Category: Mundane, Type: Shield, Points: 3]
     OPTIONAL_MOUNTS = Name: Tuskgor Chariot, Points: 80 ; Name: Razorgor Chariot, Points: 145
-    MAGIC_ITEM_BUDGET = 100
-    FACTION_ITEM_BUDGET = 100
-    TOTAL_ITEM_BUDGET = 100
+    MAGIC_ITEM_BUDGET = Points : 100
+    FACTION_ITEM_BUDGET = Points : 100
+    TOTAL_ITEM_BUDGET = Points : 100
 
 Doombull
     BASE_TYPE = Melee
@@ -29,9 +29,9 @@ Doombull
     OPTIONAL_ARMOUR = [Name: Light armour, Category: Mundane, Type: Armour, Points: 6
                        Name: Heavy armour, Category: Mundane, Type: Armour, Points: 12
                        Name: Shield, Category: Mundane, Type: Shield, Points: 6]
-    MAGIC_ITEM_BUDGET = 100
-    FACTION_ITEM_BUDGET = 100
-    TOTAL_ITEM_BUDGET = 100
+    MAGIC_ITEM_BUDGET = Points : 100
+    FACTION_ITEM_BUDGET = Points : 100
+    TOTAL_ITEM_BUDGET = Points : 100
 
 Great Bray-Shaman
     BASE_TYPE = Mage
@@ -42,12 +42,15 @@ Great Bray-Shaman
     SPECIAL_RULES = Primal Fury
     OPTIONAL_WEAPONS = Name: Additional hand weapon, Category: Mundane, Type: Melee, Points: 4
     OPTIONAL_MOUNTS = Name: Tuskgor Chariot, Points: 80 ; Name: Razorgor Chariot, Points: 145
-    MAGIC_ITEM_BUDGET = 100
-    FACTION_ITEM_BUDGET = 100
-    TOTAL_ITEM_BUDGET = 100
+    MAGIC_ITEM_BUDGET = Points : 100
+    FACTION_ITEM_BUDGET = Points : 100
+    TOTAL_ITEM_BUDGET = Points : 100
     MAGE_LEVEL = 3
     MAGE_UPGRADES = 4 [35]
-    MAGE_LORES = Wild, Beasts, Death, Shadow
+    MAGE_LORES = [Name: Wild,
+                  Name: Beasts,
+                  Name: Death,
+                  Name: Shadow]
 
 # Heroes
 
@@ -65,9 +68,9 @@ Wargor
                        Name: Shield, Category: Mundane, Type: Shield, Points: 2]
     OPTIONAL_MOUNTS = Name: Tuskgor Chariot, Points: 80 ; Name: Razorgor Chariot, Points: 145
     OPTIONAL_MC_EXTRAS = Name: Battle Standard Bearer, Points: 25
-    MAGIC_ITEM_BUDGET = 50
-    FACTION_ITEM_BUDGET = 50
-    TOTAL_ITEM_BUDGET = 50
+    MAGIC_ITEM_BUDGET = Points : 50
+    FACTION_ITEM_BUDGET = Points : 50
+    TOTAL_ITEM_BUDGET = Points : 50
 
 Gorebull
     BASE_TYPE = Melee
@@ -82,9 +85,9 @@ Gorebull
                        Name: Heavy armour, Category: Mundane, Type: Armour, Points: 8
                        Name: Shield, Category: Mundane, Type: Shield, Points: 4]
     OPTIONAL_MC_EXTRAS = Name: Battle Standard Bearer, Points: 25
-    MAGIC_ITEM_BUDGET = 50
-    FACTION_ITEM_BUDGET = 50
-    TOTAL_ITEM_BUDGET = 50
+    MAGIC_ITEM_BUDGET = Points : 50
+    FACTION_ITEM_BUDGET = Points : 50
+    TOTAL_ITEM_BUDGET = Points : 50
 
 Bray-Shaman
     BASE_TYPE = Mage
@@ -95,12 +98,15 @@ Bray-Shaman
     SPECIAL_RULES = Primal Fury
     OPTIONAL_WEAPONS = Name: Additional hand weapon, Category: Mundane, Type: Melee, Points: 2
     OPTIONAL_MOUNTS = Name: Tuskgor Chariot, Points: 80 ; Name: Razorgor Chariot, Points: 145
-    MAGIC_ITEM_BUDGET = 50
-    FACTION_ITEM_BUDGET = 50
-    TOTAL_ITEM_BUDGET = 50
+    MAGIC_ITEM_BUDGET = Points : 50
+    FACTION_ITEM_BUDGET = Points : 50
+    TOTAL_ITEM_BUDGET = Points : 50
     MAGE_LEVEL = 1
     MAGE_UPGRADES = 2 [35]
-    MAGE_LORES = Wild, Beasts, Death, Shadow
+    MAGE_LORES = [Name: Wild,
+                  Name: Beasts,
+                  Name: Death,
+                  Name: Shadow]
 
 # Core
 
@@ -176,8 +182,8 @@ Minotaurs
                         Name: Great weapons, Category: Mundane, Type: Melee, Points: 8, Replacements: Shield]
     OPTIONAL_ARMOUR = Name: Shields, Category: Mundane, Type: Shield, Points: 4, Replacements: Melee
     OPTIONAL_COMMAND = Musician - Name : Musician, Points : 10 ; Standard Bearer - Name : Standard Bearer, Points : 20 ; Champion - Name : Bloodkine, Points : 20
-    MAGIC_ITEM_BUDGET = 25
-    TOTAL_ITEM_BUDGET = 25
+    MAGIC_ITEM_BUDGET = Points : 25, Restrictions : Limit - 1
+    TOTAL_ITEM_BUDGET = copy MAGIC_ITEM_BUDGET
 
 Centigors
     BASE_TYPE = Normal
@@ -217,8 +223,8 @@ Bestigor Herd
     EQUIPMENT = [Weapon - Name: Great weapon, Category: Mundane, Type: Melee
                  Armour - Name: Heavy armour, Category: Mundane, Type: Armour]
     OPTIONAL_COMMAND = Musician - Name : Musician, Points : 6 ; Standard Bearer - Name : Standard Bearer, Points : 12 ; Champion - Name : Gougehorn, Points : 12
-    FACTION_ITEM_BUDGET = 25
-    TOTAL_ITEM_BUDGET = 25
+    FACTION_ITEM_BUDGET = Points : 25, Restrictions : Limit - 1
+    TOTAL_ITEM_BUDGET = copy FACTION_ITEM_BUDGET
     BANNER_BUDGET = 50
 
 Razorgor Chariot

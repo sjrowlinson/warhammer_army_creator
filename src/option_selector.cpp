@@ -24,34 +24,11 @@ void option_selector::update_budget_label() {
     }
 }
 
-void option_selector::item_limit_check(bool is_magic, ItemCategory ic, const std::string& s) const {
-    if (!is_magic) return;
-    std::unordered_map<std::string, item>::const_iterator item_it;
-    switch (ic) {
-    case ItemCategory::COMMON:
-        item_it = current->base()->common_items_handle()->second.find(s);
-        break;
-    case ItemCategory::MAGIC:
-        item_it = current->base()->magic_items_handle()->second.find(s);
-        break;
-    case ItemCategory::FACTION:
-        item_it = current->base()->faction_items_handle()->second.find(s);
-        break;
-    default: break;
-    }
-    auto itm_search = army->item_track_map().find(s);
-    if (itm_search != army->item_track_map().cend()) {
-        if (!(itm_search->second < item_it->second.limit)) {
-            std::string msg = "Cannot have more than " + std::to_string(item_it->second.limit)
-                    + ' ' + s + " items in a single army!";
-            throw std::runtime_error(msg);
-        }
-    }
-}
-
 bool option_selector::is_selection_magical(const std::string& selection) const {
-    return current->base()->common_items_handle()->second.count(selection) ||
-            current->base()->magic_items_handle()->second.count(selection) ||
+    return (current->base()->common_items_handle() == nullptr ?
+                false : current->base()->common_items_handle()->second.count(selection)) ||
+            (current->base()->magic_items_handle() == nullptr ?
+                 false : current->base()->magic_items_handle()->second.count(selection)) ||
             (current->base()->faction_items_handle() == nullptr ?
                  false : current->base()->faction_items_handle()->second.count(selection));
 }
@@ -89,8 +66,6 @@ void option_selector::select_weapon(const std::string& s) {
     else {
         const bool is_magical = is_selection_magical(weapon);
         ItemCategory ic = static_cast<ItemCategory>(std::stoi(split[2]));
-        try { item_limit_check(is_magical, ic, weapon); }
-        catch (const std::runtime_error&) { throw; }
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(current->id());
             if (split[3] == "default") {
@@ -165,8 +140,6 @@ void option_selector::select_armour(const std::string& s) {
     else {
         const bool is_magical = is_selection_magical(armour);
         ItemCategory ic = static_cast<ItemCategory>(std::stoi(split[2]));
-        try { item_limit_check(is_magical, ic, armour); }
-        catch (const std::runtime_error&) { throw; }
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(current->id());
             if (split[3] == "default") {
@@ -225,8 +198,6 @@ void option_selector::select_talisman(const std::string& s) {
     else {
         const bool is_magical = is_selection_magical(talisman);
         ItemCategory ic = static_cast<ItemCategory>(std::stoi(split[1]));
-        try { item_limit_check(is_magical, ic, talisman); }
-        catch (const std::runtime_error& ) { throw; }
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(p->id());
             removed = p->pick_talisman(ic, talisman);
@@ -259,8 +230,6 @@ void option_selector::select_enchanted_item(const std::string& s) {
     else {
         const bool is_magical = is_selection_magical(enchanted);
         ItemCategory ic = static_cast<ItemCategory>(std::stoi(split[1]));
-        try { item_limit_check(is_magical, ic, enchanted); }
-        catch (const std::runtime_error& ) { throw; }
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(p->id());
             removed = p->pick_enchanted_item(ic, enchanted);
@@ -292,8 +261,6 @@ void option_selector::select_other_item(const std::string& s, bool is_checked) {
     } else {
         const bool is_magical = is_selection_magical(other);
         ItemCategory ic = static_cast<ItemCategory>(std::stoi(split[1]));
-        try { item_limit_check(is_magical, ic, other); }
-        catch (const std::runtime_error& ) { throw; }
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(p->id());
             removed = p->pick_other(ic, other);
@@ -324,8 +291,6 @@ void option_selector::select_banner(const std::string& s) {
     } else {
         const bool is_magical = is_selection_magical(banner);
         ItemCategory ic = static_cast<ItemCategory>(std::stoi(split[1]));
-        try { item_limit_check(is_magical, ic, banner); }
-        catch (const std::runtime_error& ) { throw; }
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(current->id());
             removed = current->pick_banner(ic, banner);
@@ -358,8 +323,6 @@ void option_selector::select_arcane_item(const std::string& s) {
     else {
         const bool is_magical = is_selection_magical(arcane);
         ItemCategory ic = static_cast<ItemCategory>(std::stoi(split[1]));
-        try { item_limit_check(is_magical, ic, arcane); }
-        catch (const std::runtime_error& ) { throw; }
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(p->id());
             removed = p->pick_arcane_item(ic, arcane);

@@ -153,17 +153,19 @@ void selection_tree::parse_roster_file(const QString &rfile_str) {
     try {
         auto units = rp.parse();
         for (auto&& x : units) roster[x->name()] = x;
-        std::shared_ptr<
-            std::pair<
-                std::string,
-                std::unordered_map<std::string, item>
-            >
-        > sp_common = std::make_shared<
-                          std::pair<
-                              std::string,
-                              std::unordered_map<std::string, item>
-                      >>(common_items);
-        for (auto& entry : roster) entry.second->set_common_item_handle(sp_common);
+        if (race != Faction::DWARFS) { // Dwarfs cannot take items from the BRB
+            std::shared_ptr<
+                std::pair<
+                    std::string,
+                    std::unordered_map<std::string, item>
+                >
+            > sp_common = std::make_shared<
+                              std::pair<
+                                  std::string,
+                                  std::unordered_map<std::string, item>
+                          >>(common_items);
+            for (auto& entry : roster) entry.second->set_common_item_handle(sp_common);
+        }
     } catch (const std::runtime_error&) { throw; }
 }
 

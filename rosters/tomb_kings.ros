@@ -1,22 +1,20 @@
 # Lords
 
 Tomb King
-    Lord, Melee
-    Infantry
-    170
-    1, 1
-    4 6 3 5 5 4 3 4 10
-    The Curse, Flammable, My Will Be Done, Nehekharan Undead
-    Armour: Light armour {Mundane} [Armour]
-    Great weapon {Mundane} [Melee] (6), Flail {Mundane} [Melee] (6), Spear {Mundane} [Melee] (3)
-    Shield {Mundane} [Shield] (3)
-    Skeleton Chariot {Chariot} [55], Khemrian Warsphinx {Monster} [210]
-    None
-    None
-    100
-    0
-    100
-    Non-Unique
+    BASE_TYPE = Melee
+    TYPE = Lord
+    CATEGORY = Infantry
+    POINTS = 170
+    CHARACTERISTICS = 4 6 3 5 5 4 3 4 10
+    SPECIAL_RULES = The Curse, Flammable, My Will Be Done, Nehekharan Undead
+    EQUIPMENT = Armour - Name: Light armour, Category: Mundane, Type: Armour
+    OPTIONAL_WEAPONS = [Name: Great weapon, Category: Mundane, Type: Melee, Points: 6
+                        Name: Flail, Category: Mundane, Type: Melee, Points: 6
+                        Name: Spear, Category: Mundane, Type: Melee, Points: 3]
+    OPTIONAL_ARMOUR = Name: Shield, Category: Mundane, Type: Shield, Points: 3
+    OPTIONAL_MOUNTS = Name: Skeleton Chariot,  Points: 55 ; Name: Khemrian Warsphinx, Points: 210
+    MAGIC_ITEM_BUDGET = Points : 100
+    TOTAL_ITEM_BUDGET = Points : 100
 
 Liche High Priest
     Lord, Mage
@@ -42,40 +40,34 @@ Liche High Priest
 # Heroes
 
 Tomb Prince
-    Hero, Melee
-    Infantry
-    100
-    1, 1
-    4 5 3 4 5 3 3 3 9
-    The Curse, Flammable, My Will Be Done, Nehekharan Undead
-    Armour: Light armour {Mundane} [Armour]
-    Great weapon {Mundane} [Melee] (4), Flail {Mundane} [Melee] (4), Spear {Mundane} [Melee] (2)
-    Shield {Mundane} [Shield] (2)
-    Skeleton Chariot {Chariot} [55], Khemrian Warsphinx {Monster} [210]
-    None
-    None
-    50
-    0
-    50
-    Non-Unique
+    BASE_TYPE = Melee
+    TYPE = Hero
+    CATEGORY = Infantry
+    POINTS = 100
+    CHARACTERISTICS = 4 5 3 4 5 3 3 3 9
+    SPECIAL_RULES = The Curse, Flammable, My Will Be Done, Nehekharan Undead
+    EQUIPMENT = Armour: Light armour {Mundane} [Armour]
+    OPTIONAL_WEAPONS = Great weapon {Mundane} [Melee] (4), Flail {Mundane} [Melee] (4), Spear {Mundane} [Melee] (2)
+    OPTIONAL_ARMOUR = Shield {Mundane} [Shield] (2)
+    OPTIONAL_MOUNTS = Skeleton Chariot {Chariot} [55], Khemrian Warsphinx {Monster} [210]
+    OPTIONAL_MC_EXTRAS = None
+    MAGIC_ITEM_BUDGET = Points : 50
+    TOTAL_ITEM_BUDGET = Points : 50
 
 Tomb Herald
-    Hero, Melee
-    Infantry
-    60
-    1, 1
-    4 4 3 4 4 2 3 3 8
-    Flammable, Killing Blow, Nehekharan Undead, Sworn Bodyguard
-    Armour: Light armour {Mundane} [Armour]
-    Great weapon {Mundane} [Melee] (4), Flail {Mundane} [Melee] (4), Spear {Mundane} [Melee] (2), Halberd {Mundane} [Melee] (2)
-    Shield {Mundane} [Shield] (2)
-    Skeleton Chariot {Chariot} [55], Skeletal Steed {Warbeast} [10]
-    None
-    Battle Standard Bearer {True} [25]
-    50
-    0
-    50
-    Non-Unique
+    BASE_TYPE = Melee
+    TYPE = Hero
+    CATEGORY = Infantry
+    POINTS = 60
+    CHARACTERISTICS = 4 4 3 4 4 2 3 3 8
+    SPECIAL_RULES = Flammable, Killing Blow, Nehekharan Undead, Sworn Bodyguard
+    EQUIPMENT = Armour: Light armour {Mundane} [Armour]
+    OPTIONAL_WEAPONS = Great weapon {Mundane} [Melee] (4), Flail {Mundane} [Melee] (4), Spear {Mundane} [Melee] (2), Halberd {Mundane} [Melee] (2)
+    OPTIONAL_ARMOUR = Shield {Mundane} [Shield] (2)
+    OPTIONAL_MOUNTS = Skeleton Chariot {Chariot} [55], Skeletal Steed {Warbeast} [10]
+    OPTIONAL_MC_EXTRAS = Battle Standard Bearer {True} [25]
+    MAGIC_ITEM_BUDGET = Points : 50
+    TOTAL_ITEM_BUDGET = Points : 50
 
 Liche Priest
     Hero, Mage
@@ -99,22 +91,19 @@ Liche Priest
     Non-Unique
 
 Nectrotect
-    Hero, Melee
-    Infantry
-    60
-    1, 1
-    4 3 3 4 4 2 3 2 7
-    Flammable, Nehekharan Undead, Stone Shaper, Wrath of the Creator, Hatred
-    Armour: Light armour {Mundane} [Armour], Weapon: Two hand weapons {Mundane} [Melee]
-    None
-    None
-    None
-    None
-    None
-    50
-    0
-    50
-    Non-Unique
+    BASE_TYPE = Melee
+    TYPE = Hero
+    CATEGORY = Infantry
+    POINTS = 60
+    CHARACTERISTICS = 4 3 3 4 4 2 3 2 7
+    SPECIAL_RULES = Flammable, Nehekharan Undead, Stone Shaper, Wrath of the Creator, Hatred
+    EQUIPMENT = Armour: Light armour {Mundane} [Armour], Weapon: Two hand weapons {Mundane} [Melee]
+    OPTIONAL_WEAPONS = None
+    OPTIONAL_ARMOUR = None
+    OPTIONAL_MOUNTS = None
+    OPTIONAL_MC_EXTRAS = None
+    MAGIC_ITEM_BUDGET = Points : 50
+    TOTAL_ITEM_BUDGET = Points : 50
 
 # Core
 

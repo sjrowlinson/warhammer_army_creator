@@ -1,445 +1,336 @@
 # Lords
 
 Lord
-    Lord, Melee
-    Infantry
-    145
-    1, 1
-    3 7 4 4 5 3 4 4 10
-    Ancestral Grudge, Relentless, Resolute, Shieldwall
-    Armour: Gromril armour {Mundane} [Armour]
-    Great weapon {Mundane} [Melee] (6), Dwarf crossbow {Mundane} [Ballistic] (12), Dwarf handgun {Mundane} [Ballistic] (12), Dwarf pistol {Mundane} [Ballistic] (6)
-    Shield {Mundane} [Shield] (3)
-    Oath Stone {Infantry} [25], Shieldbearers {Infantry} [40]
-    None
-    None
-    125
-    125
-    125
-    Non-Unique
+    BASE_TYPE = Melee
+    TYPE = Lord
+    CATEGORY = Infantry
+    POINTS = 145
+    CHARACTERISTICS = 3 7 4 4 5 3 4 4 10
+    SPECIAL_RULES = Ancestral Grudge, Relentless, Resolute, Shieldwall
+    EQUIPMENT = Armour - Name: Gromril armour, Category: Mundane, Type: Armour
+    OPTIONAL_WEAPONS = [Name: Great weapon, Category: Mundane, Type: Melee, Points: 6
+                        Name: Dwarf crossbow, Category: Mundane, Type: Ballistic, Points: 12
+                        Name: Dwarf handgun, Category: Mundane, Type: Ballistic, Points: 12
+                        Name: Dwarf pistol, Category: Mundane, Type: Ballistic, Points: 6]
+    OPTIONAL_ARMOUR = Name: Shield, Category: Mundane, Type: Shield, Points: 3
+    OPTIONAL_MOUNTS = Name: Oath Stone, Points: 25 ; Name: Shieldbearers, Points: 40
+    MAGIC_ITEM_BUDGET = Points : 125
+    FACTION_ITEM_BUDGET = Points : 125, Restrictions : ItemType - Weapon | Armour | Talisman
+    TOTAL_ITEM_BUDGET = Points : 125
 
 Runelord
-    Lord, Melee
-    Infantry
-    120
-    1, 1
-    3 6 4 4 5 3 3 2 9
-    Ancestral Grudge, Armour Piercing, Forgefire, Magic Resistance (2), Relentless, Resolute, Rune Lore, Shieldwall
-    Armour: Gromril armour {Mundane} [Armour]
-    Great weapon {Mundane} [Melee] (6)
-    Shield {Mundane} [Shield] (3)
-    Anvil of Doom {Warmachine} [170]
-    None
-    None
-    150
-    150
-    150
-    Non-Unique
+    BASE_TYPE = Melee
+    TYPE = Lord
+    CATEGORY = Infantry
+    POINTS = 120
+    CHARACTERISTICS = 3 6 4 4 5 3 3 2 9
+    SPECIAL_RULES = Ancestral Grudge, Armour Piercing, Forgefire, Magic Resistance (2), Relentless, Resolute, Rune Lore, Shieldwall
+    EQUIPMENT = Armour - Name: Gromril armour, Category: Mundane, Type: Armour
+    OPTIONAL_WEAPONS = Name: Great weapon, Category: Mundane, Type: Melee, Points: 6
+    OPTIONAL_ARMOUR = Name: Shield, Category: Mundane, Type: Shield, Points: 3
+    OPTIONAL_MOUNTS = Name: Anvil of Doom, Points: 170
+    MAGIC_ITEM_BUDGET = Points : 150
+    FACTION_ITEM_BUDGET = Points : 150, Restrictions : ItemType - Weapon | Armour | Talisman
+    TOTAL_ITEM_BUDGET = Points : 150
 
 Daemon Slayer
-    Lord, Melee
-    Infantry
-    140
-    1, 1
-    3 7 3 4 5 3 5 4 10
-    Ancestral Grudge, Daemon Slayer, Dragon Slayer, Deathblow, Relentless, Resolute, Slayer, Slayer Axes, Slayer Cult, Unbreakable
-    Weapon: Array of axes {Mundane} [Melee]
-    None
-    None
-    None
-    None
-    None
-    0
-    100
-    100
-    Non-Unique
+    BASE_TYPE = Melee
+    TYPE = Lord
+    CATEGORY = Infantry
+    POINTS = 140
+    CHARACTERISTICS = 3 7 3 4 5 3 5 4 10
+    SPECIAL_RULES = Ancestral Grudge, Daemon Slayer, Dragon Slayer, Deathblow, Relentless, Resolute, Slayer, Slayer Axes, Slayer Cult, Unbreakable
+    EQUIPMENT = Weapon - Name: Array of axes, Category: Mundane, Type: Melee
+    FACTION_ITEM_BUDGET = Points : 100, Restrictions : Limit - 1 / ItemType - Weapon
+    TOTAL_ITEM_BUDGET = copy FACTION_ITEM_BUDGET
 
 # Heroes
 
 Thane
-    Hero, Melee
-    Infantry
-    65
-    1, 1
-    3 6 4 4 5 2 3 3 10
-    Ancestral Grudge, Relentless, Resolute, Shieldwall
-    Armour: Gromril armour {Mundane} [Armour]
-    Great weapon {Mundane} [Melee] (6), Dwarf crossbow {Mundane} [Ballistic] (12), Dwarf handgun {Mundane} [Ballistic] (12), Dwarf pistol {Mundane} [Ballistic] (6)
-    Shield {Mundane} [Shield] (3)
-    Oath Stone {Infantry} [25]
-    None
-    Battle Standard Bearer {True} [25]
-    75
-    75
-    75
-    Non-Unique
+    BASE_TYPE = Melee
+    TYPE = Hero
+    CATEGORY = Infantry
+    POINTS = 65
+    CHARACTERISTICS = 3 6 4 4 5 2 3 3 10
+    SPECIAL_RULES = Ancestral Grudge, Relentless, Resolute, Shieldwall
+    EQUIPMENT = Armour - Name: Gromril armour, Category: Mundane, Type: Armour
+    OPTIONAL_WEAPONS = [Name: Great weapon, Category: Mundane, Type: Melee, Points: 6
+                        Name: Dwarf crossbow, Category: Mundane, Type: Ballistic, Points: 12
+                        Name: Dwarf handgun, Category: Mundane, Type: Ballistic, Points: 12
+                        Name: Dwarf pistol, Category: Mundane, Type: Ballistic, Points: 6]
+    OPTIONAL_ARMOUR = Name: Shield, Category: Mundane, Type: Shield, Points: 3
+    OPTIONAL_MOUNTS = Name: Oath Stone, Points: 25
+    OPTIONAL_MC_EXTRAS = Name: Battle Standard Bearer, Points: 25
+    MAGIC_ITEM_BUDGET = Points : 75
+    FACTION_ITEM_BUDGET = Points : 75, Restrictions : ItemType - Weapon | Armour | Talisman
+    TOTAL_ITEM_BUDGET = Points : 75
 
 Runesmith
-    Hero, Melee
-    Infantry
-    60
-    1, 1
-    3 5 4 4 4 2 2 2 9
-    Ancestral Grudge, Armour Piercing, Forgefire, Magic Resistance (1), Relentless, Resolute, Rune Lore, Shieldwall
-    Armour: Gromril armour {Mundane} [Armour]
-    Great weapon {Mundane} [Melee] (6)
-    Shield {Mundane} [Shield] (3)
-    None
-    None
-    None
-    75
-    75
-    75
-    Non-Unique
+    BASE_TYPE = Melee
+    TYPE = Hero
+    CATEGORY = Infantry
+    POINTS = 60
+    CHARACTERISTICS = 3 5 4 4 4 2 2 2 9
+    SPECIAL_RULES = Ancestral Grudge, Armour Piercing, Forgefire, Magic Resistance (1), Relentless, Resolute, Rune Lore, Shieldwall
+    EQUIPMENT = Armour - Name: Gromril armour, Category: Mundane, Type: Armour
+    OPTIONAL_WEAPONS = Name: Great weapon, Category: Mundane, Type: Melee, Points: 6
+    OPTIONAL_ARMOUR = Name: Shield, Category: Mundane, Type: Shield, Points: 3
+    MAGIC_ITEM_BUDGET = Points : 75
+    FACTION_ITEM_BUDGET = Points : 75, Restrictions : ItemType - Weapon | Armour | Talisman
+    TOTAL_ITEM_BUDGET = Points : 75
 
 Master Engineer
-    Hero, Melee
-    Infantry
-    70
-    1, 1
-    3 4 4 4 4 2 2 2 9
-    Ancestral Grudge, Artillery Master, Entrenchment, Relentless, Resolute, "Stand Back Sir!"
-    Armour: Gromril armour {Mundane} [Armour]
-    Great weapon {Mundane} [Melee] (6), Dwarf handgun {Mundane} [Ballistic] (12), Dwarf pistol {Mundane} [Ballistic] (6), Brace of Dwarf pistols {Mundane} [Ballistic] (10)
-    None
-    None
-    None
-    None
-    0
-    50
-    50
-    Non-Unique
+    BASE_TYPE = Melee
+    TYPE = Hero
+    CATEGORY = Infantry
+    POINTS = 70
+    CHARACTERISTICS = 3 4 4 4 4 2 2 2 9
+    SPECIAL_RULES = Ancestral Grudge, Artillery Master, Entrenchment, Relentless, Resolute, "Stand Back Sir!"
+    EQUIPMENT = Armour - Name: Gromril armour, Category: Mundane, Type: Armour
+    OPTIONAL_WEAPONS = [Name: Great weapon, Category: Mundane, Type: Melee, Points: 6
+                        Name: Dwarf handgun, Category: Mundane, Type: Ballistic, Points: 12
+                        Name: Dwarf pistol, Category: Mundane, Type: Ballistic, Points: 6
+                        Name: Brace of Dwarf pistols, Category: Mundane, Type: Ballistic, Points: 10]
+    FACTION_ITEM_BUDGET = Points : 50, Restrictions : ItemType - Weapon | Armour | Talisman
+    TOTAL_ITEM_BUDGET = copy FACTION_ITEM_BUDGET
 
 Dragon Slayer
-    Lord, Melee
-    Infantry
-    70
-    1, 1
-    3 6 3 4 5 2 4 3 10
-    Ancestral Grudge, Dragon Slayer, Deathblow, Relentless, Resolute, Slayer, Slayer Axes, Slayer Cult, Unbreakable
-    Weapon: Array of axes {Mundane} [Melee]
-    None
-    None
-    None
-    None
-    None
-    0
-    75
-    75
-    Non-Unique
+    BASE_TYPE = Melee
+    TYPE = Hero
+    CATEGORY = Infantry
+    POINTS = 70
+    CHARACTERISTICS = 3 6 3 4 5 2 4 3 10
+    SPECIAL_RULES = Ancestral Grudge, Dragon Slayer, Deathblow, Relentless, Resolute, Slayer, Slayer Axes, Slayer Cult, Unbreakable
+    EQUIPMENT = Weapon - Name: Array of axes, Category: Mundane, Type: Melee
+    FACTION_ITEM_BUDGET = Points : 75, Restrictions : Limit - 1 / ItemType - Weapon
+    TOTAL_ITEM_BUDGET = copy FACTION_ITEM_BUDGET
 
 # Core
 
 Dwarf Warriors
-    Core, Infantry, Normal
-    8
-    10, None
-    3 4 3 3 4 1 2 1 9
-    3 4 3 3 4 1 2 2 9
-    Ancestral Grudge, Relentless, Resolute, Shieldwall
-    Ancestral Grudge, Relentless, Resolute, Shieldwall
-    Armour: Heavy armour {Mundane} [Armour]
-    None
-    Great weapons {Mundane} [Melee] (2)
-    None
-    Shields {Mundane} [Shield] (1)
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Veteran [10]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Infantry
+    POINTS = 8
+    SIZE = 10, inf
+    CHARACTERISTICS = 3 4 3 3 4 1 2 1 9
+    CHAMPION_CHARACTERISTICS = 3 4 3 3 4 1 2 2 9
+    SPECIAL_RULES = Ancestral Grudge, Relentless, Resolute, Shieldwall
+    EQUIPMENT = Armour - Name: Heavy armour, Category: Mundane, Type: Armour
+    OPTIONAL_WEAPONS = Name: Great weapons, Category: Mundane, Type: Melee, Points: 2
+    OPTIONAL_ARMOUR = Name: Shields, Category: Mundane, Type: Shield, Points: 1
+    OPTIONAL_COMMAND = Musician - Name : Musician, Points : 10 ; Standard Bearer - Name : Standard Bearer, Points : 10 ; Champion - Name : Veteran, Points : 10
 
 Quarellers
-    Core, Infantry, Normal
-    12
-    10, None
-    3 4 3 3 4 1 2 1 9
-    3 4 3 3 4 1 2 2 9
-    Ancestral Grudge, Relentless, Resolute, Shieldwall
-    Ancestral Grudge, Relentless, Resolute, Shieldwall
-    Armour: Heavy armour {Mundane} [Armour], Weapon: Dwarf crossbow {Mundane} [Ballistic]
-    None
-    Great weapons {Mundane} [Melee] (2)
-    None
-    Shields {Mundane} [Shield] (1)
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Veteran [10]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Infantry
+    POINTS = 12
+    SIZE = 10, inf
+    CHARACTERISTICS = 3 4 3 3 4 1 2 1 9
+    CHAMPION_CHARACTERISTICS = 3 4 3 3 4 1 2 2 9
+    SPECIAL_RULES = Ancestral Grudge, Relentless, Resolute, Shieldwall
+    EQUIPMENT = Armour - Name: Heavy armour, Category: Mundane, Type: Armour ; Weapon - Name: Dwarf crossbow, Category: Mundane, Type: Ballistic
+    OPTIONAL_WEAPONS = Name: Great weapons, Category: Mundane, Type: Melee, Points: 2
+    OPTIONAL_ARMOUR = Name: Shields, Category: Mundane, Type: Shield, Points: 1
+    OPTIONAL_COMMAND = Musician - Name : Musician, Points : 10 ; Standard Bearer - Name : Standard Bearer, Points : 10 ; Champion - Name : Veteran, Points : 10
 
 Thunderers
-    Core, Infantry, Normal
-    12
-    10, None
-    3 4 3 3 4 1 2 1 9
-    3 4 3 3 4 1 2 2 9
-    Ancestral Grudge, Relentless, Resolute, Shieldwall
-    Ancestral Grudge, Relentless, Resolute, Shieldwall
-    Armour: Heavy armour {Mundane} [Armour], Weapon: Dwarf handgun {Mundane} [Ballistic]
-    None
-    None
-    Brace of Dwarf pistols {Mundane} [Ballistic] (0)
-    Shields {Mundane} [Shield] (1)
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Veteran [10]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Infantry
+    POINTS = 12
+    SIZE = 10, inf
+    CHARACTERISTICS = 3 4 3 3 4 1 2 1 9
+    CHAMPION_CHARACTERISTICS = 3 4 3 3 4 1 2 2 9
+    SPECIAL_RULES = Ancestral Grudge, Relentless, Resolute, Shieldwall
+    EQUIPMENT = Armour - Name: Heavy armour, Category: Mundane, Type: Armour ; Weapon - Name: Dwarf handgun, Category: Mundane, Type: Ballistic
+    CHAMPION_OPTIONAL_WEAPONS = Name: Brace of Dwarf pistols, Category: Mundane, Type: Ballistic, Points: 0
+    OPTIONAL_ARMOUR = Name: Shields, Category: Mundane, Type: Shield, Points: 1
+    OPTIONAL_COMMAND = Musician - Name : Musician, Points : 10 ; Standard Bearer - Name : Standard Bearer, Points : 10 ; Champion - Name : Veteran, Points : 10
 
 Longbeards
-    Core, Infantry, Normal
-    12
-    10, None
-    3 5 3 4 4 1 2 1 9
-    3 5 3 4 4 1 2 2 9
-    Ancestral Grudge, Immune to Psychology, Old Grumblers, Relentless, Resolute, Shieldwall
-    Ancestral Grudge, Immune to Psychology, Old Grumblers, Relentless, Resolute, Shieldwall
-    Armour: Heavy armour {Mundane} [Armour]
-    None
-    Great weapons {Mundane} [Melee] (2)
-    None
-    Shields {Mundane} [Shield] (1)
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Old Guard [10]
-    0
-    0
-    0
-    50
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Infantry
+    POINTS = 12
+    SIZE = 10, inf
+    CHARACTERISTICS = 3 5 3 4 4 1 2 1 9
+    CHAMPION_CHARACTERISTICS = 3 5 3 4 4 1 2 2 9
+    SPECIAL_RULES = Ancestral Grudge, Immune to Psychology, Old Grumblers, Relentless, Resolute, Shieldwall
+    EQUIPMENT = Armour - Name: Heavy armour, Category: Mundane, Type: Armour
+    OPTIONAL_WEAPONS = Name: Great weapons, Category: Mundane, Type: Melee, Points: 2
+    OPTIONAL_ARMOUR = Name: Shields, Category: Mundane, Type: Shield, Points: 1
+    OPTIONAL_COMMAND = Musician - Name : Musician, Points : 10 ; Standard Bearer - Name : Standard Bearer, Points : 10 ; Champion - Name : Old Guard, Points : 10
+    BANNER_BUDGET = 50
 
 # Special
 
 Hammerers
-    Special, Infantry, Normal
-    14
-    10, None
-    3 5 3 4 4 1 2 2 9
-    3 5 3 4 4 1 2 3 9
-    Ancestral Grudge, Kingsguard, Relentless, Resolute, Shieldwall, Stubborn
-    Ancestral Grudge, Kingsguard, Relentless, Resolute, Shieldwall, Stubborn
-    Armour: Heavy armour {Mundane} [Armour], Weapon: Great weapon {Mundane} [Melee]
-    None
-    None
-    None
-    Shields {Mundane} [Shield] (1)
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Keeper of the Gate [10]
-    0
-    25
-    25
-    75
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Infantry
+    POINTS = 14
+    SIZE = 10, inf
+    CHARACTERISTICS = 3 5 3 4 4 1 2 2 9
+    CHAMPION_CHARACTERISTICS = 3 5 3 4 4 1 2 3 9
+    SPECIAL_RULES = Ancestral Grudge, Kingsguard, Relentless, Resolute, Shieldwall, Stubborn
+    EQUIPMENT = Armour - Name: Heavy armour, Category: Mundane, Type: Armour ; Weapon - Name: Great weapon, Category: Mundane, Type: Melee
+    OPTIONAL_ARMOUR = Name: Shields, Category: Mundane, Type: Shield, Points: 1
+    OPTIONAL_COMMAND = Musician - Name : Musician, Points : 10 ; Standard Bearer - Name : Standard Bearer, Points : 10 ; Champion - Name : Keeper of the Gate, Points : 10
+    FACTION_ITEM_BUDGET = Points : 25, Restrictions : Limit - 1 / ItemType - Weapon
+    TOTAL_ITEM_BUDGET = copy FACTION_ITEM_BUDGET
+    BANNER_BUDGET = 75
 
 Ironbreakers
-    Special, Infantry, Normal
-    14
-    10, None
-    3 5 3 4 4 1 2 1 10
-    3 5 3 4 4 1 2 2 10
-    Ancestral Grudge, Relentless, Resolute, Shieldwall of Gromril
-    Ancestral Grudge, Relentless, Resolute, Shieldwall of Gromril
-    Armour: Gromril armour {Mundane} [Armour], Armour: Shield {Mundane} [Shield]
-    None
-    None
-    Brace of drakefire pistols {Mundane} [Ballistic] (0)
-    None
-    None
-    None
-    None
-    None
-    Cinderblast bombs {True} [15]
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Ironbeard [10]
-    0
-    0
-    0
-    50
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Infantry
+    POINTS = 14
+    SIZE = 10, inf
+    CHARACTERISTICS = 3 5 3 4 4 1 2 1 10
+    CHAMPION_CHARACTERISTICS = 3 5 3 4 4 1 2 2 10
+    SPECIAL_RULES = Ancestral Grudge, Relentless, Resolute, Shieldwall of Gromril
+    EQUIPMENT = Armour - Name: Gromril armour, Category: Mundane, Type: Armour ; Armour - Name: Shield, Category: Mundane, Type: Shield
+    CHAMPION_OPTIONAL_WEAPONS = Name: Brace of drakefire pistols, Category: Mundane, Type: Ballistic, Points: 0, Replacements: Shield
+    CHAMPION_OPTIONAL_MC_EXTRAS = Name: Cinderblast bombs, Singular: true, Points: 15
+    OPTIONAL_COMMAND = Musician - Name : Musician, Points : 10 ; Standard Bearer - Name : Standard Bearer, Points : 10 ; Champion - Name : Ironbeard, Points : 10
+    BANNER_BUDGET = 50
 
 Miners
-    Core, Infantry, Normal
-    10
-    10, None
-    3 4 3 3 4 1 2 1 9
-    3 4 3 3 4 1 2 2 9
-    Ancestral Grudge, Relentless, Resolute, Underground Advance
-    Ancestral Grudge, Relentless, Resolute, Underground Advance
-    Armour: Heavy armour {Mundane} [Armour], Weapon: Great weapon {Mundane} [Melee]
-    None
-    None
-    Steam drill {Mundane} [Melee] (25)
-    None
-    None
-    None
-    None
-    Blasting charges {False} [2]
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Prospector [10]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Infantry
+    POINTS = 10
+    SIZE = 10, inf
+    CHARACTERISTICS = 3 4 3 3 4 1 2 1 9
+    CHAMPION_CHARACTERISTICS = 3 4 3 3 4 1 2 2 9
+    SPECIAL_RULES = Ancestral Grudge, Relentless, Resolute, Underground Advance
+    EQUIPMENT = Armour - Name: Heavy armour, Category: Mundane, Type: Armour ; Weapon - Name: Great weapon, Category: Mundane, Type: Melee
+    CHAMPION_OPTIONAL_WEAPONS = Name: Steam drill, Category: Mundane, Type: Melee, Points: 25
+    OPTIONAL_MC_EXTRAS = Name: Blasting charges, Points: 2
+    OPTIONAL_COMMAND = Musician - Name : Musician, Points : 10 ; Standard Bearer - Name : Standard Bearer, Points : 10 ; Champion - Name : Prospector, Points : 10
 
+# TODO: any number of slayers can be upgraded to giant slayers (not just one as is normal for a unit champion), figure out how to implement this
 Slayers
-    Core, Infantry, Normal
-    8
-    5, None
-    3 4 3 3 4 1 2 1 10
-    3 5 3 4 4 1 3 2 10
-    Ancestral Grudge, Deathblow, Relentless, Resolute, Slayer, Slayer Axes, Slayer Cult, Unbreakable
-    Ancestral Grudge, Deathblow, Relentless, Resolute, Slayer, Slayer Axes, Slayer Cult, Unbreakable
-    Weapon: Array of axes {Mundane} [Melee]
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Giant Slayer [12]
-    0
-    25
-    25
-    50
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Infantry
+    POINTS = 12
+    SIZE = 5, inf
+    CHARACTERISTICS = 3 4 3 3 4 1 2 1 10
+    CHAMPION_CHARACTERISTICS = 3 5 3 4 4 1 3 2 10
+    SPECIAL_RULES = Ancestral Grudge, Deathblow, Relentless, Resolute, Slayer, Slayer Axes, Slayer Cult, Unbreakable
+    EQUIPMENT = Weapon - Name: Array of axes, Category: Mundane, Type: Melee
+    OPTIONAL_COMMAND = Musician - Name : Musician, Points : 10 ; Standard Bearer - Name : Standard Bearer, Points : 10 ; Champion - Name : Giant Slayer, Points : 12
+    FACTION_ITEM_BUDGET = Points : 25, Restrictions : Limit - 1 / ItemType - Weapon
+    TOTAL_ITEM_BUDGET = copy FACTION_ITEM_BUDGET
+    BANNER_BUDGET = 50
 
 Cannon
-    Special, Warmachine, Normal
-    120
-    1, 1
-    - - - - 7 3 - - -
-    3 4 3 3 4 1 2 1 9
-    Ancestral Grudge, Stubborn
-    None
-    None
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Warmachine
+    POINTS = 120
+    CHARACTERISTICS = - - - - 7 3 - - -
+    CHAMPION_CHARACTERISTICS = 3 4 3 3 4 1 2 1 9
+    SPECIAL_RULES = Ancestral Grudge, Stubborn
+    FACTION_ITEM_BUDGET = Points : 100, Restrictions : ItemType - Other
+    TOTAL_ITEM_BUDGET = copy FACTION_ITEM_BUDGET
 
+# TODO: up to half Gyrocopters in army may be upgraded to have Vanguard deployment special rule
+#       => need to add parsing of something like: Restrictions: Limit - HALF_IN_ARMY
 Gyrocopter
-    Special, Unique, Normal
-    80
-    1, 1
-    1 4 3 4 5 3 2 2 9
-    Ancestral Grudge, Armoured Copter, Dive Bomb, Fly, Relentless
-    Weapon: Steam gun {Mundane} [Ballistic]
-    None
-    Brimstone gun {True} [0], Vanguard deployment {False} [20]
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Unique
+    POINTS = 80
+    CHARACTERISTICS = 1 4 3 4 5 3 2 2 9
+    EQUIPMENT = Weapon - Name: Steam gun, Category: Mundane, Type: Ballistic
+    OPTIONAL_WEAPONS = Name: Brimstone gun, Category: Mundane, Type: Ballistic, Points: 0
+    SPECIAL_RULES = Ancestral Grudge, Armoured Copter, Dive Bomb, Fly, Relentless
+    OPTIONAL_MC_EXTRAS = Name: Vanguard deployment, Points: 20
 
 Bolt Thrower
-    Special, Warmachine, Normal
-    55
-    1, 1
-    - - - - 7 3 - - -
-    3 4 3 3 4 1 2 1 9
-    Ancestral Grudge, Stubborn
-    None
-    None
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Warmachine
+    POINTS = 55
+    CHARACTERISTICS = - - - - 7 3 - - -
+    CHAMPION_CHARACTERISTICS = 3 4 3 3 4 1 2 1 9
+    SPECIAL_RULES = Ancestral Grudge, Stubborn
+    FACTION_ITEM_BUDGET = Points : 100, Restrictions : ItemType - Other
+    TOTAL_ITEM_BUDGET = copy FACTION_ITEM_BUDGET
 
 Grudge Thrower
-    Special, Warmachine, Normal
-    80
-    1, 1
-    - - - - 7 3 - - -
-    3 4 3 3 4 1 2 1 9
-    Ancestral Grudge, Stubborn
-    None
-    None
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Warmachine
+    POINTS = 80
+    CHARACTERISTICS = - - - - 7 3 - - -
+    CHAMPION_CHARACTERISTICS = 3 4 3 3 4 1 2 1 9
+    SPECIAL_RULES = Ancestral Grudge, Stubborn
+    FACTION_ITEM_BUDGET = Points : 100, Restrictions : ItemType - Other
+    TOTAL_ITEM_BUDGET = copy FACTION_ITEM_BUDGET
 
 # Rare
 
 Organ Gun
-    Rare, Warmachine, Normal
-    120
-    1, 1
-    - - - - 7 3 - - -
-    3 4 3 3 4 1 2 1 9
-    Ancestral Grudge, Organ Fire, Stubborn
-    None
-    None
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Warmachine
+    POINTS = 120
+    CHARACTERISTICS = - - - - 7 3 - - -
+    CHAMPION_CHARACTERISTICS = 3 4 3 3 4 1 2 1 9
+    SPECIAL_RULES = Ancestral Grudge, Organ Fire, Stubborn
+    FACTION_ITEM_BUDGET = Points : 50, Restrictions : ItemType - Other
+    TOTAL_ITEM_BUDGET = copy FACTION_ITEM_BUDGET
 
 Flame Cannon
-    Rare, Warmachine, Normal
-    120
-    1, 1
-    - - - - 7 3 - - -
-    3 4 3 3 4 1 2 1 9
-    Ancestral Grudge, Sheet of Fire, Stubborn
-    None
-    None
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Warmachine
+    POINTS = 140
+    CHARACTERISTICS = - - - - 7 3 - - -
+    CHAMPION_CHARACTERISTICS = 3 4 3 3 4 1 2 1 9
+    SPECIAL_RULES = Ancestral Grudge, Sheet of Fire, Stubborn
+    FACTION_ITEM_BUDGET = Points : 50, Restrictions : ItemType - Other
+    TOTAL_ITEM_BUDGET = copy FACTION_ITEM_BUDGET
 
 Rangers
-    Rare, Infantry, Normal
-    14
-    5, None
-    3 4 3 3 4 1 2 1 9
-    3 4 3 3 4 1 2 2 9
-    Ancestral Grudge, Relentless, Resolute, Scouts
-    Ancestral Grudge, Relentless, Resolute, Scouts
-    Armour: Heavy armour {Mundane} [Armour], Weapon: Dwarf crossbow {Mundane} [Ballistic], Weapon: Great weapon {Mundane} [Melee]
-    None
-    None
-    None
-    Shields {Mundane} [Shield] (1)
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Ol' Deadeye [10]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Infantry
+    POINTS = 14
+    SIZE = 5, inf
+    CHARACTERISTICS = 3 4 3 3 4 1 2 1 9
+    CHAMPION_CHARACTERISTICS = 3 4 3 3 4 1 2 2 9
+    SPECIAL_RULES = Ancestral Grudge, Relentless, Resolute, Scouts
+    EQUIPMENT = Armour - Name: Heavy armour, Category: Mundane, Type: Armour ; Weapon - Name: Dwarf crossbow, Category: Mundane, Type: Ballistic ; Weapon - Name: Great weapon, Category: Mundane, Type: Ballistic
+    OPTIONAL_ARMOUR = Name: Shields, Category: Mundane, Type: Shield, Points: 1
+    OPTIONAL_COMMAND = Musician - Name : Musician, Points : 10 ; Standard Bearer - Name : Standard Bearer, Points : 10 ; Champion - Name : Ol' Deadeye, Points : 10
 
 Irondrakes
-    Rare, Infantry, Normal
-    15
-    10, None
-    3 5 3 4 4 1 2 1 10
-    3 5 3 4 4 1 2 2 10
-    Ancestral Grudge, Relentless, Resolute
-    Ancestral Grudge, Relentless, Resolute
-    Armour: Forge-proven gromril armour {Mundane} [Armour], Weapon: Drakegun {Mundane} [Ballistic]
-    None
-    None
-    Brace of drakefire pistols {Mundane} [Ballistic] (0), Trollhammer torpedo {Mundane} [Ballistic] (20)
-    None
-    None
-    None
-    None
-    None
-    Cinderblast bombs {True} [15]
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Ironwarden [10]
-    0
-    0
-    0
-    50
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Infantry
+    POINTS = 15
+    SIZE = 10, inf
+    CHARACTERISTICS = 3 5 3 4 4 1 2 1 10
+    CHAMPION_CHARACTERISTICS = 3 5 3 4 4 1 2 2 10
+    SPECIAL_RULES = Ancestral Grudge, Relentless, Resolute
+    EQUIPMENT = Armour - Name: Forge-proven gromril armour, Category: Mundane, Type: Armour ; Weapon - Name: Drakegun, Category: Mundane, Type: Ballistic
+    CHAMPION_OPTIONAL_WEAPONS = [Name: Brace of drakefire pistols, Category: Mundane, Type: Ballistic, Points: 0
+                                 Name: Trollhammer torpedo, Category: Mundane, Type: Ballistic, Points: 20]
+    CHAMPION_OPTIONAL_MC_EXTRAS = Name: Cinderblast bombs, Singular: true, Points: 15
+    OPTIONAL_COMMAND = Musician - Name : Musician, Points : 10 ; Standard Bearer - Name : Standard Bearer, Points : 10 ; Champion - Name : Ironwarden, Points : 10
+    BANNER_BUDGET = 50
 
-Gyrobomber
-    Rare, Unique, Normal
-    125
-    1, 1
-    1 4 3 4 5 3 2 2 9
-    Ancestral Grudge, Armoured Copter, Bombing Run, Fly, Relentless
-    Weapon: Clattergun {Mundane} [Ballistic]
-    None
-    None
+Gyrocopter
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Unique
+    POINTS = 125
+    CHARACTERISTICS = 1 4 3 4 5 3 2 2 9
+    EQUIPMENT = Weapon - Name: Clattergun, Category: Mundane, Type: Ballistic
+    SPECIAL_RULES = Ancestral Grudge, Armoured Copter, Bombing Run, Fly, Relentless

@@ -63,8 +63,6 @@ private slots:
     void on_special_tree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
     void on_rare_tree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
 
-    //void on_army_tree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
-
     void on_add_button_clicked();
     void on_duplicate_button_clicked();
     void on_remove_button_clicked();
@@ -119,11 +117,14 @@ private:
     void update_validity_label();
     void update_budget_label();
 
+    void initialise_stylesheets();
+
     // roster tree modifying
     void populate_roster_tree();
     void clear_roster_tree();
 
     // army tree modifying
+    void resize_army_trees();
     void clear_army_tree();
 
     // info box modifying

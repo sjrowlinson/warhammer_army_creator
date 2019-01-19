@@ -4,7 +4,7 @@
 MagicItemBox::MagicItemBox(ArmyCreator* creator_, QTabWidget* box_,
                            QGroupBox* descr_box_, QLabel* descr_label_) :
     creator(creator_), box(box_), descr_box(descr_box_), descr_label(descr_label_),
-    ic_selected(ItemCategory::COMMON) {}
+    ic_selected(ItemCategory::NONE) {}
 
 void MagicItemBox::clear() {
     for (auto i = 0; i < box->count(); ++i) {
