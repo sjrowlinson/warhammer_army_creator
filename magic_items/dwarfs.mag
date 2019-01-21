@@ -1,0 +1,40 @@
+Ancestral Heirlooms
+
+The Hammer of Karak Drazh
+    CATEGORY = Weapon
+    TYPE = Melee
+    POINTS = 65
+    DESCRIPTION = Attacks with the Hammer of Karak Drazh are resolved at +3 Initiative, and enemy models that suffer one or more unsaved Wounds from it have their own Initiative reduced to 1 until the end of the Close Combat phase.
+    RESTRICTIONS = Limit - 1
+
+Red Axe of Karak Eight Peaks
+    CATEGORY = Weapon
+    TYPE = Melee
+    POINTS = 50
+    DESCRIPTION = The Red Axe of Karak Eight Peaks allows its wielder to re-roll To Hit and To Wound rolls against all models from Warhammer: Orcs & Goblins and/or Skaven. Additionally, the wielder also has the Terror special rule against all models taken from Warhammer: Orcs & Goblins and/or Skaven.
+    RESTRICTIONS = Limit - 1
+
+Magnificent Armour of Borek Beetlebrow
+    CATEGORY = Armour
+    TYPE = Armour
+    POINTS = 60
+    DESCRIPTION = The Magnificent Armour of Borek Beetlebrow grants the wearer a 2+ armour save. In addition, the Armour of Borek Beetlebrow grants the bearer a 3+ ward save against all attacks of Strength 6 or higher.
+    RESTRICTIONS = Limit - 1
+
+Silver Horn of Vengeance
+    CATEGORY = Enchanted
+    POINTS = 45
+    DESCRIPTION = One use only. The Silver Horn of Vengeance can be used at the start of any friendly turn. Its wielder, and any friendly units within 6", has the Devastating Charge special rule until the start of their following turn. Additionally, once used, the blower of the Silver Horn of Vengeance, and unit he joins, cause Fear in all models from Warhammer: High Elves, Dark Elves and/or Wood Elves for the rest of the game.
+    RESTRICTIONS = Limit - 1
+
+Fiery Ring of Thori
+    CATEGORY = Enchanted
+    POINTS = 35
+    DESCRIPTION = The Fiery Ring of Thori gives its bearer a Strength 4 Breath Weapon with the Flaming Attacks special rule.
+    RESTRICTIONS = Limit - 1
+
+Banner of Lost Holds
+    CATEGORY = Banner
+    POINTS = 100
+    DESCRIPTION = All models in a unit that carries the Banner of Lost Holds can re-roll failed To Wound rolls in close combat.
+    RESTRICTIONS = Limit - 1
