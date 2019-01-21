@@ -330,11 +330,10 @@ void ArmyCreator::change_unit_size() {
     }
 }
 
-void ArmyCreator::optional_weapon_selected() {
-    QRadioButton* rb = qobject_cast<QRadioButton*>(QObject::sender());
-    std::string rb_name = rb->objectName().toStdString();
+void ArmyCreator::optional_weapon_selected(const std::string& name,
+                                           WeaponType wt, ItemCategory ic, bool champion, bool master) {
     try {
-        opt_sel->select_weapon(rb_name);
+        opt_sel->select_weapon(name, wt, ic, champion, master);
         if (enum_convert::in_army_trees(in_tree)) {
             ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(current_item(), ArmyTreeColumn::WEAPONS, false, false);
@@ -355,11 +354,10 @@ void ArmyCreator::optional_weapon_selected() {
     mib->reinitialise(ItemType::WEAPON);
 }
 
-void ArmyCreator::optional_armour_selected() {
-    QRadioButton* rb = qobject_cast<QRadioButton*>(QObject::sender());
-    std::string rb_name = rb->objectName().toStdString();
+void ArmyCreator::optional_armour_selected(const std::string& name,
+                                           ArmourType at, ItemCategory ic, bool champion, bool master) {
     try {
-        opt_sel->select_armour(rb_name);
+        opt_sel->select_armour(name, at, ic, champion, master);
         if (enum_convert::in_army_trees(in_tree)) {
             ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(current_item(), ArmyTreeColumn::ARMOUR, false, false);
@@ -379,11 +377,9 @@ void ArmyCreator::optional_armour_selected() {
     mib->reinitialise(ItemType::ARMOUR);
 }
 
-void ArmyCreator::optional_talisman_selected() {
-    QRadioButton* rb = qobject_cast<QRadioButton*>(QObject::sender());
-    std::string rb_name = rb->objectName().toStdString();
+void ArmyCreator::optional_talisman_selected(const std::string& name, ItemCategory ic) {
     try {
-        opt_sel->select_talisman(rb_name);
+        opt_sel->select_talisman(name, ic);
         if (enum_convert::in_army_trees(in_tree)) {
             ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(current_item(), ArmyTreeColumn::TALISMAN, false, false);
@@ -399,11 +395,9 @@ void ArmyCreator::optional_talisman_selected() {
     mib->reinitialise(ItemType::TALISMAN);
 }
 
-void ArmyCreator::optional_enchanted_item_selected() {
-    QRadioButton* rb = qobject_cast<QRadioButton*>(QObject::sender());
-    std::string rb_name = rb->objectName().toStdString();
+void ArmyCreator::optional_enchanted_item_selected(const std::string& name, ItemCategory ic) {
     try {
-        opt_sel->select_enchanted_item(rb_name);
+        opt_sel->select_enchanted_item(name, ic);
         if (enum_convert::in_army_trees(in_tree)) {
             ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(current_item(), ArmyTreeColumn::ENCHANTED, false, false);
@@ -419,11 +413,9 @@ void ArmyCreator::optional_enchanted_item_selected() {
     mib->reinitialise(ItemType::ENCHANTED);
 }
 
-void ArmyCreator::optional_other_item_selected() {
-    QCheckBox* cb = qobject_cast<QCheckBox*>(QObject::sender());
-    std::string cb_name = cb->objectName().toStdString();
+void ArmyCreator::optional_other_item_selected(const std::string& name, ItemCategory ic, bool checked) {
     try {
-        opt_sel->select_other_item(cb_name, cb->isChecked());
+        opt_sel->select_other_item(name, ic, checked);
         if (enum_convert::in_army_trees(in_tree)) {
             ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(current_item(), ArmyTreeColumn::EXTRAS, false, false);
@@ -439,11 +431,9 @@ void ArmyCreator::optional_other_item_selected() {
     mib->reinitialise(ItemType::OTHER);
 }
 
-void ArmyCreator::optional_banner_selected() {
-    QRadioButton* rb = qobject_cast<QRadioButton*>(QObject::sender());
-    std::string rb_name = rb->objectName().toStdString();
+void ArmyCreator::optional_banner_selected(const std::string& name, ItemCategory ic) {
     try {
-        opt_sel->select_banner(rb_name);
+        opt_sel->select_banner(name, ic);
         if (enum_convert::in_army_trees(in_tree)) {
             ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(current_item(), ArmyTreeColumn::BANNER, false, false);
@@ -459,11 +449,9 @@ void ArmyCreator::optional_banner_selected() {
     mib->reinitialise(ItemType::BANNER);
 }
 
-void ArmyCreator::optional_arcane_item_selected() {
-    QRadioButton* rb = qobject_cast<QRadioButton*>(QObject::sender());
-    std::string rb_name = rb->objectName().toStdString();
+void ArmyCreator::optional_arcane_item_selected(const std::string& name, ItemCategory ic) {
     try {
-        opt_sel->select_arcane_item(rb_name);
+        opt_sel->select_arcane_item(name, ic);
         if (enum_convert::in_army_trees(in_tree)) {
             ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(current_item(), ArmyTreeColumn::ARCANE, false, false);
@@ -479,11 +467,9 @@ void ArmyCreator::optional_arcane_item_selected() {
     mib->reinitialise(ItemType::ARCANE);
 }
 
-void ArmyCreator::optional_level_selected() {
-    QRadioButton* rb = qobject_cast<QRadioButton*>(QObject::sender());
-    std::string rb_name = rb->objectName().toStdString();
+void ArmyCreator::optional_level_selected(short level) {
     try {
-        opt_sel->select_mage_level(rb_name);
+        opt_sel->select_mage_level(level);
         if (enum_convert::in_army_trees(in_tree)) {
             ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(current_item(), ArmyTreeColumn::LEVEL, false, false);
@@ -499,11 +485,9 @@ void ArmyCreator::optional_level_selected() {
     }
 }
 
-void ArmyCreator::optional_lore_selected() {
-    QRadioButton* rb = qobject_cast<QRadioButton*>(QObject::sender());
-    std::string rb_name = rb->objectName().toStdString();
+void ArmyCreator::optional_lore_selected(const std::string& name) {
     try {
-        opt_sel->select_mage_lore(rb_name);
+        opt_sel->select_mage_lore(name);
         if (enum_convert::in_army_trees(in_tree))
             update_unit_display(current_item(), ArmyTreeColumn::LORE, false, false);
     } catch (const std::exception& e) {
@@ -516,11 +500,9 @@ void ArmyCreator::optional_lore_selected() {
     }
 }
 
-void ArmyCreator::optional_mount_selected() {
-    QRadioButton* rb = qobject_cast<QRadioButton*>(QObject::sender());
-    std::string rb_name = rb->objectName().toStdString();
+void ArmyCreator::optional_mount_selected(const std::string& name) {
     try {
-        opt_sel->select_mount(rb_name);
+        opt_sel->select_mount(name);
         if (enum_convert::in_army_trees(in_tree)) {
             ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(current_item(), ArmyTreeColumn::MOUNT, false, false);
@@ -819,8 +801,8 @@ void ArmyCreator::change_faction(Faction faction) {
         clear();
         populate_roster_tree();
         race = faction;
-        setup_magic_items_combobox();
         mib->reset_category(ItemCategory::NONE);
+        setup_magic_items_combobox();
     }
     catch (const std::runtime_error& e) {
         ui->faction_combobox->setCurrentText(QString::fromStdString(enum_convert::FACTION_TO_STRING.at(race)));

@@ -119,21 +119,22 @@ std::string character_unit::pick_magic_item(ItemType item_type, ItemCategory ite
             if (search == handle_->faction_items_handle()->second.end())
                 throw std::invalid_argument("Item not found!");
         }
-        // do budget restriction checks
+        // get budget and current magic item points values
         const double mi_budget = (item_class == ItemCategory::FACTION) ?
             handle_->faction_item_budget().points : handle_->magic_item_budget().points;
         const double ti_budget = handle_->total_item_budget().points;
         double adj_mip =
             (item_class == ItemCategory::FACTION) ? faction_item_points_ : magic_item_points_;
         double adj_tip = total_item_points_;
+        // do budget restriction checks
         if (item_class == ItemCategory::MAGIC || item_class == ItemCategory::COMMON) {
-            auto b_restr = budget_restriction_check(base()->magic_item_budget().restrictions);
+            auto b_restr = budget_restriction_check(base()->magic_item_budget().restrictions, item_type);
             if (!b_restr.empty()) throw std::invalid_argument(b_restr);
         } else if (item_class == ItemCategory::FACTION) {
-            auto b_restr = budget_restriction_check(base()->faction_item_budget().restrictions);
+            auto b_restr = budget_restriction_check(base()->faction_item_budget().restrictions, item_type);
             if (!b_restr.empty()) throw std::invalid_argument(b_restr);
         }
-        auto b_restr = budget_restriction_check(base()->total_item_budget().restrictions);
+        auto b_restr = budget_restriction_check(base()->total_item_budget().restrictions, item_type);
         if (!b_restr.empty()) throw std::invalid_argument(b_restr);
         // do item restriction checks
         auto restr = restriction_check(search->second.restrictions, name);

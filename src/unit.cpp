@@ -123,11 +123,6 @@ std::string unit::restriction_check(
                         "of " + item_name + " in an army!";
             break;
         }
-        case RestrictionField::ITEMTYPE:
-        case RestrictionField::SUBITEMTYPE:
-            // TODO: don't know what to do with these yet, need to rewrite
-            // budget and item parsing first
-            break;
         // everything else handled by restriction_check calls in derived classes
         default: break;
         }
@@ -137,7 +132,8 @@ std::string unit::restriction_check(
 }
 
 std::string unit::budget_restriction_check(
-    const std::unordered_multimap<RestrictionField, std::any>& restrictions
+        const std::unordered_multimap<RestrictionField, std::any>& restrictions,
+        ItemType item_type
 ) const {
     std::string msg = "";
     for (const auto& restriction : restrictions) {
@@ -150,6 +146,15 @@ std::string unit::budget_restriction_check(
                        + (lim > 1 ? "s!" : "!");
             break;
         }
+        case RestrictionField::ITEMTYPE:
+        {
+            std::vector<ItemType> v = std::any_cast<std::vector<ItemType>>(restriction.second);
+            if (!std::count(std::begin(v), std::end(v), item_type))
+                msg += name() + " cannot choose items of type: " + enum_convert::ITEM_TYPE_TO_STRING.at(item_type);
+            break;
+        }
+        case RestrictionField::SUBITEMTYPE:
+            break;
         default: break;
         }
     }

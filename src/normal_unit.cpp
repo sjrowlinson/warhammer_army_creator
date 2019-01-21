@@ -232,8 +232,11 @@ std::string normal_unit::pick_champion_weapon(ItemCategory item_type, const std:
         auto search = handle->magic_items_handle()->second.find(name);
         if (search == handle->magic_items_handle()->second.end())
             throw std::invalid_argument("Weapon not found!");
-        double mi_budget = handle->magic_item_budget().points;
-        double ti_budget = handle->total_item_budget().points;
+        // get budget and current magic item points values
+        const double mi_budget = handle->magic_item_budget().points;
+        const double ti_budget = handle->total_item_budget().points;
+        double adj_mip = champ_magic_item_points;
+        double adj_tip = champ_total_item_points;
         if ((search->second.points + champ_magic_item_points > mi_budget) ||
                 (search->second.points + champ_total_item_points > ti_budget))
             throw std::runtime_error("Magic item budget exceeded!");

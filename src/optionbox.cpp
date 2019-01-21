@@ -325,39 +325,27 @@ QGroupBox* OptionBox::make_weapons_subbox(WeaponType wt, bool champion) {
     QVBoxLayout* weapons_subbox_layout = new QVBoxLayout;
     bool has_weapon = false;
     for (const auto& w : opt_weapon_vec) {
-        BaseUnitType but = current->base_unit_type();
-        std::string pts_str = tools::points_str(w->second.points, but);
+        std::string pts_str = tools::points_str(w->second.points, current->base_unit_type());
         std::string button_label = w->first + " (" + pts_str + ")";
-        std::string button_name = w->first + "_" +
-                std::to_string(static_cast<int>(w->second.type)) + "_" +
-                std::to_string(static_cast<int>(w->second.category)) + "_" +
-                ((champion) ? "champion" : "default") + "_radiobutton";
         QRadioButton* rb = new QRadioButton(creator->tr(button_label.data()));
-        rb->setObjectName(QString(button_name.data()));
-        // check if current unit weapon map contains this weapon
-        if (curr_weapons.count(w->second.type)) {
+        if (curr_weapons.count(w->second.type)) { // check if current unit weapon map contains this weapon
             if (std::get<1>(curr_weapons.at(w->second.type)) == w->first) {
                 rb->setChecked(true);
                 has_weapon = true;
             }
         }
-        creator->connect(rb, SIGNAL(clicked(bool)), creator, SLOT(optional_weapon_selected()));
+        std::string weapon_name = w->first;
+        ItemCategory ic = w->second.category;
+        creator->connect(rb, &QRadioButton::clicked, creator, [weapon_name, ic, wt, champion, this](auto) {
+            creator->optional_weapon_selected(weapon_name, wt, ic, champion, true);
+        });
         weapons_subbox_layout->addWidget(rb);
     }
     QRadioButton* none_rb = new QRadioButton(creator->tr("None"));
-    std::string none_rb_name = "None_opt_";
-    switch (wt) {
-    case WeaponType::MELEE:
-        none_rb_name += std::string("melee_") + ((champion) ? "champion" : "default") + "_radiobutton";
-        break;
-    case WeaponType::BALLISTIC:
-        none_rb_name += std::string("ranged_") + ((champion) ? "champion" : "default") + "_radiobutton";
-        break;
-    default: throw std::runtime_error("Unrecognised weapon type!");
-    }
-    none_rb->setObjectName(QString(none_rb_name.data()));
     if (!has_weapon) none_rb->setChecked(true);
-    creator->connect(none_rb, SIGNAL(clicked(bool)), creator, SLOT(optional_weapon_selected()));
+    creator->connect(none_rb, &QRadioButton::clicked, creator, [champion, wt, this](auto) {
+        creator->optional_weapon_selected("", wt, ItemCategory::MUNDANE, champion, true);
+    });
     weapons_subbox_layout->addWidget(none_rb);
     weapons_subbox_layout->addStretch(1);
     weapons_subbox->setLayout(weapons_subbox_layout);
@@ -479,12 +467,7 @@ QGroupBox* OptionBox::make_armour_subbox(ArmourType at, bool champion) {
         BaseUnitType but = current->base_unit_type();
         std::string pts_str = tools::points_str(a->second.points, but);
         std::string button_label = a->first + " (" + pts_str + ")";
-        std::string button_name = a->first + "_" +
-                std::to_string(static_cast<int>(a->second.type)) + "_" +
-                std::to_string(static_cast<int>(a->second.category)) + "_" +
-                ((champion) ? "champion" : "default") + "_radiobutton";
         QRadioButton* rb = new QRadioButton(creator->tr(button_label.data()));
-        rb->setObjectName(QString(button_name.data()));
         // check if current unit armour map contains this piece of armour
         if (curr_armour.count(a->second.type)) {
                if (std::get<1>(curr_armour.at(a->second.type)) == a->first) {
@@ -492,26 +475,18 @@ QGroupBox* OptionBox::make_armour_subbox(ArmourType at, bool champion) {
                    has_armour = true;
                }
         }
-        creator->connect(rb, SIGNAL(clicked(bool)), creator, SLOT(optional_armour_selected()));
+        std::string armour_name = a->first;
+        ItemCategory ic = a->second.category;
+        creator->connect(rb, &QRadioButton::clicked, creator, [armour_name, ic, at, champion, this](auto) {
+            creator->optional_armour_selected(armour_name, at, ic, champion, true);
+        });
         armour_subbox_layout->addWidget(rb);
     }
     QRadioButton* none_rb = new QRadioButton(creator->tr("None"));
-    std::string none_rb_name = "None_opt_";
-    switch (at) {
-    case ArmourType::ARMOUR:
-        none_rb_name += std::string("armour_") + ((champion) ? "champion" : "default") + "_radiobutton";
-        break;
-    case ArmourType::SHIELD:
-        none_rb_name += std::string("shield_") + ((champion) ? "champion" : "default") + "_radiobutton";
-        break;
-    case ArmourType::HELMET:
-        none_rb_name += std::string("helmet_") + ((champion) ? "champion" : "default") + "_radiobutton";
-        break;
-    default: throw std::runtime_error("Unrecognised armour type!");
-    }
-    none_rb->setObjectName(QString(none_rb_name.data()));
     if (!has_armour) none_rb->setChecked(true);
-    creator->connect(none_rb, SIGNAL(clicked(bool)), creator, SLOT(optional_armour_selected()));
+    creator->connect(none_rb, &QRadioButton::clicked, creator, [champion, at, this](auto) {
+        creator->optional_armour_selected("", at, ItemCategory::MUNDANE, champion, true);
+    });
     armour_subbox_layout->addWidget(none_rb);
     armour_subbox_layout->addStretch(1);
     armour_subbox->setLayout(armour_subbox_layout);
@@ -532,22 +507,24 @@ std::pair<QGroupBox*, QGroupBox*> OptionBox::make_mage_options_boxes() {
         QGroupBox* levels_box = new QGroupBox(creator->tr("Mage Levels"));
         QVBoxLayout* levels_box_layout = new QVBoxLayout;
         bool has_level = false;
-        std::string none_rb_name = "Level " + std::to_string(p->handle->mage_level()) + " (0 pts)";
-        QRadioButton* none_rb = new QRadioButton(creator->tr(none_rb_name.data()));
-        none_rb->setObjectName(QString("Default_levels_radiobutton"));
-        creator->connect(none_rb, SIGNAL(clicked(bool)), creator, SLOT(optional_level_selected()));
-        levels_box_layout->addWidget(none_rb);
         for (const auto& l : v) {
             std::string name = "Level " + std::to_string(l.first) + " (" + tools::points_str(l.second) + " pts" + ")";
             QRadioButton* b = new QRadioButton(creator->tr(name.data()));
-            b->setObjectName(QString(("level_" + std::to_string(l.first) + "_radiobutton").data()));
             if (level == l.first) {
                 b->setChecked(true);
                 has_level = true;
             }
-            creator->connect(b, SIGNAL(clicked(bool)), creator, SLOT(optional_level_selected()));
+            creator->connect(b, &QRadioButton::clicked, creator, [this, l](auto) {
+                creator->optional_level_selected(l.first);
+            });
             levels_box_layout->addWidget(b);
         }
+        std::string none_rb_name = "Level " + std::to_string(p->handle->mage_level()) + " (0 pts)";
+        QRadioButton* none_rb = new QRadioButton(creator->tr(none_rb_name.data()));
+        creator->connect(none_rb, &QRadioButton::clicked, creator, [this, p](auto) {
+            creator->optional_level_selected(p->handle->mage_level());
+        });
+        levels_box_layout->addWidget(none_rb);
         if (!has_level) none_rb->setChecked(true);
         levels_box_layout->addStretch(1);
         levels_box->setLayout(levels_box_layout);
@@ -563,7 +540,6 @@ std::pair<QGroupBox*, QGroupBox*> OptionBox::make_mage_options_boxes() {
         for (const auto& l : opt_lores) {
             std::string name = "Lore of " + l.name;
             QRadioButton* b = new QRadioButton(creator->tr(name.data()));
-            b->setObjectName(QString::fromStdString("lore_" + l.name + "_radiobutton"));
             if (lores.empty() && !has_lore) {
                 b->setChecked(true);
                 has_lore = true;
@@ -572,7 +548,9 @@ std::pair<QGroupBox*, QGroupBox*> OptionBox::make_mage_options_boxes() {
                 b->setChecked(true);
                 has_lore = true;
             }
-            creator->connect(b, SIGNAL(clicked(bool)), creator, SLOT(optional_lore_selected()));
+            creator->connect(b, &QRadioButton::clicked, creator, [this, l](auto) {
+                creator->optional_lore_selected(l.name);
+            });
             lores_box_layout->addWidget(b);
         }
         lores_box_layout->addStretch(1);
@@ -619,16 +597,16 @@ QGroupBox* OptionBox::make_mounts_boxes() {
         std::string permodel = (current->base_unit_type() == BaseUnitType::NORMAL) ? "/model" : "";
         std::string name = m.first + " (" + pts_str + " pts" + permodel + ")";
         QRadioButton* b = new QRadioButton(creator->tr(name.data()));
-        b->setObjectName(QString((m.first + "_radiobutton").data()));
         if (std::get<0>(mount_) == m.first) {
             b->setChecked(true);
             has_mount = true;
         }
-        creator->connect(b, SIGNAL(clicked(bool)), creator, SLOT(optional_mount_selected()));
+        creator->connect(b, &QRadioButton::clicked, creator, [this, m](auto) {
+            creator->optional_mount_selected(m.first);
+        });
         vbox_mounts->addWidget(b);
         // spawn another group box containing mount options
         if (current->base()->mounts_handle() == nullptr) continue;
-        //auto mount_meta = current->base()->mounts_handle()->find(m.first);
         if (!(m.second.oco_extras.empty() && m.second.mc_extras.empty()) &&
                 std::get<0>(mount_) == m.first) { // only show the options if the associated mount is selected
             QFrame* f = new QFrame();
@@ -679,9 +657,10 @@ QGroupBox* OptionBox::make_mounts_boxes() {
         }
     }
     QRadioButton* none_rb = new QRadioButton(creator->tr("None"));
-    none_rb->setObjectName(QString("None_mounts_radiobutton"));
     if (!has_mount) none_rb->setChecked(true);
-    creator->connect(none_rb, SIGNAL(clicked(bool)), creator, SLOT(optional_mount_selected()));
+    creator->connect(none_rb, &QRadioButton::clicked, creator, [this](auto) {
+        creator->optional_mount_selected("");
+    });
     vbox_mounts->addWidget(none_rb);
     vbox_mounts->addStretch(1);
     mounts_box->setLayout(vbox_mounts);

@@ -31,16 +31,16 @@ public:
 
     // selectors
 
-    void select_weapon(const std::string& s);
-    void select_armour(const std::string& s);
-    void select_talisman(const std::string& s);
-    void select_enchanted_item(const std::string& s);
-    void select_arcane_item(const std::string& s);
-    void select_other_item(const std::string& s, bool is_checked);
-    void select_banner(const std::string& s);
-    void select_mage_level(const std::string& s);
-    void select_mage_lore(const std::string& s);
-    void select_mount(const std::string& s);
+    void select_weapon(const std::string& weapon, WeaponType wt, ItemCategory ic, bool champion, bool master);
+    void select_armour(const std::string& armour, ArmourType at, ItemCategory ic, bool champion, bool master);
+    void select_talisman(const std::string& talisman, ItemCategory ic);
+    void select_enchanted_item(const std::string& enchanted, ItemCategory ic);
+    void select_arcane_item(const std::string& arcane, ItemCategory ic);
+    void select_other_item(const std::string& other, ItemCategory ic, bool checked);
+    void select_banner(const std::string& banner, ItemCategory ic);
+    void select_mage_level(short level);
+    void select_mage_lore(const std::string& lore);
+    void select_mount(const std::string& mount);
     void select_mount_oco_extra(const std::string& s);
     void select_mount_mc_extra(const std::string& s, bool is_checked);
     void select_command(const std::string& s, bool is_checked);

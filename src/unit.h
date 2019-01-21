@@ -33,7 +33,8 @@ protected:
         const std::string& item_name
     ) const;
     virtual std::string budget_restriction_check(
-        const std::unordered_multimap<RestrictionField, std::any>& restrictions
+        const std::unordered_multimap<RestrictionField, std::any>& restrictions,
+        ItemType item_type
     ) const;
 public:
     explicit unit(const std::shared_ptr<base_unit>& base, army_list* army_handle);

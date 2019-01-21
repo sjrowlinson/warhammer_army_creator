@@ -35,44 +35,31 @@ bool option_selector::is_selection_magical(const std::string& selection) const {
 
 // selectors
 
-void option_selector::select_weapon(const std::string& s) {
+void option_selector::select_weapon(const std::string& weapon, WeaponType wt, ItemCategory ic, bool champion, bool master) {
+    (void)master;
     if (current == nullptr) throw std::runtime_error("No unit selected!");
-    auto split = tools::split(s, '_');
-    auto weapon = split[0];
     std::string removed;
-    if (weapon == "None") { // None radio button selected
-        WeaponType wt;
-        if (split[2] == "melee") wt = WeaponType::MELEE;
-        else if (split[2] == "ranged") wt = WeaponType::BALLISTIC;
-        else wt = WeaponType::NONE;
+    if (weapon.empty()) { // None radio button selected => remove weapon
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(current->id());
-            if (split[3] == "default") removed = current->remove_weapon(wt);
-            else if (split[3] == "champion") {
+            if (champion) {
                 current->switch_model_select(ModelSelect::CHAMPION);
                 removed = current->remove_weapon(wt);
                 current->switch_model_select(ModelSelect::DEFAULT);
-            }
+            } else removed = current->remove_weapon(wt);
             army->update_on(current->id());
         } else {
-            if (split[3] == "default") removed = current->remove_weapon(wt);
-            else if (split[3] == "champion") {
+            if (champion) {
                 current->switch_model_select(ModelSelect::CHAMPION);
                 removed = current->remove_weapon(wt);
                 current->switch_model_select(ModelSelect::DEFAULT);
-            }
+            } else removed = current->remove_weapon(wt);
         }
-    }
-    else {
-        const bool is_magical = is_selection_magical(weapon);
-        ItemCategory ic = static_cast<ItemCategory>(std::stoi(split[2]));
+    } else {
+        const bool is_magical = ic == ItemCategory::COMMON || ic == ItemCategory::MAGIC || ic == ItemCategory::FACTION;
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(current->id());
-            if (split[3] == "default") {
-                try { removed = current->pick_weapon(ic, weapon); }
-                catch (const std::exception&) { throw; }
-            }
-            else if (split[3] == "champion") {
+            if (champion) {
                 current->switch_model_select(ModelSelect::CHAMPION);
                 try { removed = current->pick_weapon(ic, weapon); }
                 catch (const std::exception&) {
@@ -80,14 +67,13 @@ void option_selector::select_weapon(const std::string& s) {
                     throw;
                 }
                 current->switch_model_select(ModelSelect::DEFAULT);
+            } else {
+                try { removed = current->pick_weapon(ic, weapon); }
+                catch (const std::exception&) { throw; }
             }
             army->update_on(current->id());
         } else {
-            if (split[3] == "default") {
-                try { removed = current->pick_weapon(ic, weapon); }
-                catch (const std::exception&) { throw; }
-            }
-            else if (split[3] == "champion") {
+            if (champion) {
                 current->switch_model_select(ModelSelect::CHAMPION);
                 try { removed = current->pick_weapon(ic, weapon); }
                 catch (const std::exception&) {
@@ -95,6 +81,9 @@ void option_selector::select_weapon(const std::string& s) {
                     throw;
                 }
                 current->switch_model_select(ModelSelect::DEFAULT);
+            } else {
+                try { removed = current->pick_weapon(ic, weapon); }
+                catch (const std::exception&) { throw; }
             }
         }
         if (is_magical) {
@@ -108,45 +97,31 @@ void option_selector::select_weapon(const std::string& s) {
     }
 }
 
-void option_selector::select_armour(const std::string& s) {
+void option_selector::select_armour(const std::string& armour, ArmourType at, ItemCategory ic, bool champion, bool master) {
+    (void)master;
     if (current == nullptr) throw std::runtime_error("No unit selected!");
-    auto split = tools::split(s, '_');
-    auto armour = split[0];
     std::string removed;
-    if (armour == "None") {
-        ArmourType at;
-        if (split[2] == "armour") at = ArmourType::ARMOUR;
-        else if (split[2] == "shield") at = ArmourType::SHIELD;
-        else if (split[2] == "helmet") at = ArmourType::HELMET;
-        else at = ArmourType::NONE;
+    if (armour.empty()) { // None radio button selected => remove weapon
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(current->id());
-            if (split[3] == "default") removed = current->remove_armour(at);
-            else if (split[3] == "champion") {
+            if (champion) {
                 current->switch_model_select(ModelSelect::CHAMPION);
                 removed = current->remove_armour(at);
                 current->switch_model_select(ModelSelect::DEFAULT);
-            }
+            } else removed = current->remove_armour(at);
             army->update_on(current->id());
         } else {
-            if (split[3] == "default") removed = current->remove_armour(at);
-            else if (split[3] == "champion") {
+            if (champion) {
                 current->switch_model_select(ModelSelect::CHAMPION);
                 removed = current->remove_armour(at);
                 current->switch_model_select(ModelSelect::DEFAULT);
-            }
+            } else removed = current->remove_armour(at);
         }
-    }
-    else {
-        const bool is_magical = is_selection_magical(armour);
-        ItemCategory ic = static_cast<ItemCategory>(std::stoi(split[2]));
+    } else {
+        const bool is_magical = ic == ItemCategory::COMMON || ic == ItemCategory::MAGIC || ic == ItemCategory::FACTION;
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(current->id());
-            if (split[3] == "default") {
-                try { removed = current->pick_armour(ic, armour); }
-                catch (const std::exception&) { throw; }
-            }
-            else if (split[3] == "champion") {
+            if (champion) {
                 current->switch_model_select(ModelSelect::CHAMPION);
                 try { removed = current->pick_armour(ic, armour); }
                 catch (const std::exception&) {
@@ -154,14 +129,13 @@ void option_selector::select_armour(const std::string& s) {
                     throw;
                 }
                 current->switch_model_select(ModelSelect::DEFAULT);
+            } else {
+                try { removed = current->pick_armour(ic, armour); }
+                catch (const std::exception&) { throw; }
             }
             army->update_on(current->id());
         } else {
-            if (split[3] == "default") {
-                try { removed = current->pick_armour(ic, armour); }
-                catch (const std::exception&) { throw; }
-            }
-            else if (split[3] == "champion") {
+            if (champion) {
                 current->switch_model_select(ModelSelect::CHAMPION);
                 try { removed = current->pick_armour(ic, armour); }
                 catch (const std::exception&) {
@@ -169,6 +143,9 @@ void option_selector::select_armour(const std::string& s) {
                     throw;
                 }
                 current->switch_model_select(ModelSelect::DEFAULT);
+            } else {
+                try { removed = current->pick_armour(ic, armour); }
+                catch (const std::exception&) { throw; }
             }
         }
         if (is_magical) {
@@ -182,22 +159,18 @@ void option_selector::select_armour(const std::string& s) {
     }
 }
 
-void option_selector::select_talisman(const std::string& s) {
+void option_selector::select_talisman(const std::string& talisman, ItemCategory ic) {
     if (current == nullptr) throw std::runtime_error("No unit selected!");
-    auto split = tools::split(s, '_');
-    auto talisman = split[0];
     std::shared_ptr<character_unit> p = std::dynamic_pointer_cast<character_unit>(current);
     std::string removed;
-    if (talisman == "None") {
+    if (talisman.empty()) {
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(p->id());
             removed = p->remove_talisman();
             army->update_on(p->id());
         } else removed = p->remove_talisman();
-    }
-    else {
-        const bool is_magical = is_selection_magical(talisman);
-        ItemCategory ic = static_cast<ItemCategory>(std::stoi(split[1]));
+    } else {
+        const bool is_magical = ic == ItemCategory::COMMON || ic == ItemCategory::MAGIC || ic == ItemCategory::FACTION;
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(p->id());
             removed = p->pick_talisman(ic, talisman);
@@ -214,22 +187,18 @@ void option_selector::select_talisman(const std::string& s) {
     }
 }
 
-void option_selector::select_enchanted_item(const std::string& s) {
+void option_selector::select_enchanted_item(const std::string& enchanted, ItemCategory ic) {
     if (current == nullptr) throw std::runtime_error("No unit selected!");
-    auto split = tools::split(s, '_');
-    auto enchanted = split[0];
     std::shared_ptr<character_unit> p = std::dynamic_pointer_cast<character_unit>(current);
     std::string removed;
-    if (enchanted == "None") {
+    if (enchanted.empty()) {
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(p->id());
             removed = p->remove_enchanted_item();
             army->update_on(p->id());
         } else removed = p->remove_enchanted_item();
-    }
-    else {
-        const bool is_magical = is_selection_magical(enchanted);
-        ItemCategory ic = static_cast<ItemCategory>(std::stoi(split[1]));
+    } else {
+        const bool is_magical = ic == ItemCategory::COMMON || ic == ItemCategory::MAGIC || ic == ItemCategory::FACTION;
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(p->id());
             removed = p->pick_enchanted_item(ic, enchanted);
@@ -246,21 +215,18 @@ void option_selector::select_enchanted_item(const std::string& s) {
     }
 }
 
-void option_selector::select_other_item(const std::string& s, bool is_checked) {
+void option_selector::select_other_item(const std::string& other, ItemCategory ic, bool checked) {
     if (current == nullptr) throw std::runtime_error("No unit selected!");
-    auto split = tools::split(s, '_');
-    auto other = split[0];
     auto p = std::dynamic_pointer_cast<character_unit>(current);
     std::string removed;
-    if (!is_checked) {
+    if (!checked) {
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(p->id());
             removed = p->remove_other(other);
             army->update_on(p->id());
         } else removed = p->remove_other(other);
     } else {
-        const bool is_magical = is_selection_magical(other);
-        ItemCategory ic = static_cast<ItemCategory>(std::stoi(split[1]));
+        const bool is_magical = ic == ItemCategory::COMMON || ic == ItemCategory::MAGIC || ic == ItemCategory::FACTION;
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(p->id());
             removed = p->pick_other(ic, other);
@@ -277,20 +243,17 @@ void option_selector::select_other_item(const std::string& s, bool is_checked) {
     }
 }
 
-void option_selector::select_banner(const std::string& s) {
+void option_selector::select_banner(const std::string& banner, ItemCategory ic) {
     if (current == nullptr) throw std::runtime_error("No unit selected!");
-    auto split = tools::split(s, '_');
-    auto banner = split[0];
     std::string removed;
-    if (banner == "None") {
+    if (banner.empty()) {
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(current->id());
             removed = current->remove_banner();
             army->update_on(current->id());
         } else removed = current->remove_banner();
     } else {
-        const bool is_magical = is_selection_magical(banner);
-        ItemCategory ic = static_cast<ItemCategory>(std::stoi(split[1]));
+        const bool is_magical = ic == ItemCategory::COMMON || ic == ItemCategory::MAGIC || ic == ItemCategory::FACTION;
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(current->id());
             removed = current->pick_banner(ic, banner);
@@ -307,22 +270,18 @@ void option_selector::select_banner(const std::string& s) {
     }
 }
 
-void option_selector::select_arcane_item(const std::string& s) {
+void option_selector::select_arcane_item(const std::string& arcane, ItemCategory ic) {
     if (current == nullptr) throw std::runtime_error("No unit selected!");
-    auto split = tools::split(s, '_');
-    auto arcane = split[0];
     auto p = std::dynamic_pointer_cast<mage_character_unit>(current);
     std::string removed;
-    if (arcane == "None") {
+    if (arcane.empty()) {
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(p->id());
             removed = p->remove_arcane_item();
             army->update_on(p->id());
         } else removed = p->remove_arcane_item();
-    }
-    else {
-        const bool is_magical = is_selection_magical(arcane);
-        ItemCategory ic = static_cast<ItemCategory>(std::stoi(split[1]));
+    } else {
+        const bool is_magical = ic == ItemCategory::COMMON || ic == ItemCategory::MAGIC || ic == ItemCategory::FACTION;
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(p->id());
             removed = p->pick_arcane_item(ic, arcane);
@@ -339,18 +298,15 @@ void option_selector::select_arcane_item(const std::string& s) {
     }
 }
 
-void option_selector::select_mage_level(const std::string& s) {
-    auto split = tools::split(s, '_');
+void option_selector::select_mage_level(short level) {
     std::shared_ptr<mage_character_unit> p = std::dynamic_pointer_cast<mage_character_unit>(current);
-    if (split[0] == "Default") {
+    if (level == p->handle->mage_level()) {
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(p->id());
             p->reset_level();
             army->update_on(p->id());
         } else p->reset_level();
-    }
-    else {
-        auto level = static_cast<short>(std::stoi(split[1]));
+    } else {
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(p->id());
             p->change_level(level);
@@ -359,23 +315,19 @@ void option_selector::select_mage_level(const std::string& s) {
     }
 }
 
-void option_selector::select_mage_lore(const std::string& s) {
-    auto lore = tools::split(s, '_')[1];
+void option_selector::select_mage_lore(const std::string& lore) {
     std::shared_ptr<mage_character_unit> p = std::dynamic_pointer_cast<mage_character_unit>(current);
     p->pick_lore(lore);
 }
 
-void option_selector::select_mount(const std::string& s) {
-    auto split = tools::split(s, '_');
-    auto mount = split[0];
-    if (mount == "None") {
+void option_selector::select_mount(const std::string& mount) {
+    if (mount.empty()) {
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(current->id());
             current->remove_mount();
             army->update_on(current->id());
         } else current->remove_mount();
-    }
-    else {
+    } else {
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(current->id());
             current->pick_mount(mount);

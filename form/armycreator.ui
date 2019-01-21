@@ -167,7 +167,7 @@
    <widget class="QPushButton" name="add_button">
     <property name="geometry">
      <rect>
-      <x>190</x>
+      <x>180</x>
       <y>720</y>
       <width>51</width>
       <height>23</height>
@@ -403,7 +403,7 @@
    <widget class="QPushButton" name="export_button">
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>240</x>
       <y>720</y>
       <width>80</width>
       <height>21</height>

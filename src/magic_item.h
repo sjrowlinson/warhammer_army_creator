@@ -9,6 +9,8 @@
 #include <unordered_set>
 #include <vector>
 
+// TODO: add runes field (something like std::unordered_multimap<RuneType, std::string>)
+
 struct item {
     ItemCategory item_class;
     ItemType item_type;

@@ -47,6 +47,24 @@ public:
     explicit ArmyCreator(QWidget *parent = nullptr);
     ~ArmyCreator();
 
+public slots:
+    void optional_weapon_selected(const std::string& name, WeaponType wt, ItemCategory ic, bool champion, bool master);
+    void optional_armour_selected(const std::string& name, ArmourType at, ItemCategory ic, bool champion, bool master);
+    void optional_talisman_selected(const std::string& name, ItemCategory ic);
+    void optional_enchanted_item_selected(const std::string& name, ItemCategory ic);
+    void optional_other_item_selected(const std::string& name, ItemCategory ic, bool checked);
+    void optional_banner_selected(const std::string& name, ItemCategory ic);
+    void optional_arcane_item_selected(const std::string& name, ItemCategory ic);
+    void optional_level_selected(short level);
+    void optional_lore_selected(const std::string& name);
+    void optional_mount_selected(const std::string& name);
+    void optional_mount_oco_extra_selected();
+    void optional_mount_mc_extra_selected();
+    void optional_command_selected();
+    void optional_oco_extra_selected();
+    void optional_mc_extra_selected();
+
+    void change_unit_size();
 private slots:
     void on_actionExit_triggered();
 
@@ -69,27 +87,8 @@ private slots:
     void on_clear_button_clicked();
     void on_export_button_clicked();
 
-    void optional_weapon_selected();
-    void optional_armour_selected();
-    void optional_talisman_selected();
-    void optional_enchanted_item_selected();
-    void optional_other_item_selected();
-    void optional_banner_selected();
-    void optional_arcane_item_selected();
-    void optional_level_selected();
-    void optional_lore_selected();
-    void optional_mount_selected();
-    void optional_mount_oco_extra_selected();
-    void optional_mount_mc_extra_selected();
-    void optional_command_selected();
-    void optional_oco_extra_selected();
-    void optional_mc_extra_selected();
-
-    void change_unit_size();
-
     void on_magic_items_combobox_currentTextChanged(const QString &arg1);
     void on_set_general_button_clicked();
-
 private:
     Ui::ArmyCreator* ui;
     Faction race;
