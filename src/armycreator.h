@@ -58,13 +58,13 @@ public slots:
     void optional_level_selected(short level);
     void optional_lore_selected(const std::string& name);
     void optional_mount_selected(const std::string& name);
-    void optional_mount_oco_extra_selected();
-    void optional_mount_mc_extra_selected();
-    void optional_command_selected();
-    void optional_oco_extra_selected();
-    void optional_mc_extra_selected();
+    void optional_mount_oco_extra_selected(const std::string& name);
+    void optional_mount_mc_extra_selected(const std::string& name, bool checked);
+    void optional_command_selected(CommandGroup member, bool checked);
+    void optional_oco_extra_selected(const std::string& name, bool champion);
+    void optional_mc_extra_selected(const std::string& name, bool champion, bool checked);
 
-    void change_unit_size();
+    void change_unit_size(int value);
 private slots:
     void on_actionExit_triggered();
 

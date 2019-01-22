@@ -41,11 +41,11 @@ public:
     void select_mage_level(short level);
     void select_mage_lore(const std::string& lore);
     void select_mount(const std::string& mount);
-    void select_mount_oco_extra(const std::string& s);
-    void select_mount_mc_extra(const std::string& s, bool is_checked);
-    void select_command(const std::string& s, bool is_checked);
-    void select_oco_extra(const std::string& s);
-    void select_mc_extra(const std::string& s, bool is_checked);
+    void select_mount_oco_extra(const std::string& extra);
+    void select_mount_mc_extra(const std::string& extra, bool is_checked);
+    void select_command(CommandGroup member, bool checked);
+    void select_oco_extra(const std::string& extra, bool champion);
+    void select_mc_extra(const std::string& extra, bool champion, bool checked);
 };
 
 #endif // !OPTION_SELECTOR_H

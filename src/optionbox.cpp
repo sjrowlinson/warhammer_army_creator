@@ -12,46 +12,35 @@ void OptionBox::command_box_helper(QLayout* layout,
         CommandGroup, std::pair<std::string, double>
     >& command,
     bool master) {
+    (void)master;
     if (opt_command.count(CommandGroup::MUSICIAN)) {
         auto musician = opt_command.at(CommandGroup::MUSICIAN);
-        auto tmp = tools::split(std::to_string(musician.second), '.');
-        for (auto& s : tmp) tools::remove_leading_whitespaces(s);
-        std::string pts_str = (tools::starts_with(tmp[1], '0')) ? tmp[0] : tmp[0] + "." + tmp[1].substr(0, 1);
-        std::string name = musician.first + " (" + pts_str + " pts)";
+        std::string name = musician.first + " (" + tools::points_str(musician.second) + " pts)";
         QCheckBox* cb = new QCheckBox(creator->tr(name.data()));
-        cb->setObjectName(
-            QString((musician.first + "_m_" + ((master) ? "master" : "slave") + "_checkbox").data())
-        );
         if (command.count(CommandGroup::MUSICIAN)) cb->setChecked(true);
-        creator->connect(cb, SIGNAL(clicked(bool)), creator, SLOT(optional_command_selected()));
+        creator->connect(cb, &QCheckBox::clicked, creator, [this](bool checked) {
+            creator->optional_command_selected(CommandGroup::MUSICIAN, checked);
+        });
         layout->addWidget(cb);
     }
     if (opt_command.count(CommandGroup::STANDARD_BEARER)) {
         auto sb = opt_command.at(CommandGroup::STANDARD_BEARER);
-        auto tmp = tools::split(std::to_string(sb.second), '.');
-        for (auto& s : tmp) tools::remove_leading_whitespaces(s);
-        std::string pts_str = (tools::starts_with(tmp[1], '0')) ? tmp[0] : tmp[0] + "." + tmp[1].substr(0, 1);
-        std::string name = sb.first + " (" + pts_str + " pts)";
+        std::string name = sb.first + " (" + tools::points_str(sb.second) + " pts)";
         QCheckBox* cb = new QCheckBox(creator->tr(name.data()));
-        cb->setObjectName(
-            QString((sb.first + "_sb_" + ((master) ? "master" : "slave") + "_checkbox").data())
-        );
         if (command.count(CommandGroup::STANDARD_BEARER)) cb->setChecked(true);
-        creator->connect(cb, SIGNAL(clicked(bool)), creator, SLOT(optional_command_selected()));
+        creator->connect(cb, &QCheckBox::clicked, creator, [this](bool checked) {
+            creator->optional_command_selected(CommandGroup::STANDARD_BEARER, checked);
+        });
         layout->addWidget(cb);
     }
     if (opt_command.count(CommandGroup::CHAMPION)) {
         auto champ = opt_command.at(CommandGroup::CHAMPION);
-        auto tmp = tools::split(std::to_string(champ.second), '.');
-        for (auto& s : tmp) tools::remove_leading_whitespaces(s);
-        std::string pts_str = (tools::starts_with(tmp[1], '0')) ? tmp[0] : tmp[0] + "." + tmp[1].substr(0, 1);
-        std::string name = champ.first + " (" + pts_str + " pts)";
+        std::string name = champ.first + " (" + tools::points_str(champ.second) + " pts)";
         QCheckBox* cb = new QCheckBox(creator->tr(name.data()));
-        cb->setObjectName(
-            QString((champ.first + "_c_" + ((master) ? "master" : "slave") + "_checkbox").data())
-        );
         if (command.count(CommandGroup::CHAMPION)) cb->setChecked(true);
-        creator->connect(cb, SIGNAL(clicked(bool)), creator, SLOT(optional_command_selected()));
+        creator->connect(cb, &QCheckBox::clicked, creator, [this](bool checked) {
+            creator->optional_command_selected(CommandGroup::CHAMPION, checked);
+        });
         layout->addWidget(cb);
     }
 }
@@ -118,18 +107,18 @@ QGroupBox* OptionBox::make_size_command_box() {
             (p->max_size() == std::numeric_limits<std::size_t>::max()) ?
                 1000 : static_cast<int>(p->max_size())
         );
-        std::string size_sb_name = p->name() + "_spinbox";
-        size_sb->setObjectName(QString(size_sb_name.data()));
         // set value of spinbox to current unit size
         if (enum_convert::in_army_trees(in_tree)) size_sb->setValue(static_cast<int>(p->size()));
-        creator->connect(size_sb, SIGNAL(valueChanged(int)), creator, SLOT(change_unit_size()));
+        creator->connect(size_sb, QOverload<int>::of(&QSpinBox::valueChanged), creator, [this](int value) {
+            creator->change_unit_size(value);
+        });
         size_box_layout->addWidget(label);
         size_box_layout->addWidget(size_sb);
         size_box_layout->addStretch(1);
         sc_box_layout->addLayout(size_box_layout);
     }
     else { // BaseUnitType::MIXED
-        QLabel* master_label = new QLabel(creator->tr("Number of Packmasters"));
+        /*QLabel* master_label = new QLabel(creator->tr("Number of Packmasters"));
         QSpinBox* master_size_sb = new QSpinBox();
         QLabel* slave_label = new QLabel(creator->tr("Number of %1").arg(current->name().data()));
         QSpinBox* slave_size_sb = new QSpinBox();
@@ -159,7 +148,7 @@ QGroupBox* OptionBox::make_size_command_box() {
         size_box_layout->addWidget(slave_label);
         size_box_layout->addWidget(slave_size_sb);
         size_box_layout->addStretch(1);
-        sc_box_layout->addLayout(size_box_layout);
+        sc_box_layout->addLayout(size_box_layout);*/
     }
     command_box = make_command_box();
     if (command_box != nullptr) sc_box_layout->addWidget(command_box);
@@ -621,18 +610,20 @@ QGroupBox* OptionBox::make_mounts_boxes() {
                 for (const auto& mo : m.second.oco_extras) {
                     std::string mo_name = mo.first + " (" + tools::points_str(mo.second.points) + " pts)";
                     QRadioButton* rb = new QRadioButton(creator->tr(mo_name.data()));
-                    rb->setObjectName(QString::fromStdString(mo.first + "_radiobutton"));
                     if (std::get<2>(mount_).first == mo.first) {
                         rb->setChecked(true);
                         has_option = true;
                     }
-                    creator->connect(rb, SIGNAL(clicked(bool)), creator, SLOT(optional_mount_oco_extra_selected()));
+                    creator->connect(rb, &QRadioButton::clicked, creator, [this, mo](auto) {
+                        creator->optional_mount_oco_extra_selected(mo.first);
+                    });
                     mntopt_layout->addWidget(rb);
                 }
                 QRadioButton* none_rb = new QRadioButton(creator->tr("None"));
-                none_rb->setObjectName(QString("None_mountocooptions_radiobutton"));
                 if (!has_option) none_rb->setChecked(true);
-                creator->connect(none_rb, SIGNAL(clicked(bool)), creator, SLOT(optional_mount_oco_extra_selected()));
+                creator->connect(none_rb, &QRadioButton::clicked, creator, [this](auto) {
+                    creator->optional_mount_oco_extra_selected("");
+                });
                 mntopt_layout->addWidget(none_rb);
                 mntopt_layout->addStretch(1);
                 mount_oco_options_box->setLayout(mntopt_layout);
@@ -643,9 +634,10 @@ QGroupBox* OptionBox::make_mounts_boxes() {
                 for (const auto& mo : m.second.mc_extras) {
                     std::string mo_name = mo.first + " (" + tools::points_str(mo.second.points) + " pts)";
                     QCheckBox* cb = new QCheckBox(creator->tr(mo_name.data()));
-                    cb->setObjectName(QString::fromStdString(mo.first + "_checkbox"));
                     if (std::get<3>(mount_).count(mo.first)) cb->setChecked(true);
-                    creator->connect(cb, SIGNAL(clicked(bool)), creator, SLOT(optional_mount_mc_extra_selected()));
+                    creator->connect(cb, &QCheckBox::clicked, creator, [this, mo](bool checked) {
+                        creator->optional_mount_mc_extra_selected(mo.first, checked);
+                    });
                     mntopt_layout->addWidget(cb);
                 }
                 mntopt_layout->addStretch(1);
@@ -769,21 +761,21 @@ QGroupBox* OptionBox::make_oco_extras_subbox(bool champion) {
         std::string permodel = (current->base_unit_type() == BaseUnitType::NORMAL &&
                                     !(e.second.is_singular)) ? "/model" : "";
         std::string label = e.first + " (" + pts_str + " pts" + permodel + ")";
-        std::string name = e.first + "_" + ((champion) ? "champion" : "default") + "_radiobutton";
         QRadioButton* rb = new QRadioButton(creator->tr(label.data()));
-        rb->setObjectName(QString(name.data()));
         if (curr_oco_extra.first == e.first) {
             rb->setChecked(true);
             has_extra = true;
         }
-        creator->connect(rb, SIGNAL(clicked(bool)), creator, SLOT(optional_oco_extra_selected()));
+        creator->connect(rb, &QRadioButton::clicked, creator, [this, champion, e](auto) {
+            creator->optional_oco_extra_selected(e.first, champion);
+        });
         oco_box_layout->addWidget(rb);
     }
     QRadioButton* none_rb = new QRadioButton(creator->tr("None"));
-    std::string none_rb_name = std::string("None_") + ((champion) ? "champion" : "default") + "_ocoextra_radiobutton";
-    none_rb->setObjectName(QString(none_rb_name.data()));
     if (!has_extra) none_rb->setChecked(true);
-    creator->connect(none_rb, SIGNAL(clicked(bool)), creator, SLOT(optional_oco_extra_selected()));
+    creator->connect(none_rb, &QRadioButton::clicked, creator, [this, champion](auto) {
+        creator->optional_oco_extra_selected("", champion);
+    });
     oco_box_layout->addWidget(none_rb);
     oco_box_layout->addStretch(1);
     oco_box->setLayout(oco_box_layout);
@@ -827,11 +819,11 @@ QGroupBox* OptionBox::make_mc_extras_subbox(bool champion) {
         std::string permodel = (current->base_unit_type() == BaseUnitType::NORMAL &&
                                     !(e.second.is_singular)) ? "/model" : "";
         std::string label = e.first + " (" + pts_str + " pts" + permodel + ")";
-        std::string name = e.first + "_" + ((champion) ? "champion" : "default") + "_checkbox";
         QCheckBox* cb = new QCheckBox(creator->tr(label.data()));
-        cb->setObjectName(QString(name.data()));
         if (curr_mc_extras.count(e.first)) cb->setChecked(true);
-        creator->connect(cb, SIGNAL(clicked(bool)), creator, SLOT(optional_mc_extra_selected()));
+        creator->connect(cb, &QCheckBox::clicked, creator, [this, champion, e](bool checked) {
+            creator->optional_mc_extra_selected(e.first, champion, checked);
+        });
         mc_box_layout->addWidget(cb);
     }
     mc_box_layout->addStretch(1);

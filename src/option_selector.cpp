@@ -336,10 +336,8 @@ void option_selector::select_mount(const std::string& mount) {
     }
 }
 
-void option_selector::select_mount_oco_extra(const std::string& s) {
-    auto split = tools::split(s, '_');
-    auto extra = split[0];
-    if (extra == "None") {
+void option_selector::select_mount_oco_extra(const std::string& extra) {
+    if (extra.empty()) {
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(current->id());
             current->remove_mount_option(std::get<2>(current->mnt()).first, true);
@@ -359,9 +357,7 @@ void option_selector::select_mount_oco_extra(const std::string& s) {
     }
 }
 
-void option_selector::select_mount_mc_extra(const std::string& s, bool is_checked) {
-    auto split = tools::split(s, '_');
-    auto extra = split[0];
+void option_selector::select_mount_mc_extra(const std::string& extra, bool is_checked) {
     if (is_checked) {
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(current->id());
@@ -372,8 +368,7 @@ void option_selector::select_mount_mc_extra(const std::string& s, bool is_checke
             try { current->pick_mount_option(extra, false); }
             catch (const std::exception&) { throw; }
         }
-    }
-    else {
+    } else {
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(current->id());
             current->remove_mount_option(extra, false);
@@ -382,26 +377,18 @@ void option_selector::select_mount_mc_extra(const std::string& s, bool is_checke
     }
 }
 
-void option_selector::select_command(const std::string& s, bool is_checked) {
-    auto split = tools::split(s, '_');
-    auto name = split[0];
-    CommandGroup member;
-    if (split[1] == "m") member = CommandGroup::MUSICIAN;
-    else if (split[1] == "c") member = CommandGroup::CHAMPION;
-    else if (split[1] == "sb") member = CommandGroup::STANDARD_BEARER;
-    else throw std::invalid_argument("Unrecognised command group member type!");
+void option_selector::select_command(CommandGroup member, bool checked) {
     switch (current->base_unit_type()) {
     case BaseUnitType::NORMAL:
     {
         auto p = std::dynamic_pointer_cast<normal_unit>(current);
-        if (is_checked) {
+        if (checked) {
             if (enum_convert::in_army_trees(in_tree)) {
                 army->take_snapshot_of(p->id());
                 p->add_command_member(member);
                 army->update_on(p->id());
             } else p->add_command_member(member);
-        }
-        else {
+        } else {
             if (enum_convert::in_army_trees(in_tree)) {
                 army->take_snapshot_of(p->id());
                 p->remove_command_member(member);
@@ -412,9 +399,9 @@ void option_selector::select_command(const std::string& s, bool is_checked) {
     }
     case BaseUnitType::MIXED:
     {
-        auto p = std::dynamic_pointer_cast<mixed_unit>(current);
+        /*auto p = std::dynamic_pointer_cast<mixed_unit>(current);
         bool is_master = split[2] == "master";
-        if (is_checked) {
+        if (checked) {
             if (enum_convert::in_army_trees(in_tree)) {
                 army->take_snapshot_of(p->id());
                 if (is_master) p->master().add_command_member(member);
@@ -435,44 +422,38 @@ void option_selector::select_command(const std::string& s, bool is_checked) {
                 if (is_master) p->master().remove_command_member(member);
                 else p->slave().remove_command_member(member);
             }
-        }
+        }*/
         break;
     }
     default: break;
     }
 }
 
-void option_selector::select_oco_extra(const std::string& s) {
+void option_selector::select_oco_extra(const std::string& extra, bool champion) {
     if (current == nullptr) throw std::runtime_error("No unit selected!");
-    auto split = tools::split(s, '_');
-    auto extra = split[0];
-    if (extra == "None") {
+    if (extra.empty()) {
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(current->id());
-            if (split[1] == "default") current->remove_oco_extra();
-            else if (split[1] == "champion") {
+            if (champion) {
                 current->switch_model_select(ModelSelect::CHAMPION);
                 current->remove_oco_extra();
                 current->switch_model_select(ModelSelect::DEFAULT);
             }
+            else current->remove_oco_extra();
             army->update_on(current->id());
         } else {
-            if (split[1] == "default") current->remove_oco_extra();
-            else if (split[1] == "champion") {
+            if (champion) {
                 current->switch_model_select(ModelSelect::CHAMPION);
                 current->remove_oco_extra();
                 current->switch_model_select(ModelSelect::DEFAULT);
             }
+            else current->remove_oco_extra();
         }
     }
     else {
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(current->id());
-            if (split[1] == "default") {
-                try { current->pick_oco_extra(extra); }
-                catch (const std::exception&) { throw; }
-            }
-            else if (split[1] == "champion") {
+            if (champion) {
                 current->switch_model_select(ModelSelect::CHAMPION);
                 try { current->pick_oco_extra(extra); }
                 catch (const std::exception&) {
@@ -480,14 +461,13 @@ void option_selector::select_oco_extra(const std::string& s) {
                     throw;
                 }
                 current->switch_model_select(ModelSelect::DEFAULT);
+            } else {
+                try { current->pick_oco_extra(extra); }
+                catch (const std::exception&) { throw; }
             }
             army->update_on(current->id());
         } else {
-            if (split[1] == "default") {
-                try { current->pick_oco_extra(extra); }
-                catch (const std::exception&) { throw; }
-            }
-            else if (split[1] == "champion") {
+            if (champion) {
                 current->switch_model_select(ModelSelect::CHAMPION);
                 try { current->pick_oco_extra(extra); }
                 catch (const std::exception&) {
@@ -495,24 +475,21 @@ void option_selector::select_oco_extra(const std::string& s) {
                     throw;
                 }
                 current->switch_model_select(ModelSelect::DEFAULT);
+            } else {
+                try { current->pick_oco_extra(extra); }
+                catch (const std::exception&) { throw; }
             }
         }
     }
 }
 
-void option_selector::select_mc_extra(const std::string& s, bool is_checked) {
-    auto split = tools::split(s, '_');
-    auto extra = split[0];
-    if (is_checked) {
+void option_selector::select_mc_extra(const std::string& extra, bool champion, bool checked) {
+    if (checked) {
         if (extra == "Battle Standard Bearer" && army->has_bsb())
             throw std::runtime_error("Army already contains a Battle Standard Bearer!");
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(current->id());
-            if (split[1] == "default") {
-                try { current->pick_mc_extra(extra); }
-                catch (const std::exception&) { throw; }
-            }
-            else if (split[1] == "champion") {
+            if (champion) {
                 current->switch_model_select(ModelSelect::CHAMPION);
                 try { current->pick_mc_extra(extra); }
                 catch (const std::exception&) {
@@ -520,14 +497,13 @@ void option_selector::select_mc_extra(const std::string& s, bool is_checked) {
                     throw;
                 }
                 current->switch_model_select(ModelSelect::DEFAULT);
+            } else {
+                try { current->pick_mc_extra(extra); }
+                catch (const std::exception&) { throw; }
             }
             army->update_on(current->id());
         } else {
-            if (split[1] == "default") {
-                try { current->pick_mc_extra(extra); }
-                catch (const std::exception&) { throw; }
-            }
-            else if (split[1] == "champion") {
+            if (champion) {
                 current->switch_model_select(ModelSelect::CHAMPION);
                 try { current->pick_mc_extra(extra); }
                 catch (const std::exception&) {
@@ -535,10 +511,12 @@ void option_selector::select_mc_extra(const std::string& s, bool is_checked) {
                     throw;
                 }
                 current->switch_model_select(ModelSelect::DEFAULT);
+            } else {
+                try { current->pick_mc_extra(extra); }
+                catch (const std::exception&) { throw; }
             }
         }
-    }
-    else {
+    } else {
         if (extra == "Battle Standard Bearer") {
             switch (in_tree) {
             case InTree::ARMY:
@@ -554,22 +532,20 @@ void option_selector::select_mc_extra(const std::string& s, bool is_checked) {
         }
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(current->id());
-            if (split[1] == "default")
-                current->remove_mc_extra(extra);
-            else if (split[1] == "champion") {
+            if (champion) {
                 current->switch_model_select(ModelSelect::CHAMPION);
                 current->remove_mc_extra(extra);
                 current->switch_model_select(ModelSelect::DEFAULT);
             }
+            else current->remove_mc_extra(extra);
             army->update_on(current->id());
         } else {
-            if (split[1] == "default")
-                current->remove_mc_extra(extra);
-            else if (split[1] == "champion") {
+            if (champion) {
                 current->switch_model_select(ModelSelect::CHAMPION);
                 current->remove_mc_extra(extra);
                 current->switch_model_select(ModelSelect::DEFAULT);
             }
+            else current->remove_mc_extra(extra);
         }
     }
 }

@@ -259,8 +259,7 @@ QTreeWidgetItem* ArmyCreator::current_item() const {
 
 // option box selection slots
 
-void ArmyCreator::change_unit_size() {
-    QSpinBox* sb = qobject_cast<QSpinBox*>(QObject::sender());
+void ArmyCreator::change_unit_size(int value) {
     switch (current->base_unit_type()) {
     case BaseUnitType::MELEE_CHARACTER:
     case BaseUnitType::MAGE_CHARACTER:
@@ -271,27 +270,13 @@ void ArmyCreator::change_unit_size() {
         try {
             if (enum_convert::in_army_trees(in_tree)) {
                 army->take_snapshot_of(current->id());
-                p->change_size(static_cast<std::size_t>(sb->value()));
+                p->change_size(static_cast<std::size_t>(value));
                 army->update_on(current->id());
                 ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
                 update_unit_display(current_item(), ArmyTreeColumn::SIZE, false, false);
                 update_validity_label();
             }
-            else p->change_size(static_cast<std::size_t>(sb->value()));
-            /*switch (in_tree) {
-            case InTree::ARMY:
-                army->take_snapshot_of(current->id());
-                p->change_size(static_cast<std::size_t>(sb->value()));
-                army->update_on(current->id());
-                ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
-                update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::SIZE);
-                update_validity_label();
-                break;
-            case InTree::ROSTER:
-                p->change_size(static_cast<std::size_t>(sb->value()));
-                break;
-            default: throw std::runtime_error("No unit selected!");
-            }*/
+            else p->change_size(static_cast<std::size_t>(value));
         } catch (const std::invalid_argument&) {}
         break;
     }
@@ -518,11 +503,9 @@ void ArmyCreator::optional_mount_selected(const std::string& name) {
     ob->reinitialise();
 }
 
-void ArmyCreator::optional_mount_oco_extra_selected() {
-    QRadioButton* rb = qobject_cast<QRadioButton*>(QObject::sender());
-    std::string rb_name = rb->objectName().toStdString();
+void ArmyCreator::optional_mount_oco_extra_selected(const std::string& name) {
     try {
-        opt_sel->select_mount_oco_extra(rb_name);
+        opt_sel->select_mount_oco_extra(name);
         if (enum_convert::in_army_trees(in_tree)) {
             ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(current_item(), ArmyTreeColumn::MOUNT, false, false);
@@ -538,11 +521,9 @@ void ArmyCreator::optional_mount_oco_extra_selected() {
     }
 }
 
-void ArmyCreator::optional_mount_mc_extra_selected() {
-    QCheckBox* cb = qobject_cast<QCheckBox*>(QObject::sender());
-    std::string cb_name = cb->objectName().toStdString();
+void ArmyCreator::optional_mount_mc_extra_selected(const std::string& name, bool checked) {
     try {
-        opt_sel->select_mount_mc_extra(cb_name, cb->isChecked());
+        opt_sel->select_mount_mc_extra(name, checked);
         if (enum_convert::in_army_trees(in_tree)) {
             ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(current_item(), ArmyTreeColumn::MOUNT, false, false);
@@ -558,16 +539,13 @@ void ArmyCreator::optional_mount_mc_extra_selected() {
     }
 }
 
-void ArmyCreator::optional_command_selected() {
-    QCheckBox* cb = qobject_cast<QCheckBox*>(QObject::sender());
-    std::string cb_name = cb->objectName().toStdString();
+void ArmyCreator::optional_command_selected(CommandGroup member, bool checked) {
     try {
-        opt_sel->select_command(cb_name, cb->isChecked());
+        opt_sel->select_command(member, checked);
         if (enum_convert::in_army_trees(in_tree)) {
             ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(current_item(), ArmyTreeColumn::COMMAND, false, false);
-            auto split = tools::split(cb_name, '_');
-            if (split[1] == "c" || split[1] == "sb") {
+            if (member == CommandGroup::CHAMPION || member == CommandGroup::STANDARD_BEARER) {
                 update_unit_display(current_item(), ArmyTreeColumn::WEAPONS, false, false);
                 update_unit_display(current_item(), ArmyTreeColumn::ARMOUR, false, false);
                 update_unit_display(current_item(), ArmyTreeColumn::EXTRAS, false, false);
@@ -587,11 +565,9 @@ void ArmyCreator::optional_command_selected() {
     }
 }
 
-void ArmyCreator::optional_oco_extra_selected() {
-    QRadioButton* rb = qobject_cast<QRadioButton*>(QObject::sender());
-    std::string rb_name = rb->objectName().toStdString();
+void ArmyCreator::optional_oco_extra_selected(const std::string& name, bool champion) {
     try {
-        opt_sel->select_oco_extra(rb_name);
+        opt_sel->select_oco_extra(name, champion);
         if (enum_convert::in_army_trees(in_tree)) {
             ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(current_item(), ArmyTreeColumn::EXTRAS, false, false);
@@ -607,11 +583,9 @@ void ArmyCreator::optional_oco_extra_selected() {
     }
 }
 
-void ArmyCreator::optional_mc_extra_selected() {
-    QCheckBox* cb = qobject_cast<QCheckBox*>(QObject::sender());
-    std::string cb_name = cb->objectName().toStdString();
+void ArmyCreator::optional_mc_extra_selected(const std::string& name, bool champion, bool checked) {
     try {
-        opt_sel->select_mc_extra(cb_name, cb->isChecked());
+        opt_sel->select_mc_extra(name, champion, checked);
         if (enum_convert::in_army_trees(in_tree)) {
             ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(current_item(), ArmyTreeColumn::EXTRAS, false, false);
