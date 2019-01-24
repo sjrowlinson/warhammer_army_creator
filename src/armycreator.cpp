@@ -741,6 +741,11 @@ void ArmyCreator::clear() {
     id_counter = 0;
     clear_roster_tree();
     clear_army_tree();
+    /*for (auto tree : std::vector<QTreeWidget*>{ui->roster_tree, ui->lord_tree, ui->hero_tree,
+         ui->core_tree, ui->special_tree, ui->rare_tree}) {
+        tree->clearSelection();
+        tree->setCurrentItem(nullptr, 0, QItemSelectionModel::SelectionFlag::Clear);
+    }*/
     clear_unit_info_box();
     ob->clear();
     mib->clear();
@@ -815,6 +820,15 @@ void ArmyCreator::on_pts_limit_spinbox_valueChanged(double pts) {
 void ArmyCreator::on_roster_tree_currentItemChanged(QTreeWidgetItem *curr, QTreeWidgetItem *previous) {
     (void)(previous);
     if (curr == nullptr) return;
+    std::string name = curr->text(0).toStdString();
+    if (name == "Lords" || name == "Heroes" || name == "Core" ||
+            name == "Special" || name == "Rare") {
+        ui->add_button->setEnabled(false);
+        ui->duplicate_button->setEnabled(false);
+        ui->remove_button->setEnabled(false);
+        ui->set_general_button->setEnabled(false);
+        return;
+    }
     for (auto tree : std::vector<QTreeWidget*>{ui->lord_tree, ui->hero_tree,
          ui->core_tree, ui->special_tree, ui->rare_tree}) {
         tree->clearSelection();
@@ -825,25 +839,19 @@ void ArmyCreator::on_roster_tree_currentItemChanged(QTreeWidgetItem *curr, QTree
     mib->clear();
     ui->item_descr_gb->setTitle(tr("Item Description"));
     ui->item_descr_label->setText(tr(""));
-    std::string name = curr->text(0).toStdString();
-    if (name != "Lords" && name != "Heroes" && name != "Core" &&
-            name != "Special" && name != "Rare") {
-        st->change_selection(name);
-        current = st->selected();
-        in_tree = InTree::ROSTER;
-        initialise_unit_info_box();
-        opt_sel->reset(current, in_tree);
-        ob->reset(current, in_tree);
-        ob->reinitialise();
-        mib->reset(current);
-        mib->reinitialise(ItemType::WEAPON);
-        ui->add_button->setEnabled(true);
-        update_budget_label();
-    }
-    else {
-        current = nullptr;
-        ui->add_button->setEnabled(false);
-    }
+    // do logic and gui changes
+    st->change_selection(name);
+    current = st->selected();
+    in_tree = InTree::ROSTER;
+    initialise_unit_info_box();
+    opt_sel->reset(current, in_tree);
+    ob->reset(current, in_tree);
+    ob->reinitialise();
+    mib->reset(current);
+    mib->reinitialise(ItemType::WEAPON);
+    ui->add_button->setEnabled(true);
+    update_budget_label();
+    // disable army tree related buttons
     ui->duplicate_button->setEnabled(false);
     ui->remove_button->setEnabled(false);
     ui->set_general_button->setEnabled(false);
@@ -858,8 +866,8 @@ void ArmyCreator::on_roster_tree_itemDoubleClicked(QTreeWidgetItem *item, int co
     on_add_button_clicked();
 }
 
-void ArmyCreator::army_trees_itemchanged(QTreeWidgetItem* curr) {
-    if (curr == nullptr) return;
+bool ArmyCreator::army_trees_itemchanged(QTreeWidgetItem* curr) {
+    if (curr == nullptr) return false;
     clear_unit_info_box();
     ob->clear();
     mib->clear();
@@ -881,56 +889,67 @@ void ArmyCreator::army_trees_itemchanged(QTreeWidgetItem* curr) {
         ui->set_general_button->setEnabled(true);
     else ui->set_general_button->setEnabled(false);
     update_budget_label();
+    return true;
 }
 
 void ArmyCreator::on_lord_tree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous) {
     (void)(previous);
     in_tree = InTree::LORD;
-    army_trees_itemchanged(current);
-    for (auto tree : std::vector<QTreeWidget*>{ui->roster_tree, ui->hero_tree, ui->core_tree, ui->special_tree, ui->rare_tree}) {
+    if (current == previous || !army_trees_itemchanged(current)) return;
+    for (auto tree : std::vector<QTreeWidget*>{ui->roster_tree,
+            ui->hero_tree, ui->core_tree, ui->special_tree, ui->rare_tree}) {
         tree->clearSelection();
         tree->setCurrentItem(nullptr, 0, QItemSelectionModel::SelectionFlag::Clear);
     }
+    ui->lord_tree->setCurrentItem(current);
 }
 
 void ArmyCreator::on_hero_tree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous) {
     (void)(previous);
     in_tree = InTree::HERO;
-    army_trees_itemchanged(current);
-    for (auto tree : std::vector<QTreeWidget*>{ui->roster_tree, ui->lord_tree, ui->core_tree, ui->special_tree, ui->rare_tree}) {
+    if (current == previous || !army_trees_itemchanged(current)) return;
+    for (auto tree : std::vector<QTreeWidget*>{ui->roster_tree,
+            ui->lord_tree, ui->core_tree, ui->special_tree, ui->rare_tree}) {
         tree->clearSelection();
         tree->setCurrentItem(nullptr, 0, QItemSelectionModel::SelectionFlag::Clear);
     }
+    ui->hero_tree->setCurrentItem(current);
 }
 
 void ArmyCreator::on_core_tree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous) {
     (void)(previous);
     in_tree = InTree::CORE;
-    army_trees_itemchanged(current);
-    for (auto tree : std::vector<QTreeWidget*>{ui->roster_tree, ui->lord_tree, ui->hero_tree, ui->special_tree, ui->rare_tree}) {
+    if (current == previous || !army_trees_itemchanged(current)) return;
+    for (auto tree : std::vector<QTreeWidget*>{ui->roster_tree,
+            ui->lord_tree, ui->hero_tree, ui->special_tree, ui->rare_tree}) {
         tree->clearSelection();
         tree->setCurrentItem(nullptr, 0, QItemSelectionModel::SelectionFlag::Clear);
     }
+    ui->core_tree->setCurrentItem(current);
 }
 
 void ArmyCreator::on_special_tree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous) {
     (void)(previous);
     in_tree = InTree::SPECIAL;
-    army_trees_itemchanged(current);
-    for (auto tree : std::vector<QTreeWidget*>{ui->roster_tree, ui->lord_tree, ui->hero_tree, ui->core_tree, ui->rare_tree}) {
+    if (current == previous || !army_trees_itemchanged(current)) return;
+    for (auto tree : std::vector<QTreeWidget*>{ui->roster_tree,
+            ui->lord_tree, ui->hero_tree, ui->core_tree, ui->rare_tree}) {
         tree->clearSelection();
         tree->setCurrentItem(nullptr, 0, QItemSelectionModel::SelectionFlag::Clear);
     }
+    ui->special_tree->setCurrentItem(current);
 }
 
 void ArmyCreator::on_rare_tree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous) {
     (void)(previous);
     in_tree = InTree::RARE;
-    army_trees_itemchanged(current);
-    for (auto tree : std::vector<QTreeWidget*>{ui->roster_tree, ui->lord_tree, ui->hero_tree, ui->core_tree, ui->special_tree}) {
+    if (current == previous || !army_trees_itemchanged(current)) return;
+    for (auto tree : std::vector<QTreeWidget*>{ui->roster_tree,
+            ui->lord_tree, ui->hero_tree, ui->core_tree, ui->special_tree}) {
         tree->clearSelection();
         tree->setCurrentItem(nullptr, 0, QItemSelectionModel::SelectionFlag::Clear);
     }
+    ui->rare_tree->setCurrentItem(current);
 }
 
 // army_tree modifying button slots
@@ -1026,7 +1045,11 @@ void ArmyCreator::on_duplicate_button_clicked() {
     item->setData(0, Qt::UserRole, v);
     update_unit_display(item, ArmyTreeColumn::ALL, true, true);
     ob->clear();
+    ob->reset(army->get_unit(id_counter), in_tree);
     ob->reinitialise();
+    mib->clear();
+    mib->reset(army->get_unit(id_counter));
+    mib->reinitialise(ItemType::WEAPON);
     update_validity_label();
 }
 
@@ -1496,16 +1519,24 @@ void ArmyCreator::update_unit_command_display_helper(
 }
 
 void ArmyCreator::update_unit_display(QTreeWidgetItem* item, ArmyTreeColumn col, bool adding, bool copying) {
-       std::shared_ptr<unit> u;
-       if (adding) {
-           if (copying) u = army->get_unit(item->data(0, Qt::UserRole).toInt());
-           else u = st->selected();
-       }
-       else u = army->get_unit(item->data(0, Qt::UserRole).toInt());
-       if (u->is_character())
-           update_character_unit_display(item, enum_convert::ATC_TO_CTC.at(col), adding, copying);
-       else
-           update_noncharacter_unit_display(item, enum_convert::ATC_TO_UTC.at(col), adding, copying);
+    if (item == nullptr) {
+        /*QMessageBox error_box;
+        error_box.critical(nullptr, tr("Error"), QString::fromStdString(
+                               std::to_string(static_cast<int>(in_tree))));
+        error_box.setFixedSize(500, 200);
+        ui->export_button->setEnabled(false);*/
+        return;
+    }
+    std::shared_ptr<unit> u;
+    if (adding) {
+        if (copying) u = army->get_unit(item->data(0, Qt::UserRole).toInt());
+        else u = st->selected();
+    }
+    else u = army->get_unit(item->data(0, Qt::UserRole).toInt());
+    if (u->is_character())
+        update_character_unit_display(item, enum_convert::ATC_TO_CTC.at(col), adding, copying);
+    else
+        update_noncharacter_unit_display(item, enum_convert::ATC_TO_UTC.at(col), adding, copying);
 }
 
 void ArmyCreator::setup_export_directories() {
@@ -1515,6 +1546,7 @@ void ArmyCreator::setup_export_directories() {
         error_box.critical(nullptr, tr("Error"), tr("Could not find Documents directory... disabling army exporting!"));
         error_box.setFixedSize(500, 200);
         ui->export_button->setEnabled(false);
+        return;
     }
     if (QStandardPaths::locate(
                     QStandardPaths::DocumentsLocation,

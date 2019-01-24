@@ -111,7 +111,7 @@ private:
 
     QTreeWidgetItem* current_item() const;
 
-    void army_trees_itemchanged(QTreeWidgetItem* curr);
+    bool army_trees_itemchanged(QTreeWidgetItem* curr);
 
     void update_validity_label();
     void update_budget_label();

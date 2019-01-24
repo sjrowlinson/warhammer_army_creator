@@ -8,12 +8,13 @@ MagicItemBox::MagicItemBox(ArmyCreator* creator_, QTabWidget* box_,
 
 void MagicItemBox::clear() {
     for (auto i = 0; i < box->count(); ++i) {
+        //auto children = box->widget(i)->findChildren<QWidget*>(QString(), Qt::FindDirectChildrenOnly);
         auto children = box->widget(i)->children();
         for (auto& x : children) delete x;
         delete box->widget(i);
     }
     box->clear();
-    current.reset();
+    //current.reset();
 }
 
 void MagicItemBox::reset(const std::shared_ptr<unit>& current_) {

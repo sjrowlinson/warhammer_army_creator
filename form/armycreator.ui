@@ -32,25 +32,40 @@
      <property name="text">
       <string>Lords</string>
      </property>
+     <property name="flags">
+      <set>ItemIsUserCheckable|ItemIsEnabled</set>
+     </property>
     </item>
     <item>
      <property name="text">
       <string>Heroes</string>
+     </property>
+     <property name="flags">
+      <set>ItemIsUserCheckable|ItemIsEnabled</set>
      </property>
     </item>
     <item>
      <property name="text">
       <string>Core</string>
      </property>
+     <property name="flags">
+      <set>ItemIsUserCheckable|ItemIsEnabled</set>
+     </property>
     </item>
     <item>
      <property name="text">
       <string>Special</string>
      </property>
+     <property name="flags">
+      <set>ItemIsUserCheckable|ItemIsEnabled</set>
+     </property>
     </item>
     <item>
      <property name="text">
       <string>Rare</string>
+     </property>
+     <property name="flags">
+      <set>ItemIsUserCheckable|ItemIsEnabled</set>
      </property>
     </item>
    </widget>

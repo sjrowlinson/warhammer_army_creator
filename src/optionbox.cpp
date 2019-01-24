@@ -48,7 +48,7 @@ void OptionBox::command_box_helper(QLayout* layout,
 void OptionBox::clear() {
     auto c = box->children();
     for (auto& x : c) delete x;
-    current.reset();
+    //current.reset();
 }
 
 void OptionBox::reset(const std::shared_ptr<unit>& current_, InTree in_tree_) {
