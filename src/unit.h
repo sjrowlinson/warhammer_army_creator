@@ -23,6 +23,10 @@ protected:
     ModelSelect model_select_;
     MixedSelect mixed_select_;
     double points_;
+    // item points - refers to champion for non-character units
+    double magic_item_points_;
+    double faction_item_points_;
+    double total_item_points_;
     unsigned int n_magic_items;
     std::shared_ptr<base_unit> base_;
     army_list* army_;
@@ -36,6 +40,49 @@ protected:
         const std::unordered_multimap<RestrictionField, std::any>& restrictions,
         ItemType item_type
     ) const;
+
+    std::string pick_magic_item(ItemType item_type, ItemCategory item_category, const std::string& name);
+
+    virtual std::unordered_map<
+        WeaponType,
+        std::tuple<ItemCategory, std::string, double>
+    >& weapons_access() noexcept = 0;
+
+    virtual
+    std::unordered_map<
+        ArmourType,
+        std::tuple<ItemCategory, std::string, double>
+    >& armour_access() noexcept = 0;
+
+    virtual
+    std::pair<
+        std::string,
+        std::pair<ItemCategory, double>
+    >& talisman_access() noexcept = 0;
+
+    virtual
+    std::pair<
+        std::string,
+        std::pair<ItemCategory, double>
+    >& enchanted_item_access() noexcept = 0;
+
+    virtual
+    std::pair<
+        std::string,
+        std::pair<ItemCategory, double>
+    >& arcane_item_access() noexcept = 0;
+
+    virtual
+    std::unordered_map<
+        std::string,
+        std::pair<ItemCategory, double>
+    >& item_extras_access() noexcept = 0;
+
+    virtual
+    std::pair<
+        std::string,
+        std::pair<ItemCategory, double>
+    >& magic_banner_acces() noexcept = 0;
 public:
     explicit unit(const std::shared_ptr<base_unit>& base, army_list* army_handle);
     unit(const unit& other);
@@ -55,10 +102,9 @@ public:
     MixedSelect mixed_select() const noexcept;
     virtual bool switch_mixed_select(MixedSelect ms);
 
-    // non-pure virtual properties
     virtual double points() const noexcept;
 
-    // pure virtual properties
+    // const accessors for items
     virtual
     const std::unordered_map<
         WeaponType,
@@ -69,6 +115,26 @@ public:
         ArmourType,
         std::tuple<ItemCategory, std::string, double>
     >& armour() const noexcept = 0;
+    virtual
+    const std::pair<
+        std::string,
+        std::pair<ItemCategory, double>
+    >& talisman() const noexcept = 0;
+    virtual
+    const std::pair<
+        std::string,
+        std::pair<ItemCategory, double>
+    >& enchanted_item() const noexcept = 0;
+    virtual
+    const std::pair<
+        std::string,
+        std::pair<ItemCategory, double>
+    >& arcane_item() const noexcept = 0;
+    virtual
+    const std::unordered_map<
+        std::string,
+        std::pair<ItemCategory, double>
+    >& item_extras() const noexcept = 0;
     virtual
     const std::pair<
         std::string,
@@ -86,9 +152,9 @@ public:
         std::unordered_map<std::string, double>
     >& mnt() const noexcept = 0;
 
-    virtual double magic_item_points() const noexcept = 0;
-    virtual double faction_item_points() const noexcept = 0;
-    virtual double total_item_points() const noexcept = 0;
+    virtual double magic_item_points() const noexcept;
+    virtual double faction_item_points() const noexcept;
+    virtual double total_item_points() const noexcept;
 
     virtual const std::pair<std::string, std::pair<ItemCategory, double>>& magic_banner() const noexcept = 0;
 
@@ -102,22 +168,50 @@ public:
     UnitType unit_type() const noexcept;
     UnitCategory unit_class() const noexcept;
 
-    // item selectors
-    virtual std::string pick_weapon(ItemCategory item_type, const std::string& name) = 0;
+    // item selectors:
+
+    // => weapon selection and removal
+    virtual std::string pick_weapon(ItemCategory item_category, const std::string& name) = 0;
     virtual std::string remove_weapon(WeaponType wt, bool replacing=false) = 0;
-    virtual std::string pick_armour(ItemCategory item_type, const std::string& name) = 0;
+
+    // => armour selection and removal
+    virtual std::string pick_armour(ItemCategory item_category, const std::string& name) = 0;
     virtual std::string remove_armour(ArmourType at, bool replacing=false) = 0;
+
+    // => talisman selection and removal [NOTE: always refers to champion for non-characters]
+    virtual std::string pick_talisman(ItemCategory item_category, const std::string& name) = 0;
+    virtual std::string remove_talisman() = 0;
+
+    // => enchanted item selection and removal [NOTE: always refers to champion for non-characters]
+    virtual std::string pick_enchanted_item(ItemCategory item_category, const std::string& name) = 0;
+    virtual std::string remove_enchanted_item() = 0;
+
+    // => arcane item selection and removal [NOTE: always refers to champion for non-characters]
+    virtual std::string pick_arcane_item(ItemCategory item_category, const std::string& name) = 0;
+    virtual std::string remove_arcane_item() = 0;
+
+    // => other magic item selection and removal [NOTE: always refers to champion for non-characters]
+    virtual std::string pick_magic_extra(ItemCategory item_category, const std::string& name) = 0;
+    virtual std::string remove_magic_extra(const std::string& name) = 0;
+
+    // => one-choice-only extra selection and removal
     virtual std::string pick_oco_extra(const std::string& name) = 0;
     virtual std::string remove_oco_extra() = 0;
+
+    // => multiple-choice extra selection and removal
     virtual std::string pick_mc_extra(const std::string& name) = 0;
     virtual std::string remove_mc_extra(const std::string& name) = 0;
+
+    // => mount selection and removal
     virtual void pick_mount(const std::string& name) = 0;
     virtual void remove_mount() = 0;
-    virtual std::string pick_banner(ItemCategory item_class, const std::string& name) = 0;
-    virtual std::string remove_banner() = 0;
-
+    // => mount options selection and removal
     virtual void pick_mount_option(const std::string& name, bool oco);
     virtual void remove_mount_option(const std::string& name, bool oco);
+
+    // => banner selection and removal
+    virtual std::string pick_banner(ItemCategory item_category, const std::string& name) = 0;
+    virtual std::string remove_banner() = 0;
 
     // other modifiers
     virtual std::vector<std::string> clear();

@@ -554,7 +554,7 @@ QScrollArea* MagicItemBox::make_arcane_tab(const std::vector<std::pair<std::stri
             descr_label->setText(QString::fromStdString(t.second.description));
         }
         creator->connect(rb, &QRadioButton::clicked, creator, [t, this](auto) {
-            creator->optional_enchanted_item_selected(t.first, t.second.item_class);
+            creator->optional_arcane_item_selected(t.first, t.second.item_class);
         });
         try { hlayouts.at(count++/max_per_row)->addWidget(rb); }
         catch (const std::out_of_range& e) {
@@ -567,7 +567,7 @@ QScrollArea* MagicItemBox::make_arcane_tab(const std::vector<std::pair<std::stri
     QRadioButton* none_rb = new QRadioButton(creator->tr("None"));
     if (!has_arcane) none_rb->setChecked(true);
     creator->connect(none_rb, &QRadioButton::clicked, creator, [this](auto) {
-        creator->optional_enchanted_item_selected("", ic_selected);
+        creator->optional_arcane_item_selected("", ic_selected);
     });
     if (!hlayouts.empty()) (*(--std::end(hlayouts)))->addWidget(none_rb);
     for (auto l : hlayouts) l->addStretch(1);

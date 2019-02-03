@@ -3,13 +3,21 @@
 
 unit::unit(const std::shared_ptr<base_unit>& base, army_list* army_handle)
     : id_(0), model_select_(ModelSelect::DEFAULT),
-      mixed_select_(MixedSelect::SLAVE), points_(0.0), n_magic_items(0U),
+      mixed_select_(MixedSelect::SLAVE), points_(0.0),
+      magic_item_points_(0.0),
+      faction_item_points_(0.0),
+      total_item_points_(0.0),
+      n_magic_items(0U),
       base_(base), army_(army_handle) {}
 
 unit::unit(const unit& other)
     : id_(other.id()), model_select_(other.model_select_),
       mixed_select_(other.mixed_select_),
-      points_(other.points_), n_magic_items(other.n_magic_items),
+      points_(other.points_),
+      magic_item_points_(other.magic_item_points_),
+      faction_item_points_(other.faction_item_points_),
+      total_item_points_(other.total_item_points_),
+      n_magic_items(other.n_magic_items),
       base_(other.base_), army_(other.army_) {}
 
 int unit::id() const noexcept { return id_; }
@@ -161,7 +169,196 @@ std::string unit::budget_restriction_check(
     return msg;
 }
 
+std::string unit::pick_magic_item(ItemType item_type, ItemCategory item_category, const std::string& name) {
+    std::string removed = "";
+    if (item_category == ItemCategory::MUNDANE || item_category == ItemCategory::NONE) return removed;
+    if (is_character() && item_type != ItemType::BANNER && !magic_banner().first.empty())
+        throw std::runtime_error("BSBs equipped with a Magic Banner cannot take Magic Items!");
+    // obtain the iterator to the desired item
+    std::unordered_map<std::string, item>::const_iterator search;
+    if (item_category == ItemCategory::MAGIC) {
+        if (base_->magic_items_handle() == nullptr) return removed;
+        search = base_->magic_items_handle()->second.find(name);
+        if (search == base_->magic_items_handle()->second.end())
+            throw std::invalid_argument("Item not found!");
+    } else if (item_category == ItemCategory::COMMON) {
+        if (base_->common_items_handle() == nullptr) return removed;
+        search = base_->common_items_handle()->second.find(name);
+        if (search == base_->common_items_handle()->second.end())
+            throw std::invalid_argument("Item not found!");
+    } else {
+        if (base_->faction_items_handle() == nullptr) return removed;
+        search = base_->faction_items_handle()->second.find(name);
+        if (search == base_->faction_items_handle()->second.end())
+            throw std::invalid_argument("Item not found!");
+    }
+    // get the budget values...
+    const double mi_budget = (item_category == ItemCategory::FACTION) ?
+        base_->faction_item_budget().points : base_->magic_item_budget().points;
+    const double ti_budget = base_->total_item_budget().points;
+    // ... and the current magic item points values - to be used for adjusting
+    // the budgets down to the allowed remaining points
+    double adj_mip = (item_category == ItemCategory::FACTION) ? faction_item_points() : magic_item_points();
+    double adj_tip = total_item_points();
+    // do restriction checks on the budgets
+    auto budget_restr_ind_msg = budget_restriction_check(
+        (item_category == ItemCategory::FACTION) ?
+            base_->faction_item_budget().restrictions : base_->magic_item_budget().restrictions,
+        item_type
+    );
+    if (!budget_restr_ind_msg.empty()) throw std::invalid_argument(budget_restr_ind_msg);
+    auto budget_restr_tot_msg = budget_restriction_check(
+        base_->total_item_budget().restrictions,
+        item_type
+    );
+    if (!budget_restr_tot_msg.empty()) throw std::invalid_argument(budget_restr_tot_msg);
+    // do restriction checks on the item itself
+    auto item_restr_msg = restriction_check(search->second.restrictions, name);
+    if (!item_restr_msg.empty()) throw std::invalid_argument(item_restr_msg);
+    // subtract current magic item points of matching item type if applicable
+    switch (item_type) {
+    case ItemType::WEAPON:
+    {
+        auto search_weapon = weapons().find(search->second.weapon_type);
+        if (search_weapon != std::end(weapons())) {
+            adj_mip -= std::get<2>(search_weapon->second);
+            adj_tip -= std::get<2>(search_weapon->second);
+        }
+        break;
+    }
+    case ItemType::ARMOUR:
+    {
+        auto armour_type = search->second.armour_type;
+        // protect against cases where the user attempts to pick another
+        // piece of magic armour not in the category being altered
+        if (std::count_if(std::begin(armour()), std::end(armour()), [armour_type] (const auto& a) {
+            return (std::get<0>(a.second) == ItemCategory::COMMON ||
+                    std::get<0>(a.second) == ItemCategory::MAGIC ||
+                    std::get<0>(a.second) == ItemCategory::FACTION) && a.first != armour_type;
+        })) throw std::invalid_argument("Cannot choose multiple pieces of magic armour!");
+        auto search_armour = armour().find(search->second.armour_type);
+        if (search_armour != std::end(armour())) {
+            adj_mip -= std::get<2>(search_armour->second);
+            adj_tip -= std::get<2>(search_armour->second);
+        }
+        break;
+    }
+    case ItemType::TALISMAN:
+    {
+        if (!talisman().first.empty()) {
+            adj_mip -= talisman().second.second;
+            adj_tip -= talisman().second.second;
+        }
+        break;
+    }
+    case ItemType::ENCHANTED:
+    {
+        if (!enchanted_item().first.empty()) {
+            adj_mip -= enchanted_item().second.second;
+            adj_tip -= enchanted_item().second.second;
+        }
+        break;
+    }
+    case ItemType::ARCANE:
+    {
+        if (!arcane_item().first.empty()) {
+            adj_mip -= arcane_item().second.second;
+            adj_tip -= arcane_item().second.second;
+        }
+        break;
+    }
+    case ItemType::BANNER:
+    {
+        if (!is_character()) {
+            if (magic_banner().first.empty()) {
+                // TODO: subtract magic_banner().second.second from
+                //       magic banner budget
+            }
+        }
+        break;
+    }
+    default: break;
+    }
+    // perform budget value checking now that we've adjusted for previous items
+    // TODO: re-check this, seems wrong
+    if (!is_character() && item_type != ItemType::BANNER) {
+        if ((search->second.points + adj_mip > mi_budget) ||
+                (search->second.points + adj_tip > ti_budget))
+            throw std::runtime_error("Item budget exceeded!");
+    }
+    // check if the item has specific allowed units
+    if (!(search->second.allowed_units.empty())) {
+        std::string unit_name = this->name();
+        if (!std::count_if(
+                std::begin(search->second.allowed_units),
+                std::end(search->second.allowed_units),
+                [&unit_name](const auto& x) { return x == unit_name; }
+            )) throw std::invalid_argument(unit_name + " cannot take this item!");
+    }
+    // switch on the item_type once again and assign the new chosen item
+    // whilst removing the previous one
+    switch (item_type) {
+    case ItemType::WEAPON:
+        removed = remove_weapon(search->second.weapon_type);
+        weapons_access()[search->second.weapon_type] = {
+            item_category, search->first, search->second.points
+        };
+        break;
+    case ItemType::ARMOUR:
+        removed = remove_armour(search->second.armour_type);
+        armour_access()[search->second.armour_type] = {
+            item_category, search->first, search->second.points
+        };
+        break;
+    case ItemType::TALISMAN:
+        removed = remove_talisman();
+        talisman_access() = {search->first, {item_category, search->second.points}};
+        break;
+    case ItemType::ENCHANTED:
+        removed = remove_enchanted_item();
+        enchanted_item_access() = {search->first, {item_category, search->second.points}};
+        break;
+    case ItemType::ARCANE:
+        removed = remove_arcane_item();
+        arcane_item_access() = {search->first, {item_category, search->second.points}};
+        break;
+    case ItemType::BANNER:
+        removed = remove_banner();
+        magic_banner_acces() = {search->first, {item_category, search->second.points}};
+        break;
+    case ItemType::OTHER:
+        item_extras_access()[search->first] = {item_category, search->second.points};
+        break;
+    default: break;
+    }
+    points_ += search->second.points;
+    ++n_magic_items;
+    if (item_type == ItemType::BANNER) {
+        if (!is_character()) {
+            // TODO: implement
+        }
+    } else {
+        if (item_category == ItemCategory::FACTION)
+            faction_item_points_ += search->second.points;
+        else magic_item_points_ += search->second.points;
+        total_item_points_ += search->second.points;
+    }
+    return removed;
+}
+
 double unit::points() const noexcept { return points_; }
+
+double unit::magic_item_points() const noexcept {
+    return magic_item_points_;
+}
+
+double unit::faction_item_points() const noexcept {
+    return faction_item_points_;
+}
+
+double unit::total_item_points() const noexcept {
+    return total_item_points_;
+}
 
 const std::shared_ptr<base_unit>& unit::base() const noexcept {
     return base_;

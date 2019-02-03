@@ -16,6 +16,35 @@
 #include <utility>
 
 class character_unit : public unit {
+private:
+    std::unordered_map<
+        WeaponType,
+        std::tuple<ItemCategory, std::string, double>
+    >& weapons_access() noexcept override;
+    std::unordered_map<
+            ArmourType,
+            std::tuple<ItemCategory, std::string, double>
+    >& armour_access() noexcept override;
+    std::pair<
+        std::string,
+        std::pair<ItemCategory, double>
+    >& talisman_access() noexcept override;
+    std::pair<
+        std::string,
+        std::pair<ItemCategory, double>
+    >& enchanted_item_access() noexcept override;
+    std::pair<
+        std::string,
+        std::pair<ItemCategory, double>
+    >& arcane_item_access() noexcept override;
+    std::unordered_map<
+        std::string,
+        std::pair<ItemCategory, double>
+    >& item_extras_access() noexcept override;
+    std::pair<
+        std::string,
+        std::pair<ItemCategory, double>
+    >& magic_banner_acces() noexcept override;
 protected:
     // equipment
     std::unordered_map<
@@ -28,6 +57,7 @@ protected:
     > armours_;
     std::pair<std::string, std::pair<ItemCategory, double>> talisman_;
     std::pair<std::string, std::pair<ItemCategory, double>> enchanted_item_;
+    std::pair<std::string, std::pair<ItemCategory, double>> arcane_item_;
     std::pair<std::string, std::pair<bool, double>> oco_extra_;
     std::unordered_map<std::string, std::pair<bool, double>> mc_extras_;
     std::unordered_map<std::string, std::pair<ItemCategory, double>> item_extras_;
@@ -39,12 +69,6 @@ protected:
     > mount_;
     std::pair<std::string, std::pair<ItemCategory, double>> banner;
 
-    // item points
-    double magic_item_points_;
-    double faction_item_points_;
-    double total_item_points_;
-
-    std::string pick_magic_item(ItemType item_type, ItemCategory item_class, const std::string& name);
     std::string html_table_row_both(short mlevel, std::string arcane) const;
 
     virtual std::string restriction_check(
@@ -76,9 +100,14 @@ public:
         std::tuple<ItemCategory, std::string, double>
     >& armour() const noexcept override;
 
-    const std::pair<std::string, std::pair<ItemCategory, double>>& talisman() const noexcept;
-    const std::pair<std::string, std::pair<ItemCategory, double>>& enchanted_item() const noexcept;
-    const std::unordered_map<std::string, std::pair<ItemCategory, double>>& item_extras() const noexcept;
+    const std::pair<std::string, std::pair<ItemCategory, double>>& talisman() const noexcept override;
+    const std::pair<std::string, std::pair<ItemCategory, double>>& enchanted_item() const noexcept override;
+    virtual
+    const std::pair<
+        std::string,
+        std::pair<ItemCategory, double>
+    >& arcane_item() const noexcept override;
+    const std::unordered_map<std::string, std::pair<ItemCategory, double>>& item_extras() const noexcept override;
 
     const std::pair<std::string, std::pair<bool, double>>& oco_extra() const noexcept override;
     const std::unordered_map<std::string, std::pair<bool, double>>& mc_extras() const noexcept override;
@@ -92,40 +121,50 @@ public:
 
     const std::pair<std::string, std::pair<ItemCategory, double>>& magic_banner() const noexcept override;
 
-    double magic_item_points() const noexcept override;
-    double faction_item_points() const noexcept override;
-    double total_item_points() const noexcept override;
+    // item selectors:
 
-    // current property modifiers
-    std::string pick_weapon(ItemCategory item_type, const std::string& name) override;
+    // => weapon selection and removal
+    std::string pick_weapon(ItemCategory item_category, const std::string& name) override;
     std::string remove_weapon(WeaponType wt, bool replacing=false) override;
 
-    std::string pick_armour(ItemCategory item_type, const std::string& name) override;
+    // => armour selection and removal
+    std::string pick_armour(ItemCategory item_category, const std::string& name) override;
     std::string remove_armour(ArmourType at, bool replacing=false) override;
 
-    std::string pick_talisman(ItemCategory item_class, const std::string& name);
-    std::string remove_talisman();
+    // => talisman selection and removal
+    std::string pick_talisman(ItemCategory item_category, const std::string& name) override;
+    std::string remove_talisman() override;
 
-    std::string pick_enchanted_item(ItemCategory item_class, const std::string& name);
-    std::string remove_enchanted_item();
+    // => enchanted item selection and removal
+    std::string pick_enchanted_item(ItemCategory item_category, const std::string& name) override;
+    std::string remove_enchanted_item() override;
 
-    std::string pick_other(ItemCategory item_class, const std::string& name);
-    std::string remove_other(const std::string& name);
+    // => arcane item selection and removal
+    virtual std::string pick_arcane_item(ItemCategory item_category, const std::string& name) override;
+    virtual std::string remove_arcane_item() override;
 
+    // => other magic item selection and removal
+    std::string pick_magic_extra(ItemCategory item_category, const std::string& name) override;
+    std::string remove_magic_extra(const std::string& name) override;
+
+    // => one-choice-only extra selection and removal
     std::string pick_oco_extra(const std::string& name) override;
     std::string remove_oco_extra() override;
 
+    // => multiple-choice extra selection and removal
     std::string pick_mc_extra(const std::string& name) override;
     std::string remove_mc_extra(const std::string& name) override;
 
+    // => mount selection and removal
     void pick_mount(const std::string& name) override;
     void remove_mount() override;
-
-    std::string pick_banner(ItemCategory item_class, const std::string& name) override;
-    std::string remove_banner() override;
-
+    // => mount options selection and removal
     void pick_mount_option(const std::string& name, bool oco) override;
     void remove_mount_option(const std::string& name, bool oco) override;
+
+    // => banner selection and removal
+    std::string pick_banner(ItemCategory item_category, const std::string& name) override;
+    std::string remove_banner() override;
 
     virtual std::vector<std::string> clear() override;
 

@@ -27,11 +27,14 @@ namespace tools {
 
     class roster_parser : public file_parser {
         struct tmp_parse_obj {
+            // COMBINED
             UnitType unit_type;
             UnitCategory unit_category;
             std::string mount;
             double points = 0.0;
+            // MASTER
             std::pair<std::size_t, std::size_t> size = {1U, 1U};
+            std::string master_name;
             short mage_level = 0;
             std::unordered_map<short, double> mage_upgrades;
             std::vector<lore_option> mage_lores;
@@ -47,6 +50,22 @@ namespace tools {
                 CommandGroup,
                 std::pair<std::string, double>
             > command;
+            // SLAVE
+            std::pair<std::size_t, std::size_t> slave_size = {1U, 1U};
+            std::string slave_name;
+            std::vector<std::string> slave_characteristics;
+            std::vector<std::string> slave_champ_characteristics;
+            std::vector<std::string> slave_special_rules;
+            std::vector<std::string> slave_champ_special_rules;
+            tmp_parse_equipment slave_eq;
+            tmp_parse_equipment slave_champ_eq;
+            tmp_parse_options slave_opt;
+            tmp_parse_options slave_champ_opt;
+            std::unordered_map<
+                CommandGroup,
+                std::pair<std::string, double>
+            > slave_command;
+            // OTHER/COMBINED
             double mb_budget = 0.0;
             budget mi_budget = budget();
             budget fi_budget = budget();

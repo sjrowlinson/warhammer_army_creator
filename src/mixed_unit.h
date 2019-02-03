@@ -1,5 +1,5 @@
-#ifndef MIXED_UNIT_H
-#define MIXED_UNIT_H
+#ifndef mixed_unitH
+#define mixed_unitH
 
 #include "base_unit.h"
 #include "base_mixed_unit.h"
@@ -13,16 +13,110 @@
 #include <utility>
 
 class mixed_unit : public unit {
-public:
-    // handle
-    const std::shared_ptr<base_mixed_unit> handle;
 private:
-    normal_unit master_;
-    normal_unit slave_;
-
     std::size_t master_size_;
-    std::size_t slaves_size_;
+    std::size_t slave_size_;
+
+    // COMBINED
+    std::tuple<
+        std::string,
+        double,
+        std::pair<std::string, double>,
+        std::unordered_map<std::string, double>
+    > mount_;
+
+    // MASTER
+    // => non-champion
+    std::unordered_map<
+        WeaponType,
+        std::tuple<ItemCategory, std::string, double>
+    > master_weapons_;
+    std::unordered_map<
+        ArmourType,
+        std::tuple<ItemCategory, std::string, double>
+    > master_armours_;
+    std::pair<std::string, std::pair<bool, double>> master_oco_extra_;
+    std::unordered_map<std::string, std::pair<bool, double>> master_mc_extras_;
+    // => champion
+    std::unordered_map<
+        WeaponType,
+        std::tuple<ItemCategory, std::string, double>
+    > master_champ_weapons_;
+    std::unordered_map<
+        ArmourType,
+        std::tuple<ItemCategory, std::string, double>
+    > master_champ_armours_;
+    std::pair<std::string, std::pair<ItemCategory, double>> master_champ_talisman_;
+    std::pair<std::string, std::pair<ItemCategory, double>> master_champ_enchanted_item_;
+    std::pair<std::string, std::pair<ItemCategory, double>> master_champ_arcane_;
+    std::unordered_map<std::string, std::pair<ItemCategory, double>> master_champ_item_extras_;
+    std::pair<std::string, std::pair<bool, double>> master_champ_oco_extra_;
+    std::unordered_map<std::string, std::pair<bool, double>> master_champ_mc_extras_;
+
+    std::unordered_map<
+        CommandGroup, std::pair<std::string, double>
+    > master_command_group;
+    std::pair<std::string, std::pair<ItemCategory, double>> banner;
+
+    // SLAVE
+    // => non-champion
+    std::unordered_map<
+        WeaponType,
+        std::tuple<ItemCategory, std::string, double>
+    > slave_weapons_;
+    std::unordered_map<
+        ArmourType,
+        std::tuple<ItemCategory, std::string, double>
+    > slave_armours_;
+    std::pair<std::string, std::pair<bool, double>> slave_oco_extra_;
+    std::unordered_map<std::string, std::pair<bool, double>> slave_mc_extras_;
+    // => champion
+    std::unordered_map<
+        WeaponType,
+        std::tuple<ItemCategory, std::string, double>
+    > slave_champion_weapons_;
+    std::unordered_map<
+        ArmourType,
+        std::tuple<ItemCategory, std::string, double>
+    > slave_champion_armours_;
+    std::pair<std::string, std::pair<bool, double>> slave_champion_oco_extra_;
+    std::unordered_map<std::string, std::pair<bool, double>> slave_champion_mc_extras_;
+
+    std::unordered_map<
+        CommandGroup, std::pair<std::string, double>
+    > slave_command_group;
+
+    std::unordered_map<
+        WeaponType,
+        std::tuple<ItemCategory, std::string, double>
+    >& weapons_access() noexcept override;
+    std::unordered_map<
+            ArmourType,
+            std::tuple<ItemCategory, std::string, double>
+    >& armour_access() noexcept override;
+    std::pair<
+        std::string,
+        std::pair<ItemCategory, double>
+    >& talisman_access() noexcept override;
+    std::pair<
+        std::string,
+        std::pair<ItemCategory, double>
+    >& enchanted_item_access() noexcept override;
+    std::pair<
+        std::string,
+        std::pair<ItemCategory, double>
+    >& arcane_item_access() noexcept override;
+    std::unordered_map<
+        std::string,
+        std::pair<ItemCategory, double>
+    >& item_extras_access() noexcept override;
+    std::pair<
+        std::string,
+        std::pair<ItemCategory, double>
+    >& magic_banner_acces() noexcept override;
 public:
+    const std::shared_ptr<base_mixed_unit> handle;
+
     explicit mixed_unit(const std::shared_ptr<base_unit>& base, army_list* army_handle);
     mixed_unit(const mixed_unit& other);
     ~mixed_unit() override = default;
@@ -34,10 +128,8 @@ public:
     bool switch_model_select(ModelSelect ms) override;
     bool switch_mixed_select(MixedSelect ms) override;
 
-    normal_unit& master() noexcept;
-    normal_unit& slave() noexcept;
-
-    double points() const noexcept override;
+    std::size_t master_size() const noexcept;
+    std::size_t slave_size() const noexcept;
 
     const std::unordered_map<
         WeaponType,
@@ -47,6 +139,22 @@ public:
         ArmourType,
         std::tuple<ItemCategory, std::string, double>
     >& armour() const noexcept override;
+    const std::pair<
+        std::string,
+        std::pair<ItemCategory, double>
+    >& talisman() const noexcept override;
+    const std::pair<
+        std::string,
+        std::pair<ItemCategory, double>
+    >& enchanted_item() const noexcept override;
+    const std::pair<
+        std::string,
+        std::pair<ItemCategory, double>
+    >& arcane_item() const noexcept override;
+    const std::unordered_map<
+        std::string,
+        std::pair<ItemCategory, double>
+    >& item_extras() const noexcept override;
     const std::pair<
         std::string,
         std::pair<bool, double>
@@ -62,32 +170,60 @@ public:
         std::unordered_map<std::string, double>
     >& mnt() const noexcept override;
 
-    const std::pair<std::string, std::pair<ItemCategory, double>>& magic_banner() const noexcept override;
+    // item selectors:
 
-    double magic_item_points() const noexcept override;
-    double faction_item_points() const noexcept override;
-    double total_item_points() const noexcept override;
-
-    std::string pick_weapon(ItemCategory item_type, const std::string& name) override;
+    // => weapon selection and removal
+    std::string pick_weapon(ItemCategory item_category, const std::string& name) override;
     std::string remove_weapon(WeaponType wt, bool replacing=false) override;
-    std::string pick_armour(ItemCategory item_type, const std::string& name) override;
+
+    // => armour selection and removal
+    std::string pick_armour(ItemCategory item_category, const std::string& name) override;
     std::string remove_armour(ArmourType at, bool replacing=false) override;
+
+    // => talisman selection and removal [NOTE: always refers to champion for non-characters]
+    std::string pick_talisman(ItemCategory item_category, const std::string& name) override;
+    std::string remove_talisman() override;
+
+    // => enchanted item selection and removal [NOTE: always refers to champion for non-characters]
+    std::string pick_enchanted_item(ItemCategory item_category, const std::string& name) override;
+    std::string remove_enchanted_item() override;
+
+    // => arcane item selection and removal [NOTE: always refers to champion for non-characters]
+    std::string pick_arcane_item(ItemCategory item_category, const std::string& name) override;
+    std::string remove_arcane_item() override;
+
+    // => other magic item selection and removal [NOTE: always refers to champion for non-characters]
+    std::string pick_magic_extra(ItemCategory item_category, const std::string& name) override;
+    std::string remove_magic_extra(const std::string& name) override;
+
+    // => one-choice-only extra selection and removal
     std::string pick_oco_extra(const std::string& name) override;
     std::string remove_oco_extra() override;
+
+    // => multiple-choice extra selection and removal
     std::string pick_mc_extra(const std::string& name) override;
     std::string remove_mc_extra(const std::string& name) override;
+
+    // => mount selection and removal
     void pick_mount(const std::string& name) override;
     void remove_mount() override;
-    std::string pick_banner(ItemCategory item_class, const std::string& name) override;
+
+    // => banner selection and removal
+    std::string pick_banner(ItemCategory item_category, const std::string& name) override;
     std::string remove_banner() override;
 
+    // => command group selection and removal
+    void add_command_member(CommandGroup member);
+    void remove_command_member(CommandGroup member);
+
+    // changing unit size
     void change_size(std::size_t n);
     void change_master_size(std::size_t n);
     void change_slave_size(std::size_t n);
 
+    // serialisation and exporting
     std::string html_table_row() const override;
-
-    virtual std::string save() const override;
+    std::string save() const override;
 };
 
-#endif // !MIXED_UNIT_H
+#endif // !mixed_unitH

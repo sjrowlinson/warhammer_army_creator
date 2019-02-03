@@ -185,7 +185,32 @@ namespace tools {
             break;
         }
         case BaseUnitType::MIXED:
+        {
+            // MASTER
+            equipment master_eq(std::move(tpo.eq));
+            options master_opt(std::move(tpo.opt));
+            equipment master_champ_eq(std::move(tpo.champ_eq));
+            options master_champ_opt(std::move(tpo.champ_opt));
+            // SLAVE
+            equipment slave_eq(std::move(tpo.slave_eq));
+            options slave_opt(std::move(tpo.slave_opt));
+            equipment slave_champ_eq(std::move(tpo.slave_champ_eq));
+            options slave_champ_opt(std::move(tpo.slave_champ_opt));
+            bu = std::make_unique<base_mixed_unit>(
+                faction, tpo.unit_type, tpo.unit_category, name, tpo.master_name,
+                tpo.size.first, tpo.size.second, tpo.points, std::move(tpo.characteristics),
+                std::move(tpo.special_rules), std::move(master_eq), std::move(master_opt),
+                std::move(tpo.champ_characteristics), std::move(tpo.champ_special_rules),
+                std::move(master_champ_eq), std::move(master_champ_opt), std::move(tpo.mi_budget),
+                std::move(tpo.fi_budget), std::move(tpo.ti_budget), std::move(tpo.command),
+                tpo.slave_name, tpo.slave_size.first, tpo.slave_size.second, 0.0,
+                std::move(tpo.slave_characteristics), std::move(tpo.slave_special_rules),
+                std::move(slave_eq), std::move(slave_opt), std::move(tpo.slave_champ_characteristics),
+                std::move(tpo.slave_champ_special_rules), std::move(slave_champ_eq),
+                std::move(slave_champ_opt), std::move(tpo.slave_command), tpo.mb_budget
+            );
             break;
+        }
         default: break;
         }
         return bu;

@@ -41,8 +41,8 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
     setup_magic_items_combobox();
     ui->opt_box_scrollarea->setWidgetResizable(true);
     ui->magic_item_box_scrollarea->setWidgetResizable(true);
-    setup_export_directories();
-    ui->army_name_textedit->appendPlainText(QString::fromStdString(tools::points_str(army->point_limit()) + "pts_list"));
+    // TODO: add option in a preferences/settings page for setting up the convenient directories
+    //setup_export_directories();
 }
 
 ArmyCreator::~ArmyCreator() {
@@ -807,8 +807,6 @@ void ArmyCreator::on_magic_items_combobox_currentTextChanged(const QString& ic_s
 void ArmyCreator::on_pts_limit_spinbox_valueChanged(double pts) {
     army->change_points_limit(pts);
     update_validity_label();
-    ui->army_name_textedit->clear();
-    ui->army_name_textedit->appendPlainText(QString::fromStdString(tools::points_str(army->point_limit()) + "pts_list"));
 }
 
 // tree item changed or activated slots
@@ -1174,25 +1172,6 @@ void ArmyCreator::update_character_unit_display(
             if (melee != std::end(weapons)) weapons_str += '\n';
             weapons_str += std::get<1>(ballistic->second);
         }
-        if (u->switch_model_select(ModelSelect::CHAMPION)) {
-            auto cweapons = u->weapons();
-            auto cmelee = cweapons.find(WeaponType::MELEE);
-            auto cballistic = cweapons.find(WeaponType::BALLISTIC);
-            // only display champion weapon if it is different from default unit member weapon
-            if (cmelee != std::end(cweapons)
-                    && std::get<1>(cmelee->second) != std::get<1>(melee->second)) {
-                if (melee != std::end(weapons) || ballistic != std::end(weapons))
-                    weapons_str += '\n';
-                weapons_str += std::get<1>(cmelee->second) + " (Champion)";
-            }
-            if (cballistic != std::end(cweapons)
-                    && std::get<1>(cballistic->second) != std::get<1>(ballistic->second)) {
-                if (melee != std::end(weapons) || ballistic != std::end(weapons)
-                        || cmelee != std::end(cweapons)) weapons_str += '\n';
-                weapons_str += std::get<1>(cballistic->second) + " (Champion)";
-            }
-        }
-        u->switch_model_select(ModelSelect::DEFAULT);
         item->setText(col_val, QString::fromStdString(weapons_str));
         update_character_unit_display(item, CharacterTreeColumn::POINTS, adding, copying);;
         break;
@@ -1214,27 +1193,6 @@ void ArmyCreator::update_character_unit_display(
             if (!armour_str.empty()) armour_str += '\n';
             armour_str += std::get<1>(helmet->second);
         }
-        if (u->switch_model_select(ModelSelect::CHAMPION)) {
-            auto carmour = u->armour();
-            auto cbody = carmour.find(ArmourType::ARMOUR);
-            auto cshield = carmour.find(ArmourType::SHIELD);
-            auto chelmet = carmour.find(ArmourType::HELMET);
-            // only display champion armour if it is different from default unit member armour
-            if (cbody != std::end(carmour)
-                    && std::get<1>(cbody->second) != std::get<1>(body->second))
-                armour_str += std::get<1>(cbody->second);
-            if (cshield != std::end(carmour)
-                    && std::get<1>(cshield->second) != std::get<1>(shield->second)) {
-                if (!armour_str.empty()) armour_str += '\n';
-                armour_str += std::get<1>(cshield->second);
-            }
-            if (chelmet != std::end(carmour)
-                    && std::get<1>(chelmet->second) != std::get<1>(helmet->second)) {
-                if (!armour_str.empty()) armour_str += '\n';
-                armour_str += std::get<1>(chelmet->second);
-            }
-        }
-        u->switch_model_select(ModelSelect::DEFAULT);
         item->setText(col_val, QString::fromStdString(armour_str));
         update_character_unit_display(item, CharacterTreeColumn::POINTS, adding, copying);
         break;
@@ -1264,8 +1222,25 @@ void ArmyCreator::update_character_unit_display(
         update_character_unit_display(item, CharacterTreeColumn::POINTS, adding, copying);
         break;
     case CharacterTreeColumn::EXTRAS:
-        // TODO: implement
+    {
+        std::string extras_str = "";
+        auto oco_extra = u->oco_extra();
+        extras_str += oco_extra.first;
+        auto mc_extras = u->mc_extras();
+        for (const auto& extra : mc_extras) {
+            if (!extras_str.empty()) extras_str += '\n';
+            extras_str += extra.first;
+        }
+        auto p = std::dynamic_pointer_cast<character_unit>(u);
+        auto item_extras = p->item_extras();
+        for (const auto& extra : item_extras) {
+            if (!extras_str.empty()) extras_str += '\n';
+            extras_str += extra.first;
+        }
+        item->setText(col_val, QString::fromStdString(extras_str));
+        update_character_unit_display(item, CharacterTreeColumn::POINTS, adding, copying);
         break;
+    }
     case CharacterTreeColumn::POINTS:
         item->setText(col_val, QString("%1").arg(u->points()));
         break;
@@ -1457,8 +1432,30 @@ void ArmyCreator::update_noncharacter_unit_display(
         update_noncharacter_unit_display(item, UnitTreeColumn::POINTS, adding, copying);
         break;
     case UnitTreeColumn::EXTRAS:
-        // TODO: implement
+    {
+        std::string extras_str = "";
+        auto oco_extra = u->oco_extra();
+        extras_str += oco_extra.first;
+        auto mc_extras = u->mc_extras();
+        for (const auto& extra : mc_extras) {
+            if (!extras_str.empty()) extras_str += '\n';
+            extras_str += extra.first;
+        }
+        if (u->switch_model_select(ModelSelect::CHAMPION)) {
+            auto champ_oco_extra = u->oco_extra();
+            if (!extras_str.empty()) extras_str += '\n';
+            extras_str += champ_oco_extra.first;
+            auto champ_mc_extras = u->mc_extras();
+            for (const auto& extra : champ_mc_extras) {
+                if (!extras_str.empty()) extras_str += '\n';
+                extras_str += extra.first;
+            }
+        }
+        u->switch_model_select(ModelSelect::DEFAULT);
+        item->setText(col_val, QString::fromStdString(extras_str));
+        update_noncharacter_unit_display(item, UnitTreeColumn::POINTS, adding, copying);
         break;
+    }
     case UnitTreeColumn::POINTS:
         item->setText(col_val, QString("%1").arg(u->points()));
         break;
@@ -1520,11 +1517,10 @@ void ArmyCreator::update_unit_command_display_helper(
 
 void ArmyCreator::update_unit_display(QTreeWidgetItem* item, ArmyTreeColumn col, bool adding, bool copying) {
     if (item == nullptr) {
-        /*QMessageBox error_box;
-        error_box.critical(nullptr, tr("Error"), QString::fromStdString(
-                               std::to_string(static_cast<int>(in_tree))));
-        error_box.setFixedSize(500, 200);
-        ui->export_button->setEnabled(false);*/
+        // somehow item has become null when switching between army trees so lets
+        // re-update all the units in the current tree to ensure all model <-> ui
+        // association remains consistent
+        update_unit_displays();
         return;
     }
     std::shared_ptr<unit> u;
@@ -1537,6 +1533,35 @@ void ArmyCreator::update_unit_display(QTreeWidgetItem* item, ArmyTreeColumn col,
         update_character_unit_display(item, enum_convert::ATC_TO_CTC.at(col), adding, copying);
     else
         update_noncharacter_unit_display(item, enum_convert::ATC_TO_UTC.at(col), adding, copying);
+}
+
+void ArmyCreator::update_unit_displays() {
+    switch (in_tree) {
+    case InTree::ROSTER:
+    case InTree::ARMY:
+    case InTree::NEITHER:
+        break;
+    case InTree::LORD:
+        for (int i = 0; i < ui->lord_tree->topLevelItemCount(); ++i)
+            update_unit_display(ui->lord_tree->topLevelItem(i), ArmyTreeColumn::ALL, false, false);
+        break;
+    case InTree::HERO:
+        for (int i = 0; i < ui->hero_tree->topLevelItemCount(); ++i)
+            update_unit_display(ui->hero_tree->topLevelItem(i), ArmyTreeColumn::ALL, false, false);
+        break;
+    case InTree::CORE:
+        for (int i = 0; i < ui->core_tree->topLevelItemCount(); ++i)
+            update_unit_display(ui->core_tree->topLevelItem(i), ArmyTreeColumn::ALL, false, false);
+        break;
+    case InTree::SPECIAL:
+        for (int i = 0; i < ui->special_tree->topLevelItemCount(); ++i)
+            update_unit_display(ui->special_tree->topLevelItem(i), ArmyTreeColumn::ALL, false, false);
+        break;
+    case InTree::RARE:
+        for (int i = 0; i < ui->rare_tree->topLevelItemCount(); ++i)
+            update_unit_display(ui->rare_tree->topLevelItem(i), ArmyTreeColumn::ALL, false, false);
+        break;
+    }
 }
 
 void ArmyCreator::setup_export_directories() {
@@ -1607,31 +1632,23 @@ void ArmyCreator::on_export_button_clicked() {
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setPaperSize(QPrinter::A4);
     printer.setPageOrientation(QPageLayout::Landscape);
-    if (ui->army_name_textedit->toPlainText().isEmpty() || !ui->army_name_textedit->toPlainText().isSimpleText()) {
-        QMessageBox error_box;
-        error_box.critical(nullptr, tr("Error"), tr("Invalid army name for PDF export."));
-        error_box.setFixedSize(500, 200);
-        return;
-    }
-    QString file_name = ui->army_name_textedit->toPlainText() + ".pdf";
-    printer.setOutputFileName(documents_dir + '/' + army_list_dir + '/'
-                              + ui->faction_combobox->currentText() + "/" + file_name);
-    document->setPageSize(printer.pageRect().size());
-    document->print(&printer);
-    QMessageBox message_box;
-    if (QStandardPaths::locate(
-                QStandardPaths::DocumentsLocation,
-                army_list_dir + '/' + ui->faction_combobox->currentText() + '/' + file_name,
-                QStandardPaths::LocateOption::LocateFile
-            ).isEmpty())
-        message_box.information(nullptr, tr("Write failure"),
-            tr((QString("An access error occurred when trying to write the army list to: ")
-                + printer.outputFileName()).toStdString().data())
-        );
-    else
-        message_box.information(nullptr, tr("Army list written"),
+    QString file_name = QFileDialog::getSaveFileName(
+        this,
+        tr("Export army list to PDF"),
+        QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
+        tr("PDF (*.pdf)")
+    );
+    QMessageBox mb;
+    if (file_name.isEmpty())
+        mb.information(nullptr, tr("Write failure"), tr("Could not write to this location!"));
+    else {
+        printer.setOutputFileName(file_name);
+        document->setPageSize(printer.pageRect().size());
+        document->print(&printer);
+        mb.information(nullptr, tr("Army list written"),
             tr((QString("Army list successfully written to: ") + printer.outputFileName()).toStdString().data())
         );
-    message_box.setFixedSize(500, 200);
+    }
+    mb.setFixedSize(500, 200);
     delete document;
 }

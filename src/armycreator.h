@@ -13,6 +13,7 @@
 
 #include <QCheckBox>
 #include <QDir>
+#include <QFileDialog>
 #include <QGridLayout>
 #include <QGroupBox>
 #include <QMainWindow>
@@ -154,6 +155,8 @@ private:
         bool copying
     );
     void update_unit_display(QTreeWidgetItem* item, ArmyTreeColumn col, bool adding, bool copying);
+
+    void update_unit_displays();
 
 };
 

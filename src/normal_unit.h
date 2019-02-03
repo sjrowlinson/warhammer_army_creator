@@ -40,11 +40,12 @@ private:
         ArmourType,
         std::tuple<ItemCategory, std::string, double>
     > champ_armours_;
+    std::pair<std::string, std::pair<ItemCategory, double>> champ_talisman_;
+    std::pair<std::string, std::pair<ItemCategory, double>> champ_enchanted_item_;
+    std::pair<std::string, std::pair<ItemCategory, double>> champ_arcane_;
+    std::unordered_map<std::string, std::pair<ItemCategory, double>> champ_item_extras_;
     std::pair<std::string, std::pair<bool, double>> champ_oco_extra_;
     std::unordered_map<std::string, std::pair<bool, double>> champ_mc_extras_;
-    double champ_magic_item_points;
-    double champ_faction_item_points;
-    double champ_total_item_points;
 
     // mounts
     std::tuple<
@@ -59,6 +60,35 @@ private:
         CommandGroup, std::pair<std::string, double>
     > command_group;
     std::pair<std::string, std::pair<ItemCategory, double>> banner;
+
+    std::unordered_map<
+        WeaponType,
+        std::tuple<ItemCategory, std::string, double>
+    >& weapons_access() noexcept override;
+    std::unordered_map<
+            ArmourType,
+            std::tuple<ItemCategory, std::string, double>
+    >& armour_access() noexcept override;
+    std::pair<
+        std::string,
+        std::pair<ItemCategory, double>
+    >& talisman_access() noexcept override;
+    std::pair<
+        std::string,
+        std::pair<ItemCategory, double>
+    >& enchanted_item_access() noexcept override;
+    std::pair<
+        std::string,
+        std::pair<ItemCategory, double>
+    >& arcane_item_access() noexcept override;
+    std::unordered_map<
+        std::string,
+        std::pair<ItemCategory, double>
+    >& item_extras_access() noexcept override;
+    std::pair<
+        std::string,
+        std::pair<ItemCategory, double>
+    >& magic_banner_acces() noexcept override;
 public:
     // handle
     const std::shared_ptr<base_normal_unit> handle;
@@ -79,10 +109,10 @@ public:
         WeaponType,
         std::tuple<ItemCategory, std::string, double>
     >& weapons() const noexcept override;
-    std::tuple<ItemCategory, std::string, double> melee_weapon() const;
-    std::tuple<ItemCategory, std::string, double> ranged_weapon() const;
-    std::tuple<ItemCategory, std::string, double> champion_melee_weapon() const;
-    std::tuple<ItemCategory, std::string, double> champion_ranged_weapon() const;
+    const std::unordered_map<
+        WeaponType,
+        std::tuple<ItemCategory, std::string, double>
+    >& champion_weapons() const noexcept;
 
     const std::unordered_map<
         ArmourType,
@@ -104,6 +134,14 @@ public:
         std::pair<bool, double>
     >& champion_mc_extras() const noexcept;
 
+    const std::pair<std::string, std::pair<ItemCategory, double>>& talisman() const noexcept override;
+    const std::pair<std::string, std::pair<ItemCategory, double>>& enchanted_item() const noexcept override;
+    const std::pair<
+        std::string,
+        std::pair<ItemCategory, double>
+    >& arcane_item() const noexcept override;
+    const std::unordered_map<std::string, std::pair<ItemCategory, double>>& item_extras() const noexcept override;
+
     const std::tuple<
         std::string,
         double,
@@ -116,55 +154,73 @@ public:
     >& command() const noexcept;
     const std::pair<std::string, std::pair<ItemCategory, double>>& magic_banner() const noexcept override;
 
-    double magic_item_points() const noexcept override;
-    double faction_item_points() const noexcept override;
-    double total_item_points() const noexcept override;
+    // item selectors:
 
-    // current property modifiers
-    std::string pick_weapon(ItemCategory item_type, const std::string& name) override;
-    std::string pick_armour(ItemCategory item_type, const std::string& name) override;
-
-    std::string pick_default_weapon(ItemCategory item_type, const std::string& name);
-    std::string pick_default_armour(ItemCategory item_type, const std::string& name);
-    std::string pick_champion_weapon(ItemCategory item_type, const std::string& name);
-    std::string pick_champion_armour(ItemCategory item_type, const std::string& name);
-
+    // => weapon selection and removal
+    std::string pick_weapon(ItemCategory item_category, const std::string& name) override;
     std::string remove_weapon(WeaponType wt, bool replacing=false) override;
-    std::string remove_armour(ArmourType at, bool replacing=false) override;
-
+    std::string pick_default_weapon(ItemCategory item_category, const std::string& name);
     std::string remove_default_weapon(WeaponType wt, bool replacing=false);
-    std::string remove_default_armour(ArmourType at, bool replacing=false);
+    std::string pick_champion_weapon(ItemCategory item_category, const std::string& name);
     std::string remove_champion_weapon(WeaponType wt, bool replacing=false);
+
+    // => armour selection and removal
+    std::string pick_armour(ItemCategory item_category, const std::string& name) override;
+    std::string remove_armour(ArmourType at, bool replacing=false) override;
+    std::string pick_default_armour(ItemCategory item_category, const std::string& name);
+    std::string remove_default_armour(ArmourType at, bool replacing=false);
+    std::string pick_champion_armour(ItemCategory item_category, const std::string& name);
     std::string remove_champion_armour(ArmourType at, bool replacing=false);
 
-    void add_command_member(CommandGroup member);
-    void remove_command_member(CommandGroup member);
-    std::string pick_banner(ItemCategory item_type, const std::string& name) override;
+    // => talisman selection and removal [NOTE: always refers to champion]
+    std::string pick_talisman(ItemCategory item_category, const std::string& name) override;
+    std::string remove_talisman() override;
+
+    // => enchanted item selection and removal [NOTE: always refers to champion]
+    std::string pick_enchanted_item(ItemCategory item_category, const std::string& name) override;
+    std::string remove_enchanted_item() override;
+
+    // => arcane item selection and removal [NOTE: always refers to champion]
+    virtual std::string pick_arcane_item(ItemCategory item_category, const std::string& name) override;
+    virtual std::string remove_arcane_item() override;
+
+    // => other magic item selection and removal [NOTE: always refers to champion]
+    std::string pick_magic_extra(ItemCategory item_category, const std::string& name) override;
+    std::string remove_magic_extra(const std::string& name) override;
+
+    // => banner selection and removal
+    std::string pick_banner(ItemCategory item_category, const std::string& name) override;
     std::string remove_banner() override;
 
+    // => one-choice-only extra selection and removal
     std::string pick_oco_extra(const std::string& name) override;
-    std::string pick_mc_extra(const std::string& name) override;
-
-    std::string pick_default_oco_extra(const std::string& name);
-    std::string pick_default_mc_extra(const std::string& name);
-    std::string pick_champion_oco_extra(const std::string& name);
-    std::string pick_champion_mc_extra(const std::string& name);
-
     std::string remove_oco_extra() override;
-    std::string remove_mc_extra(const std::string& name) override;
-
+    std::string pick_default_oco_extra(const std::string& name);
     std::string remove_default_oco_extra();
+    std::string pick_champion_oco_extra(const std::string& name);
     std::string remove_champion_oco_extra();
+
+    // => multiple-choice extra selection and removal
+    std::string pick_mc_extra(const std::string& name) override;
+    std::string remove_mc_extra(const std::string& name) override;
+    std::string pick_default_mc_extra(const std::string& name);
     std::string remove_default_mc_extra(const std::string& name);
+    std::string pick_champion_mc_extra(const std::string& name);
     std::string remove_champion_mc_extra(const std::string& name);
 
+    // => mount selection and removal
     void pick_mount(const std::string& name) override;
     void remove_mount() override;
 
+    // => command group selection and removal
+    void add_command_member(CommandGroup member);
+    void remove_command_member(CommandGroup member);
+
+    // changing unit size
     void change_size(std::size_t n);
 
+    // serialisation and exporting
     std::string html_table_row() const override;
-
     virtual std::string save() const override;
 };
 

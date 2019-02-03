@@ -222,16 +222,16 @@ void option_selector::select_other_item(const std::string& other, ItemCategory i
     if (!checked) {
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(p->id());
-            removed = p->remove_other(other);
+            removed = p->remove_magic_extra(other);
             army->update_on(p->id());
-        } else removed = p->remove_other(other);
+        } else removed = p->remove_magic_extra(other);
     } else {
         const bool is_magical = ic == ItemCategory::COMMON || ic == ItemCategory::MAGIC || ic == ItemCategory::FACTION;
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(p->id());
-            removed = p->pick_other(ic, other);
+            removed = p->pick_magic_extra(ic, other);
             army->update_on(p->id());
-        } else removed = p->pick_other(ic, other);
+        } else removed = p->pick_magic_extra(ic, other);
         if (is_magical) {
             army->incr_item_tracker(other);
             update_budget_label();

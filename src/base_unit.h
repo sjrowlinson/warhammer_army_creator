@@ -14,8 +14,6 @@
 #include <utility>
 #include <vector>
 
-// TODO: move magic_item_budget_ etc. fields to base_unit classes from derived
-//       => then base_normal_unit budgets will be assumed to reference the champion
 class base_unit {
 protected:
     BaseUnitType but;
