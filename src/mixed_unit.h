@@ -169,16 +169,37 @@ public:
         std::pair<std::string, double>,
         std::unordered_map<std::string, double>
     >& mnt() const noexcept override;
+    const std::pair<std::string, std::pair<ItemCategory, double>>& magic_banner() const noexcept override;
 
     // item selectors:
 
     // => weapon selection and removal
     std::string pick_weapon(ItemCategory item_category, const std::string& name) override;
     std::string remove_weapon(WeaponType wt, bool replacing=false) override;
+    // ==> MASTER
+    std::string pick_master_default_weapon(ItemCategory item_category, const std::string& name);
+    std::string remove_master_default_weapon(WeaponType wt, bool replacing=false);
+    std::string pick_master_champion_weapon(ItemCategory item_category, const std::string& name);
+    std::string remove_master_champion_weapon(WeaponType wt, bool replacing=false);
+    // ==> SLAVE
+    std::string pick_slave_default_weapon(ItemCategory item_category, const std::string& name);
+    std::string remove_slave_default_weapon(WeaponType wt, bool replacing=false);
+    std::string pick_slave_champion_weapon(ItemCategory item_category, const std::string& name);
+    std::string remove_slave_champion_weapon(WeaponType wt, bool replacing=false);
 
     // => armour selection and removal
     std::string pick_armour(ItemCategory item_category, const std::string& name) override;
     std::string remove_armour(ArmourType at, bool replacing=false) override;
+    // ==> MASTER
+    std::string pick_master_default_armour(ItemCategory item_category, const std::string& name);
+    std::string remove_master_default_armour(ArmourType at, bool replacing=false);
+    std::string pick_master_champion_armour(ItemCategory item_category, const std::string& name);
+    std::string remove_master_champion_armour(ArmourType at, bool replacing=false);
+    // ==> SLAVE
+    std::string pick_slave_default_armour(ItemCategory item_category, const std::string& name);
+    std::string remove_slave_default_armour(ArmourType at, bool replacing=false);
+    std::string pick_slave_champion_armour(ItemCategory item_category, const std::string& name);
+    std::string remove_slave_champion_armour(ArmourType at, bool replacing=false);
 
     // => talisman selection and removal [NOTE: always refers to champion for non-characters]
     std::string pick_talisman(ItemCategory item_category, const std::string& name) override;
@@ -199,10 +220,30 @@ public:
     // => one-choice-only extra selection and removal
     std::string pick_oco_extra(const std::string& name) override;
     std::string remove_oco_extra() override;
+    // ==> MASTER
+    std::string pick_master_default_oco_extra(const std::string& name);
+    std::string remove_master_default_oco_extra();
+    std::string pick_master_champion_oco_extra(const std::string& name);
+    std::string remove_master_champion_oco_extra();
+    // ==> SLAVE
+    std::string pick_slave_default_oco_extra(const std::string& name);
+    std::string remove_slave_default_oco_extra();
+    std::string pick_slave_champion_oco_extra(const std::string& name);
+    std::string remove_slave_champion_oco_extra();
 
     // => multiple-choice extra selection and removal
     std::string pick_mc_extra(const std::string& name) override;
     std::string remove_mc_extra(const std::string& name) override;
+    // ==> MASTER
+    std::string pick_master_default_mc_extra(const std::string& name);
+    std::string remove_master_default_mc_extra(const std::string& name);
+    std::string pick_master_champion_mc_extra(const std::string& name);
+    std::string remove_master_champion_mc_extra(const std::string& name);
+    // ==> SLAVE
+    std::string pick_slave_default_mc_extra(const std::string& name);
+    std::string remove_slave_default_mc_extra(const std::string& name);
+    std::string pick_slave_champion_mc_extra(const std::string& name);
+    std::string remove_slave_champion_mc_extra(const std::string& name);
 
     // => mount selection and removal
     void pick_mount(const std::string& name) override;
@@ -215,6 +256,10 @@ public:
     // => command group selection and removal
     void add_command_member(CommandGroup member);
     void remove_command_member(CommandGroup member);
+    void add_master_command_member(CommandGroup member);
+    void remove_master_command_member(CommandGroup member);
+    void add_slave_command_member(CommandGroup member);
+    void remove_slave_command_member(CommandGroup member);
 
     // changing unit size
     void change_size(std::size_t n);

@@ -175,7 +175,8 @@ QGroupBox* OptionBox::make_command_box() {
     }
     case BaseUnitType::MIXED:
     {
-        auto p = std::dynamic_pointer_cast<mixed_unit>(current);
+        return nullptr;
+        /*auto p = std::dynamic_pointer_cast<mixed_unit>(current);
         auto opt_master_command = p->master().handle->optional_command();
         auto opt_slave_command = p->slave().handle->optional_command();
         if (opt_master_command.empty() && opt_slave_command.empty()) return nullptr;
@@ -203,7 +204,7 @@ QGroupBox* OptionBox::make_command_box() {
         hlayout->addWidget(slave_gb);
         // now finalise both
         gb->setLayout(hlayout);
-        return gb;
+        return gb;*/
     }
     default: return nullptr;
     }

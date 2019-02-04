@@ -52,6 +52,8 @@ base_mixed_unit::base_mixed_unit(
 ), ratio_limit_(static_cast<double>(master_min_size)/slave_min_size),
    magic_banner_budget_(magic_banner_budget),
    master_name_(master_name),
+   master_min_size_(master_min_size),
+   master_max_size_(master_max_size),
    master_pts_per_model_(master_pts_per_model),
    master_opt_command_(std::move(master_opt_command)),
    master_stats_(std::move(master_stats)),
@@ -61,6 +63,8 @@ base_mixed_unit::base_mixed_unit(
    master_champ_sr_(std::move(master_champ_sr)),
    master_champ_eq_(std::move(master_champ_eq)), master_champ_opt_(std::move(master_champ_opt)),
    slave_name_(slave_name),
+   slave_min_size_(slave_min_size),
+   slave_max_size_(slave_max_size),
    slave_pts_per_model_(slave_pts_per_model),
    slave_opt_command_(std::move(slave_opt_command)),
    slave_stats_(std::move(slave_stats)),
@@ -83,6 +87,12 @@ double base_mixed_unit::magic_banner_budget() const noexcept {
 // MASTER
 const std::string& base_mixed_unit::master_name() const noexcept {
     return master_name_;
+}
+std::size_t base_mixed_unit::master_min_size() const noexcept {
+    return master_min_size_;
+}
+std::size_t base_mixed_unit::master_max_size() const noexcept {
+    return master_max_size_;
 }
 double base_mixed_unit::master_points_per_model() const noexcept {
     return master_pts_per_model_;
@@ -120,6 +130,12 @@ const std::unordered_map<
 // SLAVE
 const std::string& base_mixed_unit::slave_name() const noexcept {
     return slave_name_;
+}
+std::size_t base_mixed_unit::slave_min_size() const noexcept {
+    return slave_min_size_;
+}
+std::size_t base_mixed_unit::slave_max_size() const noexcept {
+    return slave_max_size_;
 }
 double base_mixed_unit::slave_points_per_model() const noexcept {
     return slave_pts_per_model_;

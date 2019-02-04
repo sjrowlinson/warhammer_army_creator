@@ -18,6 +18,8 @@ private:
 
     // MASTER
     std::string master_name_;
+    std::size_t master_min_size_;
+    std::size_t master_max_size_;
     double master_pts_per_model_;
     std::unordered_map<
         CommandGroup, std::pair<std::string, double>
@@ -35,6 +37,8 @@ private:
 
     // SLAVE
     std::string slave_name_;
+    std::size_t slave_min_size_;
+    std::size_t slave_max_size_;
     double slave_pts_per_model_;
     std::unordered_map<
         CommandGroup, std::pair<std::string, double>
@@ -98,6 +102,8 @@ public:
 
     // MASTER
     const std::string& master_name() const noexcept;
+    std::size_t master_min_size() const noexcept;
+    std::size_t master_max_size() const noexcept;
     double master_points_per_model() const noexcept;
     const std::vector<std::string>& master_statistics() const noexcept;
     const std::vector<std::string>& master_special_rules() const noexcept;
@@ -113,6 +119,8 @@ public:
 
     // SLAVE
     const std::string& slave_name() const noexcept;
+    std::size_t slave_min_size() const noexcept;
+    std::size_t slave_max_size() const noexcept;
     double slave_points_per_model() const noexcept;
     const std::vector<std::string>& slave_statistics() const noexcept;
     const std::vector<std::string>& slave_special_rules() const noexcept;
