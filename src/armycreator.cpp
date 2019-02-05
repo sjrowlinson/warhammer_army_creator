@@ -259,7 +259,7 @@ QTreeWidgetItem* ArmyCreator::current_item() const {
 
 // option box selection slots
 
-void ArmyCreator::change_unit_size(int value) {
+void ArmyCreator::change_unit_size(int value, bool master) {
     switch (current->base_unit_type()) {
     case BaseUnitType::MELEE_CHARACTER:
     case BaseUnitType::MAGE_CHARACTER:
@@ -280,37 +280,32 @@ void ArmyCreator::change_unit_size(int value) {
         } catch (const std::invalid_argument&) {}
         break;
     }
-    /*case BaseUnitType::MIXED:
+    case BaseUnitType::MIXED:
     {
-        auto p = std::dynamic_pointer_cast<mixed_unit>(curr);
+        auto p = std::dynamic_pointer_cast<mixed_unit>(current);
+        auto curr_master_size = static_cast<int>(p->master_size());
+        auto curr_slave_size = static_cast<int>(p->slave_size());
         try {
-            if (tools::split(sb->objectName().toStdString(), '_')[1] == "master")
-                p->switch_mixed_select(MixedSelect::MASTER);
-            switch (in_tree) {
-            case InTree::ARMY:
-                army->take_snapshot_of(curr_id);
-                p->change_size(static_cast<std::size_t>(sb->value()));
-                army->update_on(curr_id);
+            if (enum_convert::in_army_trees(in_tree)) {
+                army->take_snapshot_of(current->id());
+                if (master) p->change_master_size(static_cast<std::size_t>(value));
+                else p->change_slave_size(static_cast<std::size_t>(value));
+                army->update_on(current->id());
                 ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
-                update_unit_display(ui->army_tree->currentItem(), false, ArmyTreeColumn::SIZE);
+                update_unit_display(current_item(), ArmyTreeColumn::SIZE, false, false);
                 update_validity_label();
-                break;
-            case InTree::ROSTER:
-                p->change_size(static_cast<std::size_t>(sb->value()));
-                break;
-            default: throw std::runtime_error("No unit selected!");
+            } else {
+                if (master) p->change_master_size(static_cast<std::size_t>(value));
+                else p->change_slave_size(static_cast<std::size_t>(value));
             }
-            p->switch_mixed_select(MixedSelect::SLAVE);
         } catch (const std::invalid_argument& e) {
             QMessageBox message_box;
             message_box.critical(nullptr, tr("Error"), tr(e.what()));
             message_box.setFixedSize(500, 200);
-            if (tools::split(sb->objectName().toStdString(), '_')[1] == "master")
-                sb->setValue(sb->value() - 1);
-            else sb->setValue(sb->value() + 1);
+            change_unit_size(master ? curr_master_size : curr_slave_size, master);
         }
         break;
-    }*/
+    }
     default: break;
     }
 }

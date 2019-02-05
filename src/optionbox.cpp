@@ -110,7 +110,7 @@ QGroupBox* OptionBox::make_size_command_box() {
         // set value of spinbox to current unit size
         if (enum_convert::in_army_trees(in_tree)) size_sb->setValue(static_cast<int>(p->size()));
         creator->connect(size_sb, QOverload<int>::of(&QSpinBox::valueChanged), creator, [this](int value) {
-            creator->change_unit_size(value);
+            creator->change_unit_size(value, true);
         });
         size_box_layout->addWidget(label);
         size_box_layout->addWidget(size_sb);
@@ -118,37 +118,41 @@ QGroupBox* OptionBox::make_size_command_box() {
         sc_box_layout->addLayout(size_box_layout);
     }
     else { // BaseUnitType::MIXED
-        /*QLabel* master_label = new QLabel(creator->tr("Number of Packmasters"));
-        QSpinBox* master_size_sb = new QSpinBox();
-        QLabel* slave_label = new QLabel(creator->tr("Number of %1").arg(current->name().data()));
-        QSpinBox* slave_size_sb = new QSpinBox();
         auto p = std::dynamic_pointer_cast<mixed_unit>(current);
-        master_size_sb->setMinimum(static_cast<int>(p->master().min_size()));
+        // master
+        std::string master_label_name = p->handle->master_name() + " models";
+        QLabel* master_label = new QLabel(creator->tr(master_label_name.data()));
+        QSpinBox* master_size_sb = new QSpinBox();
+        master_size_sb->setMinimum(static_cast<int>(p->handle->master_min_size()));
         master_size_sb->setMaximum(
-            (p->master().max_size() == std::numeric_limits<std::size_t>::max()) ?
-                1000 : static_cast<int>(p->master().max_size())
+            (p->handle->master_max_size() == std::numeric_limits<std::size_t>::max()) ?
+                1000 : static_cast<int>(p->handle->master_max_size())
         );
-        slave_size_sb->setMinimum(static_cast<int>(p->slave().min_size()));
+        // slave
+        std::string slave_label_name = p->handle->slave_name() + " models";
+        QLabel* slave_label = new QLabel(creator->tr(slave_label_name.data()));
+        QSpinBox* slave_size_sb = new QSpinBox();
+        slave_size_sb->setMinimum(static_cast<int>(p->handle->slave_min_size()));
         slave_size_sb->setMaximum(
-            (p->slave().max_size() == std::numeric_limits<std::size_t>::max()) ?
-                1000 : static_cast<int>(p->slave().max_size())
+            (p->handle->slave_max_size() == std::numeric_limits<std::size_t>::max()) ?
+                1000 : static_cast<int>(p->handle->slave_max_size())
         );
         if (enum_convert::in_army_trees(in_tree)) {
-            master_size_sb->setValue(static_cast<int>(p->master().size()));
-            slave_size_sb->setValue(static_cast<int>(p->slave().size()));
+            master_size_sb->setValue(static_cast<int>(p->master_size()));
+            slave_size_sb->setValue(static_cast<int>(p->slave_size()));
         }
-        std::string master_size_sb_name = p->name() + "_master_spinbox";
-        std::string slave_size_sb_name = p->name() + "_slave_spinbox";
-        master_size_sb->setObjectName(QString(master_size_sb_name.data()));
-        slave_size_sb->setObjectName(QString(slave_size_sb_name.data()));
-        creator->connect(master_size_sb, SIGNAL(valueChanged(int)), creator, SLOT(change_unit_size()));
-        creator->connect(slave_size_sb, SIGNAL(valueChanged(int)), creator, SLOT(change_unit_size()));
+        creator->connect(master_size_sb, QOverload<int>::of(&QSpinBox::valueChanged), creator, [this](int value) {
+            creator->change_unit_size(value, true);
+        });
+        creator->connect(slave_size_sb, QOverload<int>::of(&QSpinBox::valueChanged), creator, [this](int value) {
+            creator->change_unit_size(value, false);
+        });
         size_box_layout->addWidget(master_label);
         size_box_layout->addWidget(master_size_sb);
         size_box_layout->addWidget(slave_label);
         size_box_layout->addWidget(slave_size_sb);
         size_box_layout->addStretch(1);
-        sc_box_layout->addLayout(size_box_layout);*/
+        sc_box_layout->addLayout(size_box_layout);
     }
     command_box = make_command_box();
     if (command_box != nullptr) sc_box_layout->addWidget(command_box);

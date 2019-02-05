@@ -29,7 +29,6 @@ private:
     std::unordered_map<
         CommandGroup, std::pair<std::string, double>
     > opt_command_;
-    double magic_banner_budget_;
 
     // mount name if the unit is cavalry
     std::string mount_name_;
@@ -75,7 +74,6 @@ public:
     const std::unordered_map<
         CommandGroup, std::pair<std::string, double>
     >& optional_command() const noexcept;
-    double magic_banner_budget() const noexcept;
 
     const std::string& mount_name() const noexcept;
 };

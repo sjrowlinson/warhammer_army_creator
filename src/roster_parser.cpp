@@ -11,64 +11,158 @@ namespace tools {
 
     void roster_parser::register_bindings() {
         using std::placeholders::_1;
+        // generic
         parsing_functions["TYPE"] =
             std::bind(&roster_parser::parse_unit_type, this, _1, false, true);
         parsing_functions["CATEGORY"] =
             std::bind(&roster_parser::parse_unit_category, this, _1, false, true);
         parsing_functions["MOUNT"] =
             std::bind(&roster_parser::parse_unit_mount, this, _1, false, true);
+        // mixed unit names
+        parsing_functions["MASTER_NAME"] =
+            std::bind(&roster_parser::parse_unit_mixed_name, this, _1, false, true);
+        parsing_functions["SLAVE_NAME"] =
+            std::bind(&roster_parser::parse_unit_mixed_name, this, _1, false, false);
+        // points
         parsing_functions["POINTS"] =
             std::bind(&roster_parser::parse_unit_points, this, _1, false, true);
+        parsing_functions["MASTER_POINTS"] =
+            std::bind(&roster_parser::parse_unit_points, this, _1, false, true);
+        parsing_functions["SLAVE_POINTS"] =
+            std::bind(&roster_parser::parse_unit_points, this, _1, false, false);
+        // size
         parsing_functions["SIZE"] =
             std::bind(&roster_parser::parse_unit_size, this, _1, false, true);
+        parsing_functions["MASTER_SIZE"] =
+            std::bind(&roster_parser::parse_unit_size, this, _1, false, true);
+        parsing_functions["SLAVE_SIZE"] =
+            std::bind(&roster_parser::parse_unit_size, this, _1, false, false);
+        // mage-related
         parsing_functions["MAGE_LEVEL"] =
             std::bind(&roster_parser::parse_unit_mage_level, this, _1, false, true);
         parsing_functions["MAGE_UPGRADES"] =
             std::bind(&roster_parser::parse_unit_mage_upgrades, this, _1, false, true);
         parsing_functions["MAGE_LORES"] =
             std::bind(&roster_parser::parse_unit_mage_lores, this, _1, false, true);
+        // characteristics
         parsing_functions["CHARACTERISTICS"] =
             std::bind(&roster_parser::parse_unit_characteristics, this, _1, false, true);
+        parsing_functions["MASTER_CHARACTERISTICS"] =
+            std::bind(&roster_parser::parse_unit_characteristics, this, _1, false, true);
+        parsing_functions["SLAVE_CHARACTERISTICS"] =
+            std::bind(&roster_parser::parse_unit_characteristics, this, _1, false, false);
         parsing_functions["CHAMPION_CHARACTERISTICS"] =
             std::bind(&roster_parser::parse_unit_characteristics, this, _1, true, true);
+        parsing_functions["MASTER_CHAMPION_CHARACTERISTICS"] =
+            std::bind(&roster_parser::parse_unit_characteristics, this, _1, true, true);
+        parsing_functions["SLAVE_CHAMPION_CHARACTERISTICS"] =
+            std::bind(&roster_parser::parse_unit_characteristics, this, _1, true, false);
+        // special rules
         parsing_functions["SPECIAL_RULES"] =
             std::bind(&roster_parser::parse_unit_special_rules, this, _1, false, true);
+        parsing_functions["MASTER_SPECIAL_RULES"] =
+            std::bind(&roster_parser::parse_unit_special_rules, this, _1, false, true);
+        parsing_functions["SLAVE_SPECIAL_RULES"] =
+            std::bind(&roster_parser::parse_unit_special_rules, this, _1, false, false);
         parsing_functions["CHAMPION_SPECIAL_RULES"] =
             std::bind(&roster_parser::parse_unit_special_rules, this, _1, true, true);
+        parsing_functions["MASTER_CHAMPION_SPECIAL_RULES"] =
+            std::bind(&roster_parser::parse_unit_special_rules, this, _1, true, true);
+        parsing_functions["SLAVE_CHAMPION_SPECIAL_RULES"] =
+            std::bind(&roster_parser::parse_unit_special_rules, this, _1, true, false);
+        // equipment
         parsing_functions["EQUIPMENT"] =
             std::bind(&roster_parser::parse_unit_equipment, this, _1, false, true);
+        parsing_functions["MASTER_EQUIPMENT"] =
+            std::bind(&roster_parser::parse_unit_equipment, this, _1, false, true);
+        parsing_functions["SLAVE_EQUIPMENT"] =
+            std::bind(&roster_parser::parse_unit_equipment, this, _1, false, false);
         parsing_functions["CHAMPION_EQUIPMENT"] =
             std::bind(&roster_parser::parse_unit_equipment, this, _1, true, true);
+        parsing_functions["MASTER_CHAMPION_EQUIPMENT"] =
+            std::bind(&roster_parser::parse_unit_equipment, this, _1, true, true);
+        parsing_functions["SLAVE_CHAMPION_EQUIPMENT"] =
+            std::bind(&roster_parser::parse_unit_equipment, this, _1, true, false);
+        // optional weapons
         parsing_functions["OPTIONAL_WEAPONS"] =
             std::bind(&roster_parser::parse_unit_optional_weapons, this, _1, false, true);
+        parsing_functions["MASTER_OPTIONAL_WEAPONS"] =
+            std::bind(&roster_parser::parse_unit_optional_weapons, this, _1, false, true);
+        parsing_functions["SLAVE_OPTIONAL_WEAPONS"] =
+            std::bind(&roster_parser::parse_unit_optional_weapons, this, _1, false, false);
         parsing_functions["CHAMPION_OPTIONAL_WEAPONS"] =
             std::bind(&roster_parser::parse_unit_optional_weapons, this, _1, true, true);
+        parsing_functions["MASTER_CHAMPION_OPTIONAL_WEAPONS"] =
+            std::bind(&roster_parser::parse_unit_optional_weapons, this, _1, true, true);
+        parsing_functions["SLAVE_CHAMPION_OPTIONAL_WEAPONS"] =
+            std::bind(&roster_parser::parse_unit_optional_weapons, this, _1, true, false);
+        // optional armour
         parsing_functions["OPTIONAL_ARMOUR"] =
             std::bind(&roster_parser::parse_unit_optional_armour, this, _1, false, true);
+        parsing_functions["MASTER_OPTIONAL_ARMOUR"] =
+            std::bind(&roster_parser::parse_unit_optional_armour, this, _1, false, true);
+        parsing_functions["SLAVE_OPTIONAL_ARMOUR"] =
+            std::bind(&roster_parser::parse_unit_optional_armour, this, _1, false, false);
         parsing_functions["CHAMPION_OPTIONAL_ARMOUR"] =
             std::bind(&roster_parser::parse_unit_optional_armour, this, _1, true, true);
+        parsing_functions["MASTER_CHAMPION_OPTIONAL_ARMOUR"] =
+            std::bind(&roster_parser::parse_unit_optional_armour, this, _1, true, true);
+        parsing_functions["SLAVE_CHAMPION_OPTIONAL_ARMOUR"] =
+            std::bind(&roster_parser::parse_unit_optional_armour, this, _1, true, false);
+        // optional mounts
         parsing_functions["OPTIONAL_MOUNTS"] =
             std::bind(&roster_parser::parse_unit_optional_mounts, this, _1, false, true);
         parsing_functions["CHAMPION_OPTIONAL_MOUNTS"] =
             std::bind(&roster_parser::parse_unit_optional_mounts, this, _1, true, true);
+        // optional oco extras
         parsing_functions["OPTIONAL_OCO_EXTRAS"] =
             std::bind(&roster_parser::parse_unit_optional_oco_extras, this, _1, false, true);
+        parsing_functions["MASTER_OPTIONAL_OCO_EXTRAS"] =
+            std::bind(&roster_parser::parse_unit_optional_oco_extras, this, _1, false, true);
+        parsing_functions["SLAVE_OPTIONAL_OCO_EXTRAS"] =
+            std::bind(&roster_parser::parse_unit_optional_oco_extras, this, _1, false, false);
         parsing_functions["CHAMPION_OPTIONAL_OCO_EXTRAS"] =
             std::bind(&roster_parser::parse_unit_optional_oco_extras, this, _1, true, true);
+        parsing_functions["MASTER_CHAMPION_OPTIONAL_OCO_EXTRAS"] =
+            std::bind(&roster_parser::parse_unit_optional_oco_extras, this, _1, true, true);
+        parsing_functions["SLAVE_CHAMPION_OPTIONAL_OCO_EXTRAS"] =
+            std::bind(&roster_parser::parse_unit_optional_oco_extras, this, _1, true, false);
+        // optional mc extras
         parsing_functions["OPTIONAL_MC_EXTRAS"] =
             std::bind(&roster_parser::parse_unit_optional_mc_extras, this, _1, false, true);
+        parsing_functions["MASTER_OPTIONAL_MC_EXTRAS"] =
+            std::bind(&roster_parser::parse_unit_optional_mc_extras, this, _1, false, true);
+        parsing_functions["SLAVE_OPTIONAL_MC_EXTRAS"] =
+            std::bind(&roster_parser::parse_unit_optional_mc_extras, this, _1, false, false);
         parsing_functions["CHAMPION_OPTIONAL_MC_EXTRAS"] =
             std::bind(&roster_parser::parse_unit_optional_mc_extras, this, _1, true, true);
+        parsing_functions["MASTER_CHAMPION_OPTIONAL_MC_EXTRAS"] =
+            std::bind(&roster_parser::parse_unit_optional_mc_extras, this, _1, true, true);
+        parsing_functions["SLAVE_CHAMPION_OPTIONAL_MC_EXTRAS"] =
+            std::bind(&roster_parser::parse_unit_optional_mc_extras, this, _1, true, false);
+        // optional command group
         parsing_functions["OPTIONAL_COMMAND"] =
             std::bind(&roster_parser::parse_unit_optional_command, this, _1, false, true);
+        parsing_functions["MASTER_OPTIONAL_COMMAND"] =
+            std::bind(&roster_parser::parse_unit_optional_command, this, _1, false, true);
+        parsing_functions["SLAVE_OPTIONAL_COMMAND"] =
+            std::bind(&roster_parser::parse_unit_optional_command, this, _1, false, false);
+        // budgets
         parsing_functions["BANNER_BUDGET"] =
             std::bind(&roster_parser::parse_unit_banner_budget, this, _1, false, true);
         parsing_functions["MAGIC_ITEM_BUDGET"] =
             std::bind(&roster_parser::parse_unit_mi_budget, this, _1, false, true);
+        parsing_functions["MASTER_MAGIC_ITEM_BUDGET"] =
+            std::bind(&roster_parser::parse_unit_mi_budget, this, _1, false, true);
         parsing_functions["FACTION_ITEM_BUDGET"] =
+            std::bind(&roster_parser::parse_unit_fi_budget, this, _1, false, true);
+        parsing_functions["MASTER_FACTION_ITEM_BUDGET"] =
             std::bind(&roster_parser::parse_unit_fi_budget, this, _1, false, true);
         parsing_functions["TOTAL_ITEM_BUDGET"] =
             std::bind(&roster_parser::parse_unit_ti_budget, this, _1, false, true);
+        parsing_functions["MASTER_TOTAL_ITEM_BUDGET"] =
+            std::bind(&roster_parser::parse_unit_ti_budget, this, _1, false, true);
+        // other
         parsing_functions["UNIQUENESS"] =
             std::bind(&roster_parser::parse_unit_uniqueness, this, _1, false, true);
     }
@@ -198,12 +292,12 @@ namespace tools {
             options slave_champ_opt(std::move(tpo.slave_champ_opt));
             bu = std::make_unique<base_mixed_unit>(
                 faction, tpo.unit_type, tpo.unit_category, name, tpo.master_name,
-                tpo.size.first, tpo.size.second, tpo.points, std::move(tpo.characteristics),
+                tpo.size.first, tpo.size.second, tpo.master_points, std::move(tpo.characteristics),
                 std::move(tpo.special_rules), std::move(master_eq), std::move(master_opt),
                 std::move(tpo.champ_characteristics), std::move(tpo.champ_special_rules),
                 std::move(master_champ_eq), std::move(master_champ_opt), std::move(tpo.mi_budget),
                 std::move(tpo.fi_budget), std::move(tpo.ti_budget), std::move(tpo.command),
-                tpo.slave_name, tpo.slave_size.first, tpo.slave_size.second, 0.0,
+                tpo.slave_name, tpo.slave_size.first, tpo.slave_size.second, tpo.slave_points,
                 std::move(tpo.slave_characteristics), std::move(tpo.slave_special_rules),
                 std::move(slave_eq), std::move(slave_opt), std::move(tpo.slave_champ_characteristics),
                 std::move(tpo.slave_champ_special_rules), std::move(slave_champ_eq),
@@ -216,6 +310,12 @@ namespace tools {
         return bu;
     }
 
+    std::size_t roster_parser::parse_unit_mixed_name(const std::string& s, bool champion, bool master) {
+        (void)champion;
+        if (master) tpo.master_name = s;
+        else tpo.slave_name = s;
+        return 0U;
+    }
     std::size_t roster_parser::parse_unit_type(const std::string& s, bool champion, bool master) {
         (void)champion; (void)master;
         auto search = enum_convert::STRING_TO_UNIT_TYPE.find(s);
@@ -246,16 +346,24 @@ namespace tools {
         return 0U;
     }
     std::size_t roster_parser::parse_unit_points(const std::string& s, bool champion, bool master) {
-        (void)champion; (void)master;
+        (void)champion;
         tpo.points = std::stod(s);
+        if (master) tpo.master_points = tpo.points;
+        else tpo.slave_points = tpo.points;
         return 0U;
     }
     std::size_t roster_parser::parse_unit_size(const std::string& s, bool champion, bool master) {
-        (void)champion; (void)master;
+        (void)champion;
         auto min_max = tools::split(s, ',');
-        tpo.size.first = static_cast<std::size_t>(std::stoul(min_max[0]));
-        tpo.size.second = (min_max[1] != "inf") ?
-            static_cast<std::size_t>(std::stoul(min_max[1])) : std::numeric_limits<std::size_t>::max();
+        if (master) {
+            tpo.size.first = static_cast<std::size_t>(std::stoul(min_max[0]));
+            tpo.size.second = (min_max[1] != "inf") ?
+                static_cast<std::size_t>(std::stoul(min_max[1])) : std::numeric_limits<std::size_t>::max();
+        } else {
+            tpo.slave_size.first = static_cast<std::size_t>(std::stoul(min_max[0]));
+            tpo.slave_size.second = (min_max[1] != "inf") ?
+                static_cast<std::size_t>(std::stoul(min_max[1])) : std::numeric_limits<std::size_t>::max();
+        }
         return 0U;
     }
     std::size_t roster_parser::parse_unit_mage_level(const std::string& s, bool champion, bool master) {
@@ -302,18 +410,21 @@ namespace tools {
     }
     std::size_t roster_parser::parse_unit_characteristics(const std::string& s, bool champion, bool master) {
         (void)master;
-        if (champion) tpo.champ_characteristics = tools::split(s, ' ');
-        else tpo.characteristics = tools::split(s, ' ');
+        if (champion && master) tpo.champ_characteristics = tools::split(s, ' ');
+        else if (master) tpo.characteristics = tools::split(s, ' ');
+        else if (champion && !master) tpo.slave_champ_characteristics = tools::split(s, ' ');
+        else tpo.slave_characteristics = tools::split(s, ' ');
         return 0U;
     }
     std::size_t roster_parser::parse_unit_special_rules(const std::string& s, bool champion, bool master) {
         (void)master;
-        if (champion) tpo.champ_special_rules = tools::split(s, ',');
-        else tpo.special_rules = tools::split(s, ',');
+        if (champion && master) tpo.champ_special_rules = tools::split(s, ',');
+        else if (master) tpo.special_rules = tools::split(s, ',');
+        else if (champion && !master) tpo.slave_champ_special_rules = tools::split(s, ',');
+        else tpo.slave_special_rules = tools::split(s, ',');
         return 0U;
     }
     std::size_t roster_parser::parse_unit_equipment(const std::string& s, bool champion, bool master) {
-        (void)master;
         std::pair<std::string, std::size_t> ml_pair = {"", 0U};
         if (in_multiline_state) ml_pair = multiline_state_handler(s);
         std::vector<std::string> all = tools::split(
@@ -378,28 +489,40 @@ namespace tools {
             }
             switch (search_item_type->second) {
             case ItemType::WEAPON:
-                if (champion) tpo.champ_eq.weapons[wt] = {ic, name};
-                else tpo.eq.weapons[wt] = {ic, name};
+                if (champion && master) tpo.champ_eq.weapons[wt] = {ic, name};
+                else if (master) tpo.eq.weapons[wt] = {ic, name};
+                else if (champion && !master) tpo.slave_champ_eq.weapons[wt] = {ic, name};
+                else tpo.slave_eq.weapons[wt] = {ic, name};
                 break;
             case ItemType::ARMOUR:
-                if (champion) tpo.champ_eq.armour[at] = {ic, name};
-                else tpo.eq.armour[at] = {ic, name};
+                if (champion && master) tpo.champ_eq.armour[at] = {ic, name};
+                else if (master) tpo.eq.armour[at] = {ic, name};
+                else if (champion && !master) tpo.slave_champ_eq.armour[at] = {ic, name};
+                else tpo.slave_eq.armour[at] = {ic, name};
                 break;
             case ItemType::TALISMAN:
-                if (champion) tpo.champ_eq.talismans.push_back(name);
-                else tpo.eq.talismans.push_back(name);
+                if (champion && master) tpo.champ_eq.talismans.push_back(name);
+                else if (master) tpo.eq.talismans.push_back(name);
+                else if (champion && !master) tpo.slave_champ_eq.talismans.push_back(name);
+                else tpo.slave_eq.talismans.push_back(name);
                 break;
             case ItemType::ARCANE:
-                if (champion) tpo.champ_eq.arcane.push_back(name);
-                else tpo.eq.arcane.push_back(name);
+                if (champion && master) tpo.champ_eq.arcane.push_back(name);
+                else if (master) tpo.eq.arcane.push_back(name);
+                else if (champion && !master) tpo.slave_champ_eq.arcane.push_back(name);
+                else tpo.slave_eq.arcane.push_back(name);
                 break;
             case ItemType::ENCHANTED:
-                if (champion) tpo.champ_eq.enchanted.push_back(name);
-                else tpo.eq.enchanted.push_back(name);
+                if (champion && master) tpo.champ_eq.enchanted.push_back(name);
+                else if (master) tpo.eq.enchanted.push_back(name);
+                else if (champion && !master) tpo.slave_champ_eq.enchanted.push_back(name);
+                else tpo.slave_eq.enchanted.push_back(name);
                 break;
             case ItemType::BANNER:
-                if (champion) tpo.champ_eq.banners.push_back(name);
-                else tpo.eq.banners.push_back(name);
+                if (champion && master) tpo.champ_eq.banners.push_back(name);
+                else if (master) tpo.eq.banners.push_back(name);
+                else if (champion && !master) tpo.slave_champ_eq.banners.push_back(name);
+                else tpo.slave_eq.banners.push_back(name);
                 break;
             default: break;
             }
@@ -416,7 +539,6 @@ namespace tools {
         return ml_pair.second;
     }
     std::size_t roster_parser::parse_unit_optional_weapons(const std::string& s, bool champion, bool master) {
-        (void)master;
         std::pair<std::string, std::size_t> ml_pair = {"", 0U};
         if (in_multiline_state) ml_pair = multiline_state_handler(s);
         std::vector<std::string> all = tools::split(
@@ -463,13 +585,14 @@ namespace tools {
                 else if (y.first == "Restrictions")
                     wo.restrictions = parse_restrictions(y.second, "OPTIONAL_WEAPONS");
             }
-            if (champion) tpo.champ_opt.weapons[wo.name] = wo;
-            else tpo.opt.weapons[wo.name] = wo;
+            if (champion && master) tpo.champ_opt.weapons[wo.name] = wo;
+            else if (master) tpo.opt.weapons[wo.name] = wo;
+            else if (champion && !master) tpo.slave_champ_opt.weapons[wo.name] = wo;
+            else tpo.slave_opt.weapons[wo.name] = wo;
         }
         return ml_pair.second;
     }
     std::size_t roster_parser::parse_unit_optional_armour(const std::string& s, bool champion, bool master) {
-        (void)master;
         std::pair<std::string, std::size_t> ml_pair = {"", 0U};
         if (in_multiline_state) ml_pair = multiline_state_handler(s);
         std::vector<std::string> all = tools::split(
@@ -516,8 +639,10 @@ namespace tools {
                 else if (y.first == "Restrictions")
                     ao.restrictions = parse_restrictions(y.second, "OPTIONAL_ARMOUR");
             }
-            if (champion) tpo.champ_opt.armour[ao.name] = ao;
-            else tpo.opt.armour[ao.name] = ao;
+            if (champion && master) tpo.champ_opt.armour[ao.name] = ao;
+            else if (master) tpo.opt.armour[ao.name] = ao;
+            else if (champion && !master) tpo.slave_champ_opt.armour[ao.name] = ao;
+            else tpo.slave_opt.armour[ao.name] = ao;
         }
         return ml_pair.second;
     }
@@ -587,7 +712,6 @@ namespace tools {
     }
 
     std::size_t roster_parser::parse_unit_extras(const std::string& s, bool champion, bool master, bool oco) {
-        (void)master;
         std::pair<std::string, std::size_t> ml_pair = {"", 0U};
         if (in_multiline_state) ml_pair = multiline_state_handler(s);
         std::vector<std::string> all = tools::split(
@@ -618,11 +742,15 @@ namespace tools {
                 }
             }
             if (oco) {
-                if (champion) tpo.champ_opt.oco_extras[eo.name] = eo;
-                else tpo.opt.oco_extras[eo.name] = eo;
+                if (champion && master) tpo.champ_opt.oco_extras[eo.name] = eo;
+                else if (master) tpo.opt.oco_extras[eo.name] = eo;
+                else if (champion && !master) tpo.slave_champ_opt.oco_extras[eo.name] = eo;
+                else tpo.slave_opt.oco_extras[eo.name] = eo;
             } else {
-                if (champion) tpo.champ_opt.mc_extras[eo.name] = eo;
-                else tpo.opt.mc_extras[eo.name] = eo;
+                if (champion && master) tpo.champ_opt.mc_extras[eo.name] = eo;
+                else if (master) tpo.opt.mc_extras[eo.name] = eo;
+                else if (champion && !master) tpo.slave_champ_opt.mc_extras[eo.name] = eo;
+                else tpo.slave_opt.mc_extras[eo.name] = eo;
             }
         }
         return ml_pair.second;
@@ -635,7 +763,7 @@ namespace tools {
         return parse_unit_extras(s, champion, master, false);
     }
     std::size_t roster_parser::parse_unit_optional_command(const std::string& s, bool champion, bool master) {
-        (void)champion; (void)master;
+        (void)champion;
         std::pair<std::string, std::size_t> ml_pair = {"", 0U};
         if (in_multiline_state) ml_pair = multiline_state_handler(s);
         std::vector<std::string> all = tools::split(
@@ -664,7 +792,8 @@ namespace tools {
                     // TODO: parse restrictions
                 }
             }
-            tpo.command[search_command->second] = std::make_pair(name, points);
+            if (master) tpo.command[search_command->second] = std::make_pair(name, points);
+            else tpo.slave_command[search_command->second] = std::make_pair(name, points);
         }
         return ml_pair.second;
     }

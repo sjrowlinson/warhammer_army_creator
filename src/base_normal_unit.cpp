@@ -32,12 +32,13 @@ base_normal_unit::base_normal_unit(Faction faction,
     champ_fi_budget,
     champ_ti_budget,
     min_size,
-    max_size
+    max_size,
+    magic_banner_budget
 ), pts_per_model_(pts_per_model), stats_(std::move(stats)), sr_(std::move(sr)), eq_(std::move(eq)),
    opt_(std::move(opt)), champ_stats_(std::move(champ_stats)),
    champ_sr_(std::move(champ_sr)), champ_eq_(std::move(champ_eq)),
    champ_opt_(std::move(champ_opt)),
-   opt_command_(std::move(opt_command)), magic_banner_budget_(magic_banner_budget),
+   opt_command_(std::move(opt_command)),
    mount_name_(mount_name) { but = BaseUnitType::NORMAL; }
 
 double base_normal_unit::points_per_model() const noexcept { return pts_per_model_; }
@@ -63,6 +64,5 @@ const std::unordered_map<
 >& base_normal_unit::optional_command() const noexcept {
     return opt_command_;
 }
-double base_normal_unit::magic_banner_budget() const noexcept { return magic_banner_budget_; }
 
 const std::string& base_normal_unit::mount_name() const noexcept { return mount_name_; }

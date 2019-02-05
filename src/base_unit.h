@@ -28,6 +28,7 @@ private:
     budget magic_item_budget_;
     budget faction_item_budget_;
     budget total_item_budget_;
+    double magic_banner_budget_;
     // other
     std::size_t min_size_;
     std::size_t max_size_;
@@ -66,7 +67,8 @@ public:
         const budget& fi_budget,
         const budget& ti_budget,
         std::size_t min_size,
-        std::size_t max_size = std::numeric_limits<std::size_t>::max()
+        std::size_t max_size = std::numeric_limits<std::size_t>::max(),
+        double banner_budget = std::numeric_limits<double>::max()
     );
     virtual ~base_unit() = default;
 
@@ -83,6 +85,7 @@ public:
     const budget& magic_item_budget() const noexcept;
     const budget& faction_item_budget() const noexcept;
     const budget& total_item_budget() const noexcept;
+    double magic_banner_budget() const noexcept;
 
     const std::shared_ptr<
         std::unordered_map<

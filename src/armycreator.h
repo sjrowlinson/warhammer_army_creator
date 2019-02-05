@@ -65,7 +65,7 @@ public slots:
     void optional_oco_extra_selected(const std::string& name, bool champion);
     void optional_mc_extra_selected(const std::string& name, bool champion, bool checked);
 
-    void change_unit_size(int value);
+    void change_unit_size(int value, bool master);
 private slots:
     void on_actionExit_triggered();
 

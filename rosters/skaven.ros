@@ -270,50 +270,30 @@ Night Runners
     OPTIONAL_OCO_EXTRAS = Name : Warp-grinder, Singular : true, Points: 60
     OPTIONAL_COMMAND = Champion - Name: Nightleader, Points: 8
 
-#Giant Rats
-#    Core, Warbeast, Mixed
-#    3
-#    5, None
-#    6 3 1 3 3 1 4 1 3
-#    6 3 1 3 3 1 4 1 3
-#    Scurry Away!, Strength in Numbers, Mixed Unit, Rat Pack, Wave of Rats
-#    Scurry Away!, Strength in Numbers, Mixed Unit, Rat Pack, Wave of Rats
-#    Weapon: Sharp teeth/claws {Mundane} [Melee]
-#    None
-#    None
-#    None
-#    None
-#    None
-#    None
-#    None
-#    None
-#    None
-#    None
-#    0
-#    0
-#    0
-#    0
-#    8
-#    1, None
-#    6 3 3 3 3 1 4 1 5
-#    6 5 3 4 4 2 5 2 6
-#    Scurry Away!, Strength in Numbers, Mixed Unit, Running with the Pack
-#    Scurry Away!, Strength in Numbers, Mixed Unit, Running with the Pack, Verminous Valour
-#    Armour: Light armour {Mundane} [Armour], Weapon: Whip {Mundane} [Melee]
-#    None
-#    None
-#    Great weapon {Mundane} [Melee] (4), Things-catcher {Mundane} [Melee] (20)
-#    None
-#    None
-#    None
-#    None
-#    None
-#    None
-#    Champion: Master Moulder [25]
-#    30
-#    30
-#    30
-#    0
+Giant Rats
+    BASE_TYPE = Mixed
+    TYPE = Core
+    CATEGORY = Warbeast
+    MASTER_NAME = Packmaster
+    MASTER_POINTS = 8
+    MASTER_SIZE = 1, inf
+    MASTER_CHARACTERISTICS = 6 3 3 3 3 1 4 1 5
+    MASTER_CHAMPION_CHARACTERISTICS = 6 5 3 4 4 2 5 2 6
+    MASTER_SPECIAL_RULES = Scurry Away!, Strength in Numbers, Mixed Unit, Running with the Pack
+    MASTER_CHAMPION_SPECIAL_RULES = Scurry Away!, Strength in Numbers, Mixed Unit, Running with the Pack, Verminous Valour
+    MASTER_EQUIPMENT = Armour - Name: Light armour, Category: Mundane, Type: Armour; Weapon - Name: Whip, Category: Mundane, Type: Melee
+    MASTER_CHAMPION_OPTIONAL_WEAPONS = [Name: Great weapon, Category: Mundane, Type: Melee, Points: 4
+                                        Name: Things-catcher, Category: Mundane, Type: Melee, Points: 20]
+    MASTER_OPTIONAL_COMMAND = Champion - Name: Master Moulder, Points: 25
+    MASTER_MAGIC_ITEM_BUDGET = Points : 30, Restrictions : ItemType - Weapon
+    MASTER_FACTION_ITEM_BUDGET = Points : 30
+    MASTER_TOTAL_ITEM_BUDGET = Points : 30
+    SLAVE_NAME = Giant Rats
+    SLAVE_POINTS = 3
+    SLAVE_SIZE = 5, inf
+    SLAVE_CHARACTERISTICS = 6 3 1 3 3 1 4 1 3
+    SLAVE_SPECIAL_RULES = Scurry Away!, Strength in Numbers, Mixed Unit, Rat Pack, Wave of Rats
+    SLAVE_EQUIPMENT = Weapon - Name: Sharp teeth/claws, Category: Mundane, Type: Melee
 
 Rat Swarm
     BASE_TYPE = Normal
@@ -343,50 +323,32 @@ Gutter Runners
     CHAMPION_OPTIONAL_MC_EXTRAS = Name: Smoke bombs, Singular: true, Points: 10
     OPTIONAL_COMMAND = Champion - Name: Deathrunner, Points: 12
 
-#Rat Ogres
-#    Special, Monstrous Infantry, Mixed
-#    40
-#    2, None
-#    6 3 1 5 4 3 4 3 5
-#    6 4 1 5 4 3 5 4 5
-#    Scurry Away!, Strength in Numbers, Mixed Unit, Beast Pack, Fear, Frenzy
-#    Scurry Away!, Strength in Numbers, Mixed Unit, Beast Pack, Fear, Frenzy
-#    Weapon: Claws and savagery {Mundane} [Melee]
-#    None
-#    None
-#    None
-#    None
-#    None
-#    None
-#    None
-#    None
-#    None
-#    Champion: Master-bred Rat Ogre [15]
-#    0
-#    0
-#    0
-#    0
-#    8
-#    1, None
-#    6 3 3 3 3 1 4 1 5
-#    6 5 3 4 4 2 5 2 6
-#    Scurry Away!, Strength in Numbers, Mixed Unit, Running with the Pack
-#    Scurry Away!, Strength in Numbers, Mixed Unit, Running with the Pack, Verminous Valour
-#    Armour: Light armour {Mundane} [Armour], Weapon: Whip {Mundane} [Melee]
-#    None
-#    None
-#    Great weapon {Mundane} [Melee] (4), Things-catcher {Mundane} [Melee] (20)
-#    None
-#    None
-#    None
-#    None
-#    None
-#    None
-#    Champion: Master Moulder [25]
-#    30
-#    30
-#    30
-#    0
+Rat Ogres
+    BASE_TYPE = Mixed
+    TYPE = Special
+    CATEGORY = Monstrous Infantry
+    MASTER_NAME = Packmaster
+    MASTER_POINTS = 8
+    MASTER_SIZE = 1, inf
+    MASTER_CHARACTERISTICS = 6 3 3 3 3 1 4 1 5
+    MASTER_CHAMPION_CHARACTERISTICS = 6 5 3 4 4 2 5 2 6
+    MASTER_SPECIAL_RULES = Scurry Away!, Strength in Numbers, Mixed Unit, Running with the Pack
+    MASTER_CHAMPION_SPECIAL_RULES = Scurry Away!, Strength in Numbers, Mixed Unit, Running with the Pack, Verminous Valour
+    MASTER_EQUIPMENT = Armour - Name: Light armour, Category: Mundane, Type: Armour; Weapon - Name: Whip, Category: Mundane, Type: Melee
+    MASTER_CHAMPION_OPTIONAL_WEAPONS = [Name: Great weapon, Category: Mundane, Type: Melee, Points: 4
+                                        Name: Things-catcher, Category: Mundane, Type: Melee, Points: 20]
+    MASTER_OPTIONAL_COMMAND = Champion - Name: Master Moulder, Points: 25
+    MASTER_MAGIC_ITEM_BUDGET = Points : 30, Restrictions : ItemType - Weapon
+    MASTER_FACTION_ITEM_BUDGET = Points : 30
+    MASTER_TOTAL_ITEM_BUDGET = Points : 30
+    SLAVE_NAME = Rat Ogres
+    SLAVE_POINTS = 40
+    SLAVE_SIZE = 2, inf
+    SLAVE_CHARACTERISTICS = 6 3 1 5 4 3 4 3 5
+    SLAVE_CHAMPION_CHARACTERISTICS = 6 4 1 5 4 3 5 4 5
+    SLAVE_SPECIAL_RULES = Scurry Away!, Strength in Numbers, Mixed Unit, Beast Pack, Fear, Frenzy
+    SLAVE_EQUIPMENT = Weapon - Name: Claws and savagery, Category: Mundane, Type: Melee
+    SLAVE_OPTIONAL_COMMAND = Champion - Name: Master-bred Rat Ogre, Points: 15
 
 Plague Monks
     BASE_TYPE = Normal

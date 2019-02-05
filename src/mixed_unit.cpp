@@ -32,7 +32,7 @@ mixed_unit::mixed_unit(const mixed_unit& other)
       slave_champion_armours_(other.slave_champion_armours_),
       slave_champion_oco_extra_(other.slave_champion_oco_extra_),
       slave_champion_mc_extras_(other.slave_champion_mc_extras_),
-      slave_command_group(other.slave_command_group) {}
+      slave_command_group(other.slave_command_group), handle(other.handle) {}
 
 bool mixed_unit::is_character() const noexcept { return false; }
 bool mixed_unit::is_mage() const noexcept { return false; }
@@ -1099,19 +1099,28 @@ std::string mixed_unit::remove_slave_champion_mc_extra(const std::string& name) 
 
 // => mount selection and removal
 void mixed_unit::pick_mount(const std::string& name) {
-
+    (void)name;
 }
 void mixed_unit::remove_mount() {
 
 }
 
-// TODO: implement
 // => banner selection and removal
 std::string mixed_unit::pick_banner(ItemCategory item_category, const std::string& name) {
-    return "";
+    if (!(master_command_group.count(CommandGroup::STANDARD_BEARER)))
+        throw std::runtime_error("Unit contains no standard bearer!");
+    std::string removed;
+    try { removed = pick_magic_item(ItemType::BANNER, item_category, name); }
+    catch (const std::exception&) { throw; }
+    return removed;
 }
 std::string mixed_unit::remove_banner() {
-    return "";
+    std::string removed = banner.first;
+    if (banner.first.empty()) return std::string();
+    points_ -= banner.second.second;
+    banner.first.clear();
+    banner.second.second = 0.0;
+    return removed;
 }
 
 // => command group selection and removal
@@ -1210,7 +1219,7 @@ void mixed_unit::change_master_size(std::size_t n) {
     if (static_cast<double>(n)/slave_size_ > handle->ratio_limit()) {
         std::string msg = "Cannot take " + std::to_string(n) + ' '
                 + handle->master_name() + " models for only "
-                + std::to_string(slave_size_) + handle->slave_name()
+                + std::to_string(slave_size_) + ' ' + handle->slave_name()
                 + " models!";
         throw std::invalid_argument(msg);
     }
@@ -1254,7 +1263,7 @@ void mixed_unit::change_slave_size(std::size_t n){
     if (master_size_/static_cast<double>(n) > handle->ratio_limit()) {
         std::string msg = "Cannot take only " + std::to_string(n) + ' '
                 + handle->slave_name() + " models with "
-                + std::to_string(master_size_) + handle->master_name()
+                + std::to_string(master_size_) + ' ' + handle->master_name()
                 + " models!";
         throw std::invalid_argument(msg);
     }

@@ -35,6 +35,7 @@ namespace tools {
             // MASTER
             std::pair<std::size_t, std::size_t> size = {1U, 1U};
             std::string master_name;
+            double master_points = 0.0;
             short mage_level = 0;
             std::unordered_map<short, double> mage_upgrades;
             std::vector<lore_option> mage_lores;
@@ -53,6 +54,7 @@ namespace tools {
             // SLAVE
             std::pair<std::size_t, std::size_t> slave_size = {1U, 1U};
             std::string slave_name;
+            double slave_points = 0.0;
             std::vector<std::string> slave_characteristics;
             std::vector<std::string> slave_champ_characteristics;
             std::vector<std::string> slave_special_rules;
@@ -87,6 +89,7 @@ namespace tools {
 
         std::unique_ptr<base_unit> parse_unit(std::size_t block_pos, BaseUnitType but);
 
+        std::size_t parse_unit_mixed_name(const std::string& s, bool champion, bool master);
         std::size_t parse_unit_type(const std::string& s, bool champion, bool master);
         std::size_t parse_unit_category(const std::string& s, bool champion, bool master);
         std::size_t parse_unit_mount(const std::string& s, bool champion, bool master);

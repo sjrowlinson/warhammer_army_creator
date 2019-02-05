@@ -14,7 +14,6 @@ class base_mixed_unit : public base_unit {
 private:
     // COMBINED
     double ratio_limit_; // < defines max. ratio of master size to slave size
-    double magic_banner_budget_; // < for master CommandGroup::STANDARD_BEARER only
 
     // MASTER
     std::string master_name_;
@@ -98,7 +97,6 @@ public:
 
     // COMBINED
     double ratio_limit() const noexcept;
-    double magic_banner_budget() const noexcept;
 
     // MASTER
     const std::string& master_name() const noexcept;

@@ -149,7 +149,38 @@ std::string unit::budget_restriction_check(
         case RestrictionField::LIMIT:
         {
             unsigned int lim = std::any_cast<unsigned int>(restriction.second);
-            if (!(n_magic_items < lim))
+            unsigned int n = n_magic_items;
+            switch (item_type) { // current item of corresponding type not removed yet
+            case ItemType::WEAPON:
+                for (const auto& w : weapons()) {
+                    if (std::get<0>(w.second) != ItemCategory::MUNDANE
+                            && std::get<0>(w.second) != ItemCategory::NONE) {
+                        n -= 1;
+                        break;
+                    }
+                }
+                break;
+            case ItemType::ARMOUR:
+                for (const auto& a : armour()) {
+                    if (std::get<0>(a.second) != ItemCategory::MUNDANE
+                            && std::get<0>(a.second) != ItemCategory::NONE) {
+                        n -= 1;
+                        break;
+                    }
+                }
+                break;
+            case ItemType::TALISMAN:
+                if (!talisman().first.empty()) n -= 1;
+                break;
+            case ItemType::ENCHANTED:
+                if (!enchanted_item().first.empty()) n -= 1;
+                break;
+            case ItemType::ARCANE:
+                if (!arcane_item().first.empty()) n -= 1;
+                break;
+            default: break;
+            }
+            if (!(n < lim))
                 msg += name() + " can only have " + std::to_string(lim) + " magic item"
                        + (lim > 1 ? "s!" : "!");
             break;
@@ -271,8 +302,11 @@ std::string unit::pick_magic_item(ItemType item_type, ItemCategory item_category
     {
         if (!is_character()) {
             if (magic_banner().first.empty()) {
-                // TODO: subtract magic_banner().second.second from
-                //       magic banner budget
+                if (search->second.points > base_->magic_banner_budget())
+                    throw std::runtime_error("Magic banner budget exceeded!");
+            } else {
+                if (search->second.points > base_->magic_banner_budget() + magic_banner().second.second)
+                    throw std::runtime_error("Magic banner budget exceeded!");
             }
         }
         break;
@@ -280,8 +314,7 @@ std::string unit::pick_magic_item(ItemType item_type, ItemCategory item_category
     default: break;
     }
     // perform budget value checking now that we've adjusted for previous items
-    // TODO: re-check this, seems wrong
-    if (!is_character() && item_type != ItemType::BANNER) {
+    if (item_type != ItemType::BANNER) {
         if ((search->second.points + adj_mip > mi_budget) ||
                 (search->second.points + adj_tip > ti_budget))
             throw std::runtime_error("Item budget exceeded!");
@@ -332,12 +365,8 @@ std::string unit::pick_magic_item(ItemType item_type, ItemCategory item_category
     default: break;
     }
     points_ += search->second.points;
-    ++n_magic_items;
-    if (item_type == ItemType::BANNER) {
-        if (!is_character()) {
-            // TODO: implement
-        }
-    } else {
+    if (item_type != ItemType::BANNER) {
+        ++n_magic_items;
         if (item_category == ItemCategory::FACTION)
             faction_item_points_ += search->second.points;
         else magic_item_points_ += search->second.points;

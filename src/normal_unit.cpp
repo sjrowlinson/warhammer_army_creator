@@ -340,10 +340,12 @@ std::string normal_unit::remove_champion_weapon(WeaponType wt, bool replacing) {
     case ItemCategory::COMMON:
         magic_item_points_ -= pts;
         total_item_points_ -= pts;
+        --n_magic_items;
         break;
     case ItemCategory::FACTION:
         faction_item_points_ -= pts;
         total_item_points_ -= pts;
+        --n_magic_items;
         break;
     }
     points_ -= pts;
@@ -463,10 +465,12 @@ std::string normal_unit::remove_champion_armour(ArmourType at, bool replacing) {
     case ItemCategory::COMMON:
         magic_item_points_ -= pts;
         total_item_points_ -= pts;
+        --n_magic_items;
         break;
     case ItemCategory::FACTION:
         faction_item_points_ -= pts;
         total_item_points_ -= pts;
+        --n_magic_items;
         break;
     }
     points_ -= pts;
@@ -505,6 +509,7 @@ std::string normal_unit::remove_talisman() {
     total_item_points_ -= champ_talisman_.second.second;
     champ_talisman_.first.clear();
     champ_talisman_.second.second = 0.0;
+    --n_magic_items;
     return removed;
 }
 
@@ -538,6 +543,7 @@ std::string normal_unit::remove_enchanted_item() {
     total_item_points_ -= champ_enchanted_item_.second.second;
     champ_enchanted_item_.first.clear();
     champ_enchanted_item_.second.second = 0.0;
+    --n_magic_items;
     return removed;
 }
 
@@ -571,6 +577,7 @@ std::string normal_unit::remove_arcane_item() {
     total_item_points_ -= champ_arcane_.second.second;
     champ_arcane_.first.clear();
     champ_arcane_.second.second = 0.0;
+    --n_magic_items;
     return removed;
 }
 
@@ -605,50 +612,16 @@ std::string normal_unit::remove_magic_extra(const std::string& name) {
     }
     total_item_points_ -= search->second.second;
     champ_item_extras_.erase(name);
+    --n_magic_items;
     return name;
 }
 
-std::string normal_unit::pick_banner(ItemCategory item_type, const std::string& name) {
+std::string normal_unit::pick_banner(ItemCategory item_category, const std::string& name) {
     if (!(command_group.count(CommandGroup::STANDARD_BEARER)))
         throw std::runtime_error("Unit contains no standard bearer!");
     std::string removed;
-    // TODO: remove all of this and replace with call to pick_magic_item
-    switch (item_type) {
-    case ItemCategory::MAGIC:
-    case ItemCategory::COMMON:
-    {
-        std::unordered_map<std::string, item>::const_iterator search;
-        if (item_type == ItemCategory::MAGIC) {
-            search = handle->magic_items_handle()->second.find(name);
-            if (search == handle->magic_items_handle()->second.end())
-                throw std::invalid_argument("Magic banner not found!");
-        } else {
-            search = handle->common_items_handle()->second.find(name);
-            if (search == handle->common_items_handle()->second.end())
-                throw std::invalid_argument("Magic banner not found!");
-        }
-        double adj_bb = (banner.first.empty()) ? 0.0 : banner.second.second;
-        if (search->second.points - adj_bb > handle->magic_banner_budget())
-            throw std::invalid_argument("Magic banner beyond budget!");
-        // check if the magic weapon has specific allowed units
-        if (!(search->second.allowed_units.empty())) {
-            std::string unit_name = this->name();
-            // check that this unit is within the magic weapons' allowed units container
-            if (!std::count_if(
-                    std::begin(search->second.allowed_units),
-                    std::end(search->second.allowed_units),
-                    [&unit_name](const auto& x) { return x == unit_name; }
-                )) throw std::invalid_argument("Unit standard bearer cannot take this banner!");
-        }
-        removed = remove_banner();
-        banner = {search->first, {item_type, search->second.points}};
-        points_ += search->second.points;
-        break;
-    }
-    case ItemCategory::FACTION:
-        break;
-    default: break;
-    }
+    try { removed = pick_magic_item(ItemType::BANNER, item_category, name); }
+    catch (const std::exception&) { throw; }
     return removed;
 }
 

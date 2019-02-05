@@ -48,9 +48,9 @@ base_mixed_unit::base_mixed_unit(
     master_champ_fi_budget,
     master_champ_ti_budget,
     master_min_size,
-    master_max_size
+    master_max_size,
+    magic_banner_budget
 ), ratio_limit_(static_cast<double>(master_min_size)/slave_min_size),
-   magic_banner_budget_(magic_banner_budget),
    master_name_(master_name),
    master_min_size_(master_min_size),
    master_max_size_(master_max_size),
@@ -78,10 +78,6 @@ base_mixed_unit::base_mixed_unit(
 
 double base_mixed_unit::ratio_limit() const noexcept {
     return ratio_limit_;
-}
-
-double base_mixed_unit::magic_banner_budget() const noexcept {
-    return magic_banner_budget_;
 }
 
 // MASTER

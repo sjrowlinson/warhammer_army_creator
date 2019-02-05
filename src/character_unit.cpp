@@ -225,10 +225,12 @@ std::string character_unit::remove_weapon(WeaponType wt, bool replacing) {
     case ItemCategory::COMMON:
         magic_item_points_ -= pts;
         total_item_points_ -= pts;
+        --n_magic_items;
         break;
     case ItemCategory::FACTION:
         faction_item_points_ -= pts;
         total_item_points_ -= pts;
+        --n_magic_items;
         break;
     }
     points_ -= pts;
@@ -283,10 +285,12 @@ std::string character_unit::remove_armour(ArmourType at, bool replacing) {
     case ItemCategory::COMMON:
         magic_item_points_ -= pts;
         total_item_points_ -= pts;
+        --n_magic_items;
         break;
     case ItemCategory::FACTION:
         faction_item_points_ -= pts;
         total_item_points_ -= pts;
+        --n_magic_items;
         break;
     }
     points_ -= pts;
@@ -316,6 +320,7 @@ std::string character_unit::remove_talisman() {
     total_item_points_ -= talisman_.second.second;
     talisman_.first.clear();
     talisman_.second.second = 0.0;
+    --n_magic_items;
     return removed;
 }
 
@@ -342,6 +347,7 @@ std::string character_unit::remove_enchanted_item() {
     total_item_points_ -= enchanted_item_.second.second;
     enchanted_item_.first.clear();
     enchanted_item_.second.second = 0.0;
+    --n_magic_items;
     return removed;
 }
 
@@ -369,6 +375,7 @@ std::string character_unit::remove_arcane_item() {
     total_item_points_ -= arcane_item_.second.second;
     arcane_item_.first.clear();
     arcane_item_.second.second = 0.0;
+    --n_magic_items;
     return removed;
 }
 
@@ -396,6 +403,7 @@ std::string character_unit::remove_magic_extra(const std::string& name) {
     }
     total_item_points_ -= search->second.second;
     item_extras_.erase(name);
+    --n_magic_items;
     return name;
 }
 
