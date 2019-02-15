@@ -109,9 +109,15 @@ QGroupBox* OptionBox::make_size_command_box() {
         );
         // set value of spinbox to current unit size
         if (enum_convert::in_army_trees(in_tree)) size_sb->setValue(static_cast<int>(p->size()));
+#if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
         creator->connect(size_sb, QOverload<int>::of(&QSpinBox::valueChanged), creator, [this](int value) {
             creator->change_unit_size(value, true);
         });
+#else
+        creator->connect(size_sb, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), creator, [this](int value) {
+            creator->change_unit_size(value, true);
+        });
+#endif
         size_box_layout->addWidget(label);
         size_box_layout->addWidget(size_sb);
         size_box_layout->addStretch(1);
@@ -141,12 +147,21 @@ QGroupBox* OptionBox::make_size_command_box() {
             master_size_sb->setValue(static_cast<int>(p->master_size()));
             slave_size_sb->setValue(static_cast<int>(p->slave_size()));
         }
+#if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
         creator->connect(master_size_sb, QOverload<int>::of(&QSpinBox::valueChanged), creator, [this](int value) {
             creator->change_unit_size(value, true);
         });
         creator->connect(slave_size_sb, QOverload<int>::of(&QSpinBox::valueChanged), creator, [this](int value) {
             creator->change_unit_size(value, false);
         });
+#else
+        creator->connect(master_size_sb, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), creator, [this](int value) {
+            creator->change_unit_size(value, true);
+        });
+        creator->connect(slave_size_sb, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), creator, [this](int value) {
+            creator->change_unit_size(value, false);
+        });
+#endif
         size_box_layout->addWidget(master_label);
         size_box_layout->addWidget(master_size_sb);
         size_box_layout->addWidget(slave_label);
