@@ -1,5 +1,6 @@
 #include "armycreator.h"
 #include "optionbox.h"
+#include "option_selector.h"
 #include "magicitembox.h"
 #include "ui_armycreator.h"
 
@@ -27,7 +28,7 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
         QCoreApplication::quit();
     }
     current = nullptr;
-    opt_sel = std::make_shared<option_selector>(army, ui->budget_remaining_label);
+    opt_sel = std::make_shared<option_selector>(this, army);
     ob = std::make_shared<OptionBox>(this, ui->options_group_box);
     mib = std::make_shared<MagicItemBox>(this, ui->magic_items_selector,
                                          ui->item_descr_gb, ui->item_descr_label);
@@ -160,8 +161,24 @@ void ArmyCreator::update_budget_label() {
                 "   Total: " + tools::points_str(p->handle_->total_item_budget().points - p->total_item_points());
         }
         ui->budget_remaining_label->setText(QString::fromStdString(budget_str));
+    } else {
+        if (current->is_mixed()) {
+
+        } else {
+            auto p = std::dynamic_pointer_cast<normal_unit>(current);
+            std::string budget_str = "Magic: " +
+                    tools::points_str(p->handle->magic_item_budget().points - p->magic_item_points());
+            if (p->handle->faction_items_handle() != nullptr) {
+                budget_str += "  " + p->handle->faction_items_handle()->first + ": " +
+                    tools::points_str(p->handle->faction_item_budget().points - p->faction_item_points()) +
+                    "   Total: " + tools::points_str(p->handle->total_item_budget().points - p->total_item_points());
+            }
+            budget_str += "  Banner: " + tools::points_str(p->handle->magic_banner_budget() -
+                                                           p->magic_banner().second.second);
+            ui->budget_remaining_label->setText(QString::fromStdString(budget_str));
+        }
+
     }
-    else ui->budget_remaining_label->setText(QString(""));
 }
 
 void ArmyCreator::populate_roster_tree() {

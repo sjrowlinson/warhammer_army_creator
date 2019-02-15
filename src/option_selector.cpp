@@ -1,28 +1,14 @@
 #include "option_selector.h"
+#include "armycreator.h"
 
 option_selector::option_selector(
-    const std::shared_ptr<army_list>& army_,
-    QLabel* budget_label_
-) : army(army_), in_tree(InTree::NEITHER), current(), budget_label(budget_label_) {}
+    ArmyCreator* creator_,
+    const std::shared_ptr<army_list>& army_
+) : creator(creator_), army(army_), in_tree(InTree::NEITHER), current() {}
 
 void option_selector::reset(const std::shared_ptr<unit>& current_, InTree in_tree_) {
     current = current_;
     in_tree = in_tree_;
-}
-
-// TODO: remove and store handle to creator instead
-void option_selector::update_budget_label() {
-    if (current->is_character()) {
-        auto p = std::dynamic_pointer_cast<character_unit>(current);
-        std::string budget_str = "Magic: " +
-                tools::points_str(p->handle_->magic_item_budget().points - p->magic_item_points());
-        if (p->handle_->faction_items_handle() != nullptr) {
-            budget_str += "  " + p->handle_->faction_items_handle()->first + ": " +
-                tools::points_str(p->handle_->faction_item_budget().points - p->faction_item_points()) +
-                "   Total: " + tools::points_str(p->handle_->total_item_budget().points - p->total_item_points());
-        }
-        budget_label->setText(QString::fromStdString(budget_str));
-    }
 }
 
 bool option_selector::is_selection_magical(const std::string& selection) const {
@@ -39,22 +25,21 @@ bool option_selector::is_selection_magical(const std::string& selection) const {
 void option_selector::select_weapon(const std::string& weapon, WeaponType wt, ItemCategory ic, bool champion, bool master) {
     (void)master;
     if (current == nullptr) throw std::runtime_error("No unit selected!");
-    std::string removed;
     if (weapon.empty()) { // None radio button selected => remove weapon
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(current->id());
             if (champion) {
                 current->switch_model_select(ModelSelect::CHAMPION);
-                removed = current->remove_weapon(wt);
+                current->remove_weapon(wt);
                 current->switch_model_select(ModelSelect::DEFAULT);
-            } else removed = current->remove_weapon(wt);
+            } else current->remove_weapon(wt);
             army->update_on(current->id());
         } else {
             if (champion) {
                 current->switch_model_select(ModelSelect::CHAMPION);
-                removed = current->remove_weapon(wt);
+                current->remove_weapon(wt);
                 current->switch_model_select(ModelSelect::DEFAULT);
-            } else removed = current->remove_weapon(wt);
+            } else current->remove_weapon(wt);
         }
     } else {
         const bool is_magical = ic == ItemCategory::COMMON || ic == ItemCategory::MAGIC || ic == ItemCategory::FACTION;
@@ -62,56 +47,55 @@ void option_selector::select_weapon(const std::string& weapon, WeaponType wt, It
             army->take_snapshot_of(current->id());
             if (champion) {
                 current->switch_model_select(ModelSelect::CHAMPION);
-                try { removed = current->pick_weapon(ic, weapon); }
+                try { current->pick_weapon(ic, weapon); }
                 catch (const std::exception&) {
                     current->switch_model_select(ModelSelect::DEFAULT);
                     throw;
                 }
                 current->switch_model_select(ModelSelect::DEFAULT);
             } else {
-                try { removed = current->pick_weapon(ic, weapon); }
+                try { current->pick_weapon(ic, weapon); }
                 catch (const std::exception&) { throw; }
             }
             army->update_on(current->id());
         } else {
             if (champion) {
                 current->switch_model_select(ModelSelect::CHAMPION);
-                try { removed = current->pick_weapon(ic, weapon); }
+                try { current->pick_weapon(ic, weapon); }
                 catch (const std::exception&) {
                     current->switch_model_select(ModelSelect::DEFAULT);
                     throw;
                 }
                 current->switch_model_select(ModelSelect::DEFAULT);
             } else {
-                try { removed = current->pick_weapon(ic, weapon); }
+                try { current->pick_weapon(ic, weapon); }
                 catch (const std::exception&) { throw; }
             }
         }
-        if (is_magical) update_budget_label();
+        if (is_magical) creator->update_budget_label();
 
     }
-    if (is_selection_magical(removed)) update_budget_label();
+    creator->update_budget_label();
 }
 
 void option_selector::select_armour(const std::string& armour, ArmourType at, ItemCategory ic, bool champion, bool master) {
     (void)master;
     if (current == nullptr) throw std::runtime_error("No unit selected!");
-    std::string removed;
     if (armour.empty()) { // None radio button selected => remove weapon
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(current->id());
             if (champion) {
                 current->switch_model_select(ModelSelect::CHAMPION);
-                removed = current->remove_armour(at);
+                current->remove_armour(at);
                 current->switch_model_select(ModelSelect::DEFAULT);
-            } else removed = current->remove_armour(at);
+            } else current->remove_armour(at);
             army->update_on(current->id());
         } else {
             if (champion) {
                 current->switch_model_select(ModelSelect::CHAMPION);
-                removed = current->remove_armour(at);
+                current->remove_armour(at);
                 current->switch_model_select(ModelSelect::DEFAULT);
-            } else removed = current->remove_armour(at);
+            } else current->remove_armour(at);
         }
     } else {
         const bool is_magical = ic == ItemCategory::COMMON || ic == ItemCategory::MAGIC || ic == ItemCategory::FACTION;
@@ -119,145 +103,137 @@ void option_selector::select_armour(const std::string& armour, ArmourType at, It
             army->take_snapshot_of(current->id());
             if (champion) {
                 current->switch_model_select(ModelSelect::CHAMPION);
-                try { removed = current->pick_armour(ic, armour); }
+                try { current->pick_armour(ic, armour); }
                 catch (const std::exception&) {
                     current->switch_model_select(ModelSelect::DEFAULT);
                     throw;
                 }
                 current->switch_model_select(ModelSelect::DEFAULT);
             } else {
-                try { removed = current->pick_armour(ic, armour); }
+                try { current->pick_armour(ic, armour); }
                 catch (const std::exception&) { throw; }
             }
             army->update_on(current->id());
         } else {
             if (champion) {
                 current->switch_model_select(ModelSelect::CHAMPION);
-                try { removed = current->pick_armour(ic, armour); }
+                try { current->pick_armour(ic, armour); }
                 catch (const std::exception&) {
                     current->switch_model_select(ModelSelect::DEFAULT);
                     throw;
                 }
                 current->switch_model_select(ModelSelect::DEFAULT);
             } else {
-                try { removed = current->pick_armour(ic, armour); }
+                try { current->pick_armour(ic, armour); }
                 catch (const std::exception&) { throw; }
             }
         }
-        if (is_magical) update_budget_label();
+        if (is_magical) creator->update_budget_label();
 
     }
-    if (is_selection_magical(removed)) update_budget_label();
+    creator->update_budget_label();
 }
 
 void option_selector::select_talisman(const std::string& talisman, ItemCategory ic) {
     if (current == nullptr) throw std::runtime_error("No unit selected!");
     std::shared_ptr<character_unit> p = std::dynamic_pointer_cast<character_unit>(current);
-    std::string removed;
     if (talisman.empty()) {
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(p->id());
-            removed = p->remove_talisman();
+            p->remove_talisman();
             army->update_on(p->id());
-        } else removed = p->remove_talisman();
+        } else p->remove_talisman();
     } else {
-        const bool is_magical = ic == ItemCategory::COMMON || ic == ItemCategory::MAGIC || ic == ItemCategory::FACTION;
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(p->id());
-            removed = p->pick_talisman(ic, talisman);
+            p->pick_talisman(ic, talisman);
             army->update_on(p->id());
-        } else removed = p->pick_talisman(ic, talisman);
-        if (is_magical) update_budget_label();
+        } else p->pick_talisman(ic, talisman);
+        creator->update_budget_label();
     }
-    if (is_selection_magical(removed)) update_budget_label();
+    creator->update_budget_label();
 }
 
 void option_selector::select_enchanted_item(const std::string& enchanted, ItemCategory ic) {
     if (current == nullptr) throw std::runtime_error("No unit selected!");
     std::shared_ptr<character_unit> p = std::dynamic_pointer_cast<character_unit>(current);
-    std::string removed;
     if (enchanted.empty()) {
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(p->id());
-            removed = p->remove_enchanted_item();
+            p->remove_enchanted_item();
             army->update_on(p->id());
-        } else removed = p->remove_enchanted_item();
+        } else p->remove_enchanted_item();
     } else {
-        const bool is_magical = ic == ItemCategory::COMMON || ic == ItemCategory::MAGIC || ic == ItemCategory::FACTION;
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(p->id());
-            removed = p->pick_enchanted_item(ic, enchanted);
+            p->pick_enchanted_item(ic, enchanted);
             army->update_on(p->id());
-        } else removed = p->pick_enchanted_item(ic, enchanted);
-        if (is_magical) update_budget_label();
+        } else p->pick_enchanted_item(ic, enchanted);
+        creator->update_budget_label();
     }
-    if (is_selection_magical(removed)) update_budget_label();
+    creator->update_budget_label();
 }
 
 void option_selector::select_other_item(const std::string& other, ItemCategory ic, bool checked) {
     if (current == nullptr) throw std::runtime_error("No unit selected!");
     auto p = std::dynamic_pointer_cast<character_unit>(current);
-    std::string removed;
     if (!checked) {
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(p->id());
-            removed = p->remove_magic_extra(other);
+            p->remove_magic_extra(other);
             army->update_on(p->id());
-        } else removed = p->remove_magic_extra(other);
+        } else p->remove_magic_extra(other);
     } else {
         const bool is_magical = ic == ItemCategory::COMMON || ic == ItemCategory::MAGIC || ic == ItemCategory::FACTION;
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(p->id());
-            removed = p->pick_magic_extra(ic, other);
+            p->pick_magic_extra(ic, other);
             army->update_on(p->id());
-        } else removed = p->pick_magic_extra(ic, other);
-        if (is_magical) update_budget_label();
+        } else p->pick_magic_extra(ic, other);
+        if (is_magical) creator->update_budget_label();
 
     }
-    if (is_selection_magical(removed)) update_budget_label();
+    creator->update_budget_label();
 }
 
 void option_selector::select_banner(const std::string& banner, ItemCategory ic) {
     if (current == nullptr) throw std::runtime_error("No unit selected!");
-    std::string removed;
     if (banner.empty()) {
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(current->id());
-            removed = current->remove_banner();
+            current->remove_banner();
             army->update_on(current->id());
-        } else removed = current->remove_banner();
+        } else current->remove_banner();
     } else {
         const bool is_magical = ic == ItemCategory::COMMON || ic == ItemCategory::MAGIC || ic == ItemCategory::FACTION;
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(current->id());
-            removed = current->pick_banner(ic, banner);
+            current->pick_banner(ic, banner);
             army->update_on(current->id());
-        } else removed = current->pick_banner(ic, banner);
-        if (is_magical) update_budget_label();
+        } else current->pick_banner(ic, banner);
+        if (is_magical) creator->update_budget_label();
     }
-    if (is_selection_magical(removed)) update_budget_label();
+    creator->update_budget_label();
 }
 
 void option_selector::select_arcane_item(const std::string& arcane, ItemCategory ic) {
     if (current == nullptr) throw std::runtime_error("No unit selected!");
     auto p = std::dynamic_pointer_cast<mage_character_unit>(current);
-    std::string removed;
     if (arcane.empty()) {
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(p->id());
-            removed = p->remove_arcane_item();
+            p->remove_arcane_item();
             army->update_on(p->id());
-        } else removed = p->remove_arcane_item();
+        } else p->remove_arcane_item();
     } else {
-        const bool is_magical = ic == ItemCategory::COMMON || ic == ItemCategory::MAGIC || ic == ItemCategory::FACTION;
         if (enum_convert::in_army_trees(in_tree)) {
             army->take_snapshot_of(p->id());
-            removed = p->pick_arcane_item(ic, arcane);
+            p->pick_arcane_item(ic, arcane);
             army->update_on(p->id());
-        } else removed = p->pick_arcane_item(ic, arcane);
-        if (is_magical) update_budget_label();
+        } else p->pick_arcane_item(ic, arcane);
+        creator->update_budget_label();
     }
-    if (is_selection_magical(removed)) update_budget_label();
+    creator->update_budget_label();
 }
 
 void option_selector::select_mage_level(short level) {

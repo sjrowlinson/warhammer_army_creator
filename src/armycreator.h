@@ -4,7 +4,6 @@
 #include "army_list.h"
 #include "enums.h"
 #include "magic_item.h"
-#include "option_selector.h"
 #include "selection_tree.h"
 
 #include <functional>
@@ -40,6 +39,7 @@ class ArmyCreator;
 
 class OptionBox;
 class MagicItemBox;
+class option_selector;
 
 class ArmyCreator : public QMainWindow {
     Q_OBJECT
@@ -90,6 +90,8 @@ private slots:
 
     void on_magic_items_combobox_currentTextChanged(const QString &arg1);
     void on_set_general_button_clicked();
+public:
+    void update_budget_label();
 private:
     Ui::ArmyCreator* ui;
     Faction race;
@@ -115,7 +117,6 @@ private:
     bool army_trees_itemchanged(QTreeWidgetItem* curr);
 
     void update_validity_label();
-    void update_budget_label();
 
     void initialise_stylesheets();
 

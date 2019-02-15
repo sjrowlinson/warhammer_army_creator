@@ -1,5 +1,8 @@
 #ifndef OPTION_SELECTOR_H
 #define OPTION_SELECTOR_H
+
+class ArmyCreator;
+
 #include "army_list.h"
 #include "enums.h"
 #include "selection_tree.h"
@@ -12,17 +15,17 @@
 
 class option_selector {
 private:
+    ArmyCreator* creator;
     std::shared_ptr<army_list> army;
     InTree in_tree;
     std::shared_ptr<unit> current;
     QLabel* budget_label;
 
-    void update_budget_label();
     bool is_selection_magical(const std::string& selection) const;
 public:
     explicit option_selector(
-        const std::shared_ptr<army_list>& army_,
-        QLabel* budget_label
+        ArmyCreator* creator_,
+        const std::shared_ptr<army_list>& army_
     );
 
     // resets the option_selector instance to point
@@ -30,7 +33,6 @@ public:
     void reset(const std::shared_ptr<unit>& current_, InTree in_tree_);
 
     // selectors
-
     void select_weapon(const std::string& weapon, WeaponType wt, ItemCategory ic, bool champion, bool master);
     void select_armour(const std::string& armour, ArmourType at, ItemCategory ic, bool champion, bool master);
     void select_talisman(const std::string& talisman, ItemCategory ic);

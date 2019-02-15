@@ -540,7 +540,7 @@
      </widget>
     </widget>
    </widget>
-   <widget class="QLabel" name="label_5">
+   <widget class="QLabel" name="budget_pre_label">
     <property name="geometry">
      <rect>
       <x>260</x>
