@@ -372,6 +372,7 @@ std::string unit::pick_magic_item(ItemType item_type, ItemCategory item_category
         else magic_item_points_ += search->second.points;
         total_item_points_ += search->second.points;
     }
+    army_->incr_item_tracker(name);
     return removed;
 }
 

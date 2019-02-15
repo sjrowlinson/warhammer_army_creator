@@ -326,7 +326,7 @@ Irondrakes
     OPTIONAL_COMMAND = Musician - Name : Musician, Points : 10 ; Standard Bearer - Name : Standard Bearer, Points : 10 ; Champion - Name : Ironwarden, Points : 10
     BANNER_BUDGET = 50
 
-Gyrocopter
+Gyrobomber
     BASE_TYPE = Normal
     TYPE = Rare
     CATEGORY = Unique

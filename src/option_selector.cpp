@@ -10,6 +10,7 @@ void option_selector::reset(const std::shared_ptr<unit>& current_, InTree in_tre
     in_tree = in_tree_;
 }
 
+// TODO: remove and store handle to creator instead
 void option_selector::update_budget_label() {
     if (current->is_character()) {
         auto p = std::dynamic_pointer_cast<character_unit>(current);
@@ -86,15 +87,10 @@ void option_selector::select_weapon(const std::string& weapon, WeaponType wt, It
                 catch (const std::exception&) { throw; }
             }
         }
-        if (is_magical) {
-            army->incr_item_tracker(weapon);
-            update_budget_label();
-        }
+        if (is_magical) update_budget_label();
+
     }
-    if (!removed.empty() && is_selection_magical(removed)) {
-        army->decr_item_tracker(removed);
-        update_budget_label();
-    }
+    if (is_selection_magical(removed)) update_budget_label();
 }
 
 void option_selector::select_armour(const std::string& armour, ArmourType at, ItemCategory ic, bool champion, bool master) {
@@ -148,15 +144,10 @@ void option_selector::select_armour(const std::string& armour, ArmourType at, It
                 catch (const std::exception&) { throw; }
             }
         }
-        if (is_magical) {
-            army->incr_item_tracker(armour);
-            update_budget_label();
-        }
+        if (is_magical) update_budget_label();
+
     }
-    if (!removed.empty() && is_selection_magical(removed)) {
-        army->decr_item_tracker(removed);
-        update_budget_label();
-    }
+    if (is_selection_magical(removed)) update_budget_label();
 }
 
 void option_selector::select_talisman(const std::string& talisman, ItemCategory ic) {
@@ -176,15 +167,9 @@ void option_selector::select_talisman(const std::string& talisman, ItemCategory 
             removed = p->pick_talisman(ic, talisman);
             army->update_on(p->id());
         } else removed = p->pick_talisman(ic, talisman);
-        if (is_magical) {
-            army->incr_item_tracker(talisman);
-            update_budget_label();
-        }
+        if (is_magical) update_budget_label();
     }
-    if (!removed.empty() && is_selection_magical(removed)) {
-        army->decr_item_tracker(removed);
-        update_budget_label();
-    }
+    if (is_selection_magical(removed)) update_budget_label();
 }
 
 void option_selector::select_enchanted_item(const std::string& enchanted, ItemCategory ic) {
@@ -204,15 +189,9 @@ void option_selector::select_enchanted_item(const std::string& enchanted, ItemCa
             removed = p->pick_enchanted_item(ic, enchanted);
             army->update_on(p->id());
         } else removed = p->pick_enchanted_item(ic, enchanted);
-        if (is_magical) {
-            army->incr_item_tracker(enchanted);
-            update_budget_label();
-        }
+        if (is_magical) update_budget_label();
     }
-    if (!removed.empty() && is_selection_magical(removed)) {
-        army->decr_item_tracker(removed);
-        update_budget_label();
-    }
+    if (is_selection_magical(removed)) update_budget_label();
 }
 
 void option_selector::select_other_item(const std::string& other, ItemCategory ic, bool checked) {
@@ -232,15 +211,10 @@ void option_selector::select_other_item(const std::string& other, ItemCategory i
             removed = p->pick_magic_extra(ic, other);
             army->update_on(p->id());
         } else removed = p->pick_magic_extra(ic, other);
-        if (is_magical) {
-            army->incr_item_tracker(other);
-            update_budget_label();
-        }
+        if (is_magical) update_budget_label();
+
     }
-    if (!removed.empty() && is_selection_magical(removed)) {
-        army->decr_item_tracker(removed);
-        update_budget_label();
-    }
+    if (is_selection_magical(removed)) update_budget_label();
 }
 
 void option_selector::select_banner(const std::string& banner, ItemCategory ic) {
@@ -259,15 +233,9 @@ void option_selector::select_banner(const std::string& banner, ItemCategory ic) 
             removed = current->pick_banner(ic, banner);
             army->update_on(current->id());
         } else removed = current->pick_banner(ic, banner);
-        if (is_magical) {
-            army->incr_item_tracker(banner);
-            update_budget_label();
-        }
+        if (is_magical) update_budget_label();
     }
-    if (!removed.empty() && is_selection_magical(removed)) {
-        army->decr_item_tracker(removed);
-        update_budget_label();
-    }
+    if (is_selection_magical(removed)) update_budget_label();
 }
 
 void option_selector::select_arcane_item(const std::string& arcane, ItemCategory ic) {
@@ -287,15 +255,9 @@ void option_selector::select_arcane_item(const std::string& arcane, ItemCategory
             removed = p->pick_arcane_item(ic, arcane);
             army->update_on(p->id());
         } else removed = p->pick_arcane_item(ic, arcane);
-        if (is_magical) {
-            army->incr_item_tracker(arcane);
-            update_budget_label();
-        }
+        if (is_magical) update_budget_label();
     }
-    if (!removed.empty() && is_selection_magical(removed)) {
-        army->decr_item_tracker(removed);
-        update_budget_label();
-    }
+    if (is_selection_magical(removed)) update_budget_label();
 }
 
 void option_selector::select_mage_level(short level) {

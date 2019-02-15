@@ -226,11 +226,13 @@ std::string character_unit::remove_weapon(WeaponType wt, bool replacing) {
         magic_item_points_ -= pts;
         total_item_points_ -= pts;
         --n_magic_items;
+        army_->decr_item_tracker(std::get<1>(weapon));
         break;
     case ItemCategory::FACTION:
         faction_item_points_ -= pts;
         total_item_points_ -= pts;
         --n_magic_items;
+        army_->decr_item_tracker(std::get<1>(weapon));
         break;
     }
     points_ -= pts;
@@ -286,11 +288,13 @@ std::string character_unit::remove_armour(ArmourType at, bool replacing) {
         magic_item_points_ -= pts;
         total_item_points_ -= pts;
         --n_magic_items;
+        army_->decr_item_tracker(std::get<1>(armour));
         break;
     case ItemCategory::FACTION:
         faction_item_points_ -= pts;
         total_item_points_ -= pts;
         --n_magic_items;
+        army_->decr_item_tracker(std::get<1>(armour));
         break;
     }
     points_ -= pts;
@@ -321,6 +325,7 @@ std::string character_unit::remove_talisman() {
     talisman_.first.clear();
     talisman_.second.second = 0.0;
     --n_magic_items;
+    army_->decr_item_tracker(removed);
     return removed;
 }
 
@@ -348,6 +353,7 @@ std::string character_unit::remove_enchanted_item() {
     enchanted_item_.first.clear();
     enchanted_item_.second.second = 0.0;
     --n_magic_items;
+    army_->decr_item_tracker(removed);
     return removed;
 }
 
@@ -376,6 +382,7 @@ std::string character_unit::remove_arcane_item() {
     arcane_item_.first.clear();
     arcane_item_.second.second = 0.0;
     --n_magic_items;
+    army_->decr_item_tracker(removed);
     return removed;
 }
 
@@ -404,6 +411,7 @@ std::string character_unit::remove_magic_extra(const std::string& name) {
     total_item_points_ -= search->second.second;
     item_extras_.erase(name);
     --n_magic_items;
+    army_->decr_item_tracker(name);
     return name;
 }
 
@@ -581,6 +589,7 @@ std::string character_unit::remove_banner() {
     total_item_points_ -= banner.second.second;
     banner.first.clear();
     banner.second.second = 0.0;
+    army_->decr_item_tracker(removed);
     return removed;
 }
 

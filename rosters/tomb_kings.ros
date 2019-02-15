@@ -12,30 +12,24 @@ Tomb King
                         Name: Flail, Category: Mundane, Type: Melee, Points: 6
                         Name: Spear, Category: Mundane, Type: Melee, Points: 3]
     OPTIONAL_ARMOUR = Name: Shield, Category: Mundane, Type: Shield, Points: 3
-    OPTIONAL_MOUNTS = Name: Skeleton Chariot,  Points: 55 ; Name: Khemrian Warsphinx, Points: 210
+    OPTIONAL_MOUNTS = [Name: Skeleton Chariot,  Points: 55
+                       Name: Khemrian Warsphinx, Points: 210, MC_extras: Name - Envenomed Sting | Points - 10 / Name - Fiery Roar | Points - 20]
     MAGIC_ITEM_BUDGET = Points : 100
     TOTAL_ITEM_BUDGET = Points : 100
 
 Liche High Priest
-    Lord, Mage
-    3
-    4 [35]
-    Nehekhara, Light, Death
-    Infantry
-    175
-    1, 1
-    4 3 3 3 4 3 2 1 8
-    Nehekharan Undead
-    None
-    None
-    None
-    Skeletal Steed {Warbeast} [15]
-    None
-    None
-    100
-    0
-    100
-    Non-Unique
+    BASE_TYPE = Mage
+    TYPE = Lord
+    CATEGORY = Infantry
+    POINTS = 175
+    CHARACTERISTICS = 4 3 3 3 4 3 2 1 8
+    SPECIAL_RULES = Nehekharan Undead
+    OPTIONAL_MOUNTS = Name: Skeletal Steed, Points: 15
+    MAGIC_ITEM_BUDGET = Points: 100
+    TOTAL_ITEM_BUDGET = copy MAGIC_ITEM_BUDGET
+    MAGE_LEVEL = 3
+    MAGE_UPGRADES = 4 [35]
+    MAGE_LORES = Name: Nehekhara; Name: Light; Name: Death
 
 # Heroes
 
@@ -46,11 +40,13 @@ Tomb Prince
     POINTS = 100
     CHARACTERISTICS = 4 5 3 4 5 3 3 3 9
     SPECIAL_RULES = The Curse, Flammable, My Will Be Done, Nehekharan Undead
-    EQUIPMENT = Armour: Light armour {Mundane} [Armour]
-    OPTIONAL_WEAPONS = Great weapon {Mundane} [Melee] (4), Flail {Mundane} [Melee] (4), Spear {Mundane} [Melee] (2)
-    OPTIONAL_ARMOUR = Shield {Mundane} [Shield] (2)
-    OPTIONAL_MOUNTS = Skeleton Chariot {Chariot} [55], Khemrian Warsphinx {Monster} [210]
-    OPTIONAL_MC_EXTRAS = None
+    EQUIPMENT = Armour - Name: Light armour, Category: Mundane, Type: Armour
+    OPTIONAL_WEAPONS = [Name: Great weapon, Category: Mundane, Type: Melee, Points: 4
+                        Name: Flail, Category: Mundane, Type: Melee, Points: 4
+                        Name: Spear, Category: Mundane, Type: Melee, Points: 2]
+    OPTIONAL_ARMOUR = Name: Shield, Category: Mundane, Type: Shield, Points: 2
+    OPTIONAL_MOUNTS = [Name: Skeleton Chariot,  Points: 55
+                       Name: Khemrian Warsphinx, Points: 210Name: Khemrian Warsphinx, Points: 210, MC_extras: Name - Envenomed Sting | Points - 10 / Name - Fiery Roar | Points - 20]
     MAGIC_ITEM_BUDGET = Points : 50
     TOTAL_ITEM_BUDGET = Points : 50
 
@@ -61,34 +57,30 @@ Tomb Herald
     POINTS = 60
     CHARACTERISTICS = 4 4 3 4 4 2 3 3 8
     SPECIAL_RULES = Flammable, Killing Blow, Nehekharan Undead, Sworn Bodyguard
-    EQUIPMENT = Armour: Light armour {Mundane} [Armour]
-    OPTIONAL_WEAPONS = Great weapon {Mundane} [Melee] (4), Flail {Mundane} [Melee] (4), Spear {Mundane} [Melee] (2), Halberd {Mundane} [Melee] (2)
-    OPTIONAL_ARMOUR = Shield {Mundane} [Shield] (2)
-    OPTIONAL_MOUNTS = Skeleton Chariot {Chariot} [55], Skeletal Steed {Warbeast} [10]
-    OPTIONAL_MC_EXTRAS = Battle Standard Bearer {True} [25]
+    EQUIPMENT = Armour - Name: Light armour, Category: Mundane, Type: Armour
+    OPTIONAL_WEAPONS = [Name: Great weapon, Category: Mundane, Type: Melee, Points: 4
+                        Name: Flail, Category: Mundane, Type: Melee, Points: 4
+                        Name: Spear, Category: Mundane, Type: Melee, Points: 2
+                        Name: Halberd, Category: Mundane, Type: Melee, Points: 2]
+    OPTIONAL_ARMOUR = Name: Shield, Category: Mundane, Type: Shield, Points: 2
+    OPTIONAL_MOUNTS = Name: Skeleton Chariot, Points: 55 ; Name: Skeletal Steed, Points: 10
+    OPTIONAL_MC_EXTRAS = Name: Battle Standard Bearer, Points: 25
     MAGIC_ITEM_BUDGET = Points : 50
     TOTAL_ITEM_BUDGET = Points : 50
 
 Liche Priest
-    Hero, Mage
-    1
-    2 [35]
-    Nehekhara, Light, Death
-    Infantry
-    70
-    1, 1
-    4 3 3 3 3 2 2 1 7
-    Nehekharan Undead
-    None
-    None
-    None
-    Skeletal Steed {Warbeast} [10]
-    None
-    None
-    50
-    0
-    50
-    Non-Unique
+    BASE_TYPE = Mage
+    TYPE = Hero
+    CATEGORY = Infantry
+    POINTS = 70
+    CHARACTERISTICS = 4 3 3 3 3 2 2 1 7
+    SPECIAL_RULES = Nehekharan Undead
+    OPTIONAL_MOUNTS = Name: Skeletal Steed, Points: 10
+    MAGIC_ITEM_BUDGET = Points: 50
+    TOTAL_ITEM_BUDGET = copy MAGIC_ITEM_BUDGET
+    MAGE_LEVEL = 1
+    MAGE_UPGRADES = 2 [35]
+    MAGE_LORES = Name: Nehekhara; Name: Light; Name: Death
 
 Nectrotect
     BASE_TYPE = Melee
@@ -97,345 +89,210 @@ Nectrotect
     POINTS = 60
     CHARACTERISTICS = 4 3 3 4 4 2 3 2 7
     SPECIAL_RULES = Flammable, Nehekharan Undead, Stone Shaper, Wrath of the Creator, Hatred
-    EQUIPMENT = Armour: Light armour {Mundane} [Armour], Weapon: Two hand weapons {Mundane} [Melee]
-    OPTIONAL_WEAPONS = None
-    OPTIONAL_ARMOUR = None
-    OPTIONAL_MOUNTS = None
-    OPTIONAL_MC_EXTRAS = None
+    EQUIPMENT = Armour - Name: Light armour, Category: Mundane, Type: Armour ; Weapon - Name: Two hand weapons, Category: Mundane, Type: Melee
     MAGIC_ITEM_BUDGET = Points : 50
     TOTAL_ITEM_BUDGET = Points : 50
 
 # Core
 
 Skeleton Warriors
-    Core, Infantry, Normal
-    4
-    10, None
-    4 2 2 3 3 1 2 1 5
-    4 2 2 3 3 1 2 2 5
-    Nehekharan Undead
-    Nehekharan Undead
-    Armour: Shield {Mundane} [Shield]
-    None
-    Spears {Mundane} [Melee] (1)
-    None
-    Light armour {Mundane} [Armour] (1)
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Master of Arms [10]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Infantry
+    POINTS = 4
+    SIZE = 10, inf
+    CHARACTERISTICS = 4 2 2 3 3 1 2 1 5
+    CHAMPION_CHARACTERISTICS = 4 2 2 3 3 1 2 2 5
+    SPECIAL_RULES = Nehekharan Undead
+    EQUIPMENT = Armour - Name: Shield, Category: Mundane, Type: Shield
+    OPTIONAL_WEAPONS = Name: Spears, Category: Mundane, Type: Melee, Points: 1
+    OPTIONAL_ARMOUR = Name: Light armour, Category: Mundane, Type: Armour, Points: 1
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Master of Arms, Points: 10
 
 Skeleton Archers
-    Core, Infantry, Normal
-    6
-    10, None
-    4 2 2 3 3 1 2 1 5
-    4 2 3 3 3 1 2 1 5
-    Arrows of Asaph, Nehekharan Undead
-    Arrows of Asaph, Nehekharan Undead
-    Weapon: Bow {Mundane} [Ballistic]
-    None
-    None
-    None
-    Light armour {Mundane} [Armour] (1)
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Master of Arrows [10]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Infantry
+    POINTS = 6
+    SIZE = 10, inf
+    CHARACTERISTICS = 4 2 2 3 3 1 2 1 5
+    CHAMPION_CHARACTERISTICS = 4 2 3 3 3 1 2 1 5
+    SPECIAL_RULES = Arrows of Asaph, Nehekharan Undead
+    EQUIPMENT = Weapon - Name: Bow, Category: Mundane, Type: Ballistic
+    OPTIONAL_ARMOUR = Name: Light armour, Category: Mundane, Type: Armour, Points: 1
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Master of Arrows, Points: 10
 
 Skeleton Horsemen
-    Core, Cavalry, Normal
-    12
-    5, None
-    4 2 2 3 3 1 2 1 5
-    4 2 2 3 3 1 2 2 5
-    Nehekharan Undead, Vanguard
-    Nehekharan Undead, Vanguard
-    Armour: Shield {Mundane} [Shield], Weapon: Spear {Mundane} [Melee]
-    None
-    None
-    None
-    Light armour {Mundane} [Armour] (2)
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Master of Horse [10]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Cavalry
+    POINTS = 12
+    SIZE = 5, inf
+    CHARACTERISTICS = 4 2 2 3 3 1 2 1 5
+    CHAMPION_CHARACTERISTICS = 4 2 2 3 3 1 2 2 5
+    SPECIAL_RULES = Nehekharan Undead, Vanguard
+    EQUIPMENT = Armour - Name: Shield, Category: Mundane, Type: Shield ; Weapon - Name: Spear, Category: Mundane, Type: Melee
+    OPTIONAL_ARMOUR = Name: Light armour, Category: Mundane, Type: Armour, Points: 1
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Master of Horse, Points: 10
 
 Skeleton Horse Archers
-    Core, Cavalry, Normal
-    14
-    5, None
-    4 2 2 3 3 1 2 1 5
-    4 2 2 3 3 1 2 2 5
-    Arrows of Asaph, Fast Cavalry, Nehekharan Undead, Scouts
-    Arrows of Asaph, Fast Cavalry, Nehekharan Undead, Scouts
-    Armour: Shield {Mundane} [Shield], Weapon: Bow {Mundane} [Ballistic]
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Master of Scouts [10]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Cavalry
+    POINTS = 14
+    SIZE = 5, inf
+    CHARACTERISTICS = 4 2 2 3 3 1 2 1 5
+    CHAMPION_CHARACTERISTICS = 4 2 2 3 3 1 2 2 5
+    SPECIAL_RULES = Arrows of Asaph, Fast Cavalry, Nehekharan Undead, Scouts
+    EQUIPMENT = Armour - Name: Shield, Category: Mundane, Type: Shield ; Weapon - Name: Bow, Category: Mundane, Type: Ballistic
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Master of Scouts, Points: 10
 
 Skeleton Chariots
-    Core, Chariot, Normal
-    55
-    3, None
-    - 3 2 3 - - 2 2 7
-    - 3 2 3 - - 2 3 7
-    Arrows of Asaph
-    Arrows off Asaph
-    Weapon: Spear {Mundane} [Melee], Weapon: Bow {Mundane} [Ballistic]
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Master of Chariots [10]
-    0
-    0
-    0
-    25
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Chariot
+    POINTS = 55
+    SIZE = 3, inf
+    CHARACTERISTICS = - 3 2 3 - - 2 2 7
+    CHAMPION_CHARACTERISTICS = - 3 2 3 - - 2 3 7
+    SPECIAL_RULES = Arrows of Asaph
+    EQUIPMENT = Weapon - Name: Spear, Category: Mundane, Type: Melee ; Weapon - Name: Bow, Category: Mundane, Type: Ballistic
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Master of Chariots, Points: 10
+    BANNER_BUDGET = 25
 
 # Special
 
 Tomb Guard
-    Special, Infantry, Normal
-    11
-    10, None
-    4 3 3 4 4 1 3 1 8
-    4 3 3 4 4 1 3 2 8
-    Killing Blow, Nehekharan Undead
-    Killing Blow, Nehekharan Undead
-    Armour: Shield {Mundane} [Shield], Armour: Light armour {Mundane} [Armour]
-    None
-    Halberds {Mundane} [Melee] (2)
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Tomb Captain [10]
-    0
-    0
-    0
-    50
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Infantry
+    POINTS = 11
+    SIZE = 10, inf
+    CHARACTERISTICS = 4 3 3 4 4 1 3 1 8
+    CHAMPION_CHARACTERISTICS = 4 3 3 4 4 1 3 2 8
+    SPECIAL_RULES = Killing Blow, Nehekharan Undead
+    EQUIPMENT = Armour - Name: Shield, Category: Mundane, Type: Shield ; Armour - Name: Light armour, Category: Mundane, Type: Armour
+    OPTIONAL_WEAPONS = Name: Halberds, Category: Mundane, Type: Melee, Points: 2
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Tomb Captain, Points: 10
+    BANNER_BUDGET = 50
 
 Necropolis Knights
-    Special, Monstrous Cavalry, Normal
-    65
-    3, None
-    4 4 3 4 4 1 3 2 8
-    4 4 3 4 4 1 3 3 8
-    Animated Construct, Killing Blow, Nehekharan Undead, Stone Hide
-    Animated Construct, Killing Blow, Nehekharan Undead, Stone Hide
-    Weapon: Spear {Mundane} [Melee]
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Entombed Beneath the Sands {False} [5]
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Necropolis Captain [10]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Monstrous Cavalry
+    POINTS = 65
+    SIZE = 3, inf
+    CHARACTERISTICS = 4 4 3 4 4 1 3 2 8
+    CHAMPION_CHARACTERISTICS = 4 4 3 4 4 1 3 3 8
+    SPECIAL_RULES = Animated Construct, Killing Blow, Nehekharan Undead, Stone Hide
+    EQUIPMENT = Weapon - Name: Spear, Category: Mundane, Type: Melee
+    OPTIONAL_MC_EXTRAS = Name: Entombed Beneath the Sands, Points: 5
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Necropolis Captain, Points: 10
 
 Tomb Scorpion
-    Special, Monstrous Beast, Normal
-    60
-    1, 1
-    7 4 0 5 5 3 3 4 8
-    7 4 0 5 5 3 3 4 8
-    Animated Construct, Entombed Beneath the Sands, Killing Blow, Magic Resistance (1), Nehekharan Undead, Poisoned Attacks
-    Animated Construct, Entombed Beneath the Sands, Killing Blow, Magic Resistance (1), Nehekharan Undead, Poisoned Attacks
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Monstrous Beast
+    POINTS = 60
+    CHARACTERISTICS = 7 4 0 5 5 3 3 4 8
+    SPECIAL_RULES = Animated Construct, Entombed Beneath the Sands, Killing Blow, Magic Resistance (1), Nehekharan Undead, Poisoned Attacks
 
 Ushabti
-    Special, Monstrous Infantry, Normal
-    50
-    3, None
-    5 4 2 4 4 3 3 3 8
-    5 4 2 4 4 3 3 4 8
-    Animated Construct, Arrows of Asaph, Nehekharan Undead
-    Animated Construct, Arrows of Asaph, Nehekharan Undead
-    Weapon: Great weapon {Mundane} [Melee]
-    None
-    Additional hand weapons {Mundane} [Melee] (0), Great bows {Mundane} [Ballistic] (0)
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Ushabti Ancient [10]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Monstrous Infantry
+    POINTS = 50
+    SIZE = 3, inf
+    CHARACTERISTICS = 5 4 2 4 4 3 3 3 8
+    CHAMPION_CHARACTERISTICS = 5 4 2 4 4 3 3 4 8
+    SPECIAL_RULES = Animated Construct, Arrows of Asaph, Nehekharan Undead
+    EQUIPMENT = Weapon - Name: Great weapon, Category: Mundane, Type: Melee
+    OPTIONAL_WEAPONS = [Name: Additional hand weapons, Category: Mundane, Type: Melee, Points: 0, Replacements: Ballistic
+                        Name: Great bows, Category: Mundane, Type: Ballistic, Points: 0, Replacements: Melee]
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Ushabti Ancient, Points: 10
 
 Tomb Swarm
-    Special, Swarm, Normal
-    40
-    2, 10
-    4 3 0 2 2 5 1 5 10
-    Entombed Beneath the Sands, Nehekharan Undead, Poisoned Attacks
-    None
-    None
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Swarm
+    POINTS = 40
+    SIZE = 2, 10
+    CHARACTERISTICS = 4 3 0 2 2 5 1 5 10
+    SPECIAL_RULES = Entombed Beneath the Sands, Nehekharan Undead, Poisoned Attacks
 
 Carrion
-    Special, Warbeast, Normal
-    24
-    3, None
-    2 3 0 4 4 2 3 3 4
-    2 3 0 4 4 2 3 3 4
-    Fly, Nehekharan Undead
-    Fly, Nehekharan Undead
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Warbeast
+    POINTS = 24
+    SIZE = 3, inf
+    CHARACTERISTICS = 2 3 0 4 4 2 3 3 4
+    SPECIAL_RULES = Fly, Nehekharan Undead
 
 Khemrian Warsphinx
-    Special, Monster, Normal
-    210
-    1, 1
-    6 4 0 5 8 5 1 4 8
-    Animated Construct, Howdah Crew, Killing Blow, Large Target, Nehekharan Undead, Terror, Thundercrush Attack
-    None
-    Envenomed Sting {True} [10], Fiery Roar {True} [20]
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Monster
+    POINTS = 210
+    CHARACTERISTICS = 6 4 0 5 8 5 1 4 8
+    SPECIAL_RULES = Animated Construct, Howdah Crew, Killing Blow, Large Target, Nehekharan Undead, Terror, Thundercrush Attack
+    OPTIONAL_MC_EXTRAS = Name: Envenomed Sting, Points: 10 ; Name: Fiery Roar, Points: 20
 
 Sepulchral Stalkers
-    Special, Monstrous Beast, Normal
-    55
-    3, None
-    7 3 3 4 4 3 3 2 8
-    7 3 3 4 4 3 3 2 8
-    Animated Construct, Entombed Beneath the Sands, Nehekharan Undead, Transmogrifying Gaze
-    Animated Construct, Entombed Beneath the Sands, Nehekharan Undead, Transmogrifying Gaze
-    Weapon: Halberd {Mundane} [Melee]
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Monstrous Beast
+    POINTS = 55
+    SIZE = 3, inf
+    CHARACTERISTICS = 7 3 3 4 4 3 3 2 8
+    SPECIAL_RULES = Animated Construct, Entombed Beneath the Sands, Nehekharan Undead, Transmogrifying Gaze
+    EQUIPMENT = Weapon - Name: Halberd, Category: Mundane, Type: Melee
 
 # Rare
 
 Necrolith Colossus
-    Rare, Monster, Normal
-    170
-    1, 1
-    6 3 2 6 6 5 1 4 8
-    Animated Construct, Arrows of Asaph, Large Target, Nehekharan Undead, Terror, Unstoppable Assault
-    None
-    Additional hand weapon {True} [5], Great weapon {True} [10], Bow of the desert {True} [20]
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Monster
+    POINTS = 170
+    CHARACTERISTICS = 6 3 2 6 6 5 1 4 8
+    SPECIAL_RULES = Animated Construct, Arrows of Asaph, Large Target, Nehekharan Undead, Terror, Unstoppable Assault
+    OPTIONAL_WEAPONS = [Name: Great weapon, Category: Mundane, Type: Melee, Points: 10
+                        Name: Additional hand weapon, Category: Mundane, Type: Melee, Points: 5
+                        Name: Bow of the desert, Category: Mundane, Type: Ballistic, Points: 20, Replacements: Melee]
 
 Hierotitan
-    Rare, Monster, Normal
-    175
-    1, 1
-    6 3 0 6 6 5 1 3 8
-    Animated Construct, Large Target, Nehekharan Undead, Spirit Conduit, Terror
-    None
-    None
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Monster
+    POINTS = 175
+    CHARACTERISTICS = 6 3 0 6 6 5 1 3 8
+    SPECIAL_RULES = Animated Construct, Large Target, Nehekharan Undead, Spirit Conduit, Terror
 
 Necrosphinx
-    Special, Monster, Normal
-    225
-    1, 1
-    6 4 0 5 8 5 1 5 8
-    Animated Construct, Decapitating Strike, Fly, Killing Blow, Large Target, Nehekharan Undead, Terror
-    None
-    Envenomed Sting {True} [10]
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Monster
+    POINTS = 225
+    CHARACTERISTICS = 6 4 0 5 8 5 1 5 8
+    SPECIAL_RULES = Animated Construct, Decapitating Strike, Fly, Killing Blow, Large Target, Nehekharan Undead, Terror
+    OPTIONAL_MC_EXTRAS = Name: Envenomed Sting, Points: 10
 
 Screaming Skull Catapult
-    Rare, Warmachine, Normal
-    90
-    1, 1
-    - - - - 7 3 - - -
-    4 2 2 3 3 1 2 1 5
-    Nehekharan Undead, Screaming Skulls
-    None
-    Skulls of the Foe {True} [30]
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Warmachine
+    POINTS = 90
+    CHARACTERISTICS = - - - - 7 3 - - -
+    CHAMPION_CHARACTERISTICS = 4 2 2 3 3 1 2 1 5
+    SPECIAL_RULES = Nehekharan Undead, Screaming Skulls
+    OPTIONAL_MC_EXTRAS = Name: Skulls of the Foe, Points: 30
 
 Casket of Souls
-    Rare, Warmachine, Normal
-    135
-    1, 1
-    - - - - 10 3 - - -
-    4 3 3 3 3 1 3 2 8
-    Covenant of Power, Killing Blow, Light of Death, Nehekharan Undead, Unleashed Souls
-    None
-    None
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Warmachine
+    POINTS = 135
+    CHARACTERISTICS = - - - - 10 3 - - -
+    CHAMPION_CHARACTERISTICS = 4 3 3 3 3 1 3 2 8
+    SPECIAL_RULES = Covenant of Power, Killing Blow, Light of Death, Nehekharan Undead, Unleashed Souls
