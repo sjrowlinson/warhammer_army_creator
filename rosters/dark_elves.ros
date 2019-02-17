@@ -1,549 +1,416 @@
 # Lords
 
 Dreadlord
-    Lord, Melee
-    Infantry
-    140
-    1, 1
-    5 7 7 4 3 3 8 4 10
-    Always Strikes First, Hatred (High Elves), Murderous Prowess
-    Armour: Light armour {Mundane} [Armour]
-    Additional hand weapon {Mundane} [Melee] (3), Halberd {Mundane} [Melee] (3), Lance {Mundane} [Melee] (7), Great weapon {Mundane} [Melee] (6), Repeater crossbow {Mundane} [Ballistic] (5), Repeater handbow {Mundane} [Ballistic] (5), Brace of repeater handbows {Mundane} [Ballistic] (10)
-    Heavy armour {Mundane} [Armour] (6), Shield {Mundane} [Shield] (3)
-    Dark Steed {Cavalry} [20], Cold One {Monstrous Beast} [25], Dark Pegasus {Monstrous Beast} [50], Cold One Chariot {Chariot} [120], Manticore {Monster} [150], Black Dragon {Monster} [300]
-    None
-    Sea Dragon Cloak {True} [8]
-    100
-    0
-    100
-    Non-Unique
+    BASE_TYPE = Melee
+    TYPE = Lord
+    CATEGORY = Infantry
+    POINTS = 140
+    CHARACTERISTICS = 5 7 7 4 3 3 8 4 10
+    SPECIAL_RULES = Always Strikes First, Hatred (High Elves), Murderous Prowess
+    EQUIPMENT = Armour - Name: Light armour, Category: Mundane, Type: Armour
+    OPTIONAL_WEAPONS = [Name: Additional hand weapon, Category: Mundane, Type: Melee, Points: 3
+                        Name: Halberd, Category: Mundane, Type: Melee, Points: 3
+                        Name: Lance, Category: Mundane, Type: Melee, Points: 7
+                        Name: Great weapon, Category: Mundane, Type: Melee, Points: 6
+                        Name: Repeater crossbow, Category: Mundane, Type: Ballistic, Points: 5
+                        Name: Repeater handbow, Category: Mundane, Type: Ballistic, Points: 5
+                        Name: Brace of repeater handbows, Category: Mundane, Type: Ballistic, Points: 10]
+    OPTIONAL_ARMOUR = [Name: Heavy armour, Category: Mundane, Type: Armour, Points: 6
+                       Name: Shield, Category: Mundane, Type: Shield, Points: 3]
+    OPTIONAL_MOUNTS = [Name: Dark Steed, Points: 20
+                       Name: Cold One, Points: 25,
+                       Name: Cold One Chariot, Points: 120
+                       Name: Dark Pegasus, Points: 50
+                       Name: Manticore, Points: 150, MC_extras: Name - Iron hard skin | Points - 20 / Name - Blind Rage | Points - 25
+                       Name: Black Dragon, Points: 300]
+    OPTIONAL_MC_EXTRAS = Name : Sea Dragon Cloak, Points: 8
+    MAGIC_ITEM_BUDGET = Points : 100
+    TOTAL_ITEM_BUDGET = Points : 100
 
 Supreme Sorceress
-    Lord, Mage
-    3
-    4 [35]
-    Dark Magic, Lores
-    Infantry
-    185
-    1, 1
-    5 4 4 3 3 3 5 1 9
-    Always Strikes First, Hatred (High Elves), Hekarti's Blessing, Murderous Prowess
-    None
-    None
-    None
-    Dark Steed {Cavalry} [20], Cold One {Monstrous Beast} [25], Dark Pegasus {Monstrous Beast} [50], Manticore {Monster} [150], Black Dragon {Monster} [300]
-    None
-    None
-    100
-    0
-    100
-    Non-Unique
+    BASE_TYPE = Mage
+    TYPE = Lord
+    CATEGORY = Infantry
+    POINTS = 185
+    CHARACTERISTICS = 5 4 4 3 3 3 5 1 9
+    SPECIAL_RULES = Always Strikes First, Hatred (High Elves), Hekarti's Blessing, Murderous Prowess
+    OPTIONAL_MOUNTS = [Name: Dark Steed, Points: 20
+                       Name: Cold One, Points: 25,
+                       Name: Dark Pegasus, Points: 50
+                       Name: Manticore, Points: 150, MC_extras: Name - Iron hard skin | Points - 20 / Name - Blind Rage | Points - 25
+                       Name: Black Dragon, Points: 300]
+    MAGIC_ITEM_BUDGET = Points : 100
+    TOTAL_ITEM_BUDGET = Points : 100
+    MAGE_LEVEL = 3
+    MAGE_UPGRADES = 4 [35]
+    MAGE_LORES = [Name: Dark Magic
+                  Name: Fire
+                  Name: Beasts
+                  Name: Metal
+                  Name: Light
+                  Name: Life
+                  Name: Heavens
+                  Name: Shadow
+                  Name: Death]
 
 # TODO: handle Sea Dragon cloak in equipment
 High Beastmaster
-    Lord, Melee
-    Infantry
-    300
-    1, 1
-    5 7 7 4 3 3 8 3 9
-    Always Strikes First, Beastslaver, Hatred (High Elves), Murderous Prowess
-    Armour: Light armour {Mundane} [Armour]
-    None
-    None
-    Manticore {Monster} [0], Scourgerunner Chariot {Chariot} [0]
-    None
-    None
-    100
-    0
-    100
-    Non-Unique
+    BASE_TYPE = Melee
+    TYPE = Lord
+    CATEGORY = Infantry
+    POINTS = 300
+    CHARACTERISTICS = 5 7 7 4 3 3 8 3 9
+    SPECIAL_RULES = Always Strikes First, Beastslaver, Hatred (High Elves), Murderous Prowess
+    EQUIPMENT = Armour - Name: Light armour, Category: Mundane, Type: Armour
+    OPTIONAL_MOUNTS = [Name: Manticore, Points: 0, MC_extras: Name - Iron hard skin | Points - 20 / Name - Blind Rage | Points - 25
+                       Name: Scourgerunner Chariot, Points: 0]
+    MAGIC_ITEM_BUDGET = Points : 100
+    TOTAL_ITEM_BUDGET = Points : 100
 
 # TODO: handle Sea Dragon cloak in equipment
 Black Ark Fleetmaster
-    Lord, Melee
-    Infantry
-    155
-    1, 1
-    5 6 6 4 3 3 7 3 9
-    Always Strikes First, Hatred (High Elves), Murderous Prowess, Show No Weakness
-    Armour: Light armour {Mundane} [Armour], Weapon: Two hand weapons {Mundane} [Melee]
-    None
-    None
-    None
-    None
-    None
-    50
-    0
-    50
-    Non-Unique
+    BASE_TYPE = Melee
+    TYPE = Lord
+    CATEGORY = Infantry
+    POINTS = 155
+    CHARACTERISTICS = 5 6 6 4 3 3 7 3 9
+    SPECIAL_RULES = Always Strikes First, Hatred (High Elves), Murderous Prowess, Show No Weakness
+    EQUIPMENT = Armour - Name: Light armour, Category: Mundane, Type: Armour ; Weapon - Name: Two hand weapons, Category: Mundane, Type: Melee
+    MAGIC_ITEM_BUDGET = Points : 100
+    TOTAL_ITEM_BUDGET = Points : 100
 
 # Heroes
 
 Sorceress
-    Hero, Mage
-    1
-    2 [35]
-    Dark Magic, Lores
-    Infantry
-    80
-    1, 1
-    5 4 4 3 3 2 5 1 8
-    Always Strikes First, Hatred (High Elves), Hekarti's Blessing, Murderous Prowess
-    None
-    None
-    None
-    Dark Steed {Cavalry} [10], Cold One {Monstrous Beast} [12], Dark Pegasus {Monstrous Beast} [50]
-    None
-    None
-    50
-    0
-    50
-    Non-Unique
+    BASE_TYPE = Mage
+    TYPE = Hero
+    CATEGORY = Infantry
+    POINTS = 185
+    CHARACTERISTICS = 5 4 4 3 3 2 5 1 8
+    SPECIAL_RULES = Always Strikes First, Hatred (High Elves), Hekarti's Blessing, Murderous Prowess
+    OPTIONAL_MOUNTS = [Name: Dark Steed, Points: 20
+                       Name: Cold One, Points: 25,
+                       Name: Dark Pegasus, Points: 50]
+    MAGIC_ITEM_BUDGET = Points : 50
+    TOTAL_ITEM_BUDGET = Points : 50
+    MAGE_LEVEL = 1
+    MAGE_UPGRADES = 2 [35]
+    MAGE_LORES = [Name: Dark Magic
+                  Name: Fire
+                  Name: Beasts
+                  Name: Metal
+                  Name: Light
+                  Name: Life
+                  Name: Heavens
+                  Name: Shadow
+                  Name: Death]
 
 Master
-    Hero, Melee
-    Infantry
-    70
-    1, 1
-    5 7 7 4 3 3 8 4 10
-    Always Strikes First, Hatred (High Elves), Murderous Prowess
-    Armour: Light armour {Mundane} [Armour]
-    Additional hand weapon {Mundane} [Melee] (2), Halberd {Mundane} [Melee] (2), Lance {Mundane} [Melee] (6), Great weapon {Mundane} [Melee] (4), Repeater crossbow {Mundane} [Ballistic] (5), Repeater handbow {Mundane} [Ballistic] (5), Brace of repeater handbows {Mundane} [Ballistic] (10)
-    Heavy armour {Mundane} [Armour] (4), Shield {Mundane} [Shield] (2)
-    Dark Steed {Cavalry} [10], Cold One {Monstrous Beast} [12], Dark Pegasus {Monstrous Beast} [50], Cold One Chariot {Chariot} [120], Manticore {Monster} [150]
-    None
-    Sea Dragon Cloak {True} [8], Battle Standard Bearer {True} [25]
-    100
-    0
-    100
-    Non-Unique
+    BASE_TYPE = Melee
+    TYPE = Hero
+    CATEGORY = Infantry
+    POINTS = 70
+    CHARACTERISTICS = 5 7 7 4 3 3 8 4 10
+    SPECIAL_RULES = Always Strikes First, Hatred (High Elves), Murderous Prowess
+    EQUIPMENT = Armour - Name: Light armour, Category: Mundane, Type: Armour
+    OPTIONAL_WEAPONS = [Name: Additional hand weapon, Category: Mundane, Type: Melee, Points: 2
+                        Name: Halberd, Category: Mundane, Type: Melee, Points: 2
+                        Name: Lance, Category: Mundane, Type: Melee, Points: 6
+                        Name: Great weapon, Category: Mundane, Type: Melee, Points: 4
+                        Name: Repeater crossbow, Category: Mundane, Type: Ballistic, Points: 5
+                        Name: Repeater handbow, Category: Mundane, Type: Ballistic, Points: 5
+                        Name: Brace of repeater handbows, Category: Mundane, Type: Ballistic, Points: 10]
+    OPTIONAL_ARMOUR = [Name: Heavy armour, Category: Mundane, Type: Armour, Points: 4
+                       Name: Shield, Category: Mundane, Type: Shield, Points: 2]
+    OPTIONAL_MOUNTS = [Name: Dark Steed, Points: 10
+                       Name: Cold One, Points: 12
+                       Name: Cold One Chariot, Points: 120
+                       Name: Dark Pegasus, Points: 50
+                       Name: Manticore, Points: 150, MC_extras: Name - Iron hard skin | Points - 20 / Name - Blind Rage | Points - 25]
+    OPTIONAL_MC_EXTRAS = Name : Sea Dragon Cloak, Points: 8 ; Name : Battle Standard Bearer, Points : 25
+    MAGIC_ITEM_BUDGET = Points : 50
+    TOTAL_ITEM_BUDGET = Points : 50
 
-# TODO: 50 point magic item budget only for a single magic weapon
 Death Hag
-    Hero, Melee
-    Infantry
-    85
-    1, 1
-    5 6 6 4 3 2 7 3 9
-    Always Strikes First, Frenzy, Hatred (High Elves), Murderous Prowess, Poisoned Attacks
-    Weapon: Two hand weapons {Mundane} [Melee]
-    None
-    None
-    Cauldron of Blood {Chariot} [190]
-    Cry of War {True} [15], Witchbrew {True} [30], Rune of Khaine {True} [40]
-    Battle Standard Bearer {True} [25]
-    50
-    0
-    50
-    Non-Unique
+    BASE_TYPE = Melee
+    TYPE = Hero
+    CATEGORY = Infantry
+    POINTS = 85
+    CHARACTERISTICS = 5 6 6 4 3 2 7 3 9
+    SPECIAL_RULES = Always Strikes First, Frenzy, Hatred (High Elves), Murderous Prowess, Poisoned Attacks
+    EQUIPMENT = Weapon - Name: Two hand weapons, Category: Mundane, Type: Melee
+    OPTIONAL_MOUNTS = Name: Cauldron of Blood, Points: 190
+    OPTIONAL_OCO_EXTRAS = [Name: Cry of War, Points: 15
+                           Name: Witchbrew, Points: 30
+                           Name: Rune of Khaine, Points: 40]
+    OPTIONAL_MC_EXTRAS = Name : Battle Standard Bearer, Points : 25
+    MAGIC_ITEM_BUDGET = Points : 50, Restrictions : Limit - 1 / ItemType - Weapon
+    TOTAL_ITEM_BUDGET = copy MAGIC_ITEM_BUDGET
 
 Khainite Assassin
-    Hero, Melee
-    Infantry
-    90
-    1, 1
-    5 9 9 4 3 2 10 3 8
-    A Killer not a Leader, Always Strikes First, Hatred (High Elves), Hidden, Immune to Psychology, Murderous Prowess, Poisoned Attacks
-    Weapon: Throwing weapons {Mundane} [Ballistic]
-    Additional hand weapon {Mundane} [Melee] (2), Repeater handbow {Mundane} [Ballistic] (5)
-    None
-    None
-    Black Lotus {True} [15], Dark Venom {True} [20], Manbane {True} [20]
-    None
-    50
-    0
-    50
-    Non-Unique
+    BASE_TYPE = Melee
+    TYPE = Hero
+    CATEGORY = Infantry
+    POINTS = 90
+    CHARACTERISTICS = 5 9 9 4 3 2 10 3 8
+    SPECIAL_RULES = A Killer not a Leader, Always Strikes First, Hatred (High Elves), Hidden, Immune to Psychology, Murderous Prowess, Poisoned Attacks
+    EQUIPMENT =  Weapon - Name: Throwing weapons, Category: Mundane, Type: Ballistic
+    OPTIONAL_WEAPONS = [Name: Additional hand weapon, Category: Mundane, Type: Melee, Points: 2
+                        Name: Repeater handbow, Category: Mundane, Type: Ballistic, Points: 5]
+    OPTIONAL_OCO_EXTRAS = [Name: Black Lotus, Points: 15,
+                           Name: Dark Venom, Points: 20,
+                           Name: Manbane, Points: 20]
+    MAGIC_ITEM_BUDGET = Points : 50
+    TOTAL_ITEM_BUDGET = Points : 50
 
 # Core
 
 Dreadspears
-    Core, Infantry, Normal
-    9
-    10, None
-    5 4 4 3 3 1 5 1 8
-    5 4 4 3 3 1 5 2 8
-    Always Strikes First, Hatred (High Elves), Murderous Prowess
-    Always Strikes First, Hatred (High Elves), Murderous Prowess
-    Weapon: Spear {Mundane} [Melee], Armour: Light armour {Mundane} [Armour], Armour: Shield {Mundane} [Shield]
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Lordling [10]
-    0
-    0
-    0
-    25
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Infantry
+    POINTS = 9
+    SIZE = 10, inf
+    CHARACTERISTICS = 5 4 4 3 3 1 5 1 8
+    CHAMPION_CHARACTERISTICS = 5 4 4 3 3 1 5 2 8
+    SPECIAL_RULES = Always Strikes First, Hatred (High Elves), Murderous Prowess
+    EQUIPMENT = [Weapon - Name: Spear, Category: Mundane, Type: Melee
+                 Armour - Name: Light armour, Category: Mundane, Type: Armour
+                 Armour - Name: Shield, Category: Mundane, Type: Shield]
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Lordling, Points: 10
+    BANNER_BUDGET = 25
 
 Bleakswords
-    Core, Infantry, Normal
-    9
-    10, None
-    5 4 4 3 3 1 5 1 8
-    5 4 4 3 3 1 5 2 8
-    Always Strikes First, Hatred (High Elves), Murderous Prowess
-    Always Strikes First, Hatred (High Elves), Murderous Prowess
-    Armour: Light armour {Mundane} [Armour], Armour: Shield {Mundane} [Shield]
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Lordling [10]
-    0
-    0
-    0
-    25
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Infantry
+    POINTS = 9
+    SIZE = 10, inf
+    CHARACTERISTICS = 5 4 4 3 3 1 5 1 8
+    CHAMPION_CHARACTERISTICS = 5 4 4 3 3 1 5 2 8
+    SPECIAL_RULES = Always Strikes First, Hatred (High Elves), Murderous Prowess
+    EQUIPMENT = [Armour - Name: Light armour, Category: Mundane, Type: Armour
+                 Armour - Name: Shield, Category: Mundane, Type: Shield]
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Lordling, Points: 10
+    BANNER_BUDGET = 25
 
 Darkshards
-    Core, Infantry, Normal
-    12
-    10, None
-    5 4 4 3 3 1 5 1 8
-    5 4 5 3 3 1 5 1 8
-    Always Strikes First, Hatred (High Elves), Murderous Prowess
-    Always Strikes First, Hatred (High Elves), Murderous Prowess
-    Armour: Light armour {Mundane} [Armour], Weapon: Repeater crossbow {Mundane} [Ballistic]
-    None
-    None
-    None
-    Shields {Mundane} [Shield] (1)
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Guardmaster [10]
-    0
-    0
-    0
-    25
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Infantry
+    POINTS = 12
+    SIZE = 10, inf
+    CHARACTERISTICS = 5 4 4 3 3 1 5 1 8
+    CHAMPION_CHARACTERISTICS = 5 4 5 3 3 1 5 1 8
+    SPECIAL_RULES = Always Strikes First, Hatred (High Elves), Murderous Prowess
+    EQUIPMENT = [Weapon - Name: Repeater crossbow, Category: Mundane, Type: Ballistic
+                 Armour - Name: Light armour, Category: Mundane, Type: Armour]
+    OPTIONAL_ARMOUR = Name: Shields, Category: Mundane, Type: Shield, Points: 1
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Guardmaster, Points: 10
+    BANNER_BUDGET = 25
 
 # TODO: handle Sea Dragon cloak in equipment
 Black Ark Corsairs
-    Core, Infantry, Normal
-    9
-    10, None
-    5 4 4 3 3 1 5 1 8
-    5 4 4 3 3 1 5 2 8
-    Always Strikes First, Hatred (High Elves), Murderous Prowess
-    Always Strikes First, Hatred (High Elves), Murderous Prowess
-    Armour: Light armour {Mundane} [Armour]
-    None
-    Additional hand weapons {Mundane} [Melee] (2), Repeater handbows {Mundane} [Ballistic] (2)
-    Brace of repeater handbows {Mundane} [Ballistic] (4)
-    None
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Reaver [10]
-    0
-    0
-    0
-    25
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Infantry
+    POINTS = 9
+    SIZE = 10, inf
+    CHARACTERISTICS = 5 4 4 3 3 1 5 1 8
+    CHAMPION_CHARACTERISTICS = 5 4 4 3 3 1 5 2 8
+    SPECIAL_RULES = Always Strikes First, Hatred (High Elves), Murderous Prowess
+    EQUIPMENT = Armour - Name: Light armour, Category: Mundane, Type: Armour
+    OPTIONAL_WEAPONS = [Name: Additional hand weapons, Category: Mundane, Type: Melee, Points: 2, Replacements: Ballistic
+                        Name: Repeater handbows, Category: Mundane, Type: Ballistic, Points: 2, Replacements: Melee]
+    CHAMPION_OPTIONAL_WEAPONS = Name: Brace of repeater handbows, Category: Mundane, Type: Ballistic, Points: 4
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Reaver, Points: 10
+    BANNER_BUDGET = 25
 
 Dark Riders
-    Core, Cavalry, Normal
-    16
-    5, None
-    5 4 4 3 3 1 5 1 8
-    5 4 5 3 3 1 5 1 8
-    Always Strikes First, Fast Cavalry, Hatred (High Elves), Murderous Prowess
-    Always Strikes First, Fast Cavalry, Hatred (High Elves), Murderous Prowess
-    Weapon: Spear {Mundane} [Melee], Armour: Light armour {Mundane} [Armour]
-    None
-    Repeater crossbows {Mundane} [Ballistic] (3)
-    None
-    Shields {Mundane} [Shield] (2)
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Herald [10]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Cavalry
+    MOUNT = Dark Steed
+    POINTS = 16
+    SIZE = 5, inf
+    CHARACTERISTICS = 5 4 4 3 3 1 5 1 8
+    CHAMPION_CHARACTERISTICS = 5 4 5 3 3 1 5 1 8
+    SPECIAL_RULES = Always Strikes First, Fast Cavalry, Hatred (High Elves), Murderous Prowess
+    EQUIPMENT = Weapon - Name: Spear, Category: Mundane, Type: Melee ; Armour - Name: Light armour, Category: Mundane, Type: Armour
+    OPTIONAL_WEAPONS = Name: Repeater crossbows, Category: Mundane, Type: Ballistic, Points: 3
+    OPTIONAL_ARMOUR = Name: Shields, Category: Mundane, Type: Shield, Points: 1
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Herald, Points: 10
 
 Witch Elves
-    Core, Infantry, Normal
-    11
-    10, None
-    5 4 4 3 3 1 6 1 8
-    5 4 4 3 3 1 6 2 8
-    Always Strikes First, Frenzy, Hatred (High Elves), Madness of Khaine, Murderous Prowess, Poisoned Attacks
-    Always Strikes First, Frenzy, Hatred (High Elves), Madness of Khaine, Murderous Prowess, Poisoned Attacks
-    Weapon: Two hand weapons {Mundane} [Melee]
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Hag [10]
-    0
-    0
-    0
-    50
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Infantry
+    POINTS = 11
+    SIZE = 10, inf
+    CHARACTERISTICS = 5 4 4 3 3 1 6 1 8
+    CHAMPION_CHARACTERISTICS = 5 4 4 3 3 1 6 2 8
+    SPECIAL_RULES = Always Strikes First, Frenzy, Hatred (High Elves), Madness of Khaine, Murderous Prowess, Poisoned Attacks
+    EQUIPMENT = Weapon - Name: Two hand weapons, Category: Mundane, Type: Melee
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Hag, Points: 10
+    BANNER_BUDGET = 50
 
 # Special
 
-# TODO: champion magic item for weapon only
 Cold One Knights
-    Special, Cavalry, Normal
-    30
-    5, None
-    5 5 4 4 3 1 6 1 9
-    5 5 4 4 3 1 6 2 9
-    Always Strikes First, Fear, Hatred (High Elves), Murderous Prowess, Stupidity, Thick-shinned
-    Always Strikes First, Fear, Hatred (High Elves), Murderous Prowess, Stupidity, Thick-shinned
-    Weapon: Lance {Mundane} [Melee], Armour: Heavy armour {Mundane} [Armour], Armour: Shield {Mundane} [Shield]
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Dread Knight [10]
-    25
-    0
-    25
-    50
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Cavalry
+    MOUNT = Cold One
+    POINTS = 16
+    SIZE = 5, inf
+    CHARACTERISTICS = 5 5 4 4 3 1 6 1 9
+    CHAMPION_CHARACTERISTICS = 5 5 4 4 3 1 6 2 9
+    SPECIAL_RULES = Always Strikes First, Fear, Hatred (High Elves), Murderous Prowess, Stupidity, Thick-shinned
+    EQUIPMENT = [Weapon - Name: Lance, Category: Mundane, Type: Melee
+                 Armour - Name: Heavy armour, Category: Mundane, Type: Armour
+                 Armour - Name: Shield, Category: Mundane, Type: Shield]
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Dread Knight, Points: 10
+    MAGIC_ITEM_BUDGET = Points : 25, Restrictions : Limit - 1 / ItemType - Weapon / SubItemType - Melee
+    TOTAL_ITEM_BUDGET = copy MAGIC_ITEM_BUDGET
+    BANNER_BUDGET = 50
 
-# TODO: champion magic item for weapon only
 Black Guard of Naggarond
-    Special, Infantry, Normal
-    15
-    10, None
-    5 5 4 3 3 1 6 2 9
-    5 5 4 3 3 1 6 3 9
-    Always Strikes First, Eternal Hatred, Immune to Psychology, Murderous Prowess, Stubborn
-    Always Strikes First, Eternal Hatred, Immune to Psychology, Murderous Prowess, Stubborn
-    Weapon: Halberd {Mundane} [Melee], Armour: Heavy armour {Mundane} [Armour]
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Tower Master [10]
-    25
-    0
-    25
-    50
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Infantry
+    POINTS = 15
+    SIZE = 10, inf
+    CHARACTERISTICS = 5 5 4 3 3 1 6 2 9
+    CHAMPION_CHARACTERISTICS = 5 5 4 3 3 1 6 3 9
+    SPECIAL_RULES = Always Strikes First, Eternal Hatred, Immune to Psychology, Murderous Prowess, Stubborn
+    EQUIPMENT = Weapon - Name: Halberd, Category: Mundane, Type: Melee ; Armour - Name: Heavy armour, Category: Mundane, Type: Armour
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Tower Master, Points: 10
+    MAGIC_ITEM_BUDGET = Points : 25, Restrictions : Limit - 1 / ItemType - Weapon / SubItemType - Melee
+    TOTAL_ITEM_BUDGET = copy MAGIC_ITEM_BUDGET
+    BANNER_BUDGET = 50
 
 Shades
-    Special, Infantry, Normal
-    16
-    5, None
-    5 5 5 3 3 1 5 1 8
-    5 5 6 3 3 1 5 1 8
-    Always Strikes First, Hatred (High Elves), Murderous Prowess, Scouts, Skirmishers
-    Always Strikes First, Hatred (High Elves), Murderous Prowess, Scouts, Skirmishers
-    Weapon: Repeater crossbow {Mundane} [Ballistic]
-    None
-    Additional hand weapons {Mundane} [Melee] (2), Great weapons {Mundane} [Melee] (2)
-    None
-    Light armour {Mundane} [Armour] (1)
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Bloodshade [10]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Infantry
+    POINTS = 16
+    SIZE = 5, inf
+    CHARACTERISTICS = 5 5 5 3 3 1 5 1 8
+    CHAMPION_CHARACTERISTICS = 5 5 6 3 3 1 5 2 8
+    SPECIAL_RULES = Always Strikes First, Hatred (High Elves), Murderous Prowess, Scouts, Skirmishers
+    EQUIPMENT = Weapon - Name: Repeater crossbow, Category: Mundane, Type: Ballistic
+    OPTIONAL_WEAPONS = [Name: Additional hand weapons, Category: Mundane, Type: Melee, Points: 2
+                        Name: Great weapons, Category: Mundane, Type: Melee, Points: 2]
+    OPTIONAL_ARMOUR = Name: Light armour, Category: Mundane, Type: Armour, Points: 1
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Bloodshade, Points: 10
 
 Cold One Chariot
-    Special, Chariot, Normal
-    115
-    1, 1
-    - 5 4 4 - - 6 1 9
-    - - - 5 4 4 - - -
-    Armour Save (3+), Spears (crew only), Repeater crossbows (crew only), Always Strikes First, Fear, Hatred (High Elves), Murderous Prowess, Stupidity
-    None
-    None
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Chariot
+    POINTS = 115
+    CHARACTERISTICS = - - - 5 4 4 - - -
+    CHAMPION_CHARACTERISTICS = - 5 4 4 - - 6 1 9
+    SPECIAL_RULES = Armour Save (3+), Spears (crew only), Repeater crossbows (crew only), Always Strikes First, Fear, Hatred (High Elves), Murderous Prowess, Stupidity
 
 Har Ganeth Executioners
-    Special, Infantry, Normal
-    12
-    10, None
-    5 5 4 4 3 1 5 1 9
-    5 5 4 4 3 1 5 2 9
-    Always Strikes First, Hatred (High Elves), Killing Blow, Murderous Prowess
-    Always Strikes First, Hatred (High Elves), Killing Blow, Murderous Prowess
-    Weapon: Great weapon {Mundane} [Melee], Armour: Heavy armour {Mundane} [Armour]
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Draich Master [10]
-    0
-    0
-    0
-    50
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Infantry
+    POINTS = 12
+    SIZE = 10, inf
+    CHARACTERISTICS = 5 5 4 4 3 1 5 1 9
+    CHAMPION_CHARACTERISTICS = 5 5 4 4 3 1 5 2 9
+    SPECIAL_RULES = Always Strikes First, Hatred (High Elves), Killing Blow, Murderous Prowess
+    EQUIPMENT = Weapon - Name: Great Weapon, Category: Mundane, Type: Melee ; Armour - Name: Heavy armour, Category: Mundane, Type: Armour
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Draich Master, Points: 10
+    BANNER_BUDGET = 50
 
 Repeater Bolt Thrower
-    Special, Warmachine, Normal
-    70
-    1, 1
-    - - - - 7 2 - - -
-    5 4 4 3 3 1 5 1 8
-    Repeater Bolt Thrower, Always Strikes First, Hatred (High Elves), Murderous Prowess
-    None
-    None
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Warmachine
+    POINTS = 70
+    CHARACTERISTICS = - - - - 7 2 - - -
+    CHAMPION_CHARACTERISTICS = 5 4 4 3 3 1 5 1 8
+    SPECIAL_RULES = Repeater Bolt Thrower, Always Strikes First, Hatred (High Elves), Murderous Prowess
 
 Harpies
-    Special, Infantry, Normal
-    15
-    5, None
-    5 3 0 3 3 1 5 2 6
-    5 3 0 3 3 1 5 2 6
-    Fly
-    Fly
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Infantry
+    POINTS = 15
+    SIZE = 5, inf
+    CHARACTERISTICS = 5 3 0 3 3 1 5 2 6
+    SPECIAL_RULES = Fly
 
-Scourgerunner Chariot
-    Special, Chariot, Normal
-    150
-    1, 1
-    - 4 4 3 - - 5 2 8
-    - - - 4 4 4 - - -
-    Armour Save (5+), Spears (crew only), Ravager harpoon {chariot}, Repeater crossbows (crew only), Always Strikes First, Fear, Hatred (High Elves), Murderous Prowess, Stupidity
-    None
-    None
+Cold One Chariot
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Chariot
+    POINTS = 150
+    CHARACTERISTICS = - - - 4 4 4 - - -
+    CHAMPION_CHARACTERISTICS = - 4 4 3 - - 5 2 8
+    SPECIAL_RULES = Armour Save (5+), Spears (crew only), Ravager harpoon {chariot}, Repeater crossbows (crew only), Always Strikes First, Fear, Hatred (High Elves), Murderous Prowess, Stupidity
 
 War Hydra
-    Special, Monster, Normal
-    160
-    1, 1
-    6 4 4 5 5 5 2 3+* 6
-    If One Head is Severed..., ...Another Takes its Place, Large Target, Scaly Skin (4+), Terror
-    Fiery Breath {True} [20], Spit Fire {True} [20]
-    None
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Monster
+    POINTS = 160
+    CHARACTERISTICS = 6 4 4 5 5 5 2 3+* 6
+    SPECIAL_RULES = If One Head is Severed..., ...Another Takes its Place, Large Target, Scaly Skin (4+), Terror
+    OPTIONAL_OCO_EXTRAS = Name: Fiery Breath, Points: 20 ; Name: Spit Fire, Points: 20
 
 # Rare
 
 Doomfire Warlocks
-    Rare, Cavalry, Normal
-    25
-    5, None
-    5 4 4 4 3 1 5 2 8
-    5 4 4 4 3 1 5 3 8
-    Always Strikes First, Cursed Coven, Fast Cavalry, Hatred (High Elves), Murderous Prowess, Poisoned Attacks, Prey of the Dark Prince
-    Always Strikes First, Cursed Coven, Fast Cavalry, Hatred (High Elves), Murderous Prowess, Poisoned Attacks, Prey of the Dark Prince
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Champion: Master of Warlocks [10]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Cavalry
+    MOUNT = Dark Steed
+    POINTS = 25
+    SIZE = 5, inf
+    CHARACTERISTICS = 5 4 4 4 3 1 5 2 8
+    CHAMPION_CHARACTERISTICS = 5 4 4 4 3 1 5 3 8
+    SPECIAL_RULES = Always Strikes First, Cursed Coven, Fast Cavalry, Hatred (High Elves), Murderous Prowess, Poisoned Attacks, Prey of the Dark Prince
+    OPTIONAL_COMMAND = Champion - Name: Master of Warlocks, Points: 10
 
 Bloodwrack Medusa
-    Rare, Monstrous Infantry, Normal
-    90
-    1, 1
-    7 5 5 4 4 3 5 3 2
-    7 5 5 4 4 3 5 3 2
-    Always Strikes First, Avert Your Gaze!, Bloodwrack Stare, Fear, Frenzy, Hatred (High Elves), Murderous Prowess
-    Always Strikes First, Avert Your Gaze!, Bloodwrack Stare, Fear, Frenzy, Hatred (High Elves), Murderous Prowess
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Monstrous Infantry
+    SIZE = 1, 1
+    POINTS = 90
+    CHARACTERISTICS = 7 5 5 4 4 3 5 3 2
+    SPECIAL_RULES = Always Strikes First, Avert Your Gaze!, Bloodwrack Stare, Fear, Frenzy, Hatred (High Elves), Murderous Prowess
 
 Kharibdyss
-    Rare, Monster, Normal
-    160
-    1, 1
-    6 5 0 7 5 5 4 5 6
-    Abyssal Howl, Feast of Bones, Large Target, Poisoned Attacks, Scaly Skin (4+), Terror
-    None
-    None
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Monster
+    POINTS = 160
+    CHARACTERISTICS = 6 5 0 7 5 5 4 5 6
+    SPECIAL_RULES = Abyssal Howl, Feast of Bones, Large Target, Poisoned Attacks, Scaly Skin (4+), Terror
+
+Bloodwrack Shrine
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Chariot
+    POINTS = 175
+    CHARACTERISTICS = - - - 5 6 5 - - -
+    CHAMPION_CHARACTERISTICS = - 4 4 3 - - 5 1 8
+    SPECIAL_RULES = Armour Save (6+), Always Strikes First, Aura of Agony, Avert Your Gaze!, Bloodwrack Stare, Hatred (High Elves), Large Target, Magic Resistance (1), Murderous Prowess, Terror, Will of the Gods
 
 Sisters of Slaughter
-    Rare, Infantry, Normal
-    15
-    10, None
-    5 6 4 3 3 1 6 2 9
-    5 6 4 3 3 1 6 3 9
-    Always Strikes First, Dance of Death, Hatred (High Elves), Murderous Prowess, The Trial of Blades
-    Always Strikes First, Dance of Death, Hatred (High Elves), Murderous Prowess, The Trial of Blades
-    Armour: Shield {Mundane} [Shield]
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Handmaiden of Shards [10]
-    0
-    0
-    0
-    50
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Infantry
+    POINTS = 15
+    SIZE = 10, inf
+    CHARACTERISTICS = 5 6 4 3 3 1 6 2 9
+    CHAMPION_CHARACTERISTICS = 5 6 4 3 3 1 6 3 9
+    SPECIAL_RULES = Always Strikes First, Dance of Death, Hatred (High Elves), Murderous Prowess, The Trial of Blades
+    EQUIPMENT = Armour - Name: Shield, Category: Mundane, Type: Shield
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Handmaiden of Shards, Points: 10
+    BANNER_BUDGET = 50

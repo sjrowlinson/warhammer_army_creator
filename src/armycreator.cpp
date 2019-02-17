@@ -163,7 +163,7 @@ void ArmyCreator::update_budget_label() {
         ui->budget_remaining_label->setText(QString::fromStdString(budget_str));
     } else {
         if (current->is_mixed()) {
-
+            // TODO: implement
         } else {
             auto p = std::dynamic_pointer_cast<normal_unit>(current);
             std::string budget_str = "Magic: " +

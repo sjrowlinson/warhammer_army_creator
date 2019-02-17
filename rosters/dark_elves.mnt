@@ -1,55 +1,34 @@
 Dark Steed
-    Warbeast
-    9 3 0 3 3 1 4 1 5
-    Fast Cavalry
-    None
-    None
-    None
+    CATEGORY = Warbeast
+    CHARACTERISTICS = 9 3 0 3 3 1 4 1 5
+    SPECIAL_RULES = Fast Cavalry
 
 Cold One
-    Warbeast
-    7 3 0 4 4 1 2 2 3
-    Fear, Stupidity, Thick-skinned
-    None
-    None
-    None
+    CATEGORY = Warbeast
+    CHARACTERISTICS = 7 3 0 4 4 1 2 2 3
+    SPECIAL_RULES = Fear, Stupidity, Thick-skinned
 
 Dark Pegasus
-    Monstrous Beast
-    8 3 0 4 4 3 4 2 6
-    Fly, Impale Attack
-    None
-    None
-    None
+    CATEGORY = Monstrous Beast
+    CHARACTERISTICS = 8 3 0 4 4 3 4 2 6
+    SPECIAL_RULES = Fly, Impale Attack
 
 Cold One Chariot
-    Chariot
-    - - - 5 5 4 - - -
-    Armour Save (3+), Fear, Murderous Prowess, Stupidity
-    None
-    None
-    None
+    CATEGORY = Chariot
+    CHARACTERISTICS = - - - 5 5 4 - - -
+    SPECIAL_RULES = Armour Save (3+), Fear, Murderous Prowess, Stupidity
 
 Manticore
-    Monster
-    6 5 0 5 5 4 5 4 5
-    Fly, Killing Blow, Large Target, Terror, Uncontrollable
-    None
-    Iron Hard Skin [20], Blind Rage [25]
-    None
+    CATEGORY = Monster
+    CHARACTERISTICS = 6 5 0 5 5 4 5 4 5
+    SPECIAL_RULES = Fly, Killing Blow, Large Target, Terror, Uncontrollable
 
 Black Dragon
-    Monster
-    6 6 0 6 6 6 3 5 8
-    Fly, Hatred (High Elves), Large Target, Noxious Breath, Scaly Skin (3+), Terror
-    None
-    None
-    None
+    CATEGORY = Monster
+    CHARACTERISTICS = 6 6 0 6 6 6 3 5 8
+    SPECIAL_RULES = Fly, Hatred (High Elves), Large Target, Noxious Breath, Scaly Skin (3+), Terror
 
 Cauldron of Blood
-    Chariot
-    5 - - 5 6 5 - - -
-    Armour Save (6+), Always Strikes First, Bloodshield of Khaine, Frenzy, Fury of Khaine, Hatred (High Elves), Large Target, Magic Resistance (1), Poisoned Attacks, Murderous Prowess, Strength of Khaine, Terror, Will of the Gods
-    None
-    None
-    None
+    CATEGORY = Chariot
+    CHARACTERISTICS = 5 - - 5 6 5 - - -
+    SPECIAL_RULES = Armour Save (6+), Always Strikes First, Bloodshield of Khaine, Frenzy, Fury of Khaine, Hatred (High Elves), Large Target, Magic Resistance (1), Poisoned Attacks, Murderous Prowess, Strength of Khaine, Terror, Will of the Gods
