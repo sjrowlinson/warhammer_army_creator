@@ -172,7 +172,6 @@ Glade Guard
     OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Lord's Bowman, Points: 10
     BANNER_BUDGET = 25
 
-
 Dryads
     BASE_TYPE = Normal
     TYPE = Core
@@ -223,228 +222,134 @@ Eternal Guard
 # Special
 
 Wildwood Rangers
-    Special, Infantry, Normal
-    11
-    10, None
-    5 5 4 3 3 1 5 1 9
-    5 5 4 3 3 1 5 2 9
-    Always Strikes First, Forest Strider, Guardians of the Wildwood, Immune to Psychology
-    Always Strikes First, Forest Strider, Guardians of the Wildwood, Immune to Psychology
-    Weapon: Great weapon {Mundane} [Melee], Armour: Light armour {Mundane} [Armour]
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Wildwood Warden [10]
-    0
-    0
-    0
-    25
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Infantry
+    POINTS = 11
+    SIZE = 10, inf
+    CHARACTERISTICS = 5 5 4 3 3 1 5 1 9
+    CHAMPION_CHARACTERISTICS = 5 5 4 3 3 1 5 2 9
+    SPECIAL_RULES = Always Strikes First, Forest Strider, Guardians of the Wildwood, Immune to Psychology
+    EQUIPMENT = [Weapon - Name: Great weapon, Category: Mundane, Type: Melee
+                 Armour - Name: Light armour, Category: Mundane, Type: Armour]
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Wildwood Warden, Points: 10
+    BANNER_BUDGET = 25
 
 Wardancers
-    Special, Infantry, Normal
-    15
-    5, None
-    5 6 4 3 3 1 6 1 8
-    5 6 4 3 3 1 6 2 8
-    Always Strikes First, Forest Stalker, Immune to Psychology, Shadow Dances of Loec, Skirmishers, Talismanic Tattoos
-    Always Strikes First, Forest Stalker, Immune to Psychology, Shadow Dances of Loec, Skirmishers, Talismanic Tattoos
-    Weapon: Two hand weapons {Mundane} [Melee]
-    None
-    Asrai spear {Mundane} [Melee] (1)
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Champion: Bladesinger [10]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Infantry
+    POINTS = 15
+    SIZE = 5, inf
+    CHARACTERISTICS = 5 6 4 3 3 1 6 1 8
+    CHAMPION_CHARACTERISTICS = 5 6 4 3 3 1 6 2 8
+    SPECIAL_RULES = Always Strikes First, Forest Stalker, Immune to Psychology, Shadow Dances of Loec, Skirmishers, Talismanic Tattoos
+    EQUIPMENT = Weapon - Name: Two hand weapons, Category: Mundane, Type: Melee
+    OPTIONAL_WEAPONS = Name: Asrai spear, Category: Mundane, Type: Melee, Points: 1
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Champion - Name: Bladesinger, Points: 10
 
-Tree Kin
-    Special, Monstrous Infantry, Normal
-    45
-    3, None
-    5 4 4 4 5 3 3 3 8
-    5 4 4 4 5 3 3 4 8
-    Fear, Flammable, Forest Spirit, Scaly Skin (4+)
-    Fear, Flammable, Forest Spirit, Scaly Skin (4+)
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Champion: Tree Kin Elder [10]
-    0
-    0
-    0
-    0
+Dryads
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Infantry
+    POINTS = 45
+    SIZE = 3, inf
+    CHARACTERISTICS = 5 4 4 4 5 3 3 3 8
+    CHARACTERISTICS = 5 4 4 4 5 3 3 4 8
+    SPECIAL_RULES = Fear, Flammable, Forest Spirit, Scaly Skin (4+)
+    OPTIONAL_COMMAND = Champion - Name: Tree Kin Elder, Points: 10
 
 Deepwood Scouts
-    Special, Infantry, Normal
-    13
-    5, None
-    5 4 4 3 3 1 5 1 8
-    5 4 5 3 3 1 5 1 8
-    Always Strikes First, Forest Stalker, Scouts, Skirmishers
-    Always Strikes First, Forest Stalker, Scouts, Skirmishers
-    Weapon: Asrai Longbow {Mundane} [Ballistic]
-    None
-    None
-    None
-    None
-    None
-    Hagbane tips {False} [3], Trueflight arrows {False} [3], Moonfire shot {False} [4], Starfire shafts {False} [4], Swiftshiver shards {False} [4], Arcane bodkins {False} [5]
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Master Scout [10]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Infantry
+    POINTS = 13
+    SIZE = 5, inf
+    CHARACTERISTICS = 5 4 4 3 3 1 5 1 8
+    CHAMPION_CHARACTERISTICS = 5 4 5 3 3 1 5 1 8
+    SPECIAL_RULES = Always Strikes First, Forest Stalker, Scouts, Skirmishers
+    EQUIPMENT = Weapon - Name: Asrai longbow, Category: Mundane, Type: Ballistic
+    OPTIONAL_OCO_EXTRAS = [Name: Hagbane tips, Points: 3
+                           Name: Trueflight arrows, Points: 3
+                           Name: Moonfire shot, Points: 4
+                           Name: Starfire shafts, Points: 4
+                           Name: Swiftshiver shards, Points: 4
+                           Name: Arcane bodkins, Points: 5]
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Master Scout, Points: 10
 
 Warhawk Riders
-    Special, Monstrous Cavalry, Normal
-    45
-    3, None
-    5 4 4 3 3 1 5 1 8
-    5 4 4 3 3 1 5 2 8
-    Always Strikes First, Flying Cavalry, Forest Stalker
-    Always Strikes First, Flying Cavalry, Forest Stalker
-    Weapon: Asrai spear {Mundane} [Melee], Weapon: Asrai longbow {Mundane} [Ballistic]
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Champion: Wind Rider [10]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Monstrous Cavalry
+    MOUNT = Warhawk
+    POINTS = 45
+    SIZE = 3, inf
+    CHARACTERISTICS = 5 4 4 3 3 1 5 1 8
+    CHAMPION_CHARACTERISTICS = 5 4 4 3 3 1 5 2 8
+    SPECIAL_RULES = Always Strikes First, Flying Cavalry, Forest Stalker
+    EQUIPMENT = [Weapon - Name: Asrai spear, Category: Mundane, Type: Melee
+                 Weapon - Name: Asrai longbow, Category: Mundane, Type: Ballistic]
+    OPTIONAL_COMMAND = Champion - Name: Wind Rider, Points: 10
 
 Sisters of the Thorn
-    Special, Cavalry, Normal
-    26
-    5, None
-    5 4 5 3 3 1 5 1 9
-    5 4 6 3 3 1 5 1 9
-    Always Strikes First, Daughters of Eternity, Deepwood Coven, Fast Cavalry, Forest Stalker, Poisoned Attacks
-    Always Strikes First, Daughters of Eternity, Deepwood Coven, Fast Cavalry, Forest Stalker, Poisoned Attacks
-    Weapon: Asrai spear {Mundane} [Melee], Weapon: Asrai longbow {Mundane} [Ballistic]
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Handmaiden of the Thorn [10]
-    0
-    0
-    0
-    50
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Cavalry
+    MOUNT = Steed of Isha
+    POINTS = 26
+    SIZE = 5, inf
+    CHARACTERISTICS = 5 4 5 3 3 1 5 1 9
+    CHAMPION_CHARACTERISTICS = 5 4 6 3 3 1 5 1 9
+    SPECIAL_RULES = Always Strikes First, Daughters of Eternity, Deepwood Coven, Fast Cavalry, Forest Stalker, Poisoned Attacks
+    EQUIPMENT = Weapon - Name: Blackbriar javelin, Category: Mundane, Type: Ballistic
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Handmaiden of the Thorn, Points: 10
+    BANNER_BUDGET = 50
 
 Wild Riders
-    Special, Cavalry, Normal
-    26
-    5, None
-    5 5 4 4 3 1 5 1 9
-    5 5 4 4 3 1 5 2 9
-    Always Strikes First, Devastating Charge, Fast Cavalry, Fear, Forest Stalker, Frenzy, Talismanic Tatoos
-    Always Strikes First, Devastating Charge, Fast Cavalry, Fear, Forest Stalker, Frenzy, Talismanic Tatoos
-    Weapon: Asrai spear {Mundane} [Melee], Armour: Light armour {Mundane} [Armour]
-    None
-    None
-    None
-    Shields {Mundane} [Shield] (2)
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Wild Hunter [10]
-    0
-    0
-    0
-    50
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Cavalry
+    MOUNT = Elven Steed
+    POINTS = 26
+    SIZE = 5, inf
+    CHARACTERISTICS = 5 5 4 4 3 1 5 1 9
+    CHAMPION_CHARACTERISTICS = 5 5 4 4 3 1 5 2 9
+    SPECIAL_RULES = Always Strikes First, Devastating Charge, Fast Cavalry, Fear, Forest Stalker, Frenzy, Talismanic Tatoos
+    EQUIPMENT = [Weapon - Name: Asrai spear, Category: Mundane, Type: Melee
+                 Armour - Name: Light armour, Category: Mundane, Type: Armour]
+    OPTIONAL_ARMOUR = Name: Shield, Category: Mundane, Type: Shield, Points: 2
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Wild Hunter, Points: 10
+    BANNER_BUDGET = 50
 
 # Rare
 
 Waywatchers
-    Rare, Infantry, Normal
-    20
-    5, None
-    5 4 5 3 3 1 5 1 8
-    5 4 6 3 3 1 5 1 8
-    Always Strikes First, Forest Stalker, Hawk-eyed Archer, Scouts, Skirmishers
-    Always Strikes First, Forest Stalker, Hawk-eyed Archer, Scouts, Skirmishers
-    Weapon: Asrai Longbow {Mundane} [Ballistic], Weapon: Two hand weapons {Mundane} [Melee]
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Champion: Waywatcher Sentinel [10]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Infantry
+    POINTS = 20
+    SIZE = 5, inf
+    CHARACTERISTICS = 5 4 5 3 3 1 5 1 8
+    CHAMPION_CHARACTERISTICS = 5 4 6 3 3 1 5 1 8
+    SPECIAL_RULES = Always Strikes First, Forest Stalker, Hawk-eyed Archer, Scouts, Skirmishers
+    EQUIPMENT = [Weapon - Name: Asrai longbow, Category: Mundane, Type: Ballistic
+                 Weapon - Name: Two hand weapons, Category: Mundane, Type: Melee]
+    OPTIONAL_COMMAND = Champion - Name: Waywatcher Sentinel, Points: 10
 
-Great Eagles
-    Rare, Monstrous Beast, Normal
-    50
-    1, None
-    2 5 0 4 4 3 4 2 8
-    2 5 0 4 4 3 4 2 8
-    Fly
-    Fly
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    0
-    0
-    0
-    0
+Great Eagle
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Monstrous Beast
+    POINTS = 50
+    SIZE = 1, inf
+    CHARACTERISTICS = 2 5 0 4 4 3 4 2 8
+    SPECIAL_RULES = Fly
 
-Treeman
-    Rare, Monster, Normal
-    225
-    1, 1
-    5 6 6 5 6 5 2 5 9
-    Flammable, Forest Spirit, Large Target, Scaly Skin (3+), Stubborn, Terror, Tree Whack
-    None
-    Strangleroots {True} [20]
+Flamespyre Phoenix
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Monster
+    POINTS = 225
+    CHARACTERISTICS = 5 6 6 5 6 5 2 5 9
+    SPECIAL_RULES = Flammable, Forest Spirit, Large Target, Scaly Skin (3+), Stubborn, Terror, Tree Whack
+    OPTIONAL_MC_EXTRAS = Name: Strangleroots, Points: 20
