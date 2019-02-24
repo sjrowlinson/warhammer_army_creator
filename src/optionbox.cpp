@@ -12,14 +12,13 @@ void OptionBox::command_box_helper(QLayout* layout,
         CommandGroup, std::pair<std::string, double>
     >& command,
     bool master) {
-    (void)master;
     if (opt_command.count(CommandGroup::MUSICIAN)) {
         auto musician = opt_command.at(CommandGroup::MUSICIAN);
         std::string name = musician.first + " (" + tools::points_str(musician.second) + " pts)";
         QCheckBox* cb = new QCheckBox(creator->tr(name.data()));
         if (command.count(CommandGroup::MUSICIAN)) cb->setChecked(true);
-        creator->connect(cb, &QCheckBox::clicked, creator, [this](bool checked) {
-            creator->optional_command_selected(CommandGroup::MUSICIAN, checked);
+        creator->connect(cb, &QCheckBox::clicked, creator, [this, master](bool checked) {
+            creator->optional_command_selected(CommandGroup::MUSICIAN, checked, master);
         });
         layout->addWidget(cb);
     }
@@ -28,8 +27,8 @@ void OptionBox::command_box_helper(QLayout* layout,
         std::string name = sb.first + " (" + tools::points_str(sb.second) + " pts)";
         QCheckBox* cb = new QCheckBox(creator->tr(name.data()));
         if (command.count(CommandGroup::STANDARD_BEARER)) cb->setChecked(true);
-        creator->connect(cb, &QCheckBox::clicked, creator, [this](bool checked) {
-            creator->optional_command_selected(CommandGroup::STANDARD_BEARER, checked);
+        creator->connect(cb, &QCheckBox::clicked, creator, [this, master](bool checked) {
+            creator->optional_command_selected(CommandGroup::STANDARD_BEARER, checked, master);
         });
         layout->addWidget(cb);
     }
@@ -38,8 +37,8 @@ void OptionBox::command_box_helper(QLayout* layout,
         std::string name = champ.first + " (" + tools::points_str(champ.second) + " pts)";
         QCheckBox* cb = new QCheckBox(creator->tr(name.data()));
         if (command.count(CommandGroup::CHAMPION)) cb->setChecked(true);
-        creator->connect(cb, &QCheckBox::clicked, creator, [this](bool checked) {
-            creator->optional_command_selected(CommandGroup::CHAMPION, checked);
+        creator->connect(cb, &QCheckBox::clicked, creator, [this, master](bool checked) {
+            creator->optional_command_selected(CommandGroup::CHAMPION, checked, master);
         });
         layout->addWidget(cb);
     }
@@ -194,36 +193,43 @@ QGroupBox* OptionBox::make_command_box() {
     }
     case BaseUnitType::MIXED:
     {
-        return nullptr;
-        /*auto p = std::dynamic_pointer_cast<mixed_unit>(current);
-        auto opt_master_command = p->master().handle->optional_command();
-        auto opt_slave_command = p->slave().handle->optional_command();
+        auto p = std::dynamic_pointer_cast<mixed_unit>(current);
+        auto opt_master_command = p->handle->master_optional_command();
+        auto opt_slave_command = p->handle->slave_optional_command();
         if (opt_master_command.empty() && opt_slave_command.empty()) return nullptr;
         std::unordered_map<CommandGroup, std::pair<std::string, double>> master_command;
         std::unordered_map<CommandGroup, std::pair<std::string, double>> slave_command;
         if (enum_convert::in_army_trees(in_tree)) {
-            master_command = p->master().command();
-            slave_command = p->slave().command();
+            master_command = p->master_command();
+            slave_command = p->slave_command();
         }
         QGroupBox* gb = new QGroupBox(creator->tr("Command Groups"));
         QHBoxLayout* hlayout = new QHBoxLayout;
         // master command group
-        QGroupBox* master_gb = new QGroupBox();
-        QVBoxLayout* master_vbl = new QVBoxLayout;
-        command_box_helper(master_vbl, opt_master_command, master_command, true);
-        master_vbl->addStretch(1);
-        master_gb->setLayout(master_vbl);
-        hlayout->addWidget(master_gb);
+        if (!opt_master_command.empty()) {
+            QGroupBox* master_gb = new QGroupBox(
+                creator->tr((p->handle->master_name() + " Command").data())
+            );
+            QVBoxLayout* master_vbl = new QVBoxLayout;
+            command_box_helper(master_vbl, opt_master_command, master_command, true);
+            master_vbl->addStretch(1);
+            master_gb->setLayout(master_vbl);
+            hlayout->addWidget(master_gb);
+        }
         // slave command group
-        QGroupBox* slave_gb = new QGroupBox();
-        QVBoxLayout* slave_vbl = new QVBoxLayout;
-        command_box_helper(slave_vbl, opt_slave_command, slave_command);
-        slave_vbl->addStretch(1);
-        slave_gb->setLayout(slave_vbl);
-        hlayout->addWidget(slave_gb);
+        if (!opt_slave_command.empty()) {
+            QGroupBox* slave_gb = new QGroupBox(
+                creator->tr((p->handle->slave_name() + " Command").data())
+            );
+            QVBoxLayout* slave_vbl = new QVBoxLayout;
+            command_box_helper(slave_vbl, opt_slave_command, slave_command);
+            slave_vbl->addStretch(1);
+            slave_gb->setLayout(slave_vbl);
+            hlayout->addWidget(slave_gb);
+        }
         // now finalise both
         gb->setLayout(hlayout);
-        return gb;*/
+        return gb;
     }
     default: return nullptr;
     }

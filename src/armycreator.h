@@ -61,7 +61,7 @@ public slots:
     void optional_mount_selected(const std::string& name);
     void optional_mount_oco_extra_selected(const std::string& name);
     void optional_mount_mc_extra_selected(const std::string& name, bool checked);
-    void optional_command_selected(CommandGroup member, bool checked);
+    void optional_command_selected(CommandGroup member, bool checked, bool master);
     void optional_oco_extra_selected(const std::string& name, bool champion);
     void optional_mc_extra_selected(const std::string& name, bool champion, bool checked);
 

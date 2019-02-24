@@ -348,7 +348,7 @@ Rat Ogres
     SLAVE_CHAMPION_CHARACTERISTICS = 6 4 1 5 4 3 5 4 5
     SLAVE_SPECIAL_RULES = Scurry Away!, Strength in Numbers, Mixed Unit, Beast Pack, Fear, Frenzy
     SLAVE_EQUIPMENT = Weapon - Name: Claws and savagery, Category: Mundane, Type: Melee
-    SLAVE_OPTIONAL_COMMAND = Champion - Name: Master-bred Rat Ogre, Points: 15
+    SLAVE_OPTIONAL_COMMAND = Champion - Name: Master bred Rat Ogre, Points: 15
 
 Plague Monks
     BASE_TYPE = Normal

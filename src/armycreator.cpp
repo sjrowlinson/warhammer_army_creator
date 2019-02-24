@@ -320,6 +320,10 @@ void ArmyCreator::change_unit_size(int value, bool master) {
             message_box.critical(nullptr, tr("Error"), tr(e.what()));
             message_box.setFixedSize(500, 200);
             change_unit_size(master ? curr_master_size : curr_slave_size, master);
+            // FIXME: below causes CTD
+            /*ob->clear();
+            ob->reset(current, in_tree);
+            ob->reinitialise();*/
         }
         break;
     }
@@ -551,9 +555,9 @@ void ArmyCreator::optional_mount_mc_extra_selected(const std::string& name, bool
     }
 }
 
-void ArmyCreator::optional_command_selected(CommandGroup member, bool checked) {
+void ArmyCreator::optional_command_selected(CommandGroup member, bool checked, bool master) {
     try {
-        opt_sel->select_command(member, checked);
+        opt_sel->select_command(member, checked, master);
         if (enum_convert::in_army_trees(in_tree)) {
             ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(current_item(), ArmyTreeColumn::COMMAND, false, false);

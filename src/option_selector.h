@@ -45,7 +45,7 @@ public:
     void select_mount(const std::string& mount);
     void select_mount_oco_extra(const std::string& extra);
     void select_mount_mc_extra(const std::string& extra, bool is_checked);
-    void select_command(CommandGroup member, bool checked);
+    void select_command(CommandGroup member, bool checked, bool master);
     void select_oco_extra(const std::string& extra, bool champion);
     void select_mc_extra(const std::string& extra, bool champion, bool checked);
 };

@@ -51,6 +51,17 @@ std::size_t mixed_unit::master_size() const noexcept{ return master_size_; }
 std::size_t mixed_unit::slave_size() const noexcept{ return slave_size_; }
 
 const std::unordered_map<
+    CommandGroup, std::pair<std::string, double>
+>& mixed_unit::master_command() const noexcept {
+    return master_command_group;
+}
+const std::unordered_map<
+    CommandGroup, std::pair<std::string, double>
+>& mixed_unit::slave_command() const noexcept {
+    return slave_command_group;
+}
+
+const std::unordered_map<
     WeaponType,
     std::tuple<ItemCategory, std::string, double>
 >& mixed_unit::weapons() const noexcept {

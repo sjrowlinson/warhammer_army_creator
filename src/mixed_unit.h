@@ -132,6 +132,13 @@ public:
     std::size_t slave_size() const noexcept;
 
     const std::unordered_map<
+        CommandGroup, std::pair<std::string, double>
+    >& master_command() const noexcept;
+    const std::unordered_map<
+        CommandGroup, std::pair<std::string, double>
+    >& slave_command() const noexcept;
+
+    const std::unordered_map<
         WeaponType,
         std::tuple<ItemCategory, std::string, double>
     >& weapons() const noexcept override;

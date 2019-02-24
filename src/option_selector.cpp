@@ -315,7 +315,7 @@ void option_selector::select_mount_mc_extra(const std::string& extra, bool is_ch
     }
 }
 
-void option_selector::select_command(CommandGroup member, bool checked) {
+void option_selector::select_command(CommandGroup member, bool checked, bool master) {
     switch (current->base_unit_type()) {
     case BaseUnitType::NORMAL:
     {
@@ -337,30 +337,29 @@ void option_selector::select_command(CommandGroup member, bool checked) {
     }
     case BaseUnitType::MIXED:
     {
-        /*auto p = std::dynamic_pointer_cast<mixed_unit>(current);
-        bool is_master = split[2] == "master";
+        auto p = std::dynamic_pointer_cast<mixed_unit>(current);
         if (checked) {
             if (enum_convert::in_army_trees(in_tree)) {
                 army->take_snapshot_of(p->id());
-                if (is_master) p->master().add_command_member(member);
-                else p->slave().add_command_member(member);
+                if (master) p->add_master_command_member(member);
+                else p->add_slave_command_member(member);
                 army->update_on(p->id());
             } else {
-                if (is_master) p->master().add_command_member(member);
-                else p->slave().add_command_member(member);
+                if (master) p->add_master_command_member(member);
+                else p->add_slave_command_member(member);
             }
         }
         else {
             if (enum_convert::in_army_trees(in_tree)) {
                 army->take_snapshot_of(p->id());
-                if (is_master) p->master().remove_command_member(member);
-                else p->slave().remove_command_member(member);
+                if (master) p->remove_master_command_member(member);
+                else p->remove_slave_command_member(member);
                 army->update_on(p->id());
             } else {
-                if (is_master) p->master().remove_command_member(member);
-                else p->slave().remove_command_member(member);
+                if (master) p->remove_master_command_member(member);
+                else p->remove_slave_command_member(member);
             }
-        }*/
+        }
         break;
     }
     default: break;
