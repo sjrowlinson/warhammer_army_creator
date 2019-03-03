@@ -20,8 +20,6 @@ private:
     InTree in_tree;
     std::shared_ptr<unit> current;
     QLabel* budget_label;
-
-    bool is_selection_magical(const std::string& selection) const;
 public:
     explicit option_selector(
         ArmyCreator* creator_,

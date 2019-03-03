@@ -3,6 +3,7 @@
 
 # QtCreator dependent
 *.pro.user
+*.4.8-pre1
 
 # Makefile related
 .depend

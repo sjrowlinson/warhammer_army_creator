@@ -11,15 +11,6 @@ void option_selector::reset(const std::shared_ptr<unit>& current_, InTree in_tre
     in_tree = in_tree_;
 }
 
-bool option_selector::is_selection_magical(const std::string& selection) const {
-    return (current->base()->common_items_handle() == nullptr ?
-                false : current->base()->common_items_handle()->second.count(selection)) ||
-            (current->base()->magic_items_handle() == nullptr ?
-                 false : current->base()->magic_items_handle()->second.count(selection)) ||
-            (current->base()->faction_items_handle() == nullptr ?
-                 false : current->base()->faction_items_handle()->second.count(selection));
-}
-
 // selectors
 
 void option_selector::select_weapon(const std::string& weapon, WeaponType wt, ItemCategory ic, bool champion, bool master) {
