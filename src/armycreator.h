@@ -71,7 +71,7 @@ private slots:
 
     void on_faction_combobox_currentTextChanged(const QString& faction);
 
-    void on_pts_limit_spinbox_valueChanged(double pts);
+    void on_points_limit_spinbox_valueChanged(double pts);
 
     void on_roster_tree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
     void on_roster_tree_itemDoubleClicked(QTreeWidgetItem *item, int column);

@@ -9,7 +9,6 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
     ui(new Ui::ArmyCreator) {
     // core GUI element initialisation and resizing
     ui->setupUi(this);
-    setFixedSize(1800, 1050);
     initialise_stylesheets();
     resize_army_trees();
     ui->duplicate_button->setEnabled(false);
@@ -19,7 +18,7 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
     race = enum_convert::STRING_TO_FACTION.at(
         ui->faction_combobox->currentText().toStdString()
     );
-    army = std::make_shared<army_list>(ui->pts_limit_spinbox->value());
+    army = std::make_shared<army_list>(ui->points_limit_spinbox->value());
     try { st = std::make_shared<selection_tree>(race, army); }
     catch (const std::runtime_error&) {
         QMessageBox message_box;
@@ -31,7 +30,7 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
     opt_sel = std::make_shared<option_selector>(this, army);
     ob = std::make_shared<OptionBox>(this, ui->options_group_box);
     mib = std::make_shared<MagicItemBox>(this, ui->magic_items_selector,
-                                         ui->item_descr_gb, ui->item_descr_label);
+                                         ui->item_description_groupbox, ui->item_description_label);
     populate_roster_tree();
     id_counter = 0; // unit ID counter
     in_tree = InTree::NEITHER;
@@ -40,10 +39,52 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
     ui->validity_reasons_label->setWordWrap(true);
     // initialise magic items combobox
     setup_magic_items_combobox();
-    ui->opt_box_scrollarea->setWidgetResizable(true);
-    ui->magic_item_box_scrollarea->setWidgetResizable(true);
+    ui->unit_options_scrollarea->setWidgetResizable(true);
+    ui->magic_items_scrollarea->setWidgetResizable(true);
     // TODO: add option in a preferences/settings page for setting up the convenient directories
     //setup_export_directories();
+    // TODO: organise more logically, move to separate function and make common width, height scalings
+    const int wf_height = height();
+    const int wf_width = width();
+    ui->main_vertical_splitter->setSizes(
+        QList<int>() << static_cast<int>(static_cast<double>(wf_height)/40)
+                     << 29*static_cast<int>(static_cast<double>(wf_height)/40)
+                     << 12*static_cast<int>(static_cast<double>(wf_height)/40)
+    );
+    ui->top_horizontal_splitter->setSizes(
+        QList<int>() << 3*static_cast<int>(static_cast<double>(wf_width)/20)
+                     << 13*static_cast<int>(static_cast<double>(wf_width)/20)
+                     << 4*static_cast<int>(static_cast<double>(wf_width)/20)
+    );
+    ui->middle_horizontal_splitter->setSizes(
+        QList<int>() << 3*static_cast<int>(static_cast<double>(wf_width)/20)
+                     << 13*static_cast<int>(static_cast<double>(wf_width)/20)
+                     << 4*static_cast<int>(static_cast<double>(wf_width)/20)
+    );
+    ui->lower_horizontal_splitter->setSizes(
+        QList<int>() << 16*static_cast<int>(static_cast<double>(wf_width)/20)
+                     << 4*static_cast<int>(static_cast<double>(wf_width)/20)
+    );
+    ui->magic_item_budgets_splitter->setSizes(
+        QList<int>() << 3*static_cast<int>(static_cast<double>(wf_width)/20)
+                     << 3*static_cast<int>(static_cast<double>(wf_width)/20)
+                     << 10*static_cast<int>(static_cast<double>(wf_width)/20)
+    );
+    ui->magic_item_frame_vsplitter->setSizes(
+        QList<int>() << 1*static_cast<int>(static_cast<double>(wf_height)/40)
+                     << 11*static_cast<int>(static_cast<double>(wf_height)/40)
+    );
+    ui->info_options_frame_vsplitter->setSizes(
+        QList<int>() << 9*static_cast<int>(static_cast<double>(wf_height)/40)
+                     << 20*static_cast<int>(static_cast<double>(wf_height)/40)
+    );
+    ui->army_trees_splitter->setSizes(
+        QList<int>() << 4*static_cast<int>(static_cast<double>(wf_height)/40)
+                     << 5*static_cast<int>(static_cast<double>(wf_height)/40)
+                     << 9*static_cast<int>(static_cast<double>(wf_height)/40)
+                     << 6*static_cast<int>(static_cast<double>(wf_height)/40)
+                     << 5*static_cast<int>(static_cast<double>(wf_height)/40)
+    );
 }
 
 ArmyCreator::~ArmyCreator() {
@@ -107,7 +148,7 @@ void ArmyCreator::update_validity_label() {
     ui->validity_label->setPalette(pt);
     ui->validity_label->setText("Invalid List:");
     std::string vrl_text = "";
-    double pts_limit = ui->pts_limit_spinbox->value();
+    double pts_limit = ui->points_limit_spinbox->value();
     for (const auto& r : reasons) {
         switch (r) {
         case InvalidListReason::POINTS:
@@ -289,7 +330,7 @@ void ArmyCreator::change_unit_size(int value, bool master) {
                 army->take_snapshot_of(current->id());
                 p->change_size(static_cast<std::size_t>(value));
                 army->update_on(current->id());
-                ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+                ui->current_points_label->setText(QString("%1").arg(army->current_points()));
                 update_unit_display(current_item(), ArmyTreeColumn::SIZE, false, false);
                 update_validity_label();
             }
@@ -308,7 +349,7 @@ void ArmyCreator::change_unit_size(int value, bool master) {
                 if (master) p->change_master_size(static_cast<std::size_t>(value));
                 else p->change_slave_size(static_cast<std::size_t>(value));
                 army->update_on(current->id());
-                ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+                ui->current_points_label->setText(QString("%1").arg(army->current_points()));
                 update_unit_display(current_item(), ArmyTreeColumn::SIZE, false, false);
                 update_validity_label();
             } else {
@@ -336,7 +377,7 @@ void ArmyCreator::optional_weapon_selected(const std::string& name,
     try {
         opt_sel->select_weapon(name, wt, ic, champion, master);
         if (enum_convert::in_army_trees(in_tree)) {
-            ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+            ui->current_points_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(current_item(), ArmyTreeColumn::WEAPONS, false, false);
             update_unit_display(current_item(), ArmyTreeColumn::ARMOUR, false, false);
             update_validity_label();
@@ -360,7 +401,7 @@ void ArmyCreator::optional_armour_selected(const std::string& name,
     try {
         opt_sel->select_armour(name, at, ic, champion, master);
         if (enum_convert::in_army_trees(in_tree)) {
-            ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+            ui->current_points_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(current_item(), ArmyTreeColumn::ARMOUR, false, false);
             update_unit_display(current_item(), ArmyTreeColumn::WEAPONS, false, false);
             update_validity_label();
@@ -382,7 +423,7 @@ void ArmyCreator::optional_talisman_selected(const std::string& name, ItemCatego
     try {
         opt_sel->select_talisman(name, ic);
         if (enum_convert::in_army_trees(in_tree)) {
-            ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+            ui->current_points_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(current_item(), ArmyTreeColumn::TALISMAN, false, false);
             update_validity_label();
         }
@@ -400,7 +441,7 @@ void ArmyCreator::optional_enchanted_item_selected(const std::string& name, Item
     try {
         opt_sel->select_enchanted_item(name, ic);
         if (enum_convert::in_army_trees(in_tree)) {
-            ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+            ui->current_points_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(current_item(), ArmyTreeColumn::ENCHANTED, false, false);
             update_validity_label();
         }
@@ -418,7 +459,7 @@ void ArmyCreator::optional_other_item_selected(const std::string& name, ItemCate
     try {
         opt_sel->select_other_item(name, ic, checked);
         if (enum_convert::in_army_trees(in_tree)) {
-            ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+            ui->current_points_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(current_item(), ArmyTreeColumn::EXTRAS, false, false);
             update_validity_label();
         }
@@ -436,7 +477,7 @@ void ArmyCreator::optional_banner_selected(const std::string& name, ItemCategory
     try {
         opt_sel->select_banner(name, ic);
         if (enum_convert::in_army_trees(in_tree)) {
-            ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+            ui->current_points_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(current_item(), ArmyTreeColumn::BANNER, false, false);
             update_validity_label();
         }
@@ -454,7 +495,7 @@ void ArmyCreator::optional_arcane_item_selected(const std::string& name, ItemCat
     try {
         opt_sel->select_arcane_item(name, ic);
         if (enum_convert::in_army_trees(in_tree)) {
-            ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+            ui->current_points_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(current_item(), ArmyTreeColumn::ARCANE, false, false);
             update_validity_label();
         }
@@ -472,7 +513,7 @@ void ArmyCreator::optional_level_selected(short level) {
     try {
         opt_sel->select_mage_level(level);
         if (enum_convert::in_army_trees(in_tree)) {
-            ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+            ui->current_points_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(current_item(), ArmyTreeColumn::LEVEL, false, false);
             update_validity_label();
         }
@@ -505,7 +546,7 @@ void ArmyCreator::optional_mount_selected(const std::string& name) {
     try {
         opt_sel->select_mount(name);
         if (enum_convert::in_army_trees(in_tree)) {
-            ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+            ui->current_points_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(current_item(), ArmyTreeColumn::MOUNT, false, false);
             update_validity_label();
         }
@@ -523,7 +564,7 @@ void ArmyCreator::optional_mount_oco_extra_selected(const std::string& name) {
     try {
         opt_sel->select_mount_oco_extra(name);
         if (enum_convert::in_army_trees(in_tree)) {
-            ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+            ui->current_points_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(current_item(), ArmyTreeColumn::MOUNT, false, false);
             update_validity_label();
         }
@@ -541,7 +582,7 @@ void ArmyCreator::optional_mount_mc_extra_selected(const std::string& name, bool
     try {
         opt_sel->select_mount_mc_extra(name, checked);
         if (enum_convert::in_army_trees(in_tree)) {
-            ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+            ui->current_points_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(current_item(), ArmyTreeColumn::MOUNT, false, false);
             update_validity_label();
         }
@@ -559,7 +600,7 @@ void ArmyCreator::optional_command_selected(CommandGroup member, bool checked, b
     try {
         opt_sel->select_command(member, checked, master);
         if (enum_convert::in_army_trees(in_tree)) {
-            ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+            ui->current_points_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(current_item(), ArmyTreeColumn::COMMAND, false, false);
             if (member == CommandGroup::CHAMPION || member == CommandGroup::STANDARD_BEARER) {
                 update_unit_display(current_item(), ArmyTreeColumn::WEAPONS, false, false);
@@ -585,7 +626,7 @@ void ArmyCreator::optional_oco_extra_selected(const std::string& name, bool cham
     try {
         opt_sel->select_oco_extra(name, champion);
         if (enum_convert::in_army_trees(in_tree)) {
-            ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+            ui->current_points_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(current_item(), ArmyTreeColumn::EXTRAS, false, false);
             update_validity_label();
         }
@@ -603,7 +644,7 @@ void ArmyCreator::optional_mc_extra_selected(const std::string& name, bool champ
     try {
         opt_sel->select_mc_extra(name, champion, checked);
         if (enum_convert::in_army_trees(in_tree)) {
-            ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+            ui->current_points_label->setText(QString("%1").arg(army->current_points()));
             update_unit_display(current_item(), ArmyTreeColumn::EXTRAS, false, false);
             update_validity_label();
         }
@@ -765,15 +806,15 @@ void ArmyCreator::clear() {
     clear_unit_info_box();
     ob->clear();
     mib->clear();
-    ui->item_descr_gb->setTitle(tr("Item Description"));
-    ui->item_descr_label->setText(tr(""));
+    ui->item_description_groupbox->setTitle(tr("Item Description"));
+    ui->item_description_label->setText(tr(""));
     in_tree = InTree::NEITHER;
     ui->magic_items_combobox->clear();
     update_validity_label();
 }
 
 void ArmyCreator::clear_points_displays() {
-    ui->current_pts_label->setText(QString("%1").arg(static_cast<double>(0.0)));
+    ui->current_points_label->setText(QString("%1").arg(static_cast<double>(0.0)));
 }
 
 void ArmyCreator::setup_magic_items_combobox() {
@@ -820,7 +861,7 @@ void ArmyCreator::on_magic_items_combobox_currentTextChanged(const QString& ic_s
     mib->reinitialise(ItemType::WEAPON);
 }
 
-void ArmyCreator::on_pts_limit_spinbox_valueChanged(double pts) {
+void ArmyCreator::on_points_limit_spinbox_valueChanged(double pts) {
     army->change_points_limit(pts);
     update_validity_label();
 }
@@ -851,8 +892,8 @@ void ArmyCreator::on_roster_tree_currentItemChanged(QTreeWidgetItem *curr, QTree
     clear_unit_info_box();
     ob->clear();
     mib->clear();
-    ui->item_descr_gb->setTitle(tr("Item Description"));
-    ui->item_descr_label->setText(tr(""));
+    ui->item_description_groupbox->setTitle(tr("Item Description"));
+    ui->item_description_label->setText(tr(""));
     // do logic and gui changes
     st->change_selection(name);
     current = st->selected();
@@ -885,8 +926,8 @@ bool ArmyCreator::army_trees_itemchanged(QTreeWidgetItem* curr) {
     clear_unit_info_box();
     ob->clear();
     mib->clear();
-    ui->item_descr_gb->setTitle(tr("Item Description"));
-    ui->item_descr_label->setText(tr(""));
+    ui->item_description_groupbox->setTitle(tr("Item Description"));
+    ui->item_description_label->setText(tr(""));
     // get the name and id of the selected unit
     std::string name = curr->text(0).toStdString();
     int id = curr->data(0, Qt::UserRole).toInt();
@@ -976,7 +1017,7 @@ void ArmyCreator::on_add_button_clicked() {
         message_box.setFixedSize(500, 200);
         return;
     }
-    ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+    ui->current_points_label->setText(QString("%1").arg(army->current_points()));
     QTreeWidgetItem* item = new QTreeWidgetItem();
     std::shared_ptr<unit> u = st->selected();
     // assign id
@@ -1053,7 +1094,7 @@ void ArmyCreator::on_duplicate_button_clicked() {
     }
     cpy_ptr->set_id(id_counter++);
     army->add_unit(cpy_ptr);
-    ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+    ui->current_points_label->setText(QString("%1").arg(army->current_points()));
     QTreeWidgetItem* item = new QTreeWidgetItem();
     QVariant v(cpy_ptr->id());
     item->setData(0, Qt::UserRole, v);
@@ -1074,7 +1115,7 @@ void ArmyCreator::on_remove_button_clicked() {
     int id = v.toInt();
     UnitType unit_type = army->get_unit(id)->unit_type();
     army->remove_unit(id);
-    ui->current_pts_label->setText(QString("%1").arg(army->current_points()));
+    ui->current_points_label->setText(QString("%1").arg(army->current_points()));
     switch (unit_type) {
     case UnitType::LORD:
         //ui->army_tree->topLevelItem(0)->setText(6, QString("%1").arg(army->lord_points()));
@@ -1108,8 +1149,8 @@ void ArmyCreator::on_clear_button_clicked() {
     mib->clear();
     clear_unit_info_box();
     update_validity_label();
-    ui->item_descr_gb->setTitle(tr("Item Description"));
-    ui->item_descr_label->setText(tr(""));
+    ui->item_description_groupbox->setTitle(tr("Item Description"));
+    ui->item_description_label->setText(tr(""));
 }
 
 void ArmyCreator::on_set_general_button_clicked() {
