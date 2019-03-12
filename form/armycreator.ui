@@ -248,25 +248,40 @@
                  <property name="text">
                   <string>Lords</string>
                  </property>
+                 <property name="flags">
+                  <set>ItemIsUserCheckable|ItemIsEnabled</set>
+                 </property>
                 </item>
                 <item>
                  <property name="text">
                   <string>Heroes</string>
+                 </property>
+                 <property name="flags">
+                  <set>ItemIsUserCheckable|ItemIsEnabled</set>
                  </property>
                 </item>
                 <item>
                  <property name="text">
                   <string>Core</string>
                  </property>
+                 <property name="flags">
+                  <set>ItemIsUserCheckable|ItemIsEnabled</set>
+                 </property>
                 </item>
                 <item>
                  <property name="text">
                   <string>Special</string>
                  </property>
+                 <property name="flags">
+                  <set>ItemIsUserCheckable|ItemIsEnabled</set>
+                 </property>
                 </item>
                 <item>
                  <property name="text">
                   <string>Rare</string>
+                 </property>
+                 <property name="flags">
+                  <set>ItemIsUserCheckable|ItemIsEnabled</set>
                  </property>
                 </item>
                </widget>
@@ -647,8 +662,8 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>141</width>
-                  <height>330</height>
+                  <width>139</width>
+                  <height>331</height>
                  </rect>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_7">
@@ -674,8 +689,8 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>141</width>
-                  <height>329</height>
+                  <width>139</width>
+                  <height>330</height>
                  </rect>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_8">
@@ -739,7 +754,7 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>918</width>
+                  <width>924</width>
                   <height>68</height>
                  </rect>
                 </property>
@@ -775,8 +790,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>673</width>
-                 <height>96</height>
+                 <width>667</width>
+                 <height>94</height>
                 </rect>
                </property>
                <layout class="QGridLayout" name="gridLayout_12">

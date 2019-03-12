@@ -2,7 +2,7 @@
 #include "armycreator.h"
 
 option_selector::option_selector(
-    ArmyCreator* creator_,
+    std::shared_ptr<ArmyCreator> creator_,
     const std::shared_ptr<army_list>& army_
 ) : creator(creator_), army(army_), in_tree(InTree::NEITHER), current() {}
 

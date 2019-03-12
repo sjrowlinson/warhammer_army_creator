@@ -9,6 +9,8 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
     ui(new Ui::ArmyCreator) {
     // core GUI element initialisation and resizing
     ui->setupUi(this);
+
+    do_splitter_scalings();
     initialise_stylesheets();
     resize_army_trees();
     ui->duplicate_button->setEnabled(false);
@@ -27,7 +29,7 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
         QCoreApplication::quit();
     }
     current = nullptr;
-    opt_sel = std::make_shared<option_selector>(this, army);
+    //opt_sel = std::make_shared<option_selector>(shared_from_this(), army);
     ob = std::make_shared<OptionBox>(this, ui->options_group_box);
     mib = std::make_shared<MagicItemBox>(this, ui->magic_items_selector,
                                          ui->item_description_groupbox, ui->item_description_label);
@@ -36,59 +38,70 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
     in_tree = InTree::NEITHER;
     // initialise validity reasons label
     update_validity_label();
-    ui->validity_reasons_label->setWordWrap(true);
     // initialise magic items combobox
     setup_magic_items_combobox();
     ui->unit_options_scrollarea->setWidgetResizable(true);
     ui->magic_items_scrollarea->setWidgetResizable(true);
     // TODO: add option in a preferences/settings page for setting up the convenient directories
     //setup_export_directories();
-    // TODO: organise more logically, move to separate function and make common width, height scalings
-    const int wf_height = height();
-    const int wf_width = width();
-    ui->main_vertical_splitter->setSizes(
-        QList<int>() << static_cast<int>(static_cast<double>(wf_height)/40)
-                     << 29*static_cast<int>(static_cast<double>(wf_height)/40)
-                     << 12*static_cast<int>(static_cast<double>(wf_height)/40)
-    );
-    ui->top_horizontal_splitter->setSizes(
-        QList<int>() << 3*static_cast<int>(static_cast<double>(wf_width)/20)
-                     << 13*static_cast<int>(static_cast<double>(wf_width)/20)
-                     << 4*static_cast<int>(static_cast<double>(wf_width)/20)
-    );
-    ui->middle_horizontal_splitter->setSizes(
-        QList<int>() << 3*static_cast<int>(static_cast<double>(wf_width)/20)
-                     << 13*static_cast<int>(static_cast<double>(wf_width)/20)
-                     << 4*static_cast<int>(static_cast<double>(wf_width)/20)
-    );
-    ui->lower_horizontal_splitter->setSizes(
-        QList<int>() << 16*static_cast<int>(static_cast<double>(wf_width)/20)
-                     << 4*static_cast<int>(static_cast<double>(wf_width)/20)
-    );
-    ui->magic_item_budgets_splitter->setSizes(
-        QList<int>() << 3*static_cast<int>(static_cast<double>(wf_width)/20)
-                     << 3*static_cast<int>(static_cast<double>(wf_width)/20)
-                     << 10*static_cast<int>(static_cast<double>(wf_width)/20)
-    );
-    ui->magic_item_frame_vsplitter->setSizes(
-        QList<int>() << 1*static_cast<int>(static_cast<double>(wf_height)/40)
-                     << 11*static_cast<int>(static_cast<double>(wf_height)/40)
-    );
-    ui->info_options_frame_vsplitter->setSizes(
-        QList<int>() << 9*static_cast<int>(static_cast<double>(wf_height)/40)
-                     << 20*static_cast<int>(static_cast<double>(wf_height)/40)
-    );
-    ui->army_trees_splitter->setSizes(
-        QList<int>() << 4*static_cast<int>(static_cast<double>(wf_height)/40)
-                     << 5*static_cast<int>(static_cast<double>(wf_height)/40)
-                     << 9*static_cast<int>(static_cast<double>(wf_height)/40)
-                     << 6*static_cast<int>(static_cast<double>(wf_height)/40)
-                     << 5*static_cast<int>(static_cast<double>(wf_height)/40)
-    );
+}
+
+std::shared_ptr<ArmyCreator> ArmyCreator::create(QWidget* parent) {
+    class make_shared_enabler : public ArmyCreator {
+    public:
+        make_shared_enabler(QWidget* parent) : ArmyCreator(parent) {}
+    };
+    auto p = std::make_shared<make_shared_enabler>(parent);
+    p->opt_sel = std::make_shared<option_selector>(p->shared_from_this(), p->army);
+    return std::move(p);
 }
 
 ArmyCreator::~ArmyCreator() {
     delete ui;
+}
+
+void ArmyCreator::do_splitter_scalings() {
+    const int height_div = static_cast<int>(static_cast<double>(height())/40);
+    const int width_div = static_cast<int>(static_cast<double>(width())/40);
+    ui->main_vertical_splitter->setSizes(
+        QList<int>() << height_div
+                     << 29*height_div
+                     << 12*height_div
+    );
+    ui->top_horizontal_splitter->setSizes(
+        QList<int>() << 6*width_div
+                     << 26*width_div
+                     << 8*width_div
+    );
+    ui->middle_horizontal_splitter->setSizes(
+        QList<int>() << 6*width_div
+                     << 26*width_div
+                     << 8*width_div
+    );
+    ui->lower_horizontal_splitter->setSizes(
+        QList<int>() << 32*width_div
+                     << 8*width_div
+    );
+    ui->magic_item_budgets_splitter->setSizes(
+        QList<int>() << 6*width_div
+                     << 6*width_div
+                     << 20*width_div
+    );
+    ui->magic_item_frame_vsplitter->setSizes(
+        QList<int>() << height_div
+                     << 11*height_div
+    );
+    ui->info_options_frame_vsplitter->setSizes(
+        QList<int>() << 9*height_div
+                     << 20*height_div
+    );
+    ui->army_trees_splitter->setSizes(
+        QList<int>() << 4*height_div
+                     << 5*height_div
+                     << 9*height_div
+                     << 6*height_div
+                     << 5*height_div
+    );
 }
 
 void ArmyCreator::on_actionExit_triggered() {
@@ -104,31 +117,41 @@ void ArmyCreator::initialise_stylesheets() {
     //for (auto tree : trees) tree->setStyleSheet(tree_body_ss);
 }
 
+void ArmyCreator::resizeEvent(QResizeEvent* event) {
+    QMainWindow::resizeEvent(event);
+    resize_army_trees();
+}
+
 void ArmyCreator::resize_army_trees() {
+    const int atf_width = ui->lord_tree->width();
+    const int char_tree_cols = ui->lord_tree->columnCount();
+    const int unit_tree_cols = ui->core_tree->columnCount();
+    const int atf_width_div_c = static_cast<int>(static_cast<double>(atf_width)/char_tree_cols);
+    const int atf_width_div_u = static_cast<int>(static_cast<double>(atf_width)/unit_tree_cols);
     for (auto tree : std::vector<QTreeWidget*>{ui->lord_tree, ui->hero_tree}) {
-        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::NAME), 150);
-        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::MOUNT), 120);
-        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::LEVEL), 70);
-        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::LORE), 80);
-        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::WEAPONS), 120);
-        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::ARMOUR), 120);
-        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::TALISMAN), 120);
-        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::ENCHANTED), 120);
-        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::ARCANE), 120);
-        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::BANNER), 100);
-        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::EXTRAS), 100);
-        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::POINTS), 50);
+        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::NAME), static_cast<int>(1.5*atf_width_div_c));
+        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::MOUNT), atf_width_div_c);
+        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::LEVEL), static_cast<int>(0.6*atf_width_div_c));
+        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::LORE), static_cast<int>(0.7*atf_width_div_c));
+        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::WEAPONS), atf_width_div_c);
+        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::ARMOUR), atf_width_div_c);
+        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::TALISMAN), atf_width_div_c);
+        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::ENCHANTED), atf_width_div_c);
+        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::ARCANE), atf_width_div_c);
+        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::BANNER), atf_width_div_c);
+        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::EXTRAS), atf_width_div_c);
+        tree->header()->resizeSection(static_cast<int>(CharacterTreeColumn::POINTS), static_cast<int>(atf_width_div_c));
     }
     for (auto tree : std::vector<QTreeWidget*>{ui->core_tree, ui->special_tree, ui->rare_tree}) {
-        tree->header()->resizeSection(static_cast<int>(UnitTreeColumn::NAME), 180);
-        tree->header()->resizeSection(static_cast<int>(UnitTreeColumn::SIZE), 50);
-        tree->header()->resizeSection(static_cast<int>(UnitTreeColumn::MOUNT), 120);
-        tree->header()->resizeSection(static_cast<int>(UnitTreeColumn::WEAPONS), 130);
-        tree->header()->resizeSection(static_cast<int>(UnitTreeColumn::ARMOUR), 130);
-        tree->header()->resizeSection(static_cast<int>(UnitTreeColumn::EXTRAS), 120);
-        tree->header()->resizeSection(static_cast<int>(UnitTreeColumn::COMMAND), 120);
-        tree->header()->resizeSection(static_cast<int>(UnitTreeColumn::BANNER), 140);
-        tree->header()->resizeSection(static_cast<int>(UnitTreeColumn::POINTS), 50);
+        tree->header()->resizeSection(static_cast<int>(UnitTreeColumn::NAME), atf_width_div_u);
+        tree->header()->resizeSection(static_cast<int>(UnitTreeColumn::SIZE), atf_width_div_u);
+        tree->header()->resizeSection(static_cast<int>(UnitTreeColumn::MOUNT), atf_width_div_u);
+        tree->header()->resizeSection(static_cast<int>(UnitTreeColumn::WEAPONS), atf_width_div_u);
+        tree->header()->resizeSection(static_cast<int>(UnitTreeColumn::ARMOUR), atf_width_div_u);
+        tree->header()->resizeSection(static_cast<int>(UnitTreeColumn::EXTRAS), atf_width_div_u);
+        tree->header()->resizeSection(static_cast<int>(UnitTreeColumn::COMMAND), atf_width_div_u);
+        tree->header()->resizeSection(static_cast<int>(UnitTreeColumn::BANNER), atf_width_div_u);
+        tree->header()->resizeSection(static_cast<int>(UnitTreeColumn::POINTS), atf_width_div_u);
     }
 }
 
@@ -660,6 +683,8 @@ void ArmyCreator::optional_mc_extra_selected(const std::string& name, bool champ
 
 // unit info box initialisers
 
+// TODO: rewrite, don't like this function at all - might be worth just adding the necessary UI
+// elements to the .ui form and updating them here
 void ArmyCreator::initialise_unit_info_box() {
     if (current == nullptr) return;
     ui->unit_info_box->setTitle(tr(current->name().data()));
@@ -755,6 +780,8 @@ void ArmyCreator::initialise_unit_info_box() {
         }
         stats_table->resizeRowsToContents();
         stats_table->resizeColumnsToContents();
+        stats_table->setMaximumWidth(static_cast<int>(0.8*ui->unit_info_box->width()));
+        stats_table->setMaximumHeight(49);
         vbox->addWidget(stats_table);
     }
     // special rules

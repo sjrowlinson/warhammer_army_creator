@@ -23,6 +23,7 @@
 #include <QPrintDialog>
 #endif
 #include <QRadioButton>
+#include <QResizeEvent>
 #include <QSpinBox>
 #include <QStandardPaths>
 #include <QString>
@@ -41,12 +42,12 @@ class OptionBox;
 class MagicItemBox;
 class option_selector;
 
-class ArmyCreator : public QMainWindow {
+class ArmyCreator : public QMainWindow, public std::enable_shared_from_this<ArmyCreator> {
     Q_OBJECT
 
 public:
-    explicit ArmyCreator(QWidget *parent = nullptr);
-    ~ArmyCreator();
+    static std::shared_ptr<ArmyCreator> create(QWidget* parent = nullptr);
+    ~ArmyCreator() override;
 
 public slots:
     void optional_weapon_selected(const std::string& name, WeaponType wt, ItemCategory ic, bool champion, bool master);
@@ -93,6 +94,7 @@ private slots:
 public:
     void update_budget_label();
 private:
+    explicit ArmyCreator(QWidget *parent = nullptr);
     Ui::ArmyCreator* ui;
     Faction race;
     // handles to the army list and roster
@@ -118,7 +120,9 @@ private:
 
     void update_validity_label();
 
+    void do_splitter_scalings();
     void initialise_stylesheets();
+    void resizeEvent(QResizeEvent* event) override;
 
     // roster tree modifying
     void populate_roster_tree();

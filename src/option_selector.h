@@ -15,14 +15,14 @@ class ArmyCreator;
 
 class option_selector {
 private:
-    ArmyCreator* creator;
+    std::shared_ptr<ArmyCreator> creator;
     std::shared_ptr<army_list> army;
     InTree in_tree;
     std::shared_ptr<unit> current;
     QLabel* budget_label;
 public:
     explicit option_selector(
-        ArmyCreator* creator_,
+        std::shared_ptr<ArmyCreator> creator_,
         const std::shared_ptr<army_list>& army_
     );
 
