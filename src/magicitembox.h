@@ -26,7 +26,7 @@ class ArmyCreator;
 
 class MagicItemBox {
 private:
-    ArmyCreator* creator;
+    std::shared_ptr<ArmyCreator> creator;
     QTabWidget* box;
     QGroupBox* descr_box;
     QLabel* descr_label;
@@ -47,7 +47,7 @@ private:
 
     bool check_itemtype_allowance(ItemType it) const;
 public:
-    explicit MagicItemBox(ArmyCreator* creator_, QTabWidget* box_,
+    explicit MagicItemBox(std::shared_ptr<ArmyCreator> creator_, QTabWidget* box_,
                           QGroupBox* descr_box_, QLabel* descr_label_);
     ~MagicItemBox() = default;
 

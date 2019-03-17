@@ -1,7 +1,7 @@
 #include "magicitembox.h"
 #include "armycreator.h"
 
-MagicItemBox::MagicItemBox(ArmyCreator* creator_, QTabWidget* box_,
+MagicItemBox::MagicItemBox(std::shared_ptr<ArmyCreator> creator_, QTabWidget* box_,
                            QGroupBox* descr_box_, QLabel* descr_label_) :
     creator(creator_), box(box_), descr_box(descr_box_), descr_label(descr_label_),
     ic_selected(ItemCategory::NONE) {}
@@ -163,7 +163,7 @@ QScrollArea* MagicItemBox::make_weapons_tab(const std::vector<std::pair<std::str
                 descr_label->setText(QString::fromStdString(w.second.description));
             }
         }
-        creator->connect(rb, &QRadioButton::clicked, creator, [w, this](auto) {
+        creator->connect(rb, &QRadioButton::clicked, creator.get(), [w, this](auto) {
             creator->optional_weapon_selected(w.first, w.second.weapon_type, w.second.item_class,
                                               current->base_unit_type() == BaseUnitType::NORMAL, true);
         });
@@ -175,7 +175,7 @@ QScrollArea* MagicItemBox::make_weapons_tab(const std::vector<std::pair<std::str
     QRadioButton* none_rb_m = new QRadioButton(creator->tr("None"));
     std::string none_rb_m_name = "None_opt_melee_default_radiobutton";
     if (!has_weapon_m) none_rb_m->setChecked(true);
-    creator->connect(none_rb_m, &QRadioButton::clicked, creator, [this](auto) {
+    creator->connect(none_rb_m, &QRadioButton::clicked, creator.get(), [this](auto) {
         creator->optional_weapon_selected("", WeaponType::MELEE, ic_selected,
                                           current->base_unit_type() == BaseUnitType::NORMAL, true);
     });
@@ -190,7 +190,7 @@ QScrollArea* MagicItemBox::make_weapons_tab(const std::vector<std::pair<std::str
     // ranged none button
     QRadioButton* none_rb_r = new QRadioButton(creator->tr("None"));
     if (!has_weapon_r) none_rb_r->setChecked(true);
-    creator->connect(none_rb_r, &QRadioButton::clicked, creator, [this](auto) {
+    creator->connect(none_rb_r, &QRadioButton::clicked, creator.get(), [this](auto) {
         creator->optional_weapon_selected("", WeaponType::BALLISTIC, ic_selected,
                                           current->base_unit_type() == BaseUnitType::NORMAL, true);
     });
@@ -276,7 +276,7 @@ QScrollArea* MagicItemBox::make_armour_tab(const std::vector<std::pair<std::stri
                 descr_label->setText(QString::fromStdString(a.second.description));
             }
         }
-        creator->connect(rb, &QRadioButton::clicked, creator, [a, this](auto) {
+        creator->connect(rb, &QRadioButton::clicked, creator.get(), [a, this](auto) {
             creator->optional_armour_selected(a.first, a.second.armour_type, a.second.item_class,
                                               current->base_unit_type() == BaseUnitType::NORMAL, true);
         });
@@ -296,7 +296,7 @@ QScrollArea* MagicItemBox::make_armour_tab(const std::vector<std::pair<std::stri
     // armour
     QRadioButton* none_rb_a = new QRadioButton(creator->tr("None"));
     if (!has_body_armour) none_rb_a->setChecked(true);
-    creator->connect(none_rb_a, &QRadioButton::clicked, creator, [this](auto) {
+    creator->connect(none_rb_a, &QRadioButton::clicked, creator.get(), [this](auto) {
         creator->optional_armour_selected("", ArmourType::ARMOUR, ic_selected,
                                           current->base_unit_type() == BaseUnitType::NORMAL, true);
     });
@@ -306,7 +306,7 @@ QScrollArea* MagicItemBox::make_armour_tab(const std::vector<std::pair<std::stri
     // shield
     QRadioButton* none_rb_s = new QRadioButton(creator->tr("None"));
     if (!has_shield) none_rb_s->setChecked(true);
-    creator->connect(none_rb_s, &QRadioButton::clicked, creator, [this](auto) {
+    creator->connect(none_rb_s, &QRadioButton::clicked, creator.get(), [this](auto) {
         creator->optional_armour_selected("", ArmourType::SHIELD, ic_selected,
                                           current->base_unit_type() == BaseUnitType::NORMAL, true);
     });
@@ -316,7 +316,7 @@ QScrollArea* MagicItemBox::make_armour_tab(const std::vector<std::pair<std::stri
     // helmet
     QRadioButton* none_rb_h = new QRadioButton(creator->tr("None"));
     if (!has_helmet) none_rb_h->setChecked(true);
-    creator->connect(none_rb_h, &QRadioButton::clicked, creator, [this](auto) {
+    creator->connect(none_rb_h, &QRadioButton::clicked, creator.get(), [this](auto) {
         creator->optional_armour_selected("", ArmourType::HELMET, ic_selected,
                                           current->base_unit_type() == BaseUnitType::NORMAL, true);
     });
@@ -389,7 +389,7 @@ QScrollArea* MagicItemBox::make_talismans_tab(const std::vector<std::pair<std::s
             descr_box->setTitle(QString::fromStdString(t.first));
             descr_label->setText(QString::fromStdString(t.second.description));
         }
-        creator->connect(rb, &QRadioButton::clicked, creator, [t, this](auto) {
+        creator->connect(rb, &QRadioButton::clicked, creator.get(), [t, this](auto) {
             creator->optional_talisman_selected(t.first, t.second.item_class);
         });
         try { hlayouts.at(count++/max_per_row)->addWidget(rb); }
@@ -402,7 +402,7 @@ QScrollArea* MagicItemBox::make_talismans_tab(const std::vector<std::pair<std::s
     // none button
     QRadioButton* none_rb = new QRadioButton(creator->tr("None"));
     if (!has_talisman) none_rb->setChecked(true);
-    creator->connect(none_rb, &QRadioButton::clicked, creator, [this](auto) {
+    creator->connect(none_rb, &QRadioButton::clicked, creator.get(), [this](auto) {
         creator->optional_talisman_selected("", ic_selected);
     });
     if (!hlayouts.empty()) (*(--std::end(hlayouts)))->addWidget(none_rb);
@@ -472,7 +472,7 @@ QScrollArea* MagicItemBox::make_enchanted_tab(const std::vector<std::pair<std::s
             descr_box->setTitle(QString::fromStdString(t.first));
             descr_label->setText(QString::fromStdString(t.second.description));
         }
-        creator->connect(rb, &QRadioButton::clicked, creator, [t, this](auto) {
+        creator->connect(rb, &QRadioButton::clicked, creator.get(), [t, this](auto) {
             creator->optional_enchanted_item_selected(t.first, t.second.item_class);
         });
         try { hlayouts.at(count++/max_per_row)->addWidget(rb); }
@@ -485,7 +485,7 @@ QScrollArea* MagicItemBox::make_enchanted_tab(const std::vector<std::pair<std::s
     // none button
     QRadioButton* none_rb = new QRadioButton(creator->tr("None"));
     if (!has_enchanted) none_rb->setChecked(true);
-    creator->connect(none_rb, &QRadioButton::clicked, creator, [this](auto) {
+    creator->connect(none_rb, &QRadioButton::clicked, creator.get(), [this](auto) {
         creator->optional_enchanted_item_selected("", ic_selected);
     });
     if (!hlayouts.empty()) (*(--std::end(hlayouts)))->addWidget(none_rb);
@@ -553,7 +553,7 @@ QScrollArea* MagicItemBox::make_arcane_tab(const std::vector<std::pair<std::stri
             descr_box->setTitle(QString::fromStdString(t.first));
             descr_label->setText(QString::fromStdString(t.second.description));
         }
-        creator->connect(rb, &QRadioButton::clicked, creator, [t, this](auto) {
+        creator->connect(rb, &QRadioButton::clicked, creator.get(), [t, this](auto) {
             creator->optional_arcane_item_selected(t.first, t.second.item_class);
         });
         try { hlayouts.at(count++/max_per_row)->addWidget(rb); }
@@ -566,7 +566,7 @@ QScrollArea* MagicItemBox::make_arcane_tab(const std::vector<std::pair<std::stri
     // none button
     QRadioButton* none_rb = new QRadioButton(creator->tr("None"));
     if (!has_arcane) none_rb->setChecked(true);
-    creator->connect(none_rb, &QRadioButton::clicked, creator, [this](auto) {
+    creator->connect(none_rb, &QRadioButton::clicked, creator.get(), [this](auto) {
         creator->optional_arcane_item_selected("", ic_selected);
     });
     if (!hlayouts.empty()) (*(--std::end(hlayouts)))->addWidget(none_rb);
@@ -630,7 +630,7 @@ QScrollArea* MagicItemBox::make_banners_tab(const std::vector<std::pair<std::str
             descr_box->setTitle(QString::fromStdString(t.first));
             descr_label->setText(QString::fromStdString(t.second.description));
         }
-        creator->connect(rb, &QRadioButton::clicked, creator, [t, this](auto) {
+        creator->connect(rb, &QRadioButton::clicked, creator.get(), [t, this](auto) {
             creator->optional_banner_selected(t.first, t.second.item_class);
         });
         hlayouts[count++/max_per_row]->addWidget(rb);
@@ -638,7 +638,7 @@ QScrollArea* MagicItemBox::make_banners_tab(const std::vector<std::pair<std::str
     // none button
     QRadioButton* none_rb = new QRadioButton(creator->tr("None"));
     if (!has_banner) none_rb->setChecked(true);
-    creator->connect(none_rb, &QRadioButton::clicked, creator, [this](auto) {
+    creator->connect(none_rb, &QRadioButton::clicked, creator.get(), [this](auto) {
         creator->optional_banner_selected("", ic_selected);
     });
     if (!hlayouts.empty()) (*(--std::end(hlayouts)))->addWidget(none_rb);
@@ -702,7 +702,7 @@ QScrollArea* MagicItemBox::make_other_tab(const std::vector<std::pair<std::strin
         QCheckBox* cb = new QCheckBox(creator->tr((t.first + " (" + pts_str + " pts)").data()));
         cb->setToolTip(creator->tr(t.second.description.data()));
         if (others.count(t.first)) cb->setChecked(true);
-        creator->connect(cb, &QCheckBox::clicked, creator, [t, this](bool checked) {
+        creator->connect(cb, &QCheckBox::clicked, creator.get(), [t, this](bool checked) {
             creator->optional_other_item_selected(t.first, t.second.item_class, checked);
         });
         try { hlayouts.at(count++/max_per_row)->addWidget(cb); }

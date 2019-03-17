@@ -23,7 +23,7 @@ class ArmyCreator;
 
 class OptionBox {
 private:
-    ArmyCreator* creator;
+    std::shared_ptr<ArmyCreator> creator;
     QGroupBox* box;
     std::shared_ptr<unit> current;
     InTree in_tree;
@@ -56,7 +56,7 @@ private:
     QGroupBox* make_oco_extras_subbox(bool champion);
     QGroupBox* make_mc_extras_subbox(bool champion);
 public:
-    explicit OptionBox(ArmyCreator* creator_, QGroupBox* box_);
+    explicit OptionBox(std::shared_ptr<ArmyCreator> creator_, QGroupBox* box_);
     ~OptionBox() = default;
 
     void reset(const std::shared_ptr<unit>& current_, InTree in_tree_);

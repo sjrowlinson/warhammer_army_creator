@@ -1,7 +1,7 @@
 #include "optionbox.h"
 #include "armycreator.h"
 
-OptionBox::OptionBox(ArmyCreator* creator_, QGroupBox* box_) :
+OptionBox::OptionBox(std::shared_ptr<ArmyCreator> creator_, QGroupBox* box_) :
     creator(creator_), box(box_), current(), in_tree(InTree::NEITHER) {}
 
 void OptionBox::command_box_helper(QLayout* layout,
@@ -17,7 +17,7 @@ void OptionBox::command_box_helper(QLayout* layout,
         std::string name = musician.first + " (" + tools::points_str(musician.second) + " pts)";
         QCheckBox* cb = new QCheckBox(creator->tr(name.data()));
         if (command.count(CommandGroup::MUSICIAN)) cb->setChecked(true);
-        creator->connect(cb, &QCheckBox::clicked, creator, [this, master](bool checked) {
+        creator->connect(cb, &QCheckBox::clicked, creator.get(), [this, master](bool checked) {
             creator->optional_command_selected(CommandGroup::MUSICIAN, checked, master);
         });
         layout->addWidget(cb);
@@ -27,7 +27,7 @@ void OptionBox::command_box_helper(QLayout* layout,
         std::string name = sb.first + " (" + tools::points_str(sb.second) + " pts)";
         QCheckBox* cb = new QCheckBox(creator->tr(name.data()));
         if (command.count(CommandGroup::STANDARD_BEARER)) cb->setChecked(true);
-        creator->connect(cb, &QCheckBox::clicked, creator, [this, master](bool checked) {
+        creator->connect(cb, &QCheckBox::clicked, creator.get(), [this, master](bool checked) {
             creator->optional_command_selected(CommandGroup::STANDARD_BEARER, checked, master);
         });
         layout->addWidget(cb);
@@ -37,7 +37,7 @@ void OptionBox::command_box_helper(QLayout* layout,
         std::string name = champ.first + " (" + tools::points_str(champ.second) + " pts)";
         QCheckBox* cb = new QCheckBox(creator->tr(name.data()));
         if (command.count(CommandGroup::CHAMPION)) cb->setChecked(true);
-        creator->connect(cb, &QCheckBox::clicked, creator, [this, master](bool checked) {
+        creator->connect(cb, &QCheckBox::clicked, creator.get(), [this, master](bool checked) {
             creator->optional_command_selected(CommandGroup::CHAMPION, checked, master);
         });
         layout->addWidget(cb);
@@ -109,7 +109,7 @@ QGroupBox* OptionBox::make_size_command_box() {
         // set value of spinbox to current unit size
         if (enum_convert::in_army_trees(in_tree)) size_sb->setValue(static_cast<int>(p->size()));
 #if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
-        creator->connect(size_sb, QOverload<int>::of(&QSpinBox::valueChanged), creator, [this](int value) {
+        creator->connect(size_sb, QOverload<int>::of(&QSpinBox::valueChanged), creator.get(), [this](int value) {
             creator->change_unit_size(value, true);
         });
 #else
@@ -147,10 +147,10 @@ QGroupBox* OptionBox::make_size_command_box() {
             slave_size_sb->setValue(static_cast<int>(p->slave_size()));
         }
 #if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
-        creator->connect(master_size_sb, QOverload<int>::of(&QSpinBox::valueChanged), creator, [this](int value) {
+        creator->connect(master_size_sb, QOverload<int>::of(&QSpinBox::valueChanged), creator.get(), [this](int value) {
             creator->change_unit_size(value, true);
         });
-        creator->connect(slave_size_sb, QOverload<int>::of(&QSpinBox::valueChanged), creator, [this](int value) {
+        creator->connect(slave_size_sb, QOverload<int>::of(&QSpinBox::valueChanged), creator.get(), [this](int value) {
             creator->change_unit_size(value, false);
         });
 #else
@@ -351,14 +351,14 @@ QGroupBox* OptionBox::make_weapons_subbox(WeaponType wt, bool champion) {
         }
         std::string weapon_name = w->first;
         ItemCategory ic = w->second.category;
-        creator->connect(rb, &QRadioButton::clicked, creator, [weapon_name, ic, wt, champion, this](auto) {
+        creator->connect(rb, &QRadioButton::clicked, creator.get(), [weapon_name, ic, wt, champion, this](auto) {
             creator->optional_weapon_selected(weapon_name, wt, ic, champion, true);
         });
         weapons_subbox_layout->addWidget(rb);
     }
     QRadioButton* none_rb = new QRadioButton(creator->tr("None"));
     if (!has_weapon) none_rb->setChecked(true);
-    creator->connect(none_rb, &QRadioButton::clicked, creator, [champion, wt, this](auto) {
+    creator->connect(none_rb, &QRadioButton::clicked, creator.get(), [champion, wt, this](auto) {
         creator->optional_weapon_selected("", wt, ItemCategory::MUNDANE, champion, true);
     });
     weapons_subbox_layout->addWidget(none_rb);
@@ -492,14 +492,14 @@ QGroupBox* OptionBox::make_armour_subbox(ArmourType at, bool champion) {
         }
         std::string armour_name = a->first;
         ItemCategory ic = a->second.category;
-        creator->connect(rb, &QRadioButton::clicked, creator, [armour_name, ic, at, champion, this](auto) {
+        creator->connect(rb, &QRadioButton::clicked, creator.get(), [armour_name, ic, at, champion, this](auto) {
             creator->optional_armour_selected(armour_name, at, ic, champion, true);
         });
         armour_subbox_layout->addWidget(rb);
     }
     QRadioButton* none_rb = new QRadioButton(creator->tr("None"));
     if (!has_armour) none_rb->setChecked(true);
-    creator->connect(none_rb, &QRadioButton::clicked, creator, [champion, at, this](auto) {
+    creator->connect(none_rb, &QRadioButton::clicked, creator.get(), [champion, at, this](auto) {
         creator->optional_armour_selected("", at, ItemCategory::MUNDANE, champion, true);
     });
     armour_subbox_layout->addWidget(none_rb);
@@ -529,14 +529,14 @@ std::pair<QGroupBox*, QGroupBox*> OptionBox::make_mage_options_boxes() {
                 b->setChecked(true);
                 has_level = true;
             }
-            creator->connect(b, &QRadioButton::clicked, creator, [this, l](auto) {
+            creator->connect(b, &QRadioButton::clicked, creator.get(), [this, l](auto) {
                 creator->optional_level_selected(l.first);
             });
             levels_box_layout->addWidget(b);
         }
         std::string none_rb_name = "Level " + std::to_string(p->handle->mage_level()) + " (0 pts)";
         QRadioButton* none_rb = new QRadioButton(creator->tr(none_rb_name.data()));
-        creator->connect(none_rb, &QRadioButton::clicked, creator, [this, p](auto) {
+        creator->connect(none_rb, &QRadioButton::clicked, creator.get(), [this, p](auto) {
             creator->optional_level_selected(p->handle->mage_level());
         });
         levels_box_layout->addWidget(none_rb);
@@ -563,7 +563,7 @@ std::pair<QGroupBox*, QGroupBox*> OptionBox::make_mage_options_boxes() {
                 b->setChecked(true);
                 has_lore = true;
             }
-            creator->connect(b, &QRadioButton::clicked, creator, [this, l](auto) {
+            creator->connect(b, &QRadioButton::clicked, creator.get(), [this, l](auto) {
                 creator->optional_lore_selected(l.name);
             });
             lores_box_layout->addWidget(b);
@@ -616,7 +616,7 @@ QGroupBox* OptionBox::make_mounts_boxes() {
             b->setChecked(true);
             has_mount = true;
         }
-        creator->connect(b, &QRadioButton::clicked, creator, [this, m](auto) {
+        creator->connect(b, &QRadioButton::clicked, creator.get(), [this, m](auto) {
             creator->optional_mount_selected(m.first);
         });
         vbox_mounts->addWidget(b);
@@ -640,14 +640,14 @@ QGroupBox* OptionBox::make_mounts_boxes() {
                         rb->setChecked(true);
                         has_option = true;
                     }
-                    creator->connect(rb, &QRadioButton::clicked, creator, [this, mo](auto) {
+                    creator->connect(rb, &QRadioButton::clicked, creator.get(), [this, mo](auto) {
                         creator->optional_mount_oco_extra_selected(mo.first);
                     });
                     mntopt_layout->addWidget(rb);
                 }
                 QRadioButton* none_rb = new QRadioButton(creator->tr("None"));
                 if (!has_option) none_rb->setChecked(true);
-                creator->connect(none_rb, &QRadioButton::clicked, creator, [this](auto) {
+                creator->connect(none_rb, &QRadioButton::clicked, creator.get(), [this](auto) {
                     creator->optional_mount_oco_extra_selected("");
                 });
                 mntopt_layout->addWidget(none_rb);
@@ -661,7 +661,7 @@ QGroupBox* OptionBox::make_mounts_boxes() {
                     std::string mo_name = mo.first + " (" + tools::points_str(mo.second.points) + " pts)";
                     QCheckBox* cb = new QCheckBox(creator->tr(mo_name.data()));
                     if (std::get<3>(mount_).count(mo.first)) cb->setChecked(true);
-                    creator->connect(cb, &QCheckBox::clicked, creator, [this, mo](bool checked) {
+                    creator->connect(cb, &QCheckBox::clicked, creator.get(), [this, mo](bool checked) {
                         creator->optional_mount_mc_extra_selected(mo.first, checked);
                     });
                     mntopt_layout->addWidget(cb);
@@ -676,7 +676,7 @@ QGroupBox* OptionBox::make_mounts_boxes() {
     }
     QRadioButton* none_rb = new QRadioButton(creator->tr("None"));
     if (!has_mount) none_rb->setChecked(true);
-    creator->connect(none_rb, &QRadioButton::clicked, creator, [this](auto) {
+    creator->connect(none_rb, &QRadioButton::clicked, creator.get(), [this](auto) {
         creator->optional_mount_selected("");
     });
     vbox_mounts->addWidget(none_rb);
@@ -792,14 +792,14 @@ QGroupBox* OptionBox::make_oco_extras_subbox(bool champion) {
             rb->setChecked(true);
             has_extra = true;
         }
-        creator->connect(rb, &QRadioButton::clicked, creator, [this, champion, e](auto) {
+        creator->connect(rb, &QRadioButton::clicked, creator.get(), [this, champion, e](auto) {
             creator->optional_oco_extra_selected(e.first, champion);
         });
         oco_box_layout->addWidget(rb);
     }
     QRadioButton* none_rb = new QRadioButton(creator->tr("None"));
     if (!has_extra) none_rb->setChecked(true);
-    creator->connect(none_rb, &QRadioButton::clicked, creator, [this, champion](auto) {
+    creator->connect(none_rb, &QRadioButton::clicked, creator.get(), [this, champion](auto) {
         creator->optional_oco_extra_selected("", champion);
     });
     oco_box_layout->addWidget(none_rb);
@@ -847,7 +847,7 @@ QGroupBox* OptionBox::make_mc_extras_subbox(bool champion) {
         std::string label = e.first + " (" + pts_str + " pts" + permodel + ")";
         QCheckBox* cb = new QCheckBox(creator->tr(label.data()));
         if (curr_mc_extras.count(e.first)) cb->setChecked(true);
-        creator->connect(cb, &QCheckBox::clicked, creator, [this, champion, e](bool checked) {
+        creator->connect(cb, &QCheckBox::clicked, creator.get(), [this, champion, e](bool checked) {
             creator->optional_mc_extra_selected(e.first, champion, checked);
         });
         mc_box_layout->addWidget(cb);

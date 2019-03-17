@@ -9,7 +9,6 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
     ui(new Ui::ArmyCreator) {
     // core GUI element initialisation and resizing
     ui->setupUi(this);
-
     do_splitter_scalings();
     initialise_stylesheets();
     resize_army_trees();
@@ -29,10 +28,6 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
         QCoreApplication::quit();
     }
     current = nullptr;
-    //opt_sel = std::make_shared<option_selector>(shared_from_this(), army);
-    ob = std::make_shared<OptionBox>(this, ui->options_group_box);
-    mib = std::make_shared<MagicItemBox>(this, ui->magic_items_selector,
-                                         ui->item_description_groupbox, ui->item_description_label);
     populate_roster_tree();
     id_counter = 0; // unit ID counter
     in_tree = InTree::NEITHER;
@@ -53,6 +48,9 @@ std::shared_ptr<ArmyCreator> ArmyCreator::create(QWidget* parent) {
     };
     auto p = std::make_shared<make_shared_enabler>(parent);
     p->opt_sel = std::make_shared<option_selector>(p->shared_from_this(), p->army);
+    p->ob = std::make_shared<OptionBox>(p->shared_from_this(), p->ui->options_group_box);
+    p->mib = std::make_shared<MagicItemBox>(p->shared_from_this(), p->ui->magic_items_selector,
+                                            p->ui->item_description_groupbox, p->ui->item_description_label);
     return std::move(p);
 }
 
@@ -881,11 +879,13 @@ void ArmyCreator::on_faction_combobox_currentTextChanged(const QString& faction)
 
 void ArmyCreator::on_magic_items_combobox_currentTextChanged(const QString& ic_select) {
     (void)(ic_select);
-    auto v = ui->magic_items_combobox->currentData().toInt();
-    mib->clear();
-    mib->reset(current);
-    mib->reset_category(static_cast<ItemCategory>(v));
-    mib->reinitialise(ItemType::WEAPON);
+    if (mib != nullptr) {
+        auto v = ui->magic_items_combobox->currentData().toInt();
+        mib->clear();
+        mib->reset(current);
+        mib->reset_category(static_cast<ItemCategory>(v));
+        mib->reinitialise(ItemType::WEAPON);
+    }
 }
 
 void ArmyCreator::on_points_limit_spinbox_valueChanged(double pts) {
