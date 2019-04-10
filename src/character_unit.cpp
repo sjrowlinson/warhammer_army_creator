@@ -631,7 +631,16 @@ std::string character_unit::html_table_row_both(short mlevel, std::string arcane
     // unit name
     row += "<td>" + name() + "</td>\n";
     // unit mount
-    row += "<td>" + (std::get<0>(mount_).empty() ? "&nbsp;" : std::get<0>(mount_)) + "</td>\n";
+    row += "<td>";
+    if (!std::get<0>(mount_).empty()) {
+        row += std::get<0>(mount_);
+        if (!std::get<2>(mount_).first.empty())
+            row += "<br/>&nbsp;&nbsp;&nbsp;&nbsp;" + std::get<2>(mount_).first;
+        for (const auto& x : std::get<3>(mount_))
+            row += "<br/>&nbsp;&nbsp;&nbsp;&nbsp;" + x.first;
+    }
+    else row += "&nbsp;";
+    row += "</td>\n";
     // unit mage level
     if (mlevel == -1) row += "<td>None</td>\n";
     else row += "<td>Level " + std::to_string(mlevel) + "</td>\n";

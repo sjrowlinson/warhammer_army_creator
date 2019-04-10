@@ -1729,9 +1729,6 @@ void ArmyCreator::on_export_button_clicked() {
         printer.setOutputFileName(file_name);
         document->setPageSize(printer.pageRect().size());
         document->print(&printer);
-        mb.information(nullptr, tr("Army list written"),
-            tr((QString("Army list successfully written to: ") + printer.outputFileName()).toStdString().data())
-        );
     }
     mb.setFixedSize(500, 200);
     delete document;

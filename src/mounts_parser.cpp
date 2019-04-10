@@ -60,7 +60,7 @@ namespace tools {
         return 0U;
     }
     std::size_t mounts_parser::parse_mount_characteristics(const std::string& s) {
-        tpm.characteristics = tools::split(s, ',');
+        tpm.characteristics = tools::split(s, ' ');
         return 0U;
     }
     std::size_t mounts_parser::parse_mount_special_rules(const std::string& s) {

@@ -491,6 +491,11 @@
                  </column>
                  <column>
                   <property name="text">
+                   <string>Banner</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
                    <string>Points</string>
                   </property>
                  </column>
@@ -533,6 +538,11 @@
                  </column>
                  <column>
                   <property name="text">
+                   <string>Banner</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
                    <string>Points</string>
                   </property>
                  </column>
@@ -571,6 +581,11 @@
                  <column>
                   <property name="text">
                    <string>Command</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Banner</string>
                   </property>
                  </column>
                  <column>
