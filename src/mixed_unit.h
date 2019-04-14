@@ -142,40 +142,117 @@ public:
         WeaponType,
         std::tuple<ItemCategory, std::string, double>
     >& weapons() const noexcept override;
+
+    const std::unordered_map<
+        WeaponType,
+        std::tuple<ItemCategory, std::string, double>
+    >& slave_weapons() const noexcept;
+    const std::unordered_map<
+        WeaponType,
+        std::tuple<ItemCategory, std::string, double>
+    >& slave_champion_weapons() const noexcept;
+    const std::unordered_map<
+        WeaponType,
+        std::tuple<ItemCategory, std::string, double>
+    >& master_weapons() const noexcept;
+    const std::unordered_map<
+        WeaponType,
+        std::tuple<ItemCategory, std::string, double>
+    >& master_champion_weapons() const noexcept;
+
     const std::unordered_map<
         ArmourType,
         std::tuple<ItemCategory, std::string, double>
     >& armour() const noexcept override;
+
+    const std::unordered_map<
+        ArmourType,
+        std::tuple<ItemCategory, std::string, double>
+    >& slave_armour() const noexcept;
+    const std::unordered_map<
+        ArmourType,
+        std::tuple<ItemCategory, std::string, double>
+    >& slave_champion_armour() const noexcept;
+    const std::unordered_map<
+        ArmourType,
+        std::tuple<ItemCategory, std::string, double>
+    >& master_armour() const noexcept;
+    const std::unordered_map<
+        ArmourType,
+        std::tuple<ItemCategory, std::string, double>
+    >& master_champion_armour() const noexcept;
+
     const std::pair<
         std::string,
         std::pair<ItemCategory, double>
     >& talisman() const noexcept override;
+
     const std::pair<
         std::string,
         std::pair<ItemCategory, double>
     >& enchanted_item() const noexcept override;
+
     const std::pair<
         std::string,
         std::pair<ItemCategory, double>
     >& arcane_item() const noexcept override;
+
     const std::unordered_map<
         std::string,
         std::pair<ItemCategory, double>
     >& item_extras() const noexcept override;
+
     const std::pair<
         std::string,
         std::pair<bool, double>
     >& oco_extra() const noexcept override;
+
+    const std::pair<
+        std::string,
+        std::pair<bool, double>
+    >& slave_oco_extra() const noexcept;
+    const std::pair<
+        std::string,
+        std::pair<bool, double>
+    >& slave_champion_oco_extra() const noexcept;
+    const std::pair<
+        std::string,
+        std::pair<bool, double>
+    >& master_oco_extra() const noexcept;
+    const std::pair<
+        std::string,
+        std::pair<bool, double>
+    >& master_champion_oco_extra() const noexcept;
+
     const std::unordered_map<
         std::string,
         std::pair<bool, double>
     >& mc_extras() const noexcept override;
+
+    const std::unordered_map<
+        std::string,
+        std::pair<bool, double>
+    >& slave_mc_extras() const noexcept;
+    const std::unordered_map<
+        std::string,
+        std::pair<bool, double>
+    >& slave_champion_mc_extras() const noexcept;
+    const std::unordered_map<
+        std::string,
+        std::pair<bool, double>
+    >& master_mc_extras() const noexcept;
+    const std::unordered_map<
+        std::string,
+        std::pair<bool, double>
+    >& master_champion_mc_extras() const noexcept;
+
     const std::tuple<
         std::string,
         double,
         std::pair<std::string, double>,
         std::unordered_map<std::string, double>
     >& mnt() const noexcept override;
+
     const std::pair<std::string, std::pair<ItemCategory, double>>& magic_banner() const noexcept override;
 
     // item selectors:

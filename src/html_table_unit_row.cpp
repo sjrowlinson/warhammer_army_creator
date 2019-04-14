@@ -204,8 +204,16 @@ void html_table_unit_row::make_normal_unit_row() {
     auto coco = p->champion_oco_extra();
     auto mc = p->mc_extras();
     auto cmc = p->champion_mc_extras();
-    if (oco.first.empty() && coco.first.empty() && mc.empty() && cmc.empty()) urow += row_entry("");
-    else if (coco.first.empty() && cmc.empty()) { // no champion extras only defaults
+    auto ctalisman = p->talisman();
+    auto cenchanted = p->enchanted_item();
+    auto carcane = p->arcane_item();
+    auto cextras = p->item_extras();
+    if (oco.first.empty() && coco.first.empty() && mc.empty() && cmc.empty()
+            && ctalisman.first.empty() && cenchanted.first.empty()
+            && carcane.first.empty() && cextras.empty()) urow += row_entry("");
+    else if (coco.first.empty() && cmc.empty()
+                && ctalisman.first.empty() && cenchanted.first.empty()
+                && carcane.first.empty() && cextras.empty()) { // no champion extras only defaults
         std::string entry = oco.first;
         for (const auto& x : mc) entry += (entry.empty() ? "" : newline) + x.first;
         urow += row_entry(entry);
@@ -217,6 +225,10 @@ void html_table_unit_row::make_normal_unit_row() {
         if (!oco.first.empty() || !mc.empty()) entry += newline + champ_name + newline;
         if (!coco.first.empty()) entry += tab + coco.first;
         for (const auto& x : cmc) entry += (coco.first.empty() ? newline : "") + tab + x.first;
+        if (!ctalisman.first.empty()) entry += newline + tab + ctalisman.first;
+        if (!cenchanted.first.empty()) entry += newline + tab + cenchanted.first;
+        if (!carcane.first.empty()) entry += newline + tab + carcane.first;
+        for (const auto& x : cextras) entry += newline + tab + x.first;
         urow += row_entry(entry);
     }
     // command
@@ -263,7 +275,108 @@ void html_table_unit_row::make_normal_unit_row() {
 }
 
 void html_table_unit_row::make_mixed_unit_row() {
-
+    auto p = std::dynamic_pointer_cast<mixed_unit>(u);
+    if (p == nullptr)
+        throw std::runtime_error("Bug encountered! Unable to dynamically cast unit ptr to mixed_unit ptr"
+                                 " in html_table_unit_row::make_mixed_unit_row");
+    // store some names for convenience
+    std::string mname = p->handle->master_name();
+    std::string sname = p->handle->slave_name();
+    std::string mcname;
+    auto mchamp_it = p->handle->master_optional_command().find(CommandGroup::CHAMPION);
+    if (mchamp_it != std::end(p->handle->master_optional_command())) mcname = mchamp_it->second.first;
+    std::string scname;
+    auto schamp_it = p->handle->slave_optional_command().find(CommandGroup::CHAMPION);
+    if (schamp_it != std::end(p->handle->slave_optional_command())) scname = schamp_it->second.first;
+    // NAME
+    urow += row_entry(p->name());
+    // SIZE
+    urow += row_entry(std::to_string(p->slave_size()) + ' ' + sname + newline
+                      + std::to_string(p->master_size()) + ' ' + mname + (p->master_size() > 1 ? "s" : ""));
+    // MOUNT
+    if (std::get<0>(p->mnt()).empty()) urow += row_entry("");
+    else {
+        std::string entry = std::get<0>(p->mnt());
+        if (!std::get<2>(p->mnt()).first.empty())
+            entry += newline + tab + std::get<2>(p->mnt()).first;
+        for (const auto& x : std::get<3>(p->mnt()))
+            entry += newline + tab + x.first;
+        urow += row_entry(entry);
+    }
+    // WEAPONS
+    /*auto sw = p->slave_weapons();
+    auto scw = p->slave_champion_weapons();
+    auto mw = p->master_weapons();
+    auto mcw = p->master_champion_weapons();*/
+    // TODO: this could get very messy, think about clean implementation for different permutations/combinations
+    urow += row_entry("");
+    // ARMOUR
+    /*auto sa = p->slave_armour();
+    auto sca = p->slave_champion_armour();
+    auto ma = p->master_armour();
+    auto mca =p->master_champion_armour();*/
+    // TODO: this could get very messy, think about clean implementation for different permutations/combinations
+    urow += row_entry("");
+    // EXTRAS
+    // TODO: this could get very messy, think about clean implementation for different permutations/combinations
+    urow += row_entry("");
+    // COMMAND
+    auto scomm = p->slave_command();
+    auto mcomm = p->master_command();
+    if (!scomm.count(CommandGroup::MUSICIAN) && !scomm.count(CommandGroup::STANDARD_BEARER)
+            && !scomm.count(CommandGroup::CHAMPION) && !mcomm.count(CommandGroup::MUSICIAN)
+            && !mcomm.count(CommandGroup::STANDARD_BEARER) && !mcomm.count(CommandGroup::CHAMPION))
+        urow += row_entry("");
+    else {
+        std::string entry = (scomm.empty() ? mname : sname) + newline;
+        if (scomm.count(CommandGroup::STANDARD_BEARER))
+            entry += tab + scomm.at(CommandGroup::STANDARD_BEARER).first;
+        if (scomm.count(CommandGroup::CHAMPION))
+            entry += (scomm.count(CommandGroup::STANDARD_BEARER) ? newline : "") + tab
+                    + scomm.at(CommandGroup::CHAMPION).first;
+        if (scomm.count(CommandGroup::MUSICIAN))
+            entry += (scomm.count(CommandGroup::STANDARD_BEARER) || scomm.count(CommandGroup::CHAMPION) ? newline : "")
+                    + tab + scomm.at(CommandGroup::CHAMPION).first;
+        if (!scomm.empty() && !mcomm.empty()) entry += newline + mname + newline;
+        if (mcomm.count(CommandGroup::STANDARD_BEARER))
+            entry += tab + mcomm.at(CommandGroup::STANDARD_BEARER).first;
+        if (mcomm.count(CommandGroup::CHAMPION))
+            entry += (mcomm.count(CommandGroup::STANDARD_BEARER) ? newline : "") + tab
+                    + mcomm.at(CommandGroup::CHAMPION).first;
+        if (mcomm.count(CommandGroup::MUSICIAN))
+            entry += (mcomm.count(CommandGroup::STANDARD_BEARER) || mcomm.count(CommandGroup::CHAMPION) ? newline : "")
+                    + tab + mcomm.at(CommandGroup::CHAMPION).first;
+        urow += row_entry(entry);
+    }
+    // BANNER
+    if (p->magic_banner().first.empty()) urow += row_entry("");
+    else urow += row_entry(u->magic_banner().first);
+    // CHARACTERISTICS
+    urow += mixed_characteristics_table(
+        p->handle->slave_statistics(),
+        p->slave_command().count(CommandGroup::CHAMPION) ?
+                    p->handle->slave_champion_statistics() : std::vector<std::string>{},
+        p->handle->master_statistics(),
+        p->master_command().count(CommandGroup::CHAMPION) ?
+                    p->handle->master_champion_statistics() : std::vector<std::string>{}
+    );
+    // POINTS
+    urow += row_entry(tools::points_str(p->points()));
+    // choose correct colour based on core, special or rare unit type
+    std::string colour;
+    switch (p->unit_type()) {
+    case UnitType::CORE:
+        colour = "#D4EFDF";
+        break;
+    case UnitType::SPECIAL:
+        colour = "#D6EAF8";
+        break;
+    case UnitType::RARE:
+        colour = "#F2D7D5";
+        break;
+    default: break;
+    }
+    urow = row(urow, " style=\"background-color:" + colour + "\"");
 }
 
 const std::string& html_table_unit_row::to_string() const noexcept {
@@ -317,4 +430,52 @@ std::string html_table_unit_row::characteristics_table(
     table += "</table></td>\n";
     return table;
 }
+
+std::string html_table_unit_row::mixed_characteristics_table(
+    const std::vector<std::string>& slave_chars,
+    const std::vector<std::string>& slave_champ_chars,
+    const std::vector<std::string>& master_chars,
+    const std::vector<std::string>& master_champ_chars
+        ) {
+    auto p = std::dynamic_pointer_cast<mixed_unit>(u);
+    std::string table = "<td><table border=1 cellspacing=0 cellpadding=1 width=100%>\n";
+    table += "<thead><tr>\n"
+                "<th>&nbsp;</th>"
+                "<th>M</th><th>WS</th><th>BS</th><th>S</th><th>T</th><th>W</th>"
+                "<th>I</th><th>A</th><th>Ld</th>\n"
+             "</tr></thead>\n";
+    table += "<tr>\n";
+    table += row_entry(p->handle->slave_name(), " max-width:100% white-space:nowrap");
+    for (const auto& x : slave_chars) table += row_entry(x, " align=\"center\"");
+    table += "</tr>\n";
+    if (!slave_champ_chars.empty() && !std::equal(
+        std::begin(slave_chars), std::end(slave_chars), std::begin(slave_champ_chars)
+    )) {
+        table += "<tr>\n";
+        table += row_entry(
+            p->handle->slave_optional_command().at(CommandGroup::CHAMPION).first,
+            " max-width:100% white-space:nowrap"
+        );
+        for (const auto& x : slave_champ_chars) table += row_entry(x, " align=\"center\"");
+        table += "</tr>\n";
+    }
+    table += "<tr>\n";
+    table += row_entry(p->handle->master_name(), " max-width:100% white-space:nowrap");
+    for (const auto& x : master_chars) table += row_entry(x, " align=\"center\"");
+    table += "</tr>\n";
+    if (!master_champ_chars.empty() && !std::equal(
+        std::begin(master_chars), std::end(master_chars), std::begin(master_champ_chars)
+    )) {
+        table += "<tr>\n";
+        table += row_entry(
+            p->handle->master_optional_command().at(CommandGroup::CHAMPION).first,
+            " max-width:100% white-space:nowrap"
+        );
+        for (const auto& x : master_champ_chars) table += row_entry(x, " align=\"center\"");
+        table += "</tr>\n";
+    }
+    table += "</table></td>\n";
+    return table;
+}
+
 

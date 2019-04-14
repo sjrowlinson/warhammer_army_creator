@@ -30,6 +30,12 @@ private:
         const std::vector<std::string>& champ_chars,
         const std::vector<std::string>& mount_chars
     );
+    std::string mixed_characteristics_table(
+        const std::vector<std::string>& slave_chars,
+        const std::vector<std::string>& slave_champ_chars,
+        const std::vector<std::string>& master_chars,
+        const std::vector<std::string>& master_champ_chars
+    );
 
     void make_character_row();
     void make_normal_unit_row();

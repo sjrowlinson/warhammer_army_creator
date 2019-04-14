@@ -85,6 +85,32 @@ const std::unordered_map<
     }
     return master_weapons_;
 }
+
+const std::unordered_map<
+    WeaponType,
+    std::tuple<ItemCategory, std::string, double>
+>& mixed_unit::slave_weapons() const noexcept {
+    return slave_weapons_;
+}
+const std::unordered_map<
+    WeaponType,
+    std::tuple<ItemCategory, std::string, double>
+>& mixed_unit::slave_champion_weapons() const noexcept {
+    return slave_champion_weapons_;
+}
+const std::unordered_map<
+    WeaponType,
+    std::tuple<ItemCategory, std::string, double>
+>& mixed_unit::master_weapons() const noexcept {
+    return master_weapons_;
+}
+const std::unordered_map<
+    WeaponType,
+    std::tuple<ItemCategory, std::string, double>
+>& mixed_unit::master_champion_weapons() const noexcept {
+    return master_champ_weapons_;
+}
+
 const std::unordered_map<
     ArmourType,
     std::tuple<ItemCategory, std::string, double>
@@ -109,6 +135,32 @@ const std::unordered_map<
     }
     return master_armours_;
 }
+
+const std::unordered_map<
+    ArmourType,
+    std::tuple<ItemCategory, std::string, double>
+>& mixed_unit::slave_armour() const noexcept{
+    return slave_armours_;
+}
+const std::unordered_map<
+    ArmourType,
+    std::tuple<ItemCategory, std::string, double>
+>& mixed_unit::slave_champion_armour() const noexcept {
+    return slave_champion_armours_;
+}
+const std::unordered_map<
+    ArmourType,
+    std::tuple<ItemCategory, std::string, double>
+>& mixed_unit::master_armour() const noexcept {
+    return master_armours_;
+}
+const std::unordered_map<
+    ArmourType,
+    std::tuple<ItemCategory, std::string, double>
+>& mixed_unit::master_champion_armour() const noexcept {
+    return master_champ_armours_;
+}
+
 const std::pair<
     std::string,
     std::pair<ItemCategory, double>
@@ -133,6 +185,7 @@ const std::unordered_map<
 >& mixed_unit::item_extras() const noexcept {
     return master_champ_item_extras_;
 }
+
 const std::pair<
     std::string,
     std::pair<bool, double>
@@ -157,6 +210,32 @@ const std::pair<
     }
     return master_oco_extra_;
 }
+
+const std::pair<
+    std::string,
+    std::pair<bool, double>
+>& mixed_unit::slave_oco_extra() const noexcept {
+    return slave_oco_extra_;
+}
+const std::pair<
+    std::string,
+    std::pair<bool, double>
+>& mixed_unit::slave_champion_oco_extra() const noexcept {
+    return slave_champion_oco_extra_;
+}
+const std::pair<
+    std::string,
+    std::pair<bool, double>
+>& mixed_unit::master_oco_extra() const noexcept {
+    return master_oco_extra_;
+}
+const std::pair<
+    std::string,
+    std::pair<bool, double>
+>& mixed_unit::master_champion_oco_extra() const noexcept {
+    return master_champ_oco_extra_;
+}
+
 const std::unordered_map<
     std::string,
     std::pair<bool, double>
@@ -181,6 +260,32 @@ const std::unordered_map<
     }
     return master_mc_extras_;
 }
+
+const std::unordered_map<
+    std::string,
+    std::pair<bool, double>
+>& mixed_unit::slave_mc_extras() const noexcept {
+    return slave_mc_extras_;
+}
+const std::unordered_map<
+    std::string,
+    std::pair<bool, double>
+>& mixed_unit::slave_champion_mc_extras() const noexcept {
+    return slave_champion_mc_extras_;
+}
+const std::unordered_map<
+    std::string,
+    std::pair<bool, double>
+>& mixed_unit::master_mc_extras() const noexcept {
+    return master_mc_extras_;
+}
+const std::unordered_map<
+    std::string,
+    std::pair<bool, double>
+>& mixed_unit::master_champion_mc_extras() const noexcept {
+    return master_champ_mc_extras_;
+}
+
 const std::tuple<
     std::string,
     double,

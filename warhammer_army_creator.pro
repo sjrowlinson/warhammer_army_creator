@@ -55,7 +55,8 @@ SOURCES += \
         src/normal_unit.cpp \
         src/option_selector.cpp \
         src/optionbox.cpp \
-        src/magicitembox.cpp
+        src/magicitembox.cpp \
+        src/html_table_unit_row.cpp
 
 HEADERS += \
         src/armycreator.h \
@@ -86,7 +87,8 @@ HEADERS += \
         src/normal_unit.h \
         src/option_selector.h \
         src/optionbox.h \
-        src/magicitembox.h
+        src/magicitembox.h \
+        src/html_table_unit_row.h
 
 FORMS += \
         form/armycreator.ui
