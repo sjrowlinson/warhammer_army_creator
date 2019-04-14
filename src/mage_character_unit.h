@@ -38,8 +38,6 @@ public:
     void remove_lore(const std::string& lore);
 
     virtual std::vector<std::string> clear() override;
-
-    std::string html_table_row() const override;
 };
 
 #endif // !MAGE_CHARACTER_UNIT_H

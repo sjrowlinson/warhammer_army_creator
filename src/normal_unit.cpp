@@ -495,29 +495,6 @@ std::string normal_unit::pick_talisman(ItemCategory item_category, const std::st
     return removed;
 }
 
-// TODO: could just define remove_talisman and a few others (e.g. enchanted_item) in
-//       unit and use talisman_access() in method body
-std::string normal_unit::remove_talisman() {
-    std::string removed = champ_talisman_.first;
-    points_ -= champ_talisman_.second.second;
-    switch (champ_talisman_.second.first) {
-    case ItemCategory::MAGIC:
-    case ItemCategory::COMMON:
-        magic_item_points_ -= champ_talisman_.second.second;
-        break;
-    case ItemCategory::FACTION:
-        faction_item_points_ -= champ_talisman_.second.second;
-        break;
-    default: break;
-    }
-    total_item_points_ -= champ_talisman_.second.second;
-    champ_talisman_.first.clear();
-    champ_talisman_.second.second = 0.0;
-    --n_magic_items;
-    army_->decr_item_tracker(removed);
-    return removed;
-}
-
 std::string normal_unit::pick_enchanted_item(ItemCategory item_category, const std::string& name) {
     if (!(command_group.count(CommandGroup::CHAMPION)))
         throw std::runtime_error("No champion present in the unit!");
@@ -529,27 +506,6 @@ std::string normal_unit::pick_enchanted_item(ItemCategory item_category, const s
         throw;
     }
     switch_model_select(ModelSelect::DEFAULT);
-    return removed;
-}
-
-std::string normal_unit::remove_enchanted_item() {
-    std::string removed = champ_enchanted_item_.first;
-    points_ -= champ_enchanted_item_.second.second;
-    switch (champ_enchanted_item_.second.first) {
-    case ItemCategory::MAGIC:
-    case ItemCategory::COMMON:
-        magic_item_points_ -= champ_enchanted_item_.second.second;
-        break;
-    case ItemCategory::FACTION:
-        faction_item_points_ -= champ_enchanted_item_.second.second;
-        break;
-    default: break;
-    }
-    total_item_points_ -= champ_enchanted_item_.second.second;
-    champ_enchanted_item_.first.clear();
-    champ_enchanted_item_.second.second = 0.0;
-    --n_magic_items;
-    army_->decr_item_tracker(removed);
     return removed;
 }
 
@@ -567,27 +523,6 @@ std::string normal_unit::pick_arcane_item(ItemCategory item_category, const std:
     return removed;
 }
 
-std::string normal_unit::remove_arcane_item() {
-    std::string removed = champ_arcane_.first;
-    points_ -= champ_arcane_.second.second;
-    switch (champ_arcane_.second.first) {
-    case ItemCategory::MAGIC:
-    case ItemCategory::COMMON:
-        magic_item_points_ -= champ_arcane_.second.second;
-        break;
-    case ItemCategory::FACTION:
-        faction_item_points_ -= champ_arcane_.second.second;
-        break;
-    default: break;
-    }
-    total_item_points_ -= champ_arcane_.second.second;
-    champ_arcane_.first.clear();
-    champ_arcane_.second.second = 0.0;
-    --n_magic_items;
-    army_->decr_item_tracker(removed);
-    return removed;
-}
-
 std::string normal_unit::pick_magic_extra(ItemCategory item_category, const std::string& name) {
     if (!(command_group.count(CommandGroup::CHAMPION)))
         throw std::runtime_error("No champion present in the unit!");
@@ -600,28 +535,6 @@ std::string normal_unit::pick_magic_extra(ItemCategory item_category, const std:
     }
     switch_model_select(ModelSelect::DEFAULT);
     return removed;
-}
-
-std::string normal_unit::remove_magic_extra(const std::string& name) {
-    auto search = champ_item_extras_.find(name);
-    if (search == champ_item_extras_.end())
-        throw std::invalid_argument("Unit does not have this item!");
-    points_ -= search->second.second;
-    switch (search->second.first) {
-    case ItemCategory::MAGIC:
-    case ItemCategory::COMMON:
-        magic_item_points_ -= search->second.second;
-        break;
-    case ItemCategory::FACTION:
-        faction_item_points_ -= search->second.second;
-        break;
-    default: break;
-    }
-    total_item_points_ -= search->second.second;
-    champ_item_extras_.erase(name);
-    --n_magic_items;
-    army_->decr_item_tracker(name);
-    return name;
 }
 
 std::string normal_unit::pick_banner(ItemCategory item_category, const std::string& name) {
@@ -855,107 +768,6 @@ void normal_unit::change_size(std::size_t n) {
     for (const auto& m : command_group) points_ += m.second.second;
     points_ += banner.second.second;
     size_ = n;
-}
-
-std::string normal_unit::html_table_row() const {
-    std::string colour;
-    switch (handle->unit_type()) {
-    case UnitType::CORE:
-        colour = "#D4EFDF";
-        break;
-    case UnitType::SPECIAL:
-        colour = "#D6EAF8";
-        break;
-    case UnitType::RARE:
-        colour = "#F2D7D5";
-        break;
-    default: break;
-    }
-    std::string row = "<tr style=\"background-color:" + colour + "\">\n";
-    // unit name
-    row += "<td>" + name() + "</td>\n";
-    // unit size
-    row += "<td>" + std::to_string(size_) + "</td>\n";
-    // unit mount
-    row += "<td>" + (std::get<0>(mount_).empty() ? "&nbsp;" : std::get<0>(mount_)) + "</td>\n";
-    // weapons
-    if (weapons_.empty()) row += "<td>&nbsp;</td>\n";
-    if (weapons_.count(WeaponType::MELEE))
-        row += "<td><strong>Melee:</strong> " +
-                std::get<1>(weapons_.at(WeaponType::MELEE)) +
-                (weapons_.count(WeaponType::BALLISTIC) ? "<br/>" : "</td>\n");
-    if (weapons_.count(WeaponType::BALLISTIC))
-        row +=  std::string(weapons_.count(WeaponType::MELEE) ? "" : "<td>") + "<strong>Ranged:</strong> " +
-                std::get<1>(weapons_.at(WeaponType::BALLISTIC)) + "</td>\n";
-    // armour
-    if (armours_.empty()) row += "<td>&nbsp;</td>\n";
-    if (armours_.count(ArmourType::ARMOUR))
-        row += "<td><strong>Body:</strong> " +
-                std::get<1>(armours_.at(ArmourType::ARMOUR)) +
-                (armours_.count(ArmourType::SHIELD) || armours_.count(ArmourType::HELMET)
-                    ? "<br/>" : "</td>\n");
-    if (armours_.count(ArmourType::SHIELD))
-        row +=  std::string(armours_.count(ArmourType::ARMOUR) ? "" : "<td>") + "<strong>Shield:</strong> " +
-                std::get<1>(armours_.at(ArmourType::SHIELD)) +
-                (armours_.count(ArmourType::HELMET) ? "<br/>" : "</td>\n");
-    if (armours_.count(ArmourType::HELMET))
-        row +=  std::string((armours_.count(ArmourType::ARMOUR) || armours_.count(ArmourType::SHIELD))
-                            ? "" : "<td>") + "<strong>Helmet:</strong> " +
-                std::get<1>(armours_.at(ArmourType::HELMET)) + "</td>\n";
-    // extras
-    row += "<td>";
-    if (!oco_extra_.first.empty()) row += oco_extra_.first + (mc_extras().empty() ? "" : "<br/>");
-    for (const auto& x : mc_extras_) row += x.first + "<br/>";
-    if (oco_extra_.first.empty() && mc_extras_.empty()) row += "&nbsp;";
-    row += "</td>\n";
-    // command
-    if (command_group.count(CommandGroup::MUSICIAN))
-        row += "<td>" +
-                command_group.at(CommandGroup::MUSICIAN).first +
-                (command_group.count(CommandGroup::STANDARD_BEARER) || command_group.count(CommandGroup::CHAMPION)
-                    ? "<br/>" : "</td>\n");
-    if (command_group.count(CommandGroup::STANDARD_BEARER))
-        row +=  std::string(command_group.count(CommandGroup::MUSICIAN) ? "" : "<td>") +
-                command_group.at(CommandGroup::STANDARD_BEARER).first +
-                (command_group.count(CommandGroup::CHAMPION) ? "<br/>" : "</td>\n");
-    if (command_group.count(CommandGroup::CHAMPION))
-        row +=  std::string((command_group.count(CommandGroup::MUSICIAN)
-                             || command_group.count(CommandGroup::STANDARD_BEARER))
-                            ? "" : "<td>") + command_group.at(CommandGroup::CHAMPION).first + "</td>\n";
-    if (!command_group.count(CommandGroup::MUSICIAN) &&
-            !command_group.count(CommandGroup::STANDARD_BEARER) &&
-            !command_group.count(CommandGroup::CHAMPION)) row += "<td>&nbsp;</td>";
-    // banner
-    row += "<td>";
-    if (!banner.first.empty()) row += banner.first;
-    else row += "&nbsp;";
-    row += "</td>\n";
-    // characteristics
-    row += "<td><table border=1 cellspacing=0 cellpadding=1 width=100%>\n";
-    row += "<thead><tr>\n"
-            "<th>M</th><th>WS</th><th>BS</th><th>S</th><th>T</th><th>W</th>"
-            "<th>I</th><th>A</th><th>Ld</th>\n"
-           "</tr></thead>\n";
-    // => default member characteristics
-    row += "<tr>\n";
-    for (const auto& x : handle->statistics()) row += "<td align=\"center\">" + x + "</td>\n";
-    row += "</tr>\n";
-    if (!handle->champion_statistics().empty() &&
-            !std::equal(std::begin(handle->statistics()),
-                    std::end(handle->statistics()),
-                    std::begin(handle->champion_statistics()))) {
-        // => champion member characteristics
-        row += "<tr>\n";
-        for (const auto& x : handle->champion_statistics())
-            row += "<td align=\"center\">" + x + "</td>\n";
-        row += "</tr>\n";
-    }
-    row += "</table></td>\n";
-    // points
-    row += "<td>" + tools::points_str(points()) + "</td>\n";
-    // end row
-    row += "</tr>\n";
-    return row;
 }
 
 std::string normal_unit::save() const {

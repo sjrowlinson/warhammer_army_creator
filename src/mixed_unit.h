@@ -274,7 +274,6 @@ public:
     void change_slave_size(std::size_t n);
 
     // serialisation and exporting
-    std::string html_table_row() const override;
     std::string save() const override;
 };
 

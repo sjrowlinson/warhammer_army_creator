@@ -12,6 +12,7 @@ class army_list;
 
 #include <any>
 #include <memory>
+#include <stdexcept>
 #include <string>
 #include <tuple>
 #include <unordered_map>
@@ -83,6 +84,7 @@ protected:
         std::string,
         std::pair<ItemCategory, double>
     >& magic_banner_acces() noexcept = 0;
+
 public:
     explicit unit(const std::shared_ptr<base_unit>& base, army_list* army_handle);
     unit(const unit& other);
@@ -180,19 +182,19 @@ public:
 
     // => talisman selection and removal [NOTE: always refers to champion for non-characters]
     virtual std::string pick_talisman(ItemCategory item_category, const std::string& name) = 0;
-    virtual std::string remove_talisman() = 0;
+    virtual std::string remove_talisman();
 
     // => enchanted item selection and removal [NOTE: always refers to champion for non-characters]
     virtual std::string pick_enchanted_item(ItemCategory item_category, const std::string& name) = 0;
-    virtual std::string remove_enchanted_item() = 0;
+    virtual std::string remove_enchanted_item();
 
     // => arcane item selection and removal [NOTE: always refers to champion for non-characters]
     virtual std::string pick_arcane_item(ItemCategory item_category, const std::string& name) = 0;
-    virtual std::string remove_arcane_item() = 0;
+    virtual std::string remove_arcane_item();
 
     // => other magic item selection and removal [NOTE: always refers to champion for non-characters]
     virtual std::string pick_magic_extra(ItemCategory item_category, const std::string& name) = 0;
-    virtual std::string remove_magic_extra(const std::string& name) = 0;
+    virtual std::string remove_magic_extra(const std::string& name);
 
     // => one-choice-only extra selection and removal
     virtual std::string pick_oco_extra(const std::string& name) = 0;
@@ -217,7 +219,6 @@ public:
     virtual std::vector<std::string> clear();
 
     // serialisation and exporting
-    virtual std::string html_table_row() const = 0;
     virtual std::string save() const = 0;
 };
 

@@ -174,19 +174,15 @@ public:
 
     // => talisman selection and removal [NOTE: always refers to champion]
     std::string pick_talisman(ItemCategory item_category, const std::string& name) override;
-    std::string remove_talisman() override;
 
     // => enchanted item selection and removal [NOTE: always refers to champion]
     std::string pick_enchanted_item(ItemCategory item_category, const std::string& name) override;
-    std::string remove_enchanted_item() override;
 
     // => arcane item selection and removal [NOTE: always refers to champion]
     virtual std::string pick_arcane_item(ItemCategory item_category, const std::string& name) override;
-    virtual std::string remove_arcane_item() override;
 
     // => other magic item selection and removal [NOTE: always refers to champion]
     std::string pick_magic_extra(ItemCategory item_category, const std::string& name) override;
-    std::string remove_magic_extra(const std::string& name) override;
 
     // => banner selection and removal
     std::string pick_banner(ItemCategory item_category, const std::string& name) override;
@@ -220,7 +216,6 @@ public:
     void change_size(std::size_t n);
 
     // serialisation and exporting
-    std::string html_table_row() const override;
     virtual std::string save() const override;
 };
 

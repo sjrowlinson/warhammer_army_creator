@@ -376,6 +376,98 @@ std::string unit::pick_magic_item(ItemType item_type, ItemCategory item_category
     return removed;
 }
 
+std::string unit::remove_talisman() {
+    auto name = talisman_access().first;
+    auto talisman_pts = talisman_access().second.second;
+    points_ -= talisman_pts;
+    switch (talisman_access().second.first) {
+    case ItemCategory::MAGIC:
+    case ItemCategory::COMMON:
+        magic_item_points_ -= talisman_pts;
+        break;
+    case ItemCategory::FACTION:
+        faction_item_points_ -= talisman_pts;
+        break;
+    default: break;
+    }
+    total_item_points_ -= talisman_pts;
+    talisman_access().first.clear();
+    talisman_access().second.first = ItemCategory::NONE;
+    talisman_access().second.second = 0.0;
+    --n_magic_items;
+    army_->decr_item_tracker(name);
+    return name;
+}
+
+std::string unit::remove_enchanted_item() {
+    auto name = enchanted_item_access().first;
+    auto enchanted_item_pts = enchanted_item_access().second.second;
+    points_ -= enchanted_item_pts;
+    switch (enchanted_item_access().second.first) {
+    case ItemCategory::MAGIC:
+    case ItemCategory::COMMON:
+        magic_item_points_ -= enchanted_item_pts;
+        break;
+    case ItemCategory::FACTION:
+        faction_item_points_ -= enchanted_item_pts;
+        break;
+    default: break;
+    }
+    total_item_points_ -= enchanted_item_pts;
+    enchanted_item_access().first.clear();
+    enchanted_item_access().second.first = ItemCategory::NONE;
+    enchanted_item_access().second.second = 0.0;
+    --n_magic_items;
+    army_->decr_item_tracker(name);
+    return name;
+}
+
+std::string unit::remove_arcane_item() {
+    auto name = arcane_item_access().first;
+    auto arcane_item_pts = arcane_item_access().second.second;
+    points_ -= arcane_item_pts;
+    switch (arcane_item_access().second.first) {
+    case ItemCategory::MAGIC:
+    case ItemCategory::COMMON:
+        magic_item_points_ -= arcane_item_pts;
+        break;
+    case ItemCategory::FACTION:
+        faction_item_points_ -= arcane_item_pts;
+        break;
+    default: break;
+    }
+    total_item_points_ -= arcane_item_pts;
+    arcane_item_access().first.clear();
+    arcane_item_access().second.first = ItemCategory::NONE;
+    arcane_item_access().second.second = 0.0;
+    --n_magic_items;
+    army_->decr_item_tracker(name);
+    return name;
+}
+
+std::string unit::remove_magic_extra(const std::string& _name) {
+    auto search = item_extras_access().find(_name);
+    if (search == std::end(item_extras_access()))
+        throw std::invalid_argument(name() + " does not have this item!");
+    auto item_pts = search->second.second;
+    points_ -= item_pts;
+    switch (search->second.first) {
+    case ItemCategory::MAGIC:
+    case ItemCategory::COMMON:
+        magic_item_points_ -= item_pts;
+        break;
+    case ItemCategory::FACTION:
+        faction_item_points_ -= item_pts;
+        break;
+    default: break;
+    }
+    total_item_points_ -= item_pts;
+    item_extras_access().erase(_name);
+    --n_magic_items;
+    army_->decr_item_tracker(_name);
+    return _name;
+}
+
 double unit::points() const noexcept { return points_; }
 
 double unit::magic_item_points() const noexcept {

@@ -308,52 +308,11 @@ std::string character_unit::pick_talisman(ItemCategory item_category, const std:
     return removed;
 }
 
-std::string character_unit::remove_talisman() {
-    std::string removed = talisman_.first;
-    points_ -= talisman_.second.second;
-    switch (talisman_.second.first) {
-    case ItemCategory::MAGIC:
-    case ItemCategory::COMMON:
-        magic_item_points_ -= talisman_.second.second;
-        break;
-    case ItemCategory::FACTION:
-        faction_item_points_ -= talisman_.second.second;
-        break;
-    default: break;
-    }
-    total_item_points_ -= talisman_.second.second;
-    talisman_.first.clear();
-    talisman_.second.second = 0.0;
-    --n_magic_items;
-    army_->decr_item_tracker(removed);
-    return removed;
-}
 
 std::string character_unit::pick_enchanted_item(ItemCategory item_category, const std::string& name) {
     std::string removed;
     try { removed = pick_magic_item(ItemType::ENCHANTED, item_category, name); }
     catch (const std::exception&) { throw; }
-    return removed;
-}
-
-std::string character_unit::remove_enchanted_item() {
-    std::string removed = enchanted_item_.first;
-    points_ -= enchanted_item_.second.second;
-    switch (enchanted_item_.second.first) {
-    case ItemCategory::MAGIC:
-    case ItemCategory::COMMON:
-        magic_item_points_ -= enchanted_item_.second.second;
-        break;
-    case ItemCategory::FACTION:
-        faction_item_points_ -= enchanted_item_.second.second;
-        break;
-    default: break;
-    }
-    total_item_points_ -= enchanted_item_.second.second;
-    enchanted_item_.first.clear();
-    enchanted_item_.second.second = 0.0;
-    --n_magic_items;
-    army_->decr_item_tracker(removed);
     return removed;
 }
 
@@ -365,54 +324,11 @@ std::string character_unit::pick_arcane_item(ItemCategory item_category, const s
     return removed;
 }
 
-std::string character_unit::remove_arcane_item() {
-    std::string removed = arcane_item_.first;
-    points_ -= arcane_item_.second.second;
-    switch (arcane_item_.second.first) {
-    case ItemCategory::MAGIC:
-    case ItemCategory::COMMON:
-        magic_item_points_ -= arcane_item_.second.second;
-        break;
-    case ItemCategory::FACTION:
-        faction_item_points_ -= arcane_item_.second.second;
-        break;
-    default: break;
-    }
-    total_item_points_ -= arcane_item_.second.second;
-    arcane_item_.first.clear();
-    arcane_item_.second.second = 0.0;
-    --n_magic_items;
-    army_->decr_item_tracker(removed);
-    return removed;
-}
-
 std::string character_unit::pick_magic_extra(ItemCategory item_category, const std::string& name) {
     std::string removed;
     try { removed = pick_magic_item(ItemType::OTHER, item_category, name); }
     catch (const std::exception&) { throw; }
     return removed;
-}
-
-std::string character_unit::remove_magic_extra(const std::string& name) {
-    auto search = item_extras_.find(name);
-    if (search == item_extras_.end())
-        throw std::invalid_argument("Unit does not have this item!");
-    points_ -= search->second.second;
-    switch (search->second.first) {
-    case ItemCategory::MAGIC:
-    case ItemCategory::COMMON:
-        magic_item_points_ -= search->second.second;
-        break;
-    case ItemCategory::FACTION:
-        faction_item_points_ -= search->second.second;
-        break;
-    default: break;
-    }
-    total_item_points_ -= search->second.second;
-    item_extras_.erase(name);
-    --n_magic_items;
-    army_->decr_item_tracker(name);
-    return name;
 }
 
 std::string character_unit::pick_oco_extra(const std::string& name) {
@@ -614,114 +530,6 @@ std::vector<std::string> character_unit::clear() {
         }
     }
     return removed;
-}
-
-std::string character_unit::html_table_row_both(short mlevel, std::string arcane) const {
-    std::string colour;
-    switch (handle_->unit_type()) {
-    case UnitType::LORD:
-        colour = "#D7BDE2";
-        break;
-    case UnitType::HERO:
-        colour = "#FDEBD0";
-        break;
-    default: break;
-    }
-    std::string row = "<tr style=\"background-color:" + colour + "\">\n";
-    // unit name
-    row += "<td>" + name() + "</td>\n";
-    // unit mount
-    row += "<td>";
-    if (!std::get<0>(mount_).empty()) {
-        row += std::get<0>(mount_);
-        if (!std::get<2>(mount_).first.empty())
-            row += "<br/>&nbsp;&nbsp;&nbsp;&nbsp;" + std::get<2>(mount_).first;
-        for (const auto& x : std::get<3>(mount_))
-            row += "<br/>&nbsp;&nbsp;&nbsp;&nbsp;" + x.first;
-    }
-    else row += "&nbsp;";
-    row += "</td>\n";
-    // unit mage level
-    if (mlevel == -1) row += "<td>None</td>\n";
-    else row += "<td>Level " + std::to_string(mlevel) + "</td>\n";
-    // weapons
-    if (weapons_.empty()) row += "<td>&nbsp;</td>\n";
-    if (weapons_.count(WeaponType::MELEE))
-        row += "<td><strong>Melee:</strong> " +
-                std::get<1>(weapons_.at(WeaponType::MELEE)) +
-                (weapons_.count(WeaponType::BALLISTIC) ? "<br/>" : "</td>\n");
-    if (weapons_.count(WeaponType::BALLISTIC))
-        row +=  std::string(weapons_.count(WeaponType::MELEE) ? "" : "<td>") + "<strong>Ranged:</strong> " +
-                std::get<1>(weapons_.at(WeaponType::BALLISTIC)) + "</td>\n";
-    // armour
-    if (armours_.empty()) row += "<td>&nbsp;</td>\n";
-    if (armours_.count(ArmourType::ARMOUR))
-        row += "<td><strong>Body:</strong> " +
-                std::get<1>(armours_.at(ArmourType::ARMOUR)) +
-                (armours_.count(ArmourType::SHIELD) || armours_.count(ArmourType::HELMET)
-                    ? "<br/>" : "</td>\n");
-    if (armours_.count(ArmourType::SHIELD))
-        row +=  std::string(armours_.count(ArmourType::ARMOUR) ? "" : "<td>") + "<strong>Shield:</strong> " +
-                std::get<1>(armours_.at(ArmourType::SHIELD)) +
-                (armours_.count(ArmourType::HELMET) ? "<br/>" : "</td>\n");
-    if (armours_.count(ArmourType::HELMET))
-        row +=  std::string((armours_.count(ArmourType::ARMOUR) || armours_.count(ArmourType::SHIELD))
-                            ? "" : "<td>") + "<strong>Helmet:</strong> " +
-                std::get<1>(armours_.at(ArmourType::HELMET)) + "</td>\n";
-    // talisman
-    row += "<td>";
-    if (!talisman_.first.empty()) row += talisman_.first;
-    else row += "&nbsp;";
-    row += "</td>\n";
-    // enchanted item
-    row += "<td>";
-    if (!enchanted_item_.first.empty()) row += enchanted_item_.first;
-    else row += "&nbsp;";
-    row += "</td>\n";
-    // arcane item
-    if (arcane.empty()) row += "<td>&nbsp;</td>\n";
-    else row += "<td>" + arcane + "</td>\n";
-    // magic/faction item extras
-    row += "<td>";
-    for (const auto& x : item_extras_) row += x.first + "<br/>";
-    if (item_extras_.empty()) row += "&nbsp;";
-    row += "</td>\n";
-    // other extras
-    row += "<td>";
-    if (!oco_extra_.first.empty()) row += oco_extra_.first + (mc_extras().empty() ? "" : "<br/>");
-    for (const auto& x : mc_extras_) row += x.first + "<br/>";
-    if (oco_extra_.first.empty() && mc_extras_.empty()) row += "&nbsp;";
-    row += "</td>\n";
-    // banner (if BSB)
-    row += "<td>";
-    if (!banner.first.empty()) row += banner.first;
-    else row += "&nbsp;";
-    row += "</td>\n";
-    // characteristics
-    row += "<td><table border=1 cellspacing=0 cellpadding=1 width=100%>\n";
-    row += "<thead><tr>\n"
-            "<th>M</th><th>WS</th><th>BS</th><th>S</th><th>T</th><th>W</th>"
-            "<th>I</th><th>A</th><th>Ld</th>\n"
-           "</tr></thead>\n";
-    row += "<tr>\n";
-    for (const auto& x : handle_->statistics()) row += "<td align=\"center\">" + x + "</td>\n";
-    row += "</tr>\n";
-    if (!std::get<0>(mount_).empty()) {
-        row += "<tr>\n";
-        auto mount_characteristics = handle_->mounts_handle()->find(std::get<0>(mount_))->second.statistics();
-        for (const auto& x : mount_characteristics) row += "<td align=\"center\">" + x + "</td>\n";
-        row += "</tr>\n";
-    }
-    row += "</table></td>\n";
-    // points
-    row += "<td>" + tools::points_str(points()) + "</td>\n";
-    // end row
-    row += "</tr>\n";
-    return row;
-}
-
-std::string character_unit::html_table_row() const {
-    return html_table_row_both(-1, std::string());
 }
 
 std::string character_unit::save() const {

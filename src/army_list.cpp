@@ -1,5 +1,6 @@
 #include "army_list.h"
 #include "unit.h"
+#include "html_table_unit_row.h"
 
 army_list::army_list(double points) :
     army(), unique_units(), general_(), item_tracker(),
@@ -371,7 +372,8 @@ std::string army_list::html_characters_table() const {
         return x.second->unit_type() == UnitType::HERO;
     });
     for (const auto& x : lords) {
-        auto tr = x->second->html_table_row();
+        html_table_unit_row htr(x->second);
+        auto tr = htr.to_string();
         if (x->second == general_) {
             auto search_td = tr.find("td") + 3U;
             tr.insert(search_td, "<em>");
@@ -379,7 +381,10 @@ std::string army_list::html_characters_table() const {
         }
         table += tr;
     }
-    for (const auto& x : heroes) table += x->second->html_table_row();
+    for (const auto& x : heroes) {
+        html_table_unit_row htr(x->second);
+        table += htr.to_string();
+    }
     table += "</table>";
     return table;
 }
@@ -410,9 +415,18 @@ std::string army_list::html_units_table() const {
     auto rares = tools::find_all_if(std::begin(army), std::end(army), [](const auto& x) {
         return x.second->unit_type() == UnitType::RARE;
     });
-    for (const auto& x : core) table += x->second->html_table_row();
-    for (const auto& x : special) table += x->second->html_table_row();
-    for (const auto& x : rares) table += x->second->html_table_row();
+    for (const auto& x : core) {
+        html_table_unit_row htr(x->second);
+        table += htr.to_string();
+    }
+    for (const auto& x : special) {
+        html_table_unit_row htr(x->second);
+        table += htr.to_string();
+    }
+    for (const auto& x : rares) {
+        html_table_unit_row htr(x->second);
+        table += htr.to_string();
+    }
     table += "</table>";
     return table;
 }

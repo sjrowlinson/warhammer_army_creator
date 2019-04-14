@@ -85,7 +85,3 @@ std::vector<std::string> mage_character_unit::clear() {
     if (!arcane_rmvd.empty()) removed.push_back(arcane_rmvd);
     return removed;
 }
-
-std::string mage_character_unit::html_table_row() const {
-    return html_table_row_both(level_.first, arcane_item_.first);
-}
