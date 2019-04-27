@@ -548,9 +548,9 @@ void ArmyCreator::optional_level_selected(short level) {
     }
 }
 
-void ArmyCreator::optional_lore_selected(const std::string& name) {
+void ArmyCreator::optional_lore_selected(const std::string& name, std::string to_remove) {
     try {
-        opt_sel->select_mage_lore(name);
+        opt_sel->select_mage_lore(name, to_remove);
         if (enum_convert::in_army_trees(in_tree))
             update_unit_display(current_item(), ArmyTreeColumn::LORE, false, false);
     } catch (const std::exception& e) {

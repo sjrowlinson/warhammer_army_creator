@@ -63,6 +63,7 @@ struct lore_option {
         RestrictionField,
         std::any
     > restrictions;
+    bool is_default;
 };
 
 struct budget {

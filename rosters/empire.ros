@@ -37,7 +37,7 @@ Battle Wizard Lord
     TOTAL_ITEM_BUDGET = Points : 100
     MAGE_LEVEL = 3
     MAGE_UPGRADES = 4 [35]
-    MAGE_LORES = [Name: Fire
+    MAGE_LORES = [Name: Fire, Default
                   Name: Beasts
                   Name: Metal
                   Name: Light
@@ -112,7 +112,7 @@ Battle Wizard
     TOTAL_ITEM_BUDGET = Points : 50
     MAGE_LEVEL = 1
     MAGE_UPGRADES = 2 [35]
-    MAGE_LORES = [Name: Fire
+    MAGE_LORES = [Name: Fire, Default
                   Name: Beasts
                   Name: Metal
                   Name: Light

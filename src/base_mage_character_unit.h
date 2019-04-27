@@ -7,6 +7,7 @@
 class base_mage_character_unit : public base_character_unit {
 private:
     short mage_level_;
+    short lore_count_;
     std::unordered_map<short, double> level_upgrades_;
     std::vector<lore_option> lores_;
 public:
@@ -27,6 +28,7 @@ public:
         short mage_level,
         std::unordered_map<short, double>&& level_upgrades,
         std::vector<lore_option>&& lores,
+        short lore_count,
         std::string mount_name=""
     );
     ~base_mage_character_unit() = default;
@@ -34,6 +36,7 @@ public:
     short mage_level() const noexcept;
     const std::unordered_map<short, double>& level_upgrades() const noexcept;
     const std::vector<lore_option>& lores() const noexcept;
+    short lore_count() const noexcept;
 };
 
 #endif // !BASE_MAGE_CHARACTER_UNIT_H

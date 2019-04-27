@@ -58,7 +58,7 @@ public slots:
     void optional_banner_selected(const std::string& name, ItemCategory ic);
     void optional_arcane_item_selected(const std::string& name, ItemCategory ic);
     void optional_level_selected(short level);
-    void optional_lore_selected(const std::string& name);
+    void optional_lore_selected(const std::string& name, std::string to_remove);
     void optional_mount_selected(const std::string& name);
     void optional_mount_oco_extra_selected(const std::string& name);
     void optional_mount_mc_extra_selected(const std::string& name, bool checked);

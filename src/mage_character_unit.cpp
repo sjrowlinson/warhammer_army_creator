@@ -4,10 +4,13 @@ mage_character_unit::mage_character_unit(const std::shared_ptr<base_unit>& base,
     : character_unit(base, army_handle),
       handle(std::dynamic_pointer_cast<base_mage_character_unit>(base)) {
     level_ = {handle->mage_level(), 0.0};
+    auto search = tools::find_all_if(std::begin(handle->lores()), std::end(handle->lores()),
+                                     [](const auto& x) { return x.is_default; });
+    for (auto it : search) lores_.push_back(it->name);
 }
 
 mage_character_unit::mage_character_unit(const mage_character_unit& other)
-    : character_unit(other), level_(other.level_),
+    : character_unit(other), level_(other.level_), lores_(other.lores_),
       handle(other.handle) {}
 
 std::string mage_character_unit::restriction_check(
@@ -75,7 +78,7 @@ void mage_character_unit::pick_lore(const std::string& lore) {
     lores_.push_back(lore);
 }
 void mage_character_unit::remove_lore(const std::string& lore) {
-    lores_.erase(std::remove(std::begin(lores_), std::end(lores_), lore));
+    lores_.erase(std::remove(std::begin(lores_), std::end(lores_), lore), std::end(lores_));
 }
 
 std::vector<std::string> mage_character_unit::clear() {

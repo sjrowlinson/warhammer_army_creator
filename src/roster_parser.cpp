@@ -44,6 +44,8 @@ namespace tools {
             std::bind(&roster_parser::parse_unit_mage_upgrades, this, _1, false, true);
         parsing_functions["MAGE_LORES"] =
             std::bind(&roster_parser::parse_unit_mage_lores, this, _1, false, true);
+        parsing_functions["MAGE_LORE_COUNT"] =
+            std::bind(&roster_parser::parse_unit_mage_lore_count, this, _1, false, true);
         // characteristics
         parsing_functions["CHARACTERISTICS"] =
             std::bind(&roster_parser::parse_unit_characteristics, this, _1, false, true);
@@ -245,7 +247,7 @@ namespace tools {
                 std::move(eq), std::move(opt), std::move(tpo.mi_budget),
                 std::move(tpo.fi_budget), std::move(tpo.ti_budget), tpo.unique, tpo.mage_level,
                 std::move(tpo.mage_upgrades), std::move(tpo.mage_lores),
-                tpo.mount
+                tpo.mage_lore_count, tpo.mount
             );
             break;
         }
@@ -398,15 +400,30 @@ namespace tools {
                 throw std::runtime_error(msg);
             }
             lore_option lo;
+            lo.is_default = all.size() < 2U;
             for (const auto& y : names_values) {
                 if (y.first == "Name") lo.name = y.second;
                 else if (y.first == "Restrictions")
-                        lo.restrictions = parse_restrictions(y.second, "MAGE_LORES");
-
+                    lo.restrictions = parse_restrictions(y.second, "MAGE_LORES");
+                else if (y.first == "Default")
+                    lo.is_default = true;
             }
             tpo.mage_lores.push_back(lo);
         }
+        // make sure a default lore gets set even if none are specified in the roster file
+        if (!tpo.mage_lores.empty() &&
+                std::none_of(std::begin(tpo.mage_lores), std::end(tpo.mage_lores), [](const auto& lo) {
+                    return lo.is_default;
+                })
+           ) {
+            tpo.mage_lores[0].is_default = true;
+        }
         return ml_pair.second;
+    }
+    std::size_t roster_parser::parse_unit_mage_lore_count(const std::string& s, bool champion, bool master) {
+        (void)champion; (void)master;
+        tpo.mage_lore_count = static_cast<short>(std::stoi(s));
+        return 0U;
     }
     std::size_t roster_parser::parse_unit_characteristics(const std::string& s, bool champion, bool master) {
         (void)master;

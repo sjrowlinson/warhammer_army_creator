@@ -38,7 +38,7 @@ void html_table_unit_row::make_character_row() {
             entry += bold("Melee: ") + std::get<1>(w.at(WeaponType::MELEE));
         if (w.count(WeaponType::BALLISTIC))
             entry += (w.count(WeaponType::MELEE) ? newline : "") + bold("Ranged: ")
-                    + std::get<1>(w.at(WeaponType::MELEE));
+                    + std::get<1>(w.at(WeaponType::BALLISTIC));
         urow += row_entry(entry);
     }
     // armour

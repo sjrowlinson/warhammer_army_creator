@@ -554,8 +554,12 @@ std::pair<QGroupBox*, QGroupBox*> OptionBox::make_mage_options_boxes() {
         bool has_lore = false;
         for (const auto& l : opt_lores) {
             std::string name = "Lore of " + l.name;
-            QRadioButton* b = new QRadioButton(creator->tr(name.data()));
-            if (lores.empty() && !has_lore) {
+            QAbstractButton* b;
+            if (p->handle->lore_count() > 1) b = new QCheckBox(creator->tr(name.data()));
+            else b = new QRadioButton(creator->tr(name.data()));
+            // lores can only be empty if unit is selected in roster_tree
+            // so in this case select the lore if it is a default
+            if (lores.empty() && l.is_default) {
                 b->setChecked(true);
                 has_lore = true;
             }
@@ -563,9 +567,16 @@ std::pair<QGroupBox*, QGroupBox*> OptionBox::make_mage_options_boxes() {
                 b->setChecked(true);
                 has_lore = true;
             }
-            creator->connect(b, &QRadioButton::clicked, creator.get(), [this, l](auto) {
-                creator->optional_lore_selected(l.name);
-            });
+            if (p->handle->lore_count() > 1)
+                creator->connect(b, &QCheckBox::clicked, creator.get(), [this, l](bool checked) {
+                   creator->optional_lore_selected(l.name, !checked ? l.name : "");
+                });
+            else
+                creator->connect(b, &QRadioButton::clicked, creator.get(), [this, l, p](auto) {
+                    std::string to_remove = p->lores().empty() ? "" :p->lores()[0];
+                    if (to_remove == l.name) return;
+                    creator->optional_lore_selected(l.name, to_remove);
+                });
             lores_box_layout->addWidget(b);
         }
         lores_box_layout->addStretch(1);

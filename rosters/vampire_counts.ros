@@ -1,24 +1,28 @@
 # Lords
 
 Vampire Lord
-    Lord, Mage
-    1
-    2 [35], 3 [35], 4 [35]
-    Death, Shadow, Vampires
-    Infantry
-    220
-    1, 1
-    6 7 5 5 5 3 7 5 10
-    The Hunger, Undead, Vampiric
-    None
-    Great weapon {Mundane} [Melee] (10), Additional hand weapon {Mundane} [Melee] (4), Lance {Mundane} [Melee] (10)
-    Shield {Mundane} [Shield] (3), Heavy armour {Mundane} [Armour] (6)
-    Barded Nightmare {Warbeast} [24], Hellsteed {Warbeast} [30], Abyssal Terror {Monster} [120], Zombie Dragon {Monster} [245], Coven Throne {Chariot} [230]
-    None
-    None
-    100
-    100
-    200
+    BASE_TYPE = Mage
+    TYPE = LORD
+    CATEGORY = Infantry
+    POINTS = 220
+    CHARACTERISTICS = 6 7 5 5 5 3 7 5 10
+    SPECIAL_RULES = The Hunger, Undead, Vampiric
+    OPTIONAL_WEAPONS = [Name: Great weapon, Category: Mundane, Type: Melee, Points: 10
+                        Name: Additional hand weapon, Category: Mundane, Type: Melee, Points: 4
+                        Name: Lance, Category: Mundane, Type: Melee, Points: 10]
+    OPTIONAL_ARMOUR = [Name: Shield, Category: Mundane, Type: Shield, Points: 3
+                       Name: Heavy armour,  Category: Mundane, Type: Armour, Points: 6]
+    OPTIONAL_MOUNTS = [Name: Barded Nightmare, Points: 24
+                       Name: Hellsteed, Points: 30
+                       Name: Abyssal Terror, Points: 120, MC_extras: Name - Poisonous Tail | Points - 15 / Name - Sword-claws | Points - 10
+                       Name: Zombie Dragon, Points: 245
+                       Name: Coven Throne, Points: 230]
+    MAGIC_ITEM_BUDGET = Points : 100
+    FACTION_ITEM_BUDGET = Points : 100
+    TOTAL_ITEM_BUDGET = Points : 200
+    MAGE_LEVEL = 1
+    MAGE_UPGRADES = 2 [35], 3 [70], 4 [105]
+    MAGE_LORES = Name: Vampires; Name: Shadow; Name: Death
 
 Master Necromancer
     Lord, Mage

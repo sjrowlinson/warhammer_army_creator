@@ -244,8 +244,16 @@ void option_selector::select_mage_level(short level) {
     }
 }
 
-void option_selector::select_mage_lore(const std::string& lore) {
+void option_selector::select_mage_lore(const std::string& lore, std::string to_remove) {
     std::shared_ptr<mage_character_unit> p = std::dynamic_pointer_cast<mage_character_unit>(current);
+    // erase a lore
+    if (!to_remove.empty()) {
+        p->remove_lore(to_remove);
+        // if lore to remove same as lore to pick then this indicates a check-box
+        // being unchecked - so return immediately without repicking the same lore
+        if (to_remove == lore) return;
+    }
+    // pick a lore
     p->pick_lore(lore);
 }
 

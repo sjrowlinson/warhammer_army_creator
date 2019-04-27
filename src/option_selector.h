@@ -39,7 +39,7 @@ public:
     void select_other_item(const std::string& other, ItemCategory ic, bool checked);
     void select_banner(const std::string& banner, ItemCategory ic);
     void select_mage_level(short level);
-    void select_mage_lore(const std::string& lore);
+    void select_mage_lore(const std::string& lore, std::string to_remove);
     void select_mount(const std::string& mount);
     void select_mount_oco_extra(const std::string& extra);
     void select_mount_mc_extra(const std::string& extra, bool is_checked);

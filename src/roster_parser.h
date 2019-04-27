@@ -37,6 +37,7 @@ namespace tools {
             std::string master_name;
             double master_points = 0.0;
             short mage_level = 0;
+            short mage_lore_count = 0;
             std::unordered_map<short, double> mage_upgrades;
             std::vector<lore_option> mage_lores;
             std::vector<std::string> characteristics;
@@ -98,6 +99,7 @@ namespace tools {
         std::size_t parse_unit_mage_level(const std::string& s, bool champion, bool master);
         std::size_t parse_unit_mage_upgrades(const std::string& s, bool champion, bool master);
         std::size_t parse_unit_mage_lores(const std::string& s, bool champion, bool master);
+        std::size_t parse_unit_mage_lore_count(const std::string& s, bool champion, bool master);
         std::size_t parse_unit_characteristics(const std::string& s, bool champion, bool master);
         std::size_t parse_unit_special_rules(const std::string& s, bool champion, bool master);
         std::size_t parse_unit_equipment(const std::string& s, bool champion, bool master);

@@ -10,7 +10,7 @@ Lord Skrolk
     EQUIPMENT = Weapon - Name: Rod of Corruption, Category: Magic, Type: Melee ; Arcane - Name: The Liber Bubonicus
     UNIQUENESS = true
     MAGE_LEVEL = 3
-    MAGE_LORES = Name: Plague
+    MAGE_LORES = Name: Plague, Default
 
 Thanquol & Boneripper
     BASE_TYPE = Mage
@@ -36,7 +36,7 @@ Ikit Claw
                  Armour - Name: Iron Frame, Category: Magic, Type: Armour]
     UNIQUENESS = true
     MAGE_LEVEL = 3
-    MAGE_LORES = Name: Ruin
+    MAGE_LORES = Name: Ruin, Default
 
 Throt the Unclean
     BASE_TYPE = Melee
@@ -84,7 +84,8 @@ Vermin Lord
     SPECIAL_RULES = Scurry Away!, Immune to Psychology, Large Target, Rat Daemon, Terror, Ward save (5+)
     EQUIPMENT = Weapon - Name: Doom Glaive, Category: Magic, Type: Melee
     MAGE_LEVEL = 4
-    MAGE_LORES = Name: Plague; Name: Ruin
+    MAGE_LORE_COUNT = 2
+    MAGE_LORES = Name: Plague, Default; Name: Ruin, Default
 
 Grey Seer
     BASE_TYPE = Mage
@@ -105,7 +106,8 @@ Grey Seer
     FACTION_ITEM_BUDGET = Points : 100
     TOTAL_ITEM_BUDGET = Points : 100
     MAGE_LEVEL = 4
-    MAGE_LORES = Name: Plague; Name: Ruin
+    MAGE_LORE_COUNT = 2
+    MAGE_LORES = Name: Plague, Default; Name: Ruin, Default
 
 # Heroes
 

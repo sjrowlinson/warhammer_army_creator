@@ -15,7 +15,7 @@ base_mage_character_unit::base_mage_character_unit(Faction faction,
     bool is_unique,
     short mage_level,
     std::unordered_map<short, double>&& level_upgrades,
-    std::vector<lore_option> &&lores,
+    std::vector<lore_option> &&lores, short lore_count,
     std::string mount_name
 ) : base_character_unit(
     faction,
@@ -32,13 +32,19 @@ base_mage_character_unit::base_mage_character_unit(Faction faction,
     std::move(ti_budget),
     is_unique,
     mount_name
-), mage_level_(mage_level), level_upgrades_(std::move(level_upgrades)),
+), mage_level_(mage_level), lore_count_(lore_count), level_upgrades_(std::move(level_upgrades)),
    lores_(std::move(lores)) { but = BaseUnitType::MAGE_CHARACTER; }
 
 short base_mage_character_unit::mage_level() const noexcept { return mage_level_; }
+
 const std::unordered_map<short, double>& base_mage_character_unit::level_upgrades() const noexcept {
     return level_upgrades_;
 }
+
 const std::vector<lore_option> &base_mage_character_unit::lores() const noexcept {
     return lores_;
+}
+
+short base_mage_character_unit::lore_count() const noexcept {
+    return lore_count_;
 }
