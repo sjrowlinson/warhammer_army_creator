@@ -2,7 +2,7 @@
 
 Vampire Lord
     BASE_TYPE = Mage
-    TYPE = LORD
+    TYPE = Lord
     CATEGORY = Infantry
     POINTS = 220
     CHARACTERISTICS = 6 7 5 5 5 3 7 5 10
@@ -14,7 +14,7 @@ Vampire Lord
                        Name: Heavy armour,  Category: Mundane, Type: Armour, Points: 6]
     OPTIONAL_MOUNTS = [Name: Barded Nightmare, Points: 24
                        Name: Hellsteed, Points: 30
-                       Name: Abyssal Terror, Points: 120, MC_extras: Name - Poisonous Tail | Points - 15 / Name - Sword-claws | Points - 10
+                       Name: Abyssal Terror, Points: 120, MC_extras: Name - Poisonous Tail | Points - 15 / Name - Sword claws | Points - 10
                        Name: Zombie Dragon, Points: 245
                        Name: Coven Throne, Points: 230]
     MAGIC_ITEM_BUDGET = Points : 100
@@ -22,495 +22,337 @@ Vampire Lord
     TOTAL_ITEM_BUDGET = Points : 200
     MAGE_LEVEL = 1
     MAGE_UPGRADES = 2 [35], 3 [70], 4 [105]
-    MAGE_LORES = Name: Vampires; Name: Shadow; Name: Death
+    MAGE_LORES = Name: Vampires, Default; Name: Shadow; Name: Death
 
 Master Necromancer
-    Lord, Mage
-    3
-    4 [35]
-    Death, Vampires
-    Infantry
-    165
-    1, 1
-    4 3 3 3 4 3 3 1 8
-    Undead
-    None
-    None
-    None
-    Barded Nightmare {Warbeast} [20], Hellsteed {Warbeast} [30], Abyssal Terror {Monster} [120], Corpse Cart {Chariot} [90]
-    None
-    Master of the Dead {True} [20]
-    100
-    0
-    100
+    BASE_TYPE = Mage
+    TYPE = Lord
+    CATEGORY = Infantry
+    POINTS = 165
+    CHARACTERISTICS = 4 3 3 3 4 3 3 1 8
+    SPECIAL_RULES = Undead
+    OPTIONAL_MOUNTS = [Name: Barded Nightmare, Points: 20
+                       Name: Hellsteed, Points: 30
+                       Name: Abyssal Terror, Points: 120, MC_extras: Name - Poisonous Tail | Points - 15 / Name - Sword claws | Points - 10
+                       Name: Corpse Cart, Points: 90]
+    OPTIONAL_MC_EXTRAS = Name: Master of the Dead, Points: 20
+    MAGIC_ITEM_BUDGET = Points : 100
+    FACTION_ITEM_BUDGET = Points : 0
+    TOTAL_ITEM_BUDGET = Points : 100
+    MAGE_LEVEL = 3
+    MAGE_UPGRADES = 4 [35]
+    MAGE_LORES = Name: Vampires, Default; Name: Death
 
 Strigoi Ghoul King
-    Lord, Mage
-    1
-    None
-    Vampires
-    Infantry
-    260
-    1, 1
-    6 6 3 5 5 3 8 5 9
-    The Hunger, Infinite Hatred, Poisoned Attacks, Regeneration (5+), Undead, Vampiric
-    None
-    None
-    None
-    Terrorgheist {Monster} [225]
-    None
-    None
-    100
-    100
-    200
+    BASE_TYPE = Mage
+    TYPE = Lord
+    CATEGORY = Infantry
+    POINTS = 260
+    CHARACTERISTICS = 6 6 3 5 5 3 8 5 9
+    SPECIAL_RULES = The Hunger, Infinite Hatred, Poisoned Attacks, Regeneration (5+), Undead, Vampiric
+    OPTIONAL_MOUNTS = Name: Terrorgheist, Points: 225
+    MAGIC_ITEM_BUDGET = Points : 100
+    FACTION_ITEM_BUDGET = Points : 100
+    TOTAL_ITEM_BUDGET = Points : 200
+    MAGE_LEVEL = 1
+    MAGE_LORES = Name: Vampires, Default
 
 # Heroes
 
 Necromancer
-    Hero, Mage
-    1
-    2 [35]
-    Death, Vampires
-    Infantry
-    65
-    1, 1
-    4 3 3 3 3 2 3 1 7
-    Undead
-    None
-    None
-    None
-    Nightmare {Warbeast} [15], Corpse Cart {Chariot} [90]
-    None
-    Master of the Dead {True} [20]
-    50
-    0
-    50
+    BASE_TYPE = Mage
+    TYPE = Hero
+    CATEGORY = Infantry
+    POINTS = 65
+    CHARACTERISTICS = 4 3 3 3 3 2 3 1 7
+    SPECIAL_RULES = Undead
+    OPTIONAL_MOUNTS = [Name: Nightmare, Points: 15
+                       Name: Corpse Cart, Points: 90]
+    OPTIONAL_MC_EXTRAS = Name: Master of the Dead, Points: 20
+    MAGIC_ITEM_BUDGET = Points : 50
+    FACTION_ITEM_BUDGET = Points : 0
+    TOTAL_ITEM_BUDGET = Points : 50
+    MAGE_LEVEL = 1
+    MAGE_UPGRADES = 2 [35]
+    MAGE_LORES = Name: Vampires, Default; Name: Death
 
 Vampire
-    Hero, Mage
-    1
-    2 [35]
-    Death, Shadow, Vampires
-    Infantry
-    105
-    1, 1
-    6 6 4 5 4 2 6 4 7
-    The Hunger, Undead, Vampiric
-    None
-    Great weapon {Mundane} [Melee] (8), Additional hand weapon {Mundane} [Melee] (3), Lance {Mundane} [Melee] (8)
-    Shield {Mundane} [Shield] (2), Heavy armour {Mundane} [Armour] (4)
-    Barded Nightmare {Warbeast} [16], Hellsteed {Warbeast} [30], Coven Throne {Chariot} [230]
-    None
-    Battle Standard Bearer {True} [25]
-    50
-    50
-    100
+    BASE_TYPE = Mage
+    TYPE = Hero
+    CATEGORY = Infantry
+    POINTS = 105
+    CHARACTERISTICS = 6 6 4 5 4 2 6 4 7
+    SPECIAL_RULES = The Hunger, Undead, Vampiric
+    OPTIONAL_WEAPONS = [Name: Great weapon, Category: Mundane, Type: Melee, Points: 8
+                        Name: Additional hand weapon, Category: Mundane, Type: Melee, Points: 3
+                        Name: Lance, Category: Mundane, Type: Melee, Points: 8]
+    OPTIONAL_ARMOUR = [Name: Shield, Category: Mundane, Type: Shield, Points: 2
+                       Name: Heavy armour,  Category: Mundane, Type: Armour, Points: 4]
+    OPTIONAL_MOUNTS = [Name: Barded Nightmare, Points: 16
+                       Name: Hellsteed, Points: 30
+                       Name: Coven Throne, Points: 230]
+    OPTIONAL_MC_EXTRAS = Name: Battle Standard Bearer, Points: 25
+    MAGIC_ITEM_BUDGET = Points : 50
+    FACTION_ITEM_BUDGET = Points : 50
+    TOTAL_ITEM_BUDGET = Points : 100
+    MAGE_LEVEL = 1
+    MAGE_UPGRADES = 2 [35]
+    MAGE_LORES = Name: Vampires, Default; Name: Shadow; Name: Death
 
 Wight King
-    Hero, Melee
-    Infantry
-    85
-    1, 1
-    4 4 0 4 5 3 4 3 9
-    Killing Blow, Undead
-    Armour: Heavy armour {Mundane} [Armour]
-    Great weapon {Mundane} [Melee] (5), Additional hand weapon {Mundane} [Melee] (2), Lance {Mundane} [Melee] (5)
-    Shield {Mundane} [Shield] (4)
-    Skeletal Steed {Warbeast} [12]
-    None
-    Battle Standard Bearer {True} [25]
-    50
-    0
-    50
+    BASE_TYPE = Melee
+    TYPE = Hero
+    CATEGORY = Infantry
+    POINTS = 85
+    CHARACTERISTICS = 4 4 0 4 5 3 4 3 9
+    SPECIAL_RULES = Killing Blow, Undead
+    EQUIPMENT = Armour - Name : Heavy armour, Category : Mundane, Type : Armour
+    OPTIONAL_WEAPONS = [Name: Great weapon, Category: Mundane, Type: Melee, Points: 5
+                        Name: Additional hand weapon, Category: Mundane, Type: Melee, Points: 2
+                        Name: Lance, Category: Mundane, Type: Melee, Points: 5]
+    OPTIONAL_ARMOUR = Name: Shield, Category: Mundane, Type: Shield, Points: 4
+    OPTIONAL_MOUNTS = Name: Skeletal Steed, Points: 12
+    OPTIONAL_MC_EXTRAS = Name: Battle Standard Bearer, Points: 25
+    MAGIC_ITEM_BUDGET = Points : 50
+    FACTION_ITEM_BUDGET = Points : 50
+    TOTAL_ITEM_BUDGET = Points : 100
 
 Cairn Wraith
-    Hero, Melee
-    Infantry
-    60
-    1, 1
-    6 3 0 3 3 2 2 3 5
-    Chill Grasp, Ethereal, Terror, Undead
-    Weapon: Great weapon {Mundane} [Melee]
-    None
-    None
-    None
-    None
-    None
-    0
-    0
-    0
+    BASE_TYPE = Melee
+    TYPE = Hero
+    CATEGORY = Infantry
+    POINTS = 60
+    CHARACTERISTICS = 6 3 0 3 3 2 2 3 5
+    SPECIAL_RULES = Chill Grasp, Ethereal, Terror, Undead
+    EQUIPMENT = Weapon - Name: Great weapon, Category: Mundane, Type: Melee
 
 Tomb Banshee
-    Hero, Melee
-    Infantry
-    95
-    1, 1
-    6 3 0 3 3 2 3 1 5
-    Ethereal, Ghostly Howl, Terror, Undead
-    None
-    None
-    None
-    None
-    None
-    None
-    0
-    0
-    0
+    BASE_TYPE = Melee
+    TYPE = Hero
+    CATEGORY = Infantry
+    POINTS = 95
+    CHARACTERISTICS = 6 3 0 3 3 2 3 1 5
+    SPECIAL_RULES = Ethereal, Ghostly Howl, Terror, Undead
 
 # Core
 
 Zombies
-    Core, Infantry, Normal
-    3
-    20, None
-    4 1 0 3 3 1 1 1 2
-    4 1 0 3 3 1 1 1 2
-    Always Strikes Last, The Newly Dead, Undead
-    Always Strikes Last, The Newly Dead, Undead
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [5], Standard Bearer: Standard Bearer [5]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Infantry
+    POINTS = 3
+    SIZE = 20, inf
+    CHARACTERISTICS = 4 1 0 3 3 1 1 1 2
+    SPECIAL_RULES = Always Strikes Last, The Newly Dead, Undead
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 5 ; Standard Bearer - Name: Standard Bearer, Points: 5
 
 Skeleton Warriors
-    Core, Infantry, Normal
-    5
-    10, None
-    4 2 2 3 3 1 2 1 3
-    4 2 2 3 3 1 2 2 3
-    Undead
-    Undead
-    Armour: Shield {Mundane} [Shield], Armour: Light armour {Mundane} [Armour]
-    None
-    Spears {Mundane} [Melee] (0)
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Skeleton Champion [10]
-    0
-    0
-    0
-    25
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Infantry
+    POINTS = 5
+    SIZE = 10, inf
+    CHARACTERISTICS = 4 2 2 3 3 1 2 1 3
+    CHAMPION_CHARACTERISTICS = 4 2 2 3 3 1 2 2 3
+    SPECIAL_RULES = Undead
+    EQUIPMENT = Armour - Name: Shield, Category: Mundane, Type: Shield ; Armour - Name: Light armour, Category: Mundane, Type: Armour
+    OPTIONAL_WEAPONS = Name: Spears, Category: Mundane, Type: Melee, Points: 0
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Skeleton Champion, Points: 10
+    BANNER_BUDGET = 25
 
 Crypt Ghouls
-    Core, Infantry, Normal
-    10
-    10, None
-    4 3 0 3 4 1 3 2 5
-    4 3 0 3 4 1 3 3 5
-    Poisoned Attacks, Undead
-    Poisoned Attacks, Undead
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Champion: Crypt Ghast [10]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Infantry
+    POINTS = 10
+    SIZE = 10, inf
+    CHARACTERISTICS = 4 3 0 3 4 1 3 2 5
+    CHAMPION_CHARACTERISTICS = 4 3 0 3 4 1 3 3 5
+    SPECIAL_RULES = Poisoned Attacks, Undead
+    OPTIONAL_COMMAND = Champion - Name: Crypt Ghast, Points: 10
 
 Dire Wolves
-    Core, Warbeast, Normal
-    8
-    5, 20
-    9 3 0 3 3 1 3 1 3
-    9 3 0 3 3 1 3 2 3
-    Slavering Charge, Undead, Vanguard
-    Slavering Charge, Undead, Vanguard
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Champion: Doom Wolf [10]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Core
+    CATEGORY = Warbeast
+    POINTS = 8
+    SIZE = 5, inf
+    CHARACTERISTICS = 9 3 0 3 3 1 3 1 3
+    CHAMPION_CHARACTERISTICS = 9 3 0 3 3 1 3 2 3
+    SPECIAL_RULES = Slavering Charge, Undead, Vanguard
+    OPTIONAL_COMMAND = Champion - Name: Skeleton Champion, Points: 10
+
+# Special
 
 Corpse Cart
-    Special, Chariot, Normal
-    90
-    1, 1
-    - 3 0 3 - - 2 1 5
-    - - - 4 4 4 - - -
-    Armour Save (5+), Random Attacks (2D6) (The Restless Dead only), Regeneration, Undead, Vigour Mortis
-    Balefire {False} [15], Unholy Lodestone {False} [30]
-    Spear {False} [1]
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Chariot
+    POINTS = 90
+    CHARACTERISTICS = - - - 4 4 4 - - -
+    CHAMPION_CHARACTERISTICS = - 3 0 3 - - 2 1 5
+    SPECIAL_RULES = Armour Save (5+), Random Attacks (2D6) (The Restless Dead only), Regeneration, Undead, Vigour Mortis
+    OPTIONAL_WEAPONS = Name: Spear, Category: Mundane, Type: Melee, Points: 1
+    OPTIONAL_OCO_EXTRAS = Name: Balefire, Points: 15 ; Name: Lodestone, Points: 30
 
 Grave Guard
-    Special, Infantry, Normal
-    11
-    10, None
-    4 3 0 4 4 1 3 1 6
-    4 3 0 4 4 1 3 2 6
-    Killing Blow, Undead
-    Killing Blow, Undead
-    Armour: Shield {Mundane} [Shield], Armour: Heavy armour {Mundane} [Armour]
-    None
-    Great weapons {Mundane} [Melee] (1); Shield
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Seneschal [10]
-    0
-    0
-    0
-    50
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Infantry
+    POINTS = 11
+    SIZE = 10, inf
+    CHARACTERISTICS = 4 3 0 4 4 1 3 1 6
+    CHAMPION_CHARACTERISTICS = 4 3 0 4 4 1 3 2 6
+    SPECIAL_RULES = Killing Blow, Undead
+    EQUIPMENT = Armour - Name: Shield, Category: Mundane, Type: Shield ; Armour - Name: Heavy armour, Category: Mundane, Type: Armour
+    OPTIONAL_WEAPONS = Name: Great weapons, Category: Mundane, Type: Melee, Points: 1, Replacements: Shield
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Seneschal, Points: 10
+    BANNER_BUDGET = 50
 
 Black Knights
-    Special, Cavalry, Normal
-    21
-    5, None
-    4 3 0 4 4 1 3 1 6
-    4 3 0 4 4 1 3 2 6
-    Killing Blow, Undead, Spectral Steeds
-    Killing Blow, Undead, Spectral Steeds
-    Armour: Shield {Mundane} [Shield], Armour: Heavy armour {Mundane} [Armour]
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Barding {False} (3), Lances {False} (2)
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Hell Knight [10]
-    0
-    0
-    0
-    50
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Cavalry
+    MOUNT = Skeletal Steed
+    POINTS = 21
+    SIZE = 5, inf
+    CHARACTERISTICS = 4 3 0 4 4 1 3 1 6
+    CHAMPION_CHARACTERISTICS = 4 3 0 4 4 1 3 2 6
+    SPECIAL_RULES = Killing Blow, Undead, Spectral Steeds
+    EQUIPMENT = Armour - Name: Heavy armour, Category: Mundane, Type: Armour ; Armour - Name: Shield, Category: Mundane, Type: Shield
+    OPTIONAL_WEAPONS = Name: Lances, Category: Mundane, Type: Melee, Points: 2
+    OPTIONAL_MC_EXTRAS = Name : Barding, Points : 3
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Hell Knight, Points: 10
+    BANNER_BUDGET = 50
 
 Crypt Horrors
-    Special, Monstrous Infantry, Normal
-    38
-    3, None
-    6 3 0 4 5 3 2 3 5
-    6 3 0 4 5 3 2 4 5
-    Poisoned Attacks, Regeneration (5+), Undead
-    Poisoned Attacks, Regeneration (5+), Undead
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Champion: Crypt Haunter [10]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Monstrous Infantry
+    POINTS = 38
+    SIZE = 3, inf
+    CHARACTERISTICS = 6 3 0 4 5 3 2 3 5
+    CHAMPION_CHARACTERISTICS = 6 3 0 4 5 3 2 4 5
+    SPECIAL_RULES = Poisoned Attacks, Regeneration (5+), Undead
+    OPTIONAL_COMMAND = Champion - Name: Crypt Haunter, Points: 10
 
 Fell Bats
-    Special, Warbeast, Normal
-    16
-    2, None
-    1 3 0 3 3 2 3 2 3
-    1 3 0 3 3 2 3 2 3
-    Fly, Undead
-    Fly, Undead
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Warbeast
+    POINTS = 16
+    SIZE = 2, inf
+    CHARACTERISTICS = 1 3 0 3 3 2 3 2 3
+    SPECIAL_RULES = Fly, Undead
 
 Bat Swarms
-    Special, Swarm, Normal
-    35
-    2, None
-    1 3 0 2 2 5 4 5 3
-    Cloud of Horror, Hover, Undead
-    None
-    None
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Swarm
+    POINTS = 35
+    SIZE = 2, inf
+    CHARACTERISTICS = 1 3 0 2 2 5 4 5 3
+    SPECIAL_RULES = Cloud of Horror, Hover, Undead
 
 Spirit Host
-    Special, Swarm, Normal
-    45
-    1, 10
-    6 3 0 3 3 4 1 4 4
-    Ethereal, Undead
-    None
-    None
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Swarm
+    POINTS = 45
+    SIZE = 1, 10
+    CHARACTERISTICS = 6 3 0 3 3 4 1 4 4
+    SPECIAL_RULES = Ethereal, Undead
 
 Hexwraiths
-    Special, Cavalry, Normal
-    30
-    5, 10
-    6 3 0 3 3 1 2 1 5
-    6 3 0 3 3 1 2 2 5
-    Ethereal, Fast Cavalry, Soul Reapers, Soulstriders, Spectral Hunters, Terror, Undead
-    Ethereal, Fast Cavalry, Soul Reapers, Soulstriders, Spectral Hunters, Terror, Undead
-    Weapon: Great weapon {Mundane} [Melee]
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Champion: Hellwraith [10]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Cavalry
+    MOUNT = Skeletal Steed
+    POINTS = 30
+    SIZE = 5, 10
+    CHARACTERISTICS = 6 3 0 3 3 1 2 1 5
+    CHAMPION_CHARACTERISTICS = 6 3 0 3 3 1 2 2 5
+    SPECIAL_RULES = Killing Blow, Undead, Spectral Steeds
+    EQUIPMENT = Weapon - Name: Great weapon, Category: Mundane, Type: Melee
+    OPTIONAL_COMMAND = Champion - Name: Hellwraith, Points: 10
 
 Vargheists
-    Special, Monstrous Infantry, Normal
-    46
-    3, None
-    6 4 0 5 4 3 4 3 7
-    6 4 0 5 4 3 4 4 7
-    Fly, Frenzy, Undead, Vampiric
-    Fly, Frenzy, Undead, Vampiric
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Champion: Vargoyle [10]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Special
+    CATEGORY = Monstrous Infantry
+    POINTS = 46
+    SIZE = 3, inf
+    CHARACTERISTICS = 6 4 0 5 4 3 4 3 7
+    CHAMPION_CHARACTERISTICS = 6 4 0 5 4 3 4 4 7
+    SPECIAL_RULES = Fly, Frenzy, Undead, Vampiric
+    OPTIONAL_COMMAND = Champion - Name: Vargoyle, Points: 10
+
+# Rare
 
 Varghulf
-    Rare, Monster, Normal
-    175
-    1, 1
-    8 5 0 5 5 4 4 5 4
-    Bestial Fury, Hatred, Regeneration, Terror, Undead, Vampiric
-    None
-    None
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Monster
+    POINTS = 175
+    CHARACTERISTICS = 8 5 0 5 5 4 4 5 4
+    SPECIAL_RULES = Bestial Fury, Hatred, Regeneration, Terror, Undead, Vampiric
 
-#TODO: Kastellan can take magic weapon up to 25 pts, standard bearer can
-#      take Flag of Blood Keep (75 pts) if no other magic banner taken
+#TODO: can take Flag of Blood Keep (75 pts) if no other magic banner taken
 Blood Knights
-    Rare, Cavalry, Normal
-    50
-    5, None
-    4 5 3 5 4 1 5 2 7
-    4 5 3 5 4 1 5 3 7
-    Frenzy, Martial Honour, Undead, Vampiric
-    Frenzy, Martial Honour, Undead, Vampiric
-    Armour: Shield {Mundane} [Shield], Armour: Heavy armour {Mundane} [Armour], Weapon: Lance {Mundane} [Melee]
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Musician: Musician [10], Standard Bearer: Standard Bearer [10], Champion: Kastellan [15]
-    0
-    0
-    0
-    50
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Cavalry
+    MOUNT = Barded Nightmare
+    POINTS = 50
+    SIZE = 4, inf
+    CHARACTERISTICS = 4 5 3 5 4 1 5 2 7
+    CHAMPION_CHARACTERISTICS = 4 5 3 5 4 1 5 3 7
+    SPECIAL_RULES = Frenzy, Martial Honour, Undead, Vampiric
+    EQUIPMENT = Armour - Name: Heavy armour, Category: Mundane, Type: Armour ; Armour - Name: Shield, Category: Mundane, Type: Shield ; Weapon - Name: Lance, Category: Mundane, Type: Melee
+    OPTIONAL_COMMAND = Musician - Name: Musician, Points: 10 ; Standard Bearer - Name: Standard Bearer, Points: 10 ; Champion - Name: Kastellan, Points: 10
+    BANNER_BUDGET = 50
+    MAGIC_ITEM_BUDGET = Points : 25, Restrictions : Limit - 1 / ItemType - Weapon / SubItemType - Melee
+    TOTAL_ITEM_BUDGET = copy MAGIC_ITEM_BUDGET
 
 Cairn Wraiths
-    Rare, Infantry, Normal
-    50
-    3, 10
-    6 3 0 3 3 2 2 3 5
-    6 3 0 3 3 2 2 1 5
-    Chill Grasp, Ethereal, Ghostly Howl, Terror, Undead
-    Chill Grasp, Ethereal, Ghostly Howl, Terror, Undead
-    Weapon: Great weapon {Mundane} [Melee]
-    Weapon: Hand weapon {Mundane} [Melee]
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    None
-    Champion: Tomb Banshee [10]
-    0
-    0
-    0
-    0
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Infantry
+    POINTS = 50
+    SIZE = 3, 10
+    CHARACTERISTICS = 6 3 0 3 3 2 2 3 5
+    CHAMPION_CHARACTERISTICS = 6 3 0 3 3 2 2 1 5
+    SPECIAL_RULES = Chill Grasp, Ethereal, Terror, Undead
+    CHAMPION_SPECIAL_RULES = Ghostly Howl
+    EQUIPMENT = Weapon - Name: Great weapon, Category: Mundane, Type: Melee
+    CHAMPION_EQUIPMENT = Weapon - Name: Hand weapon, Category: Mundane, Type: Melee
+    OPTIONAL_COMMAND = Champion - Name: Tomb Banshee, Points: 10
 
 Black Coach
-    Rare, Chariot, Normal
-    195
-    1, 1
-    - 3 0 3 - - 2 3 5
-    - - - 5 6 4 - - -
-    Armour Save (3+), Chill Grasp, Evocation of Death, Terror, Undead, Vampiric, Ward Save (4+)
-    None
-    None
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Chariot
+    POINTS = 195
+    CHARACTERISTICS = - - - 5 6 4 - - -
+    CHAMPION_CHARACTERISTICS = - 3 0 3 - - 2 3 5
+    SPECIAL_RULES = Armour Save (3+), Chill Grasp, Evocation of Death, Terror, Undead, Vampiric, Ward Save (4+)
+    EQUIPMENT = Weapon - Name: Great weapon, Category: Mundane, Type: Melee
 
 Terrorgheist
-    Rare, Monster, Normal
-    225
-    1, 1
-    6 3 0 5 6 6 3 4 4
-    Death Shriek, Fly, Large Target, Regenerate (6+), Terror, Undead
-    None
-    Rancid Maw {False} [15], Infested {False} [10]
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Monster
+    POINTS = 225
+    CHARACTERISTICS = 6 3 0 5 6 6 3 4 4
+    SPECIAL_RULES = Death Shriek, Fly, Large Target, Regenerate (6+), Terror, Undead
+    OPTIONAL_MC_EXTRAS = Name : Rancid Maw, Points : 15 ; Name: Infested, Points: 10
 
 Mortis Engine
-    Rare, Chariot, Normal
-    220
-    1, 1
-    - 3 0 3 - - 2 1 5
-    - - - 5 5 5 - - -
-    Armour Save (5+), Banshee Swarm, Large Target, Random Attacks (2D6) (Spirit Horde only), Regeneration, Spectral Steeds, Terror, The Reliquary, Undead
-    None
-    Blasphemous Tome {False} [20]
+    BASE_TYPE = Normal
+    TYPE = Rare
+    CATEGORY = Chariot
+    POINTS = 220
+    CHARACTERISTICS = - - - 5 5 5 - - -
+    CHAMPION_CHARACTERISTICS = - 3 0 3 - - 2 3 5
+    SPECIAL_RULES = Armour Save (5+), Banshee Swarm, Large Target, Random Attacks (2D6) (Spirit Horde only), Regeneration, Spectral Steeds, Terror, The Reliquary, Undead
+    OPTIONAL_MC_EXTRAS = Name : Blasphemous Tome, Points : 20

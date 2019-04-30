@@ -3,5 +3,6 @@
         <file alias="skaven.fit">faction_items/skaven.fit</file>
         <file alias="woc.fit">faction_items/woc.fit</file>
         <file alias="beastmen.fit">faction_items/beastmen.fit</file>
+        <file alias="vampire_counts.fit">faction_items/vampire_counts.fit</file>
     </qresource>
 </RCC>

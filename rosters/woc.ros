@@ -307,7 +307,7 @@ Chaos Knights
     SIZE = 5, inf
     CHARACTERISTICS = 4 5 3 4 4 1 5 2 8
     CHAMPION_CHARACTERISTICS = 4 5 3 4 4 1 5 3 8
-    SPECIAL_RULES = FEAR
+    SPECIAL_RULES = Fear
     CHAMPION_SPECIAL_RULES = Eye of the Gods
     EQUIPMENT = Armour - Name: Chaos armour, Category: Mundane, Type: Armour ; Armour - Name: Shield, Category: Mundane, Type: Shield
     OPTIONAL_WEAPONS = [Name: Lances, Category: Mundane, Type: Melee, Points: 2

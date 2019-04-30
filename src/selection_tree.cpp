@@ -71,6 +71,7 @@ std::tuple<std::string, std::string, std::string, std::string> selection_tree::f
     case Faction::VAMPIRE_COUNTS:
         roster_file += "vampire_counts.ros";
         magic_item_file += "vampire_counts.mag";
+        faction_item_file += "vampire_counts.fit";
         break;
     case Faction::TOMB_KINGS:
         roster_file += "tomb_kings.ros";

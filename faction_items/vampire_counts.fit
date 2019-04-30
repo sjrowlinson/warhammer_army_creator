@@ -1,0 +1,71 @@
+Vampiric Powers
+
+Master of the Black Arts
+    CATEGORY = Other
+    POINTS = 75
+    DESCRIPTION = A player using a Vampire with the Master of the Black Arts power can re-roll one of the dice when he is determining the strength of the Winds of Magic.
+
+Curse of the Revenant
+    CATEGORY = Other
+    POINTS = 55
+    DESCRIPTION = This Vampire has + 1 Wound on his profile.
+
+Red Fury
+    CATEGORY = Other
+    POINTS = 50
+    DESCRIPTION = For each unsaved Wound that the Vampire causes in close combat, it can immediately make a further Attack. These additional Attacks do not benefit from Red Fury. An Attack that automatically kills an enemy counts as having done an amount of Wounds equal to the number of Wounds that model had remaining.
+
+Flying Horror
+    CATEGORY = Other
+    POINTS = 30
+    DESCRIPTION = Character on foot only. The Vampire has the Fly special rule.
+
+Quickblood
+    CATEGORY = Other
+    POINTS = 30
+    DESCRIPTION = The Vampire has the Always Strikes First special rule.
+
+Aura of Dark Majesty
+    CATEGORY = Other
+    POINTS = 25
+    DESCRIPTION = All enemy units within 6" of one or more Vampires with the Aura of Dark Majesty suffer a -1 penalty to their Leadership. This penalty is cumulative with any other modifiers.
+
+Dark Acolyte
+    CATEGORY = Other
+    POINTS = 25
+    DESCRIPTION = The Vampire adds D3 to the casting total whenever he successfully casts Invocation of Nehek (regardless of the casting value chosen).
+
+Forbidden Lore
+    CATEGORY = Other
+    POINTS = 25
+    DESCRIPTION = The Vampire can generate his spells from any one of the lores in the Warhammer rulebook, except the Lore of Life.
+
+Supernatural Horror
+    CATEGORY = Other
+    POINTS = 25
+    DESCRIPTION = This Vampire has the Terror special rule.
+
+Fear Incarnate
+    CATEGORY = Other
+    POINTS = 20
+    DESCRIPTION = Fear tests caused by the Vampire (or his unit) that have been passed by an enemy unit must be re-rolled. If a Battle Standard Bearer is conferring its Hold Your Ground ability to the testing unit, the two rules cancel each other out.
+
+Beguile
+    CATEGORY = Other
+    POINTS = 15
+    DESCRIPTION = At the beginning of the Close Combat round, after challenges have been issued and/or accepted, select a model in base contact with the Vampire. That model must take a Leadership test with a -3 modifier; if the test is failed, the model must re-roll successful To Hit rolls that phase.
+
+Master Strike
+    CATEGORY = Other
+    POINTS = 15
+    DESCRIPTION = The Vampire may exchange all of his Attacks for a single Attack with the Heroic Killing Blow special rule.
+
+Dread Knight
+    CATEGORY = Other
+    POINTS = 10
+    DESCRIPTION = The Vampire has +2 Weapon Skill. In addition, unless he is part of a combat containing Krell or a Vampiric character with higher Leadership, he must always issue a challenge when possible, and must answer any challenge issued by the enemy.
+
+Summon Creatures of the Night
+    CATEGORY = Other
+    POINTS = 10
+    DESCRIPTION = This Vampire can use the Invocation of Nehek spell to increase units of Dire Wolves, Bat Swarms and Fell Bats beyond their starting size.

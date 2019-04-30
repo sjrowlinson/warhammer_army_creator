@@ -1,0 +1,49 @@
+Skeletal Steed
+    CATEGORY = Warbeast
+    CHARACTERISTICS = 8 2 0 3 3 1 2 1 3
+    SPECIAL_RULES = Spectral Steeds, Undead
+
+Barded Skeletal Steed
+    CATEGORY = Warbeast
+    CHARACTERISTICS = 7 2 0 3 3 1 2 1 3
+    SPECIAL_RULES = Spectral Steeds, Undead
+
+Nightmare
+    CATEGORY = Warbeast
+    CHARACTERISTICS = 8 3 0 4 4 1 2 1 3
+    SPECIAL_RULES = Undead
+
+Barded Nightmare
+    CATEGORY = Warbeast
+    CHARACTERISTICS = 7 3 0 4 4 1 2 1 3
+    SPECIAL_RULES = Undead
+
+Hellsteed
+    CATEGORY = Warbeast
+    CHARACTERISTICS = 8 3 0 4 4 1 2 1 3
+    SPECIAL_RULES = Fly, Undead
+
+Abyssal Terror
+    CATEGORY = Monster
+    CHARACTERISTICS = 6 4 0 5 5 4 2 3 4
+    SPECIAL_RULES = Fly, Large Target, Terror, Undead
+
+Terrorgheist
+    CATEGORY = Monster
+    CHARACTERISTICS = 6 3 0 5 6 6 3 4 4
+    SPECIAL_RULES = Death Shriek, Fly, Large Target, Regeneration (6+), Terror, Undead
+
+Terrorgheist
+    CATEGORY = Monster
+    CHARACTERISTICS = 6 4 0 6 6 6 2 5 4
+    SPECIAL_RULES = Fly, Large Target, Pestilential Breath, Scaly Skin (5+), Swarm of Flies, Terror, Undead
+
+Coven Throne
+    CATEGORY = Chariot
+    CHARACTERISTICS = - - - 5 5 5 - - -
+    SPECIAL_RULES = Battle of Wills, Large Target, Scrying Pool, Spectral Steeds, Undead, Vampiric, Ward Save (4+), Always Strikes First (Pallid Handmaidens only), Random Attacks (2D6) (Spirit Horde only)
+
+Corpse Cart
+    CATEGORY = Chariot
+    CHARACTERISTICS = - - - 4 4 4 - - -
+    SPECIAL_RULES = Armour Save (5+), Random Attacks (2D6) (The Restless Dead only), Regeneration, Undead, Vigour Mortis

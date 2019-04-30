@@ -17,5 +17,7 @@
         <file alias="high_elves.mnt">rosters/high_elves.mnt</file>
         <file alias="tomb_kings.mnt">rosters/tomb_kings.mnt</file>
         <file alias="wood_elves.mnt">rosters/wood_elves.mnt</file>
+        <file alias="vampire_counts.ros">rosters/vampire_counts.ros</file>
+        <file alias="vampire_counts.mnt">rosters/vampire_counts.mnt</file>
     </qresource>
 </RCC>
