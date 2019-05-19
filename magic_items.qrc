@@ -11,5 +11,6 @@
         <file alias="tomb_kings.mag">magic_items/tomb_kings.mag</file>
         <file alias="dwarfs.mag">magic_items/dwarfs.mag</file>
         <file alias="vampire_counts.mag">magic_items/vampire_counts.mag</file>
+        <file alias="orcs_goblins.mag">magic_items/orcs_goblins.mag</file>
     </qresource>
 </RCC>

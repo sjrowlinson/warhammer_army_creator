@@ -61,6 +61,7 @@ ArmyCreator::~ArmyCreator() {
 void ArmyCreator::do_splitter_scalings() {
     const int height_div = static_cast<int>(static_cast<double>(height())/40);
     const int width_div = static_cast<int>(static_cast<double>(width())/40);
+    const int val_frame_width_div = static_cast<int>(static_cast<double>(ui->validity_frame->width())/5);
     ui->main_vertical_splitter->setSizes(
         QList<int>() << height_div
                      << 29*height_div
@@ -100,6 +101,10 @@ void ArmyCreator::do_splitter_scalings() {
                      << 6*height_div
                      << 5*height_div
     );
+    ui->validity_labels_splitter->setSizes(
+        QList<int>() << val_frame_width_div
+                     << 4*val_frame_width_div
+    );
 }
 
 void ArmyCreator::on_actionExit_triggered() {
@@ -118,6 +123,7 @@ void ArmyCreator::initialise_stylesheets() {
 void ArmyCreator::resizeEvent(QResizeEvent* event) {
     QMainWindow::resizeEvent(event);
     resize_army_trees();
+    do_splitter_scalings();
 }
 
 void ArmyCreator::resize_army_trees() {
@@ -937,6 +943,25 @@ void ArmyCreator::on_roster_tree_currentItemChanged(QTreeWidgetItem *curr, QTree
     ui->duplicate_button->setEnabled(false);
     ui->remove_button->setEnabled(false);
     ui->set_general_button->setEnabled(false);
+    const int height_div = static_cast<int>(static_cast<double>(height())/40);
+    auto tmp1 = current->base()->total_item_budget().points;
+    auto tmp2 = current->base()->magic_banner_budget();
+    if (current->base()->total_item_budget().points > 0.0 || current->base()->magic_banner_budget() > 0.0) {
+        ui->lower_horizontal_splitter->show();
+        ui->main_vertical_splitter->setSizes(
+            QList<int>() << height_div
+                         << 29*height_div
+                         << 12*height_div
+        );
+    }
+    else {
+        ui->lower_horizontal_splitter->hide();
+        ui->main_vertical_splitter->setSizes(
+            QList<int>() << height_div
+                         << 30*height_div
+                         << 0
+        );
+    }
 }
 
 void ArmyCreator::on_roster_tree_itemDoubleClicked(QTreeWidgetItem *item, int column) {
@@ -971,6 +996,23 @@ bool ArmyCreator::army_trees_itemchanged(QTreeWidgetItem* curr) {
         ui->set_general_button->setEnabled(true);
     else ui->set_general_button->setEnabled(false);
     update_budget_label();
+    const int height_div = static_cast<int>(static_cast<double>(height())/40);
+    if (current->base()->total_item_budget().points > 0.0 || current->base()->magic_banner_budget() > 0.0) {
+        ui->lower_horizontal_splitter->show();
+        ui->main_vertical_splitter->setSizes(
+            QList<int>() << height_div
+                         << 29*height_div
+                         << 12*height_div
+        );
+    }
+    else {
+        ui->lower_horizontal_splitter->hide();
+        ui->main_vertical_splitter->setSizes(
+            QList<int>() << height_div
+                         << 30*height_div
+                         << 0
+        );
+    }
     return true;
 }
 
@@ -1143,21 +1185,41 @@ void ArmyCreator::on_remove_button_clicked() {
     UnitType unit_type = army->get_unit(id)->unit_type();
     army->remove_unit(id);
     ui->current_points_label->setText(QString("%1").arg(army->current_points()));
+    int col_val = 0;
+    if (current->is_character())
+        col_val = static_cast<int>(CharacterTreeColumn::POINTS);
+    else
+        col_val = static_cast<int>(UnitTreeColumn::POINTS);
     switch (unit_type) {
     case UnitType::LORD:
-        //ui->army_tree->topLevelItem(0)->setText(6, QString("%1").arg(army->lord_points()));
+        ui->lord_tree->headerItem()->setText(
+            col_val,
+            QString("Points (%1)").arg(tools::points_str(army->lord_points()).data())
+        );
         break;
     case UnitType::HERO:
-        //ui->army_tree->topLevelItem(1)->setText(6, QString("%1").arg(army->hero_points()));
+        ui->hero_tree->headerItem()->setText(
+            col_val,
+            QString("Points (%1)").arg(tools::points_str(army->hero_points()).data())
+        );
         break;
     case UnitType::CORE:
-        //ui->army_tree->topLevelItem(2)->setText(6, QString("%1").arg(army->core_points()));
+        ui->core_tree->headerItem()->setText(
+            col_val,
+            QString("Points (%1)").arg(tools::points_str(army->core_points()).data())
+        );
         break;
     case UnitType::SPECIAL:
-        //ui->army_tree->topLevelItem(3)->setText(6, QString("%1").arg(army->special_points()));
+        ui->special_tree->headerItem()->setText(
+            col_val,
+            QString("Points (%1)").arg(tools::points_str(army->special_points()).data())
+        );
         break;
     case UnitType::RARE:
-        //ui->army_tree->topLevelItem(4)->setText(6, QString("%1").arg(army->rare_points()));
+        ui->rare_tree->headerItem()->setText(
+            col_val,
+            QString("Points (%1)").arg(tools::points_str(army->rare_points()).data())
+        );
         break;
     default:
         break;
@@ -1178,6 +1240,27 @@ void ArmyCreator::on_clear_button_clicked() {
     update_validity_label();
     ui->item_description_groupbox->setTitle(tr("Item Description"));
     ui->item_description_label->setText(tr(""));
+    // reset point displays for each tree
+    ui->lord_tree->headerItem()->setText(
+        static_cast<int>(CharacterTreeColumn::POINTS),
+        QString("Points (0)")
+    );
+    ui->hero_tree->headerItem()->setText(
+        static_cast<int>(CharacterTreeColumn::POINTS),
+        QString("Points (0)")
+    );
+    ui->core_tree->headerItem()->setText(
+        static_cast<int>(UnitTreeColumn::POINTS),
+        QString("Points (0)")
+    );
+    ui->special_tree->headerItem()->setText(
+        static_cast<int>(UnitTreeColumn::POINTS),
+        QString("Points (0)")
+    );
+    ui->rare_tree->headerItem()->setText(
+        static_cast<int>(UnitTreeColumn::POINTS),
+        QString("Points (0)")
+    );
 }
 
 void ArmyCreator::on_set_general_button_clicked() {
@@ -1327,6 +1410,15 @@ void ArmyCreator::update_character_unit_display(
     }
     case CharacterTreeColumn::POINTS:
         item->setText(col_val, QString("%1").arg(u->points()));
+        switch (u->unit_type()) {
+        case UnitType::LORD:
+            ui->lord_tree->headerItem()->setText(col_val, QString("Points (%1)").arg(tools::points_str(army->lord_points()).data()));
+            break;
+        case UnitType::HERO:
+            ui->hero_tree->headerItem()->setText(col_val, QString("Points (%1)").arg(tools::points_str(army->hero_points()).data()));
+            break;
+        default: break;
+        }
         break;
     case CharacterTreeColumn::ALL:
         update_character_unit_display(item, CharacterTreeColumn::NAME, adding, copying);
@@ -1542,6 +1634,19 @@ void ArmyCreator::update_noncharacter_unit_display(
     }
     case UnitTreeColumn::POINTS:
         item->setText(col_val, QString("%1").arg(u->points()));
+        switch (u->unit_type()) {
+        case UnitType::CORE:
+            ui->core_tree->headerItem()->setText(col_val, QString("Points (%1)").arg(tools::points_str(army->core_points()).data()));
+            break;
+        case UnitType::SPECIAL:
+            ui->special_tree->headerItem()->setText(col_val, QString("Points (%1)").arg(tools::points_str(army->special_points()).data()));
+            break;
+        case UnitType::RARE:
+            ui->rare_tree->headerItem()->setText(col_val, QString("Points (%1)").arg(tools::points_str(army->rare_points()).data()));
+            break;
+        default:
+            break;
+        }
         break;
     case UnitTreeColumn::ALL:
         update_noncharacter_unit_display(item, UnitTreeColumn::NAME, adding, copying);

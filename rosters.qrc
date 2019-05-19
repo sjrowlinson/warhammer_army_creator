@@ -19,5 +19,7 @@
         <file alias="wood_elves.mnt">rosters/wood_elves.mnt</file>
         <file alias="vampire_counts.ros">rosters/vampire_counts.ros</file>
         <file alias="vampire_counts.mnt">rosters/vampire_counts.mnt</file>
+        <file alias="orcs_goblins.ros">rosters/orcs_goblins.ros</file>
+        <file alias="orcs_goblins.mnt">rosters/orcs_goblins.mnt</file>
     </qresource>
 </RCC>

@@ -68,7 +68,7 @@ public:
         const budget& ti_budget,
         std::size_t min_size,
         std::size_t max_size = std::numeric_limits<std::size_t>::max(),
-        double banner_budget = std::numeric_limits<double>::max()
+        double banner_budget = 0.0
     );
     virtual ~base_unit() = default;
 

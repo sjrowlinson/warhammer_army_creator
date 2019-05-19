@@ -240,7 +240,7 @@ Orc Shaman
     MAGE_UPGRADES = 2 [35]
     MAGE_LORES = Name: da Big Waaagh!, Default
 
-Savage Orc Great Shaman
+Savage Orc Shaman
     BASE_TYPE = Mage
     TYPE = Hero
     CATEGORY = Infantry

@@ -140,7 +140,7 @@ void html_table_unit_row::make_normal_unit_row() {
             entry += bold("Melee: ") + std::get<1>(w.at(WeaponType::MELEE));
         if (w.count(WeaponType::BALLISTIC))
             entry += (w.count(WeaponType::MELEE) ? newline : "") + bold("Ranged: ")
-                    + std::get<1>(w.at(WeaponType::MELEE));
+                    + std::get<1>(w.at(WeaponType::BALLISTIC));
         urow += row_entry(entry);
     }
     else {
@@ -150,14 +150,14 @@ void html_table_unit_row::make_normal_unit_row() {
                 entry += tab + bold("Melee: ") + std::get<1>(w.at(WeaponType::MELEE));
             if (w.count(WeaponType::BALLISTIC))
                 entry += (w.count(WeaponType::MELEE) ? newline : "") + tab + bold("Ranged: ")
-                        + std::get<1>(w.at(WeaponType::MELEE));
+                        + std::get<1>(w.at(WeaponType::BALLISTIC));
             entry += newline + champ_name + newline;
         }
         if (cw.count(WeaponType::MELEE))
             entry += tab + bold("Melee: ") + std::get<1>(cw.at(WeaponType::MELEE));
         if (cw.count(WeaponType::BALLISTIC))
                 entry += (cw.count(WeaponType::MELEE) ? newline : "") + tab + bold("Ranged: ")
-                        + std::get<1>(cw.at(WeaponType::MELEE));
+                        + std::get<1>(cw.at(WeaponType::BALLISTIC));
         urow += row_entry(entry);
     }
     // armour
