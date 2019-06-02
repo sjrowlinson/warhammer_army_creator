@@ -1,5 +1,5 @@
 #include "character_unit.h"
-#include "army_list.h"
+#include "../army_list.h"
 
 character_unit::character_unit(const std::shared_ptr<base_unit>& base, army_list* army_handle)
     : unit(base, army_handle),

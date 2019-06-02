@@ -2,9 +2,9 @@
 #define HTML_TABLE_UNIT_ROW_H
 
 #include "enums.h"
-#include "unit.h"
-#include "mage_character_unit.h"
-#include "mixed_unit.h"
+#include "units/unit.h"
+#include "units/mage_character_unit.h"
+#include "units/mixed_unit.h"
 #include "tools.h"
 
 #include <memory>

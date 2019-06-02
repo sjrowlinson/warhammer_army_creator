@@ -1,9 +1,9 @@
 #ifndef MAGE_CHARACTER_UNIT_H
 #define MAGE_CHARACTER_UNIT_H
 
-#include "enums.h"
-#include "base_unit.h"
-#include "base_mage_character_unit.h"
+#include "../enums.h"
+#include "../base_units/base_unit.h"
+#include "../base_units/base_mage_character_unit.h"
 #include "character_unit.h"
 
 #include <memory>

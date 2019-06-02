@@ -1,10 +1,10 @@
 #ifndef BASE_UNIT_H
 #define BASE_UNIT_H
 
-#include "enums.h"
-#include "magic_item.h"
-#include "mount.h"
-#include "options.h"
+#include "../enums.h"
+#include "../magic_item.h"
+#include "../mount.h"
+#include "../options.h"
 
 #include <algorithm>
 #include <limits>

@@ -1,5 +1,5 @@
 #include "army_list.h"
-#include "unit.h"
+#include "units/unit.h"
 #include "html_table_unit_row.h"
 
 army_list::army_list(double points) :

@@ -1,10 +1,10 @@
 #ifndef MOUNTS_PARSER_H
 #define MOUNTS_PARSER_H
 
-#include "enums.h"
+#include "../enums.h"
 #include "file_parser.h"
-#include "mount.h"
-#include "tools.h"
+#include "../mount.h"
+#include "../tools.h"
 
 #include <QString>
 

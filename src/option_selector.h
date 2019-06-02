@@ -6,7 +6,7 @@ class ArmyCreator;
 #include "army_list.h"
 #include "enums.h"
 #include "selection_tree.h"
-#include "unit.h"
+#include "units/unit.h"
 
 #include <memory>
 #include <string>

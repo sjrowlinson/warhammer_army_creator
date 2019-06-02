@@ -1,12 +1,12 @@
 #ifndef CHARACTER_UNIT_H
 #define CHARACTER_UNIT_H
 
-#include "enums.h"
-#include "base_unit.h"
-#include "base_character_unit.h"
-#include "mount.h"
+#include "../enums.h"
+#include "../base_units/base_unit.h"
+#include "../base_units/base_character_unit.h"
+#include "../mount.h"
 #include "unit.h"
-#include "tools.h"
+#include "../tools.h"
 
 #include <memory>
 #include <stdexcept>

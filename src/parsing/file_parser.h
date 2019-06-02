@@ -1,8 +1,8 @@
 #ifndef FILE_PARSER_H
 #define FILE_PARSER_H
 
-#include "enums.h"
-#include "tools.h"
+#include "../enums.h"
+#include "../tools.h"
 
 #include <any>
 #include <fstream>

@@ -1,5 +1,5 @@
 #include "normal_unit.h"
-#include "army_list.h"
+#include "../army_list.h"
 
 normal_unit::normal_unit(const std::shared_ptr<base_unit>& base, army_list* army_handle)
     : unit(base, army_handle),

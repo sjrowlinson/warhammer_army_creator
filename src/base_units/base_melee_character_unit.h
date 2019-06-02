@@ -1,7 +1,7 @@
 #ifndef BASE_MELEE_CHARACTER_UNIT_H
 #define BASE_MELEE_CHARACTER_UNIT_H
 
-#include "enums.h"
+#include "../enums.h"
 #include "base_character_unit.h"
 
 class base_melee_character_unit : public base_character_unit {

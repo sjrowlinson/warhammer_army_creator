@@ -1,11 +1,11 @@
 #ifndef NORMAL_UNIT_H
 #define NORMAL_UNIT_H
 
-#include "enums.h"
-#include "base_unit.h"
-#include "base_normal_unit.h"
+#include "../enums.h"
+#include "../base_units/base_unit.h"
+#include "../base_units/base_normal_unit.h"
 #include "unit.h"
-#include "tools.h"
+#include "../tools.h"
 
 #include <memory>
 #include <stdexcept>

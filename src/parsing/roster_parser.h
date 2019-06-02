@@ -1,15 +1,15 @@
 #ifndef ROSTER_PARSER_H
 #define ROSTER_PARSER_H
 
-#include "base_unit.h"
-#include "base_character_unit.h"
-#include "base_mage_character_unit.h"
-#include "base_melee_character_unit.h"
-#include "base_mixed_unit.h"
-#include "base_normal_unit.h"
-#include "enums.h"
+#include "../base_units/base_unit.h"
+#include "../base_units/base_character_unit.h"
+#include "../base_units/base_mage_character_unit.h"
+#include "../base_units/base_melee_character_unit.h"
+#include "../base_units/base_mixed_unit.h"
+#include "../base_units/base_normal_unit.h"
+#include "../enums.h"
+#include "../tools.h"
 #include "file_parser.h"
-#include "tools.h"
 
 #include <algorithm>
 #include <functional>

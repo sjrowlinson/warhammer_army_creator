@@ -3,12 +3,12 @@
 
 class army_list;
 
-#include "base_unit.h"
-#include "base_mage_character_unit.h"
-#include "base_melee_character_unit.h"
-#include "base_normal_unit.h"
-#include "base_mixed_unit.h"
-#include "enums.h"
+#include "../base_units/base_unit.h"
+#include "../base_units/base_mage_character_unit.h"
+#include "../base_units/base_melee_character_unit.h"
+#include "../base_units/base_normal_unit.h"
+#include "../base_units/base_mixed_unit.h"
+#include "../enums.h"
 
 #include <any>
 #include <memory>

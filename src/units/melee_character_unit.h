@@ -1,8 +1,8 @@
 #ifndef MELEE_CHARACTER_UNIT_H
 #define MELEE_CHARACTER_UNIT_H
 
-#include "base_unit.h"
-#include "base_melee_character_unit.h"
+#include "../base_units/base_unit.h"
+#include "../base_units/base_melee_character_unit.h"
 #include "character_unit.h"
 
 #include <memory>

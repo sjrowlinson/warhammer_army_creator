@@ -3,8 +3,8 @@
 
 #include "base_unit.h"
 #include "base_normal_unit.h"
-#include "equipment.h"
-#include "options.h"
+#include "../equipment.h"
+#include "../options.h"
 
 #include <string>
 #include <unordered_map>

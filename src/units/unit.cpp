@@ -1,5 +1,5 @@
 #include "unit.h"
-#include "army_list.h"
+#include "../army_list.h"
 
 unit::unit(const std::shared_ptr<base_unit>& base, army_list* army_handle)
     : id_(0), model_select_(ModelSelect::DEFAULT),
