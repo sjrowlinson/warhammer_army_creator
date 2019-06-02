@@ -944,8 +944,6 @@ void ArmyCreator::on_roster_tree_currentItemChanged(QTreeWidgetItem *curr, QTree
     ui->remove_button->setEnabled(false);
     ui->set_general_button->setEnabled(false);
     const int height_div = static_cast<int>(static_cast<double>(height())/40);
-    auto tmp1 = current->base()->total_item_budget().points;
-    auto tmp2 = current->base()->magic_banner_budget();
     if (current->base()->total_item_budget().points > 0.0 || current->base()->magic_banner_budget() > 0.0) {
         ui->lower_horizontal_splitter->show();
         ui->main_vertical_splitter->setSizes(
@@ -1500,7 +1498,14 @@ void ArmyCreator::update_noncharacter_unit_display(
         }
         case BaseUnitType::MIXED:
         {
-            // TODO: implement
+            auto p = std::dynamic_pointer_cast<mixed_unit>(u);
+            auto msize = p->master_size();
+            auto ssize = p->slave_size();
+            auto mname = p->handle->master_name();
+            auto sname = p->handle->slave_name();
+            std::string text = std::to_string(msize) + ' ' + mname + (msize > 1 ? "s\n" : "\n")
+                    + std::to_string(ssize) + ' ' + sname + (ssize > 1 ? "s\n" : "\n");
+            item->setText(col_val, QString::fromStdString(text));
             break;
         }
         default: break;
