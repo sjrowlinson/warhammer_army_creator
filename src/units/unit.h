@@ -83,7 +83,7 @@ protected:
     std::pair<
         std::string,
         std::pair<ItemCategory, double>
-    >& magic_banner_acces() noexcept = 0;
+    >& magic_banner_access() noexcept = 0;
 
 public:
     explicit unit(const std::shared_ptr<base_unit>& base, army_list* army_handle);

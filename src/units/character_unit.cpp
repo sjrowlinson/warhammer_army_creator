@@ -172,7 +172,7 @@ const std::pair<std::string, std::pair<ItemCategory, double>>& character_unit::m
 std::pair<
     std::string,
     std::pair<ItemCategory, double>
->& character_unit::magic_banner_acces() noexcept { return banner; }
+>& character_unit::magic_banner_access() noexcept { return banner; }
 
 std::string character_unit::pick_weapon(ItemCategory item_category, const std::string& name) {
     std::string removed;

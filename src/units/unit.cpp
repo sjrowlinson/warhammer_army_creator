@@ -357,7 +357,7 @@ std::string unit::pick_magic_item(ItemType item_type, ItemCategory item_category
         break;
     case ItemType::BANNER:
         removed = remove_banner();
-        magic_banner_acces() = {search->first, {item_category, search->second.points}};
+        magic_banner_access() = {search->first, {item_category, search->second.points}};
         break;
     case ItemType::OTHER:
         item_extras_access()[search->first] = {item_category, search->second.points};

@@ -362,7 +362,7 @@ Night Goblins
     EQUIPMENT = Armour - Name : Light armour, Category : Mundane, Type : Armour ; Armour - Name: Shields, Category: Mundane, Type: Shield
     OPTIONAL_WEAPONS = [Name: Spears, Category: Mundane, Type: Melee, Points: 0, Replacements: Ballistic
                         Name: Short bows, Category: Mundane, Type: Ballistic, Points: 0, Replacements: Melee / Shield]
-    OPTIONAL_MC_EXTRAS = Name : Netters, Points : 45
+    OPTIONAL_MC_EXTRAS = Name : Netters, Singular: true, Points : 45
     OPTIONAL_OCO_EXTRAS = [Name : One Fanatic, Singular : true, Points : 25
                            Name : Two Fanatics, Singular : true, Points : 50
                            Name : Three Fanatics, Singular : true, Points : 75]

@@ -44,7 +44,7 @@ private:
     std::pair<
         std::string,
         std::pair<ItemCategory, double>
-    >& magic_banner_acces() noexcept override;
+    >& magic_banner_access() noexcept override;
 protected:
     // equipment
     std::unordered_map<

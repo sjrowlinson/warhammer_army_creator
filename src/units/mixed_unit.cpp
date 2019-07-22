@@ -374,7 +374,7 @@ std::unordered_map<
 std::pair<
     std::string,
     std::pair<ItemCategory, double>
->& mixed_unit::magic_banner_acces() noexcept {
+>& mixed_unit::magic_banner_access() noexcept {
     return banner;
 }
 

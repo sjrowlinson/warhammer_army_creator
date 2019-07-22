@@ -7,6 +7,7 @@
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
+#include <vector>
 
 class item {
 private:
@@ -17,6 +18,7 @@ private:
     double points_;
     std::unordered_set<std::string> allowed_units_;
     std::unordered_multimap<RestrictionField, std::any> restrictions_;
+    std::vector<std::string> runes_;
 public:
     explicit item(
         ItemCategory ic,
@@ -25,11 +27,12 @@ public:
         const std::string& descr,
         double pts,
         std::unordered_set<std::string> allowed,
-        std::unordered_multimap<RestrictionField, std::any> restr
+        std::unordered_multimap<RestrictionField, std::any> restr,
+        std::vector<std::string> rns
     );
 
-    ItemCategory item_category() const noexcept;
-    ItemType item_type() const noexcept;
+    ItemCategory category() const noexcept;
+    ItemType type() const noexcept;
     const std::string& name() const noexcept;
     const std::string& description() const noexcept;
     double points() const noexcept;

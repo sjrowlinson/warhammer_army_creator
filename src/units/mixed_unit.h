@@ -113,7 +113,7 @@ private:
     std::pair<
         std::string,
         std::pair<ItemCategory, double>
-    >& magic_banner_acces() noexcept override;
+    >& magic_banner_access() noexcept override;
 public:
     const std::shared_ptr<base_mixed_unit> handle;
 

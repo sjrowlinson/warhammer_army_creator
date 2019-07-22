@@ -214,7 +214,7 @@ const std::pair<std::string, std::pair<ItemCategory, double>>& normal_unit::magi
 std::pair<
     std::string,
     std::pair<ItemCategory, double>
->& normal_unit::magic_banner_acces() noexcept {
+>& normal_unit::magic_banner_access() noexcept {
     return banner;
 }
 
