@@ -58,6 +58,7 @@ public:
         UnitType ut,
         UnitCategory uc,
         const std::string& name,
+        bool contributes,
         const std::string& master_name,
         std::size_t master_min_size,
         std::size_t master_max_size,

@@ -7,7 +7,8 @@ army_list::army_list(double points) :
     points(points), curr_pts(0.0), lord_lim(0.0),
     hero_lim(0.0), core_min(0.0), spec_lim(0.0),
     rare_lim(0.0),  lord_pts(0.0), hero_pts(0.0),
-    core_pts(0.0), spec_pts(0.0), rare_pts(0.0), snap_unit_pts(0.0),
+    core_pts(0.0), spec_pts(0.0), rare_pts(0.0), lord_no_contrib_pts(0.0), hero_no_contrib_pts(0.0),
+    core_no_contrib_pts(0.0), spec_no_contrib_pts(0.0), rare_no_contrib_pts(0.0), snap_unit_pts(0.0),
     invalidities{InvalidListReason::CORE_MINIMUM} {
     determine_limits();
 }
@@ -24,29 +25,54 @@ void army_list::add_unit(std::shared_ptr<unit> u) {
         invalidities.insert(InvalidListReason::POINTS);
     switch (u->unit_type()) {
     case UnitType::LORD:
-        if (lord_pts + pts > lord_lim)
-            invalidities.insert(InvalidListReason::LORD_LIMIT);
-        lord_pts += pts;
+        if (u->base()->counts_towards()) {
+            if (lord_pts + pts > lord_lim)
+                invalidities.insert(InvalidListReason::LORD_LIMIT);
+            lord_pts += pts;
+        }
+        else {
+            lord_no_contrib_pts += pts;
+        }
         break;
     case UnitType::HERO:
-        if (hero_pts + pts > hero_lim)
-            invalidities.insert(InvalidListReason::HERO_LIMIT);
-        hero_pts += pts;
+        if (u->base()->counts_towards()) {
+            if (hero_pts + pts > hero_lim)
+                invalidities.insert(InvalidListReason::HERO_LIMIT);
+            hero_pts += pts;
+        }
+        else {
+            hero_no_contrib_pts += pts;
+        }
         break;
     case UnitType::CORE:
-        if (core_pts + pts < core_min)
-            invalidities.insert(InvalidListReason::CORE_MINIMUM);
-        core_pts += pts;
+        if (u->base()->counts_towards()) {
+            if (core_pts + pts < core_min)
+                invalidities.insert(InvalidListReason::CORE_MINIMUM);
+            core_pts += pts;
+        }
+        else {
+            core_no_contrib_pts += pts;
+        }
         break;
     case UnitType::SPECIAL:
-        if (spec_pts + pts < spec_lim)
-            invalidities.insert(InvalidListReason::SPECIAL_LIMIT);
-        spec_pts += pts;
+        if (u->base()->counts_towards()) {
+            if (spec_pts + pts < spec_lim)
+                invalidities.insert(InvalidListReason::SPECIAL_LIMIT);
+            spec_pts += pts;
+        }
+        else {
+            spec_no_contrib_pts += pts;
+        }
         break;
     case UnitType::RARE:
-        if (rare_pts + pts < rare_lim)
-            invalidities.insert(InvalidListReason::RARE_LIMIT);
-        rare_pts += pts;
+        if (u->base()->counts_towards()) {
+            if (rare_pts + pts < rare_lim)
+                invalidities.insert(InvalidListReason::RARE_LIMIT);
+            rare_pts += pts;
+        }
+        else {
+            rare_no_contrib_pts += pts;
+        }
         break;
     default:
         throw std::invalid_argument("unit type not recognised, cannot add unit to army list.");
@@ -57,30 +83,56 @@ void army_list::add_unit(std::shared_ptr<unit> u) {
 }
 
 void army_list::remove_unit(int id) {
-    auto pts = army[id]->points();
-    if (army[id]->is_character() &&
-            std::dynamic_pointer_cast<base_character_unit>(army[id]->base())->unique())
-        unique_units.erase(army[id]->name());
-    UnitType unit_type = army[id]->unit_type();
-    auto items_to_decrement = army[id]->clear();
+    auto u = army[id];
+    auto pts = u->points();
+    if (u->is_character() &&
+            std::dynamic_pointer_cast<base_character_unit>(u->base())->unique())
+        unique_units.erase(u->name());
+    UnitType unit_type = u->unit_type();
+    auto items_to_decrement = u->clear();
     for (const auto& item : items_to_decrement) decr_item_tracker(item);
     army.erase(id);
     curr_pts -= pts;
     switch (unit_type) {
     case UnitType::LORD:
-        lord_pts -= pts;
+        if (u->base()->counts_towards()) {
+            lord_pts -= pts;
+        }
+        else {
+            lord_no_contrib_pts -= pts;
+        }
         break;
     case UnitType::HERO:
-        hero_pts -= pts;
+        if (u->base()->counts_towards()) {
+            hero_pts -= pts;
+        }
+        else {
+            hero_no_contrib_pts -= pts;
+        }
         break;
     case UnitType::CORE:
-        core_pts -= pts;
+        if (u->base()->counts_towards()) {
+            core_pts -= pts;
+        }
+        else {
+            core_no_contrib_pts -= pts;
+        }
         break;
     case UnitType::SPECIAL:
-        spec_pts -= pts;
+        if (u->base()->counts_towards()) {
+            spec_pts -= pts;
+        }
+        else {
+            spec_no_contrib_pts -= pts;
+        }
         break;
     case UnitType::RARE:
-        rare_pts -= pts;
+        if (u->base()->counts_towards()) {
+            rare_pts -= pts;
+        }
+        else {
+            rare_no_contrib_pts -= pts;
+        }
         break;
     default:
         throw std::invalid_argument("unit type not recognised, cannot remove unit.");
@@ -230,6 +282,12 @@ double army_list::core_points() const noexcept { return core_pts; }
 double army_list::special_points() const noexcept { return spec_pts; }
 double army_list::rare_points() const noexcept { return rare_pts; }
 
+double army_list::lord_no_contrib_points() const noexcept { return lord_no_contrib_pts; }
+double army_list::hero_no_contrib_points() const noexcept { return hero_no_contrib_pts; }
+double army_list::core_no_contrib_points() const noexcept { return core_no_contrib_pts; }
+double army_list::special_no_contrib_points() const noexcept { return spec_no_contrib_pts; }
+double army_list::rare_no_contrib_points() const noexcept { return rare_no_contrib_pts; }
+
 bool army_list::has_bsb() const noexcept {
     return std::count_if(
         std::begin(army),
@@ -265,23 +323,49 @@ void army_list::take_snapshot_of(int id) {
 }
 
 void army_list::update_on(int id) {
-    double diff = army[id]->points() - snap_unit_pts;
+    auto u = army[id];
+    double diff = u->points() - snap_unit_pts;
     curr_pts += diff;
-    switch (army[id]->unit_type()) {
+    switch (u->unit_type()) {
     case UnitType::LORD:
-        lord_pts += diff;
+        if (u->base()->counts_towards()) {
+            lord_pts += diff;
+        }
+        else {
+            lord_no_contrib_pts += diff;
+        }
         break;
     case UnitType::HERO:
-        hero_pts += diff;
+        if (u->base()->counts_towards()) {
+            hero_pts += diff;
+        }
+        else {
+            hero_no_contrib_pts += diff;
+        }
         break;
     case UnitType::CORE:
-        core_pts += diff;
+        if (u->base()->counts_towards()) {
+            core_pts += diff;
+        }
+        else {
+            core_no_contrib_pts += diff;
+        }
         break;
     case UnitType::SPECIAL:
-        spec_pts += diff;
+        if (u->base()->counts_towards()) {
+            spec_pts += diff;
+        }
+        else {
+            spec_no_contrib_pts += diff;
+        }
         break;
     case UnitType::RARE:
-        rare_pts += diff;
+        if (u->base()->counts_towards()) {
+            rare_pts += diff;
+        }
+        else {
+            rare_no_contrib_pts += diff;
+        }
         break;
     default: break;
     }

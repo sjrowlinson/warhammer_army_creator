@@ -37,6 +37,7 @@ public:
         UnitType ut,
         UnitCategory uc,
         const std::string& name,
+        bool contributes,
         std::size_t min_size,
         std::size_t max_size,
         double pts_per_model,

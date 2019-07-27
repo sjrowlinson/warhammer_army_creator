@@ -12,6 +12,7 @@ public:
         UnitType ut,
         UnitCategory uc,
         const std::string& name,
+        bool contributes,
         double pts,
         std::vector<std::string>&& stats,
         std::vector<std::string>&& sr,

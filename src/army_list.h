@@ -43,6 +43,11 @@ private:
     double core_pts;
     double spec_pts;
     double rare_pts;
+    double lord_no_contrib_pts;
+    double hero_no_contrib_pts;
+    double core_no_contrib_pts;
+    double spec_no_contrib_pts;
+    double rare_no_contrib_pts;
     double snap_unit_pts;
     // other
     std::set<InvalidListReason> invalidities;
@@ -77,6 +82,11 @@ public:
     double core_points() const noexcept;
     double special_points() const noexcept;
     double rare_points() const noexcept;
+    double lord_no_contrib_points() const noexcept;
+    double hero_no_contrib_points() const noexcept;
+    double core_no_contrib_points() const noexcept;
+    double special_no_contrib_points() const noexcept;
+    double rare_no_contrib_points() const noexcept;
     // bsb flag methods
     bool has_bsb() const noexcept;
 

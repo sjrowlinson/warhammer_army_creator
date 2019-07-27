@@ -204,18 +204,26 @@ namespace tools {
         while (!arg.empty()) { // iterate over all args in the unit block
             curr_line = i;
             auto line = tools::split(arg, '=');
-            auto search_parse_fn = parsing_functions.find(line[0]);
-            if (search_parse_fn == std::end(parsing_functions)) {
-                std::string msg = "Error parsing + " + enum_convert::FACTION_TO_STRING.at(faction)
-                        + " roster - unit: " + read_line(blocks[block_pos])
-                        + " has an invalid argument: " + line[0];
-                throw std::runtime_error(msg);
-            }
-            in_multiline_state = tools::starts_with(line[1], '[');
-            // call the relevant parsing function
+            auto kwd = line[0];
             std::size_t ml_offset = 0U;
-            try { ml_offset = search_parse_fn->second(tools::trim(line[1]), false, true); }
-            catch (const std::runtime_error&) { throw; }
+            if (kwd == "UNIQUE")
+                tpo.unique = true;
+            else if (kwd == "NOCONTRIB")
+                tpo.counts_towards = false;
+            else {
+                auto value = line[1];
+                auto search_parse_fn = parsing_functions.find(kwd);
+                if (search_parse_fn == std::end(parsing_functions)) {
+                    std::string msg = "Error parsing + " + enum_convert::FACTION_TO_STRING.at(faction)
+                            + " roster - unit: " + read_line(blocks[block_pos])
+                            + " has an invalid argument: " + kwd;
+                    throw std::runtime_error(msg);
+                }
+                in_multiline_state = tools::starts_with(value, '[');
+                // call the relevant parsing function
+                try { ml_offset = search_parse_fn->second(tools::trim(value), false, true); }
+                catch (const std::runtime_error&) { throw; }
+            }
             i += 1U + ml_offset;
             arg = read_line(blocks[block_pos] + i);
         }
@@ -242,7 +250,7 @@ namespace tools {
             equipment eq(std::move(tpo.eq));
             options opt(std::move(tpo.opt));
             bu = std::make_unique<base_mage_character_unit>(
-                faction, tpo.unit_type, tpo.unit_category, name, tpo.points,
+                faction, tpo.unit_type, tpo.unit_category, name, tpo.counts_towards, tpo.points,
                 std::move(tpo.characteristics), std::move(tpo.special_rules),
                 std::move(eq), std::move(opt), std::move(tpo.mi_budget),
                 std::move(tpo.fi_budget), std::move(tpo.ti_budget), tpo.unique, tpo.mage_level,
@@ -256,7 +264,7 @@ namespace tools {
             equipment eq(std::move(tpo.eq));
             options opt(std::move(tpo.opt));
             bu = std::make_unique<base_melee_character_unit>(
-                faction, tpo.unit_type, tpo.unit_category, name, tpo.points,
+                faction, tpo.unit_type, tpo.unit_category, name, tpo.counts_towards, tpo.points,
                 std::move(tpo.characteristics), std::move(tpo.special_rules),
                 std::move(eq), std::move(opt), std::move(tpo.mi_budget),
                 std::move(tpo.fi_budget), std::move(tpo.ti_budget), tpo.unique, tpo.mount
@@ -270,7 +278,7 @@ namespace tools {
             equipment champ_eq(std::move(tpo.champ_eq));
             options champ_opt(std::move(tpo.champ_opt));
             bu = std::make_unique<base_normal_unit>(
-                 faction, tpo.unit_type, tpo.unit_category, name, tpo.size.first,
+                 faction, tpo.unit_type, tpo.unit_category, name, tpo.counts_towards, tpo.size.first,
                  tpo.size.second, tpo.points, std::move(tpo.characteristics),
                  std::move(tpo.special_rules), std::move(eq), std::move(opt),
                  std::move(tpo.champ_characteristics), std::move(tpo.champ_special_rules),
@@ -293,7 +301,7 @@ namespace tools {
             equipment slave_champ_eq(std::move(tpo.slave_champ_eq));
             options slave_champ_opt(std::move(tpo.slave_champ_opt));
             bu = std::make_unique<base_mixed_unit>(
-                faction, tpo.unit_type, tpo.unit_category, name, tpo.master_name,
+                faction, tpo.unit_type, tpo.unit_category, name, tpo.counts_towards, tpo.master_name,
                 tpo.size.first, tpo.size.second, tpo.master_points, std::move(tpo.characteristics),
                 std::move(tpo.special_rules), std::move(master_eq), std::move(master_opt),
                 std::move(tpo.champ_characteristics), std::move(tpo.champ_special_rules),

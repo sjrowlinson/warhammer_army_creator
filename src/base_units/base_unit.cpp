@@ -7,13 +7,14 @@ base_unit::base_unit(Faction faction,
     const budget &mi_budget,
     const budget &fi_budget,
     const budget &ti_budget,
+    bool contributes,
     std::size_t min_size,
     std::size_t max_size,
     double banner_budget
 ) : but(BaseUnitType::BASE), faction_(faction), ut_(ut), uc_(uc), name_(name),
     magic_item_budget_(mi_budget), faction_item_budget_(fi_budget),
     total_item_budget_(ti_budget), magic_banner_budget_(banner_budget),
-    min_size_(min_size), max_size_(max_size) {}
+    min_size_(min_size), max_size_(max_size), contributes(contributes) {}
 
 BaseUnitType base_unit::base_unit_type() const noexcept { return but; }
 
@@ -29,6 +30,10 @@ const budget& base_unit::magic_item_budget() const noexcept { return magic_item_
 const budget& base_unit::faction_item_budget() const noexcept { return faction_item_budget_; }
 const budget& base_unit::total_item_budget() const noexcept { return total_item_budget_; }
 double base_unit::magic_banner_budget() const noexcept { return magic_banner_budget_; }
+
+bool base_unit::counts_towards() const noexcept {
+    return contributes;
+}
 
 const std::shared_ptr<
     std::unordered_map<

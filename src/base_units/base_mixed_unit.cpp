@@ -5,6 +5,7 @@ base_mixed_unit::base_mixed_unit(
     UnitType ut,
     UnitCategory uc,
     const std::string& name,
+    bool contributes,
     const std::string& master_name,
     std::size_t master_min_size,
     std::size_t master_max_size,
@@ -47,6 +48,7 @@ base_mixed_unit::base_mixed_unit(
     master_champ_mi_budget,
     master_champ_fi_budget,
     master_champ_ti_budget,
+    contributes,
     master_min_size,
     master_max_size,
     magic_banner_budget

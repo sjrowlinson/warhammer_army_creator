@@ -74,6 +74,7 @@ namespace tools {
             budget fi_budget = budget();
             budget ti_budget = budget();
             bool unique = false;
+            bool counts_towards = true;
         };
 
     private:

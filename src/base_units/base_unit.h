@@ -32,6 +32,7 @@ private:
     // other
     std::size_t min_size_;
     std::size_t max_size_;
+    bool contributes;
     // handle to mounts
     std::shared_ptr<
         std::unordered_map<
@@ -66,6 +67,7 @@ public:
         const budget& mi_budget,
         const budget& fi_budget,
         const budget& ti_budget,
+        bool contributes,
         std::size_t min_size,
         std::size_t max_size = std::numeric_limits<std::size_t>::max(),
         double banner_budget = 0.0
@@ -86,6 +88,8 @@ public:
     const budget& faction_item_budget() const noexcept;
     const budget& total_item_budget() const noexcept;
     double magic_banner_budget() const noexcept;
+
+    bool counts_towards() const noexcept;
 
     const std::shared_ptr<
         std::unordered_map<

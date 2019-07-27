@@ -1410,10 +1410,34 @@ void ArmyCreator::update_character_unit_display(
         item->setText(col_val, QString("%1").arg(u->points()));
         switch (u->unit_type()) {
         case UnitType::LORD:
-            ui->lord_tree->headerItem()->setText(col_val, QString("Points (%1)").arg(tools::points_str(army->lord_points()).data()));
+            if (army->lord_no_contrib_points() > 0.0)
+                ui->lord_tree->headerItem()->setText(
+                    col_val,
+                    QString("Points [%1 (%2)]").arg(
+                        tools::points_str(army->lord_points()).data(),
+                        tools::points_str(army->lord_points() + army->lord_no_contrib_points()).data()
+                    )
+                );
+            else
+                ui->lord_tree->headerItem()->setText(
+                    col_val,
+                    QString("Points [%1]").arg(tools::points_str(army->lord_points()).data())
+                );
             break;
         case UnitType::HERO:
-            ui->hero_tree->headerItem()->setText(col_val, QString("Points (%1)").arg(tools::points_str(army->hero_points()).data()));
+            if (army->hero_no_contrib_points() > 0.0)
+                ui->hero_tree->headerItem()->setText(
+                    col_val,
+                    QString("Points [%1 (%2)]").arg(
+                        tools::points_str(army->hero_points()).data(),
+                        tools::points_str(army->hero_points() + army->hero_no_contrib_points()).data()
+                    )
+                );
+            else
+                ui->hero_tree->headerItem()->setText(
+                    col_val,
+                    QString("Points [%1]").arg(tools::points_str(army->hero_points()).data())
+                );
             break;
         default: break;
         }
@@ -1638,21 +1662,59 @@ void ArmyCreator::update_noncharacter_unit_display(
         break;
     }
     case UnitTreeColumn::POINTS:
+    {
         item->setText(col_val, QString("%1").arg(u->points()));
         switch (u->unit_type()) {
         case UnitType::CORE:
-            ui->core_tree->headerItem()->setText(col_val, QString("Points (%1)").arg(tools::points_str(army->core_points()).data()));
+            if (army->core_no_contrib_points() > 0.0)
+                ui->core_tree->headerItem()->setText(
+                    col_val,
+                    QString("Points [%1 (%2)]").arg(
+                        tools::points_str(army->core_points()).data(),
+                        tools::points_str(army->core_points() + army->core_no_contrib_points()).data()
+                    )
+                );
+            else
+                ui->core_tree->headerItem()->setText(
+                    col_val,
+                    QString("Points [%1]").arg(tools::points_str(army->core_points()).data())
+                );
             break;
         case UnitType::SPECIAL:
-            ui->special_tree->headerItem()->setText(col_val, QString("Points (%1)").arg(tools::points_str(army->special_points()).data()));
+            if (army->special_no_contrib_points() > 0.0)
+                ui->special_tree->headerItem()->setText(
+                    col_val,
+                    QString("Points [%1 (%2)]").arg(
+                        tools::points_str(army->special_points()).data(),
+                        tools::points_str(army->special_points() + army->special_no_contrib_points()).data()
+                    )
+                );
+            else
+                ui->special_tree->headerItem()->setText(
+                    col_val,
+                    QString("Points [%1]").arg(tools::points_str(army->special_points()).data())
+                );
             break;
         case UnitType::RARE:
-            ui->rare_tree->headerItem()->setText(col_val, QString("Points (%1)").arg(tools::points_str(army->rare_points()).data()));
+            if (army->rare_no_contrib_points() > 0.0)
+                ui->rare_tree->headerItem()->setText(
+                    col_val,
+                    QString("Points [%1 (%2)]").arg(
+                        tools::points_str(army->rare_points()).data(),
+                        tools::points_str(army->rare_points() + army->rare_no_contrib_points()).data()
+                    )
+                );
+            else
+                ui->rare_tree->headerItem()->setText(
+                    col_val,
+                    QString("Points [%1]").arg(tools::points_str(army->rare_points()).data())
+                );
             break;
         default:
             break;
         }
         break;
+    }
     case UnitTreeColumn::ALL:
         update_noncharacter_unit_display(item, UnitTreeColumn::NAME, adding, copying);
         update_noncharacter_unit_display(item, UnitTreeColumn::SIZE, adding, copying);
