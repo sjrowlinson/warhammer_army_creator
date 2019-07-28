@@ -23,6 +23,19 @@ unit::unit(const unit& other)
 int unit::id() const noexcept { return id_; }
 void unit::set_id(int id) { id_ = id; }
 
+const std::string& unit::assigned_name() const noexcept {
+    return assigned_name_;
+}
+void unit::assign_name(std::string aname) {
+    assigned_name_ = aname;
+}
+
+std::string unit::full_name() const noexcept {
+    if (assigned_name_.empty())
+        return name();
+    return assigned_name_ + " (" + name() + ')';
+}
+
 ModelSelect unit::model_select() const noexcept { return model_select_; }
 bool unit::switch_model_select(ModelSelect ms) {
     model_select_ = ms;

@@ -15,6 +15,7 @@
 #include <QFileDialog>
 #include <QGridLayout>
 #include <QGroupBox>
+#include <QInputDialog>
 #include <QMainWindow>
 #include <QMessageBox>
 #include <QPushButton>
@@ -91,6 +92,8 @@ private slots:
 
     void on_magic_items_combobox_currentTextChanged(const QString &arg1);
     void on_set_general_button_clicked();
+    void on_name_unit_button_clicked();
+
 public:
     void update_budget_label();
 private:

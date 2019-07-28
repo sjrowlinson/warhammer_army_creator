@@ -11,7 +11,7 @@ html_table_unit_row::html_table_unit_row(const std::shared_ptr<unit>& _u)
 
 void html_table_unit_row::make_character_row() {
     // name
-    urow += row_entry(u->name());
+    urow += row_entry(u->full_name());
     // mount
     if (std::get<0>(u->mnt()).empty())
         urow += row_entry("");
@@ -116,7 +116,7 @@ void html_table_unit_row::make_normal_unit_row() {
     auto champ_it = p->handle->optional_command().find(CommandGroup::CHAMPION);
     if (champ_it != std::end(p->handle->optional_command())) champ_name = champ_it->second.first;
     // name
-    urow += row_entry(p->name());
+    urow += row_entry(p->full_name());
     // size
     urow += row_entry(std::to_string(p->size()));
     // mount
@@ -289,7 +289,7 @@ void html_table_unit_row::make_mixed_unit_row() {
     auto schamp_it = p->handle->slave_optional_command().find(CommandGroup::CHAMPION);
     if (schamp_it != std::end(p->handle->slave_optional_command())) scname = schamp_it->second.first;
     // NAME
-    urow += row_entry(p->name());
+    urow += row_entry(p->full_name());
     // SIZE
     urow += row_entry(std::to_string(p->slave_size()) + ' ' + sname + newline
                       + std::to_string(p->master_size()) + ' ' + mname + (p->master_size() > 1 ? "s" : ""));

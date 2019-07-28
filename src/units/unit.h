@@ -20,6 +20,7 @@ class army_list;
 class unit {
 private:
     int id_;
+    std::string assigned_name_;
 protected:
     ModelSelect model_select_;
     MixedSelect mixed_select_;
@@ -92,6 +93,11 @@ public:
 
     int id() const noexcept;
     void set_id(int id);
+
+    const std::string& assigned_name() const noexcept;
+    void assign_name(std::string aname);
+
+    std::string full_name() const noexcept;
 
     virtual bool is_character() const noexcept = 0;
     virtual bool is_mage() const noexcept = 0;

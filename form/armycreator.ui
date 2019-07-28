@@ -619,6 +619,13 @@
                  </spacer>
                 </item>
                 <item>
+                 <widget class="QPushButton" name="name_unit_button">
+                  <property name="text">
+                   <string>Name Unit</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
                  <widget class="QPushButton" name="set_general_button">
                   <property name="text">
                    <string>Set as General</string>
@@ -677,8 +684,8 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>139</width>
-                  <height>331</height>
+                  <width>306</width>
+                  <height>236</height>
                  </rect>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_7">
@@ -704,8 +711,8 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>139</width>
-                  <height>330</height>
+                  <width>306</width>
+                  <height>235</height>
                  </rect>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_8">
@@ -770,7 +777,7 @@
                   <x>0</x>
                   <y>0</y>
                   <width>924</width>
-                  <height>68</height>
+                  <height>104</height>
                  </rect>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_10">
@@ -806,7 +813,7 @@
                  <x>0</x>
                  <y>0</y>
                  <width>667</width>
-                 <height>94</height>
+                 <height>213</height>
                 </rect>
                </property>
                <layout class="QGridLayout" name="gridLayout_12">

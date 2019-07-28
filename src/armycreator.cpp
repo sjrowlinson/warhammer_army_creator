@@ -1293,8 +1293,10 @@ void ArmyCreator::update_character_unit_display(
     const int col_val = static_cast<int>(column);
     switch (column) {
     case CharacterTreeColumn::NAME:
-        item->setText(col_val, QString::fromStdString(u->name()));
+    {
+        item->setText(col_val, QString::fromStdString(u->full_name()));
         break;
+    }
     case CharacterTreeColumn::MOUNT:
     {
         auto mnt_name = std::get<0>(u->mnt());
@@ -1499,8 +1501,10 @@ void ArmyCreator::update_noncharacter_unit_display(
     const int col_val = static_cast<int>(column);
     switch (column) {
     case UnitTreeColumn::NAME:
-        item->setText(col_val, QString::fromStdString(u->name()));
+    {
+        item->setText(col_val, QString::fromStdString(u->full_name()));
         break;
+    }
     case UnitTreeColumn::MOUNT:
     {
         auto mnt_name = std::get<0>(u->mnt());
@@ -1528,7 +1532,7 @@ void ArmyCreator::update_noncharacter_unit_display(
             auto mname = p->handle->master_name();
             auto sname = p->handle->slave_name();
             std::string text = std::to_string(msize) + ' ' + mname + (msize > 1 ? "s\n" : "\n")
-                    + std::to_string(ssize) + ' ' + sname + (ssize > 1 ? "s\n" : "\n");
+                    + std::to_string(ssize) + ' ' + sname + "\n";
             item->setText(col_val, QString::fromStdString(text));
             break;
         }
@@ -1904,4 +1908,13 @@ void ArmyCreator::on_export_button_clicked() {
     }
     mb.setFixedSize(500, 200);
     delete document;
+}
+
+void ArmyCreator::on_name_unit_button_clicked() {
+    bool ok;
+    QString assigned_name = QInputDialog::getText(this, tr("Assign a name"), tr("Name:"), QLineEdit::Normal, QString::fromStdString(current->name()), &ok);
+    if (ok && !assigned_name.isEmpty()) {
+        current->assign_name(assigned_name.toStdString());
+        update_unit_display(current_item(), ArmyTreeColumn::NAME, false, false);
+    }
 }
