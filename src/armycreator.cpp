@@ -19,7 +19,7 @@ ArmyCreator::ArmyCreator(QWidget *parent) :
     race = enum_convert::STRING_TO_FACTION.at(
         ui->faction_combobox->currentText().toStdString()
     );
-    army = std::make_shared<army_list>(ui->points_limit_spinbox->value());
+    army = std::make_shared<army_list>(ui->points_limit_spinbox->value(), race);
     try { st = std::make_shared<selection_tree>(race, army); }
     catch (const std::runtime_error&) {
         QMessageBox message_box;
@@ -865,6 +865,7 @@ void ArmyCreator::change_faction(Faction faction) {
     if (faction == race) return;
     try {
         st->reset(faction);
+        army->switch_faction(faction);
         clear();
         populate_roster_tree();
         race = faction;
@@ -1917,4 +1918,30 @@ void ArmyCreator::on_name_unit_button_clicked() {
         current->assign_name(assigned_name.toStdString());
         update_unit_display(current_item(), ArmyTreeColumn::NAME, false, false);
     }
+}
+
+void ArmyCreator::on_save_button_clicked() {
+    QString file_name = QFileDialog::getSaveFileName(
+        this,
+        tr("Save army list"),
+        QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
+        tr("Army files (*.army)")
+    );
+    if (file_name.isEmpty()) {
+        QMessageBox mb;
+        mb.information(nullptr, tr("Write failure"), tr("Could not write to this location!"));
+        mb.setFixedSize(500, 200);
+    }
+    else
+        army->save(file_name);
+}
+
+void ArmyCreator::on_load_button_clicked() {
+    QString file_name = QFileDialog::getOpenFileName(
+        this,
+        tr("Load army list"),
+        QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
+        tr("Army files (*.army)")
+    );
+    // TODO make army_parser class (inheriting from file_parser) which loads from file_name
 }

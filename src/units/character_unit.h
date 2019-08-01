@@ -157,7 +157,7 @@ public:
 
     virtual std::vector<std::string> clear() override;
 
-    virtual std::string save() const override;
+    virtual std::string save() override;
 };
 
 #endif // !CHARACTER_UNIT_H

@@ -94,6 +94,10 @@ private slots:
     void on_set_general_button_clicked();
     void on_name_unit_button_clicked();
 
+    void on_save_button_clicked();
+
+    void on_load_button_clicked();
+
 public:
     void update_budget_label();
 private:

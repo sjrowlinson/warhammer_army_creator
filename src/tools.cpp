@@ -73,6 +73,14 @@ namespace tools {
         return remove_trailing_whitespaces(t1);
     }
 
+    std::string to_upper(std::string s) {
+        std::string s_cap = s;
+        std::transform(std::begin(s), std::end(s), std::begin(s_cap), [](unsigned char c) {
+            return std::toupper(c);
+        });
+        return s_cap;
+    }
+
 	bool starts_with(const std::string& s, char c) {
 		if (s.empty()) return false;
 		return *s.cbegin() == c;
@@ -123,5 +131,128 @@ namespace tools {
         );
     }
 
+
+    void serialise_weapon(
+        const std::unordered_map<
+            WeaponType,
+            std::tuple<ItemCategory, std::string, double>
+        >& weapons,
+        WeaponType wt,
+        std::string& stream,
+        std::string pre
+    ) {
+        if (!weapons.count(wt)) return;
+
+        auto weapon = weapons.at(wt);
+        ItemCategory category = std::get<0>(weapon);
+        std::string name = std::get<1>(weapon);
+        stream += pre + to_upper(enum_convert::WEAPON_TYPE_TO_STRING.at(wt)) + "_WEAPON = name: " + name +
+                  ", category: " + enum_convert::ITEM_CLASS_TO_STRING.at(category);
+    }
+
+    void serialise_armour(
+        const std::unordered_map<
+            ArmourType,
+            std::tuple<ItemCategory, std::string, double>
+        >& armours,
+        ArmourType at,
+        std::string& stream,
+        std::string pre
+    ) {
+        if (!armours.count(at)) return;
+
+        auto armour = armours.at(at);
+        ItemCategory category = std::get<0>(armour);
+        std::string name = std::get<1>(armour);
+        stream += pre + to_upper(enum_convert::ARMOUR_TYPE_TO_STRING.at(at)) + "_ARMOUR = name: " + name +
+                  ", category: " + enum_convert::ITEM_CLASS_TO_STRING.at(category);
+    }
+
+    void serialise_magic_item(
+        const std::pair<
+            std::string,
+            std::pair<ItemCategory, double>
+        >& mitem,
+        std::string type,
+        std::string& stream,
+        std::string pre
+    ) {
+        if (mitem.first.empty()) return;
+
+        ItemCategory category = mitem.second.first;
+        std::string name = mitem.first;
+        stream += pre + to_upper(type) + " = name: " + name + ", category: "
+                  + enum_convert::ITEM_CLASS_TO_STRING.at(category);
+    }
+
+    void serialise_oco_extra(
+        const std::pair<
+            std::string,
+            std::pair<bool, double>
+        >& oco,
+        std::string& stream,
+        std::string pre
+    ) {
+        if (oco.first.empty()) return;
+
+        std::string name = oco.first;
+        stream += pre + "OCO_EXTRA = " + name;
+    }
+
+    void serialise_mc_extras(
+        const std::unordered_map<
+            std::string,
+            std::pair<bool, double>
+        >& mc,
+        std::string& stream,
+        std::string pre
+    ) {
+        if (mc.empty()) return;
+
+        stream += pre + "MC_EXTRAS = ";
+        for (const auto& item_details : mc) {
+            stream += item_details.first + "; ";
+        }
+    }
+
+    void serialise_mount(
+        const std::tuple<
+            std::string,
+            double,
+            std::pair<std::string, double>,
+            std::unordered_map<std::string, double>
+        >& mnt,
+        std::string& stream,
+        std::string pre
+    ) {
+        if (std::get<0>(mnt).empty()) return;
+
+        stream += pre + "MOUNT = " + std::get<0>(mnt);
+        // serialise OCO option of mount
+        if (!std::get<2>(mnt).first.empty()) {
+            stream += pre + "MOUNT_OCO_OPTION = " + std::get<2>(mnt).first;
+        }
+        if (!std::get<3>(mnt).empty()) {
+            stream += pre + "MOUNT_MC_OPTIONS = ";
+            for (const auto& option_details : std::get<3>(mnt)) {
+                stream += option_details.first + "; ";
+            }
+        }
+    }
+
+    void serialise_command_group(
+        const std::unordered_map<
+            CommandGroup, std::pair<std::string, double>
+        >& command,
+        std::string& stream,
+        std::string pre
+    ) {
+        if (command.empty()) return;
+
+        stream += pre + "COMMAND = ";
+        for (const auto& comm_member : command) {
+            stream += enum_convert::COMMAND_TO_STRING.at(comm_member.first) + "; ";
+        }
+    }
 
 }

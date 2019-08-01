@@ -22,6 +22,7 @@ class unit;
 
 class army_list {
 private:
+    Faction faction_;
     // unit and item containers
     std::unordered_map<
         int,
@@ -55,7 +56,7 @@ private:
     void check_validity();
     void determine_limits();
 public:
-    explicit army_list(double points);
+    explicit army_list(double points, Faction faction);
     ~army_list() = default;
     double current_points() const noexcept;
     double point_limit() const noexcept;
@@ -101,6 +102,7 @@ public:
     void update_on(int id);
     // list property modification
     void change_points_limit(double pts);
+    void switch_faction(Faction f);
     // list modification
     void clear();
     // other

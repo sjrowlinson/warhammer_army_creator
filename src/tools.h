@@ -1,6 +1,7 @@
 #ifndef TOOLS_H
 #define TOOLS_H
 #include "base_units/base_unit.h"
+#include "enums.h"
 #include "magic_item.h"
 
 #include <algorithm>
@@ -25,6 +26,8 @@ namespace tools {
 
     std::string& trim(std::string& s);
     std::string trim(const std::string& s);
+
+    std::string to_upper(std::string s);
 
 	bool starts_with(const std::string& s, char c);
     bool ends_with(const std::string& s, char c);
@@ -65,6 +68,73 @@ namespace tools {
         }
         return found;
     }
+
+    void serialise_weapon(
+        const std::unordered_map<
+            WeaponType,
+            std::tuple<ItemCategory, std::string, double>
+        >& weapons,
+        WeaponType wt,
+        std::string& stream,
+        std::string pre=""
+    );
+
+    void serialise_armour(
+        const std::unordered_map<
+            ArmourType,
+            std::tuple<ItemCategory, std::string, double>
+        >& armours,
+        ArmourType at,
+        std::string& stream,
+        std::string pre=""
+    );
+
+    void serialise_magic_item(
+        const std::pair<
+            std::string,
+            std::pair<ItemCategory, double>
+        >& mitem,
+        std::string type,
+        std::string& stream,
+        std::string pre=""
+    );
+
+    void serialise_oco_extra(
+        const std::pair<
+            std::string,
+            std::pair<bool, double>
+        >& oco,
+        std::string& stream,
+        std::string pre=""
+    );
+
+    void serialise_mc_extras(
+        const std::unordered_map<
+            std::string,
+            std::pair<bool, double>
+        >& mc,
+        std::string& stream,
+        std::string pre=""
+    );
+
+    void serialise_mount(
+        const std::tuple<
+            std::string,
+            double,
+            std::pair<std::string, double>,
+            std::unordered_map<std::string, double>
+        >& mnt,
+        std::string& stream,
+        std::string pre=""
+    );
+
+    void serialise_command_group(
+        const std::unordered_map<
+            CommandGroup, std::pair<std::string, double>
+        >& command,
+        std::string& stream,
+        std::string pre=""
+    );
 
 }
 

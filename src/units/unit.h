@@ -9,6 +9,7 @@ class army_list;
 #include "../base_units/base_normal_unit.h"
 #include "../base_units/base_mixed_unit.h"
 #include "../enums.h"
+#include "../tools.h"
 
 #include <any>
 #include <memory>
@@ -21,6 +22,8 @@ class unit {
 private:
     int id_;
     std::string assigned_name_;
+
+    void serialise_items(std::string& stream, std::string pre);
 protected:
     ModelSelect model_select_;
     MixedSelect mixed_select_;
@@ -50,42 +53,35 @@ protected:
         std::tuple<ItemCategory, std::string, double>
     >& weapons_access() noexcept = 0;
 
-    virtual
-    std::unordered_map<
+    virtual std::unordered_map<
         ArmourType,
         std::tuple<ItemCategory, std::string, double>
     >& armour_access() noexcept = 0;
 
-    virtual
-    std::pair<
+    virtual std::pair<
         std::string,
         std::pair<ItemCategory, double>
     >& talisman_access() noexcept = 0;
 
-    virtual
-    std::pair<
+    virtual std::pair<
         std::string,
         std::pair<ItemCategory, double>
     >& enchanted_item_access() noexcept = 0;
 
-    virtual
-    std::pair<
+    virtual std::pair<
         std::string,
         std::pair<ItemCategory, double>
     >& arcane_item_access() noexcept = 0;
 
-    virtual
-    std::unordered_map<
+    virtual std::unordered_map<
         std::string,
         std::pair<ItemCategory, double>
     >& item_extras_access() noexcept = 0;
 
-    virtual
-    std::pair<
+    virtual std::pair<
         std::string,
         std::pair<ItemCategory, double>
     >& magic_banner_access() noexcept = 0;
-
 public:
     explicit unit(const std::shared_ptr<base_unit>& base, army_list* army_handle);
     unit(const unit& other);
@@ -225,7 +221,7 @@ public:
     virtual std::vector<std::string> clear();
 
     // serialisation and exporting
-    virtual std::string save() const = 0;
+    virtual std::string save();
 };
 
 #endif // !UNIT_H

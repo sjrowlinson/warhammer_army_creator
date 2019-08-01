@@ -575,3 +575,62 @@ std::vector<std::string> unit::clear() {
     return removed;
 }
 
+void unit::serialise_items(std::string& stream, std::string pre) {
+    tools::serialise_weapon(weapons(), WeaponType::MELEE, stream, pre);
+    tools::serialise_weapon(weapons(), WeaponType::BALLISTIC, stream, pre);
+    tools::serialise_armour(armour(), ArmourType::ARMOUR, stream, pre);
+    tools::serialise_armour(armour(), ArmourType::SHIELD, stream, pre);
+    tools::serialise_armour(armour(), ArmourType::HELMET, stream, pre);
+    tools::serialise_oco_extra(oco_extra(), stream, pre);
+    tools::serialise_mc_extras(mc_extras(), stream, pre);
+}
+
+std::string unit::save() {
+    const std::string NT = "\n\t";
+    std::string serialised = name();
+    serialised += NT + "ID = " + std::to_string(id());
+    serialised += NT + "POINTS = " + std::to_string(points());
+    serialised += NT + "MAGIC_ITEM_POINTS = " + std::to_string(magic_item_points());
+    serialised += NT + "FACTION_ITEM_POINTS = " + std::to_string(faction_item_points());
+    serialised += NT + "TOTAL_ITEM_POINTS = " + std::to_string(total_item_points());
+
+    if (!is_character()) {
+        if (!is_mixed()) {
+            serialise_items(serialised, NT);
+            switch_model_select(ModelSelect::CHAMPION);
+            serialise_items(serialised, NT + "CHAMPION_");
+        }
+        else {
+            serialise_items(serialised, NT + "MASTER_");
+            switch_model_select(ModelSelect::CHAMPION);
+            serialise_items(serialised, NT + "MASTER_CHAMPION_");
+            switch_mixed_select(MixedSelect::SLAVE);
+            serialise_items(serialised, NT + "SLAVE_CHAMPION_");
+            switch_model_select(ModelSelect::DEFAULT);
+            serialise_items(serialised, NT + "SLAVE_");
+        }
+    }
+    else {
+        serialise_items(serialised, NT);
+    }
+
+    tools::serialise_magic_item(talisman(), "TALISMAN", serialised, NT);
+    tools::serialise_magic_item(enchanted_item(), "ENCHANTED_ITEM", serialised, NT);
+    tools::serialise_magic_item(arcane_item(), "ARCANE_ITEM", serialised, NT);
+    if (!item_extras().empty()) {
+        serialised += NT + "MAGIC_ITEM_EXTRAS =";
+        for (const auto& item_details : item_extras()) {
+            serialised += " name: " + item_details.first + ", category: "
+                          + enum_convert::ITEM_CLASS_TO_STRING.at(item_details.second.first) + ';';
+        }
+    }
+    if (!magic_banner().first.empty()) {
+        ItemCategory category = magic_banner().second.first;
+        std::string name = magic_banner().first;
+        serialised += NT + "BANNER = name: " + name + ", category: " +
+                      enum_convert::ITEM_CLASS_TO_STRING.at(category);
+    }
+    tools::serialise_mount(mnt(), serialised, NT);
+
+    return serialised;
+}

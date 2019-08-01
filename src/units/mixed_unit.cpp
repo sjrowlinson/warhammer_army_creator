@@ -1421,6 +1421,12 @@ void mixed_unit::change_slave_size(std::size_t n){
 
 // serialisation and exporting
 
-std::string mixed_unit::save() const {
-    return "";
+std::string mixed_unit::save() {
+    const std::string NT = "\n\t";
+    std::string serialised = unit::save();
+    serialised += NT + "MASTER_SIZE = " + std::to_string(master_size());
+    serialised += NT + "SLAVE_SIZE = " + std::to_string(slave_size());
+    tools::serialise_command_group(master_command(), serialised, NT + "MASTER_");
+    tools::serialise_command_group(slave_command(), serialised, NT + "SLAVE_");
+    return serialised;
 }

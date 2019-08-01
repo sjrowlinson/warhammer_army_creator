@@ -770,6 +770,10 @@ void normal_unit::change_size(std::size_t n) {
     size_ = n;
 }
 
-std::string normal_unit::save() const {
-    return "";
+std::string normal_unit::save() {
+    const std::string NT = "\n\t";
+    std::string serialised = unit::save();
+    serialised += NT + "SIZE = " + std::to_string(size());
+    tools::serialise_command_group(command(), serialised, NT);
+    return serialised;
 }

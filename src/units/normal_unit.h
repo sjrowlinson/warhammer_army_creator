@@ -216,7 +216,7 @@ public:
     void change_size(std::size_t n);
 
     // serialisation and exporting
-    virtual std::string save() const override;
+    std::string save() override;
 };
 
 #endif // !_UNIT_H

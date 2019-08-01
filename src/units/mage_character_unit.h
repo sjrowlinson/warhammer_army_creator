@@ -38,6 +38,8 @@ public:
     void remove_lore(const std::string& lore);
 
     virtual std::vector<std::string> clear() override;
+
+    std::string save() override;
 };
 
 #endif // !MAGE_CHARACTER_UNIT_H

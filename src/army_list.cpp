@@ -2,7 +2,7 @@
 #include "units/unit.h"
 #include "html_table_unit_row.h"
 
-army_list::army_list(double points) :
+army_list::army_list(double points, Faction faction) : faction_(faction),
     army(), unique_units(), general_(), item_tracker(),
     points(points), curr_pts(0.0), lord_lim(0.0),
     hero_lim(0.0), core_min(0.0), spec_lim(0.0),
@@ -378,6 +378,10 @@ void army_list::change_points_limit(double pts) {
     check_validity();
 }
 
+void army_list::switch_faction(Faction f) {
+    faction_ = f;
+}
+
 void army_list::clear() {
     army.clear();
     unique_units.clear();
@@ -390,6 +394,11 @@ void army_list::clear() {
     core_pts = 0.0;
     spec_pts = 0.0;
     rare_pts = 0.0;
+    lord_no_contrib_pts = 0.0;
+    hero_no_contrib_pts = 0.0;
+    core_no_contrib_pts = 0.0;
+    spec_no_contrib_pts = 0.0;
+    rare_no_contrib_pts = 0.0;
 }
 
 bool army_list::is_valid() const noexcept {
@@ -520,8 +529,9 @@ void army_list::save(const QString& filename) const {
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
         throw std::runtime_error("Access error - unable to write to: " + filename.toStdString());
     QTextStream stream(&file);
-    for (const auto& u : army) stream << "UNIT = " << QString::fromStdString(u.second->save()) << '\n';
+    stream << "ARMY = " << QString::fromStdString(enum_convert::FACTION_TO_STRING.at(faction_)) << "\n\n";
+    stream << "POINTS_LIMIT = " << QString::fromStdString(std::to_string(point_limit())) << "\n\n";
     if (general_ != nullptr)
-        stream << "GENERAL = " << QString::fromStdString(general_->name())
-               << ' ' << QString("%1").arg(general_->id()) << '\n';
+        stream << "GENERAL = " << QString("%1").arg(general_->id()) << "\n\n";
+    for (const auto& u : army) stream << "UNIT = " << QString::fromStdString(u.second->save()) << '\n';
 }

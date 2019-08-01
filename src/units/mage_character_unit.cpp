@@ -88,3 +88,16 @@ std::vector<std::string> mage_character_unit::clear() {
     if (!arcane_rmvd.empty()) removed.push_back(arcane_rmvd);
     return removed;
 }
+
+std::string mage_character_unit::save() {
+    const std::string NT = "\n\t";
+    std::string serialised = unit::save();
+    serialised += NT + "MAGE_LEVEL = " + std::to_string(level());
+    if (!lores().empty()) {
+        serialised += NT + "MAGE_LORES = ";
+        for (const auto& lore : lores()) {
+            serialised += lore + "; ";
+        }
+    }
+    return serialised;
+}

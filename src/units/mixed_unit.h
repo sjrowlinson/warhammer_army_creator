@@ -351,7 +351,7 @@ public:
     void change_slave_size(std::size_t n);
 
     // serialisation and exporting
-    std::string save() const override;
+    std::string save() override;
 };
 
 #endif // !mixed_unitH

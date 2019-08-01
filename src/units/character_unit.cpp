@@ -532,6 +532,6 @@ std::vector<std::string> character_unit::clear() {
     return removed;
 }
 
-std::string character_unit::save() const {
-    return "";
+std::string character_unit::save() {
+    return unit::save();
 }
