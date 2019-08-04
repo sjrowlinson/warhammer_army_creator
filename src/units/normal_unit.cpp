@@ -242,6 +242,12 @@ std::string normal_unit::remove_weapon(WeaponType wt, bool replacing) {
 
 std::string normal_unit::pick_default_weapon(ItemCategory item_type, const std::string& name) {
     std::string removed;
+    auto equipment_weapons = handle->eq().weapons();
+    if (std::count_if(
+        std::begin(equipment_weapons),
+        std::end(equipment_weapons), [&name](const auto& p) {
+            return p.second.second == name;
+    })) return removed;
     switch (item_type) {
     case ItemCategory::MUNDANE:
     {
@@ -288,6 +294,12 @@ std::string normal_unit::pick_champion_weapon(ItemCategory item_type, const std:
     if (!(command_group.count(CommandGroup::CHAMPION)))
         throw std::runtime_error("No champion present in the unit!");
     std::string removed;
+    auto equipment_weapons = handle->champion_eq().weapons();
+    if (std::count_if(
+        std::begin(equipment_weapons),
+        std::end(equipment_weapons), [&name](const auto& p) {
+            return p.second.second == name;
+    })) return removed;
     switch (item_type) {
     case ItemCategory::MUNDANE:
     {
@@ -376,6 +388,12 @@ std::string normal_unit::remove_armour(ArmourType at, bool replacing) {
 
 std::string normal_unit::pick_default_armour(ItemCategory item_type, const std::string& name) {
     std::string removed;
+    auto equipment_armour = handle->eq().armours();
+    if (std::count_if(
+        std::begin(equipment_armour),
+        std::end(equipment_armour), [&name](const auto& p) {
+            return p.second.second == name;
+    })) return removed;
     switch (item_type) {
     case ItemCategory::MUNDANE:
     {
@@ -418,6 +436,12 @@ std::string normal_unit::pick_champion_armour(ItemCategory item_type, const std:
     if (!(command_group.count(CommandGroup::CHAMPION)))
         throw std::runtime_error("No champion present in the unit!");
     std::string removed;
+    auto equipment_armour = handle->champion_eq().armours();
+    if (std::count_if(
+        std::begin(equipment_armour),
+        std::end(equipment_armour), [&name](const auto& p) {
+            return p.second.second == name;
+    })) return removed;
     switch (item_type) {
     case ItemCategory::MUNDANE:
     {

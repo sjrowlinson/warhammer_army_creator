@@ -1271,7 +1271,8 @@ void ArmyCreator::update_character_unit_display(
     QTreeWidgetItem* item,
     CharacterTreeColumn column,
     bool adding,
-    bool copying
+    bool copying,
+    bool loading
         ) {
     if (item == nullptr) {
         QMessageBox error_box;
@@ -1458,7 +1459,7 @@ void ArmyCreator::update_character_unit_display(
         update_character_unit_display(item, CharacterTreeColumn::BANNER, adding, copying);
         update_character_unit_display(item, CharacterTreeColumn::EXTRAS, adding, copying);
         update_character_unit_display(item, CharacterTreeColumn::POINTS, adding, copying);
-        if (adding) {
+        if (adding || loading) {
             switch (u->unit_type()) {
             case UnitType::LORD:
                 ui->lord_tree->addTopLevelItem(item);
@@ -1479,7 +1480,8 @@ void ArmyCreator::update_noncharacter_unit_display(
     QTreeWidgetItem* item,
     UnitTreeColumn column,
     bool adding,
-    bool copying
+    bool copying,
+    bool loading
         ) {
     if (item == nullptr) {
         QMessageBox error_box;
@@ -1730,7 +1732,7 @@ void ArmyCreator::update_noncharacter_unit_display(
         update_noncharacter_unit_display(item, UnitTreeColumn::COMMAND, adding, copying);
         update_noncharacter_unit_display(item, UnitTreeColumn::EXTRAS, adding, copying);
         update_noncharacter_unit_display(item, UnitTreeColumn::POINTS, adding, copying);
-        if (adding) {
+        if (adding || loading) {
             switch (u->unit_type()) {
             case UnitType::CORE:
                 ui->core_tree->addTopLevelItem(item);
@@ -1776,7 +1778,9 @@ void ArmyCreator::update_unit_command_display_helper(
     }
 }
 
-void ArmyCreator::update_unit_display(QTreeWidgetItem* item, ArmyTreeColumn col, bool adding, bool copying) {
+void ArmyCreator::update_unit_display(QTreeWidgetItem* item, ArmyTreeColumn col,
+                                      bool adding, bool copying,
+                                      bool loading) {
     if (item == nullptr) {
         // somehow item has become null when switching between army trees so lets
         // re-update all the units in the current tree to ensure all model <-> ui
@@ -1791,9 +1795,9 @@ void ArmyCreator::update_unit_display(QTreeWidgetItem* item, ArmyTreeColumn col,
     }
     else u = army->get_unit(item->data(0, Qt::UserRole).toInt());
     if (u->is_character())
-        update_character_unit_display(item, enum_convert::ATC_TO_CTC.at(col), adding, copying);
+        update_character_unit_display(item, enum_convert::ATC_TO_CTC.at(col), adding, copying, loading);
     else
-        update_noncharacter_unit_display(item, enum_convert::ATC_TO_UTC.at(col), adding, copying);
+        update_noncharacter_unit_display(item, enum_convert::ATC_TO_UTC.at(col), adding, copying, loading);
 }
 
 void ArmyCreator::update_unit_displays() {
@@ -1943,5 +1947,26 @@ void ArmyCreator::on_load_button_clicked() {
         QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
         tr("Army files (*.army)")
     );
-    // TODO make army_parser class (inheriting from file_parser) which loads from file_name
+    if (file_name.isEmpty()) return;
+    tools::army_parser ap(file_name, st);
+    Faction faction = ap.parse_faction();
+    ui->faction_combobox->setCurrentText(QString::fromStdString(enum_convert::FACTION_TO_STRING.at(faction)));
+    try {
+        double pts_lim = ap.parse();
+        int general_id = ap.general_id();
+        if (general_id != -1) army->set_as_general(general_id);
+        ui->points_limit_spinbox->setValue(pts_lim);
+        auto all_ids = ap.all_ids();
+        ui->current_points_label->setText(QString("%1").arg(army->current_points()));
+        for (auto id : all_ids) {
+            QTreeWidgetItem* item = new QTreeWidgetItem();
+            QVariant v(id);
+            item->setData(0, Qt::UserRole, v);
+            update_unit_display(item, ArmyTreeColumn::ALL, false, false, true);
+        }
+    } catch (const std::runtime_error& re) {
+        QMessageBox error_box;
+        error_box.critical(nullptr, tr("Error"), tr(re.what()));
+        error_box.setFixedSize(500, 200);
+    }
 }

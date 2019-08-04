@@ -6,6 +6,8 @@
 #include "magic_item.h"
 #include "selection_tree.h"
 
+#include "parsing/army_parser.h"
+
 #include <functional>
 #include <memory>
 #include <unordered_map>
@@ -158,15 +160,18 @@ private:
         QTreeWidgetItem* item,
         CharacterTreeColumn column,
         bool adding,
-        bool copying
+        bool copying,
+        bool loading=false
     );
     void update_noncharacter_unit_display(
         QTreeWidgetItem* item,
         UnitTreeColumn column,
         bool adding,
-        bool copying
+        bool copying,
+        bool loading=false
     );
-    void update_unit_display(QTreeWidgetItem* item, ArmyTreeColumn col, bool adding, bool copying);
+    void update_unit_display(QTreeWidgetItem* item, ArmyTreeColumn col,
+                             bool adding, bool copying, bool loading=false);
 
     void update_unit_displays();
 

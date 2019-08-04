@@ -176,6 +176,12 @@ std::pair<
 
 std::string character_unit::pick_weapon(ItemCategory item_category, const std::string& name) {
     std::string removed;
+    auto equipment_weapons = handle_->eq().weapons();
+    if (std::count_if(
+        std::begin(equipment_weapons),
+        std::end(equipment_weapons), [&name](const auto& p) {
+            return p.second.second == name;
+    })) return removed;
     switch (item_category) {
     case ItemCategory::MUNDANE:
     {
@@ -241,6 +247,12 @@ std::string character_unit::remove_weapon(WeaponType wt, bool replacing) {
 
 std::string character_unit::pick_armour(ItemCategory item_category, const std::string& name) {
     std::string removed;
+    auto equipment_armour = handle_->eq().armours();
+    if (std::count_if(
+        std::begin(equipment_armour),
+        std::end(equipment_armour), [&name](const auto& p) {
+            return p.second.second == name;
+    })) return removed;
     switch (item_category) {
     case ItemCategory::MUNDANE:
     {

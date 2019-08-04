@@ -588,6 +588,7 @@ void unit::serialise_items(std::string& stream, std::string pre) {
 std::string unit::save() {
     const std::string NT = "\n\t";
     std::string serialised = name();
+    if (!assigned_name().empty()) serialised += NT + "ASSIGNED_NAME = " + assigned_name();
     serialised += NT + "ID = " + std::to_string(id());
     serialised += NT + "POINTS = " + std::to_string(points());
     serialised += NT + "MAGIC_ITEM_POINTS = " + std::to_string(magic_item_points());

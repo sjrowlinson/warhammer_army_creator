@@ -531,7 +531,7 @@ void army_list::save(const QString& filename) const {
     QTextStream stream(&file);
     stream << "ARMY = " << QString::fromStdString(enum_convert::FACTION_TO_STRING.at(faction_)) << "\n\n";
     stream << "POINTS_LIMIT = " << QString::fromStdString(std::to_string(point_limit())) << "\n\n";
+    for (const auto& u : army) stream << "UNIT = " << QString::fromStdString(u.second->save()) << "\n\n";
     if (general_ != nullptr)
         stream << "GENERAL = " << QString("%1").arg(general_->id()) << "\n\n";
-    for (const auto& u : army) stream << "UNIT = " << QString::fromStdString(u.second->save()) << '\n';
 }

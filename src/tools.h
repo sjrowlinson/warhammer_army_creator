@@ -69,6 +69,13 @@ namespace tools {
         return found;
     }
 
+    template<
+        class Ty = double,
+        class = std::enable_if_t<std::is_floating_point<Ty>::value>
+    > bool isclose(Ty x, Ty y, Ty abs_err=1e-12) {
+        return std::abs(x - y) < abs_err;
+    }
+
     void serialise_weapon(
         const std::unordered_map<
             WeaponType,

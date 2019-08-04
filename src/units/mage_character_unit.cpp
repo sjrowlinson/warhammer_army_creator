@@ -52,6 +52,7 @@ short mage_character_unit::level() const noexcept {
 }
 
 void mage_character_unit::change_level(short lvl) {
+    if (lvl == level_.first) return;
     auto search = handle->level_upgrades().find(lvl);
     if (search == handle->level_upgrades().end())
         throw std::invalid_argument("Level upgrade not available!");

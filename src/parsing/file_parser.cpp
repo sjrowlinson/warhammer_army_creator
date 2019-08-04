@@ -4,6 +4,9 @@ namespace tools {
 
     file_parser::file_parser(const QString& rfile) : f(rfile) {
         f.open(QIODevice::ReadOnly | QIODevice::Text);
+        if (f.size() > static_cast<qint64>(50e6)) {
+            throw std::runtime_error("");
+        }
         QTextStream in(&f);
         std::string content = in.readAll().toStdString();
         ss = std::stringstream(content);

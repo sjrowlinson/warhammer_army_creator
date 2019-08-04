@@ -44,6 +44,7 @@ SOURCES += \
         src/parsing/item_parser.cpp \
         src/parsing/roster_parser.cpp \
         src/parsing/mounts_parser.cpp \
+        src/parsing/army_parser.cpp \
         src/main.cpp \
         src/armycreator.cpp \
         src/army_list.cpp \
@@ -75,6 +76,7 @@ HEADERS += \
         src/parsing/item_parser.h \
         src/parsing/roster_parser.h \
         src/parsing/mounts_parser.h \
+        src/parsing/army_parser.h \
         src/armycreator.h \
         src/army_list.h \
         src/equipment.h \
