@@ -1111,6 +1111,7 @@ void ArmyCreator::on_add_button_clicked() {
 
 void ArmyCreator::on_duplicate_button_clicked() {
     QTreeWidgetItem* curr_item = current_item();
+    if (curr_item == nullptr) return;
     auto u = army->get_unit(curr_item->data(0, Qt::UserRole).toInt());
     if (u->has_non_duplicable_items()) {
         QMessageBox message_box;
@@ -1632,7 +1633,17 @@ void ArmyCreator::update_noncharacter_unit_display(
         }
         case BaseUnitType::MIXED:
         {
-            // TODO: implement
+            auto p = std::dynamic_pointer_cast<mixed_unit>(u);
+            QString command_str;
+            if (!p->master_command().empty()) {
+                command_str += QString::fromStdString(p->handle->master_name());
+                update_unit_command_display_helper(p->master_command(), command_str, "    ");
+            }
+            if (!p->slave_command().empty()) {
+                command_str += "\n" + QString::fromStdString(p->handle->slave_name());
+                update_unit_command_display_helper(p->slave_command(), command_str, "    ");
+            }
+            item->setText(col_val, command_str);
             break;
         }
         default: break;
@@ -1754,25 +1765,26 @@ void ArmyCreator::update_noncharacter_unit_display(
 
 void ArmyCreator::update_unit_command_display_helper(
     const std::unordered_map<CommandGroup, std::pair<std::string, double>>& command,
-    QString& command_str
+    QString& command_str,
+    QString pre
         ) {
     auto musician_it = command.find(CommandGroup::MUSICIAN);
     auto sb_it = command.find(CommandGroup::STANDARD_BEARER);
     auto champion_it = command.find(CommandGroup::CHAMPION);
     if (musician_it != command.end()) {
-        command_str += QString("%1").arg(
+        command_str += pre + QString("%1").arg(
                           std::get<0>(musician_it->second).data()
                        );
     }
     if (sb_it != command.end()) {
         if (!command_str.isEmpty()) command_str += QString("\n");
-        command_str += QString("%1").arg(
+        command_str += pre + QString("%1").arg(
                           std::get<0>(sb_it->second).data()
                        );
     }
     if (champion_it != command.end()) {
         if (!command_str.isEmpty()) command_str += QString("\n");
-        command_str += QString("%1").arg(
+        command_str += pre + QString("%1").arg(
                           std::get<0>(champion_it->second).data()
                        );
     }
@@ -1948,8 +1960,14 @@ void ArmyCreator::on_load_button_clicked() {
         tr("Army files (*.army)")
     );
     if (file_name.isEmpty()) return;
+    clear();
     tools::army_parser ap(file_name, st);
     Faction faction = ap.parse_faction();
+    if (faction == race) {
+        populate_roster_tree();
+        mib->reset_category(ItemCategory::NONE);
+        setup_magic_items_combobox();
+    }
     ui->faction_combobox->setCurrentText(QString::fromStdString(enum_convert::FACTION_TO_STRING.at(faction)));
     try {
         double pts_lim = ap.parse();

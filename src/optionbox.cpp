@@ -257,6 +257,19 @@ std::pair<QGroupBox*, QGroupBox*> OptionBox::make_weapons_boxes() {
         if (!p->handle->champion_opt().weapons().empty()) has_champ_opt_weapons = true;
         break;
     }
+    case BaseUnitType::MIXED:
+    {
+        auto p = std::dynamic_pointer_cast<mixed_unit>(current);
+        if (p->handle->master_opt().weapons().empty() && p->handle->master_champion_opt().weapons().empty() &&
+                p->handle->slave_opt().weapons().empty() && p->handle->slave_champion_opt().weapons().empty())
+            return boxes;
+        if (!p->handle->master_opt().weapons().empty() || !p->handle->slave_opt().weapons().empty())
+            has_opt_weapons = true;
+        if (!p->handle->master_champion_opt().weapons().empty() ||
+                !p->handle->slave_champion_opt().weapons().empty())
+            has_champ_opt_weapons = true;
+        break;
+    }
     default: return boxes;
     }
     if (has_opt_weapons) {
@@ -285,6 +298,38 @@ std::pair<QGroupBox*, QGroupBox*> OptionBox::make_weapons_boxes() {
 }
 
 QGroupBox* OptionBox::make_weapons_subbox(WeaponType wt, bool champion) {
+    if (current->is_mixed()) {
+        auto p = std::dynamic_pointer_cast<mixed_unit>(current);
+        std::unordered_map<
+            std::string,
+            weapon_option
+        > master_opt_weapons;
+        std::unordered_map<
+            WeaponType,
+            std::tuple<ItemCategory, std::string, double>
+        > master_curr_weapons;
+        std::unordered_map<
+            std::string,
+            weapon_option
+        > slave_opt_weapons;
+        std::unordered_map<
+            WeaponType,
+            std::tuple<ItemCategory, std::string, double>
+        > slave_curr_weapons;
+        if (champion) {
+            master_opt_weapons = p->handle->master_champion_opt().weapons();
+            master_curr_weapons = p->master_champion_weapons();
+            slave_opt_weapons = p->handle->slave_champion_opt().weapons();
+            slave_curr_weapons = p->slave_champion_weapons();
+        } else {
+            master_opt_weapons = p->handle->master_opt().weapons();
+            master_curr_weapons = p->master_weapons();
+            slave_opt_weapons = p->handle->slave_opt().weapons();
+            slave_curr_weapons = p->slave_weapons();
+        }
+        return nullptr;
+        //QGroupBox* gb = new QGroupBox()
+    }
     std::unordered_map<
         std::string,
         weapon_option

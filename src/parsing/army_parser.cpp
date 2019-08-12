@@ -259,13 +259,32 @@ namespace tools {
             ++i;
             arg = read_line(blocks[block] + i);
         }
-        if (!tools::isclose(unit_handle->points(), unit_pts) ||
-                !tools::isclose(unit_handle->magic_item_points(), unit_magic_pts) ||
-                !tools::isclose(unit_handle->faction_item_points(), unit_faction_pts) ||
-                !tools::isclose(unit_handle->total_item_points(), unit_total_pts)) {
+        if (!cached_mixed_unit_master_size.empty()) {
+            parse_unit_size(cached_mixed_unit_master_size, true, true);
+            cached_mixed_unit_master_size.clear();
+        }
+        if (!tools::isclose(unit_handle->magic_item_points(), unit_magic_pts)) {
+            std::string msg = "Army file: " + filename + " is corrupted. Mismatch in magic item points values"
+                                " in unit: " + unit_handle->name() + " of " +
+                                tools::points_str(unit_handle->magic_item_points() - unit_magic_pts) + " pts";
+            throw std::runtime_error(msg);
+        }
+        if (!tools::isclose(unit_handle->faction_item_points(), unit_faction_pts)) {
+            std::string msg = "Army file: " + filename + " is corrupted. Mismatch in faction item points values"
+                                " in unit: " + unit_handle->name() + " of " +
+                                tools::points_str(unit_handle->faction_item_points() - unit_faction_pts) + " pts";
+            throw std::runtime_error(msg);
+        }
+        if (!tools::isclose(unit_handle->total_item_points(), unit_total_pts)) {
+            std::string msg = "Army file: " + filename + " is corrupted. Mismatch in total item points values"
+                                " in unit: " + unit_handle->name() + " of " +
+                                tools::points_str(unit_handle->total_item_points() - unit_total_pts) + " pts";
+            throw std::runtime_error(msg);
+        }
+        if (!tools::isclose(unit_handle->points(), unit_pts)) {
             std::string msg = "Army file: " + filename + " is corrupted. Mismatch in points values"
-                                " in unit: " + unit_handle->name() + " of: " +
-                                tools::points_str(unit_handle->points() - unit_pts);
+                                " in unit: " + unit_handle->name() + " of " +
+                                tools::points_str(unit_handle->points() - unit_pts) + " pts";
             throw std::runtime_error(msg);
         }
     }
@@ -465,29 +484,36 @@ namespace tools {
     }
 
     void army_parser::parse_unit_item_extras(const std::string& s, bool champion, bool master) {
-        auto args = tools::split(s, ',');
-        auto argname_value_pairs = tools::zip_args_to_names_values(args);
-        auto search_name = std::find_if(
-            std::begin(argname_value_pairs), std::end(argname_value_pairs), [](const auto& p) {
-                return p.first == "name";
-        });
-        auto search_category = std::find_if(
-            std::begin(argname_value_pairs), std::end(argname_value_pairs), [](const auto& p) {
-                return p.first == "category";
-        });
-        if (search_name == std::end(argname_value_pairs)) {
-            std::string msg = "Army file: " + filename + " is corrupted. Unable to find name field in "
-                                "MAGIC_ITEM_EXTRAS field of unit: " + unit_handle->name();
-            throw std::runtime_error(msg);
-        }
-        if (search_category == std::end(argname_value_pairs)) {
-            std::string msg = "Army file: " + filename + " is corrupted. Unable to find category field in "
-                                "MAGIC_ITEM_EXTRAS field of unit: " + unit_handle->name();
-            throw std::runtime_error(msg);
-        }
+        auto args = tools::split(s, ';');
         if (champion) unit_handle->switch_model_select(ModelSelect::CHAMPION);
         if (!master) unit_handle->switch_mixed_select(MixedSelect::SLAVE);
-        unit_handle->pick_magic_extra(enum_convert::STRING_TO_ITEM_CLASS.at(search_category->second), search_name->second);
+        for (const auto& arg : args) {
+            auto item_args = tools::split(arg, ',');
+            auto argname_value_pairs = tools::zip_args_to_names_values(item_args);
+            auto search_name = std::find_if(
+                std::begin(argname_value_pairs), std::end(argname_value_pairs), [](const auto& p) {
+                    return p.first == "name";
+            });
+            auto search_category = std::find_if(
+                std::begin(argname_value_pairs), std::end(argname_value_pairs), [](const auto& p) {
+                    return p.first == "category";
+            });
+            if (search_name == std::end(argname_value_pairs)) {
+                std::string msg = "Army file: " + filename + " is corrupted. Unable to find name field in "
+                                    "MAGIC_ITEM_EXTRAS field of unit: " + unit_handle->name();
+                throw std::runtime_error(msg);
+            }
+            if (search_category == std::end(argname_value_pairs)) {
+                std::string msg = "Army file: " + filename + " is corrupted. Unable to find category field in "
+                                    "MAGIC_ITEM_EXTRAS field of unit: " + unit_handle->name();
+                throw std::runtime_error(msg);
+            }
+
+            unit_handle->pick_magic_extra(
+                        enum_convert::STRING_TO_ITEM_CLASS.at(search_category->second),
+                        search_name->second
+            );
+        }
         unit_handle->switch_model_select(ModelSelect::DEFAULT);
         unit_handle->switch_mixed_select(MixedSelect::MASTER);
     }
@@ -544,6 +570,7 @@ namespace tools {
             if (!master) unit_handle->switch_mixed_select(MixedSelect::SLAVE);
             for (const auto& member : members)
                 p->add_command_member(enum_convert::STRING_TO_COMMAND.at(member));
+            unit_handle->switch_mixed_select(MixedSelect::MASTER);
         }
         else {
             auto p = std::dynamic_pointer_cast<normal_unit>(unit_handle);
@@ -557,7 +584,13 @@ namespace tools {
         if (champion) {
             auto p = std::dynamic_pointer_cast<mixed_unit>(unit_handle);
             if (!master) unit_handle->switch_mixed_select(MixedSelect::SLAVE);
-            p->change_size(std::stoul(s));
+            try {
+                p->change_size(std::stoul(s));
+            } catch (const std::invalid_argument&) {
+                if (master)
+                    cached_mixed_unit_master_size = s;
+            }
+            unit_handle->switch_mixed_select(MixedSelect::MASTER);
         }
         else {
             auto p = std::dynamic_pointer_cast<normal_unit>(unit_handle);

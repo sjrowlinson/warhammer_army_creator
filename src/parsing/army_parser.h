@@ -38,6 +38,8 @@ namespace tools {
         double unit_faction_pts;
         double unit_total_pts;
 
+        std::string cached_mixed_unit_master_size;
+
         void register_bindings();
 
         void parse_unit_assigned_name(const std::string& s, bool champion, bool master);

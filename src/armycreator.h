@@ -154,7 +154,8 @@ private:
 
     void update_unit_command_display_helper(
         const std::unordered_map<CommandGroup, std::pair<std::string, double>>& command,
-        QString& command_str
+        QString& command_str,
+        QString pre=""
     );
     void update_character_unit_display(
         QTreeWidgetItem* item,
